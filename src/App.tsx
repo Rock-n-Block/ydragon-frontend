@@ -1,8 +1,8 @@
 import React from 'react';
 import {
-  BrowserRouter as Router,
   Switch,
-  Route
+  Route,
+  useRouteMatch
 } from 'react-router-dom';
 
 import { Header } from './components';
@@ -11,20 +11,20 @@ import { Home, Auth } from './pages';
 import './styles/index.scss';
 
 export const App: React.FC = () => {
-  return (
-    <div id="app">
-      <Router>
-        <Header />
+  const match = useRouteMatch();
 
-        <Switch>
-          <Route exact path="/">
-            <Home />
-          </Route>
-          <Route path="/auth">
-            <Auth />
-          </Route>
-        </Switch>
-      </Router>
+  return (
+    <div className={ match.isExact ? 'page-wrapper page-wrapper--home' : 'page-wrapper' }>
+      <Header />
+
+      <Switch>
+        <Route exact path="/">
+          <Home />
+        </Route>
+        <Route path="/auth">
+          <Auth />
+        </Route>
+      </Switch>
     </div>
   );
 };
