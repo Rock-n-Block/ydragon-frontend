@@ -12,7 +12,14 @@ const Header: React.FC = () => {
     <header className="header">
       <div className="container">
         <div className="header__inner">
-          <img src={ logo } alt="logo" width="64" height="58"/>
+          <div className="header__logo">
+            <Link to="/">
+              <img src={ logo } alt="logo" width="64" height="58"/>
+            </Link>
+
+            <div className="header__logo-text">YDRAGON</div>
+          </div>
+
 
           <nav className="header__nav">
             { isLoggedIn ?

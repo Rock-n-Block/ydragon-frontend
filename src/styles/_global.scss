@@ -7,6 +7,10 @@ body {
   font-family: 'TNR', sans-serif;
 }
 
+img {
+  vertical-align: top;
+}
+
 .page-wrapper {
   height: 100%;
   background-color: $main-bg;

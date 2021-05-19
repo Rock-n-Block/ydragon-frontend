@@ -1,0 +1,17 @@
+@import '../../styles/_variables.scss';
+
+.button {
+  padding: 20px 40px;
+  box-sizing: border-box;
+  background: $gradient;
+  border: none;
+  border-radius: 40px;
+  color: #ffffff;
+  font-family: 'MEB';
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: 0.15em;
+  text-align: center;
+  text-transform: uppercase;
+  cursor: pointer;
+}
