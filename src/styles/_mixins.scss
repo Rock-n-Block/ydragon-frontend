@@ -1,6 +1,5 @@
 @mixin respond-above($breakpoint) {
   @if map-has-key($breakpoints, $breakpoint) {
-
     $breakpoint-value: map-get($breakpoints, $breakpoint);
 
     @media (min-width: $breakpoint-value) {
@@ -13,7 +12,6 @@
 
 @mixin respond-below($breakpoint) {
   @if map-has-key($breakpoints, $breakpoint) {
-
     $breakpoint-value: map-get($breakpoints, $breakpoint);
 
     @media (max-width: ($breakpoint-value - 1)) {
@@ -22,4 +20,34 @@
   } @else {
     @warn 'Invalid breakpoint: #{$breakpoint}.';
   }
+}
+
+@mixin gradient-title {
+  font-family: 'MEB';
+  letter-spacing: 0.075em;
+  text-transform: uppercase;
+
+  color: $white;
+  background: $gradient;
+  background-clip: text;
+  -webkit-text-stroke: 4px transparent;
+  mix-blend-mode: darken;
+}
+
+@mixin title-text {
+  font-family: 'MEB';
+  font-size: 14px;
+  line-height: 17px;
+  letter-spacing: 0.93em;
+  text-transform: uppercase;
+
+  color: $black;
+}
+
+@mixin normal-text {
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0.035em;
+
+  color: $black;
 }

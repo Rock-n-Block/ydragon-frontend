@@ -2,10 +2,15 @@ $breakpoints: (
   xs: 576px,
   sm: 768px,
   md: 992px,
-  lg: 1200px
+  lg: 1200px,
 );
 
-$main-bg: #F2F3F8;
+$main-bg: #f2f3f8;
+$footer-bg: #eceff9;
 
 $black: #000316;
-$gradient: linear-gradient(180deg, #DF3F3A 0%, #F47C45 100%);
+$white: #fff;
+$orange: #df3f3a;
+$blue: #2754cd;
+
+$gradient: linear-gradient(180deg, #df3f3a 0%, #f47c45 100%);

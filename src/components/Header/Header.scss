@@ -2,9 +2,10 @@
 
 .header {
   &__inner {
+    padding: 60px 0;
+
     display: flex;
     align-items: center;
-    padding: 60px 0;
   }
 
   &__logo {
@@ -14,10 +15,12 @@
 
   &__logo-text {
     margin-left: 30px;
+
     font-family: 'MEB';
     font-size: 14px;
     line-height: 17px;
     letter-spacing: 0.93em;
+
     color: $black;
   }
 
@@ -27,10 +30,12 @@
 }
 
 .header-nav {
-  display: flex;
-  align-items: center;
   margin: 0;
   padding: 0;
+
+  display: flex;
+  align-items: center;
+
   list-style: none;
 
   &__item {
@@ -42,34 +47,42 @@
   &__link {
     font-size: 16px;
     line-height: 20px;
-    color: $black;
     text-decoration: none;
+
+    color: $black;
   }
 
   &__btn {
     position: relative;
+
     display: flex;
     justify-content: center;
     align-items: center;
+
     width: 120px;
     height: 40px;
-    background: $gradient;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    border-radius: 10px;
+
     font-size: 16px;
     line-height: 20px;
 
-    &:before {
+    background: $gradient;
+    background-clip: text;
+    border-radius: 10px;
+    -webkit-text-fill-color: transparent;
+
+    &::before {
       content: '';
+
       position: absolute;
       top: 0;
       right: 0;
-      bottom: 0;
       left: 0;
-      border-radius: 10px;
+      bottom: 0;
+
       padding: 1px;
+
       background: $gradient;
+      border-radius: 10px;
       -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
       -webkit-mask-composite: destination-out;
       mask-composite: exclude;

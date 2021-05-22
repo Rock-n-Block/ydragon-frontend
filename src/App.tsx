@@ -1,12 +1,8 @@
 import React from 'react';
-import {
-  Switch,
-  Route,
-  useRouteMatch
-} from 'react-router-dom';
+import { Route, Switch, useRouteMatch } from 'react-router-dom';
 
-import { Header } from './components';
-import { Home, Auth } from './pages';
+import { Footer, Header } from './components';
+import { Auth, Home } from './pages';
 
 import './styles/index.scss';
 
@@ -14,7 +10,23 @@ export const App: React.FC = () => {
   const match = useRouteMatch();
 
   return (
-    <div className={ match.isExact ? 'page-wrapper page-wrapper--home' : 'page-wrapper' }>
+    <div className={match.isExact ? 'page-wrapper page-wrapper--home' : 'page-wrapper'}>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        style={{
+          width: 0,
+          height: 0,
+          position: 'absolute',
+        }}
+        aria-hidden="true"
+        focusable="false"
+      >
+        <linearGradient id="gradient" x2="0" y2="1">
+          <stop offset="0" stopColor="#DF3F3A" />
+          <stop offset="1" stopColor="#F47C45" />
+        </linearGradient>
+      </svg>
+
       <Header />
 
       <Switch>
@@ -25,6 +37,8 @@ export const App: React.FC = () => {
           <Auth />
         </Route>
       </Switch>
+
+      <Footer />
     </div>
   );
 };

@@ -1,46 +1,46 @@
-@import '../../styles/_variables.scss';
+@import '../../../styles/variables';
+@import '../../../styles/mixins';
 
 .home {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
+
   min-height: calc(100vh - 178px);
 
   &__title-wrapper {
     position: relative;
+
     display: inline-flex;
     justify-content: center;
     align-items: center;
   }
 
   &__title {
-    background: $gradient;
-    background-clip: text;
-    -webkit-text-stroke: 4px transparent;
-    font-family: 'MEB';
+    @include gradient-title;
     font-size: 144px;
     line-height: 173px;
-    letter-spacing: 0.035em;
-    color: #ffffff;
-    mix-blend-mode: darken;
-    text-rendering: geometricPrecision;
   }
 
   &__sub-title {
     position: absolute;
+
     font-family: 'MEB';
     font-size: 24px;
     line-height: 29px;
     letter-spacing: 0.93em;
     text-transform: uppercase;
+
     color: $black;
   }
 
   &__descr {
-    max-width: 360px;
     margin-top: 40px;
     margin-left: 50px;
+
+    max-width: 360px;
+
     font-size: 18px;
     line-height: 22px;
     letter-spacing: 0.035em;

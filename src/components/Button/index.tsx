@@ -1,11 +1,13 @@
 import React from 'react';
 
-import './Button.scss'
+import './Button.scss';
 
 const Button: React.FC<{ text: string }> = ({ text }) => {
   return (
-    <button type="button" className="button">{ text }</button>
+    <button type="button" className="button">
+      {text}
+    </button>
   );
-}
+};
 
 export default Button;
