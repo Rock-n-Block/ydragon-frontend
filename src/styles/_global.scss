@@ -28,6 +28,10 @@ img {
   }
 }
 
+main {
+  flex: 1 1 auto;
+}
+
 .container {
   margin: 0 auto;
   padding: 0 20px;
@@ -78,5 +82,48 @@ img {
     & + & {
       margin-left: 20px;
     }
+  }
+}
+
+.page {
+  &__title-row {
+    display: flex;
+    align-items: center;
+  }
+
+  &__title-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 64px;
+    height: 64px;
+
+    border-radius: 50% !important;
+
+    &--index {
+      @include shadow-block;
+    }
+
+    &--ydr {
+      background-color: #191c34;
+    }
+  }
+
+  &__title-wrapper {
+    margin-left: 20px;
+  }
+
+  &__title {
+    @include gradient-title;
+    font-size: 48px;
+    line-height: 58px;
+  }
+
+  &__title-label {
+    font-size: 16px;
+    line-height: 19px;
+
+    color: $black;
   }
 }

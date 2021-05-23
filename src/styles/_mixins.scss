@@ -34,6 +34,15 @@
   mix-blend-mode: darken;
 }
 
+@mixin gradient-text {
+  font-family: 'MER';
+  letter-spacing: 0.1em;
+
+  background: $gradient;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
 @mixin title-text {
   font-family: 'MEB';
   font-size: 14px;
@@ -50,4 +59,10 @@
   letter-spacing: 0.035em;
 
   color: $black;
+}
+
+@mixin shadow-block {
+  background-color: $white;
+  border-radius: 16px;
+  box-shadow: $shadow;
 }

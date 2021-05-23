@@ -24,12 +24,12 @@ const Header: React.FC = () => {
             {isLoggedIn ? (
               <ul className="header-nav">
                 <li className="header-nav__item">
-                  <Link to="/" className="header-nav__btn">
+                  <Link to="/ydrtoken" className="header-nav__btn">
                     Buy YDR
                   </Link>
                 </li>
                 <li className="header-nav__item">
-                  <Link to="/" className="header-nav__link">
+                  <Link to="/index" className="header-nav__link">
                     Index
                   </Link>
                 </li>
@@ -41,6 +41,11 @@ const Header: React.FC = () => {
               </ul>
             ) : (
               <ul className="header-nav">
+                <li className="header-nav__item">
+                  <Link to="/admin" className="header-nav__link">
+                    Admin
+                  </Link>
+                </li>
                 <li className="header-nav__item">
                   <Link to="/" className="header-nav__link" onClick={() => setLogged(true)}>
                     Login

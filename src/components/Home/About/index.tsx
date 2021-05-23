@@ -6,7 +6,7 @@ const About: React.FC = () => {
   return (
     <section className="section">
       <div className="section__title">
-        <GradientText width="700" height="36" text="About Us" />
+        <GradientText width="352" height="36" text="About Us" />
       </div>
 
       <div className="section__text-row">

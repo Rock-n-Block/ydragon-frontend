@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, Switch, useRouteMatch } from 'react-router-dom';
 
 import { Footer, Header } from './components';
-import { Auth, Home } from './pages';
+import { Admin, Auth, Home, Index, YdrToken } from './pages';
 
 import './styles/index.scss';
 
@@ -35,6 +35,15 @@ export const App: React.FC = () => {
         </Route>
         <Route path="/auth">
           <Auth />
+        </Route>
+        <Route path="/index">
+          <Index />
+        </Route>
+        <Route path="/ydrtoken">
+          <YdrToken />
+        </Route>
+        <Route path="/admin">
+          <Admin />
         </Route>
       </Switch>
 

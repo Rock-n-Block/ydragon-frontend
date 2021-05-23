@@ -1,0 +1,102 @@
+@import '../../../styles/_variables.scss';
+@import '../../../styles/_mixins.scss';
+
+.index-create-btn {
+  margin-left: auto;
+  padding: 10px;
+
+  line-height: 26px;
+
+  &::before {
+    content: '';
+
+    margin-right: 10px;
+
+    display: inline-block;
+
+    width: 26px;
+    height: 26px;
+
+    vertical-align: bottom;
+
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 26 26'%3E%3Ccircle cx='13' cy='13' r='12' stroke='%23fff' stroke-width='2'/%3E%3Cpath stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M13 7.09V18.91M7.091 13H18.91'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+}
+
+.indexs-table {
+  margin-top: 60px;
+
+  &__row {
+    padding: 20px 10px;
+
+    display: grid;
+    align-items: center;
+    grid-template-columns: repeat(3, 2fr) 1fr;
+    grid-column-gap: 20px;
+
+    & + & {
+      border-top: 1px solid rgba($black, 0.1);
+    }
+
+    &--head {
+      margin-bottom: 10px;
+      padding: 0 30px;
+
+      align-items: end;
+
+      font-family: 'MER', sans-serif;
+      font-size: 12px;
+      line-height: 14px;
+
+      color: rgba($black, 0.4);
+    }
+  }
+
+  &__sort {
+    display: inline-flex;
+    align-items: center;
+
+    cursor: pointer;
+
+    &::after {
+      content: '';
+
+      margin-left: 5px;
+
+      width: 10px;
+      height: 6px;
+
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 10 6'%3E%3Cpath stroke='url(%23paint0_linear)' stroke-width='2' d='M9 1.5l-4 3-4-3'/%3E%3Cdefs%3E%3ClinearGradient id='paint0_linear' x1='7.876' x2='2.143' y1='2.477' y2='2.477' gradientUnits='userSpaceOnUse'%3E%3Cstop stop-color='%23EF8944'/%3E%3Cstop offset='1' stop-color='%23FE9D4B'/%3E%3C/linearGradient%3E%3C/defs%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: center;
+
+      transition: transform 0.3s;
+    }
+
+    &--up {
+      &::after {
+        transform: rotate(180deg);
+      }
+    }
+  }
+
+  &__content {
+    @include shadow-block;
+    padding: 0 20px;
+
+    font-size: 18px;
+    line-height: 21px;
+
+    color: $black;
+  }
+
+  &__price {
+    font-family: 'MER', sans-serif;
+    font-size: 18px;
+    line-height: 22px;
+
+    color: $black;
+  }
+}
