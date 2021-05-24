@@ -49,6 +49,12 @@ main {
     margin-top: 220px;
   }
 
+  &--admin {
+    & + & {
+      margin-top: 80px;
+    }
+  }
+
   &__title-row {
     display: flex;
     align-items: center;

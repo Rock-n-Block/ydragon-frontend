@@ -9,7 +9,7 @@
 
     display: grid;
     align-items: center;
-    grid-template-columns: 240px repeat(5, 1fr);
+    grid-template-columns: 360px repeat(4, 1fr);
     grid-column-gap: 20px;
 
     & + & {
@@ -58,7 +58,7 @@
     }
   }
 
-  &__amount {
+  &__quantity {
     @include gradient-text;
     font-size: 16px;
     line-height: 19px;

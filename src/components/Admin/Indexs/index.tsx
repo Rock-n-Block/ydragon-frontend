@@ -6,7 +6,7 @@ import './Indexs.scss';
 
 const Indexs: React.FC = () => {
   return (
-    <section className="section">
+    <section className="section section--admin">
       <div className="section__title-row">
         <div className="section__title">
           <GradientText width="248" height="36" text="Indexs" />

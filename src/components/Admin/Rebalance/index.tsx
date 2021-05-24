@@ -6,19 +6,22 @@ import './Rebalance.scss';
 
 const Rebalance: React.FC = () => {
   return (
-    <section className="section">
+    <section className="section section--admin">
       <div className="section__title">
         <GradientText width="660" height="36" text="Index rebalance" />
       </div>
 
       <div className="rebalance-table">
         <div className="rebalance-table__row rebalance-table__row--head">
-          <div className="rebalance-table__col">Index 1</div>
-          <div className="rebalance-table__col">Amount</div>
-          <div className="rebalance-table__col">Price, USD</div>
-          <div className="rebalance-table__col">Weight</div>
-          <div className="rebalance-table__col">Amount Price</div>
-          <div className="rebalance-table__col">Total tonens</div>
+          <div className="rebalance-table__col">Token</div>
+          <div className="rebalance-table__col">
+            Quantity <br /> per Index
+          </div>
+          <div className="rebalance-table__col">Token Price</div>
+          <div className="rebalance-table__col">Current Price Allocation</div>
+          <div className="rebalance-table__col">
+            Total Price <br /> per Index
+          </div>
         </div>
 
         <div className="rebalance-table__content">
@@ -27,13 +30,10 @@ const Rebalance: React.FC = () => {
               <div className="rebalance-table__token">Token 1</div>
             </div>
             <div className="rebalance-table__col">
-              <div className="rebalance-table__amount">4.9938</div>
+              <div className="rebalance-table__quantity">4.9938</div>
             </div>
             <div className="rebalance-table__col">
               <div className="rebalance-table__price">$30.44</div>
-            </div>
-            <div className="rebalance-table__col">
-              <div className="rebalance-table__price">33</div>
             </div>
             <div className="rebalance-table__col">
               <div className="rebalance-table__price">33</div>
@@ -47,13 +47,10 @@ const Rebalance: React.FC = () => {
               <div className="rebalance-table__token">Token 1</div>
             </div>
             <div className="rebalance-table__col">
-              <div className="rebalance-table__amount">4.9938</div>
+              <div className="rebalance-table__quantity">4.9938</div>
             </div>
             <div className="rebalance-table__col">
               <div className="rebalance-table__price">$30.44</div>
-            </div>
-            <div className="rebalance-table__col">
-              <div className="rebalance-table__price">33</div>
             </div>
             <div className="rebalance-table__col">
               <div className="rebalance-table__price">33</div>
@@ -67,13 +64,10 @@ const Rebalance: React.FC = () => {
               <div className="rebalance-table__token">Token 1</div>
             </div>
             <div className="rebalance-table__col">
-              <div className="rebalance-table__amount">4.9938</div>
+              <div className="rebalance-table__quantity">4.9938</div>
             </div>
             <div className="rebalance-table__col">
               <div className="rebalance-table__price">$30.44</div>
-            </div>
-            <div className="rebalance-table__col">
-              <div className="rebalance-table__price">33</div>
             </div>
             <div className="rebalance-table__col">
               <div className="rebalance-table__price">33</div>
