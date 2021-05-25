@@ -9,7 +9,7 @@ const Main: React.FC = () => {
     <section className="section home">
       <div className="home__title-wrapper">
         <div className="home__title">
-          <GradientText width="977" height="106" text="YDRAGON" />
+          <GradientText width="982" height="106" text="YDRAGON" />
         </div>
         <div className="home__sub-title">DeFi made simple</div>
       </div>

@@ -8,7 +8,7 @@ const Structure: React.FC = () => {
   return (
     <section className="section section--admin">
       <div className="section__title">
-        <GradientText width="660" height="36" text="Vault Structure" />
+        <GradientText width="666" height="36" text="Vault Structure" />
       </div>
 
       <div className="structure">

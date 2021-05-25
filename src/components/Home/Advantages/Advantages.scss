@@ -1,3 +1,4 @@
+@import '../../../styles/_mixins.scss';
 @import '../../../styles/_variables.scss';
 
 .advantages-row {
@@ -65,18 +66,11 @@
   background-blend-mode: lighten;
 
   &__title {
+    @include title-text;
     position: absolute;
     top: 33px;
-
     width: 100%;
-
-    font-family: 'MEB';
-    font-size: 14px;
-    line-height: 17px;
     text-align: center;
-    letter-spacing: 0.93em;
-    text-transform: uppercase;
-
     color: $white;
   }
 }

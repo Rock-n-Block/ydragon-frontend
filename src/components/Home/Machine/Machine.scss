@@ -13,14 +13,8 @@
   margin-top: 240px;
 
   &__title {
-    font-family: 'MEB';
-    font-size: 14px;
-    line-height: 17px;
+    @include title-text;
     text-align: center;
-    letter-spacing: 0.93em;
-    text-transform: uppercase;
-
-    color: $black;
   }
 
   &__row {

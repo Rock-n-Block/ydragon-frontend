@@ -8,7 +8,7 @@ const Rebalance: React.FC = () => {
   return (
     <section className="section section--admin">
       <div className="section__title">
-        <GradientText width="660" height="36" text="Index rebalance" />
+        <GradientText width="666" height="36" text="Index rebalance" />
       </div>
 
       <div className="rebalance-table">
