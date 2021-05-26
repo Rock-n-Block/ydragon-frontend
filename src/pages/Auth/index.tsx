@@ -4,15 +4,21 @@ import metamask from '../../assets/img/auth/metamask.svg';
 import walletconnect from '../../assets/img/auth/walletconnect.svg';
 
 import './Auth.scss';
+import { useWalletConnectorContext } from '../../services/walletConnect';
 
 const Auth: React.FC = () => {
+  const walletConnector = useWalletConnectorContext();
+
+  const connectWallet=():void=>{
+    walletConnector.connect();
+  }
   return (
     <main className="container">
       <div className="auth">
         <div className="auth-block">
           <div className="auth-block__title">Welcome back</div>
 
-          <div className="auth-block__inner">
+          <div role="button" className="auth-block__inner" onClick={connectWallet} onKeyDown={connectWallet} tabIndex={0}>
             <div className="auth-method">
               <div className="auth-method__icon">
                 <img src={metamask} alt="logo" width="107" height="111" />
