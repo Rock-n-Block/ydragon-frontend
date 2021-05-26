@@ -23,6 +23,7 @@ img {
 
   &--home {
     background-image: url('../assets/img/home-bg.png'), url('../assets/img/home-bg-bottom.png');
+    background-size: contain;
     background-position: top center, bottom 670px center;
     background-blend-mode: unset;
   }
