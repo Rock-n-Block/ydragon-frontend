@@ -8,9 +8,9 @@ const Indexs: React.FC = () => {
   return (
     <section className="section section--admin">
       <div className="section__title-row">
-        <div className="section__title">
+        <h2 className="section__title">
           <GradientText width="254" height="36" text="Indexs" />
-        </div>
+        </h2>
 
         <Button className="index-create-btn" text="create new index" />
       </div>

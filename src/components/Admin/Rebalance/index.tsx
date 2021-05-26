@@ -7,9 +7,9 @@ import './Rebalance.scss';
 const Rebalance: React.FC = () => {
   return (
     <section className="section section--admin">
-      <div className="section__title">
+      <h2 className="section__title">
         <GradientText width="666" height="36" text="Index rebalance" />
-      </div>
+      </h2>
 
       <div className="rebalance-table">
         <div className="rebalance-table__row rebalance-table__row--head">

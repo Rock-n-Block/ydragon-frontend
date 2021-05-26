@@ -7,9 +7,9 @@ import './Structure.scss';
 const Structure: React.FC = () => {
   return (
     <section className="section section--admin">
-      <div className="section__title">
+      <h2 className="section__title">
         <GradientText width="666" height="36" text="Vault Structure" />
-      </div>
+      </h2>
 
       <div className="structure">
         <div className="structure__title">index 1</div>

@@ -19,10 +19,10 @@ const YdrToken: React.FC = () => {
         </div>
 
         <div className="page__title-wrapper">
-          <div className="page__title">
+          <h1 className="page__title">
             <GradientText width="392" height="36" text="YDR token" />
-          </div>
-          <div className="page__title-label">Set creator</div>
+          </h1>
+          <span className="page__title-label">Set creator</span>
         </div>
       </div>
 
