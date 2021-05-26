@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Composition, Indexs, Rebalance, Structure, RebalanceModal } from '../../components/Admin';
+import { Composition, Indexs, Rebalance, RebalanceModal, Structure } from '../../components/Admin';
 
 const Admin: React.FC = () => {
   return (
