@@ -17,8 +17,8 @@ const TokenPanel: React.FC<{ panelContent: Array<any> }> = ({ panelContent }) =>
       </div>
 
       <div className="token-panel__btns">
-        <Button className="token-panel__btn" text="buy" />
-        <Button className="token-panel__btn" text="sell" />
+        <Button className="token-panel__btn">buy</Button>
+        <Button className="token-panel__btn">sell</Button>
       </div>
     </div>
   );

@@ -57,8 +57,8 @@ const Composition: React.FC = () => {
         </div>
 
         <div className="composition__btns-row">
-          <Button text="add / remove token" />
-          <Button text="Change Weight" />
+          <Button>add / remove token</Button>
+          <Button>Change Weight</Button>
         </div>
       </div>
     </section>

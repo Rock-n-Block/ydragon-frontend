@@ -12,7 +12,7 @@ const Indexs: React.FC = () => {
           <GradientText width="254" height="36" text="Indexs" />
         </div>
 
-        <Button className="index-create-btn" text="create new index" />
+        <Button>create new index</Button>
       </div>
 
       <div className="indexs-table">

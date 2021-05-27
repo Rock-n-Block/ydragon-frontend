@@ -2,10 +2,14 @@ import React from 'react';
 
 import './Button.scss';
 
-const Button: React.FC<{ className?: string; text: string }> = ({ className, text }) => {
+interface IButton{
+  onClick?:()=>void;
+  className?: string;
+}
+const Button: React.FC<IButton> = ({ className,onClick, children }) => {
   return (
-    <button type="button" className={`button ${className}`}>
-      {text}
+    <button type="button" className={`button ${className}`} onClick={onClick}>
+      {children}
     </button>
   );
 };

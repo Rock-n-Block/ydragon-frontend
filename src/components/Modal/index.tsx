@@ -2,7 +2,7 @@ import React from 'react';
 import { Modal as ModalAntd } from 'antd';
 import classNames from 'classnames';
 
-// import { ReactComponent as ClearImg } from '../../../assets/img/icons/uploader-cross.svg';
+import { ReactComponent as CloseImg } from '../../assets/img/icons/icon-close.svg';
 
 interface IModal {
   isVisible: boolean;
@@ -28,7 +28,7 @@ const Modal: React.FC<IModal> = ({
       visible={isVisible}
       footer={false}
       closable={closeIcon}
-      // closeIcon={<ClearImg />}
+      closeIcon={<CloseImg />}
       onCancel={handleCancel}
       centered
       destroyOnClose={destroyOnClose}

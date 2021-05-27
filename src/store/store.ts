@@ -12,6 +12,7 @@ const RootModel=types.model({
 export const Store=RootModel.create({
   modals:{
     metamask: {},
+    rebalance:{isOpen: false}
   },
   user:{
     address: '',

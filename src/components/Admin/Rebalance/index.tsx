@@ -3,8 +3,15 @@ import React from 'react';
 import { Button, GradientText } from '../../index';
 
 import './Rebalance.scss';
+import { observer } from 'mobx-react-lite';
+import { useMst } from '../../../store/store';
 
-const Rebalance: React.FC = () => {
+const Rebalance: React.FC = observer(() => {
+  const {modals}=useMst();
+  const handleRebalanceOpen=()=>{
+    console.log(handleRebalanceOpen)
+    modals.rebalance.open();
+  }
   return (
     <section className="section section--admin">
       <div className="section__title">
@@ -78,12 +85,12 @@ const Rebalance: React.FC = () => {
           </div>
 
           <div className="rebalance-table__btn-row">
-            <Button text="rebalance index" />
+            <Button onClick={handleRebalanceOpen}>rebalance index</Button>
           </div>
         </div>
       </div>
     </section>
   );
-};
+});
 
 export default Rebalance;

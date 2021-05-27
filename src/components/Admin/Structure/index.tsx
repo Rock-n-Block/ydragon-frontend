@@ -48,7 +48,7 @@ const Structure: React.FC = () => {
         </div>
 
         <div className="structure__btn-row">
-          <Button text="rebalance XY structure" />
+          <Button>rebalance XY structure</Button>
         </div>
       </div>
     </section>
