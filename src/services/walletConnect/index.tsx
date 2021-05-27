@@ -3,17 +3,16 @@ import { withRouter } from 'react-router-dom';
 import { observer } from 'mobx-react';
 import MetamaskService from '../web3';
 import { rootStore } from '../../store/store';
-import { userApi } from '../api';
+// import { userApi } from '../api';
 
 const walletConnectorContext = createContext<any>({
   MetamaskService: {},
-  connect: (): void => {
-  },
+  connect: (): void => {},
 });
 
 @observer
 class Connector extends React.Component<any, any> {
-  constructor(props: any) {
+  constructor(props:any) {
     super(props);
 
     this.state = {
@@ -48,27 +47,12 @@ class Connector extends React.Component<any, any> {
     try {
       const { address } = await this.state.provider.connect();
 
-      if (!localStorage.yd_token) {
-        const metMsg: any = await userApi.getMsg();// TODO:change on backend endpoints
 
-        const signedMsg = await this.state.provider.signMsg(metMsg.data);
+      rootStore.user.setAddress(address);
+      localStorage.yd__metamask = true;
 
-        const login: any = await userApi.login({
-          address,
-          msg: metMsg.data,
-          signedMsg,
-        });
-
-        localStorage.yd__token = login.data.key;
-        rootStore.user.setAddress(address);
-        localStorage.yd__metamask = true;
-
-      } else {
-        rootStore.user.setAddress(address);
-        localStorage.yd__metamask = true;
-      }
-      await rootStore.user.getMe();
     } catch (err) {
+      console.log(err)
       rootStore.modals.metamask.setErr(err.message);
       this.disconnect();
     }
@@ -84,7 +68,7 @@ class Connector extends React.Component<any, any> {
         value={{
           metamaskService: this.state.provider,
           connect: this.connect,
-          disconnect: this.disconnect(),
+          disconnect: this.disconnect,
         }}>
         {this.props.children}
       </walletConnectorContext.Provider>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Switch, useRouteMatch } from 'react-router-dom';
 
-import { Footer, Header } from './components';
+import { Footer, Header, MetamaskErrModal } from './components';
 import { Admin, Auth, Home, Index, YdrToken } from './pages';
 
 import './styles/index.scss';
@@ -46,7 +46,7 @@ export const App: React.FC = () => {
           <Admin />
         </Route>
       </Switch>
-
+      <MetamaskErrModal/>
       <Footer />
     </div>
   );

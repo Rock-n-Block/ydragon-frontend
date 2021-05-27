@@ -7,8 +7,8 @@ interface ILogin {
 }
 
 export default {
-  login:(data:ILogin)=>axios.post('account/metamask_login',{
-    address:data.address,
+   login:(data:ILogin)=>axios.post('account/metamask_login',{
+     address:data.address,
     signedMsg:data.signedMsg,
     msg:data.msg,
   }),

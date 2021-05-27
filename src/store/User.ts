@@ -1,4 +1,4 @@
-import { applySnapshot, flow, types } from 'mobx-state-tree';
+import { applySnapshot, types } from 'mobx-state-tree';
 
 export const User = types.model({
   address: types.string,
@@ -14,7 +14,7 @@ export const User = types.model({
     delete localStorage.dds_token;
     delete localStorage.dds_metamask;
   };
-  const getMe = flow(function* getMe() {
+/*  const getMe = flow(function* getMe() {
     try {
       const { data } = yield userApi.getMe();
 
@@ -23,11 +23,11 @@ export const User = types.model({
       console.log(err);
       disconnect();
     }
-  });
+  }); */
   return {
     setAddress,
     update,
     disconnect,
-    getMe,
+    // getMe,
   };
 });

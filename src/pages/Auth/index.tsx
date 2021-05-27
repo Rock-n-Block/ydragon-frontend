@@ -5,8 +5,9 @@ import walletconnect from '../../assets/img/auth/walletconnect.svg';
 
 import './Auth.scss';
 import { useWalletConnectorContext } from '../../services/walletConnect';
+import { observer } from 'mobx-react-lite';
 
-const Auth: React.FC = () => {
+const Auth: React.FC = observer(() => {
   const walletConnector = useWalletConnectorContext();
 
   const connectWallet=():void=>{
@@ -18,8 +19,8 @@ const Auth: React.FC = () => {
         <div className="auth-block">
           <div className="auth-block__title">Welcome back</div>
 
-          <div role="button" className="auth-block__inner" onClick={connectWallet} onKeyDown={connectWallet} tabIndex={0}>
-            <div className="auth-method">
+          <div className="auth-block__inner">
+            <div role="button" className="auth-method" onClick={connectWallet} onKeyDown={connectWallet} tabIndex={0}>
               <div className="auth-method__icon">
                 <img src={metamask} alt="logo" width="107" height="111" />
               </div>
@@ -27,7 +28,7 @@ const Auth: React.FC = () => {
               <div className="auth-method__descr">Connect to your MetaMask Wallet</div>
             </div>
 
-            <div className="auth-method">
+            <div role="button" className="auth-method" onClick={connectWallet} onKeyDown={connectWallet} tabIndex={0}>
               <div className="auth-method__icon">
                 <img src={walletconnect} alt="logo" width="138" height="85" />
               </div>
@@ -39,6 +40,6 @@ const Auth: React.FC = () => {
       </div>
     </main>
   );
-};
+});
 
 export default Auth;
