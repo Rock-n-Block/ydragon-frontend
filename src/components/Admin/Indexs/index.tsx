@@ -5,7 +5,6 @@ import { Button, GradientText } from '../../index';
 import './Indexs.scss';
 
 const Indexs: React.FC = () => {
-
   return (
     <section className="section section--admin">
       <div className="section__title-row">
@@ -13,7 +12,7 @@ const Indexs: React.FC = () => {
           <GradientText width="256" height="38" text="Indexs" />
         </h2>
 
-        <Button>create new index</Button>
+        <Button className="index-create-btn">create new index</Button>
       </div>
 
       <div className="indexs-table">

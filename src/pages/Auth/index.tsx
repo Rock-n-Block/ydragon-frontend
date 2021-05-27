@@ -1,11 +1,11 @@
 import React from 'react';
+import { observer } from 'mobx-react-lite';
 
 import metamask from '../../assets/img/auth/metamask.svg';
 import walletconnect from '../../assets/img/auth/walletconnect.svg';
+import { useWalletConnectorContext } from '../../services/walletConnect';
 
 import './Auth.scss';
-import { useWalletConnectorContext } from '../../services/walletConnect';
-import { observer } from 'mobx-react-lite';
 
 const Auth: React.FC = observer(() => {
   const walletConnector = useWalletConnectorContext();

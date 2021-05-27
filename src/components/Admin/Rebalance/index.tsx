@@ -1,17 +1,17 @@
 import React from 'react';
+import { observer } from 'mobx-react-lite';
 
+import { useMst } from '../../../store/store';
 import { Button, GradientText } from '../../index';
 
 import './Rebalance.scss';
-import { observer } from 'mobx-react-lite';
-import { useMst } from '../../../store/store';
 
 const Rebalance: React.FC = observer(() => {
-  const {modals}=useMst();
-  const handleRebalanceOpen=()=>{
-    console.log(handleRebalanceOpen)
+  const { modals } = useMst();
+  const handleRebalanceOpen = () => {
+    console.log(handleRebalanceOpen);
     modals.rebalance.open();
-  }
+  };
   return (
     <section className="section section--admin">
       <h2 className="section__title">

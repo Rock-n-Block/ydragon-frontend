@@ -41,6 +41,10 @@
   background: $gradient;
   background-clip: text;
   -webkit-text-fill-color: transparent;
+
+  &::selection {
+    -webkit-text-fill-color: $white;
+  }
 }
 
 @mixin title-text {

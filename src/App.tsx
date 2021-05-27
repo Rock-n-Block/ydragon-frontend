@@ -46,7 +46,7 @@ export const App: React.FC = () => {
           <Admin />
         </Route>
       </Switch>
-      <MetamaskErrModal/>
+      <MetamaskErrModal />
       <Footer />
     </div>
   );

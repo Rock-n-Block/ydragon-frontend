@@ -1,9 +1,10 @@
 import React, { createContext, useContext } from 'react';
 import { withRouter } from 'react-router-dom';
 import { observer } from 'mobx-react';
-import MetamaskService from '../web3';
+
 import { rootStore } from '../../store/store';
 import { accountsApi } from '../api';
+import MetamaskService from '../web3';
 // import { userApi } from '../api';
 
 const walletConnectorContext = createContext<any>({
@@ -13,7 +14,7 @@ const walletConnectorContext = createContext<any>({
 
 @observer
 class Connector extends React.Component<any, any> {
-  constructor(props:any) {
+  constructor(props: any) {
     super(props);
 
     this.state = {
@@ -56,7 +57,7 @@ class Connector extends React.Component<any, any> {
         const login: any = await accountsApi.login({
           address,
           msg: metMsg.data,
-          signed_msg:signedMsg,
+          signed_msg: signedMsg,
         });
 
         localStorage.yd_token = login.data.key;
@@ -67,15 +68,15 @@ class Connector extends React.Component<any, any> {
         localStorage.yd_metamask = true;
       }
     } catch (err) {
-      console.log(err)
+      console.log(err);
       rootStore.modals.metamask.setErr(err.message);
       this.disconnect();
     }
   };
 
-  disconnect=()=>{
+  disconnect = () => {
     rootStore.user.disconnect();
-  }
+  };
 
   render() {
     return (
@@ -84,7 +85,8 @@ class Connector extends React.Component<any, any> {
           metamaskService: this.state.provider,
           connect: this.connect,
           disconnect: this.disconnect,
-        }}>
+        }}
+      >
         {this.props.children}
       </walletConnectorContext.Provider>
     );
@@ -93,6 +95,6 @@ class Connector extends React.Component<any, any> {
 
 export default withRouter(Connector);
 
-export function useWalletConnectorContext(){
+export function useWalletConnectorContext() {
   return useContext(walletConnectorContext);
 }

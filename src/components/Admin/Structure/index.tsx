@@ -23,7 +23,15 @@ const Structure: React.FC = () => {
 
             <div className="structure-item__value">3.000</div>
 
-            <div className="structure-item__pause">Pause</div>
+            <Button
+              styledType="outline"
+              colorScheme="orange"
+              background="white"
+              borderSize="sm"
+              className="structure-item__pause"
+            >
+              Pause
+            </Button>
           </div>
           <div className="structure-item">
             <div className="structure-item__info">
@@ -33,7 +41,15 @@ const Structure: React.FC = () => {
 
             <div className="structure-item__value">3.000</div>
 
-            <div className="structure-item__pause">Pause</div>
+            <Button
+              styledType="outline"
+              colorScheme="orange"
+              background="white"
+              borderSize="sm"
+              className="structure-item__pause"
+            >
+              Pause
+            </Button>
           </div>
           <div className="structure-item">
             <div className="structure-item__info">
@@ -43,7 +59,15 @@ const Structure: React.FC = () => {
 
             <div className="structure-item__value">3.000</div>
 
-            <div className="structure-item__pause">Pause</div>
+            <Button
+              styledType="outline"
+              colorScheme="orange"
+              background="white"
+              borderSize="sm"
+              className="structure-item__pause"
+            >
+              Pause
+            </Button>
           </div>
         </div>
 

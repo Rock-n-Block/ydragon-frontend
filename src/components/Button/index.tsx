@@ -1,13 +1,16 @@
 import React from 'react';
-
 import { Link } from 'react-router-dom';
 import { Button as BtnAntd } from 'antd';
-
-import './Button.scss';
 import classNames from 'classnames';
 
+import './Button.scss';
+
+export interface IStyledType {
+  styledType?: 'outline' | 'filled' | 'nav';
+}
+
 export interface IColorScheme {
-  colorScheme?: 'outline' | 'filled' | 'green';
+  colorScheme?: 'orange' | 'green';
 }
 
 export interface IBackground {
@@ -24,14 +27,15 @@ export interface IType {
   type?: 'default' | 'text' | 'link';
 }
 
-interface IButton extends IColorScheme, ISize, IBorderSize, IBackground, IType {
+interface IButton extends IStyledType, IColorScheme, ISize, IBorderSize, IBackground, IType {
   onClick?: () => void;
   className?: string;
   link?: string;
   linkClassName?: string;
 }
 const Button: React.FC<IButton> = ({
-  colorScheme = 'filled',
+  styledType = 'filled',
+  colorScheme,
   type,
   background,
   link,
@@ -47,30 +51,39 @@ const Button: React.FC<IButton> = ({
       onClick={onClick}
       type={type}
       className={classNames(
-        className,
         'btn',
-        `btn-${size}`,
-        `btn-${colorScheme}`,
-        `btn-background-${background}`,
+        `btn--${size}`,
+        `btn--${styledType}`,
+        `btn--${background}`,
+        styledType === 'outline' ? '' : className,
       )}
     >
       {children}
     </BtnAntd>
   );
   let outlineBtn;
-  if (colorScheme === 'outline') {
+  if (styledType === 'outline') {
     outlineBtn = (
-      <div className={classNames('btn-outline__wrapper', `btn-border-${borderSize}`)}>{Btn}</div>
+      <div
+        className={classNames(
+          'btn-outline',
+          `btn-outline--${colorScheme}`,
+          `btn-outline--${borderSize}`,
+          className,
+        )}
+      >
+        {Btn}
+      </div>
     );
   }
   if (link) {
     return (
       <Link className={classNames('btn-link', linkClassName)} to={link}>
-        {colorScheme === 'outline' ? outlineBtn : Btn}
+        {styledType === 'outline' ? outlineBtn : Btn}
       </Link>
     );
   }
-  return Btn;
+  return outlineBtn || Btn;
 };
 
 export default Button;

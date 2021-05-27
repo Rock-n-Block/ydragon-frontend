@@ -3,9 +3,9 @@ import React, { useCallback, useEffect } from 'react';
 import logo from '../../assets/img/icons/logo.svg';
 import { GradientText, TokenPanel } from '../../components';
 import { About, RebalanceHistory, Table } from '../../components/IndexPage';
+import { indexesApi } from '../../services/api';
 
 import './Index.scss';
-import { indexesApi } from '../../services/api';
 
 const Index: React.FC = () => {
   const panelInfo = [
@@ -19,14 +19,14 @@ const Index: React.FC = () => {
     },
   ];
 
-  const getIndexes=useCallback(()=>{
-    indexesApi.getIndexes().then(({ data })=>{
-      console.log('getIndexes',data);
-    })
-  },[])
-  useEffect(()=>{
+  const getIndexes = useCallback(() => {
+    indexesApi.getIndexes().then(({ data }) => {
+      console.log('getIndexes', data);
+    });
+  }, []);
+  useEffect(() => {
     getIndexes();
-  },[getIndexes])
+  }, [getIndexes]);
   return (
     <main className="container page">
       <div className="page__title-row">

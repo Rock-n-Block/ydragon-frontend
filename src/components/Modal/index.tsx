@@ -14,14 +14,14 @@ interface IModal {
 }
 
 const Modal: React.FC<IModal> = ({
-                                   children,
-                                   isVisible,
-                                   handleCancel,
-                                   width = 'fit-content',
-                                   className,
-                                   destroyOnClose = false,
-                                   closeIcon = false,
-                                 }) => {
+  children,
+  isVisible,
+  handleCancel,
+  width = 'fit-content',
+  className,
+  destroyOnClose = false,
+  closeIcon = false,
+}) => {
   return (
     <ModalAntd
       title={false}

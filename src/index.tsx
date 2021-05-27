@@ -4,10 +4,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
-import Connector from './services/walletConnect';
 
-import { App } from './App';
+import Connector from './services/walletConnect';
 import { Provider, rootStore } from './store/store';
+import { App } from './App';
 
 ReactDOM.render(
   <Provider value={rootStore}>
@@ -17,6 +17,5 @@ ReactDOM.render(
       </Connector>
     </Router>
   </Provider>,
-document.getElementById('root'),
-)
-;
+  document.getElementById('root'),
+);

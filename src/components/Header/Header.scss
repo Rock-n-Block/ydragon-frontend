@@ -55,38 +55,17 @@
   &__btn {
     position: relative;
 
+    padding: 2px;
+
     display: flex;
     justify-content: center;
     align-items: center;
 
-    width: 120px;
     height: 40px;
 
-    font-size: 16px;
-    line-height: 20px;
     text-decoration: none;
 
     background: $gradient;
-    background-clip: text;
     border-radius: 10px;
-    -webkit-text-fill-color: transparent;
-
-    &::before {
-      content: '';
-
-      position: absolute;
-      top: 0;
-      right: 0;
-      left: 0;
-      bottom: 0;
-
-      padding: 1px;
-
-      background: $gradient;
-      border-radius: 10px;
-      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-      -webkit-mask-composite: destination-out;
-      mask-composite: exclude;
-    }
   }
 }

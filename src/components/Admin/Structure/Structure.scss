@@ -37,7 +37,7 @@
 
   box-sizing: border-box;
 
-  background-color: #e9ebf3;
+  background-color: $gray-bg;
   border-radius: 40px;
 
   & + & {
@@ -111,59 +111,6 @@
   }
 
   &__pause {
-    position: relative;
-
     margin-left: auto;
-    padding: 10px 20px;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    font-family: 'TNB', sans-serif;
-    font-size: 16px;
-    line-height: 20px;
-
-    cursor: pointer;
-
-    background: $gradient;
-    background-clip: text;
-    border-radius: 40px;
-    -webkit-text-fill-color: transparent;
-
-    &::before {
-      content: '';
-
-      position: absolute;
-      top: 0;
-      right: 0;
-      left: 0;
-      bottom: 0;
-
-      padding: 1px;
-
-      background: $gradient;
-      border-radius: 40px;
-      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-      -webkit-mask-composite: destination-out;
-      mask-composite: exclude;
-    }
-
-    &::after {
-      content: '';
-
-      position: absolute;
-      z-index: -1;
-      top: 0;
-      right: 0;
-      left: 0;
-      bottom: 0;
-
-      padding: 1px;
-
-      background: $white;
-      background-clip: content-box;
-      border-radius: 40px;
-    }
   }
 }

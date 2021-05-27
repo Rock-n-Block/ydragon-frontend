@@ -1,5 +1,4 @@
-import {  types } from 'mobx-state-tree';
-
+import { types } from 'mobx-state-tree';
 
 const RebalanceModal = types
   .model({
@@ -13,23 +12,27 @@ const RebalanceModal = types
       self.isOpen = false;
     },
   }));
-const MetamaskModal = types.model({
-  errMsg: types.optional(types.string, ''),
-}).actions((self) => ({
-  setErr(err: string) {
-    self.errMsg = err;
-  },
-  close() {
-    self.errMsg = '';
-  },
-}));
+const MetamaskModal = types
+  .model({
+    errMsg: types.optional(types.string, ''),
+  })
+  .actions((self) => ({
+    setErr(err: string) {
+      self.errMsg = err;
+    },
+    close() {
+      self.errMsg = '';
+    },
+  }));
 
-export const Modals=types.model({
-  rebalance:RebalanceModal,
-  metamask:MetamaskModal
-}).actions((self)=>({
-  closeAll(){
-    self.metamask.close();
-    self.rebalance.close();
-  }
-}));
+export const Modals = types
+  .model({
+    rebalance: RebalanceModal,
+    metamask: MetamaskModal,
+  })
+  .actions((self) => ({
+    closeAll() {
+      self.metamask.close();
+      self.rebalance.close();
+    },
+  }));
