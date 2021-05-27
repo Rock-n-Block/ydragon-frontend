@@ -1,1 +1,2 @@
-export { default as userApi } from './user';
+export { default as accountsApi } from './accounts';
+export { default as indexesApi } from './indexes';

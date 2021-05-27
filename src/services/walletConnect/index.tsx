@@ -3,6 +3,7 @@ import { withRouter } from 'react-router-dom';
 import { observer } from 'mobx-react';
 import MetamaskService from '../web3';
 import { rootStore } from '../../store/store';
+import { accountsApi } from '../api';
 // import { userApi } from '../api';
 
 const walletConnectorContext = createContext<any>({
@@ -47,10 +48,24 @@ class Connector extends React.Component<any, any> {
     try {
       const { address } = await this.state.provider.connect();
 
+      if (!localStorage.yd_token) {
+        const metMsg: any = await accountsApi.getMsg();
 
-      rootStore.user.setAddress(address);
-      localStorage.yd__metamask = true;
+        const signedMsg = await this.state.provider.signMsg(metMsg.data);
 
+        const login: any = await accountsApi.login({
+          address,
+          msg: metMsg.data,
+          signed_msg:signedMsg,
+        });
+
+        localStorage.yd_token = login.data.key;
+        rootStore.user.setAddress(address);
+        localStorage.yd_metamask = true;
+      } else {
+        rootStore.user.setAddress(address);
+        localStorage.yd_metamask = true;
+      }
     } catch (err) {
       console.log(err)
       rootStore.modals.metamask.setErr(err.message);

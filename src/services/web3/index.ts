@@ -114,5 +114,8 @@ export default class MetamaskService {
 
   };
 
+  signMsg(msg: string) {
+    return this.web3Provider.eth.personal.sign(msg, this.walletAddress, '');
+  }
 
 }

@@ -5,6 +5,7 @@ import { Button, GradientText } from '../../index';
 import './Indexs.scss';
 
 const Indexs: React.FC = () => {
+
   return (
     <section className="section section--admin">
       <div className="section__title-row">
