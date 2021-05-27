@@ -35,7 +35,7 @@ const Future: React.FC = () => {
   return (
     <section className="section future">
       <h2 className="section__title">
-        <GradientText width="706" height="36" text="The Future of DeFi" />
+        <GradientText width="716" height="38" text="The Future of DeFi" />
       </h2>
       <span className="section__sub-title">with YDragon</span>
 

@@ -27,7 +27,7 @@ const Index: React.FC = () => {
 
         <div className="page__title-wrapper">
           <h1 className="page__title">
-            <GradientText width="424" height="36" text="Index name" />
+            <GradientText width="434" height="38" text="Index name" />
           </h1>
           <span className="page__title-label">Set creator</span>
         </div>

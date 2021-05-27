@@ -39,7 +39,7 @@ const Composition: React.FC = () => {
   return (
     <section className="section section--admin">
       <h2 className="section__title">
-        <GradientText width="190" height="36" text="head" />
+        <GradientText width="190" height="38" text="head" />
       </h2>
 
       <div className="composition">

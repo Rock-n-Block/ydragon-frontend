@@ -13,7 +13,7 @@ const Machine: React.FC = () => {
   return (
     <section className="section machine">
       <h2 className="section__title">
-        <GradientText width="664" height="36" text="YDragon Machine" />
+        <GradientText width="672" height="38" text="YDragon Machine" />
       </h2>
       <span className="section__sub-title">Our core platform product</span>
 

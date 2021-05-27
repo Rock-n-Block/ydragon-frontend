@@ -9,7 +9,7 @@ const Advantages: React.FC = () => {
     <section className="section">
       <div className="section__title-row">
         <h2 className="section__title">
-          <GradientText width="148" height="36" text="DEFI qweqwe" />
+          <GradientText width="146" height="38" text="DEFI" />
         </h2>
         <div className="section__sub-title">RIGHT NOW</div>
       </div>

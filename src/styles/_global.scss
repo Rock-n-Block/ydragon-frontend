@@ -135,6 +135,8 @@ main {
     @include gradient-title;
     font-size: 48px;
     line-height: 58px;
+
+    background: none; //in firefox style work for svg text
   }
 
   &__title-label {
