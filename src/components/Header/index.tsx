@@ -1,13 +1,19 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 
 import logo from '../../assets/img/icons/logo.svg';
 
 import './Header.scss';
+import { observer } from 'mobx-react-lite';
+import { useMst } from '../../store/store';
+import { Button } from '../index';
 
-const Header: React.FC = () => {
-  const [isLoggedIn, setLogged] = useState(false);
-
+const Header: React.FC = observer(() => {
+  const { user } = useMst();
+  // const [isLoggedIn, setLogged] = useState(false);
+  const handleLogOut = () => {
+    user.disconnect();
+  };
   return (
     <header className="header">
       <div className="container">
@@ -16,12 +22,11 @@ const Header: React.FC = () => {
             <Link to="/">
               <img src={logo} alt="logo" width="64" height="58" />
             </Link>
-
             <div className="header__logo-text">YDRAGON</div>
           </div>
 
           <nav className="header__nav">
-            {isLoggedIn ? (
+            {user.address ? (
               <ul className="header-nav">
                 <li className="header-nav__item">
                   <Link to="/ydrtoken" className="header-nav__btn">
@@ -34,26 +39,16 @@ const Header: React.FC = () => {
                   </Link>
                 </li>
                 <li className="header-nav__item">
-                  <Link to="/" className="header-nav__link" onClick={() => setLogged(false)}>
+                  <Button className="header-nav__link" onClick={handleLogOut}>
                     Log Out
-                  </Link>
+                  </Button>
                 </li>
               </ul>
             ) : (
               <ul className="header-nav">
                 <li className="header-nav__item">
-                  <Link to="/admin" className="header-nav__link">
-                    Admin
-                  </Link>
-                </li>
-                <li className="header-nav__item">
-                  <Link to="/" className="header-nav__link" onClick={() => setLogged(true)}>
-                    Login
-                  </Link>
-                </li>
-                <li className="header-nav__item">
                   <Link to="/auth" className="header-nav__btn">
-                    Sign Up
+                    Connect wallet
                   </Link>
                 </li>
               </ul>
@@ -63,6 +58,6 @@ const Header: React.FC = () => {
       </div>
     </header>
   );
-};
+});
 
 export default Header;
