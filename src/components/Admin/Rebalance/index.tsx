@@ -14,9 +14,9 @@ const Rebalance: React.FC = observer(() => {
   }
   return (
     <section className="section section--admin">
-      <div className="section__title">
-        <GradientText width="666" height="36" text="Index rebalance" />
-      </div>
+      <h2 className="section__title">
+        <GradientText width="648" height="38" text="Index rebalance" />
+      </h2>
 
       <div className="rebalance-table">
         <div className="rebalance-table__row rebalance-table__row--head">

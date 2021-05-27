@@ -26,10 +26,10 @@ const Index: React.FC = () => {
         </div>
 
         <div className="page__title-wrapper">
-          <div className="page__title">
-            <GradientText width="424" height="36" text="Index name" />
-          </div>
-          <div className="page__title-label">Set creator</div>
+          <h1 className="page__title">
+            <GradientText width="434" height="38" text="Index name" />
+          </h1>
+          <span className="page__title-label">Set creator</span>
         </div>
       </div>
 

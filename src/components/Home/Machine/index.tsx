@@ -1,30 +1,30 @@
 import React from 'react';
 
-import { GradientText } from '../..';
 import icon1 from '../../../assets/img/featuring/icon-1.svg';
 import icon2 from '../../../assets/img/featuring/icon-2.svg';
 import icon3 from '../../../assets/img/featuring/icon-3.svg';
 import icon4 from '../../../assets/img/featuring/icon-4.svg';
 import image from '../../../assets/img/machine.svg';
+import { GradientText } from '../../index';
 
 import './Machine.scss';
 
 const Machine: React.FC = () => {
   return (
     <section className="section machine">
-      <div className="section__title">
-        <GradientText width="664" height="36" text="YDragon Machine" />
-      </div>
-      <div className="section__sub-title">Our core platform product</div>
+      <h2 className="section__title">
+        <GradientText width="672" height="38" text="YDragon Machine" />
+      </h2>
+      <span className="section__sub-title">Our core platform product</span>
 
       <div className="section__text-row">
-        <div className="section__text">
+        <p className="section__text">
           We’ve created it specifically to make the process of Yield Farming as easy as possible.
           Through providing the needed tools for the mass market to use DeFi we strive to bring new
           innovation and more liquidity to the DeFi world. We are committed to creating more
           products that allow for a wider range of users to access DeFi at the same time education
           our users about it
-        </div>
+        </p>
       </div>
 
       <div className="machine__img">
@@ -32,7 +32,7 @@ const Machine: React.FC = () => {
       </div>
 
       <div className="machine-featuring">
-        <div className="machine-featuring__title">featuring</div>
+        <h3 className="machine-featuring__title">featuring</h3>
 
         <div className="machine-featuring__row">
           <div className="machine-featuring__item">

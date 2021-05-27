@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { GradientText } from '../..';
+import { GradientText } from '../../index';
 
 import './Advantages.scss';
 
@@ -8,9 +8,9 @@ const Advantages: React.FC = () => {
   return (
     <section className="section">
       <div className="section__title-row">
-        <div className="section__title">
-          <GradientText width="148" height="36" text="DEFI qweqwe" />
-        </div>
+        <h2 className="section__title">
+          <GradientText width="146" height="38" text="DEFI" />
+        </h2>
         <div className="section__sub-title">RIGHT NOW</div>
       </div>
 
