@@ -9,7 +9,7 @@
 
     display: grid;
     align-items: center;
-    grid-template-columns: 360px repeat(5, 1fr);
+    grid-template-columns: 360px repeat(4, 1fr);
     grid-column-gap: 20px;
 
     & + & {

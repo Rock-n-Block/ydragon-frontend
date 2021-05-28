@@ -1,5 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react-lite';
+import { useHistory } from 'react-router-dom';
 
 import metamask from '../../assets/img/auth/metamask.svg';
 import walletconnect from '../../assets/img/auth/walletconnect.svg';
@@ -8,10 +9,13 @@ import { useWalletConnectorContext } from '../../services/walletConnect';
 import './Auth.scss';
 
 const Auth: React.FC = observer(() => {
+  const history = useHistory();
   const walletConnector = useWalletConnectorContext();
 
   const connectWallet = (): void => {
-    walletConnector.connect();
+    walletConnector.connect().then(() => {
+      history.push('/');
+    });
   };
   return (
     <main className="container">

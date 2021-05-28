@@ -33,16 +33,16 @@ export const App: React.FC = () => {
         <Route exact path="/">
           <Home />
         </Route>
-        <Route path="/auth">
+        <Route exact path="/auth">
           <Auth />
         </Route>
-        <Route path="/index">
+        <Route exact path="/index/:indexId">
           <Index />
         </Route>
-        <Route path="/ydrtoken">
+        <Route exact path="/ydrtoken">
           <YdrToken />
         </Route>
-        <Route path="/admin">
+        <Route exact path="/admin">
           <Admin />
         </Route>
       </Switch>

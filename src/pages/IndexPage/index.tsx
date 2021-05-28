@@ -1,32 +1,39 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
+import moment from 'moment';
+import { useParams } from 'react-router-dom';
 
 import logo from '../../assets/img/icons/logo.svg';
 import { GradientText, TokenPanel } from '../../components';
-import { About, RebalanceHistory, Table } from '../../components/IndexPage';
+import { RebalanceHistory, IndexTable } from '../../components/IndexPage';
 import { indexesApi } from '../../services/api';
 
 import './Index.scss';
+import { IToken } from '../../components/IndexPage/IndexTable';
+
+interface IIndexId {
+  indexId: string;
+}
+export interface IIndex {
+  id: number;
+  name: string;
+  tokens: Array<IToken>;
+  created_at: Date | string;
+  rebalance_date?: Date | string;
+}
 
 const Index: React.FC = () => {
-  const panelInfo = [
-    {
-      label: 'Market Cap',
-      value: '$34.0000',
-    },
-    {
-      label: 'Inception Date',
-      value: '22.01.2021',
-    },
-  ];
+  const { indexId } = useParams<IIndexId>();
+  const [indexData, setIndexData] = useState<IIndex | undefined>();
 
-  const getIndexes = useCallback(() => {
-    indexesApi.getIndexes().then(({ data }) => {
+  const getCurrentIndex = useCallback(() => {
+    indexesApi.getIndexById(+indexId).then(({ data }) => {
+      setIndexData(data);
       console.log('getIndexes', data);
     });
-  }, []);
+  }, [indexId]);
   useEffect(() => {
-    getIndexes();
-  }, [getIndexes]);
+    getCurrentIndex();
+  }, [getCurrentIndex]);
   return (
     <main className="container page">
       <div className="page__title-row">
@@ -36,16 +43,24 @@ const Index: React.FC = () => {
 
         <div className="page__title-wrapper">
           <h1 className="page__title">
-            <GradientText width="434" height="38" text="Index name" />
+            <GradientText width="434" height="38" text={`${indexData?.name}`} />
           </h1>
-          <span className="page__title-label">Set creator</span>
         </div>
       </div>
 
-      <TokenPanel panelContent={panelInfo} />
-      <RebalanceHistory />
-      <Table />
-      <About />
+      <TokenPanel
+        panelContent={[
+          {
+            label: 'Inception Date',
+            value: moment(indexData?.created_at ?? moment())
+              .format('DD.MM.YYYY')
+              .toString(),
+          },
+        ]}
+      />
+      <RebalanceHistory lastRebalance={indexData?.rebalance_date} />
+      <IndexTable tokens={indexData?.tokens} />
+      {/* <About /> */}
     </main>
   );
 };

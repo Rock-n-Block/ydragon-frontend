@@ -1,5 +1,6 @@
 import { Observable } from 'rxjs';
 import Web3 from 'web3';
+import BigNumber from 'bignumber.js/bignumber';
 
 declare global {
   interface Window {
@@ -38,6 +39,8 @@ export default class MetamaskService {
 
   public accountChangedObs: any;
 
+  public disconnectObs: any;
+
   public usedNetwork: string;
 
   public usedChain: string;
@@ -66,6 +69,12 @@ export default class MetamaskService {
     this.accountChangedObs = new Observable((subscriber) => {
       this.wallet.on('accountChanged', () => {
         subscriber.next();
+      });
+    });
+    this.disconnectObs = new Observable((subscriber) => {
+      this.wallet.on('disconnect', (code: number, reason: string) => {
+        console.log('disconnect', code, reason);
+        subscriber.next(reason);
       });
     });
   }
@@ -117,7 +126,13 @@ export default class MetamaskService {
     });
   }
 
+  static calcTransactionAmount(amount: number | string, tokenDecimal: number) {
+    return new BigNumber(amount).times(new BigNumber(10).pow(tokenDecimal)).toString(10);
+  }
+
   signMsg(msg: string) {
     return this.web3Provider.eth.personal.sign(msg, this.walletAddress, '');
   }
+
+  // TODO: rewrite when contract ready
 }

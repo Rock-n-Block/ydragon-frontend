@@ -34,7 +34,7 @@ const Header: React.FC = observer(() => {
                   </Link>
                 </li>
                 <li className="header-nav__item">
-                  <Link to="/index" className="header-nav__link">
+                  <Link to="/index/1" className="header-nav__link">
                     Index
                   </Link>
                 </li>

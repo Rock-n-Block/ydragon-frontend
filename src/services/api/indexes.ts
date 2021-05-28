@@ -1,13 +1,6 @@
-import axios from '../../core/axios';
-
-const instance = axios.create({
-  headers: {
-    common: {
-      token: localStorage.yd_token ?? '',
-    },
-  },
-});
+import { axiosWithToken } from '../../core/axios';
 
 export default {
-  getIndexes: () => instance.get('indexes/'),
+  getIndexes: () => axiosWithToken.get('indexes/'),
+  getIndexById: (id: number) => axiosWithToken.get(`indexes/${id}`),
 };
