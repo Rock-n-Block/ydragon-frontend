@@ -3,7 +3,7 @@ import { observer } from 'mobx-react-lite';
 import { useHistory } from 'react-router-dom';
 
 import metamask from '../../assets/img/auth/metamask.svg';
-import walletconnect from '../../assets/img/auth/walletconnect.svg';
+// import walletconnect from '../../assets/img/auth/walletconnect.svg';
 import { useWalletConnectorContext } from '../../services/walletConnect';
 
 import './Auth.scss';
@@ -37,7 +37,7 @@ const Auth: React.FC = observer(() => {
               <div className="auth-method__title">MetaMask</div>
               <div className="auth-method__descr">Connect to your MetaMask Wallet</div>
             </div>
-
+            {/*
             <div
               role="button"
               className="auth-method"
@@ -50,7 +50,7 @@ const Auth: React.FC = observer(() => {
               </div>
               <div className="auth-method__title">Wallet Connect</div>
               <div className="auth-method__descr">Connect to your Wallet Connect Wallet</div>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
