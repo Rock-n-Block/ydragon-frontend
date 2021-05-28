@@ -1,6 +1,6 @@
 import React from 'react';
-import { observer } from 'mobx-react-lite';
 import { useHistory } from 'react-router-dom';
+import { observer } from 'mobx-react-lite';
 
 import metamask from '../../assets/img/auth/metamask.svg';
 // import walletconnect from '../../assets/img/auth/walletconnect.svg';

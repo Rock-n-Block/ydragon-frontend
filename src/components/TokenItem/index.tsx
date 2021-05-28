@@ -19,7 +19,9 @@ const TokenItem: React.FC<{ icon: string; name: string; abbr: string; weight: st
         </div>
       </div>
 
-      <div className="token-item__weight">{weight}</div>
+      <div className="token-item__weight">
+        <span>{weight}</span>
+      </div>
     </div>
   );
 };

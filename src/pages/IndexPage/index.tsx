@@ -1,14 +1,14 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import moment from 'moment';
 import { useParams } from 'react-router-dom';
+import moment from 'moment';
 
 import logo from '../../assets/img/icons/logo.svg';
 import { GradientText, TokenPanel } from '../../components';
-import { RebalanceHistory, IndexTable } from '../../components/IndexPage';
+import { IndexTable, RebalanceHistory } from '../../components/IndexPage';
+import { IToken } from '../../components/IndexPage/IndexTable';
 import { indexesApi } from '../../services/api';
 
 import './Index.scss';
-import { IToken } from '../../components/IndexPage/IndexTable';
 
 interface IIndexId {
   indexId: string;

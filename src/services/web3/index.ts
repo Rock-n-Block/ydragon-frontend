@@ -1,6 +1,6 @@
+import BigNumber from 'bignumber.js/bignumber';
 import { Observable } from 'rxjs';
 import Web3 from 'web3';
-import BigNumber from 'bignumber.js/bignumber';
 
 declare global {
   interface Window {

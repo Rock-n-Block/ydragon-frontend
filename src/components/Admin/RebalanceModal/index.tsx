@@ -5,7 +5,7 @@ import bnb from '../../../assets/img/tokens/bnb.svg';
 import btc from '../../../assets/img/tokens/btc.svg';
 import eth from '../../../assets/img/tokens/eth.svg';
 import { useMst } from '../../../store/store';
-import { Button, Modal } from '../../index';
+import { Button, Input, Modal } from '../../index';
 
 import './RebalanceModal.scss';
 
@@ -63,15 +63,15 @@ const RebalanceModal: React.FC = observer(() => {
                 </div>
 
                 <div className="rebalance-item__input-wrapper">
-                  <input type="text" value="0.0" className="rebalance-item__input" />
+                  <Input val="0.0" />
                 </div>
 
                 <div className="rebalance-item__input-wrapper">
-                  <input type="text" value="0" className="rebalance-item__input" />
+                  <Input val="0" />
                 </div>
 
                 <div className="rebalance-item__input-wrapper">
-                  <input type="text" value="0" className="rebalance-item__input" />
+                  <Input val="0" />
                 </div>
 
                 <Button
@@ -95,15 +95,15 @@ const RebalanceModal: React.FC = observer(() => {
                 </div>
 
                 <div className="rebalance-item__input-wrapper">
-                  <input type="text" value="0.0" className="rebalance-item__input" />
+                  <Input val="0.0" />
                 </div>
 
                 <div className="rebalance-item__input-wrapper">
-                  <input type="text" value="0" className="rebalance-item__input" />
+                  <Input val="0" />
                 </div>
 
                 <div className="rebalance-item__input-wrapper">
-                  <input type="text" value="0" className="rebalance-item__input" />
+                  <Input val="0" />
                 </div>
 
                 <Button
@@ -127,15 +127,15 @@ const RebalanceModal: React.FC = observer(() => {
                 </div>
 
                 <div className="rebalance-item__input-wrapper">
-                  <input type="text" value="0.0" className="rebalance-item__input" />
+                  <Input val="0.0" />
                 </div>
 
                 <div className="rebalance-item__input-wrapper">
-                  <input type="text" value="0" className="rebalance-item__input" />
+                  <Input val="0" />
                 </div>
 
                 <div className="rebalance-item__input-wrapper">
-                  <input type="text" value="0" className="rebalance-item__input" />
+                  <Input val="0" />
                 </div>
 
                 <Button
@@ -170,14 +170,14 @@ const RebalanceModal: React.FC = observer(() => {
               <div className="rebalance-option">
                 <div className="rebalance-option__label">Days</div>
                 <div className="rebalance-option__input-wrapper">
-                  <input type="text" value="30" className="rebalance-option__input" />
+                  <Input val="30" />
                 </div>
               </div>
 
               <div className="rebalance-option">
                 <div className="rebalance-option__label">Hours</div>
                 <div className="rebalance-option__input-wrapper">
-                  <input type="text" value="30" className="rebalance-option__input" />
+                  <Input val="30" />
                 </div>
               </div>
             </div>

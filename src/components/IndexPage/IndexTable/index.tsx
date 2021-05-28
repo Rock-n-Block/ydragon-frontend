@@ -1,7 +1,7 @@
 import React from 'react';
+import BigNumber from 'bignumber.js/bignumber';
 
 import './IndexTable.scss';
-import BigNumber from 'bignumber.js/bignumber';
 
 export interface IToken {
   address: string;

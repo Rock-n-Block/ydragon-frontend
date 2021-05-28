@@ -1,7 +1,7 @@
 import React from 'react';
+import moment from 'moment';
 
 import './RebalanceHistory.scss';
-import moment from 'moment';
 
 interface RebalanceHistoryProps {
   lastRebalance?: Date | string;

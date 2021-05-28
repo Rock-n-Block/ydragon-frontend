@@ -1,9 +1,9 @@
 import React from 'react';
+import nextId from 'react-id-generator';
 
 import { Button } from '../index';
 
 import './TokenPanel.scss';
-import nextId from 'react-id-generator';
 
 interface TokenPanelProps {
   panelContent: Array<IPanelContent>;

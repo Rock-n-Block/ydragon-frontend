@@ -21,7 +21,9 @@ const Structure: React.FC = () => {
               <div className="structure-item__name">X Vault</div>
             </div>
 
-            <div className="structure-item__value">3.000</div>
+            <div className="structure-item__value">
+              <span>3.000</span>
+            </div>
 
             <Button
               styledType="outline"
@@ -39,7 +41,9 @@ const Structure: React.FC = () => {
               <div className="structure-item__name">Y Vault</div>
             </div>
 
-            <div className="structure-item__value">3.000</div>
+            <div className="structure-item__value">
+              <span>3.000</span>
+            </div>
 
             <Button
               styledType="outline"
@@ -57,7 +61,9 @@ const Structure: React.FC = () => {
               <div className="structure-item__name">Z Vault</div>
             </div>
 
-            <div className="structure-item__value">3.000</div>
+            <div className="structure-item__value">
+              <span>3.000</span>
+            </div>
 
             <Button
               styledType="outline"
