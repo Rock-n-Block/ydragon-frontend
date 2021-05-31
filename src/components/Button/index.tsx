@@ -6,7 +6,7 @@ import classNames from 'classnames';
 import './Button.scss';
 
 export interface IStyledType {
-  styledType?: 'outline' | 'filled' | 'nav';
+  styledType?: 'outline' | 'filled' | 'nav' | 'clear';
 }
 
 export interface IColorScheme {
