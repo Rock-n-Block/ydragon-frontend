@@ -1,0 +1,90 @@
+@import '../../../styles/variables';
+@import '../../../styles/mixins';
+
+.initial-mint-event{
+
+  &__title-wrapper {
+    position: relative;
+
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__title {
+    @include gradient-title;
+    font-size: 48px;
+    line-height: 58px;
+
+    background: none; //in firefox style work for svg text
+  }
+  &__content{
+    padding: 40px 50px 40px 30px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+
+    background: linear-gradient(355.19deg, #FFFFFF 0%, #DDE1F0 100%);
+    box-shadow: -8px 8px 36px rgba(203, 209, 230, 0.3);
+    border-radius: 32px;
+  }
+  &__description{
+    max-width: 340px;
+    width: 100%;
+    font-size: 16px;
+    line-height: 24px;
+
+    letter-spacing: 0.035em;
+    font-feature-settings: 'liga' off;
+  }
+  &__timings{
+    display: flex;
+    flex-direction: column;
+    gap:12px;
+  }
+  &__timing{
+    font-family: 'MEB';
+    text-transform: uppercase;
+    font-size: 14px;
+    line-height: 17px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap:20px;
+  }
+  &__unit{
+    display: flex;
+    justify-content: flex-end;
+    gap: 62px;
+    font-size: 18px;
+    line-height: 22px;
+    letter-spacing: 0.035em;
+    span{
+      width: 77px;
+      text-align: center;
+    }
+  }
+  &__timer{
+    display: flex;
+    gap:25px;
+    span{
+      text-align: center;
+      font-size: 44px;
+      line-height: 53px;
+      font-family: MER;
+
+      font-feature-settings: 'liga' off;
+    }
+    &-time{
+      width: 77px;
+    }
+    &-colon{
+      width: 12px;
+    }
+  }
+  &__get-btn{
+    max-width: 463px;
+    margin-left: auto;
+    margin-top: 22px;
+  }
+}

@@ -33,6 +33,15 @@ const Header: React.FC = observer(() => {
                     Buy YDR
                   </Link>
                 </li>
+                {localStorage.yd_token ? (
+                  <li className="header-nav__item">
+                    <Link to="/admin" className="header-nav__btn">
+                      Admin Panel
+                    </Link>
+                  </li>
+                ) : (
+                  <></>
+                )}
                 <li className="header-nav__item">
                   <Link to="/index/1" className="header-nav__link">
                     Index

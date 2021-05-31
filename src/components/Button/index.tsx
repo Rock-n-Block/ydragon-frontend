@@ -51,10 +51,11 @@ const Button: React.FC<IButton> = ({
       onClick={onClick}
       type={type}
       className={classNames(
+        className,
         'btn',
-        `btn--${size}`,
-        `btn--${styledType}`,
-        `btn--${background}`,
+        `btn-${size}`,
+        `btn-${styledType}`,
+        `btn-${background}`,
         styledType === 'outline' ? '' : className,
       )}
     >
@@ -67,8 +68,8 @@ const Button: React.FC<IButton> = ({
       <div
         className={classNames(
           'btn-outline',
-          `btn-outline--${colorScheme}`,
-          `btn-outline--${borderSize}`,
+          `btn-outline-${colorScheme}`,
+          `btn-outline-${borderSize}`,
           className,
         )}
       >

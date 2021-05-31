@@ -1,18 +1,19 @@
 .btn {
   height: auto;
+  width: 100%;
 
   border: none;
   box-shadow: none;
 
-  &--white {
+  &-white {
     background-color: $white;
   }
 
-  &--gray {
+  &-gray {
     background-color: $gray-bg;
   }
 
-  &--nav {
+  &-nav {
     padding: 0 15px;
 
     min-width: 120px;
@@ -30,7 +31,7 @@
     }
   }
 
-  &--filled {
+  &-filled {
     padding: 20px 40px;
 
     box-sizing: border-box;
@@ -54,7 +55,7 @@
     }
   }
 
-  &--outline {
+  &-outline {
     padding: 10px 20px;
 
     font-family: 'TNB', sans-serif;
@@ -68,7 +69,7 @@
 .btn-outline {
   border-radius: 40px;
 
-  &--sm {
+  &-sm {
     padding: 1px;
 
     .btn {
@@ -76,7 +77,7 @@
     }
   }
 
-  &--md {
+  &-md {
     padding: 2px;
 
     .btn {
@@ -84,7 +85,7 @@
     }
   }
 
-  &--lg {
+  &-lg {
     padding: 3px;
 
     .btn {
@@ -92,7 +93,7 @@
     }
   }
 
-  &--orange {
+  &-orange {
     background: $gradient;
 
     span {
@@ -102,7 +103,7 @@
     }
   }
 
-  &--green {
+  &-green {
     background: linear-gradient(180deg, #26cc90 0%, #29cd92 100%);
 
     span {
