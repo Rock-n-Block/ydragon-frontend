@@ -14,11 +14,9 @@
   &__content {
     display: flex;
   }
-
-  &__btn {
-    & + & {
-      margin-left: 20px;
-    }
+  &__btns {
+    display: flex;
+    gap: 20px;
   }
 }
 

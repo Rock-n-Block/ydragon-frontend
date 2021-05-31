@@ -1,12 +1,12 @@
 import React from 'react';
 
-import { Composition, Indexs, Rebalance, RebalanceModal, Structure } from '../../components/Admin';
+import { Composition, Rebalance, RebalanceModal, Structure } from '../../components/Admin';
 
 const Admin: React.FC = () => {
   return (
     <main className="container">
       <Structure />
-      <Indexs />
+      {/* <Indexs /> */}
       <Composition />
       <Rebalance />
       <RebalanceModal />
