@@ -9,6 +9,7 @@ export interface IToken {
   current_weight: number;
   decimal: number;
   id: number;
+  image: string;
   name: string;
   price_for_one: number;
   price_total: number;
@@ -38,7 +39,8 @@ const IndexTable: React.FC<IndexTableProps> = ({ tokens }) => {
         {tokens ? (
           tokens.map((token) => (
             <div className="index-table__row" key={`token-${token.id}`}>
-              <div className="index-table__col">
+              <div className="index-table__col index-table__first-col">
+                <img src={token.image} className="index-table__image" alt={`${token.name} logo`} />
                 <div className="index-table__token">{token.name}</div>
               </div>
               <div className="index-table__col">

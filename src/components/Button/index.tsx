@@ -32,6 +32,7 @@ interface IButton extends IStyledType, IColorScheme, ISize, IBorderSize, IBackgr
   className?: string;
   link?: string;
   linkClassName?: string;
+  disabled?: boolean;
 }
 const Button: React.FC<IButton> = ({
   styledType = 'filled',
@@ -44,6 +45,7 @@ const Button: React.FC<IButton> = ({
   borderSize = 'md',
   className,
   onClick,
+  disabled = false,
   children,
 }) => {
   const Btn = (
@@ -51,13 +53,13 @@ const Button: React.FC<IButton> = ({
       onClick={onClick}
       type={type}
       className={classNames(
-        className,
         'btn',
         `btn-${size}`,
         `btn-${styledType}`,
         `btn-${background}`,
         styledType === 'outline' ? '' : className,
       )}
+      disabled={disabled}
     >
       {children}
     </BtnAntd>

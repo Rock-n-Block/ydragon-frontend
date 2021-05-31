@@ -20,13 +20,18 @@ const RebalanceModal: React.FC = observer(() => {
       isVisible={modals.rebalance.isOpen}
       className="m-rebalance"
       handleCancel={handleClose}
-      closeIcon
       width={800}
     >
       <div className="m-rebalance__content">
         <div className="rebalance-modal-wrapper">
           <div className="rebalance-modal">
-            <div className="rebalance-modal__close">
+            <div
+              role="button"
+              className="rebalance-modal__close"
+              onClick={() => modals.rebalance.close()}
+              onKeyDown={() => modals.rebalance.close()}
+              tabIndex={0}
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="18"
@@ -157,7 +162,6 @@ const RebalanceModal: React.FC = observer(() => {
                 styledType="outline"
                 colorScheme="green"
                 background="white"
-                borderSize="lg"
                 className="rebalance-add-token__btn"
               >
                 Add Token
@@ -176,6 +180,13 @@ const RebalanceModal: React.FC = observer(() => {
 
               <div className="rebalance-option">
                 <div className="rebalance-option__label">Hours</div>
+                <div className="rebalance-option__input-wrapper">
+                  <Input val="30" />
+                </div>
+              </div>
+
+              <div className="rebalance-option">
+                <div className="rebalance-option__label">Steps</div>
                 <div className="rebalance-option__input-wrapper">
                   <Input val="30" />
                 </div>

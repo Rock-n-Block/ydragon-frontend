@@ -1,40 +1,18 @@
 import React from 'react';
 
-import bnb from '../../../assets/img/tokens/bnb.svg';
-import btc from '../../../assets/img/tokens/btc.svg';
-import dero from '../../../assets/img/tokens/dero.svg';
-import eth from '../../../assets/img/tokens/eth.svg';
 import { Button, GradientText, TokenItem } from '../../index';
 
 import './Composition.scss';
+import BigNumber from 'bignumber.js/bignumber';
+import { IIndexStatus, ITokensDiff } from '../../../pages/Admin';
+import nextId from 'react-id-generator';
 
-const Composition: React.FC = () => {
-  const tokens = [
-    {
-      icon: btc,
-      name: 'Bitcoin',
-      abbr: 'BTC',
-      weight: '25%',
-    },
-    {
-      icon: bnb,
-      name: 'Binance',
-      abbr: 'BNB',
-      weight: '25%',
-    },
-    {
-      icon: eth,
-      name: 'Ethereum',
-      abbr: 'ETH',
-      weight: '25%',
-    },
-    {
-      icon: dero,
-      name: 'DERO',
-      abbr: 'DERO',
-      weight: '25%',
-    },
-  ];
+interface CompositionProps extends IIndexStatus {
+  tokens: Array<ITokensDiff>;
+}
+
+const Composition: React.FC<CompositionProps> = ({ status, tokens }) => {
+  const rebalanceInProgress = status === 'PROCESSING';
 
   return (
     <section className="section section--admin">
@@ -46,20 +24,26 @@ const Composition: React.FC = () => {
         <div className="composition__title">Index composition</div>
 
         <div className="composition__content">
-          {tokens.map((token) => (
-            <TokenItem
-              icon={token.icon}
-              name={token.name}
-              abbr={token.abbr}
-              weight={token.weight}
+          {tokens?.map((tokenDiff) => (
+            <TokenItem // TODO: change abbr and icon
+              key={nextId()}
+              icon={tokenDiff.token.image}
+              name={tokenDiff.token.name}
+              abbr={tokenDiff.token.symbol}
+              weight={`${new BigNumber(tokenDiff.token.current_weight)
+                .multipliedBy(100)
+                .toFixed(2)}%`}
             />
           ))}
         </div>
 
-        <div className="composition__btns-row">
-          <Button>add / remove token</Button>
-          <Button>Change Weight</Button>
-        </div>
+        <Button
+          styledType="filled"
+          className="composition__change-btn"
+          disabled={rebalanceInProgress}
+        >
+          Change index
+        </Button>
       </div>
     </section>
   );

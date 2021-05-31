@@ -36,28 +36,24 @@
   }
 
   &__token {
-    display: flex;
-    align-items: center;
 
     font-size: 18px;
     line-height: 21px;
 
     color: $black;
 
-    &::before {
-      content: '';
-
-      margin-right: 10px;
-
-      width: 31px;
-      height: 31px;
-
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 31 31'%3E%3Cpath fill='%238594BE' d='M31 15.5C31 24.06 24.06 31 15.5 31 6.94 31 0 24.06 0 15.5 0 6.94 6.94 0 15.5 0 24.06 0 31 6.94 31 15.5z'/%3E%3Cpath fill='%23fff' d='M15.309 8.611l-.097.328v9.529l.097.096 4.423-2.614-4.423-7.339z'/%3E%3Cpath fill='%23fff' d='M15.31 8.611l-4.424 7.339 4.423 2.614V8.611zM15.31 19.835l-.055.067v3.394l.054.159 4.426-6.233-4.426 2.613z'/%3E%3Cpath fill='%23fff' d='M15.309 23.455v-3.62l-4.423-2.613 4.423 6.233z'/%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-position: center;
-    }
   }
+  &__first-col{
+    display: flex;
+    align-items: center;
+  }
+  &__image{
 
+    margin-right: 10px;
+
+    width: 31px;
+    height: 31px;
+  }
   &__quantity {
     @include gradient-text;
     font-size: 16px;

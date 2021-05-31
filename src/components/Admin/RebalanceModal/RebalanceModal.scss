@@ -211,15 +211,16 @@
   color: $black;
   border-top: 1px solid rgba($black, 0.1);
   border-bottom: 1px solid rgba($black, 0.1);
+  &__title{
+    align-self: flex-start;
+  }
 }
 
 .rebalance-option {
   display: flex;
+  flex-direction: column;
   align-items: center;
-
-  &__label {
-    margin-right: 10px;
-  }
+  gap: 10px;
 
   &__input-wrapper {
     width: 160px;
