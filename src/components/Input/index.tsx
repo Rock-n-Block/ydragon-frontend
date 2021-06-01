@@ -1,13 +1,16 @@
 import React from 'react';
 
 export interface IValue {
-  val?: any;
+  value?: string|number;
+  name?:string;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onBlur?: React.FocusEventHandler<HTMLInputElement>;
 }
 
-const Input: React.FC<IValue> = ({ val }) => {
+const Input: React.FC<IValue> = ({ value,name,onChange,onBlur }) => {
   return (
     <div className="input-border">
-      <input type="text" value={val} className="input" />
+      <input name={name} type="text" value={value} className="input" onChange={onChange} onBlur={onBlur}/>
     </div>
   );
 };

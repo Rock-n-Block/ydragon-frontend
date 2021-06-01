@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Composition, Rebalance, RebalanceModal } from '../../components/Admin';
 import { indexesApi } from '../../services/api';
 import { IToken } from '../../components/IndexPage/IndexTable';
+import { observer } from 'mobx-react-lite';
 
 export interface IIndexStatus {
   status: 'CREATED' | 'PROCESSING' | 'FINISHED ';
@@ -28,7 +29,7 @@ interface IRebalance extends IIndexStatus {
   attempts_count: number;
 }
 
-const Admin: React.FC = () => {
+const Admin: React.FC = observer(() => {
   const [index, setIndex] = useState<IRebalance>({} as IRebalance);
   const getIndexComposition = () => {
     // TODO: change indexId dynamically
@@ -51,9 +52,9 @@ const Admin: React.FC = () => {
       {/* <Indexs /> */}
       <Composition status={index.status} tokens={index.tokens_diff} />
       <Rebalance status={index.status} tokens={index.tokens_diff} />
-      <RebalanceModal  tokens={index.tokens_diff}/>
+      <RebalanceModal name={index.index?.name} tokens={index.tokens_diff}/>
     </main>
   );
-};
+});
 
 export default Admin;
