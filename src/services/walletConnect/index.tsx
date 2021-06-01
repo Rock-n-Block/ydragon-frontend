@@ -60,6 +60,7 @@ class Connector extends React.Component<any, any> {
           signed_msg: signedMsg,
         });
 
+        localStorage.yd_isAdmin = true;
         localStorage.yd_token = login.data.key;
         rootStore.user.setAddress(address);
         localStorage.yd_metamask = true;
@@ -68,9 +69,17 @@ class Connector extends React.Component<any, any> {
         localStorage.yd_metamask = true;
       }
     } catch (err) {
-      console.log(err);
-      rootStore.modals.metamask.setErr(err.message);
-      this.disconnect();
+      const {response} = err;
+      if(response.status===400&&response.data.result[0]==='user is not admin'){
+        localStorage.yd_isAdmin = false;
+        const { address } = await this.state.provider.connect();
+        rootStore.user.setAddress(address);
+        localStorage.yd_metamask = true;
+      }else{
+        rootStore.modals.metamask.setErr(err.message);
+        this.disconnect();
+      }
+      console.log(response);
     }
   };
 
