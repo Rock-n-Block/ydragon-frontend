@@ -70,40 +70,6 @@ const Rebalance: React.FC<RebalanceProps> = observer(({ status, tokens }) => {
               </div>
             ))
           )}
-          {/*  {rebalanceTokens ? (
-              rebalanceTokens?.map((tokenDiff: ITokensDiff) => (
-              <div className="rebalance-table__row">
-                <div className="rebalance-table__col">
-                  <img
-                    src={tokenDiff.token.image}
-                    className="rebalance-table__image"
-                    alt={`${tokenDiff.token.name} logo`}
-                  />
-                  <div className="rebalance-table__token">{tokenDiff.token.name}</div>
-                </div>
-                <div className="rebalance-table__col">
-                  <div className="rebalance-table__quantity">
-                    {new BigNumber(tokenDiff.token.count)
-                      .multipliedBy(new BigNumber(10).pow(-tokenDiff.token.decimal))
-                      .toFixed(2)}
-                  </div>
-                </div>
-                <div className="rebalance-table__col">
-                  <div className="rebalance-table__price">${tokenDiff.token.price_for_one}</div>
-                </div>
-                <div className="rebalance-table__col">
-                  <div className="rebalance-table__price">
-                    {new BigNumber(tokenDiff.token.current_weight).multipliedBy(100).toFixed(2)}%
-                  </div>
-                </div>
-                <div className="rebalance-table__col">
-                  <div className="rebalance-table__price">${tokenDiff.token.price_total}</div>
-                </div>
-              </div>
-            ))
-          ) : (
-            <></>
-          )} */}
 
           <div className="rebalance-table__btn-row">
             <Button onClick={handleRebalanceOpen} disabled={rebalanceInProgress}>

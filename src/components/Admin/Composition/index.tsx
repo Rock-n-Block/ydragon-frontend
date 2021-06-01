@@ -6,14 +6,19 @@ import './Composition.scss';
 import BigNumber from 'bignumber.js/bignumber';
 import { IIndexStatus, ITokensDiff } from '../../../pages/Admin';
 import nextId from 'react-id-generator';
+import { useMst } from '../../../store/store';
+import { observer } from 'mobx-react-lite';
 
 interface CompositionProps extends IIndexStatus {
   tokens: Array<ITokensDiff>;
 }
 
-const Composition: React.FC<CompositionProps> = ({ status, tokens }) => {
+const Composition: React.FC<CompositionProps> = observer(({ status, tokens }) => {
+  const { modals } = useMst();
   const rebalanceInProgress = status === 'PROCESSING';
-
+  const handleRebalanceOpen = () => {
+    modals.rebalance.open();
+  };
   return (
     <section className="section section--admin">
       <h2 className="section__title">
@@ -39,14 +44,13 @@ const Composition: React.FC<CompositionProps> = ({ status, tokens }) => {
 
         <Button
           styledType="filled"
-          className="composition__change-btn"
-          disabled={rebalanceInProgress}
+          className="composition__change-btn" onClick={handleRebalanceOpen} disabled={rebalanceInProgress}
         >
           Change index
         </Button>
       </div>
     </section>
   );
-};
+});
 
 export default Composition;

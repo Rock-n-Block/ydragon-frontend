@@ -51,7 +51,7 @@ const Admin: React.FC = () => {
       {/* <Indexs /> */}
       <Composition status={index.status} tokens={index.tokens_diff} />
       <Rebalance status={index.status} tokens={index.tokens_diff} />
-      <RebalanceModal />
+      <RebalanceModal  tokens={index.tokens_diff}/>
     </main>
   );
 };
