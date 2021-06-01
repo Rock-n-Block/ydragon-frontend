@@ -8,7 +8,7 @@ import MetamaskService from '../web3';
 // import { userApi } from '../api';
 
 const walletConnectorContext = createContext<any>({
-  MetamaskService: {},
+  metamaskService: {},
   connect: (): void => {},
 });
 
@@ -19,7 +19,7 @@ class Connector extends React.Component<any, any> {
 
     this.state = {
       provider: new MetamaskService({
-        testnet: 'kovan',
+        testnet: 'bnbt',
       }),
     };
 
@@ -70,15 +70,15 @@ class Connector extends React.Component<any, any> {
       }
     } catch (err) {
       const {response} = err;
-      if(response.status===400&&response.data.result[0]==='user is not admin'){
+       /* if(response.status===400&&response.data.result[0]==='user is not admin'){
         localStorage.yd_isAdmin = false;
         const { address } = await this.state.provider.connect();
         rootStore.user.setAddress(address);
         localStorage.yd_metamask = true;
-      }else{
+      }else{ */
         rootStore.modals.metamask.setErr(err.message);
         this.disconnect();
-      }
+      // }
       console.log(response);
     }
   };
