@@ -17,6 +17,7 @@ interface IMetamaskService {
   testnet: 'ropsten' | 'kovan' | 'rinkeby' | 'bnbt';
   isProduction?: boolean;
 }
+export type SpenderTypes = 'WBNB' | 'YDR' | 'USDT';
 
 const networks: INetworks = {
   mainnet: '0x1',
@@ -165,33 +166,39 @@ export default class MetamaskService {
     return this.contract.methods.imeEndTimestamp().call();
   }
 
-  async checkAllowance() {
+  async checkAllowance(spender: SpenderTypes) {
     try {
-      let result = await this.contract.methods.allowance(this.walletAddress, config.ADDRESS).call();
-      const totalSupply = await this.totalSupply(18);
+      const result = await this.contract.methods
+        .allowance(this.walletAddress, config.SPENDER_ADDRESS[spender])
+        .call();
 
-      result =
-        result === '0'
-          ? null
-          : +new BigNumber(result).dividedBy(new BigNumber(10).pow(18)).toString(10);
-      if (result && new BigNumber(result).minus(totalSupply).isPositive()) {
-        return true;
-      }
-      return false;
+      if (result === '0') return false;
+      return true;
     } catch (error) {
       return false;
     }
   }
 
-  async approve(walletAddress: string) {
+  /*  async checkAllAllowance() {
+    const wbnbAllowance = await this.checkAllowance('WBNB');
+    console.log('wbnbAllowance', wbnbAllowance);
+    const ydtAllowance = await this.checkAllowance('YDT');
+    console.log('ydtAllowance', ydtAllowance);
+    const usdtAllowance = await this.checkAllowance('USDT');
+    console.log('usdtAllowance', usdtAllowance);
+    if (wbnbAllowance || ydtAllowance || usdtAllowance) return true;
+    return false;
+  } */
+
+  async approve(spender: SpenderTypes) {
     try {
-      // const totalSupply = await this.totalSupply(18);
+      const totalSupply = await this.totalSupply(18);
 
       const approveMethod = MetamaskService.getMethodInterface(config.ABI, 'approve');
 
       const approveSignature = this.encodeFunctionCall(approveMethod, [
-        walletAddress,
-        '0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff',
+        config.SPENDER_ADDRESS[spender],
+        totalSupply,
       ]);
 
       return this.sendTransaction({

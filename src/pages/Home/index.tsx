@@ -1,6 +1,14 @@
 import React from 'react';
 
-import { About, Advantages, Future, InitialMintEvent, Machine, Main } from '../../components/Home';
+import {
+  About,
+  Advantages,
+  Future,
+  GetInModal,
+  InitialMintEvent,
+  Machine,
+  Main,
+} from '../../components/Home';
 
 const Home: React.FC = () => {
   return (
@@ -11,6 +19,7 @@ const Home: React.FC = () => {
       <Machine />
       <Future />
       <About />
+      <GetInModal />
     </main>
   );
 };

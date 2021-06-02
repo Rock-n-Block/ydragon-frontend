@@ -4,22 +4,17 @@ import { Button, GradientText } from '../../index';
 import moment from 'moment';
 import { useWalletConnectorContext } from '../../../services/walletConnect';
 import BigNumber from 'bignumber.js/bignumber';
+import { observer } from 'mobx-react-lite';
+import { useMst } from '../../../store/store';
 
-const InitialMintEvent: React.FC = () => {
+const InitialMintEvent: React.FC = observer(() => {
+  const { modals } = useMst();
   const walletConnector = useWalletConnectorContext();
   const [start, setStart] = useState(moment());
   const [end, setEnd] = useState(moment());
   const [now, setNow] = useState(moment());
-  const [allowed, setAllowed] = useState<boolean>(false);
-  const handleApprove = () => {
-    walletConnector.metamaskService
-      .approve()
-      .then((data: any) => {
-        console.log('approve', data);
-      })
-      .catch((err: any) => {
-        console.log('approve error', err);
-      });
+  const handleGetIn = () => {
+    modals.getIn.open();
   };
   useEffect(() => {
     const interval = setInterval(() => {
@@ -34,7 +29,6 @@ const InitialMintEvent: React.FC = () => {
       .getStartDate()
       .then((data: any) => {
         const dateInMilliseconds = new BigNumber(data).multipliedBy(1000).toString();
-        console.log('start date', dateInMilliseconds);
         setStart(moment(new Date(+dateInMilliseconds)));
       })
       .catch((err: any) => {
@@ -44,17 +38,7 @@ const InitialMintEvent: React.FC = () => {
       .getEndDate()
       .then((data: any) => {
         const dateInMilliseconds = new BigNumber(data).multipliedBy(1000).toString();
-        console.log('end date', dateInMilliseconds);
         setEnd(moment(new Date(+dateInMilliseconds)));
-      })
-      .catch((err: any) => {
-        console.log('get balance error', err);
-      });
-    walletConnector.metamaskService
-      .checkAllowance()
-      .then((data: boolean) => {
-        console.log('check allowance', data);
-        setAllowed(data);
       })
       .catch((err: any) => {
         console.log('get balance error', err);
@@ -121,21 +105,14 @@ const InitialMintEvent: React.FC = () => {
               </span>
             </p>
           </div>
-          {allowed ? (
-            <Button link="/index/1" className="initial-mint-event__get-btn">
-              {' '}
-              GET IN!
-            </Button>
-          ) : (
-            <Button className="initial-mint-event__get-btn" onClick={handleApprove}>
-              {' '}
-              Approve
-            </Button>
-          )}
+          <Button onClick={handleGetIn} className="initial-mint-event__get-btn">
+            {' '}
+            GET IN!
+          </Button>
         </div>
       </div>
     </section>
   );
-};
+});
 
 export default InitialMintEvent;

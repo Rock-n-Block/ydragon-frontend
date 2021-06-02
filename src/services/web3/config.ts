@@ -1,5 +1,10 @@
 export default {
   ADDRESS: '0xDF337A69B6d99E45253F088070Cdb2DD47aB8e1f',
+  SPENDER_ADDRESS: {
+    WBNB: '0x591873D1fFF4ae144307F8da8dCfbb52b00bDf20',
+    YDR: '',
+    USDT: '0x916082868d33a860C297F4c54Ac18771186ed73c',
+  },
   ABI: [
     { inputs: [], stateMutability: 'nonpayable', type: 'constructor' },
     {

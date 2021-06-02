@@ -12,6 +12,18 @@ const RebalanceModal = types
       self.isOpen = false;
     },
   }));
+const GetInModal = types
+  .model({
+    isOpen: types.boolean,
+  })
+  .actions((self) => ({
+    open() {
+      self.isOpen = true;
+    },
+    close() {
+      self.isOpen = false;
+    },
+  }));
 const MetamaskModal = types
   .model({
     errMsg: types.optional(types.string, ''),
@@ -28,11 +40,13 @@ const MetamaskModal = types
 export const Modals = types
   .model({
     rebalance: RebalanceModal,
+    getIn: GetInModal,
     metamask: MetamaskModal,
   })
   .actions((self) => ({
     closeAll() {
       self.metamask.close();
+      self.getIn.close();
       self.rebalance.close();
     },
   }));
