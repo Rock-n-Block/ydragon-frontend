@@ -9,6 +9,7 @@ import { IToken } from '../../components/IndexPage/IndexTable';
 import { indexesApi } from '../../services/api';
 
 import './Index.scss';
+import GetInModal from '../../components/Home/GetInModal';
 
 interface IIndexId {
   indexId: string;
@@ -61,6 +62,7 @@ const Index: React.FC = () => {
       <RebalanceHistory lastRebalance={indexData?.rebalance_date} />
       <IndexTable tokens={indexData?.tokens} />
       {/* <About /> */}
+      <GetInModal />
     </main>
   );
 };

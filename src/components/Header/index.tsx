@@ -54,7 +54,7 @@ const Header: React.FC = observer(() => {
                 )}
                 <li className="header-nav__item ">
                   <Button
-                    link="/index/1"
+                    link="/index/2"
                     linkClassName="header-nav__link"
                     type="text"
                     styledType="clear"

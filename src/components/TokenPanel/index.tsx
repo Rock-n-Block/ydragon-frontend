@@ -4,6 +4,8 @@ import nextId from 'react-id-generator';
 import { Button } from '../index';
 
 import './TokenPanel.scss';
+import { observer } from 'mobx-react-lite';
+import { useMst } from '../../store/store';
 
 interface TokenPanelProps {
   panelContent: Array<IPanelContent>;
@@ -13,7 +15,18 @@ interface IPanelContent {
   value: string;
 }
 
-const TokenPanel: React.FC<TokenPanelProps> = ({ panelContent }) => {
+const TokenPanel: React.FC<TokenPanelProps> = observer(({ panelContent }) => {
+  const { user, modals } = useMst();
+  const isTokenPicked = !!user.token;
+  const handleGetIn = () => {
+    modals.getIn.open();
+  };
+  const handleMint = () => {
+    console.log('mint event');
+  };
+  const handleRedeem = () => {
+    console.log('redeem event');
+  };
   return (
     <div className="token-panel">
       <div className="token-panel__content">
@@ -26,11 +39,23 @@ const TokenPanel: React.FC<TokenPanelProps> = ({ panelContent }) => {
       </div>
 
       <div className="token-panel__btns">
-        <Button className="token-panel__btn">buy</Button>
-        <Button className="token-panel__btn">sell</Button>
+        {isTokenPicked ? (
+          <>
+            <Button className="token-panel__btn" onClick={handleMint}>
+              buy
+            </Button>
+            <Button className="token-panel__btn" onClick={handleRedeem}>
+              sell
+            </Button>
+          </>
+        ) : (
+          <Button className="token-panel__btn" onClick={handleGetIn}>
+            Get in!
+          </Button>
+        )}
       </div>
     </div>
   );
-};
+});
 
 export default TokenPanel;
