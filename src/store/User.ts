@@ -13,8 +13,8 @@ export const User = types
     };
     const disconnect = () => {
       self.address = '';
-      delete localStorage.dds_token;
-      delete localStorage.dds_metamask;
+      delete localStorage.yd_token;
+      delete localStorage.yd_metamask;
     };
     return {
       setAddress,

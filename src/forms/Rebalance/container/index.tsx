@@ -6,8 +6,8 @@ import { observer } from 'mobx-react-lite';
 import { indexesApi } from '../../../services/api';
 
 interface RebalanceFormProps {
-  name: string,
-  tokens: Array<ITokensDiff>,
+  name: string;
+  tokens: Array<ITokensDiff>;
 }
 
 const RebalanceForm: React.FC<RebalanceFormProps> = ({ name, tokens }) => {
@@ -15,7 +15,7 @@ const RebalanceForm: React.FC<RebalanceFormProps> = ({ name, tokens }) => {
     enableReinitialize: true,
     mapPropsToValues: () => ({
       index: { name: '' || name } as { name: string },
-      tokens: tokens || [] as Array<ITokensDiff>,
+      tokens: tokens || ([] as Array<ITokensDiff>),
       days: 30,
       hours: 30,
       steps: 30,
@@ -33,7 +33,7 @@ const RebalanceForm: React.FC<RebalanceFormProps> = ({ name, tokens }) => {
           new_weight: tokenDiff.token.current_weight,
         };
       });
-      const term = +(values.days) * 24 + +(values.hours);
+      const term = +values.days * 24 + +values.hours;
       const formData = new FormData();
       formData.append('index', JSON.stringify({ name: values.index.name }));
       formData.append('tokens_diff', JSON.stringify(tokens_diff));
@@ -47,13 +47,15 @@ const RebalanceForm: React.FC<RebalanceFormProps> = ({ name, tokens }) => {
         term,
         attempts_count: +values.steps,
       };
-      indexesApi.putIndexesRebalance(1, newData).then(({ data }) => {
+      indexesApi
+        .putIndexesRebalance(2, newData)
+        .then(({ data }) => {
           console.log('put rebalance success', data);
-        },
-      ).catch((err) => {
-        const { response } = err;
-        console.log('put rebalance error', response);
-      });
+        })
+        .catch((err) => {
+          const { response } = err;
+          console.log('put rebalance error', response);
+        });
     },
     displayName: 'Rebalance',
   })(Rebalance);

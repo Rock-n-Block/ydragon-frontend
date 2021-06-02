@@ -3,11 +3,12 @@ import './InitialMintEvent.scss';
 import { Button, GradientText } from '../../index';
 import moment from 'moment';
 import { useWalletConnectorContext } from '../../../services/walletConnect';
+import BigNumber from 'bignumber.js/bignumber';
 
 const InitialMintEvent: React.FC = () => {
   const walletConnector = useWalletConnectorContext();
-  const [start, setStart] = useState(moment('20210615', 'YYYYMMDD'));
-  const [end, setEnd] = useState(moment('20210622', 'YYYYMMDD'));
+  const [start, setStart] = useState(moment());
+  const [end, setEnd] = useState(moment());
   const [now, setNow] = useState(moment());
   const [allowed, setAllowed] = useState<boolean>(false);
   const handleApprove = () => {
@@ -32,8 +33,9 @@ const InitialMintEvent: React.FC = () => {
     walletConnector.metamaskService
       .getStartDate()
       .then((data: any) => {
-        console.log('start date', data);
-        setStart(moment(new Date(+data)));
+        const dateInMilliseconds = new BigNumber(data).multipliedBy(1000).toString();
+        console.log('start date', dateInMilliseconds);
+        setStart(moment(new Date(+dateInMilliseconds)));
       })
       .catch((err: any) => {
         console.log('get balance error', err);
@@ -41,8 +43,9 @@ const InitialMintEvent: React.FC = () => {
     walletConnector.metamaskService
       .getEndDate()
       .then((data: any) => {
-        console.log('end date', data);
-        setEnd(moment(new Date(+data)));
+        const dateInMilliseconds = new BigNumber(data).multipliedBy(1000).toString();
+        console.log('end date', dateInMilliseconds);
+        setEnd(moment(new Date(+dateInMilliseconds)));
       })
       .catch((err: any) => {
         console.log('get balance error', err);

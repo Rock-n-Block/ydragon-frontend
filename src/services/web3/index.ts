@@ -167,7 +167,7 @@ export default class MetamaskService {
 
   async checkAllowance() {
     try {
-      let result = await this.contract.methods.allowance(config.ADDRESS, this.walletAddress).call();
+      let result = await this.contract.methods.allowance(this.walletAddress, config.ADDRESS).call();
       const totalSupply = await this.totalSupply(18);
 
       result =
@@ -183,15 +183,15 @@ export default class MetamaskService {
     }
   }
 
-  async approve() {
+  async approve(walletAddress: string) {
     try {
-      const totalSupply = await this.totalSupply(18);
+      // const totalSupply = await this.totalSupply(18);
 
       const approveMethod = MetamaskService.getMethodInterface(config.ABI, 'approve');
 
       const approveSignature = this.encodeFunctionCall(approveMethod, [
-        this.walletAddress,
-        MetamaskService.calcTransactionAmount(totalSupply, 18),
+        walletAddress,
+        '0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff',
       ]);
 
       return this.sendTransaction({

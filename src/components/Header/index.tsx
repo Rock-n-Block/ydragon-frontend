@@ -38,7 +38,7 @@ const Header: React.FC = observer(() => {
                     Buy YDR
                   </Button>
                 </li>
-                {localStorage.yd_isAdmin ? (
+                {localStorage.yd_token ? (
                   <li className="header-nav__item">
                     <Button
                       link="/admin"

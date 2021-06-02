@@ -16,10 +16,10 @@ export interface ITokensDiff {
   id: number;
   new_weight: string;
 }
-export interface IIndex{
-  id:number;
-  name:string;
-  rebalance_date?:Date|string;
+export interface IIndex {
+  id: number;
+  name: string;
+  rebalance_date?: Date | string;
 }
 interface IRebalance extends IIndexStatus {
   index: IIndex;
@@ -34,7 +34,7 @@ const Admin: React.FC = observer(() => {
   const getIndexComposition = () => {
     // TODO: change indexId dynamically
     indexesApi
-      .getIndexesRebalance(1)
+      .getIndexesRebalance(2)
       .then(({ data }) => {
         setIndex(data);
         console.log(data);
@@ -52,7 +52,7 @@ const Admin: React.FC = observer(() => {
       {/* <Indexs /> */}
       <Composition status={index.status} tokens={index.tokens_diff} />
       <Rebalance status={index.status} tokens={index.tokens_diff} />
-      <RebalanceModal name={index.index?.name} tokens={index.tokens_diff}/>
+      <RebalanceModal name={index.index?.name} tokens={index.tokens_diff} />
     </main>
   );
 });
