@@ -51,10 +51,10 @@ export default class MetamaskService {
 
   constructor({ testnet, isProduction = false }: IMetamaskService) {
     this.wallet = window.ethereum;
-    // this.web3Provider = new Web3('https://data-seed-prebsc-1-s1.binance.org:8545');
-    // window.ethereum.enable();
+    this.web3Provider = new Web3('https://data-seed-prebsc-1-s1.binance.org:8545');
+    window.ethereum.enable();
 
-    this.web3Provider = new Web3('https://data-seed-prebsc-1-s1.binance.org:8545/');
+    this.web3Provider = new Web3(window.ethereum);
     this.testnet = testnet;
     this.isProduction = isProduction;
     this.contract = new this.web3Provider.eth.Contract(config.ABI as Array<any>, config.ADDRESS);
@@ -162,7 +162,25 @@ export default class MetamaskService {
   }
 
   getEndDate() {
-    return this.contract.methods.imeStartTimestamp().call();
+    return this.contract.methods.imeEndTimestamp().call();
+  }
+
+  async checkAllowance() {
+    try {
+      let result = await this.contract.methods.allowance(config.ADDRESS, this.walletAddress).call();
+      const totalSupply = await this.totalSupply(18);
+
+      result =
+        result === '0'
+          ? null
+          : +new BigNumber(result).dividedBy(new BigNumber(10).pow(18)).toString(10);
+      if (result && new BigNumber(result).minus(totalSupply).isPositive()) {
+        return true;
+      }
+      return false;
+    } catch (error) {
+      return false;
+    }
   }
 
   async approve() {
@@ -178,7 +196,7 @@ export default class MetamaskService {
 
       return this.sendTransaction({
         from: this.walletAddress,
-        to:config.ADDRESS,
+        to: config.ADDRESS,
         data: approveSignature,
       });
     } catch (error) {
