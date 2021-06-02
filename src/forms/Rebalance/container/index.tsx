@@ -4,6 +4,7 @@ import { withFormik } from 'formik';
 import Rebalance, { IRebalance } from '../component';
 import { observer } from 'mobx-react-lite';
 import { indexesApi } from '../../../services/api';
+import { useHistory } from 'react-router-dom';
 
 interface RebalanceFormProps {
   name: string;
@@ -11,6 +12,7 @@ interface RebalanceFormProps {
 }
 
 const RebalanceForm: React.FC<RebalanceFormProps> = ({ name, tokens }) => {
+  const history = useHistory();
   const FormWithFormik = withFormik<any, IRebalance>({
     enableReinitialize: true,
     mapPropsToValues: () => ({
@@ -51,6 +53,16 @@ const RebalanceForm: React.FC<RebalanceFormProps> = ({ name, tokens }) => {
         .putIndexesRebalance(2, newData)
         .then(({ data }) => {
           console.log('put rebalance success', data);
+          indexesApi
+            .launchRebalance(2)
+            .then((response) => {
+              console.log('launch rebalance success', response);
+            })
+            .catch((err) => {
+              const { response } = err;
+              console.log('launch rebalance error', response);
+              history.push('/admin');
+            });
         })
         .catch((err) => {
           const { response } = err;
