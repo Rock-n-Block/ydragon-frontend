@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-axios.defaults.baseURL = 'http://dev-ydragon.rocknblock.io/api/';
+axios.defaults.baseURL = 'https://dev-ydragon.rocknblock.io/api/';
 
 export const axiosWithToken = axios.create({
   headers: {
