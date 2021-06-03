@@ -32,7 +32,7 @@ export default class MetamaskService {
 
   public web3Provider;
 
-  public contract: any;
+  // public contract: any;
 
   private testnet: string;
 
@@ -58,7 +58,7 @@ export default class MetamaskService {
     this.web3Provider = new Web3(window.ethereum);
     this.testnet = testnet;
     this.isProduction = isProduction;
-    this.contract = new this.web3Provider.eth.Contract(config.ABI as Array<any>, config.ADDRESS);
+    // this.contract = new this.web3Provider.eth.Contract(config.ABI as Array<any>, config.ADDRESS);
 
     this.usedNetwork = this.isProduction ? 'mainnet' : this.testnet;
     this.usedChain = this.isProduction ? networks.mainnet : networks[this.testnet];
@@ -90,6 +90,10 @@ export default class MetamaskService {
 
   ethRequestAccounts() {
     return this.wallet.request({ method: 'eth_requestAccounts' });
+  }
+
+  getContract(address?: string) {
+    return new this.web3Provider.eth.Contract(config.ABI as Array<any>, address || config.ADDRESS);
   }
 
   public connect() {
@@ -146,7 +150,7 @@ export default class MetamaskService {
   }
 
   async totalSupply(tokenDecimals: number) {
-    const totalSupply = await this.contract.methods.totalSupply().call();
+    const totalSupply = await this.getContract().methods.totalSupply().call();
     return +new BigNumber(totalSupply).dividedBy(new BigNumber(10).pow(tokenDecimals)).toString(10);
   }
 
@@ -159,17 +163,17 @@ export default class MetamaskService {
   }
 
   getStartDate() {
-    return this.contract.methods.imeStartTimestamp().call();
+    return this.getContract().methods.imeStartTimestamp().call();
   }
 
   getEndDate() {
-    return this.contract.methods.imeEndTimestamp().call();
+    return this.getContract().methods.imeEndTimestamp().call();
   }
 
   async checkAllowance(spender: SpenderTypes) {
     try {
-      const result = await this.contract.methods
-        .allowance(this.walletAddress, config.SPENDER_ADDRESS[spender])
+      const result = await this.getContract(config.SPENDER_ADDRESS[spender])
+        .methods.allowance(this.walletAddress, config.ADDRESS)
         .call();
 
       if (result === '0') return false;
