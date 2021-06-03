@@ -17,7 +17,13 @@ const RebalanceForm: React.FC<RebalanceFormProps> = ({ name, tokens }) => {
     enableReinitialize: true,
     mapPropsToValues: () => ({
       index: { name: '' || name } as { name: string },
-      tokens: tokens || ([] as Array<ITokensDiff>),
+      tokens:
+        tokens.map((tokenDiff) => {
+          return {
+            ...tokenDiff,
+            new_weight: `${+tokenDiff.new_weight * 100}`,
+          };
+        }) || ([] as Array<ITokensDiff>),
       days: 30,
       hours: 30,
       steps: 30,
@@ -32,7 +38,7 @@ const RebalanceForm: React.FC<RebalanceFormProps> = ({ name, tokens }) => {
             address: tokenDiff.token.address,
           },
           id: tokenDiff.id,
-          new_weight: tokenDiff.token.current_weight,
+          new_weight: tokenDiff.token.current_weight / 100,
         };
       });
       const term = +values.days * 24 + +values.hours;
