@@ -183,8 +183,20 @@ export default class MetamaskService {
     const mintMethod = MetamaskService.getMethodInterface(config.ABI, 'mint');
     const signature = this.encodeFunctionCall(mintMethod, [
       config.SPENDER_ADDRESS[spenderToken],
-      value,
-      // MetamaskService.calcTransactionAmount(value, 18),
+      MetamaskService.calcTransactionAmount(value, 18),
+    ]);
+
+    return this.sendTransaction({
+      from: this.walletAddress,
+      to: config.ADDRESS,
+      data: signature,
+    });
+  }
+
+  redeem(value: string) {
+    const redeemMethod = MetamaskService.getMethodInterface(config.ABI, 'redeem');
+    const signature = this.encodeFunctionCall(redeemMethod, [
+      MetamaskService.calcTransactionAmount(value, 18),
     ]);
 
     return this.sendTransaction({
@@ -196,18 +208,16 @@ export default class MetamaskService {
 
   async approve(spender: SpenderTypes) {
     try {
-      const totalSupply = await this.totalSupply(18);
-
       const approveMethod = MetamaskService.getMethodInterface(config.ABI, 'approve');
 
       const approveSignature = this.encodeFunctionCall(approveMethod, [
-        config.SPENDER_ADDRESS[spender],
-        totalSupply,
+        config.ADDRESS,
+        '0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff',
       ]);
 
       return this.sendTransaction({
         from: this.walletAddress,
-        to: config.ADDRESS,
+        to: config.SPENDER_ADDRESS[spender],
         data: approveSignature,
       });
     } catch (error) {

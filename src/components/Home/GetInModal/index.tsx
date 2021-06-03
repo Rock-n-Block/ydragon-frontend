@@ -67,12 +67,12 @@ const GetInModal: React.FC = observer(() => {
       <div className="m-get-in__content">
         <h2>Get in with:</h2>
         <ul>
-          {isWBNBAllowed && (
+          {isWBNBAllowed && false && (
             <li>
               <Button onClick={() => setToken('WBNB')}>WBNB</Button>
             </li>
           )}
-          {isYDRAllowed && (
+          {isYDRAllowed && false && (
             <li>
               {' '}
               <Button onClick={() => setToken('YDR')}>YDR</Button>
@@ -86,19 +86,19 @@ const GetInModal: React.FC = observer(() => {
         </ul>
         <h2>Or approve new token</h2>
         <ul>
-          {!isWBNBAllowed && (
+          {!isWBNBAllowed && false && (
             <li>
               <Button onClick={() => handleApprove('WBNB')}>Approve WBNB</Button>
             </li>
           )}
 
-          {!isYDRAllowed && (
+          {!isYDRAllowed && false && (
             <li>
               <Button onClick={() => handleApprove('YDR')}>Approve YDR token</Button>
             </li>
           )}
 
-          {!isUSDTAllowed && (
+          {!isUSDTAllowed && false && (
             <li>
               <Button onClick={() => handleApprove('USDT')}>Approve USDT</Button>
             </li>

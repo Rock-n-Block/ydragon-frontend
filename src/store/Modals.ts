@@ -36,6 +36,18 @@ const MintModal = types
       self.isOpen = false;
     },
   }));
+const RedeemModal = types
+  .model({
+    isOpen: types.boolean,
+  })
+  .actions((self) => ({
+    open() {
+      self.isOpen = true;
+    },
+    close() {
+      self.isOpen = false;
+    },
+  }));
 const MetamaskModal = types
   .model({
     errMsg: types.optional(types.string, ''),
@@ -54,6 +66,7 @@ export const Modals = types
     rebalance: RebalanceModal,
     getIn: GetInModal,
     mint: MintModal,
+    redeem: RedeemModal,
     metamask: MetamaskModal,
   })
   .actions((self) => ({
@@ -61,6 +74,7 @@ export const Modals = types
       self.metamask.close();
       self.getIn.close();
       self.mint.close();
+      self.redeem.close();
       self.rebalance.close();
     },
   }));

@@ -11,6 +11,7 @@ import { indexesApi } from '../../services/api';
 import './Index.scss';
 import GetInModal from '../../components/Home/GetInModal';
 import MintModal from '../../components/IndexPage/MintModal';
+import RedeemModal from '../../components/IndexPage/RedeemModal';
 
 interface IIndexId {
   indexId: string;
@@ -65,6 +66,7 @@ const Index: React.FC = () => {
       {/* <About /> */}
       <GetInModal />
       <MintModal />
+      <RedeemModal />
     </main>
   );
 };

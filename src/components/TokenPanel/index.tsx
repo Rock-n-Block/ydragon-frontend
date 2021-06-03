@@ -27,7 +27,7 @@ const TokenPanel: React.FC<TokenPanelProps> = observer(({ panelContent }) => {
     modals.mint.open();
   };
   const handleRedeem = () => {
-    console.log('redeem event');
+    modals.redeem.open();
   };
   return (
     <div className="token-panel">
