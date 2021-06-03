@@ -179,16 +179,20 @@ export default class MetamaskService {
     }
   }
 
-  /*  async checkAllAllowance() {
-    const wbnbAllowance = await this.checkAllowance('WBNB');
-    console.log('wbnbAllowance', wbnbAllowance);
-    const ydtAllowance = await this.checkAllowance('YDT');
-    console.log('ydtAllowance', ydtAllowance);
-    const usdtAllowance = await this.checkAllowance('USDT');
-    console.log('usdtAllowance', usdtAllowance);
-    if (wbnbAllowance || ydtAllowance || usdtAllowance) return true;
-    return false;
-  } */
+  mint(value: string, spenderToken: SpenderTypes) {
+    const mintMethod = MetamaskService.getMethodInterface(config.ABI, 'mint');
+    const signature = this.encodeFunctionCall(mintMethod, [
+      config.SPENDER_ADDRESS[spenderToken],
+      value,
+      // MetamaskService.calcTransactionAmount(value, 18),
+    ]);
+
+    return this.sendTransaction({
+      from: this.walletAddress,
+      to: config.ADDRESS,
+      data: signature,
+    });
+  }
 
   async approve(spender: SpenderTypes) {
     try {

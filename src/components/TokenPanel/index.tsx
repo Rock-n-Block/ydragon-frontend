@@ -6,6 +6,7 @@ import { Button } from '../index';
 import './TokenPanel.scss';
 import { observer } from 'mobx-react-lite';
 import { useMst } from '../../store/store';
+// import { useWalletConnectorContext } from '../../services/walletConnect';
 
 interface TokenPanelProps {
   panelContent: Array<IPanelContent>;
@@ -16,13 +17,14 @@ interface IPanelContent {
 }
 
 const TokenPanel: React.FC<TokenPanelProps> = observer(({ panelContent }) => {
+  // const walletConnector = useWalletConnectorContext();
   const { user, modals } = useMst();
   const isTokenPicked = !!user.token;
   const handleGetIn = () => {
     modals.getIn.open();
   };
   const handleMint = () => {
-    console.log('mint event');
+    modals.mint.open();
   };
   const handleRedeem = () => {
     console.log('redeem event');

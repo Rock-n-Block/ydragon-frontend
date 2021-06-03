@@ -21,12 +21,7 @@ export default {
       anonymous: false,
       inputs: [
         { indexed: false, internalType: 'uint256', name: 'totalWeight', type: 'uint256' },
-        {
-          indexed: false,
-          internalType: 'uint256',
-          name: 'totalAssetMintFromIme',
-          type: 'uint256',
-        },
+        { indexed: false, internalType: 'uint256', name: 'totalAssetMintFromIme', type: 'uint256' },
       ],
       name: 'ImeProceeded',
       type: 'event',

@@ -10,6 +10,7 @@ import { indexesApi } from '../../services/api';
 
 import './Index.scss';
 import GetInModal from '../../components/Home/GetInModal';
+import MintModal from '../../components/IndexPage/MintModal';
 
 interface IIndexId {
   indexId: string;
@@ -63,6 +64,7 @@ const Index: React.FC = () => {
       <IndexTable tokens={indexData?.tokens} />
       {/* <About /> */}
       <GetInModal />
+      <MintModal />
     </main>
   );
 };

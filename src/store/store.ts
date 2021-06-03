@@ -14,6 +14,7 @@ export const Store = RootModel.create({
     metamask: {},
     rebalance: { isOpen: false },
     getIn: { isOpen: false },
+    mint: { isOpen: false },
   },
   user: {
     address: '',
