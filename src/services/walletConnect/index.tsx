@@ -29,61 +29,70 @@ class Connector extends React.Component<any, any> {
 
   componentDidMount() {
     const self = this;
-    if (localStorage.yd_metamsk) {
-      this.connect();
-    }
-    this.state.provider.chainChangedObs.subscribe({
-      next(err: string) {
-        rootStore.modals.metamask.setErr(err);
-      },
-    });
+    if (window.ethereum) {
+      if (localStorage.yd_metamask) {
+        this.connect();
+      }
+      this.state.provider.chainChangedObs.subscribe({
+        next(err: string) {
+          rootStore.modals.metamask.setErr(err);
+        },
+      });
 
-    this.state.provider.accountChangedObs.subscribe({
-      next() {
-        self.disconnect();
-      },
-    });
+      this.state.provider.accountChangedObs.subscribe({
+        next() {
+          self.disconnect();
+        },
+      });
+    }
   }
 
   connect = async () => {
-    try {
-      const { address } = await this.state.provider.connect();
+    if (window.ethereum) {
+      try {
+        const { address } = await this.state.provider.connect();
 
-      if (!localStorage.yd_token) {
-        const metMsg: any = await accountsApi.getMsg();
+        if (!localStorage.yd_token) {
+          const metMsg: any = await accountsApi.getMsg();
 
-        const signedMsg = await this.state.provider.signMsg(metMsg.data);
+          const signedMsg = await this.state.provider.signMsg(metMsg.data);
 
-        const login: any = await accountsApi.login({
-          address,
-          msg: metMsg.data,
-          signed_msg: signedMsg,
-        });
+          const login: any = await accountsApi.login({
+            address,
+            msg: metMsg.data,
+            signed_msg: signedMsg,
+          });
 
-        localStorage.yd_token = login.data.key;
-        rootStore.user.setAddress(address);
-        localStorage.yd_metamask = true;
-      } else {
-        rootStore.user.setAddress(address);
-        localStorage.yd_metamask = true;
-      }
-    } catch (err) {
-      const { response } = err;
-      if (response) {
-        if (response.status === 400 && response.data.result[0] === 'user is not admin') {
-          localStorage.yd_isAdmin = false;
-          const { address } = await this.state.provider.connect();
+          localStorage.yd_token = login.data.key;
           rootStore.user.setAddress(address);
           localStorage.yd_metamask = true;
+          // rootStore.user.update({ address });
+        } else {
+          rootStore.user.setAddress(address);
+          localStorage.yd_metamask = true;
+          // rootStore.user.update({ address });
+        }
+      } catch (err) {
+        const { response } = err;
+        if (response) {
+          if (response.status === 400 && response.data.result[0] === 'user is not admin') {
+            localStorage.yd_isAdmin = false;
+            const { address } = await this.state.provider.connect();
+            rootStore.user.setAddress(address);
+            localStorage.yd_metamask = true;
+            rootStore.user.update({ address });
+          } else {
+            rootStore.modals.metamask.setErr(err.message);
+            this.disconnect();
+          }
         } else {
           rootStore.modals.metamask.setErr(err.message);
           this.disconnect();
         }
-      } else {
-        rootStore.modals.metamask.setErr(err.message);
-        this.disconnect();
+        console.log(response);
       }
-      console.log(response);
+    } else {
+      rootStore.modals.metamask.setErr('No Metamask (or other Web3 Provider) installed');
     }
   };
 

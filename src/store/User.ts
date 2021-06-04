@@ -19,6 +19,7 @@ export const User = types
       self.address = '';
       delete localStorage.yd_token;
       delete localStorage.yd_metamask;
+      // delete localStorage.yd_address;
     };
     return {
       setAddress,

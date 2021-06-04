@@ -52,8 +52,6 @@ export default class MetamaskService {
 
   constructor({ testnet, isProduction = false }: IMetamaskService) {
     this.wallet = window.ethereum;
-    this.web3Provider = new Web3('https://data-seed-prebsc-1-s1.binance.org:8545');
-    window.ethereum.enable();
 
     this.web3Provider = new Web3(window.ethereum);
     this.testnet = testnet;
