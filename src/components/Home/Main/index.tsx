@@ -1,16 +1,12 @@
 import React from 'react';
 
-import { GradientText } from '../../index';
-
 import './Main.scss';
 
 const Main: React.FC = () => {
   return (
     <section className="section home">
       <div className="home__title-wrapper">
-        <h1 className="home__title">
-          <GradientText width="998" height="108" text="YDRAGON" />
-        </h1>
+        <h1 className="home__title text-outline">YDRAGON</h1>
         <span className="home__sub-title">DeFi made simple</span>
       </div>
 

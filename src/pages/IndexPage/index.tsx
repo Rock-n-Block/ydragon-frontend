@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import moment from 'moment';
 
 import logo from '../../assets/img/icons/logo.svg';
-import { GradientText, TokenPanel } from '../../components';
+import { TokenPanel } from '../../components';
 import { IndexTable, RebalanceHistory } from '../../components/IndexPage';
 import { IToken } from '../../components/IndexPage/IndexTable';
 import { indexesApi } from '../../services/api';
@@ -45,9 +45,7 @@ const Index: React.FC = () => {
         </div>
 
         <div className="page__title-wrapper">
-          <h1 className="page__title">
-            <GradientText width="434" height="38" text={`${indexData?.name}`} />
-          </h1>
+          <h1 className="page__title text-outline">{indexData?.name}</h1>
         </div>
       </div>
 

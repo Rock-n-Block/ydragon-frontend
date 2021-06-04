@@ -2,7 +2,7 @@ import React from 'react';
 import { observer } from 'mobx-react-lite';
 
 import { useMst } from '../../../store/store';
-import { Button, GradientText } from '../../index';
+import { Button } from '../../index';
 
 import './Rebalance.scss';
 import { IIndexStatus, ITokensDiff } from '../../../pages/Admin';
@@ -20,9 +20,7 @@ const Rebalance: React.FC<RebalanceProps> = observer(({ status, tokens }) => {
   };
   return (
     <section className="section section--admin">
-      <h2 className="section__title">
-        <GradientText width="648" height="38" text="Index rebalance" />
-      </h2>
+      <h2 className="section__title text-outline">Index rebalance</h2>
 
       <div className="rebalance-table">
         <div className="rebalance-table__row rebalance-table__row--head">
@@ -38,8 +36,8 @@ const Rebalance: React.FC<RebalanceProps> = observer(({ status, tokens }) => {
         </div>
 
         <div className="rebalance-table__content">
-          {tokens&&(
-            tokens?.map((tokenDiff:ITokensDiff)=>(
+          {tokens &&
+            tokens?.map((tokenDiff: ITokensDiff) => (
               <div className="rebalance-table__row">
                 <div className="rebalance-table__col rebalance-table__first-col">
                   <img
@@ -68,8 +66,7 @@ const Rebalance: React.FC<RebalanceProps> = observer(({ status, tokens }) => {
                   <div className="rebalance-table__price">${tokenDiff.token.price_total}</div>
                 </div>
               </div>
-            ))
-          )}
+            ))}
 
           <div className="rebalance-table__btn-row">
             <Button onClick={handleRebalanceOpen} disabled={rebalanceInProgress}>

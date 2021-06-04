@@ -12,11 +12,10 @@
   }
 
   &__title {
-    @include gradient-title;
     font-size: 48px;
     line-height: 58px;
+    margin-bottom: 40px;
 
-    background: none; //in firefox style work for svg text
   }
   &__content{
     padding: 40px 50px 40px 30px;

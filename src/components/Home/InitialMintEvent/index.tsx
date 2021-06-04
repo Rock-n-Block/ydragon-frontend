@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './InitialMintEvent.scss';
-import { Button, GradientText } from '../../index';
+import { Button } from '../../index';
 import moment from 'moment';
 import { useWalletConnectorContext } from '../../../services/walletConnect';
 import BigNumber from 'bignumber.js/bignumber';
@@ -47,9 +47,7 @@ const InitialMintEvent: React.FC = observer(() => {
   return (
     <section className="section initial-mint-event">
       <div className="initial-mint-event__title-wrapper">
-        <h2 className="initial-mint-event__title">
-          <GradientText width="766" height="58" text="INITIAL MINT EVENT" />
-        </h2>
+        <h2 className="initial-mint-event__title text-outline">INITIAL MINT EVENT</h2>
       </div>
       <div className="initial-mint-event__content">
         <p className="initial-mint-event__description">

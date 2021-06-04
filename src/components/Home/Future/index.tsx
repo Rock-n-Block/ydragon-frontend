@@ -13,7 +13,6 @@ import slide7 from '../../../assets/img/partners/logo-7.png';
 import slide8 from '../../../assets/img/partners/logo-8.png';
 import slide9 from '../../../assets/img/partners/logo-9.png';
 import slide10 from '../../../assets/img/partners/logo-10.png';
-import { GradientText } from '../../index';
 
 import 'swiper/swiper.scss';
 import './Future.scss';
@@ -34,9 +33,7 @@ const Future: React.FC = () => {
 
   return (
     <section className="section future">
-      <h2 className="section__title">
-        <GradientText width="716" height="38" text="The Future of DeFi" />
-      </h2>
+      <h2 className="section__title text-outline">The Future of DeFi</h2>
       <span className="section__sub-title">with YDragon</span>
 
       <div className="section__text-row">

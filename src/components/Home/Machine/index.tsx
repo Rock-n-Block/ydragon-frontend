@@ -5,16 +5,13 @@ import icon2 from '../../../assets/img/featuring/icon-2.svg';
 import icon3 from '../../../assets/img/featuring/icon-3.svg';
 import icon4 from '../../../assets/img/featuring/icon-4.svg';
 import image from '../../../assets/img/machine.svg';
-import { GradientText } from '../../index';
 
 import './Machine.scss';
 
 const Machine: React.FC = () => {
   return (
     <section className="section machine">
-      <h2 className="section__title">
-        <GradientText width="672" height="38" text="YDragon Machine" />
-      </h2>
+      <h2 className="section__title text-outline">YDragon Machine</h2>
       <span className="section__sub-title">Our core platform product</span>
 
       <div className="section__text-row">

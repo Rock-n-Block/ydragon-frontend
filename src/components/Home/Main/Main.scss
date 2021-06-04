@@ -18,11 +18,9 @@
   }
 
   &__title {
-    @include gradient-title;
     font-size: 144px;
     line-height: 173px;
 
-    background: none; //in firefox style work for svg text
   }
 
   &__sub-title {

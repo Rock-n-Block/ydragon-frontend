@@ -1,7 +1,7 @@
 import React from 'react';
 
 import logo from '../../assets/img/icons/logo.svg';
-import { GradientText, TokenPanel } from '../../components';
+import { TokenPanel } from '../../components';
 
 const YdrToken: React.FC = () => {
   const panelInfo = [
@@ -19,9 +19,7 @@ const YdrToken: React.FC = () => {
         </div>
 
         <div className="page__title-wrapper">
-          <h1 className="page__title">
-            <GradientText width="402" height="38" text="YDR token" />
-          </h1>
+          <h1 className="page__title text-outline">YDR token</h1>
           <span className="page__title-label">Set creator</span>
         </div>
       </div>

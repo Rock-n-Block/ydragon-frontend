@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Button, GradientText, TokenItem } from '../../index';
+import { Button, TokenItem } from '../../index';
 
 import './Composition.scss';
 import BigNumber from 'bignumber.js/bignumber';
@@ -14,7 +14,7 @@ interface CompositionProps extends IIndexStatus {
 }
 
 const Composition: React.FC<CompositionProps> = observer(({ status, tokens }) => {
-  const {modals}=useMst();
+  const { modals } = useMst();
   const rebalanceInProgress = status === 'PROCESSING';
   const handleRebalanceOpen = () => {
     modals.rebalance.open();
@@ -22,9 +22,7 @@ const Composition: React.FC<CompositionProps> = observer(({ status, tokens }) =>
 
   return (
     <section className="section section--admin">
-      <h2 className="section__title">
-        <GradientText width="190" height="38" text="head" />
-      </h2>
+      <h2 className="section__title text-outline">head</h2>
 
       <div className="composition">
         <div className="composition__title">Index composition</div>
@@ -45,7 +43,9 @@ const Composition: React.FC<CompositionProps> = observer(({ status, tokens }) =>
 
         <Button
           styledType="filled"
-          className="composition__change-btn" onClick={handleRebalanceOpen} disabled={rebalanceInProgress}
+          className="composition__change-btn"
+          onClick={handleRebalanceOpen}
+          disabled={rebalanceInProgress}
         >
           Change index
         </Button>
