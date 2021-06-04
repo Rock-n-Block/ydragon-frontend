@@ -25,13 +25,20 @@ const MintModal: React.FC = observer(() => {
   const handleClose = (): void => {
     modals.mint.close();
   };
+  const handleGetInOpen = (): void => {
+    handleClose();
+    modals.getIn.open();
+  };
   return (
     <Modal isVisible={modals.mint.isOpen} className="m-mint" handleCancel={handleClose}>
       <div className="m-mint__content">
-        <h2>Enter amount to mint</h2>
+        <h2>Enter amount of {user.token} to mint</h2>
         <div>
           <Input value={value} onChange={handleInputChange} />
           <Button onClick={handleSubmitMint}>Submit</Button>
+        </div>
+        <div role="button" onClick={handleGetInOpen} onKeyDown={handleGetInOpen} tabIndex={0}>
+          Or change token
         </div>
       </div>
     </Modal>

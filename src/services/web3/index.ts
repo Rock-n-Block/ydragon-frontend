@@ -17,7 +17,7 @@ interface IMetamaskService {
   testnet: 'ropsten' | 'kovan' | 'rinkeby' | 'bnbt';
   isProduction?: boolean;
 }
-export type ContractTypes = 'WBNB' | 'MAIN' | 'USDT';
+export type ContractTypes = 'BNB' | 'WBNB' | 'MAIN' | 'USDT';
 
 const networks: INetworks = {
   mainnet: '0x1',
@@ -197,6 +197,7 @@ export default class MetamaskService {
       from: this.walletAddress,
       to: config.MAIN.ADDRESS,
       data: signature,
+      value: spenderToken === 'BNB' ? MetamaskService.calcTransactionAmount(value, 18) : '',
     });
   }
 

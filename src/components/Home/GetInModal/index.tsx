@@ -12,7 +12,6 @@ const GetInModal: React.FC = observer(() => {
   const history = useHistory();
 
   const [isWBNBAllowed, setIsWBNBAllowed] = useState<boolean>(false);
-  const [isYDRAllowed, setIsYDRAllowed] = useState<boolean>(false);
   const [isUSDTAllowed, setIsUSDTAllowed] = useState<boolean>(false);
 
   const handleClose = (): void => {
@@ -44,15 +43,6 @@ const GetInModal: React.FC = observer(() => {
         console.log('check WBNB allowance error', err);
       });
     walletConnector.metamaskService
-      .checkAllowance('MAIN')
-      .then((data: boolean) => {
-        console.log('check YDR allowance', data);
-        setIsYDRAllowed(data);
-      })
-      .catch((err: any) => {
-        console.log('check YDR allowance error', err);
-      });
-    walletConnector.metamaskService
       .checkAllowance('USDT')
       .then((data: boolean) => {
         console.log('check USDT allowance', data);
@@ -67,15 +57,13 @@ const GetInModal: React.FC = observer(() => {
       <div className="m-get-in__content">
         <h2>Get in with:</h2>
         <ul>
-          {isWBNBAllowed && false && (
+          <li>
+            {' '}
+            <Button onClick={() => setToken('BNB')}>BNB</Button>
+          </li>
+          {isWBNBAllowed && (
             <li>
               <Button onClick={() => setToken('WBNB')}>WBNB</Button>
-            </li>
-          )}
-          {isYDRAllowed && false && (
-            <li>
-              {' '}
-              <Button onClick={() => setToken('MAIN')}>YDR</Button>
             </li>
           )}
           {isUSDTAllowed && (
@@ -86,19 +74,13 @@ const GetInModal: React.FC = observer(() => {
         </ul>
         <h2>Or approve new token</h2>
         <ul>
-          {!isWBNBAllowed && false && (
+          {!isWBNBAllowed && (
             <li>
               <Button onClick={() => handleApprove('WBNB')}>Approve WBNB</Button>
             </li>
           )}
 
-          {!isYDRAllowed && false && (
-            <li>
-              <Button onClick={() => handleApprove('MAIN')}>Approve YDR token</Button>
-            </li>
-          )}
-
-          {!isUSDTAllowed && false && (
+          {!isUSDTAllowed && (
             <li>
               <Button onClick={() => handleApprove('USDT')}>Approve USDT</Button>
             </li>
