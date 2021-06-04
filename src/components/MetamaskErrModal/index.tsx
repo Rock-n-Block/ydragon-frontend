@@ -9,8 +9,11 @@ import './MetamaskErrModal.scss';
 
 const MetamaskErrModal: React.FC = observer(() => {
   const { modals } = useMst();
+  const handleCancel = (): void => {
+    modals.metamask.setErr('');
+  };
   return (
-    <Modal isVisible={!!modals.metamask.errMsg} className="m-metamask">
+    <Modal isVisible={!!modals.metamask.errMsg} className="m-metamask" handleCancel={handleCancel}>
       <div className="m-metamask__content">
         <img src={MetamaskImg} alt="" className="m-metamask__img" />
         <p className="text-md">{modals.metamask.errMsg}</p>
