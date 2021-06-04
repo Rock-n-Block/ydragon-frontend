@@ -17,7 +17,7 @@ interface IMetamaskService {
   testnet: 'ropsten' | 'kovan' | 'rinkeby' | 'bnbt';
   isProduction?: boolean;
 }
-export type SpenderTypes = 'WBNB' | 'YDR' | 'USDT';
+export type ContractTypes = 'WBNB' | 'MAIN' | 'USDT';
 
 const networks: INetworks = {
   mainnet: '0x1',
@@ -92,8 +92,11 @@ export default class MetamaskService {
     return this.wallet.request({ method: 'eth_requestAccounts' });
   }
 
-  getContract(address?: string) {
-    return new this.web3Provider.eth.Contract(config.ABI as Array<any>, address || config.ADDRESS);
+  getContract(contractName: ContractTypes) {
+    return new this.web3Provider.eth.Contract(
+      config[contractName].ABI as Array<any>,
+      config[contractName].ADDRESS,
+    );
   }
 
   public connect() {
@@ -149,8 +152,8 @@ export default class MetamaskService {
     return this.web3Provider.eth.abi.encodeFunctionCall(abi, data);
   }
 
-  async totalSupply(tokenDecimals: number) {
-    const totalSupply = await this.getContract().methods.totalSupply().call();
+  async totalSupply(contractName: ContractTypes, tokenDecimals: number) {
+    const totalSupply = await this.getContract(contractName).methods.totalSupply().call();
     return +new BigNumber(totalSupply).dividedBy(new BigNumber(10).pow(tokenDecimals)).toString(10);
   }
 
@@ -163,17 +166,17 @@ export default class MetamaskService {
   }
 
   getStartDate() {
-    return this.getContract().methods.imeStartTimestamp().call();
+    return this.getContract('MAIN').methods.imeStartTimestamp().call();
   }
 
   getEndDate() {
-    return this.getContract().methods.imeEndTimestamp().call();
+    return this.getContract('MAIN').methods.imeEndTimestamp().call();
   }
 
-  async checkAllowance(spender: SpenderTypes) {
+  async checkAllowance(spender: ContractTypes) {
     try {
-      const result = await this.getContract(config.SPENDER_ADDRESS[spender])
-        .methods.allowance(this.walletAddress, config.ADDRESS)
+      const result = await this.getContract(spender)
+        .methods.allowance(this.walletAddress, config.MAIN.ADDRESS)
         .call();
 
       if (result === '0') return false;
@@ -183,45 +186,45 @@ export default class MetamaskService {
     }
   }
 
-  mint(value: string, spenderToken: SpenderTypes) {
-    const mintMethod = MetamaskService.getMethodInterface(config.ABI, 'mint');
+  mint(value: string, spenderToken: ContractTypes) {
+    const mintMethod = MetamaskService.getMethodInterface(config.MAIN.ABI, 'mint');
     const signature = this.encodeFunctionCall(mintMethod, [
-      config.SPENDER_ADDRESS[spenderToken],
+      config[spenderToken].ADDRESS,
       MetamaskService.calcTransactionAmount(value, 18),
     ]);
 
     return this.sendTransaction({
       from: this.walletAddress,
-      to: config.ADDRESS,
+      to: config.MAIN.ADDRESS,
       data: signature,
     });
   }
 
   redeem(value: string) {
-    const redeemMethod = MetamaskService.getMethodInterface(config.ABI, 'redeem');
+    const redeemMethod = MetamaskService.getMethodInterface(config.MAIN.ABI, 'redeem');
     const signature = this.encodeFunctionCall(redeemMethod, [
       MetamaskService.calcTransactionAmount(value, 18),
     ]);
 
     return this.sendTransaction({
       from: this.walletAddress,
-      to: config.ADDRESS,
+      to: config.MAIN.ADDRESS,
       data: signature,
     });
   }
 
-  async approve(spender: SpenderTypes) {
+  async approve(spender: ContractTypes) {
     try {
-      const approveMethod = MetamaskService.getMethodInterface(config.ABI, 'approve');
+      const approveMethod = MetamaskService.getMethodInterface(config[spender].ABI, 'approve');
 
       const approveSignature = this.encodeFunctionCall(approveMethod, [
-        config.ADDRESS,
+        config[spender].ADDRESS,
         '0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff',
       ]);
 
       return this.sendTransaction({
         from: this.walletAddress,
-        to: config.SPENDER_ADDRESS[spender],
+        to: config[spender].ADDRESS,
         data: approveSignature,
       });
     } catch (error) {

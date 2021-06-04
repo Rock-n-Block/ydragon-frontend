@@ -3,7 +3,7 @@ import { Button, Modal } from '../../index';
 import { observer } from 'mobx-react-lite';
 import { useMst } from '../../../store/store';
 import { useWalletConnectorContext } from '../../../services/walletConnect';
-import { SpenderTypes } from '../../../services/web3';
+import { ContractTypes } from '../../../services/web3';
 import { useHistory } from 'react-router-dom';
 
 const GetInModal: React.FC = observer(() => {
@@ -18,12 +18,12 @@ const GetInModal: React.FC = observer(() => {
   const handleClose = (): void => {
     modals.getIn.close();
   };
-  const setToken = (spender: SpenderTypes) => {
+  const setToken = (spender: ContractTypes) => {
     user.setToken(spender);
     handleClose();
     history.push('/index/2');
   };
-  const handleApprove = (spender: SpenderTypes) => {
+  const handleApprove = (spender: ContractTypes) => {
     walletConnector.metamaskService
       .approve(spender)
       .then((data: any) => {
@@ -44,7 +44,7 @@ const GetInModal: React.FC = observer(() => {
         console.log('check WBNB allowance error', err);
       });
     walletConnector.metamaskService
-      .checkAllowance('YDR')
+      .checkAllowance('MAIN')
       .then((data: boolean) => {
         console.log('check YDR allowance', data);
         setIsYDRAllowed(data);
@@ -75,7 +75,7 @@ const GetInModal: React.FC = observer(() => {
           {isYDRAllowed && false && (
             <li>
               {' '}
-              <Button onClick={() => setToken('YDR')}>YDR</Button>
+              <Button onClick={() => setToken('MAIN')}>YDR</Button>
             </li>
           )}
           {isUSDTAllowed && (
@@ -94,7 +94,7 @@ const GetInModal: React.FC = observer(() => {
 
           {!isYDRAllowed && false && (
             <li>
-              <Button onClick={() => handleApprove('YDR')}>Approve YDR token</Button>
+              <Button onClick={() => handleApprove('MAIN')}>Approve YDR token</Button>
             </li>
           )}
 
