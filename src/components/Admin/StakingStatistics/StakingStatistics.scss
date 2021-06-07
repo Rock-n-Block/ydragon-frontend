@@ -1,0 +1,95 @@
+@import '../../../styles/_variables.scss';
+@import '../../../styles/_mixins.scss';
+
+.staking-statistics {
+  &__btn-row {
+    margin-top: 20px;
+
+    display: flex;
+  }
+
+  &__btn {
+    & + & {
+      margin-left: 20px;
+    }
+  }
+}
+
+.staking-statistics-table {
+  margin-top: 30px;
+
+  &__row {
+    padding: 20px 10px;
+
+    display: grid;
+    align-items: center;
+    grid-template-columns: 220px 60px 100px repeat(4, 1fr);
+    grid-column-gap: 20px;
+
+    & + & {
+      border-top: 1px solid rgba($black, 0.1);
+    }
+
+    &--head {
+      margin-bottom: 10px;
+      padding: 0 30px;
+
+      align-items: end;
+
+      font-family: 'MER', sans-serif;
+      font-size: 12px;
+      line-height: 14px;
+
+      color: rgba($black, 0.5);
+    }
+  }
+
+  &__content {
+    @include shadow-block;
+    padding: 0 20px;
+  }
+
+  &__token {
+    display: flex;
+    align-items: center;
+
+    font-size: 18px;
+    line-height: 21px;
+
+    color: $black;
+
+    &::before {
+      content: '';
+
+      margin-right: 10px;
+
+      width: 31px;
+      height: 31px;
+
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 31 31'%3E%3Cpath fill='%238594BE' d='M31 15.5C31 24.06 24.06 31 15.5 31 6.94 31 0 24.06 0 15.5 0 6.94 6.94 0 15.5 0 24.06 0 31 6.94 31 15.5z'/%3E%3Cpath fill='%23fff' d='M15.309 8.611l-.097.328v9.529l.097.096 4.423-2.614-4.423-7.339z'/%3E%3Cpath fill='%23fff' d='M15.31 8.611l-4.424 7.339 4.423 2.614V8.611zM15.31 19.835l-.055.067v3.394l.054.159 4.426-6.233-4.426 2.613z'/%3E%3Cpath fill='%23fff' d='M15.309 23.455v-3.62l-4.423-2.613 4.423 6.233z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+  }
+
+  &__time {
+    @include gradient-text;
+    font-size: 18px;
+    line-height: 22px;
+  }
+
+  &__date {
+    font-size: 18px;
+    line-height: 21px;
+
+    color: $black;
+  }
+
+  &__value {
+    font-family: 'MER', sans-serif;
+    font-size: 18px;
+    line-height: 22px;
+
+    color: $black;
+  }
+}

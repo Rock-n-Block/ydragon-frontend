@@ -1,0 +1,14 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="18"
+  height="18"
+  fill="none"
+  viewBox="0 0 18 18"
+>
+  <path
+    fill="#fff"
+    fill-rule="evenodd"
+    d="M18 9A9 9 0 110 9a9 9 0 0118 0zM4.293 13.707a1 1 0 010-1.414L7.586 9 4.293 5.707a1 1 0 011.414-1.414L9 7.586l3.293-3.293a1 1 0 111.414 1.414L10.414 9l3.293 3.293a1 1 0 01-1.414 1.414L9 10.414l-3.293 3.293a1 1 0 01-1.414 0z"
+    clip-rule="evenodd"
+  />
+</svg>

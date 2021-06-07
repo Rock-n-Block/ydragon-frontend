@@ -1,0 +1,148 @@
+body {
+  margin: 0;
+
+  font-family: 'TNR', sans-serif;
+}
+
+img {
+  vertical-align: top;
+}
+
+h1,
+h2,
+h3,
+h4,
+p {
+  margin: 0;
+}
+
+.page-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  min-height: 100vh;
+
+  background-color: $main-bg;
+  background-image: url('../assets/img/main-bg.svg');
+  background-repeat: no-repeat;
+  background-position: top 36px center;
+  background-blend-mode: overlay;
+
+  &--home {
+    background-image: url('../assets/img/home-bg.png'), url('../assets/img/home-bg-bottom.png');
+    background-position: top center, bottom 670px center;
+    background-size: contain;
+    background-blend-mode: unset;
+  }
+}
+
+main {
+  flex: 1 1 auto;
+}
+
+.container {
+  margin: 0 auto;
+  padding: 0 20px;
+
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 1240px;
+}
+
+.section {
+  $this: &;
+  position: relative;
+
+  & + & {
+    margin-top: 220px;
+  }
+
+  &--admin {
+    & + & {
+      margin-top: 80px;
+    }
+  }
+
+  &__title-row {
+    display: flex;
+    align-items: center;
+
+    #{$this}__sub-title {
+      margin-left: 40px;
+    }
+  }
+
+  &__title {
+    @include gradient-title;
+    font-size: 48px;
+    line-height: 58px;
+
+    background: none; //in firefox style work for svg text
+  }
+
+  &__sub-title {
+    @include title-text;
+  }
+
+  &__text-row {
+    margin-top: 50px;
+
+    display: flex;
+  }
+
+  &__text {
+    max-width: 420px;
+
+    @include normal-text;
+
+    & + & {
+      margin-left: 20px;
+    }
+  }
+}
+
+.page {
+  &__title-row {
+    display: flex;
+    align-items: center;
+  }
+
+  &__title-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 64px;
+    height: 64px;
+
+    border-radius: 50% !important;
+
+    &--index {
+      @include shadow-block;
+    }
+
+    &--ydr {
+      background-color: #191c34;
+    }
+  }
+
+  &__title-wrapper {
+    margin-left: 20px;
+  }
+
+  &__title {
+    @include gradient-title;
+    font-size: 48px;
+    line-height: 58px;
+
+    background: none; //in firefox style work for svg text
+  }
+
+  &__title-label {
+    font-size: 16px;
+    line-height: 19px;
+
+    color: $black;
+  }
+}

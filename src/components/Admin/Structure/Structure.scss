@@ -1,0 +1,118 @@
+@import '../../../styles/_variables.scss';
+@import '../../../styles/_mixins.scss';
+
+.structure {
+  @include shadow-block;
+  margin-top: 30px;
+  padding: 40px;
+
+  &__title {
+    font-family: 'MER', sans-serif;
+    font-size: 20px;
+    line-height: 24px;
+
+    color: $black;
+  }
+
+  &__content {
+    margin-top: 30px;
+  }
+
+  &__btn-row {
+    margin-top: 40px;
+
+    display: flex;
+    justify-content: center;
+  }
+}
+
+.structure-item {
+  position: relative;
+  z-index: 1;
+
+  padding: 16px;
+
+  display: flex;
+  align-items: center;
+
+  box-sizing: border-box;
+
+  background-color: $gray-bg;
+  border-radius: 40px;
+
+  & + & {
+    margin-top: 20px;
+  }
+
+  &__info {
+    display: flex;
+    align-items: center;
+
+    width: 190px;
+  }
+
+  &__icon {
+    width: 36px;
+    height: 36px;
+
+    background: $gradient;
+    border-radius: 50%;
+  }
+
+  &__name {
+    margin-left: 10px;
+
+    font-family: 'TNB', sans-serif;
+    font-size: 18px;
+    line-height: 21px;
+
+    color: $black;
+  }
+
+  &__value {
+    position: relative;
+
+    margin-left: 20px;
+    padding: 0 30px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    box-sizing: border-box;
+
+    width: 410px;
+    height: 53px;
+
+    font-family: 'TNB', sans-serif;
+    font-size: 20px;
+    line-height: 24px;
+
+    background: linear-gradient(180deg, #5381ff 0%, #1944b9 100%);
+    border-radius: 60px;
+
+    &::before {
+      content: '';
+
+      position: absolute;
+      top: 0;
+      right: 0;
+      left: 0;
+      bottom: 0;
+
+      padding: 3px;
+
+      background: $white;
+      background-clip: content-box;
+      border-radius: 60px;
+    }
+
+    span {
+      position: relative;
+    }
+  }
+
+  &__pause {
+    margin-left: auto;
+  }
+}

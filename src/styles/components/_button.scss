@@ -1,0 +1,112 @@
+.btn {
+  height: auto;
+
+  border: none;
+  box-shadow: none;
+
+  &-white {
+    background-color: $white;
+  }
+
+  &-gray {
+    background-color: $gray-bg;
+  }
+
+  &-nav {
+    padding: 0 15px;
+
+    min-width: 120px;
+    height: 100%;
+
+    font-size: 16px;
+    line-height: 20px;
+
+    border-radius: 8px;
+
+    span {
+      background: $gradient;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+  }
+
+  &-filled {
+    padding: 20px 40px;
+
+    box-sizing: border-box;
+
+    font-family: 'MEB';
+    font-size: 15px;
+    line-height: 16px;
+    text-align: center;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+
+    color: $white;
+    background: $gradient;
+
+    border-radius: 40px;
+
+    &:hover,
+    &:focus {
+      color: $white;
+      background: $gradient;
+    }
+  }
+
+  &-outline {
+    padding: 10px 20px;
+
+    font-family: 'TNB', sans-serif;
+    font-size: 16px;
+    line-height: 20px;
+
+    border-radius: 40px;
+  }
+}
+
+.btn-outline {
+  border-radius: 40px;
+
+  &-sm {
+    padding: 1px;
+
+    .btn {
+      padding: 9px 19px;
+    }
+  }
+
+  &-md {
+    padding: 2px;
+
+    .btn {
+      padding: 8px 18px;
+    }
+  }
+
+  &-lg {
+    padding: 3px;
+
+    .btn {
+      padding: 7px 17px;
+    }
+  }
+
+  &-orange {
+    background: $gradient;
+
+    span {
+      background: $gradient;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+  }
+
+  &-green {
+    background: linear-gradient(180deg, #26cc90 0%, #29cd92 100%);
+
+    span {
+      color: #27cd91;
+    }
+  }
+}

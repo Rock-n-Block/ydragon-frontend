@@ -1,0 +1,30 @@
+@import '../../../styles/_variables.scss';
+@import '../../../styles/_mixins.scss';
+
+.composition {
+  @include shadow-block;
+  margin-top: 30px;
+  padding: 40px;
+
+  &__title {
+    @include gradient-text;
+    font-size: 20px;
+    line-height: 24px;
+  }
+
+  &__content {
+    margin-top: 30px;
+
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-column-gap: 20px;
+    grid-row-gap: 25px;
+  }
+
+  &__btns-row {
+    margin-top: 40px;
+
+    display: flex;
+    justify-content: space-between;
+  }
+}

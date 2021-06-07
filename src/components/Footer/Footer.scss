@@ -1,0 +1,36 @@
+@import '../../styles/_variables.scss';
+
+.footer {
+  margin-top: 240px;
+  padding: 60px 0;
+
+  background-color: $footer-bg;
+
+  &__content {
+    display: flex;
+
+    font-size: 16px;
+    line-height: 19px;
+  }
+
+  &__copyright {
+    width: calc(100% / 3);
+  }
+
+  &__links {
+    display: flex;
+    justify-content: center;
+
+    width: calc(100% / 3);
+
+    a {
+      text-decoration: none;
+
+      color: $black;
+
+      & + a {
+        margin-left: 20px;
+      }
+    }
+  }
+}
