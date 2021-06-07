@@ -22,18 +22,6 @@
   }
 }
 
-@mixin gradient-title {
-  font-family: 'MEB';
-  letter-spacing: 0.075em;
-  text-transform: uppercase;
-
-  color: $white;
-  background: $gradient;
-  background-clip: text;
-  -webkit-text-stroke: 4px transparent;
-  mix-blend-mode: darken;
-}
-
 @mixin gradient-text {
   font-family: 'MER';
   letter-spacing: 0.1em;

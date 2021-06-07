@@ -1,0 +1,23 @@
+.text{
+  &-outline{
+    /* Prefix required. Even Firefox only supports the -webkit- prefix */
+    -webkit-text-fill-color: transparent; /* Will override color (regardless of order) */
+    -webkit-text-stroke-width: 2px;
+    -webkit-text-stroke-color: $orange-l;
+    text-transform: uppercase;
+    font-family: 'MEB';
+    letter-spacing: 0.035em;
+  }
+  &-gradient{
+    font-family: 'MER';
+    letter-spacing: 0.1em;
+
+    background: $gradient;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    &::selection {
+      -webkit-text-fill-color: $white;
+    }
+  }
+}

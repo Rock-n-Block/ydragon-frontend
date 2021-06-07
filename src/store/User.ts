@@ -3,33 +3,28 @@ import { applySnapshot, types } from 'mobx-state-tree';
 export const User = types
   .model({
     address: types.string,
+    token: types.string,
   })
   .actions((self) => {
     const setAddress = (addr: string) => {
       self.address = addr;
+    };
+    const setToken = (token: string) => {
+      self.token = token;
     };
     const update = (userData: any) => {
       applySnapshot(self, userData);
     };
     const disconnect = () => {
       self.address = '';
-      delete localStorage.dds_token;
-      delete localStorage.dds_metamask;
+      delete localStorage.yd_token;
+      delete localStorage.yd_metamask;
+      // delete localStorage.yd_address;
     };
-    /*  const getMe = flow(function* getMe() {
-    try {
-      const { data } = yield userApi.getMe();
-
-      update(data);
-    } catch (err) {
-      console.log(err);
-      disconnect();
-    }
-  }); */
     return {
       setAddress,
+      setToken,
       update,
       disconnect,
-      // getMe,
     };
   });

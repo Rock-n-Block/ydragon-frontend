@@ -1,16 +1,14 @@
 import React from 'react';
 
 import btc from '../../../assets/img/tokens/btc.svg';
-import { Button, GradientText, Input } from '../../index';
+import { Button, Input } from '../../index';
 
 import './Stake.scss';
 
 const Stake: React.FC = () => {
   return (
     <section className="section section--admin">
-      <h2 className="section__title">
-        <GradientText width="652" height="38" text="Stake" />
-      </h2>
+      <h2 className="section__title text-outline">Stake</h2>
 
       <div className="stake">
         <div className="stake__title">Available to stake</div>
@@ -60,7 +58,7 @@ const Stake: React.FC = () => {
           <div className="stake-amount__title">Amount to stake</div>
 
           <div className="stake-amount__input-wrapper">
-            <Input val="0.0" />
+            <Input value="0.0" />
             <span className="stake-amount__all">All Available</span>
           </div>
 

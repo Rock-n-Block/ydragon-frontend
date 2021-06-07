@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Button, GradientText } from '../../index';
+import { Button } from '../../index';
 
 import './Indexs.scss';
 
@@ -8,9 +8,7 @@ const Indexs: React.FC = () => {
   return (
     <section className="section section--admin">
       <div className="section__title-row">
-        <h2 className="section__title">
-          <GradientText width="256" height="38" text="Indexs" />
-        </h2>
+        <h2 className="section__title text-outline">Indexes</h2>
 
         <Button className="index-create-btn">create new index</Button>
       </div>

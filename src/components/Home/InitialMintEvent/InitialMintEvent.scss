@@ -1,88 +1,89 @@
 @import '../../../styles/variables';
 @import '../../../styles/mixins';
 
-.initial-mint-event {
-  &__content {
-    margin-top: 40px;
-    padding: 40px 50px 40px 30px;
+.initial-mint-event{
 
+  &__title-wrapper {
+    position: relative;
+
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__title {
+    font-size: 48px;
+    line-height: 58px;
+    margin-bottom: 40px;
+
+  }
+  &__content{
+    padding: 40px 50px 40px 30px;
+    width: 100%;
     display: flex;
     justify-content: space-between;
 
-    background: linear-gradient(355.19deg, #fff 0%, #dde1f0 100%);
-    border-radius: 32px;
+    background: linear-gradient(355.19deg, #FFFFFF 0%, #DDE1F0 100%);
     box-shadow: -8px 8px 36px rgba(203, 209, 230, 0.3);
+    border-radius: 32px;
   }
-
-  &__description {
+  &__description{
     max-width: 340px;
+    width: 100%;
+    font-size: 16px;
+    line-height: 24px;
 
-    @include normal-text;
+    letter-spacing: 0.035em;
+    font-feature-settings: 'liga' off;
   }
-
-  &__timings {
+  &__timings{
     display: flex;
     flex-direction: column;
+    gap:12px;
   }
-
-  &__timing {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-
+  &__timing{
     font-family: 'MEB';
+    text-transform: uppercase;
     font-size: 14px;
     line-height: 17px;
-    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap:20px;
   }
-
-  &__unit {
-    margin: 12px 0;
-
+  &__unit{
     display: flex;
     justify-content: flex-end;
-
+    gap: 62px;
     font-size: 18px;
     line-height: 22px;
     letter-spacing: 0.035em;
-  }
-
-  &__unit-item {
-    width: 80px;
-
-    text-align: center;
-
-    & + & {
-      margin-left: 52px;
+    span{
+      width: 77px;
+      text-align: center;
     }
   }
-
-  &__timer {
-    margin-left: 20px;
-
+  &__timer{
     display: flex;
+    gap:25px;
+    span{
+      text-align: center;
+      font-size: 44px;
+      line-height: 53px;
+      font-family: MER;
 
-    font-family: 'MER', sans-serif;
-    font-size: 44px;
-    line-height: 53px;
-    text-align: center;
+      font-feature-settings: 'liga' off;
+    }
+    &-time{
+      width: 77px;
+    }
+    &-colon{
+      width: 12px;
+    }
   }
-
-  &__timer-time {
-    width: 80px;
-  }
-
-  &__timer-colon {
-    margin: 0 20px;
-
-    width: 12px;
-  }
-
-  &__get-btn {
-    margin-top: 20px;
+  &__get-btn{
+    max-width: 463px;
     margin-left: auto;
-
-    width: 100%;
-    max-width: 460px;
+    margin-top: 22px;
   }
 }

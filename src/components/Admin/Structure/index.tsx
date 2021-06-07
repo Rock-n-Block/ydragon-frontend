@@ -1,15 +1,13 @@
 import React from 'react';
 
-import { Button, GradientText } from '../../index';
+import { Button } from '../../index';
 
 import './Structure.scss';
 
 const Structure: React.FC = () => {
   return (
     <section className="section section--admin">
-      <h2 className="section__title">
-        <GradientText width="652" height="38" text="Vault Structure" />
-      </h2>
+      <h2 className="section__title text-outline">Vault Structure</h2>
 
       <div className="structure">
         <div className="structure__title">index 1</div>

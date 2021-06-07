@@ -1,15 +1,13 @@
 import React from 'react';
 
-import { Button, GradientText } from '../../index';
+import { Button } from '../../index';
 
 import './StakingStatistics.scss';
 
 const StakingStatistics: React.FC = () => {
   return (
     <section className="section section--admin staking-statistics">
-      <h2 className="section__title">
-        <GradientText width="720" height="38" text="Staking Statistics" />
-      </h2>
+      <h2 className="section__title text-outline">Staking Statistics</h2>
 
       <div className="staking-statistics__btn-row">
         <Button className="staking-statistics__btn">Harvest</Button>

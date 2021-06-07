@@ -1,9 +1,10 @@
 .btn {
   height: auto;
+  width: 100%;
 
   border: none;
   box-shadow: none;
-
+  font-feature-settings: 'liga' off;
   &-white {
     background-color: $white;
   }
@@ -63,6 +64,16 @@
 
     border-radius: 40px;
   }
+  &-clear{
+    color: #000316;
+    font-size: 16px;
+    line-height: 19px;
+    span {
+      background: unset;
+      background-clip: unset;
+      -webkit-text-fill-color: unset;
+    }
+  }
 }
 
 .btn-outline {
@@ -109,4 +120,7 @@
       color: #27cd91;
     }
   }
+}
+.ant-btn-text{
+  color:black;
 }

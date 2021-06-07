@@ -29,26 +29,47 @@ const Header: React.FC = observer(() => {
             {user.address ? (
               <ul className="header-nav">
                 <li className="header-nav__item">
-                  <Link to="/ydrtoken" className="header-nav__btn">
+                  <Button
+                    link="/ydrtoken"
+                    linkClassName="header-nav__btn"
+                    styledType="nav"
+                    background="gray"
+                  >
                     Buy YDR
-                  </Link>
+                  </Button>
                 </li>
                 {localStorage.yd_token ? (
                   <li className="header-nav__item">
-                    <Link to="/admin" className="header-nav__btn">
+                    <Button
+                      link="/admin"
+                      linkClassName="header-nav__link"
+                      type="text"
+                      styledType="clear"
+                    >
                       Admin Panel
-                    </Link>
+                    </Button>
                   </li>
                 ) : (
                   <></>
                 )}
-                <li className="header-nav__item">
-                  <Link to="/index/1" className="header-nav__link">
+                <li className="header-nav__item ">
+                  <Button
+                    link="/index/2"
+                    linkClassName="header-nav__link"
+                    type="text"
+                    styledType="clear"
+                  >
                     Index
-                  </Link>
+                  </Button>
                 </li>
                 <li className="header-nav__item">
-                  <Button className="header-nav__link" onClick={handleLogOut}>
+                  <Button
+                    link="/index/1"
+                    linkClassName="header-nav__link"
+                    type="text"
+                    styledType="clear"
+                    onClick={handleLogOut}
+                  >
                     Log Out
                   </Button>
                 </li>
@@ -56,7 +77,12 @@ const Header: React.FC = observer(() => {
             ) : (
               <ul className="header-nav">
                 <li className="header-nav__item">
-                  <Button link="/auth" linkClassName="header-nav__btn" styledType="nav">
+                  <Button
+                    link="/auth"
+                    linkClassName="header-nav__btn"
+                    styledType="nav"
+                    background="gray"
+                  >
                     Connect wallet
                   </Button>
                 </li>

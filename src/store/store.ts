@@ -13,9 +13,13 @@ export const Store = RootModel.create({
   modals: {
     metamask: {},
     rebalance: { isOpen: false },
+    getIn: { isOpen: false },
+    mint: { isOpen: false },
+    redeem: { isOpen: false },
   },
   user: {
     address: '',
+    token: '',
   },
 });
 

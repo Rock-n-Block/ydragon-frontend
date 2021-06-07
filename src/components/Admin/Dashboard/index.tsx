@@ -1,16 +1,13 @@
 import React from 'react';
 
 import logo from '../../../assets/img/icons/logo.svg';
-import { GradientText } from '../../index';
 
 import './Dashboard.scss';
 
 const Dashboard: React.FC = () => {
   return (
     <section className="section section--admin">
-      <h2 className="section__title">
-        <GradientText width="652" height="38" text="Index" />
-      </h2>
+      <h2 className="section__title text-outline">Index</h2>
 
       <div className="index-dashboard">
         <div className="index-dashboard__row index-dashboard__row--head">

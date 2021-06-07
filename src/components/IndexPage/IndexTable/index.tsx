@@ -5,12 +5,15 @@ import './IndexTable.scss';
 
 export interface IToken {
   address: string;
-  count: number;
+  count: string;
   current_weight: number;
   decimal: number;
   id: number;
+  image: string;
   name: string;
-  price: number;
+  price_for_one: number;
+  price_total: number;
+  symbol: string;
   unit_weight: number;
 }
 interface IndexTableProps {
@@ -36,27 +39,28 @@ const IndexTable: React.FC<IndexTableProps> = ({ tokens }) => {
         {tokens ? (
           tokens.map((token) => (
             <div className="index-table__row" key={`token-${token.id}`}>
-              <div className="index-table__col">
+              <div className="index-table__col index-table__first-col">
+                <img src={token.image} className="index-table__image" alt={`${token.name} logo`} />
                 <div className="index-table__token">{token.name}</div>
               </div>
               <div className="index-table__col">
-                <div className="index-table__quantity">{token.count}</div>
+                <div className="index-table__quantity">
+                  {new BigNumber(token.count)
+                    .multipliedBy(new BigNumber(10).pow(-token.decimal))
+                    .toFixed(2)}
+                </div>
               </div>
               <div className="index-table__col">
                 {/* TODO: add data from backend */}
-                <div className="index-table__price">${token.price}</div>
-              </div>
-              <div className="index-table__col">
-                <div className="index-table__price">{token.current_weight}%</div>
+                <div className="index-table__price">${token.price_for_one}</div>
               </div>
               <div className="index-table__col">
                 <div className="index-table__price">
-                  $
-                  {new BigNumber(token.price)
-                    .multipliedBy(token.current_weight)
-                    .dividedBy(100)
-                    .toFixed(2)}
+                  {new BigNumber(token.current_weight).multipliedBy(100).toFixed(2)}%
                 </div>
+              </div>
+              <div className="index-table__col">
+                <div className="index-table__price">${token.price_total}</div>
               </div>
             </div>
           ))
