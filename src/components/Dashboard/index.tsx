@@ -97,28 +97,28 @@ const Dashboard: React.FC = () => {
                     className='index-dashboard__token-color'
                     style={{ backgroundColor: '#F7931E' }}
                   />
-                    <span className='index-dashboard__token-name'>{index.tokens?index.tokens[0].name:''}</span>
+                    <span className='index-dashboard__token-name'>{index.tokens?index.tokens[0].symbol:''}</span>
                   </div>
                   {index.tokens&&index.tokens?.length>=2&&(<div className='index-dashboard__token'>
                   <span
                     className='index-dashboard__token-color'
                     style={{ backgroundColor: '#2754CD' }}
                   />
-                    <span className='index-dashboard__token-name'>{index.tokens[1].name}</span>
+                    <span className='index-dashboard__token-name'>{index.tokens[1].symbol}</span>
                   </div>)}
                   {index.tokens&&index.tokens?.length>=3&&(<div className='index-dashboard__token'>
                   <span
                     className='index-dashboard__token-color'
                     style={{ backgroundColor: '#D53038' }}
                   />
-                    <span className='index-dashboard__token-name'>{index.tokens[2].name}</span>
+                    <span className='index-dashboard__token-name'>{index.tokens[2].symbol}</span>
                   </div>)}
                   {index.tokens&&index.tokens?.length===4&&(<div className='index-dashboard__token'>
                   <span
                     className='index-dashboard__token-color'
                     style={{ backgroundColor: '#000316' }}
                   />
-                    <span className='index-dashboard__token-name'>{index.tokens[3].name}</span>
+                    <span className='index-dashboard__token-name'>{index.tokens[3].symbol}</span>
                   </div>)}
                   {index.tokens&&index.tokens?.length>4&&(<div className='index-dashboard__token'>
                   <span
