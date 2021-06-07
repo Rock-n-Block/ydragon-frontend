@@ -3,6 +3,7 @@
 
 .index-create-btn {
   margin-left: auto;
+  max-width: 292px;
   padding: 10px !important;
 
   span {
@@ -88,17 +89,22 @@
     @include shadow-block;
     padding: 0 20px;
 
-    font-size: 18px;
-    line-height: 21px;
+    font-size: 20px;
+    line-height: 23px;
 
     color: $black;
   }
 
   &__price {
     font-family: 'MER', sans-serif;
-    font-size: 18px;
-    line-height: 22px;
+    font-size: 16px;
+    line-height: 19px;
+    letter-spacing: 0.1em;
 
+    color: $black;
+  }
+
+  &__name{
     color: $black;
   }
 }

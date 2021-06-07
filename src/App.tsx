@@ -5,6 +5,8 @@ import { Footer, Header, MetamaskErrModal } from './components';
 import { Admin, Auth, Home, Index, IndexDashboard, StakePage, YdrToken } from './pages';
 
 import './styles/index.scss';
+import { Indexes } from './components/Admin';
+import AdminIndex from './pages/AdminIndex';
 
 export const App: React.FC = () => {
   const match = useRouteMatch();
@@ -44,6 +46,12 @@ export const App: React.FC = () => {
         </Route>
         <Route exact path="/admin">
           <Admin />
+        </Route>
+        <Route exact path="/admin">
+          <Indexes />
+        </Route>
+        <Route exact path="/admin/index/:indexId">
+          <AdminIndex/>
         </Route>
         <Route exact path="/stake">
           <StakePage />
