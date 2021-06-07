@@ -12,6 +12,8 @@ import './Index.scss';
 import GetInModal from '../../components/Home/GetInModal';
 import MintModal from '../../components/IndexPage/MintModal';
 import RedeemModal from '../../components/IndexPage/RedeemModal';
+import { observer } from 'mobx-react-lite';
+import { useMst } from '../../store/store';
 
 interface IIndexId {
   indexId: string;
@@ -24,8 +26,9 @@ export interface IIndex {
   rebalance_date?: Date | string;
 }
 
-const Index: React.FC = () => {
+const Index: React.FC = observer(() => {
   const { indexId } = useParams<IIndexId>();
+  const { modals } = useMst();
   const [indexData, setIndexData] = useState<IIndex | undefined>();
 
   const getCurrentIndex = useCallback(() => {
@@ -34,6 +37,12 @@ const Index: React.FC = () => {
       console.log('getIndexes', data);
     });
   }, [indexId]);
+  const handleMint = () => {
+    modals.mint.open();
+  };
+  const handleRedeem = () => {
+    modals.redeem.open();
+  };
   useEffect(() => {
     getCurrentIndex();
   }, [getCurrentIndex]);
@@ -58,6 +67,8 @@ const Index: React.FC = () => {
               .toString(),
           },
         ]}
+        handleBuy={handleMint}
+        handleSell={handleRedeem}
       />
       <RebalanceHistory lastRebalance={indexData?.rebalance_date} />
       <IndexTable tokens={indexData?.tokens} />
@@ -67,6 +78,6 @@ const Index: React.FC = () => {
       <RedeemModal />
     </main>
   );
-};
+});
 
 export default Index;

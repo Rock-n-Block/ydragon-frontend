@@ -2,6 +2,7 @@ import BigNumber from 'bignumber.js/bignumber';
 import { Observable } from 'rxjs';
 import Web3 from 'web3';
 import config from './config';
+import moment from 'moment';
 
 declare global {
   interface Window {
@@ -17,7 +18,8 @@ interface IMetamaskService {
   testnet: 'ropsten' | 'kovan' | 'rinkeby' | 'bnbt';
   isProduction?: boolean;
 }
-export type ContractTypes = 'BNB' | 'WBNB' | 'MAIN' | 'USDT';
+
+export type ContractTypes = 'BNB' | 'WBNB' | 'MAIN' | 'USDT' | 'YDR';
 
 const networks: INetworks = {
   mainnet: '0x1',
@@ -199,10 +201,11 @@ export default class MetamaskService {
     });
   }
 
-  redeem(value: string) {
+  redeem(value: string, spenderToken: ContractTypes) {
     const redeemMethod = MetamaskService.getMethodInterface(config.MAIN.ABI, 'redeem');
     const signature = this.encodeFunctionCall(redeemMethod, [
       MetamaskService.calcTransactionAmount(value, 18),
+      config[spenderToken].ADDRESS,
     ]);
 
     return this.sendTransaction({
@@ -217,7 +220,7 @@ export default class MetamaskService {
       const approveMethod = MetamaskService.getMethodInterface(config[spender].ABI, 'approve');
 
       const approveSignature = this.encodeFunctionCall(approveMethod, [
-        config[spender].ADDRESS,
+        config.MAIN.ADDRESS,
         '0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff',
       ]);
 
@@ -229,6 +232,45 @@ export default class MetamaskService {
     } catch (error) {
       return error;
     }
+  }
+
+  buyYDRToken(value: string, spenderToken: ContractTypes, address?: string) {
+    let methodName: '' | 'swapExactETHForTokens' | 'swapExactTokensForTokens';
+    switch (spenderToken) {
+      case 'BNB': {
+        methodName = 'swapExactETHForTokens';
+        break;
+      }
+      case 'WBNB': {
+        methodName = 'swapExactTokensForTokens';
+        break;
+      }
+      case 'USDT': {
+        methodName = 'swapExactETHForTokens';
+        break;
+      }
+      default: {
+        methodName = '';
+        break;
+      }
+    }
+    const buyMethod = MetamaskService.getMethodInterface(config.YDR.ABI, methodName);
+    const signature = this.encodeFunctionCall(buyMethod, [
+      spenderToken !== 'BNB' ? MetamaskService.calcTransactionAmount(value, 18) : '',
+      0,
+      address
+        ? [address, config.MAIN.ADDRESS, config.YDR.ADDRESS]
+        : [config.MAIN.ADDRESS, config.YDR.ADDRESS],
+      this.walletAddress,
+      moment().add(30, 'minutes').format('X'),
+    ]);
+
+    return this.sendTransaction({
+      from: this.walletAddress,
+      to: config.YDR.ADDRESS,
+      data: signature,
+      value: spenderToken === 'BNB' ? MetamaskService.calcTransactionAmount(value, 18) : '',
+    });
   }
 
   sendTransaction(transactionConfig: any) {

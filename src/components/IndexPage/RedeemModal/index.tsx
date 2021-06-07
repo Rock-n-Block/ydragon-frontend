@@ -6,14 +6,14 @@ import { useWalletConnectorContext } from '../../../services/walletConnect';
 
 const RedeemModal: React.FC = observer(() => {
   const walletConnector = useWalletConnectorContext();
-  const { modals } = useMst();
+  const { user, modals } = useMst();
   const [value, setValue] = useState<string>('');
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setValue(e.target.value);
   };
   const handleSubmitRedeem = () => {
     walletConnector.metamaskService
-      .redeem(value)
+      .redeem(value, user.token)
       .then((data: any) => {
         console.log('redeem', data);
       })

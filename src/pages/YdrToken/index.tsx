@@ -2,14 +2,20 @@ import React from 'react';
 
 import logo from '../../assets/img/icons/logo.svg';
 import { TokenPanel } from '../../components';
+// import { useWalletConnectorContext } from '../../services/walletConnect';
 
 const YdrToken: React.FC = () => {
+  //  const walletConnector = useWalletConnectorContext();
   const panelInfo = [
     {
       label: 'Price',
       value: '$255',
     },
   ];
+  const handleBuy = () => {
+    // walletConnector.metamaskService.buyYDRToken().then().catch();
+  };
+  const handleSell = () => {};
 
   return (
     <main className="container page">
@@ -24,7 +30,7 @@ const YdrToken: React.FC = () => {
         </div>
       </div>
 
-      <TokenPanel panelContent={panelInfo} />
+      <TokenPanel panelContent={panelInfo} handleBuy={handleBuy} handleSell={handleSell} />
     </main>
   );
 };
