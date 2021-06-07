@@ -5,6 +5,7 @@ import Rebalance, { IRebalance } from '../component';
 import { observer } from 'mobx-react-lite';
 import { indexesApi } from '../../../services/api';
 import { useHistory } from 'react-router-dom';
+import BigNumber from 'bignumber.js/bignumber';
 
 interface RebalanceFormProps {
   name: string;
@@ -21,7 +22,7 @@ const RebalanceForm: React.FC<RebalanceFormProps> = ({ name, tokens }) => {
         tokens.map((tokenDiff) => {
           return {
             ...tokenDiff,
-            new_weight: `${+tokenDiff.new_weight * 100}`,
+            new_weight: `${new BigNumber(tokenDiff.new_weight).multipliedBy(100).toNumber()}`,
           };
         }) || ([] as Array<ITokensDiff>),
       days: 30,
