@@ -56,7 +56,7 @@ export const App: React.FC = () => {
         <Route exact path="/stake">
           <StakePage />
         </Route>
-        <Route exact path="/dashboard">
+        <Route exact path="/indexes">
           <IndexDashboard />
         </Route>
       </Switch>
