@@ -7,8 +7,10 @@
     border-radius: 16px;
     box-shadow: $shadow;
   }
+
   &-close {
     top: 30px;
+
     display: flex;
     justify-content: center;
     align-items: center;
@@ -26,6 +28,7 @@
     &-x {
       width: 18px;
       height: 18px;
+
       line-height: unset;
     }
   }

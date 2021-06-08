@@ -5,6 +5,7 @@
   @include shadow-block;
   margin-top: 60px;
   padding: 40px;
+
   display: flex;
   flex-direction: column;
 
@@ -23,8 +24,9 @@
     grid-row-gap: 25px;
   }
 
-  &__change-btn{
-    max-width: 280px;
+  &__change-btn {
     margin: 40px auto 0;
+
+    max-width: 280px;
   }
 }

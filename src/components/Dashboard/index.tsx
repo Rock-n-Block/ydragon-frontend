@@ -1,13 +1,13 @@
 import React, { useCallback, useEffect, useState } from 'react';
+import nextId from 'react-id-generator';
+import { Link } from 'react-router-dom';
+import BigNumber from 'bignumber.js/bignumber';
 
 import logo from '../../assets/img/icons/logo.svg';
+import { IIndex } from '../../pages/Admin';
+import { indexesApi } from '../../services/api';
 
 import './Dashboard.scss';
-import { IIndex } from '../../pages/Admin';
-import { Link } from 'react-router-dom';
-import { indexesApi } from '../../services/api';
-import nextId from 'react-id-generator';
-import BigNumber from 'bignumber.js/bignumber';
 
 interface IUserIndex extends IIndex {
   day: number;

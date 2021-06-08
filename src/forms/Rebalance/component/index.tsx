@@ -1,9 +1,10 @@
 import React from 'react';
-import { Form, FieldArray, FormikProps } from 'formik';
-import { Button, Input } from '../../../components';
-import { observer } from 'mobx-react-lite';
-import { ITokensDiff } from '../../../pages/Admin';
 import nextId from 'react-id-generator';
+import { FieldArray, Form, FormikProps } from 'formik';
+import { observer } from 'mobx-react-lite';
+
+import { Button, Input } from '../../../components';
+import { ITokensDiff } from '../../../pages/Admin';
 
 export interface IRebalance {
   index: { name: string };

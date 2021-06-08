@@ -1,11 +1,12 @@
 import React from 'react';
-import { ITokensDiff } from '../../../pages/Admin';
-import { withFormik } from 'formik';
-import Rebalance, { IRebalance } from '../component';
-import { observer } from 'mobx-react-lite';
-import { indexesApi } from '../../../services/api';
 import { useHistory } from 'react-router-dom';
 import BigNumber from 'bignumber.js/bignumber';
+import { withFormik } from 'formik';
+import { observer } from 'mobx-react-lite';
+
+import { ITokensDiff } from '../../../pages/Admin';
+import { indexesApi } from '../../../services/api';
+import Rebalance, { IRebalance } from '../component';
 
 interface RebalanceFormProps {
   name: string;

@@ -36,24 +36,24 @@
   }
 
   &__token {
-
     font-size: 18px;
     line-height: 21px;
 
     color: $black;
-
   }
-  &__first-col{
+
+  &__first-col {
     display: flex;
     align-items: center;
   }
-  &__image{
 
+  &__image {
     margin-right: 10px;
 
     width: 31px;
     height: 31px;
   }
+
   &__quantity {
     @include gradient-text;
     font-size: 16px;

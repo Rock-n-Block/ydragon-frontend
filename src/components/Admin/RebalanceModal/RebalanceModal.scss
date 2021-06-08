@@ -1,35 +1,44 @@
 @import '../../../styles/_variables.scss';
 @import '../../../styles/_mixins.scss';
+
 .m-rebalance {
   &__content {
     padding: 30px;
   }
 }
-.rebalance{
-  &__total{
+
+.rebalance {
+  &__total {
     padding: 20px 16px;
+
     display: grid;
-    grid-template-columns: repeat(3,1fr);
+    grid-template-columns: repeat(3, 1fr);
     grid-gap: 15px;
+
     align-items: center;
-    &-name{
-      font-family: "MER", sans-serif;
+
+    &-name {
+      font-family: 'MER', sans-serif;
       font-size: 12px;
       line-height: 14px;
-      color: rgba(0, 3, 22,0.5);
+
+      color: rgba(0, 3, 22, 0.5);
       justify-self: flex-end;
     }
-    .input-border{
+
+    .input-border {
       display: flex;
       justify-content: center;
       align-items: center;
-      .input{
+
+      .input {
         display: flex;
         justify-content: center;
         align-items: center;
       }
     }
   }
+
   &-modal {
     position: relative;
 
@@ -46,11 +55,13 @@
 
       display: flex;
       justify-content: center;
-      .btn{
+
+      .btn {
         max-width: 285px;
       }
     }
   }
+
   &-items {
     margin-top: 20px;
 
@@ -66,15 +77,16 @@
       text-align: center;
 
       color: rgba($black, 0.4);
-      grid-template-columns: repeat(3,1fr);
+      grid-template-columns: repeat(3, 1fr);
       grid-column-gap: 15px;
     }
   }
+
   &-item {
     padding: 16px;
 
     display: grid;
-    grid-template-columns: repeat(3,1fr);
+    grid-template-columns: repeat(3, 1fr);
     grid-column-gap: 15px;
 
     align-items: center;
@@ -119,6 +131,7 @@
       width: fit-content;
     }
   }
+
   &-add-token {
     margin-top: 30px;
     padding: 20px 16px 20px 62px;
@@ -162,10 +175,13 @@
       }
     }
   }
-  &-options{
+
+  &-options {
+    margin-top: 20px;
+
     display: flex;
-    margin-top:20px;
     gap: 30px;
+
     &-row {
       padding: 30px 0;
 
@@ -179,11 +195,13 @@
       color: $black;
       border-top: 1px solid rgba($black, 0.1);
       border-bottom: 1px solid rgba($black, 0.1);
+
       &__title {
-        font-family: "MER", sans-serif;
+        font-family: 'MER', sans-serif;
       }
     }
   }
+
   &-option {
     display: flex;
     flex-direction: column;
@@ -195,4 +213,3 @@
     }
   }
 }
-

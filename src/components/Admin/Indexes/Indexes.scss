@@ -3,8 +3,9 @@
 
 .index-create-btn {
   margin-left: auto;
-  max-width: 292px;
   padding: 10px !important;
+
+  max-width: 292px;
 
   span {
     line-height: 26px;
@@ -104,7 +105,7 @@
     color: $black;
   }
 
-  &__name{
+  &__name {
     color: $black;
   }
 }

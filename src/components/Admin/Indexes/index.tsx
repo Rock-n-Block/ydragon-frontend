@@ -1,13 +1,13 @@
 import React, { useCallback, useEffect, useState } from 'react';
-
-import { Button } from '../../index';
+import nextId from 'react-id-generator';
 import { Link } from 'react-router-dom';
+import moment from 'moment';
+
+import { IIndex } from '../../../pages/Admin';
+import { indexesApi } from '../../../services/api';
+import { Button } from '../../index';
 
 import './Indexes.scss';
-import { indexesApi } from '../../../services/api';
-import { IIndex } from '../../../pages/Admin';
-import nextId from 'react-id-generator';
-import moment from 'moment';
 
 const Indexes: React.FC = () => {
   const [indexes, setIndexes] = useState<Array<IIndex>>();

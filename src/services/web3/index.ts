@@ -1,8 +1,9 @@
 import BigNumber from 'bignumber.js/bignumber';
+import moment from 'moment';
 import { Observable } from 'rxjs';
 import Web3 from 'web3';
+
 import config from './config';
-import moment from 'moment';
 
 declare global {
   interface Window {

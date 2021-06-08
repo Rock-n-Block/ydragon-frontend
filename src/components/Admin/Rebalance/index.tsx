@@ -1,12 +1,12 @@
 import React from 'react';
+import BigNumber from 'bignumber.js/bignumber';
 import { observer } from 'mobx-react-lite';
 
+import { IIndexStatus, ITokensDiff } from '../../../pages/Admin';
 import { useMst } from '../../../store/store';
 import { Button } from '../../index';
 
 import './Rebalance.scss';
-import { IIndexStatus, ITokensDiff } from '../../../pages/Admin';
-import BigNumber from 'bignumber.js/bignumber';
 
 interface RebalanceProps extends IIndexStatus {
   tokens: Array<ITokensDiff>;

@@ -1,12 +1,12 @@
 import React from 'react';
 import { Route, Switch, useRouteMatch } from 'react-router-dom';
 
+import { Indexes } from './components/Admin';
+import AdminIndex from './pages/AdminIndex';
 import { Footer, Header, MetamaskErrModal } from './components';
 import { Admin, Auth, Home, Index, IndexDashboard, StakePage, YdrToken } from './pages';
 
 import './styles/index.scss';
-import { Indexes } from './components/Admin';
-import AdminIndex from './pages/AdminIndex';
 
 export const App: React.FC = () => {
   const match = useRouteMatch();
@@ -51,7 +51,7 @@ export const App: React.FC = () => {
           <Indexes />
         </Route>
         <Route exact path="/admin/index/:indexId">
-          <AdminIndex/>
+          <AdminIndex />
         </Route>
         <Route exact path="/stake">
           <StakePage />

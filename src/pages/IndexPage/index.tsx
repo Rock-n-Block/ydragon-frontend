@@ -1,19 +1,19 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { observer } from 'mobx-react-lite';
 import moment from 'moment';
 
 import logo from '../../assets/img/icons/logo.svg';
 import { TokenPanel } from '../../components';
+import GetInModal from '../../components/Home/GetInModal';
 import { IndexTable, RebalanceHistory } from '../../components/IndexPage';
 import { IToken } from '../../components/IndexPage/IndexTable';
-import { indexesApi } from '../../services/api';
-
-import './Index.scss';
-import GetInModal from '../../components/Home/GetInModal';
 import MintModal from '../../components/IndexPage/MintModal';
 import RedeemModal from '../../components/IndexPage/RedeemModal';
-import { observer } from 'mobx-react-lite';
+import { indexesApi } from '../../services/api';
 import { useMst } from '../../store/store';
+
+import './Index.scss';
 
 interface IIndexId {
   indexId: string;

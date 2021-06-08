@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Modal } from '../../index';
+import { useHistory } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
-import { useMst } from '../../../store/store';
+
 import { useWalletConnectorContext } from '../../../services/walletConnect';
 import { ContractTypes } from '../../../services/web3';
-import { useHistory } from 'react-router-dom';
+import { useMst } from '../../../store/store';
+import { Button, Modal } from '../../index';
 
 const GetInModal: React.FC = observer(() => {
   const { modals, user } = useMst();

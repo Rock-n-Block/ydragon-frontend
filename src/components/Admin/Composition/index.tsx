@@ -1,13 +1,13 @@
 import React from 'react';
+import nextId from 'react-id-generator';
+import BigNumber from 'bignumber.js/bignumber';
+import { observer } from 'mobx-react-lite';
 
+import { IIndexStatus, ITokensDiff } from '../../../pages/Admin';
+import { useMst } from '../../../store/store';
 import { Button, TokenItem } from '../../index';
 
 import './Composition.scss';
-import BigNumber from 'bignumber.js/bignumber';
-import { IIndexStatus, ITokensDiff } from '../../../pages/Admin';
-import nextId from 'react-id-generator';
-import { observer } from 'mobx-react-lite';
-import { useMst } from '../../../store/store';
 
 interface CompositionProps extends IIndexStatus {
   tokens: Array<ITokensDiff>;

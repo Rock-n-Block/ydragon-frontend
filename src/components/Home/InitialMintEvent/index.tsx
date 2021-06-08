@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import './InitialMintEvent.scss';
-import { Button } from '../../index';
-import moment from 'moment';
-import { useWalletConnectorContext } from '../../../services/walletConnect';
 import BigNumber from 'bignumber.js/bignumber';
 import { observer } from 'mobx-react-lite';
+import moment from 'moment';
+
+import { useWalletConnectorContext } from '../../../services/walletConnect';
 import { useMst } from '../../../store/store';
+import { Button } from '../../index';
+
+import './InitialMintEvent.scss';
 
 const InitialMintEvent: React.FC = observer(() => {
   const { modals } = useMst();

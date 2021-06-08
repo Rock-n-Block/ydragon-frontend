@@ -1,8 +1,8 @@
 import React from 'react';
+import { observer } from 'mobx-react-lite';
 
 import { Indexes } from '../../components/Admin';
 import { IToken } from '../../components/IndexPage/IndexTable';
-import { observer } from 'mobx-react-lite';
 
 export interface IIndexStatus {
   status: 'CREATED' | 'PROCESSING' | 'FINISHED ';

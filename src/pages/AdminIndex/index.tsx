@@ -1,7 +1,8 @@
 import React, { useCallback, useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+
 import { Composition, Rebalance, RebalanceModal } from '../../components/Admin';
 import { indexesApi } from '../../services/api';
-import { useParams } from 'react-router-dom';
 import { IIndex, IIndexStatus, ITokensDiff } from '../Admin';
 
 interface IIndexId {

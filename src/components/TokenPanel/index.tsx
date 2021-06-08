@@ -1,11 +1,11 @@
 import React from 'react';
 import nextId from 'react-id-generator';
+import { observer } from 'mobx-react-lite';
 
+import { useMst } from '../../store/store';
 import { Button } from '../index';
 
 import './TokenPanel.scss';
-import { observer } from 'mobx-react-lite';
-import { useMst } from '../../store/store';
 // import { useWalletConnectorContext } from '../../services/walletConnect';
 
 interface TokenPanelProps {

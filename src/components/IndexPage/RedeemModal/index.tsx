@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { Button, Input, Modal } from '../../index';
 import { observer } from 'mobx-react-lite';
-import { useMst } from '../../../store/store';
+
 import { useWalletConnectorContext } from '../../../services/walletConnect';
+import { useMst } from '../../../store/store';
+import { Button, Input, Modal } from '../../index';
 
 const RedeemModal: React.FC = observer(() => {
   const walletConnector = useWalletConnectorContext();

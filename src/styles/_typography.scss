@@ -1,14 +1,16 @@
-.text{
-  &-outline{
+.text {
+  &-outline {
+    font-family: 'MEB';
+    letter-spacing: 0.035em;
+    text-transform: uppercase;
+
     /* Prefix required. Even Firefox only supports the -webkit- prefix */
     -webkit-text-fill-color: transparent; /* Will override color (regardless of order) */
     -webkit-text-stroke-width: 2px;
     -webkit-text-stroke-color: $orange-l;
-    text-transform: uppercase;
-    font-family: 'MEB';
-    letter-spacing: 0.035em;
   }
-  &-gradient{
+
+  &-gradient {
     font-family: 'MER';
     letter-spacing: 0.1em;
 
