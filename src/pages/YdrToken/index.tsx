@@ -1,10 +1,10 @@
 import React from 'react';
+import { observer } from 'mobx-react-lite';
 
 import logo from '../../assets/img/icons/logo.svg';
 import { TokenPanel, TradeYDRModal } from '../../components';
-import { observer } from 'mobx-react-lite';
-import { useMst } from '../../store/store';
 import { GetInModal } from '../../components/Home';
+import { useMst } from '../../store/store';
 // import { useWalletConnectorContext } from '../../services/walletConnect';
 
 const YdrToken: React.FC = observer(() => {

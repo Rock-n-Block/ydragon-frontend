@@ -1,8 +1,10 @@
 import React from 'react';
-import { Modal } from '../index';
 import { observer } from 'mobx-react-lite';
-import { useMst } from '../../store/store';
+
 import Logo from '../../assets/img/icons/logo.svg';
+import { useMst } from '../../store/store';
+import { Modal } from '../index';
+
 import './TradeYDRModal.scss';
 
 const TradeYDRModal: React.FC = observer(() => {
