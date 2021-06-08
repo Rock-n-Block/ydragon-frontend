@@ -52,7 +52,7 @@ class Connector extends React.Component<any, any> {
       try {
         const { address } = await this.state.provider.connect();
 
-        if (!localStorage.yd_token) {
+        if (!localStorage.yd_address) {
           const metMsg: any = await accountsApi.getMsg();
 
           const signedMsg = await this.state.provider.signMsg(metMsg.data);
@@ -64,6 +64,7 @@ class Connector extends React.Component<any, any> {
           });
 
           localStorage.yd_token = login.data.key;
+          localStorage.yd_address = address;
           rootStore.user.setAddress(address);
           localStorage.yd_metamask = true;
           // rootStore.user.update({ address });
@@ -78,6 +79,7 @@ class Connector extends React.Component<any, any> {
           if (response.status === 400 && response.data.result[0] === 'user is not admin') {
             localStorage.yd_isAdmin = false;
             const { address } = await this.state.provider.connect();
+            localStorage.yd_address = address;
             rootStore.user.setAddress(address);
             localStorage.yd_metamask = true;
             rootStore.user.update({ address });
