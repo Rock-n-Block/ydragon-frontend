@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {Indexes} from '../../components/Admin';
+import { Indexes } from '../../components/Admin';
 import { IToken } from '../../components/IndexPage/IndexTable';
 import { observer } from 'mobx-react-lite';
 
@@ -16,17 +16,20 @@ export interface ITokensDiff {
   new_weight: string;
 }
 
-export interface IAdminIndex {
+export interface IIndex {
   id: number;
+  address: string;
   name: string;
   rebalance_date?: Date | string;
-  tokens?:Array<IToken>;
+  created_at: Date | string;
+  tokens: Array<IToken>;
+  market_cap: number;
+  price: number;
 }
-
 
 const Admin: React.FC = observer(() => {
   return (
-    <main className='container'>
+    <main className="container">
       {/* <Structure /> */}
       <Indexes />
     </main>

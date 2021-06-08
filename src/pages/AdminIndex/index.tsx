@@ -2,21 +2,20 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { Composition, Rebalance, RebalanceModal } from '../../components/Admin';
 import { indexesApi } from '../../services/api';
 import { useParams } from 'react-router-dom';
-import { IAdminIndex, IIndexStatus, ITokensDiff } from '../Admin';
-
+import { IIndex, IIndexStatus, ITokensDiff } from '../Admin';
 
 interface IIndexId {
   indexId: string;
 }
 
 interface IRebalance extends IIndexStatus {
-  index: IAdminIndex;
+  index: IIndex;
   tokens_diff: Array<ITokensDiff>;
   id: number;
   term: number;
   attempts_count: number;
 }
-const AdminIndex:React.FC=()=>{
+const AdminIndex: React.FC = () => {
   const { indexId } = useParams<IIndexId>();
   const [index, setIndex] = useState<IRebalance>({} as IRebalance);
   const getIndexComposition = useCallback(() => {
@@ -30,7 +29,7 @@ const AdminIndex:React.FC=()=>{
       .catch((err) => {
         console.log(err, 'get collections');
       });
-  },[indexId]);
+  }, [indexId]);
   useEffect(() => {
     getIndexComposition();
   }, [getIndexComposition]);
@@ -40,7 +39,7 @@ const AdminIndex:React.FC=()=>{
       <Rebalance status={index.status} tokens={index.tokens_diff} />
       <RebalanceModal name={index.index?.name} tokens={index.tokens_diff} />
     </main>
-  )
-}
+  );
+};
 
 export default AdminIndex;
