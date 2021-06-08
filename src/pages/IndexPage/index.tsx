@@ -43,6 +43,9 @@ const Index: React.FC = observer(() => {
   const handleRedeem = () => {
     modals.redeem.open();
   };
+  const handleGetIn = () => {
+    modals.getIn.open();
+  };
   useEffect(() => {
     getCurrentIndex();
   }, [getCurrentIndex]);
@@ -69,6 +72,7 @@ const Index: React.FC = observer(() => {
         ]}
         handleBuy={handleMint}
         handleSell={handleRedeem}
+        handleGetIn={handleGetIn}
       />
       <RebalanceHistory lastRebalance={indexData?.rebalance_date} />
       <IndexTable tokens={indexData?.tokens} />

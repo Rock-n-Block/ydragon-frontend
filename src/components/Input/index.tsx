@@ -1,4 +1,5 @@
 import React from 'react';
+import { Input as InputAntd } from 'antd';
 
 export interface IValue {
   value?: string | number;
@@ -10,7 +11,7 @@ export interface IValue {
 const Input: React.FC<IValue> = ({ value, name, onChange, onBlur }) => {
   return (
     <div className="input-border">
-      <input
+      <InputAntd
         name={name}
         type="text"
         value={value}

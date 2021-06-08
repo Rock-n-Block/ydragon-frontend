@@ -1,10 +1,14 @@
 import React from 'react';
 
 import logo from '../../assets/img/icons/logo.svg';
-import { TokenPanel } from '../../components';
+import { TokenPanel, TradeYDRModal } from '../../components';
+import { observer } from 'mobx-react-lite';
+import { useMst } from '../../store/store';
+import { GetInModal } from '../../components/Home';
 // import { useWalletConnectorContext } from '../../services/walletConnect';
 
-const YdrToken: React.FC = () => {
+const YdrToken: React.FC = observer(() => {
+  const { modals } = useMst();
   //  const walletConnector = useWalletConnectorContext();
   const panelInfo = [
     {
@@ -13,10 +17,16 @@ const YdrToken: React.FC = () => {
     },
   ];
   const handleBuy = () => {
+    modals.tradeYDR.open('buy');
     // walletConnector.metamaskService.buyYDRToken().then().catch();
   };
-  const handleSell = () => {};
+  const handleSell = () => {
+    modals.tradeYDR.open('sell');
+  };
 
+  const handleGetIn = () => {
+    modals.getIn.open();
+  };
   return (
     <main className="container page">
       <div className="page__title-row">
@@ -30,9 +40,16 @@ const YdrToken: React.FC = () => {
         </div>
       </div>
 
-      <TokenPanel panelContent={panelInfo} handleBuy={handleBuy} handleSell={handleSell} />
+      <TokenPanel
+        panelContent={panelInfo}
+        handleBuy={handleBuy}
+        handleSell={handleSell}
+        handleGetIn={handleGetIn}
+      />
+      <GetInModal />
+      <TradeYDRModal />
     </main>
   );
-};
+});
 
 export default YdrToken;

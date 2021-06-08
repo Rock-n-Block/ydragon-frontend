@@ -11,6 +11,7 @@ import './TokenPanel.scss';
 interface TokenPanelProps {
   panelContent: Array<IPanelContent>;
   handleBuy?: () => void;
+  handleGetIn?: () => void;
   handleSell?: () => void;
 }
 interface IPanelContent {
@@ -19,13 +20,10 @@ interface IPanelContent {
 }
 
 const TokenPanel: React.FC<TokenPanelProps> = observer(
-  ({ panelContent, handleBuy, handleSell }) => {
+  ({ panelContent, handleBuy, handleGetIn, handleSell }) => {
     // const walletConnector = useWalletConnectorContext();
-    const { user, modals } = useMst();
+    const { user } = useMst();
     const isTokenPicked = !!user.token;
-    const handleGetIn = () => {
-      modals.getIn.open();
-    };
     return (
       <div className="token-panel">
         <div className="token-panel__content">

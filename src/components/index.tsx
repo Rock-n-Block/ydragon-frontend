@@ -8,3 +8,4 @@ export { default as Dashboard } from './Dashboard';
 export { default as TokenItem } from './TokenItem';
 export { default as Modal } from './Modal';
 export { default as MetamaskErrModal } from './MetamaskErrModal';
+export { default as TradeYDRModal } from './TradeYDRModal';

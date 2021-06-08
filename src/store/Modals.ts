@@ -36,6 +36,20 @@ const MintModal = types
       self.isOpen = false;
     },
   }));
+const TradeYDRModal = types
+  .model({
+    isOpen: types.boolean,
+    method: types.string,
+  })
+  .actions((self) => ({
+    open(method: 'sell' | 'buy') {
+      self.isOpen = true;
+      self.method = method;
+    },
+    close() {
+      self.isOpen = false;
+    },
+  }));
 const RedeemModal = types
   .model({
     isOpen: types.boolean,
@@ -67,6 +81,7 @@ export const Modals = types
     getIn: GetInModal,
     mint: MintModal,
     redeem: RedeemModal,
+    tradeYDR: TradeYDRModal,
     metamask: MetamaskModal,
   })
   .actions((self) => ({
@@ -75,6 +90,7 @@ export const Modals = types
       self.getIn.close();
       self.mint.close();
       self.redeem.close();
+      self.tradeYDR.close();
       self.rebalance.close();
     },
   }));

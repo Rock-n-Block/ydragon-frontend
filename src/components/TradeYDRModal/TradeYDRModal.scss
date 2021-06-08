@@ -1,0 +1,45 @@
+@import 'src/styles/variables';
+@import 'src/styles/mixins';
+
+.m-trade-ydr {
+  &__content {
+    padding: 100px 20px 26px;
+    position: relative;
+    @include shadow-block;
+  }
+
+  &__logo {
+    position: absolute;
+    top: -42px;
+    left: 50%;
+    transform: translate(-50%, 0);
+    width: 131px;
+    height: 131px;
+    background: #191c34;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 9px solid #fff;
+    border-radius: 50%;
+
+    img {
+      width: 55px;
+      height: 100%;
+    }
+  }
+
+  &__header {
+    text-transform: uppercase;
+    font-family: 'MER', sans-serif;
+    font-size: 20px;
+    line-height: 24px;
+    color: $black;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
+    span {
+      color: $orange-l;
+    }
+  }
+}
