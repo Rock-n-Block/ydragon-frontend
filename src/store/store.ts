@@ -15,6 +15,7 @@ export const Store = RootModel.create({
     rebalance: { isOpen: false },
     getIn: { isOpen: false },
     mint: { isOpen: false },
+    info: { msg: '', title: '', type: 'info' },
     redeem: { isOpen: false },
     tradeYDR: { isOpen: false, method: 'buy' },
   },

@@ -50,6 +50,24 @@ const TradeYDRModal = types
       self.isOpen = false;
     },
   }));
+const InfoModal = types
+  .model({
+    type: types.optional(types.string, ''),
+    title: types.optional(types.string, ''),
+    msg: types.optional(types.string, ''),
+  })
+  .actions((self) => ({
+    setMsg(title: string, msg: string, type: 'success' | 'error' | 'info') {
+      self.msg = msg;
+      self.title = title;
+      self.type = type;
+    },
+    close() {
+      self.msg = '';
+      self.title = '';
+      self.type = 'info';
+    },
+  }));
 const RedeemModal = types
   .model({
     isOpen: types.boolean,
@@ -81,6 +99,7 @@ export const Modals = types
     getIn: GetInModal,
     mint: MintModal,
     redeem: RedeemModal,
+    info: InfoModal,
     tradeYDR: TradeYDRModal,
     metamask: MetamaskModal,
   })
