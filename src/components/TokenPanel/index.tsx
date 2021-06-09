@@ -36,7 +36,7 @@ const TokenPanel: React.FC<TokenPanelProps> = observer(
         </div>
 
         <div className="token-panel__btns">
-          {isTokenPicked ? (
+          {isTokenPicked || !handleGetIn ? (
             <>
               <Button className="token-panel__btn" onClick={handleBuy}>
                 buy
@@ -46,6 +46,9 @@ const TokenPanel: React.FC<TokenPanelProps> = observer(
               </Button>
             </>
           ) : (
+            <></>
+          )}
+          {!isTokenPicked && handleGetIn && (
             <Button className="token-panel__btn" onClick={handleGetIn}>
               Get in!
             </Button>

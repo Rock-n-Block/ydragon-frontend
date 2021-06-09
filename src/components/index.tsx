@@ -2,6 +2,7 @@ export { default as Header } from './Header';
 export { default as Footer } from './Footer';
 export { default as Button } from './Button';
 export { default as Input } from './Input';
+export { InputWithSelect } from './Input';
 // eslint-disable-next-line import/no-cycle
 export { default as TokenPanel } from './TokenPanel';
 export { default as Dashboard } from './Dashboard';

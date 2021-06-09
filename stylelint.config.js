@@ -2,8 +2,10 @@ module.exports = {
   extends: ['stylelint-config-standard', 'stylelint-prettier/recommended'],
   plugins: ['stylelint-order', 'stylelint-scss'],
   rules: {
+    // recommended rules
     'at-rule-no-unknown': null,
     'scss/at-rule-no-unknown': true,
+    // any other rules you'd want to change e.g.
     'color-named': 'never',
     'font-weight-notation': 'numeric',
     'no-descending-specificity': null,

@@ -3,7 +3,6 @@ import { observer } from 'mobx-react-lite';
 
 import logo from '../../assets/img/icons/logo.svg';
 import { TokenPanel, TradeYDRModal } from '../../components';
-import { GetInModal } from '../../components/Home';
 import { useMst } from '../../store/store';
 // import { useWalletConnectorContext } from '../../services/walletConnect';
 
@@ -24,9 +23,6 @@ const YdrToken: React.FC = observer(() => {
     modals.tradeYDR.open('sell');
   };
 
-  const handleGetIn = () => {
-    modals.getIn.open();
-  };
   return (
     <main className="container page">
       <div className="page__title-row">
@@ -40,13 +36,7 @@ const YdrToken: React.FC = observer(() => {
         </div>
       </div>
 
-      <TokenPanel
-        panelContent={panelInfo}
-        handleBuy={handleBuy}
-        handleSell={handleSell}
-        handleGetIn={handleGetIn}
-      />
-      <GetInModal />
+      <TokenPanel panelContent={panelInfo} handleBuy={handleBuy} handleSell={handleSell} />
       <TradeYDRModal />
     </main>
   );

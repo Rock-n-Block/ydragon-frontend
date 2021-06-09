@@ -7,6 +7,8 @@
 
     padding: 100px 20px 26px;
     @include shadow-block;
+    display: flex;
+    flex-direction: column;
   }
 
   &__logo {
@@ -37,6 +39,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-bottom: 32px;
 
     font-family: 'MER', sans-serif;
     font-size: 20px;
@@ -48,5 +51,26 @@
     span {
       color: $orange-l;
     }
+  }
+  &__field{
+    margin-bottom: 20px;
+  }
+  &__labels{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 6px;
+  }
+  &__label{
+    font-family: "MER", sans-serif;
+    font-size: 12px;
+    line-height: 14px;
+    color: rgba($black,0.5);
+  }
+  &__fee{
+    text-align: center;
+  }
+  &__btn{
+    width: unset !important;
+    margin: 26px auto 0;
   }
 }
