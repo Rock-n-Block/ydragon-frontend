@@ -71,12 +71,22 @@ const TradeYDRModal: React.FC = observer(() => {
     walletConnector.metamaskService
       .buyYDRToken(payInput, firstCurrency)
       .then((data: any) => {
-        setIsNeedApprove(false);
         console.log(`buy of ${secondCurrency} for ${firstCurrency} success`, data);
       })
       .catch((err: any) => {
         const { response } = err;
         console.log('buy error', response);
+      });
+  };
+  const handleSell = (): void => {
+    walletConnector.metamaskService
+      .sellYDRToken(payInput, firstCurrency)
+      .then((data: any) => {
+        console.log(`sell of ${firstCurrency} for ${secondCurrency} success`, data);
+      })
+      .catch((err: any) => {
+        const { response } = err;
+        console.log('sell error', response);
       });
   };
   useEffect(() => {
@@ -149,7 +159,7 @@ const TradeYDRModal: React.FC = observer(() => {
           )}
         </div>
         <p className="m-trade-ydr__label m-trade-ydr__fee">Service Fee 0.441 BNB</p>
-        {isNeedApprove && firstCurrency !== 'BNB' && (
+        {isNeedApprove && (firstCurrency !== 'BNB' || secondCurrency !== 'BNB') && (
           <Button className="m-trade-ydr__btn" onClick={handleApprove}>
             Approve
           </Button>
@@ -160,7 +170,9 @@ const TradeYDRModal: React.FC = observer(() => {
           </Button>
         )}
         {modals.tradeYDR.method === 'sell' && (!isNeedApprove || firstCurrency === 'BNB') && (
-          <Button className="m-trade-ydr__btn">Sell</Button>
+          <Button className="m-trade-ydr__btn" onClick={handleSell}>
+            Sell
+          </Button>
         )}
       </div>
     </Modal>

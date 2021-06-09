@@ -295,6 +295,50 @@ export default class MetamaskService {
     });
   }
 
+  sellYDRToken(value: string, spenderToken: ContractTypes, address?: string) {
+    let methodName: 'swapExactTokensForETH' | 'swapExactTokensForTokens';
+    let otherTokenAddress = address;
+    switch (spenderToken) {
+      case 'BNB': {
+        methodName = 'swapExactTokensForETH';
+        break;
+      }
+      case 'WBNB': {
+        methodName = 'swapExactTokensForTokens';
+        break;
+      }
+      case 'USDT': {
+        // TODO: change if user can enter address of token
+        otherTokenAddress = config.USDT.ADDRESS;
+        methodName = 'swapExactTokensForTokens';
+        break;
+      }
+      default: {
+        methodName = 'swapExactTokensForTokens';
+        break;
+      }
+    }
+
+    const buyMethod = MetamaskService.getMethodInterface(config.Router.ABI, methodName);
+
+    const signature = this.encodeFunctionCall(buyMethod, [
+      MetamaskService.calcTransactionAmount(value, 18),
+      '0x0000000000000000000000000000000000000000',
+      otherTokenAddress
+        ? [config.YDR.ADDRESS, config.WBNB.ADDRESS, otherTokenAddress]
+        : [config.YDR.ADDRESS, config.WBNB.ADDRESS],
+      this.walletAddress,
+      moment().add(30, 'minutes').format('X'),
+    ]);
+
+    return this.sendTransaction({
+      from: this.walletAddress,
+      to: config.Router.ADDRESS,
+      data: signature,
+      value: spenderToken === 'BNB' ? MetamaskService.calcTransactionAmount(value, 18) : '',
+    });
+  }
+
   sendTransaction(transactionConfig: any) {
     return this.web3Provider.eth.sendTransaction({
       ...transactionConfig,
