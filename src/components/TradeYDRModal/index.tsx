@@ -126,7 +126,11 @@ const TradeYDRModal: React.FC = observer(() => {
               type="number"
             />
           ) : (
-            <InputWithSelect value="0.0" tokens={platformToken} />
+            <InputWithSelect
+              value={payInput}
+              onChange={(event) => setPayInput(event.target.value)}
+              tokens={platformToken}
+            />
           )}
         </div>
         <div className="m-trade-ydr__field">
@@ -145,17 +149,17 @@ const TradeYDRModal: React.FC = observer(() => {
           )}
         </div>
         <p className="m-trade-ydr__label m-trade-ydr__fee">Service Fee 0.441 BNB</p>
-        {isNeedApprove && (
+        {isNeedApprove && firstCurrency !== 'BNB' && (
           <Button className="m-trade-ydr__btn" onClick={handleApprove}>
             Approve
           </Button>
         )}
-        {modals.tradeYDR.method === 'buy' && !isNeedApprove && (
+        {modals.tradeYDR.method === 'buy' && (!isNeedApprove || firstCurrency === 'BNB') && (
           <Button className="m-trade-ydr__btn" onClick={handleBuy}>
             Buy
           </Button>
         )}
-        {modals.tradeYDR.method === 'sell' && !isNeedApprove && (
+        {modals.tradeYDR.method === 'sell' && (!isNeedApprove || firstCurrency === 'BNB') && (
           <Button className="m-trade-ydr__btn">Sell</Button>
         )}
       </div>
