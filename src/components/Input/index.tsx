@@ -3,23 +3,25 @@ import { Input as InputAntd, Select } from 'antd';
 import { ITokenMini } from '../../utils/tokenMini';
 import { ReactComponent as ArrowDown } from '../../assets/img/icons/icon-arrow-down.svg';
 import Icon from '@ant-design/icons';
+import nextId from 'react-id-generator';
 
 const { Option } = Select;
 
 export interface IValue {
   value?: string | number;
   name?: string;
+  type?: 'text' | 'number';
   placeholder?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onBlur?: React.FocusEventHandler<HTMLInputElement>;
 }
 
-const Input: React.FC<IValue> = ({ value, name, placeholder, onChange, onBlur }) => {
+const Input: React.FC<IValue> = ({ value, name, type = 'text', placeholder, onChange, onBlur }) => {
   return (
     <div className="input-border">
       <InputAntd
         name={name}
-        type="text"
+        type={type}
         value={value}
         className="input"
         placeholder={placeholder}
@@ -32,12 +34,13 @@ const Input: React.FC<IValue> = ({ value, name, placeholder, onChange, onBlur })
 
 interface InputWithSelectProps extends IValue {
   tokens: ITokenMini | Array<ITokenMini>;
-  onSelectChange?: () => void;
+  onSelectChange?: (value: string) => void;
 }
 
 export const InputWithSelect: React.FC<InputWithSelectProps> = ({
   value,
   name,
+  type,
   tokens,
   placeholder,
   onChange,
@@ -55,7 +58,7 @@ export const InputWithSelect: React.FC<InputWithSelectProps> = ({
           suffixIcon={<Icon component={ArrowDown} />}
         >
           {tokens.map((token) => (
-            <Option value={token.name}>
+            <Option value={token.name} key={nextId()}>
               <h4 className="input-with-select__name">{token.name}</h4>
               <div className="input-with-select__logo">
                 <img src={token.logo} alt={`${token.name} logo`} />
@@ -79,10 +82,10 @@ export const InputWithSelect: React.FC<InputWithSelectProps> = ({
     <div className="input-with-select input-border">
       <InputAntd
         name={name}
-        type="text"
+        type={type}
         value={value}
-        placeholder={placeholder}
         className="input"
+        placeholder={placeholder}
         onChange={onChange}
         onBlur={onBlur}
       />

@@ -20,7 +20,7 @@ interface IMetamaskService {
   isProduction?: boolean;
 }
 
-export type ContractTypes = 'BNB' | 'WBNB' | 'MAIN' | 'USDT' | 'YDR';
+export type ContractTypes = 'BNB' | 'WBNB' | 'MAIN' | 'USDT' | 'YDR' | 'Router';
 
 const networks: INetworks = {
   mainnet: '0x1',
@@ -149,6 +149,17 @@ export default class MetamaskService {
     })[0];
   }
 
+  get getBNBBalance() {
+    return this.web3Provider.eth.getBalance(this.walletAddress);
+  }
+
+  getBalanceOf(currency: ContractTypes) {
+    if (currency === 'BNB') {
+      return this.getBNBBalance;
+    }
+    return this.getContract(currency).methods.balanceOf(this.walletAddress).call();
+  }
+
   encodeFunctionCall(abi: any, data: Array<any>) {
     return this.web3Provider.eth.abi.encodeFunctionCall(abi, data);
   }
@@ -236,7 +247,7 @@ export default class MetamaskService {
   }
 
   buyYDRToken(value: string, spenderToken: ContractTypes, address?: string) {
-    let methodName: '' | 'swapExactETHForTokens' | 'swapExactTokensForTokens';
+    let methodName: 'swapExactETHForTokens' | 'swapExactTokensForTokens';
     switch (spenderToken) {
       case 'BNB': {
         methodName = 'swapExactETHForTokens';
@@ -246,22 +257,18 @@ export default class MetamaskService {
         methodName = 'swapExactTokensForTokens';
         break;
       }
-      case 'USDT': {
-        methodName = 'swapExactETHForTokens';
-        break;
-      }
       default: {
-        methodName = '';
+        methodName = 'swapExactTokensForTokens';
         break;
       }
     }
     const buyMethod = MetamaskService.getMethodInterface(config.YDR.ABI, methodName);
     const signature = this.encodeFunctionCall(buyMethod, [
       spenderToken !== 'BNB' ? MetamaskService.calcTransactionAmount(value, 18) : '',
-      0,
+      '0x0000000000000000000000000000000000000000',
       address
-        ? [address, config.MAIN.ADDRESS, config.YDR.ADDRESS]
-        : [config.MAIN.ADDRESS, config.YDR.ADDRESS],
+        ? [address, config.WBNB.ADDRESS, config.YDR.ADDRESS]
+        : [config.WBNB.ADDRESS, config.YDR.ADDRESS],
       this.walletAddress,
       moment().add(30, 'minutes').format('X'),
     ]);
