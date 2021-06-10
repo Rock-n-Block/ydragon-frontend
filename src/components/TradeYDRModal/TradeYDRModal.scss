@@ -36,10 +36,11 @@
   }
 
   &__header {
+    margin-bottom: 32px;
+
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 32px;
 
     font-family: 'MER', sans-serif;
     font-size: 20px;
@@ -52,25 +53,33 @@
       color: $orange-l;
     }
   }
-  &__field{
+
+  &__field {
     margin-bottom: 20px;
   }
-  &__labels{
+
+  &__labels {
+    margin-bottom: 6px;
+
     display: flex;
     justify-content: space-between;
-    margin-bottom: 6px;
   }
-  &__label{
-    font-family: "MER", sans-serif;
+
+  &__label {
+    font-family: 'MER', sans-serif;
     font-size: 12px;
     line-height: 14px;
-    color: rgba($black,0.5);
+
+    color: rgba($black, 0.5);
   }
-  &__fee{
+
+  &__fee {
     text-align: center;
   }
-  &__btn{
-    width: unset !important;
+
+  &__btn {
     margin: 26px auto 0;
+
+    width: unset !important;
   }
 }

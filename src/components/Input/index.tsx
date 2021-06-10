@@ -1,9 +1,10 @@
 import React from 'react';
-import { Input as InputAntd, Select } from 'antd';
-import { ITokenMini } from '../../utils/tokenMini';
-import { ReactComponent as ArrowDown } from '../../assets/img/icons/icon-arrow-down.svg';
-import Icon from '@ant-design/icons';
 import nextId from 'react-id-generator';
+import Icon from '@ant-design/icons';
+import { Input as InputAntd, Select } from 'antd';
+
+import { ReactComponent as ArrowDown } from '../../assets/img/icons/icon-arrow-down.svg';
+import { ITokenMini } from '../../utils/tokenMini';
 
 const { Option } = Select;
 

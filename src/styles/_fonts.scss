@@ -17,6 +17,33 @@
 }
 
 @font-face {
+  font-family: 'RR';
+  src: url('../assets/fonts/Rubik-Regular.woff2') format('woff2'),
+    url('../assets/fonts/Rubik-Regular.woff') format('woff');
+
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'RM';
+  src: url('../assets/fonts/Rubik-Medium.woff2') format('woff2'),
+    url('../assets/fonts/Rubik-Medium.woff') format('woff');
+
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'RB';
+  src: url('../assets/fonts/Rubik-Bold.woff2') format('woff2'),
+    url('../assets/fonts/Rubik-Bold.woff') format('woff');
+
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
   font-family: 'TNR';
   src: url('../assets/fonts/TTNorms-Regular.woff') format('woff');
 

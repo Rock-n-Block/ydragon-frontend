@@ -1,9 +1,10 @@
 import React from 'react';
 import { observer } from 'mobx-react-lite';
 
-import './InfoModal.scss';
 import { useMst } from '../../store/store';
 import { Button, Modal } from '../index';
+
+import './InfoModal.scss';
 
 const InfoModal: React.FC = observer(() => {
   const { modals } = useMst();

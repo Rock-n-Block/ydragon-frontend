@@ -1,0 +1,17 @@
+@import '../../../styles/_variables.scss';
+@import '../../../styles/mixins';
+
+.protocols-used {
+  &__title {
+    @include title-text;
+    text-align: center;
+
+    color: $white;
+  }
+
+  &__row {
+    margin-top: 50px;
+
+    text-align: center;
+  }
+}

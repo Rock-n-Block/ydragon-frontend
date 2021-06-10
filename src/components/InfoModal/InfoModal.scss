@@ -1,8 +1,9 @@
 @import 'src/styles/variables';
+
 .m-success {
   z-index: 9999;
-  &__content {
 
+  &__content {
     padding: 30px;
 
     display: flex;
@@ -15,17 +16,21 @@
 
     background: #fff;
   }
-  &__title{
-    &-success{
+
+  &__title {
+    &-success {
       color: $green-l;
     }
-    &-error{
+
+    &-error {
       color: $orange-l;
     }
-    &-info{
-      color:$black;
+
+    &-info {
+      color: $black;
     }
   }
+
   p {
     margin: 11px 0 30px;
   }

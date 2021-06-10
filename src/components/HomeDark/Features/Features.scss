@@ -1,0 +1,36 @@
+@import '../../../styles/_variables.scss';
+@import '../../../styles/mixins';
+
+.features {
+  margin-top: 80px;
+
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-column-gap: 120px;
+  grid-row-gap: 60px;
+}
+
+.features-item {
+  display: flex;
+
+  &__content {
+    margin-left: 20px;
+  }
+
+  &__title {
+    font-family: 'MER';
+    font-size: 24px;
+    line-height: 29px;
+
+    color: $white;
+  }
+
+  &__descr {
+    margin-top: 10px;
+
+    font-size: 18px;
+    line-height: 30px;
+
+    color: $white;
+  }
+}

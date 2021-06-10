@@ -58,3 +58,9 @@
   border-radius: 16px;
   box-shadow: $shadow;
 }
+
+@mixin shadow-dark-block {
+  background: linear-gradient(238.88deg, #000316 31.18%, #050c25 99.47%);
+  border-radius: 32px;
+  box-shadow: $shadow-dark;
+}

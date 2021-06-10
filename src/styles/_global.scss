@@ -1,7 +1,7 @@
 body {
   margin: 0;
 
-  font-family: 'TNR', sans-serif;
+  font-family: 'RR', sans-serif;
 }
 
 img {
@@ -23,14 +23,15 @@ p {
 
   min-height: 100vh;
 
-  background-color: $main-bg;
+  background-color: $main-dark-bg;
   background-image: url('../assets/img/main-bg.svg');
   background-repeat: no-repeat;
   background-position: top 36px center;
   background-blend-mode: overlay;
 
   &--home {
-    background-image: url('../assets/img/home-bg.png'), url('../assets/img/home-bg-bottom.png');
+    background-image: url('../assets/img/home-dark-bg.png'),
+      url('../assets/img/home-dark-bg-bottom.png');
     background-position: top center, bottom 670px center;
     background-size: contain;
     background-blend-mode: unset;
@@ -69,6 +70,7 @@ main {
     align-items: center;
 
     #{$this}__sub-title {
+      margin-top: 0;
       margin-left: 40px;
     }
   }
@@ -76,10 +78,16 @@ main {
   &__title {
     font-size: 48px;
     line-height: 58px;
+    text-align: center;
   }
 
   &__sub-title {
     @include title-text;
+    margin-top: 10px;
+
+    text-align: center;
+
+    color: $white;
   }
 
   &__text-row {
@@ -138,5 +146,16 @@ main {
     line-height: 19px;
 
     color: $black;
+  }
+}
+
+.link {
+  text-decoration: underline;
+
+  color: $orange-l;
+
+  &:hover,
+  &:active {
+    color: $orange-l;
   }
 }

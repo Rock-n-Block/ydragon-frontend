@@ -1,0 +1,19 @@
+@import '../../../styles/_variables.scss';
+@import '../../../styles/mixins';
+
+.machine {
+  margin-top: 40px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  &__descr {
+    max-width: 420px;
+
+    font-size: 18px;
+    line-height: 30px;
+
+    color: $white;
+  }
+}
