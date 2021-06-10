@@ -159,7 +159,7 @@ const TradeYDRModal: React.FC = observer(() => {
           )}
         </div>
         <p className="m-trade-ydr__label m-trade-ydr__fee">Service Fee 0.441 BNB</p>
-        {isNeedApprove && (firstCurrency !== 'BNB' || secondCurrency !== 'BNB') && (
+        {isNeedApprove && firstCurrency !== 'BNB' && secondCurrency !== 'BNB' && (
           <Button className="m-trade-ydr__btn" onClick={handleApprove}>
             Approve
           </Button>

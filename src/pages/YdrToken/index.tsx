@@ -32,7 +32,6 @@ const YdrToken: React.FC = observer(() => {
 
         <div className="page__title-wrapper">
           <h1 className="page__title text-outline">YDR token</h1>
-          <span className="page__title-label">Set creator</span>
         </div>
       </div>
 
