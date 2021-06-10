@@ -52,10 +52,18 @@ const Footer: React.FC = () => {
             <div className="footer__links-title">Product</div>
 
             <div className="footer__links">
-              <a href="/">Whitepaper</a>
-              <a href="/">Privacy Policy</a>
-              <a href="/">Terms of Service</a>
-              <a href="/">Contact us</a>
+              <span className="isDisabled">
+                <a href="/">Whitepaper</a>
+              </span>
+              <span className="isDisabled">
+                <a href="/">Privacy Policy</a>
+              </span>
+              <span className="isDisabled">
+                <a href="/">Terms of Service</a>
+              </span>
+              <span className="isDisabled">
+                <a href="/">Contact us</a>
+              </span>
             </div>
           </div>
 
@@ -63,9 +71,15 @@ const Footer: React.FC = () => {
             <div className="footer__links-title">Engage</div>
 
             <div className="footer__links">
-              <a href="/">About Us</a>
-              <a href="/">Tutorial</a>
-              <a href="/">FAQ</a>
+              <span className="isDisabled">
+                <a href="/">About Us</a>
+              </span>
+              <span className="isDisabled">
+                <a href="/">Tutorial</a>
+              </span>
+              <span className="isDisabled">
+                <a href="/">FAQ</a>
+              </span>
             </div>
           </div>
 
@@ -73,8 +87,12 @@ const Footer: React.FC = () => {
             <div className="footer__links-title">DeFi</div>
 
             <div className="footer__links">
-              <a href="/">Index Products</a>
-              <a href="/">Become Partner</a>
+              <span className="isDisabled">
+                <a href="/">Index Products</a>
+              </span>
+              <span className="isDisabled">
+                <a href="/">Become Partner</a>
+              </span>
             </div>
           </div>
         </div>
