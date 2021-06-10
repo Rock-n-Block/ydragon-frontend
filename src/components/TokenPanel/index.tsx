@@ -36,17 +36,15 @@ const TokenPanel: React.FC<TokenPanelProps> = observer(
         </div>
 
         <div className="token-panel__btns">
-          {isTokenPicked || !handleGetIn ? (
-            <>
-              <Button className="token-panel__btn" onClick={handleBuy}>
-                buy
-              </Button>
-              <Button className="token-panel__btn" onClick={handleSell}>
-                sell
-              </Button>
-            </>
-          ) : (
-            <></>
+          {isTokenPicked && handleBuy && (
+            <Button className="token-panel__btn" onClick={handleBuy}>
+              buy
+            </Button>
+          )}
+          {isTokenPicked && handleSell && (
+            <Button className="token-panel__btn" onClick={handleSell}>
+              sell
+            </Button>
           )}
           {!isTokenPicked && handleGetIn && (
             <Button className="token-panel__btn" onClick={handleGetIn}>
