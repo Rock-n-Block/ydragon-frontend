@@ -1,14 +1,14 @@
 import React, { useCallback, useEffect, useState } from 'react';
+import BigNumber from 'bignumber.js/bignumber';
 import { observer } from 'mobx-react-lite';
 
 import YDRLogo from '../../assets/img/icons/logo.svg';
+import { useWalletConnectorContext } from '../../services/walletConnect';
 import { useMst } from '../../store/store';
+import { platformToken, TokenMiniNameTypes, tokensArray } from '../../utils/tokenMini';
 import { Button, InputWithSelect, Modal } from '../index';
 
 import './TradeYDRModal.scss';
-import { platformToken, TokenMiniNameTypes, tokensArray } from '../../utils/tokenMini';
-import { useWalletConnectorContext } from '../../services/walletConnect';
-import BigNumber from 'bignumber.js/bignumber';
 
 const TradeYDRModal: React.FC = observer(() => {
   const walletConnector = useWalletConnectorContext();

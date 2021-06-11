@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { TokenPanel } from '../../index';
 
 const IndexInfo: React.FC = () => {

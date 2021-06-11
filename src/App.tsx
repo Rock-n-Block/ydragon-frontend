@@ -3,7 +3,7 @@ import { Route, Switch, useRouteMatch } from 'react-router-dom';
 
 import { Indexes } from './components/Admin';
 import AdminIndex from './pages/AdminIndex';
-import { Footer, Header, MetamaskErrModal, EventBanner } from './components';
+import { EventBanner, Footer, Header, MetamaskErrModal } from './components';
 import { Admin, Auth, Home, Index, IndexDashboard, StakePage, YdrToken } from './pages';
 
 import './styles/index.scss';

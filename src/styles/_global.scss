@@ -169,7 +169,7 @@ main {
 .isDisabled > a {
   display: inline-block; /* For IE11/ MS Edge bug */
 
-  pointer-events: none;
-
   text-decoration: none;
+
+  pointer-events: none;
 }

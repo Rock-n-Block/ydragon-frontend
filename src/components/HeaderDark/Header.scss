@@ -6,6 +6,7 @@
 
     display: grid;
     grid-template-columns: 1fr 410px 1fr;
+
     align-items: center;
   }
 
@@ -56,16 +57,17 @@
     line-height: 20px;
     text-decoration: none;
 
-    color: #F7F8FD;
+    color: #f7f8fd;
 
     &:hover,
     &:active {
-      color: #F7F8FD;
+      color: #f7f8fd;
     }
   }
 
   &__btn {
     display: inline-block;
+
     width: 150px;
   }
 }

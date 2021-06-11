@@ -3,20 +3,22 @@
 
 .event-banner {
   position: sticky;
+  z-index: 1;
   top: 0;
-  background-color: #01051B;
-  background-image: url('../../assets/img/event-banner-bg.png'), linear-gradient(90.45deg, rgba(1, 3, 22, 0) 0%, rgba(227, 74, 60, 0.3) 100%);
+
+  background-color: #01051b;
+  background-image: url('../../assets/img/event-banner-bg.png'),
+    linear-gradient(90.45deg, rgba(1, 3, 22, 0) 0%, rgba(227, 74, 60, 0.3) 100%);
   background-repeat: no-repeat;
   background-position: left center;
   background-size: auto 100%;
-  z-index: 1;
 
   &__inner {
     padding: 20px 0;
 
     display: grid;
-    grid-template-columns: 1fr 600px 1fr;
     align-items: center;
+    grid-template-columns: 1fr 600px 1fr;
   }
 
   &__icon {
@@ -34,13 +36,15 @@
   }
 
   &__get-btn {
-    max-width: 200px;
     padding: 15px 20px !important;
+
+    max-width: 200px;
   }
 
   &__more-link {
-    display: inline-block;
     margin-top: 10px;
+
+    display: inline-block;
   }
 }
 
@@ -52,13 +56,14 @@
   &__title {
     @include title-text;
     text-align: center;
+
     color: $white;
   }
 
   &__row {
-    display: flex;
-
     margin-top: 10px;
+
+    display: flex;
 
     font-size: 28px;
     line-height: 34px;

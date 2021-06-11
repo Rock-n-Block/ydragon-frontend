@@ -1,6 +1,6 @@
-import YDRLogo from '../assets/img/icons/logo.svg';
 import BinanceLogo from '../assets/img/icons/logo-binance.svg';
 import USDTLogo from '../assets/img/icons/logo-usdt.svg';
+import YDRLogo from '../assets/img/icons/logo.svg';
 
 export type TokenMiniNameTypes = 'YDR' | 'BNB' | 'WBNB' | 'USDT';
 

@@ -129,37 +129,38 @@
 //.ant-btn-text {
 //  color: black;
 //}
-
 .btn {
   width: 100%;
   height: auto;
-
-  border: none;
-  border-radius: 12px;
-  box-shadow: none;
 
   font-family: 'RB';
   font-size: 16px;
   line-height: 20px;
 
+  border: none;
+  border-radius: 12px;
+  box-shadow: none;
+
   &-filled {
     padding: 20px;
-    background-color: #D53038;
-    box-shadow: 0 16px 32px rgba(213, 48, 56, 0.3);
+
     color: $white;
+    background-color: #d53038;
+    box-shadow: 0 16px 32px rgba(213, 48, 56, 0.3);
 
     &:hover,
     &:focus {
       color: $white;
-      background-color: #D53038;
+      background-color: #d53038;
     }
   }
 
   &-outline {
     padding: 20px;
+
+    color: $white;
     background-color: transparent;
     border: 1px solid $white;
-    color: $white;
 
     &:hover,
     &:focus {
@@ -171,17 +172,18 @@
 
   &-nav {
     padding: 10px 20px;
-    background-color: transparent;
-    border: 1px solid #D53038;
-    color: #D53038;
 
     font-family: 'RM';
 
+    color: #d53038;
+    background-color: transparent;
+    border: 1px solid #d53038;
+
     &:hover,
     &:focus {
-      color: #D53038;
+      color: #d53038;
       background-color: transparent;
-      border-color: #D53038;
+      border-color: #d53038;
     }
   }
 
@@ -192,6 +194,7 @@
 
 .ant-btn-text {
   font-family: 'RM';
+
   color: $white;
 
   &:hover,
