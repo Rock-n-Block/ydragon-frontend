@@ -18,7 +18,7 @@ const Main: React.FC = () => {
       </p>
 
       <div className="home__btns-row">
-        <Button className="home__btn" disabled>
+        <Button linkClassName="home__btn" link="/ydrtoken">
           Buy YDR
         </Button>
         <Button className="home__btn" styledType="outline" disabled>

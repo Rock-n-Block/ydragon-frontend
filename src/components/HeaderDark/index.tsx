@@ -3,17 +3,23 @@ import { Link } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 
 import logo from '../../assets/img/icons/logo.svg';
-// import { useMst } from '../../store/store';
-// import { Button } from '../index';
+import { Button } from '../index';
 
 import './Header.scss';
+import { useWalletConnectorContext } from '../../services/walletConnect';
+import { useMst } from '../../store/store';
 
 const Header: React.FC = observer(() => {
-  // const { user } = useMst();
-  // const [isLoggedIn, setLogged] = useState(false);
-  /* const handleLogOut = () => {
-    user.disconnect();
-  }; */
+  const { user } = useMst();
+  const walletConnector = useWalletConnectorContext();
+
+  const handleLogOut = () => {
+    walletConnector.disconnect();
+  };
+
+  const connectWallet = (): void => {
+    walletConnector.connect();
+  };
   return (
     <header className="header">
       <div className="container">
@@ -25,47 +31,54 @@ const Header: React.FC = observer(() => {
             <div className="header__logo-text">YDRAGON</div>
           </div>
 
-          {/*  <nav className="header__nav">
+          <nav className="header__nav">
             <ul className="header-nav">
               <li className="header-nav__item">
-                <Link to="/" className="header-nav__link">Home</Link>
+                <Link to="/" className="header-nav__link">
+                  Home
+                </Link>
               </li>
               <li className="header-nav__item">
-                <Link to="/" className="header-nav__link">Index Products</Link>
+                <Link to="/indexes" className="header-nav__link">
+                  Index Products
+                </Link>
               </li>
               <li className="header-nav__item">
-                <Link to="/" className="header-nav__link">Dashboard</Link>
+                <Link to="/indexes" className="header-nav__link">
+                  Dashboard
+                </Link>
               </li>
               <li className="header-nav__item">
-                <Link to="/" className="header-nav__link">About</Link>
+                <Link to="/" className="header-nav__link">
+                  About
+                </Link>
               </li>
             </ul>
           </nav>
 
           <div className="header__sign">
             <ul className="header-nav">
-              <li className="header-nav__item">
-                <Button
-                  link="/"
-                  linkClassName="header-nav__link"
-                  type="text"
-                  styledType="clear"
-                  onClick={handleLogOut}
-                >
-                  Sign In
-                </Button>
-              </li>
-              <li className="header-nav__item">
-                <Button
-                  link="/auth"
-                  linkClassName="header-nav__btn"
-                  styledType="nav"
-                >
-                  Sign Up
-                </Button>
-              </li>
+              {user.address && (
+                <li className="header-nav__item">
+                  <Button
+                    className="header-nav__link"
+                    type="text"
+                    styledType="clear"
+                    onClick={handleLogOut}
+                  >
+                    Log Out
+                  </Button>
+                </li>
+              )}
+              {!user.address && (
+                <li className="header-nav__item">
+                  <Button linkClassName="header-nav__btn" styledType="nav" onClick={connectWallet}>
+                    Connect wallet
+                  </Button>
+                </li>
+              )}
             </ul>
-          </div> */}
+          </div>
         </div>
       </div>
     </header>

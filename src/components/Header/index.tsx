@@ -10,7 +10,6 @@ import './Header.scss';
 
 const Header: React.FC = observer(() => {
   const { user } = useMst();
-  // const [isLoggedIn, setLogged] = useState(false);
   const handleLogOut = () => {
     user.disconnect();
   };

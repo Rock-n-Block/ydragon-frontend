@@ -12,7 +12,7 @@ const YdrToken: React.FC = observer(() => {
   const panelInfo = [
     {
       label: 'Price',
-      value: '$255',
+      value: '$257',
     },
   ];
   const handleBuy = () => {

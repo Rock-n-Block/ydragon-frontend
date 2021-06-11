@@ -1,13 +1,10 @@
 import React from 'react';
 import { Route, Switch, useRouteMatch } from 'react-router-dom';
 
-/* import { Indexes } from './components/Admin';
+import { Indexes } from './components/Admin';
 import AdminIndex from './pages/AdminIndex';
-import { Footer, Header, MetamaskErrModal } from './components';
-import { Admin, Auth, Home, Index, IndexDashboard, StakePage, YdrToken } from './pages'; */
-
-import { Footer, Header, EventBanner } from './components';
-import { Home } from './pages';
+import { Footer, Header, MetamaskErrModal, EventBanner } from './components';
+import { Admin, Auth, Home, Index, IndexDashboard, StakePage, YdrToken } from './pages';
 
 import './styles/index.scss';
 
@@ -24,7 +21,7 @@ export const App: React.FC = () => {
         <Route exact path="/">
           <Home />
         </Route>
-        {/* <Route exact path="/auth">
+        <Route exact path="/auth">
           <Auth />
         </Route>
         <Route exact path="/index/:indexId">
@@ -47,9 +44,9 @@ export const App: React.FC = () => {
         </Route>
         <Route exact path="/indexes">
           <IndexDashboard />
-        </Route> */}
+        </Route>
       </Switch>
-      {/* <MetamaskErrModal /> */}
+      <MetamaskErrModal />
       <Footer />
     </div>
   );
