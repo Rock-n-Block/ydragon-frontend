@@ -53,6 +53,13 @@ const Header: React.FC = observer(() => {
                   About
                 </Link>
               </li>
+              {localStorage.yd_token && (
+                <li className="header-nav__item">
+                  <Link to="/" className="header-nav__link">
+                    Admin panel
+                  </Link>
+                </li>
+              )}
             </ul>
           </nav>
 
