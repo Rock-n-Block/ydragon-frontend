@@ -26,69 +26,46 @@ const Header: React.FC = observer(() => {
           </div>
 
           <nav className="header__nav">
-            {user.address ? (
-              <ul className="header-nav">
-                <li className="header-nav__item">
-                  <Button
-                    link="/ydrtoken"
-                    linkClassName="header-nav__btn"
-                    styledType="nav"
-                    background="gray"
-                  >
-                    Buy YDR
-                  </Button>
-                </li>
-                {localStorage.yd_token ? (
-                  <li className="header-nav__item">
-                    <Button
-                      link="/admin"
-                      linkClassName="header-nav__link"
-                      type="text"
-                      styledType="clear"
-                    >
-                      Admin Panel
-                    </Button>
-                  </li>
-                ) : (
-                  <></>
-                )}
-                <li className="header-nav__item ">
-                  <Button
-                    link="/indexes"
-                    linkClassName="header-nav__link"
-                    type="text"
-                    styledType="clear"
-                  >
-                    Indexes
-                  </Button>
-                </li>
-                <li className="header-nav__item">
-                  <Button
-                    link="/index/1"
-                    linkClassName="header-nav__link"
-                    type="text"
-                    styledType="clear"
-                    onClick={handleLogOut}
-                  >
-                    Log Out
-                  </Button>
-                </li>
-              </ul>
-            ) : (
-              <ul className="header-nav">
-                <li className="header-nav__item">
-                  <Button
-                    link="/auth"
-                    linkClassName="header-nav__btn"
-                    styledType="nav"
-                    background="gray"
-                  >
-                    Connect wallet
-                  </Button>
-                </li>
-              </ul>
-            )}
+            <ul className="header-nav">
+              <li className="header-nav__item">
+                <Link to="/" className="header-nav__link">Home</Link>
+              </li>
+              <li className="header-nav__item">
+                <Link to="/" className="header-nav__link">Index Products</Link>
+              </li>
+              <li className="header-nav__item">
+                <Link to="/" className="header-nav__link">Dashboard</Link>
+              </li>
+              <li className="header-nav__item">
+                <Link to="/" className="header-nav__link">About</Link>
+              </li>
+            </ul>
           </nav>
+
+          <div className="header__sign">
+            <ul className="header-nav">
+              <li className="header-nav__item">
+                <Button
+                  link="/"
+                  linkClassName="header-nav__link"
+                  type="text"
+                  styledType="clear"
+                  onClick={handleLogOut}
+                >
+                  Sign In
+                </Button>
+              </li>
+              <li className="header-nav__item">
+                <Button
+                  link="/auth"
+                  linkClassName="header-nav__btn"
+                  styledType="nav"
+                >
+                  Sign Up
+                </Button>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </header>

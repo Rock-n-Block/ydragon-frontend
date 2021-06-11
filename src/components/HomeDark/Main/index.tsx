@@ -19,7 +19,7 @@ const Main: React.FC = () => {
 
       <div className="home__btns-row">
         <Button className="home__btn">Buy YDR</Button>
-        <Button className="home__btn">Whitepaper</Button>
+        <Button className="home__btn" styledType="outline">Whitepaper</Button>
       </div>
 
       <div className="home__currently-price">

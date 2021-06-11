@@ -1,131 +1,201 @@
+//.btn {
+//  width: 100%;
+//  height: auto;
+//
+//  border: none;
+//  box-shadow: none;
+//  font-feature-settings: 'liga' off;
+//
+//  &-white {
+//    background-color: $white;
+//  }
+//
+//  &-gray {
+//    background-color: $gray-bg;
+//  }
+//
+//  &-nav {
+//    padding: 0 15px;
+//
+//    min-width: 120px;
+//    height: 100%;
+//
+//    font-size: 16px;
+//    line-height: 20px;
+//
+//    border-radius: 8px;
+//
+//    span {
+//      background: $gradient;
+//      background-clip: text;
+//      -webkit-text-fill-color: transparent;
+//    }
+//  }
+//
+//  &-filled {
+//    padding: 20px 40px;
+//
+//    box-sizing: border-box;
+//
+//    font-family: 'MEB';
+//    font-size: 15px;
+//    line-height: 16px;
+//    text-align: center;
+//    letter-spacing: 0.15em;
+//    text-transform: uppercase;
+//
+//    color: $white;
+//    background: $gradient;
+//
+//    border-radius: 40px;
+//
+//    &:hover,
+//    &:focus {
+//      color: $white;
+//      background: $gradient;
+//    }
+//  }
+//
+//  &-outline {
+//    padding: 10px 20px;
+//
+//    font-family: 'TNB', sans-serif;
+//    font-size: 16px;
+//    line-height: 20px;
+//
+//    border-radius: 40px;
+//  }
+//
+//  &-clear {
+//    font-size: 16px;
+//    line-height: 19px;
+//
+//    color: #000316;
+//
+//    span {
+//      background: unset;
+//      background-clip: unset;
+//      -webkit-text-fill-color: unset;
+//    }
+//  }
+//}
+//
+//.btn-outline {
+//  border-radius: 40px;
+//
+//  &-sm {
+//    padding: 1px;
+//
+//    .btn {
+//      padding: 9px 19px;
+//    }
+//  }
+//
+//  &-md {
+//    padding: 2px;
+//
+//    .btn {
+//      padding: 8px 18px;
+//    }
+//  }
+//
+//  &-lg {
+//    padding: 3px;
+//
+//    .btn {
+//      padding: 7px 17px;
+//    }
+//  }
+//
+//  &-orange {
+//    background: $gradient;
+//
+//    span {
+//      background: $gradient;
+//      background-clip: text;
+//      -webkit-text-fill-color: transparent;
+//    }
+//  }
+//
+//  &-green {
+//    background: linear-gradient(180deg, #26cc90 0%, #29cd92 100%);
+//
+//    span {
+//      color: #27cd91;
+//    }
+//  }
+//}
+//
+//.ant-btn-text {
+//  color: black;
+//}
+
 .btn {
   width: 100%;
   height: auto;
 
   border: none;
+  border-radius: 12px;
   box-shadow: none;
-  font-feature-settings: 'liga' off;
 
-  &-white {
-    background-color: $white;
-  }
-
-  &-gray {
-    background-color: $gray-bg;
-  }
-
-  &-nav {
-    padding: 0 15px;
-
-    min-width: 120px;
-    height: 100%;
-
-    font-size: 16px;
-    line-height: 20px;
-
-    border-radius: 8px;
-
-    span {
-      background: $gradient;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-  }
+  font-family: 'RB';
+  font-size: 16px;
+  line-height: 20px;
 
   &-filled {
-    padding: 20px 40px;
-
-    box-sizing: border-box;
-
-    font-family: 'MEB';
-    font-size: 15px;
-    line-height: 16px;
-    text-align: center;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-
+    padding: 20px;
+    background-color: #D53038;
+    box-shadow: 0 16px 32px rgba(213, 48, 56, 0.3);
     color: $white;
-    background: $gradient;
-
-    border-radius: 40px;
 
     &:hover,
     &:focus {
       color: $white;
-      background: $gradient;
+      background-color: #D53038;
     }
   }
 
   &-outline {
+    padding: 20px;
+    background-color: transparent;
+    border: 1px solid $white;
+    color: $white;
+
+    &:hover,
+    &:focus {
+      color: $white;
+      background-color: transparent;
+      border-color: $white;
+    }
+  }
+
+  &-nav {
     padding: 10px 20px;
+    background-color: transparent;
+    border: 1px solid #D53038;
+    color: #D53038;
 
-    font-family: 'TNB', sans-serif;
-    font-size: 16px;
-    line-height: 20px;
+    font-family: 'RM';
 
-    border-radius: 40px;
+    &:hover,
+    &:focus {
+      color: #D53038;
+      background-color: transparent;
+      border-color: #D53038;
+    }
   }
 
   &-clear {
-    font-size: 16px;
-    line-height: 19px;
-
-    color: #000316;
-
-    span {
-      background: unset;
-      background-clip: unset;
-      -webkit-text-fill-color: unset;
-    }
-  }
-}
-
-.btn-outline {
-  border-radius: 40px;
-
-  &-sm {
-    padding: 1px;
-
-    .btn {
-      padding: 9px 19px;
-    }
-  }
-
-  &-md {
-    padding: 2px;
-
-    .btn {
-      padding: 8px 18px;
-    }
-  }
-
-  &-lg {
-    padding: 3px;
-
-    .btn {
-      padding: 7px 17px;
-    }
-  }
-
-  &-orange {
-    background: $gradient;
-
-    span {
-      background: $gradient;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-  }
-
-  &-green {
-    background: linear-gradient(180deg, #26cc90 0%, #29cd92 100%);
-
-    span {
-      color: #27cd91;
-    }
+    padding: 0;
   }
 }
 
 .ant-btn-text {
-  color: black;
+  font-family: 'RM';
+  color: $white;
+
+  &:hover,
+  &:focus {
+    color: $white;
+  }
 }

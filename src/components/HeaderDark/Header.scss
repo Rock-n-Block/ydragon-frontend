@@ -4,7 +4,8 @@
   &__inner {
     padding: 40px 0;
 
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 410px 1fr;
     align-items: center;
   }
 
@@ -25,7 +26,13 @@
   }
 
   &__nav {
-    margin-left: auto;
+    display: flex;
+    justify-content: center;
+  }
+
+  &__sign {
+    display: flex;
+    justify-content: flex-end;
   }
 }
 
@@ -35,32 +42,30 @@
 
   display: flex;
   align-items: center;
-  gap: 30px;
 
   list-style: none;
+
+  &__item {
+    & + & {
+      margin-left: 40px;
+    }
+  }
 
   &__link {
     font-size: 16px;
     line-height: 20px;
     text-decoration: none;
 
-    color: $black;
+    color: #F7F8FD;
+
+    &:hover,
+    &:active {
+      color: #F7F8FD;
+    }
   }
 
   &__btn {
-    position: relative;
-
-    padding: 2px;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    height: 40px;
-
-    text-decoration: none;
-
-    background: $gradient;
-    border-radius: 10px;
+    display: inline-block;
+    width: 150px;
   }
 }
