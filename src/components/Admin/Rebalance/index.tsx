@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import BigNumber from 'bignumber.js/bignumber';
 import { observer } from 'mobx-react-lite';
 
 import { IIndexStatus, ITokensDiff } from '../../../pages/Admin';
 import { useMst } from '../../../store/store';
-import { Button } from '../../index';
+import { Button, Table } from '../../index';
 
 import './Rebalance.scss';
+import { IColumns } from '../../Table';
 
 interface RebalanceProps extends IIndexStatus {
   tokens: Array<ITokensDiff>;
@@ -15,66 +16,74 @@ interface RebalanceProps extends IIndexStatus {
 const Rebalance: React.FC<RebalanceProps> = observer(({ status, tokens }) => {
   const { modals } = useMst();
   const rebalanceInProgress = status === 'PROCESSING';
+  const columns: IColumns[] = [
+    {
+      title: 'Token',
+      dataIndex: 'name',
+      key: 'name',
+      render: (item: any) => (
+        <div className="table__col-with-logo">
+          <img src={item.image} className="rebalance-table__image" alt={`${item.name} logo`} />
+          <span className="rebalance-table__token">{item.name}</span>
+        </div>
+      ),
+    },
+    {
+      title: 'Quantity per index',
+      dataIndex: 'quantity',
+      key: 'quantity',
+      render: (item: any) => <span className="text-gradient">{item}</span>,
+    },
+    {
+      title: 'Token price',
+      dataIndex: 'price',
+      key: 'price',
+    },
+    {
+      title: 'Current Price Allocation',
+      dataIndex: 'weight',
+      key: 'weight',
+    },
+    {
+      title: 'Total price per index',
+      dataIndex: 'priceTotal',
+      key: 'priceTotal',
+    },
+  ];
+  const [dataSource, setDataSource] = useState<any[]>([]);
   const handleRebalanceOpen = () => {
     modals.rebalance.open();
   };
+  useEffect(() => {
+    if (tokens) {
+      const newData = tokens.map((token, index) => {
+        return {
+          key: index,
+          name: { image: token.token.image, name: token.token.name },
+          quantity: new BigNumber(token.token.count)
+            .multipliedBy(new BigNumber(10).pow(-token.token.decimal))
+            .toFixed(2),
+          price: `$${token.token.price_for_one}`,
+          weight: `${new BigNumber(token.token.current_weight).multipliedBy(100).toFixed(2)}%`,
+          priceTotal: token.token.price_total,
+        };
+      });
+      setDataSource(newData);
+    }
+  }, [tokens]);
   return (
     <section className="section section--admin">
       <h2 className="section__title text-outline">Index rebalance</h2>
 
-      <div className="rebalance-table">
-        <div className="rebalance-table__row rebalance-table__row--head">
-          <div className="rebalance-table__col">Token</div>
-          <div className="rebalance-table__col">
-            Quantity <br /> per Index
-          </div>
-          <div className="rebalance-table__col">Token Price</div>
-          <div className="rebalance-table__col">Current Price Allocation</div>
-          <div className="rebalance-table__col">
-            Total Price <br /> per Index
-          </div>
-        </div>
-
-        <div className="rebalance-table__content">
-          {tokens &&
-            tokens?.map((tokenDiff: ITokensDiff) => (
-              <div className="rebalance-table__row">
-                <div className="rebalance-table__col rebalance-table__first-col">
-                  <img
-                    src={tokenDiff.token.image}
-                    className="rebalance-table__image"
-                    alt={`${tokenDiff.token.name} logo`}
-                  />
-                  <div className="rebalance-table__token">{tokenDiff.token.name}</div>
-                </div>
-                <div className="rebalance-table__col">
-                  <div className="rebalance-table__quantity">
-                    {new BigNumber(tokenDiff.token.count)
-                      .multipliedBy(new BigNumber(10).pow(-tokenDiff.token.decimal))
-                      .toFixed(2)}
-                  </div>
-                </div>
-                <div className="rebalance-table__col">
-                  <div className="rebalance-table__price">${tokenDiff.token.price_for_one}</div>
-                </div>
-                <div className="rebalance-table__col">
-                  <div className="rebalance-table__price">
-                    {new BigNumber(tokenDiff.token.current_weight).multipliedBy(100).toFixed(2)}%
-                  </div>
-                </div>
-                <div className="rebalance-table__col">
-                  <div className="rebalance-table__price">${tokenDiff.token.price_total}</div>
-                </div>
-              </div>
-            ))}
-
-          <div className="rebalance-table__btn-row">
+      {tokens && (
+        <Table dataSource={dataSource} columns={columns} className="rebalance-table">
+          <div className="rebalance-table__btn-row ">
             <Button onClick={handleRebalanceOpen} disabled={rebalanceInProgress}>
               rebalance index
             </Button>
           </div>
-        </div>
-      </div>
+        </Table>
+      )}
     </section>
   );
 });

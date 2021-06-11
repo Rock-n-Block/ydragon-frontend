@@ -11,3 +11,4 @@ export { default as Modal } from './Modal';
 export { default as MetamaskErrModal } from './MetamaskErrModal';
 export { default as TradeYDRModal } from './TradeYDRModal';
 export { default as EventBanner } from './EventBanner';
+export { default as Table } from './Table';

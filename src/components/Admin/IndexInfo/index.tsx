@@ -5,10 +5,6 @@ import { TokenPanel } from '../../index';
 const IndexInfo: React.FC = () => {
   const panelInfo = [
     {
-      label: 'Total supply',
-      value: '10.000',
-    },
-    {
       label: 'Index price',
       value: '50836,13935',
     },
