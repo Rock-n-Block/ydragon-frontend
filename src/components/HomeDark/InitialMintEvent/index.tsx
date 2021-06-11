@@ -4,22 +4,22 @@ import { observer } from 'mobx-react-lite';
 import moment from 'moment';
 
 // import { useWalletConnectorContext } from '../../../services/walletConnect';
-import { useMst } from '../../../store/store';
-import { Button } from '../../index';
+// import { useMst } from '../../../store/store';
+// import { Button } from '../../index';
 
 import './InitialMintEvent.scss';
 
 const InitialMintEvent: React.FC = observer(() => {
-  const { modals } = useMst();
+  // const { modals } = useMst();
   // const walletConnector = useWalletConnectorContext();
   // const [start, setStart] = useState(moment());
-  const mockStart = moment('20211007', 'YYYYDDMM');
+  const mockStart = moment('20211207', 'YYYYDDMM');
   // const [end, setEnd] = useState(moment());
-  const mockEnd = moment('20211008', 'YYYYDDMM');
+  // const mockEnd = moment('20211008', 'YYYYDDMM');
   const [now, setNow] = useState(moment());
-  const handleGetIn = () => {
-    modals.getIn.open();
-  };
+  // const handleGetIn = () => {
+  //   modals.getIn.open();
+  // };
   useEffect(() => {
     const interval = setInterval(() => {
       setNow(moment());
@@ -86,26 +86,26 @@ const InitialMintEvent: React.FC = observer(() => {
             </div>
           </div>
 
-          <div className="initial-mint-event__timing timing-finish">
+          {/* <div className="initial-mint-event__timing timing-finish">
             <p className="initial-mint-event__timing-name">days to finish</p>
             <p className="initial-mint-event__timer">
               <span className="initial-mint-event__timer-time">
-                {/* {end.diff(now, 'days') < 0 ? 0 : end.diff(now, 'days')} */}
+                 {end.diff(now, 'days') < 0 ? 0 : end.diff(now, 'days')}
                 {mockEnd.diff(now, 'days') < 0 ? 0 : mockEnd.diff(now, 'days')}
               </span>
               <span className="initial-mint-event__timer-colon">:</span>
               <span className="initial-mint-event__timer-time">
-                {/* {end.diff(now, 'hours') < 0 ? 0 : end.diff(now, 'hours') % 24} */}
+                 {end.diff(now, 'hours') < 0 ? 0 : end.diff(now, 'hours') % 24}
                 {mockEnd.diff(now, 'hours') < 0 ? 0 : mockEnd.diff(now, 'hours') % 24}
               </span>
               <span className="initial-mint-event__timer-colon">:</span>
               <span className="initial-mint-event__timer-time">
-                {/* {end.diff(now, 'minutes') < 0 ? 0 : end.diff(now, 'minutes') % 60} */}
+                 {end.diff(now, 'minutes') < 0 ? 0 : end.diff(now, 'minutes') % 60}
                 {mockEnd.diff(now, 'minutes') < 0 ? 0 : mockEnd.diff(now, 'minutes') % 60}
               </span>
               <span className="initial-mint-event__timer-colon">:</span>
               <span className="initial-mint-event__timer-time">
-                {/* {end.diff(now, 'seconds') < 0 ? 0 : end.diff(now, 'seconds') % 60} */}
+                 {end.diff(now, 'seconds') < 0 ? 0 : end.diff(now, 'seconds') % 60}
                 {mockEnd.diff(now, 'seconds') < 0 ? 0 : mockEnd.diff(now, 'seconds') % 60}
               </span>
             </p>
@@ -116,7 +116,7 @@ const InitialMintEvent: React.FC = observer(() => {
               <span className="initial-mint-event__unit-item">Min</span>
               <span className="initial-mint-event__unit-item">Sec</span>
             </div>
-          </div>
+          </div> */}
         </div>
 
         <div className="initial-mint-event__content">
@@ -128,10 +128,10 @@ const InitialMintEvent: React.FC = observer(() => {
             yield.
           </p>
 
-          <Button onClick={handleGetIn} className="initial-mint-event__get-btn" disabled>
+          {/* <Button onClick={handleGetIn} className="initial-mint-event__get-btn" disabled>
             {' '}
             GET IN!
-          </Button>
+          </Button> */}
         </div>
       </div>
     </section>

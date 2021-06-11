@@ -4,24 +4,24 @@ import { observer } from 'mobx-react-lite';
 import moment from 'moment';
 
 // import { useWalletConnectorContext } from '../../../services/walletConnect';
-import { useMst } from '../../store/store';
-import { Button } from '../index';
+// import { useMst } from '../../store/store';
+// import { Button } from '../index';
 
 import coinIcon from '../../assets/img/future/icon-2.svg';
 
 import './EventBanner.scss';
 
 const EventBanner: React.FC = observer(() => {
-  const { modals } = useMst();
+  // const { modals } = useMst();
   // const walletConnector = useWalletConnectorContext();
   // const [start, setStart] = useState(moment());
   const mockStart = moment('20211007', 'YYYYDDMM');
   // const [end, setEnd] = useState(moment());
   // const mockEnd = moment('20211008', 'YYYYDDMM');
   const [now, setNow] = useState(moment());
-  const handleGetIn = () => {
-    modals.getIn.open();
-  };
+  // const handleGetIn = () => {
+  //   modals.getIn.open();
+  // };
   useEffect(() => {
     const interval = setInterval(() => {
       setNow(moment());
@@ -90,7 +90,7 @@ const EventBanner: React.FC = observer(() => {
             </div>
           </div>
 
-          <div className="event-banner__btns">
+          {/*  <div className="event-banner__btns">
             <div className="event-banner__btns-inner">
               <Button onClick={handleGetIn} className="event-banner__get-btn" disabled>
                 {' '}
@@ -106,7 +106,7 @@ const EventBanner: React.FC = observer(() => {
                 Learn more
               </Button>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

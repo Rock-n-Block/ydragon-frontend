@@ -19,12 +19,12 @@ const Machine: React.FC = () => {
           <br /> <br />
           Within our ecosystem we have created YDR, our governance token that enables holders to
           vote on the future composition of all platform indexes. For more information on YDR,
-          please{' '}
-          <span className="isDisabled ">
+          please read here{' '}
+          {/* <span className="isDisabled ">
             <a href="/" className="link">
               read here
             </a>
-          </span>
+          </span> */}
           .
         </p>
 
