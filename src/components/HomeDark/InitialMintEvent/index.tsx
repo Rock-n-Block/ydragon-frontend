@@ -128,7 +128,7 @@ const InitialMintEvent: React.FC = observer(() => {
             yield.
           </p>
 
-          <Button onClick={handleGetIn} className="initial-mint-event__get-btn">
+          <Button onClick={handleGetIn} className="initial-mint-event__get-btn" disabled>
             {' '}
             GET IN!
           </Button>

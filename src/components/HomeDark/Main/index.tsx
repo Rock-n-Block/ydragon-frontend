@@ -18,8 +18,12 @@ const Main: React.FC = () => {
       </p>
 
       <div className="home__btns-row">
-        <Button className="home__btn">Buy YDR</Button>
-        <Button className="home__btn" styledType="outline">Whitepaper</Button>
+        <Button className="home__btn" disabled>
+          Buy YDR
+        </Button>
+        <Button className="home__btn" styledType="outline" disabled>
+          Whitepaper
+        </Button>
       </div>
 
       <div className="home__currently-price">

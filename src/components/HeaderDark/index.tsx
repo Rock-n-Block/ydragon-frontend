@@ -3,17 +3,17 @@ import { Link } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 
 import logo from '../../assets/img/icons/logo.svg';
-import { useMst } from '../../store/store';
-import { Button } from '../index';
+// import { useMst } from '../../store/store';
+// import { Button } from '../index';
 
 import './Header.scss';
 
 const Header: React.FC = observer(() => {
-  const { user } = useMst();
+  // const { user } = useMst();
   // const [isLoggedIn, setLogged] = useState(false);
-  const handleLogOut = () => {
+  /* const handleLogOut = () => {
     user.disconnect();
-  };
+  }; */
   return (
     <header className="header">
       <div className="container">
@@ -25,7 +25,7 @@ const Header: React.FC = observer(() => {
             <div className="header__logo-text">YDRAGON</div>
           </div>
 
-          <nav className="header__nav">
+          {/*  <nav className="header__nav">
             <ul className="header-nav">
               <li className="header-nav__item">
                 <Link to="/" className="header-nav__link">Home</Link>
@@ -65,7 +65,7 @@ const Header: React.FC = observer(() => {
                 </Button>
               </li>
             </ul>
-          </div>
+          </div> */}
         </div>
       </div>
     </header>
