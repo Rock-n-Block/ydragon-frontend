@@ -7,7 +7,7 @@ import {
   InitialMintEvent,
   Machine,
   Main,
-  Partners,
+  // Partners,
 } from '../../components/HomeDark';
 
 const Home: React.FC = () => {
@@ -18,7 +18,7 @@ const Home: React.FC = () => {
       <Machine />
       <Features />
       <Advantages />
-      <Partners />
+      {/* <Partners /> */}
       <GetInModal />
     </main>
   );

@@ -15,7 +15,7 @@ const EventBanner: React.FC = observer(() => {
   // const { modals } = useMst();
   // const walletConnector = useWalletConnectorContext();
   // const [start, setStart] = useState(moment());
-  const mockStart = moment('20211007', 'YYYYDDMM');
+  const mockStart = moment('20211207', 'YYYYDDMM');
   // const [end, setEnd] = useState(moment());
   // const mockEnd = moment('20211008', 'YYYYDDMM');
   const [now, setNow] = useState(moment());
