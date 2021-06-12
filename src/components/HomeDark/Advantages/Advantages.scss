@@ -8,6 +8,10 @@
   padding: 40px 50px;
 
   @include shadow-dark-block;
+  @include b('tablet'){
+    display: flex;
+    flex-direction: column;
+  }
 }
 
 .advantages {
@@ -18,7 +22,9 @@
   width: 40%;
 
   color: $white;
-
+@include b('tablet'){
+  width: 100%;
+}
   &--yd {
     padding: 40px 50px;
 
@@ -29,6 +35,9 @@
     #{$this}__item {
       &:last-child {
         margin-top: auto;
+        @include b('tablet'){
+          margin-top: 40px;
+        }
       }
     }
   }
@@ -72,6 +81,12 @@
   box-shadow: -8px 0 36px rgba(0, 0, 0, 0.25);
   background-blend-mode: lighten;
 
+  @include b('tablet'){
+    margin-top: 40px;
+    padding-top: 30px;
+    width: 100%;
+    position: unset;
+  }
   &__title {
     @include title-text;
     position: absolute;
@@ -82,5 +97,8 @@
     text-align: center;
 
     color: $white;
+    @include b('tablet'){
+      position: unset;
+    }
   }
 }

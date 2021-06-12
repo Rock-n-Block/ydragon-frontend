@@ -11,6 +11,9 @@
   background-size: auto 100%;
   z-index: 999;
 
+  @include b('tablet'){
+    position: relative;
+  }
   &__inner {
     padding: 20px 0;
 
