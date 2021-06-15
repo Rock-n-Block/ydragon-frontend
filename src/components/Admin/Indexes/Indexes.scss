@@ -32,33 +32,7 @@
 .indexs-table {
   margin-top: 60px;
 
-  &__row {
-    padding: 20px 10px;
-
-    display: grid;
-    align-items: center;
-    grid-template-columns: repeat(3, 2fr) 1fr;
-    grid-column-gap: 20px;
-
-    & + & {
-      border-top: 1px solid rgba($black, 0.1);
-    }
-
-    &--head {
-      margin-bottom: 10px;
-      padding: 0 30px;
-
-      align-items: end;
-
-      font-family: 'MER', sans-serif;
-      font-size: 12px;
-      line-height: 14px;
-
-      color: rgba($black, 0.4);
-    }
-  }
-
-  &__sort {
+  /*&__sort {
     display: inline-flex;
     align-items: center;
 
@@ -84,28 +58,6 @@
         transform: rotate(180deg);
       }
     }
-  }
+  }*/
 
-  &__content {
-    @include shadow-block;
-    padding: 0 20px;
-
-    font-size: 20px;
-    line-height: 23px;
-
-    color: $black;
-  }
-
-  &__price {
-    font-family: 'MER', sans-serif;
-    font-size: 16px;
-    line-height: 19px;
-    letter-spacing: 0.1em;
-
-    color: $black;
-  }
-
-  &__name {
-    color: $black;
-  }
 }
