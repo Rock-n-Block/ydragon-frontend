@@ -277,15 +277,26 @@ export default class MetamaskService {
 
     const buyMethod = MetamaskService.getMethodInterface(config.Router.ABI, methodName);
 
-    const signature = this.encodeFunctionCall(buyMethod, [
-      spenderToken !== 'BNB' ? MetamaskService.calcTransactionAmount(value, 18) : '',
-      '0x0000000000000000000000000000000000000000',
-      otherTokenAddress
-        ? [otherTokenAddress, config.WBNB.ADDRESS, config.YDR.ADDRESS]
-        : [config.WBNB.ADDRESS, config.YDR.ADDRESS],
-      this.walletAddress,
-      moment().add(30, 'minutes').format('X'),
-    ]);
+    let signature;
+    if (spenderToken !== 'BNB') {
+      signature = this.encodeFunctionCall(buyMethod, [
+        MetamaskService.calcTransactionAmount(value, 18),
+        0,
+        config.WBNB.ADDRESS,
+        config.YDR.ADDRESS,
+        this.walletAddress,
+        moment().add(30, 'minutes').format('X'),
+      ]);
+    } else {
+      signature = this.encodeFunctionCall(buyMethod, [
+        0,
+        otherTokenAddress
+          ? [otherTokenAddress, config.WBNB.ADDRESS, config.YDR.ADDRESS]
+          : [config.WBNB.ADDRESS, config.YDR.ADDRESS],
+        this.walletAddress,
+        moment().add(30, 'minutes').format('X'),
+      ]);
+    }
 
     return this.sendTransaction({
       from: this.walletAddress,
