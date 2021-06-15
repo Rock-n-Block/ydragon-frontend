@@ -34,9 +34,7 @@ const Composition: React.FC<CompositionProps> = observer(({ status, tokens }) =>
               icon={tokenDiff.token.image}
               name={tokenDiff.token.name}
               abbr={tokenDiff.token.symbol}
-              weight={`${new BigNumber(tokenDiff.token.current_weight)
-                .multipliedBy(100)
-                .toFixed(2)}%`}
+              weight={`${new BigNumber(tokenDiff.new_weight).multipliedBy(100).toFixed(2)}%`}
             />
           ))}
         </div>

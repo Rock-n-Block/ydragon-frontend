@@ -1,10 +1,13 @@
-import React from 'react';
-import nextId from 'react-id-generator';
-import { FieldArray, Form, FormikProps } from 'formik';
+import React, { ChangeEvent, useState } from 'react';
+
+import { FieldArray, FieldArrayRenderProps, Form, FormikProps } from 'formik';
 import { observer } from 'mobx-react-lite';
 
-import { Button, Input } from '../../../components';
+import { Button, Input, Search } from '../../../components';
 import { ITokensDiff } from '../../../pages/Admin';
+import BigNumber from 'bignumber.js/bignumber';
+import { coinsApi } from '../../../services/api';
+import { ISearchToken } from '../../../components/Search';
 
 export interface IRebalance {
   index: { name: string };
@@ -16,22 +19,48 @@ export interface IRebalance {
 }
 
 const Rebalance: React.FC<FormikProps<IRebalance> & IRebalance> = observer(
-  ({ handleChange, handleBlur, values, handleSubmit }) => {
+  ({ setFieldValue, handleChange, handleBlur, values, handleSubmit }) => {
+    const [newTokenName, setNewTokenName] = useState<string>('');
+    const [searchTokens, setSearchTokens] = useState<ISearchToken[]>([] as ISearchToken);
     const weightsSum = values.tokens
       .map((tokenDiff) => +tokenDiff.new_weight)
-      .reduce((prevSum, newItem) => prevSum + newItem, 0);
+      .reduce((prevSum, newItem) => prevSum.plus(newItem), new BigNumber(0))
+      .toString(10);
+    const handleRemove = (arrayHelper: FieldArrayRenderProps, index: number) => {
+      if (values.tokens[index].id) {
+        setFieldValue(`tokens[${index}].to_delete`, !values.tokens[index].to_delete);
+      } else {
+        arrayHelper.remove(index);
+      }
+    };
+    const handleNewTokenNameChange = (tokenName: string) => {
+      if (tokenName.length >= 3) {
+        coinsApi
+          .getCoinsList(tokenName)
+          .then(({ data }) => {
+            console.log(`tokens with ${tokenName}`, data);
+          })
+          .catch((error) => {
+            const { response } = error;
+            console.log('search error', response);
+          });
+      }
+    };
+    const handleSearchPick = (pickedItem: ISearchToken) => {
+      console.log(pickedItem);
+    };
     return (
       <Form name="form-rebalance" className="form-rebalance">
         <FieldArray
           name="tokens"
-          render={() => (
+          render={(arrayHelper) => (
             <div className="rebalance-items">
               <div className="rebalance-items__head">
                 <div className="rebalance-items__head-col">Weight%</div>
               </div>
               {values.tokens && values.tokens.length > 0 ? (
                 values.tokens?.map((tokenDiff, index) => (
-                  <div className="rebalance-item" key={nextId()}>
+                  <div className="rebalance-item" key={`token ${tokenDiff.token.name}`}>
                     <div className="rebalance-item__info">
                       <img
                         src={tokenDiff.token.image}
@@ -56,15 +85,31 @@ const Rebalance: React.FC<FormikProps<IRebalance> & IRebalance> = observer(
                       />
                     </div>
 
-                    <Button
-                      styledType="outline"
-                      colorScheme="orange"
-                      background="gray"
-                      borderSize="lg"
-                      className="rebalance-item__remove"
-                    >
-                      Remove
-                    </Button>
+                    {!tokenDiff.to_delete ? (
+                      <Button
+                        styledType="outline"
+                        colorScheme="orange"
+                        background="gray"
+                        borderSize="lg"
+                        className="rebalance-item__remove"
+                        onClick={() => handleRemove(arrayHelper, index)}
+                        disabled={values.tokens.length === 1}
+                      >
+                        Remove
+                      </Button>
+                    ) : (
+                      <Button
+                        styledType="outline"
+                        colorScheme="orange"
+                        background="gray"
+                        borderSize="lg"
+                        className="rebalance-item__remove"
+                        onClick={() => handleRemove(arrayHelper, index)}
+                        disabled={values.tokens.length === 1}
+                      >
+                        Add back
+                      </Button>
+                    )}
                   </div>
                 ))
               ) : (
@@ -81,14 +126,15 @@ const Rebalance: React.FC<FormikProps<IRebalance> & IRebalance> = observer(
         </div>
 
         <div className="rebalance-add-token">
-          <input type="text" placeholder="Name token" className="rebalance-add-token__input" />
-
-          <Button
-            styledType="outline"
-            colorScheme="green"
-            background="white"
-            className="rebalance-add-token__btn"
-          >
+          <input
+            type="text"
+            placeholder="Name token"
+            value={newTokenName}
+            onChange={()=>handleNewTokenNameChange}
+            className="rebalance-add-token__input"
+          />
+          <Search onChange={(e) => handleNewTokenNameChange(e)} onPick={handleSearchPick} />
+          <Button background="white" className="rebalance-add-token__btn">
             Add Token
           </Button>
         </div>

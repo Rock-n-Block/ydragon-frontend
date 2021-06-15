@@ -23,6 +23,7 @@ const RebalanceForm: React.FC<RebalanceFormProps> = ({ name, tokens }) => {
         tokens.map((tokenDiff) => {
           return {
             ...tokenDiff,
+            deleting: false,
             new_weight: `${new BigNumber(tokenDiff.new_weight).multipliedBy(100).toNumber()}`,
           };
         }) || ([] as Array<ITokensDiff>),
