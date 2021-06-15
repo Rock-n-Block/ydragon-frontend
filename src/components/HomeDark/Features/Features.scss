@@ -9,7 +9,7 @@
   grid-column-gap: 120px;
   grid-row-gap: 60px;
   @include b('tablet'){
-    margin-top:70px;
+    //margin-top:70px;
     grid-template-columns: unset;
     grid-template-rows: repeat(4,1fr);
   }

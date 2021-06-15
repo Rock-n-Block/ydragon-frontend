@@ -14,6 +14,9 @@
   @include b('tablet'){
     position: relative;
   }
+  @include b('mobile'){
+    display: none;
+  }
   &__inner {
     padding: 20px 0;
 

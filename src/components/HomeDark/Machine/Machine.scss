@@ -26,7 +26,11 @@
   }
   &__img{
 
-    @include b('tablet'){width: 100%;
+    @include b('tablet'){
+      width: 100%;
+      img{
+        width: 100%;
+      }
     }
   }
 }
