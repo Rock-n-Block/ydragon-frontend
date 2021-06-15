@@ -1,18 +1,5 @@
-import React from 'react';
-import { Table as TableAntd } from 'antd';
-
-interface TableProps {
-  dataSource: any[];
-  columns: IColumns[];
-
-  className?: string;
-}
-export interface IColumns {
-  title?: string;
-  dataIndex: string;
-  key: string;
-  render?: any;
-}
+import React, { PropsWithChildren } from 'react';
+import { Table as TableAntd, TableProps } from 'antd';
 
 const StyleInjector = (children: any) => {
   const StyledChildren = () =>
@@ -25,15 +12,12 @@ const StyleInjector = (children: any) => {
   return <StyledChildren />;
 };
 
-const Table: React.FC<TableProps> = ({ dataSource, columns, className, children }) => {
+const Table: React.FC<TableProps<any>> = (props: PropsWithChildren<TableProps<any>>) => {
+  const { children, className, ...otherTableProps } = props;
+
   return (
     <div className={`table ${className || ''} ${children ? 'table-bottom-unbordered' : ''}`}>
-      <TableAntd
-        dataSource={dataSource}
-        columns={columns}
-        rowClassName="table-row"
-        pagination={false}
-      />
+      <TableAntd rowClassName="table-row" pagination={false} {...otherTableProps} />
       {children ? StyleInjector(children) : <></>}
     </div>
   );

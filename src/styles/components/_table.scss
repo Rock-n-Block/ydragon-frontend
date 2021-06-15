@@ -1,20 +1,38 @@
 .table {
   &-row {
     .ant-table-cell {
+      color: #ffffff;
       padding-top: 20px;
       padding-bottom: 20px;
       font-family: 'MER', sans-serif;
       font-size: 18px;
       line-height: 22px;
+      a{
+        color: #ffffff;
+      }
       &:first-child {
         padding-left: 31px;
       }
+    }
+    &:hover{
+      &>td{
+        background: #14265a !important;
+      }
+    }
+    td.ant-table-column-sort{
+      background: #14265a;
     }
   }
   &__col-with-logo {
     display: flex;
     align-items: center;
     font-family: 'TNR', sans-serif;
+    &__image {
+      margin-right: 10px;
+
+      width: 31px;
+      height: 31px;
+    }
   }
   .text-gradient {
     letter-spacing: 0.1em;
@@ -40,8 +58,18 @@
         border: none;
       }
     }
+    &-column-sorters{
+      justify-content: flex-start;
+      gap: 7px;
+      .ant-table-column-title{
+        flex: unset;
+      }
+    }
     &-tbody {
-      background: #ffffff;
+      background: linear-gradient(180deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0) 100%), linear-gradient(171.49deg, #1A1E3A 3.83%, #161A2A 100%);
+      &> tr > td{
+        border-bottom: 1px solid rgba(#FFFFFF,0.1);
+      }
       tr:first-child {
         td:first-child {
           border-top-left-radius: 16px;
@@ -49,11 +77,6 @@
         td:last-child {
           border-top-right-radius: 16px;
         }
-      }
-    }
-    tr:last-child {
-      td {
-        border-bottom: none;
       }
     }
   }
@@ -66,7 +89,7 @@
 
     .table-bottom {
       padding: 40px 20px;
-      background: white;
+      background: linear-gradient(180deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0) 100%), linear-gradient(171.49deg, #1A1E3A 3.83%, #161A2A 100%);
       width: 100%;
       border-bottom-left-radius: 16px;
       border-bottom-right-radius: 16px;

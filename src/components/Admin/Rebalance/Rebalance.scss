@@ -73,10 +73,12 @@
 
   &__btn-row {
     padding: 40px 0;
-
     display: flex;
     justify-content: center;
 
     border-top: 1px solid rgba($black, 0.1);
+    .btn {
+      max-width: 278px;
+    }
   }
 }

@@ -7,7 +7,6 @@ import { useMst } from '../../../store/store';
 import { Button, Table } from '../../index';
 
 import './Rebalance.scss';
-import { IColumns } from '../../Table';
 
 interface RebalanceProps extends IIndexStatus {
   tokens: Array<ITokensDiff>;
@@ -16,15 +15,15 @@ interface RebalanceProps extends IIndexStatus {
 const Rebalance: React.FC<RebalanceProps> = observer(({ status, tokens }) => {
   const { modals } = useMst();
   const rebalanceInProgress = status === 'PROCESSING';
-  const columns: IColumns[] = [
+  const columns: any[] = [
     {
       title: 'Token',
       dataIndex: 'name',
       key: 'name',
       render: (item: any) => (
         <div className="table__col-with-logo">
-          <img src={item.image} className="rebalance-table__image" alt={`${item.name} logo`} />
-          <span className="rebalance-table__token">{item.name}</span>
+          <img src={item.image} className="table__col-with-logo__image" alt={`${item.name} logo`} />
+          <span className="table__col-with-logo__text">{item.name}</span>
         </div>
       ),
     },
