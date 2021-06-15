@@ -12,7 +12,7 @@
     padding: 20px 16px;
 
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: 1fr 110px 110px;
     grid-gap: 15px;
 
     align-items: center;
@@ -66,8 +66,8 @@
     margin-top: 20px;
 
     &__head {
+      padding: 0 16px;
       margin-bottom: 10px;
-      padding-left: 166px;
 
       display: grid;
 
@@ -77,8 +77,11 @@
       text-align: center;
 
       color: rgba($black, 0.4);
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: 1fr 110px 110px;
       grid-column-gap: 15px;
+      &-col{
+        grid-column-start: 2;
+      }
     }
   }
 
@@ -86,7 +89,7 @@
     padding: 16px;
 
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: 1fr 110px 110px;
     grid-column-gap: 15px;
 
     align-items: center;

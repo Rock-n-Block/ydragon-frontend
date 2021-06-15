@@ -48,11 +48,6 @@ const Rebalance: React.FC<FormikProps<IRebalance> & IRebalance> = observer(
                     </div>
 
                     <div className="rebalance-item__input-wrapper">
-                      {/* <Field name={`tokens[${index}].token.current_weight`} value={tokenDiff.token.current_weight}/> */}
-                      {/* <AntdInput name={`tokens.${index}.current_weight`} defaultValue={tokenDiff.token.current_weight}
-                             onChange={handleChange}
-                             onBlur={handleBlur}
-                  /> */}
                       <Input
                         name={`tokens[${index}].new_weight`}
                         value={tokenDiff.new_weight}
@@ -60,16 +55,16 @@ const Rebalance: React.FC<FormikProps<IRebalance> & IRebalance> = observer(
                         onBlur={handleBlur}
                       />
                     </div>
-                    {/*
-            <Button
-              styledType='outline'
-              colorScheme='orange'
-              background='gray'
-              borderSize='lg'
-              className='rebalance-item__remove'
-            >
-              Remove
-            </Button> */}
+
+                    <Button
+                      styledType="outline"
+                      colorScheme="orange"
+                      background="gray"
+                      borderSize="lg"
+                      className="rebalance-item__remove"
+                    >
+                      Remove
+                    </Button>
                   </div>
                 ))
               ) : (
@@ -85,18 +80,18 @@ const Rebalance: React.FC<FormikProps<IRebalance> & IRebalance> = observer(
           </div>
         </div>
 
-        {/* <div className='rebalance-add-token'>
-              <input type='text' placeholder='Name token' className='rebalance-add-token__input' />
+        <div className="rebalance-add-token">
+          <input type="text" placeholder="Name token" className="rebalance-add-token__input" />
 
-              <Button
-                styledType='outline'
-                colorScheme='green'
-                background='white'
-                className='rebalance-add-token__btn'
-              >
-                Add Token
-              </Button>
-            </div> */}
+          <Button
+            styledType="outline"
+            colorScheme="green"
+            background="white"
+            className="rebalance-add-token__btn"
+          >
+            Add Token
+          </Button>
+        </div>
 
         <div className="rebalance-options-row">
           <div className="rebalance-options-row__title">Rebalance options</div>
