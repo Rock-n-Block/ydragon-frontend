@@ -1,53 +1,29 @@
 import React from 'react';
 import nextId from 'react-id-generator';
 import Icon from '@ant-design/icons';
-import { Input as InputAntd, Select } from 'antd';
+import { Input as InputAntd, InputProps, Select } from 'antd';
 
 import { ReactComponent as ArrowDown } from '../../assets/img/icons/icon-arrow-down.svg';
 import { ITokenMini } from '../../utils/tokenMini';
 
 const { Option } = Select;
 
-export interface IValue {
-  value?: string | number;
-  name?: string;
-  type?: 'text' | 'number';
-  placeholder?: string;
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onBlur?: React.FocusEventHandler<HTMLInputElement>;
-}
-
-const Input: React.FC<IValue> = ({ value, name, type = 'text', placeholder, onChange, onBlur }) => {
+const Input: React.FC<InputProps> = (props) => {
   return (
     <div className="input-border">
-      <InputAntd
-        name={name}
-        type={type}
-        value={value}
-        className="input"
-        placeholder={placeholder}
-        onChange={onChange}
-        onBlur={onBlur}
-      />
+      <InputAntd className="input" {...props} />
     </div>
   );
 };
 
-interface InputWithSelectProps extends IValue {
+interface InputWithSelectProps extends InputProps {
   tokens: ITokenMini | Array<ITokenMini>;
   onSelectChange?: (value: string) => void;
 }
 
-export const InputWithSelect: React.FC<InputWithSelectProps> = ({
-  value,
-  name,
-  type,
-  tokens,
-  placeholder,
-  onChange,
-  onSelectChange,
-  onBlur,
-}) => {
+export const InputWithSelect: React.FC<InputWithSelectProps> = (props) => {
+  const { tokens, onSelectChange, ...otherInputProps } = props;
+
   let tokenOrSelect;
   if (Array.isArray(tokens)) {
     tokenOrSelect = (
@@ -81,15 +57,7 @@ export const InputWithSelect: React.FC<InputWithSelectProps> = ({
   }
   return (
     <div className="input-with-select input-border">
-      <InputAntd
-        name={name}
-        type={type}
-        value={value}
-        className="input"
-        placeholder={placeholder}
-        onChange={onChange}
-        onBlur={onBlur}
-      />
+      <InputAntd className="input" {...otherInputProps} />
       {tokenOrSelect}
     </div>
   );
