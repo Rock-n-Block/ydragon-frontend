@@ -51,12 +51,12 @@ const InitialMintEvent: React.FC = observer(() => {
   return (
     <section className="section">
       <h2 className="section__title text-outline">INITIAL minting Event</h2>
-      <p className="section__sub-title">Guaranteed YDR allocation for index minters</p>
+      <p className="section__sub-title">FUNDED YDR ALLOCATION FOR INDEX STAKERS </p>
 
       <div className="initial-mint-event">
         <div className="initial-mint-event__timings">
           <div className="initial-mint-event__timing timing-start">
-            <p className="initial-mint-event__timing-name">days before start</p>
+            <p className="initial-mint-event__timing-name">DAYS UNTIL AWAKENING</p>
             <p className="initial-mint-event__timer">
               <span className="initial-mint-event__timer-time">
                 {/* {start.diff(now, 'days') < 0 ? 0 : start.diff(now, 'days')} */}
@@ -87,7 +87,7 @@ const InitialMintEvent: React.FC = observer(() => {
           </div>
 
           {/* <div className="initial-mint-event__timing timing-finish">
-            <p className="initial-mint-event__timing-name">days to finish</p>
+            <p className="initial-mint-event__timing-name">DAYS BEFORE DISTRIBUTION</p>
             <p className="initial-mint-event__timer">
               <span className="initial-mint-event__timer-time">
                  {end.diff(now, 'days') < 0 ? 0 : end.diff(now, 'days')}
@@ -123,14 +123,13 @@ const InitialMintEvent: React.FC = observer(() => {
           <h3 className="initial-mint-event__title">B5 Index</h3>
 
           <p className="initial-mint-event__description">
-            The BSC Top 5 Reputable Projects is a selection of the top 5 tokens listed across
-            multiple chains on binance, in addition to YDR, that have the ability to produce a high
-            yield.
+            The BSC Top 5 Reputable Projects is a selection of the top 5 tokens listed on binance
+            smart chain, in addition to YDR, that have the ability to produce a high yield.
           </p>
 
           {/* <Button onClick={handleGetIn} className="initial-mint-event__get-btn" disabled>
             {' '}
-            GET IN!
+            Enter!
           </Button> */}
         </div>
       </div>

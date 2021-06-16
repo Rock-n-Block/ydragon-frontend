@@ -26,7 +26,6 @@ const Machine: React.FC = () => {
               read here
             </a>
           </span> */}
-          .
         </p>
 
         <div className="machine__img">

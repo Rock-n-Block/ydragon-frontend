@@ -11,9 +11,11 @@
   @include shadow-dark-block;
 
   @include b('tablet'){
-    padding: 0;
     flex-direction: column;
     margin-top: 40px;
+  }
+  @include b('mobile'){
+    padding: 0;
   }
   &__content {
     max-width: 305px;

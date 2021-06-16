@@ -94,7 +94,7 @@ const EventBanner: React.FC = observer(() => {
             <div className="event-banner__btns-inner">
               <Button onClick={handleGetIn} className="event-banner__get-btn" disabled>
                 {' '}
-                GET IN!
+                Enter!
               </Button>
 
               <Button

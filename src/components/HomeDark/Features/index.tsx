@@ -22,7 +22,7 @@ const Features: React.FC = () => {
             <div className="features-item__title">Cross-Chain</div>
 
             <div className="features-item__descr">
-              YDragon technology allows you to invest in Indexes from various blockchains. No more
+              The YDragon protocol allows you to invest in indexes from various blockchains. No more
               hassle switching from one network to another.
             </div>
           </div>
@@ -33,7 +33,7 @@ const Features: React.FC = () => {
             <img src={icon2} alt="" width="64" height="64" />
           </div>
           <div className="features-item__content">
-            <div className="features-item__title">Yield-Generation</div>
+            <div className="features-item__title">Yield Generation</div>
 
             <div className="features-item__descr">
               When you lock your funds in an index, you will be entitled to a passive income through
@@ -48,7 +48,7 @@ const Features: React.FC = () => {
             <img src={icon3} alt="" width="64" height="64" />
           </div>
           <div className="features-item__content">
-            <div className="features-item__title">Risk-Diversification</div>
+            <div className="features-item__title">Risk Diversification</div>
 
             <div className="features-item__descr">
               Everyone knows it, do not put all your eggs in the same basket. That&apos;s why at
@@ -63,11 +63,12 @@ const Features: React.FC = () => {
             <img src={icon4} alt="" width="64" height="64" />
           </div>
           <div className="features-item__content">
-            <div className="features-item__title">Governance</div>
+            <div className="features-item__title">Utility & Governance</div>
 
             <div className="features-item__descr">
-              Our YDR token is, among other cool advantages, a governance token. What does it mean?
-              You will be able to vote and decide of the future of the YDragon indexes & strategies.
+              Our YDR token is, among other cool advantages, a utility and governance token. What
+              does it mean? You will be able to vote and decide of the future of the YDragon indexes
+              & strategies, and earn passive income at the same time.
             </div>
           </div>
         </div>
