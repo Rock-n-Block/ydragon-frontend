@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { useState } from 'react';
 
 import { FieldArray, FieldArrayRenderProps, Form, FormikProps } from 'formik';
 import { observer } from 'mobx-react-lite';
@@ -6,9 +6,14 @@ import { observer } from 'mobx-react-lite';
 import { Button, Input, Search } from '../../../components';
 import { ITokensDiff } from '../../../pages/Admin';
 import BigNumber from 'bignumber.js/bignumber';
-import { coinsApi } from '../../../services/api';
+import { coinsApi, indexesApi } from '../../../services/api';
 import { ISearchToken } from '../../../components/Search';
+import { IToken } from '../../../components/IndexPage/IndexTable';
+import { useParams } from 'react-router-dom';
 
+interface IIndexId {
+  indexId: string;
+}
 export interface IRebalance {
   index: { name: string };
   tokens: Array<ITokensDiff>;
@@ -20,8 +25,9 @@ export interface IRebalance {
 
 const Rebalance: React.FC<FormikProps<IRebalance> & IRebalance> = observer(
   ({ setFieldValue, handleChange, handleBlur, values, handleSubmit }) => {
-    const [newTokenName, setNewTokenName] = useState<string>('');
-    const [searchTokens, setSearchTokens] = useState<ISearchToken[]>([] as ISearchToken);
+    const { indexId } = useParams<IIndexId>();
+    const [newToken, setNewToken] = useState<ISearchToken>({} as ISearchToken);
+    const [searchTokens, setSearchTokens] = useState<ISearchToken[]>([] as ISearchToken[]);
     const weightsSum = values.tokens
       .map((tokenDiff) => +tokenDiff.new_weight)
       .reduce((prevSum, newItem) => prevSum.plus(newItem), new BigNumber(0))
@@ -39,6 +45,7 @@ const Rebalance: React.FC<FormikProps<IRebalance> & IRebalance> = observer(
           .getCoinsList(tokenName)
           .then(({ data }) => {
             console.log(`tokens with ${tokenName}`, data);
+            setSearchTokens(data);
           })
           .catch((error) => {
             const { response } = error;
@@ -47,7 +54,33 @@ const Rebalance: React.FC<FormikProps<IRebalance> & IRebalance> = observer(
       }
     };
     const handleSearchPick = (pickedItem: ISearchToken) => {
+      setNewToken(pickedItem);
       console.log(pickedItem);
+    };
+    const handleAddNewToken = (arrayHelper: FieldArrayRenderProps) => {
+      indexesApi
+        .addTokenToIndex(+indexId, newToken.symbol)
+        .then(() => {
+          arrayHelper.push({
+            to_delete: false,
+            new_weight: '0',
+            pending: true,
+            id: 0,
+            old_weight: '0',
+            diff: 0,
+            token: {
+              name: newToken.name,
+              symbol: newToken.symbol,
+              image: newToken.image,
+              address: newToken.address,
+              id: 0,
+            } as IToken,
+          } as ITokensDiff);
+        })
+        .catch((error) => {
+          const { response } = error;
+          console.log('add new token error', response);
+        });
     };
     return (
       <Form name="form-rebalance" className="form-rebalance">
@@ -115,29 +148,30 @@ const Rebalance: React.FC<FormikProps<IRebalance> & IRebalance> = observer(
               ) : (
                 <></>
               )}
+              <div className="rebalance__total">
+                <h3 className="rebalance__total-name">Total weight</h3>
+                <div className="input-border">
+                  <span className="input">{weightsSum}</span>
+                </div>
+              </div>
+
+              <div className="rebalance-add-token">
+                <Search
+                  data={searchTokens}
+                  onChange={(e) => handleNewTokenNameChange(e)}
+                  onPick={handleSearchPick}
+                />
+                <Button
+                  background="white"
+                  className="rebalance-add-token__btn"
+                  onClick={() => handleAddNewToken(arrayHelper)}
+                >
+                  Add Token
+                </Button>
+              </div>
             </div>
           )}
         />
-        <div className="rebalance__total">
-          <h3 className="rebalance__total-name">Total weight</h3>
-          <div className="input-border">
-            <span className="input">{weightsSum}</span>
-          </div>
-        </div>
-
-        <div className="rebalance-add-token">
-          <input
-            type="text"
-            placeholder="Name token"
-            value={newTokenName}
-            onChange={()=>handleNewTokenNameChange}
-            className="rebalance-add-token__input"
-          />
-          <Search onChange={(e) => handleNewTokenNameChange(e)} onPick={handleSearchPick} />
-          <Button background="white" className="rebalance-add-token__btn">
-            Add Token
-          </Button>
-        </div>
 
         <div className="rebalance-options-row">
           <div className="rebalance-options-row__title">Rebalance options</div>

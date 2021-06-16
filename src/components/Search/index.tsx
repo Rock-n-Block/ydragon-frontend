@@ -31,7 +31,7 @@ const Search: React.FC<SearchProps> = ({ data, className, onChange, onPick }) =>
         className="rebalance-add-token__input"
       />
       <ul className="search__items">
-        {data?.map((item) => (
+        {data?.slice(0, 5).map((item) => (
           <li className="search__item" key={`search-${item.symbol}`}>
             <div
               role="button"
