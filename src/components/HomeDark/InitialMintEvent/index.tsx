@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-// import BigNumber from 'bignumber.js/bignumber';
+import BigNumber from 'bignumber.js/bignumber';
 import { observer } from 'mobx-react-lite';
 import moment from 'moment';
 
-// import { useWalletConnectorContext } from '../../../services/walletConnect';
+import { useWalletConnectorContext } from '../../../services/walletConnect';
 import { useMst } from '../../../store/store';
 import { Button } from '../../index';
 
@@ -11,12 +11,11 @@ import './InitialMintEvent.scss';
 
 const InitialMintEvent: React.FC = observer(() => {
   const { modals } = useMst();
-  // const walletConnector = useWalletConnectorContext();
-  // const [start, setStart] = useState(moment());
-  const mockStart = moment('20211007', 'YYYYDDMM');
-  // const [end, setEnd] = useState(moment());
-  const mockEnd = moment('20211008', 'YYYYDDMM');
+  const walletConnector = useWalletConnectorContext();
+  const [start, setStart] = useState(moment());
+  const [end, setEnd] = useState(moment());
   const [now, setNow] = useState(moment());
+  const [imeEnabled, setImeEnabled] = useState<boolean>(false);
   const handleGetIn = () => {
     modals.getIn.open();
   };
@@ -24,11 +23,16 @@ const InitialMintEvent: React.FC = observer(() => {
     const interval = setInterval(() => {
       setNow(moment());
     }, 1000);
+    if (end.diff(now, 'seconds') < 0) {
+      setImeEnabled(true);
+    } else {
+      setImeEnabled(false);
+    }
     return () => {
       clearInterval(interval);
     };
-  }, []);
-  /*  useEffect(() => {
+  }, [end, now]);
+  useEffect(() => {
     walletConnector.metamaskService
       .getStartDate()
       .then((data: any) => {
@@ -47,7 +51,7 @@ const InitialMintEvent: React.FC = observer(() => {
       .catch((err: any) => {
         console.log('get balance error', err);
       });
-  }, [walletConnector.metamaskService]); */
+  }, [walletConnector.metamaskService]);
   return (
     <section className="section">
       <h2 className="section__title text-outline">INITIAL minting Event</h2>
@@ -59,23 +63,19 @@ const InitialMintEvent: React.FC = observer(() => {
             <p className="initial-mint-event__timing-name">days before start</p>
             <p className="initial-mint-event__timer">
               <span className="initial-mint-event__timer-time">
-                {/* {start.diff(now, 'days') < 0 ? 0 : start.diff(now, 'days')} */}
-                {mockStart.diff(now, 'days') < 0 ? 0 : mockStart.diff(now, 'days')}
+                {start.diff(now, 'days') < 0 ? 0 : start.diff(now, 'days')}
               </span>
               <span className="initial-mint-event__timer-colon">:</span>
               <span className="initial-mint-event__timer-time">
-                {/* {start.diff(now, 'hours') < 0 ? 0 : start.diff(now, 'hours') % 24} */}
-                {mockStart.diff(now, 'hours') < 0 ? 0 : mockStart.diff(now, 'hours') % 24}
+                {start.diff(now, 'hours') < 0 ? 0 : start.diff(now, 'hours') % 24}
               </span>
               <span className="initial-mint-event__timer-colon">:</span>
               <span className="initial-mint-event__timer-time">
-                {/* {start.diff(now, 'minutes') < 0 ? 0 : start.diff(now, 'minutes') % 60} */}
-                {mockStart.diff(now, 'minutes') < 0 ? 0 : mockStart.diff(now, 'minutes') % 60}
+                {start.diff(now, 'minutes') < 0 ? 0 : start.diff(now, 'minutes') % 60}
               </span>
               <span className="initial-mint-event__timer-colon">:</span>
               <span className="initial-mint-event__timer-time">
-                {/* {start.diff(now, 'seconds') < 0 ? 0 : start.diff(now, 'seconds') % 60} */}
-                {mockStart.diff(now, 'seconds') < 0 ? 0 : mockStart.diff(now, 'seconds') % 60}
+                {start.diff(now, 'seconds') < 0 ? 0 : start.diff(now, 'seconds') % 60}
               </span>
             </p>
             <div className="initial-mint-event__unit">
@@ -90,23 +90,19 @@ const InitialMintEvent: React.FC = observer(() => {
             <p className="initial-mint-event__timing-name">days to finish</p>
             <p className="initial-mint-event__timer">
               <span className="initial-mint-event__timer-time">
-                {/* {end.diff(now, 'days') < 0 ? 0 : end.diff(now, 'days')} */}
-                {mockEnd.diff(now, 'days') < 0 ? 0 : mockEnd.diff(now, 'days')}
+                {end.diff(now, 'days') < 0 ? 0 : end.diff(now, 'days')}
               </span>
               <span className="initial-mint-event__timer-colon">:</span>
               <span className="initial-mint-event__timer-time">
-                {/* {end.diff(now, 'hours') < 0 ? 0 : end.diff(now, 'hours') % 24} */}
-                {mockEnd.diff(now, 'hours') < 0 ? 0 : mockEnd.diff(now, 'hours') % 24}
+                {end.diff(now, 'hours') < 0 ? 0 : end.diff(now, 'hours') % 24}
               </span>
               <span className="initial-mint-event__timer-colon">:</span>
               <span className="initial-mint-event__timer-time">
-                {/* {end.diff(now, 'minutes') < 0 ? 0 : end.diff(now, 'minutes') % 60} */}
-                {mockEnd.diff(now, 'minutes') < 0 ? 0 : mockEnd.diff(now, 'minutes') % 60}
+                {end.diff(now, 'minutes') < 0 ? 0 : end.diff(now, 'minutes') % 60}
               </span>
               <span className="initial-mint-event__timer-colon">:</span>
               <span className="initial-mint-event__timer-time">
-                {/* {end.diff(now, 'seconds') < 0 ? 0 : end.diff(now, 'seconds') % 60} */}
-                {mockEnd.diff(now, 'seconds') < 0 ? 0 : mockEnd.diff(now, 'seconds') % 60}
+                {end.diff(now, 'seconds') < 0 ? 0 : end.diff(now, 'seconds') % 60}
               </span>
             </p>
 
@@ -128,9 +124,13 @@ const InitialMintEvent: React.FC = observer(() => {
             yield.
           </p>
 
-          <Button onClick={handleGetIn} className="initial-mint-event__get-btn" disabled>
+          <Button
+            onClick={handleGetIn}
+            className="initial-mint-event__get-btn"
+            disabled={imeEnabled}
+          >
             {' '}
-            GET IN!
+            Enter!
           </Button>
         </div>
       </div>

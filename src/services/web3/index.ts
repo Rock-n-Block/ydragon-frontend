@@ -183,11 +183,24 @@ export default class MetamaskService {
   }
 
   getStartDate() {
-    return this.getContract('MAIN').methods.imeStartTimestamp().call();
+    // return this.getContract('MAIN').methods.imeStartTimestamp().call();
+    return new this.web3Provider.eth.Contract(
+      config.MAIN.ABI as Array<any>,
+      '0xeD86087c760EcB754D42b9030B606b4C974bA718',
+    ).methods
+      .imeStartTimestamp()
+      .call();
   }
 
   getEndDate() {
-    return this.getContract('MAIN').methods.imeEndTimestamp().call();
+    // TODO: change this to normal contract later
+    // return this.getContract('MAIN').methods.imeEndTimestamp().call();
+    return new this.web3Provider.eth.Contract(
+      config.MAIN.ABI as Array<any>,
+      '0xeD86087c760EcB754D42b9030B606b4C974bA718',
+    ).methods
+      .imeEndTimestamp()
+      .call();
   }
 
   async checkAllowance(toContract: ContractTypes, spender?: ContractTypes) {
