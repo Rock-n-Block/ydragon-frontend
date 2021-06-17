@@ -13,4 +13,6 @@ export default {
     axiosWithToken.post(`/indexes/${indexId}/rebalance/tokens/`, { symbol, new_weight: 0 }),
   removeTokenFromIndex: (indexId: number, tokenId: number) =>
     axiosWithToken.delete(`/indexes/${indexId}/rebalance/tokens/${tokenId}/`),
+  addTokenBackToIndex: (indexId: number, tokenId: number) =>
+    axiosWithToken.put(`/indexes/${indexId}/rebalance/tokens/${tokenId}/`, {}),
 };

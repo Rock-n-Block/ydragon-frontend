@@ -10,6 +10,7 @@ import { coinsApi, indexesApi } from '../../../services/api';
 import { ISearchToken } from '../../../components/Search';
 import { IToken } from '../../../components/IndexPage/IndexTable';
 import { useParams } from 'react-router-dom';
+import { ReactComponent as GreenPlus } from '../../../assets/img/icons/icon-plus-green.svg';
 
 interface IIndexId {
   indexId: string;
@@ -32,13 +33,6 @@ const Rebalance: React.FC<FormikProps<IRebalance> & IRebalance> = observer(
       .map((tokenDiff) => +tokenDiff.new_weight)
       .reduce((prevSum, newItem) => prevSum.plus(newItem), new BigNumber(0))
       .toString(10);
-    const handleRemove = (arrayHelper: FieldArrayRenderProps, index: number) => {
-      if (values.tokens[index].id) {
-        setFieldValue(`tokens[${index}].to_delete`, !values.tokens[index].to_delete);
-      } else {
-        arrayHelper.remove(index);
-      }
-    };
     const handleNewTokenNameChange = (tokenName: string) => {
       if (tokenName.length >= 3) {
         coinsApi
@@ -57,30 +51,63 @@ const Rebalance: React.FC<FormikProps<IRebalance> & IRebalance> = observer(
       setNewToken(pickedItem);
       console.log(pickedItem);
     };
-    const handleAddNewToken = (arrayHelper: FieldArrayRenderProps) => {
+    const handleRemove = (arrayHelper: FieldArrayRenderProps, index: number) => {
       indexesApi
-        .addTokenToIndex(+indexId, newToken.symbol)
+        .removeTokenFromIndex(+indexId, values.tokens[index].id)
         .then(() => {
-          arrayHelper.push({
-            to_delete: false,
-            new_weight: '0',
-            pending: true,
-            id: 0,
-            old_weight: '0',
-            diff: 0,
-            token: {
-              name: newToken.name,
-              symbol: newToken.symbol,
-              image: newToken.image,
-              address: newToken.address,
-              id: 0,
-            } as IToken,
-          } as ITokensDiff);
+          if (values.tokens[index].pending === false) {
+            setFieldValue(`tokens[${index}].to_delete`, !values.tokens[index].to_delete);
+            setFieldValue(`tokens[${index}].new_weight`, 0);
+          } else {
+            arrayHelper.remove(index);
+          }
         })
         .catch((error) => {
           const { response } = error;
-          console.log('add new token error', response);
+          console.log('search error', response);
         });
+    };
+    const handleAddBack = (arrayHelper: FieldArrayRenderProps, index: number) => {
+      indexesApi
+        .addTokenBackToIndex(+indexId, values.tokens[index].id)
+        .then(({ data }) => {
+          setFieldValue(`tokens[${index}].to_delete`, !values.tokens[index].to_delete);
+          setFieldValue(
+            `tokens[${index}].new_weight`,
+            new BigNumber(data.new_weight).multipliedBy(100),
+          );
+        })
+        .catch((error) => {
+          const { response } = error;
+          console.log('search error', response);
+        });
+    };
+    const handleAddNewToken = (arrayHelper: FieldArrayRenderProps) => {
+      if (newToken.symbol) {
+        indexesApi
+          .addTokenToIndex(+indexId, newToken.symbol)
+          .then(({ data }) => {
+            arrayHelper.push({
+              to_delete: false,
+              new_weight: '0',
+              pending: true,
+              id: data.id,
+              old_weight: '0',
+              diff: 0,
+              token: {
+                name: newToken.name,
+                symbol: newToken.symbol,
+                image: newToken.image,
+                address: newToken.address,
+                id: 0,
+              } as IToken,
+            } as ITokensDiff);
+          })
+          .catch((error) => {
+            const { response } = error;
+            console.log('add new token error', response);
+          });
+      }
     };
     return (
       <Form name="form-rebalance" className="form-rebalance">
@@ -111,6 +138,7 @@ const Rebalance: React.FC<FormikProps<IRebalance> & IRebalance> = observer(
 
                     <div className="rebalance-item__input-wrapper">
                       <Input
+                        disabled={tokenDiff.to_delete}
                         name={`tokens[${index}].new_weight`}
                         value={tokenDiff.new_weight}
                         onChange={handleChange}
@@ -121,9 +149,7 @@ const Rebalance: React.FC<FormikProps<IRebalance> & IRebalance> = observer(
                     {!tokenDiff.to_delete ? (
                       <Button
                         styledType="outline"
-                        colorScheme="orange"
-                        background="gray"
-                        borderSize="lg"
+                        colorScheme="red"
                         className="rebalance-item__remove"
                         onClick={() => handleRemove(arrayHelper, index)}
                         disabled={values.tokens.length === 1}
@@ -133,11 +159,9 @@ const Rebalance: React.FC<FormikProps<IRebalance> & IRebalance> = observer(
                     ) : (
                       <Button
                         styledType="outline"
-                        colorScheme="orange"
-                        background="gray"
-                        borderSize="lg"
+                        colorScheme="green"
                         className="rebalance-item__remove"
-                        onClick={() => handleRemove(arrayHelper, index)}
+                        onClick={() => handleAddBack(arrayHelper, index)}
                         disabled={values.tokens.length === 1}
                       >
                         Add back
@@ -162,10 +186,12 @@ const Rebalance: React.FC<FormikProps<IRebalance> & IRebalance> = observer(
                   onPick={handleSearchPick}
                 />
                 <Button
-                  background="white"
+                  styledType="outline"
+                  colorScheme="green"
                   className="rebalance-add-token__btn"
                   onClick={() => handleAddNewToken(arrayHelper)}
                 >
+                  <GreenPlus />
                   Add Token
                 </Button>
               </div>

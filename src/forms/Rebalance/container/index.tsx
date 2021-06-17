@@ -40,10 +40,6 @@ const RebalanceForm: React.FC<RebalanceFormProps> = ({ name, tokens }) => {
       setFieldValue('isLoading', true);
       const tokens_diff = values.tokens.map((tokenDiff) => {
         return {
-          token: {
-            count: tokenDiff.token.count,
-            address: tokenDiff.token.address,
-          },
           id: tokenDiff.id,
           new_weight: new BigNumber(tokenDiff.new_weight).dividedBy(100).toString(10),
         };
