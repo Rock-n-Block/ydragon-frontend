@@ -22,8 +22,7 @@ const Features: React.FC = () => {
             <div className="features-item__title">Cross-Chain</div>
 
             <div className="features-item__descr">
-              The YDragon protocol allows you to invest in indexes from various blockchains. No more
-              hassle switching from one network to another.
+              The YDragon protocol allows you to invest in indexes from various blockchains.
             </div>
           </div>
         </div>
