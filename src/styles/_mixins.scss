@@ -57,10 +57,9 @@
   color: $black;
 }
 
-@mixin shadow-block {
-  background-color: $white;
+@mixin shadow-block {background: linear-gradient(180deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0) 100%), linear-gradient(171.49deg, #1A1E3A 3.83%, #161A2A 100%);
   border-radius: 16px;
-  box-shadow: $shadow;
+  box-shadow: $shadow-dark;
 }
 
 @mixin shadow-dark-block {

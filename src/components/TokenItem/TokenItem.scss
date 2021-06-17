@@ -10,7 +10,7 @@
 
   box-sizing: border-box;
 
-  background-color: $gray-bg;
+  background: rgba(255, 255, 255, 0.05);
   border-radius: 40px;
 
   &__info {
@@ -20,6 +20,7 @@
 
   &__name-wrapper {
     margin-left: 10px;
+    color: white;
   }
 
   &__name {
@@ -27,15 +28,13 @@
     font-size: 18px;
     line-height: 21px;
 
-    color: $black;
   }
 
   &__abbr {
     font-size: 18px;
     line-height: 21px;
     text-transform: uppercase;
-
-    color: rgba($black, 0.4);
+opacity: 0.4;
   }
 
   &__weight {
@@ -66,13 +65,15 @@
 
       padding: 3px;
 
-      background: $white;
+
+      background: rgb(35, 38, 60);
       background-clip: content-box;
       border-radius: 60px;
     }
 
     span {
       position: relative;
+      color: white;
     }
   }
 }
