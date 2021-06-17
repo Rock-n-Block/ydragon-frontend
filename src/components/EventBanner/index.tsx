@@ -62,23 +62,31 @@ const EventBanner: React.FC = observer(() => {
           </div>
 
           <div className="event-banner-timer">
-            <p className="event-banner-timer__title">INITIAL minting Event</p>
+            <p className="event-banner-timer__title">
+              INITIAL minting Event <span>{imeEnabled ? 'Starts in' : 'ends in'}</span>
+            </p>
 
             <div className="event-banner-timer__row">
               <span className="event-banner-timer__time">
-                {start.diff(now, 'days') < 0 ? 0 : start.diff(now, 'days')}
+                {start.diff(now, 'days') <= 0 ? end.diff(now, 'days') : start.diff(now, 'days')}
               </span>
               <span className="event-banner-timer__colon">:</span>
               <span className="event-banner-timer__time">
-                {start.diff(now, 'hours') < 0 ? 0 : start.diff(now, 'hours') % 24}
+                {start.diff(now, 'hours') < 0
+                  ? end.diff(now, 'hours') % 24
+                  : start.diff(now, 'hours') % 24}
               </span>
               <span className="event-banner-timer__colon">:</span>
               <span className="event-banner-timer__time">
-                {start.diff(now, 'minutes') < 0 ? 0 : start.diff(now, 'minutes') % 60}
+                {start.diff(now, 'minutes') < 0
+                  ? end.diff(now, 'minutes') % 60
+                  : start.diff(now, 'minutes') % 60}
               </span>
               <span className="event-banner-timer__colon">:</span>
               <span className="event-banner-timer__time">
-                {start.diff(now, 'seconds') < 0 ? 0 : start.diff(now, 'seconds') % 60}
+                {start.diff(now, 'seconds') < 0
+                  ? end.diff(now, 'seconds') % 60
+                  : start.diff(now, 'seconds') % 60}
               </span>
             </div>
             <div className="event-banner-timer__unit">

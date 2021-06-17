@@ -54,6 +54,8 @@
   align-items: center;
 
   &__title {
+    display: flex;
+    flex-direction: column;
     @include title-text;
     text-align: center;
 
@@ -73,7 +75,7 @@
   }
 
   &__time {
-    width: 55px;
+    min-width: 55px;
   }
 
   &__colon {
