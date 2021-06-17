@@ -1,6 +1,6 @@
 export default {
   MAIN: {
-    ADDRESS: '0xfbce4D8A33Ac3a25bdf39fA158fA9B2E37B49349',
+    ADDRESS: '0xeD86087c760EcB754D42b9030B606b4C974bA718',
     ABI: [
       { inputs: [], stateMutability: 'nonpayable', type: 'constructor' },
       {
@@ -30,36 +30,6 @@ export default {
       {
         anonymous: false,
         inputs: [
-          { indexed: true, internalType: 'bytes32', name: 'role', type: 'bytes32' },
-          { indexed: true, internalType: 'bytes32', name: 'previousAdminRole', type: 'bytes32' },
-          { indexed: true, internalType: 'bytes32', name: 'newAdminRole', type: 'bytes32' },
-        ],
-        name: 'RoleAdminChanged',
-        type: 'event',
-      },
-      {
-        anonymous: false,
-        inputs: [
-          { indexed: true, internalType: 'bytes32', name: 'role', type: 'bytes32' },
-          { indexed: true, internalType: 'address', name: 'account', type: 'address' },
-          { indexed: true, internalType: 'address', name: 'sender', type: 'address' },
-        ],
-        name: 'RoleGranted',
-        type: 'event',
-      },
-      {
-        anonymous: false,
-        inputs: [
-          { indexed: true, internalType: 'bytes32', name: 'role', type: 'bytes32' },
-          { indexed: true, internalType: 'address', name: 'account', type: 'address' },
-          { indexed: true, internalType: 'address', name: 'sender', type: 'address' },
-        ],
-        name: 'RoleRevoked',
-        type: 'event',
-      },
-      {
-        anonymous: false,
-        inputs: [
           { indexed: true, internalType: 'address', name: 'from', type: 'address' },
           { indexed: true, internalType: 'address', name: 'to', type: 'address' },
           { indexed: false, internalType: 'uint256', name: 'value', type: 'uint256' },
@@ -79,13 +49,6 @@ export default {
       },
       {
         inputs: [],
-        name: 'DEFAULT_ADMIN_ROLE',
-        outputs: [{ internalType: 'bytes32', name: '', type: 'bytes32' }],
-        stateMutability: 'view',
-        type: 'function',
-      },
-      {
-        inputs: [],
         name: 'MANAGER_ROLE',
         outputs: [{ internalType: 'bytes32', name: '', type: 'bytes32' }],
         stateMutability: 'view',
@@ -95,10 +58,9 @@ export default {
         inputs: [
           { internalType: 'string', name: 'name', type: 'string' },
           { internalType: 'string', name: 'symbol', type: 'string' },
-          { internalType: 'address[2]', name: 'oracleAndDexRouter', type: 'address[2]' },
-          { internalType: 'uint256[2]', name: 'ImeTimeInfo', type: 'uint256[2]' },
+          { internalType: 'address[3]', name: 'oracleDexRouterAndZVault', type: 'address[3]' },
+          { internalType: 'uint256[2]', name: 'imeTimeInfo', type: 'uint256[2]' },
           { internalType: 'address[]', name: '_tokenWhitelist', type: 'address[]' },
-          { internalType: 'address', name: 'admin', type: 'address' },
           { internalType: 'address[]', name: '_tokensInAsset', type: 'address[]' },
           { internalType: 'uint256[]', name: '_tokensDistribution', type: 'uint256[]' },
         ],
@@ -169,6 +131,17 @@ export default {
         type: 'function',
       },
       {
+        inputs: [
+          { internalType: 'uint256[]', name: 'tokenAmountsOfY', type: 'uint256[]' },
+          { internalType: 'address[]', name: 'tokensOfDividends', type: 'address[]' },
+          { internalType: 'uint256[]', name: 'amountOfDividends', type: 'uint256[]' },
+        ],
+        name: 'depositToIndex',
+        outputs: [],
+        stateMutability: 'nonpayable',
+        type: 'function',
+      },
+      {
         inputs: [],
         name: 'dexRouter',
         outputs: [{ internalType: 'address', name: '', type: 'address' }],
@@ -201,35 +174,56 @@ export default {
       },
       {
         inputs: [],
+        name: 'feeAmountInAssetToken',
+        outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
+        inputs: [],
         name: 'feeAmountToZ',
         outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
         stateMutability: 'view',
         type: 'function',
       },
       {
-        inputs: [{ internalType: 'bytes32', name: 'role', type: 'bytes32' }],
-        name: 'getRoleAdmin',
-        outputs: [{ internalType: 'bytes32', name: '', type: 'bytes32' }],
+        inputs: [],
+        name: 'feeLimitForAuto',
+        outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
         stateMutability: 'view',
         type: 'function',
       },
       {
-        inputs: [
-          { internalType: 'bytes32', name: 'role', type: 'bytes32' },
-          { internalType: 'address', name: 'account', type: 'address' },
-        ],
-        name: 'grantRole',
+        inputs: [],
+        name: 'feeLimitForAutoInAssetToken',
+        outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
+        inputs: [],
+        name: 'forceFeesAutosend',
         outputs: [],
         stateMutability: 'nonpayable',
         type: 'function',
       },
       {
         inputs: [
-          { internalType: 'bytes32', name: 'role', type: 'bytes32' },
-          { internalType: 'address', name: 'account', type: 'address' },
+          { internalType: 'address', name: 'currencyIn', type: 'address' },
+          { internalType: 'uint256', name: 'amountIn', type: 'uint256' },
         ],
-        name: 'hasRole',
-        outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
+        name: 'getBuyAmountOut',
+        outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
+        inputs: [
+          { internalType: 'address', name: 'currencyOut', type: 'address' },
+          { internalType: 'uint256', name: 'amountIn', type: 'uint256' },
+        ],
+        name: 'getSellAmountOut',
+        outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
         stateMutability: 'view',
         type: 'function',
       },
@@ -325,20 +319,10 @@ export default {
       },
       {
         inputs: [
-          { internalType: 'bytes32', name: 'role', type: 'bytes32' },
-          { internalType: 'address', name: 'account', type: 'address' },
+          { internalType: 'uint256', name: '_feeLimitForAuto', type: 'uint256' },
+          { internalType: 'uint256', name: '_feeLimitForAutoInAssetToken', type: 'uint256' },
         ],
-        name: 'renounceRole',
-        outputs: [],
-        stateMutability: 'nonpayable',
-        type: 'function',
-      },
-      {
-        inputs: [
-          { internalType: 'bytes32', name: 'role', type: 'bytes32' },
-          { internalType: 'address', name: 'account', type: 'address' },
-        ],
-        name: 'revokeRole',
+        name: 'setFeeLimits',
         outputs: [],
         stateMutability: 'nonpayable',
         type: 'function',
@@ -348,13 +332,6 @@ export default {
         name: 'setIsAllowedAutoXYRebalace',
         outputs: [],
         stateMutability: 'nonpayable',
-        type: 'function',
-      },
-      {
-        inputs: [{ internalType: 'bytes4', name: 'interfaceId', type: 'bytes4' }],
-        name: 'supportsInterface',
-        outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
-        stateMutability: 'view',
         type: 'function',
       },
       {
@@ -452,10 +429,24 @@ export default {
         type: 'function',
       },
       {
+        inputs: [{ internalType: 'uint256[]', name: 'tokenAmounts', type: 'uint256[]' }],
+        name: 'withdrawTokensForStaking',
+        outputs: [],
+        stateMutability: 'nonpayable',
+        type: 'function',
+      },
+      {
         inputs: [{ internalType: 'address', name: '', type: 'address' }],
         name: 'xVaultAmount',
         outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
         stateMutability: 'view',
+        type: 'function',
+      },
+      {
+        inputs: [{ internalType: 'uint256', name: 'xPercentage', type: 'uint256' }],
+        name: 'xyRebalance',
+        outputs: [],
+        stateMutability: 'nonpayable',
         type: 'function',
       },
       {
@@ -469,6 +460,13 @@ export default {
         inputs: [{ internalType: 'address', name: '', type: 'address' }],
         name: 'yVaultAmountInStaking',
         outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
+        inputs: [],
+        name: 'zVault',
+        outputs: [{ internalType: 'address', name: '', type: 'address' }],
         stateMutability: 'view',
         type: 'function',
       },

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 
@@ -6,6 +6,7 @@ import { useWalletConnectorContext } from '../../../services/walletConnect';
 import { ContractTypes } from '../../../services/web3';
 import { useMst } from '../../../store/store';
 import { Button, Modal } from '../../index';
+import './GetInModal.scss';
 
 const GetInModal: React.FC = observer(() => {
   const { modals, user } = useMst();
@@ -33,6 +34,16 @@ const GetInModal: React.FC = observer(() => {
         console.log('approve error', err);
       });
   };
+  const getTokenList = useCallback(() => {
+    walletConnector.metamaskService.getTokensForIME();
+    /* .then(() => {
+        console.log('get tokens success');
+      })
+      .catch((err: any) => {
+        const { response } = err;
+        console.log('approve error', response);
+      }); */
+  }, [walletConnector.metamaskService]);
   useEffect(() => {
     walletConnector.metamaskService
       .checkAllowance('WBNB')
@@ -53,10 +64,13 @@ const GetInModal: React.FC = observer(() => {
         console.log('check USDT allowance error', err);
       });
   }, [walletConnector.metamaskService]);
+  useEffect(() => {
+    getTokenList();
+  }, [getTokenList]);
   return (
     <Modal isVisible={modals.getIn.isOpen} handleCancel={handleClose} className="m-get-in">
       <div className="m-get-in__content">
-        <h2>Get in with:</h2>
+        <h2 className="m-get-in__title">Total for index</h2>
         <ul>
           <li>
             {' '}

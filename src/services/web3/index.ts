@@ -183,24 +183,39 @@ export default class MetamaskService {
   }
 
   getStartDate() {
-    // return this.getContract('MAIN').methods.imeStartTimestamp().call();
-    return new this.web3Provider.eth.Contract(
-      config.MAIN.ABI as Array<any>,
-      '0xeD86087c760EcB754D42b9030B606b4C974bA718',
-    ).methods
-      .imeStartTimestamp()
-      .call();
+    return this.getContract('MAIN').methods.imeStartTimestamp().call();
   }
 
   getEndDate() {
     // TODO: change this to normal contract later
-    // return this.getContract('MAIN').methods.imeEndTimestamp().call();
-    return new this.web3Provider.eth.Contract(
-      config.MAIN.ABI as Array<any>,
-      '0xeD86087c760EcB754D42b9030B606b4C974bA718',
-    ).methods
-      .imeEndTimestamp()
-      .call();
+    return this.getContract('MAIN').methods.imeEndTimestamp().call();
+  }
+
+  async getTokensForIME() {
+    let length = 0;
+    const tokenAddresses: string[] = [];
+    // get tokens count
+    await this.getContract('MAIN')
+      .methods.tokenWhitelistLen()
+      .call()
+      .then((data: number) => {
+        length = data;
+      })
+      .catch((err: any) => {
+        console.log('error in getting tokens length', err);
+      });
+    // get tokens addresses
+    for (let i = 0; i < length; i += 1) {
+      this.getContract('MAIN')
+        .methods.tokenWhitelist(i)
+        .call()
+        .then((data: string) => {
+          tokenAddresses.push(data);
+        })
+        .catch((err: any) => {
+          console.log(`error in getting token ${i} address`, err);
+        });
+    }
   }
 
   async checkAllowance(toContract: ContractTypes, spender?: ContractTypes) {
