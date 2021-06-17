@@ -10,7 +10,6 @@ import { coinsApi, indexesApi } from '../../../services/api';
 import { ISearchToken } from '../../../components/Search';
 import { IToken } from '../../../components/IndexPage/IndexTable';
 import { useParams } from 'react-router-dom';
-import { ReactComponent as GreenPlus } from '../../../assets/img/icons/icon-plus-green.svg';
 
 interface IIndexId {
   indexId: string;
@@ -27,7 +26,6 @@ export interface IRebalance {
 const Rebalance: React.FC<FormikProps<IRebalance> & IRebalance> = observer(
   ({ setFieldValue, handleChange, handleBlur, values, handleSubmit }) => {
     const { indexId } = useParams<IIndexId>();
-    const [newToken, setNewToken] = useState<ISearchToken>({} as ISearchToken);
     const [searchTokens, setSearchTokens] = useState<ISearchToken[]>([] as ISearchToken[]);
     const weightsSum = values.tokens
       .map((tokenDiff) => +tokenDiff.new_weight)
@@ -45,11 +43,9 @@ const Rebalance: React.FC<FormikProps<IRebalance> & IRebalance> = observer(
             const { response } = error;
             console.log('search error', response);
           });
+      } else {
+        setSearchTokens([] as ISearchToken[]);
       }
-    };
-    const handleSearchPick = (pickedItem: ISearchToken) => {
-      setNewToken(pickedItem);
-      console.log(pickedItem);
     };
     const handleRemove = (arrayHelper: FieldArrayRenderProps, index: number) => {
       indexesApi
@@ -82,32 +78,30 @@ const Rebalance: React.FC<FormikProps<IRebalance> & IRebalance> = observer(
           console.log('search error', response);
         });
     };
-    const handleAddNewToken = (arrayHelper: FieldArrayRenderProps) => {
-      if (newToken.symbol) {
-        indexesApi
-          .addTokenToIndex(+indexId, newToken.symbol)
-          .then(({ data }) => {
-            arrayHelper.push({
-              to_delete: false,
-              new_weight: '0',
-              pending: true,
-              id: data.id,
-              old_weight: '0',
-              diff: 0,
-              token: {
-                name: newToken.name,
-                symbol: newToken.symbol,
-                image: newToken.image,
-                address: newToken.address,
-                id: 0,
-              } as IToken,
-            } as ITokensDiff);
-          })
-          .catch((error) => {
-            const { response } = error;
-            console.log('add new token error', response);
-          });
-      }
+    const handleAddNewToken = (arrayHelper: FieldArrayRenderProps, pickedItem: ISearchToken) => {
+      indexesApi
+        .addTokenToIndex(+indexId, pickedItem.symbol)
+        .then(({ data }) => {
+          arrayHelper.push({
+            to_delete: false,
+            new_weight: '0',
+            pending: true,
+            id: data.id,
+            old_weight: '0',
+            diff: 0,
+            token: {
+              name: pickedItem.name,
+              symbol: pickedItem.symbol,
+              image: pickedItem.image,
+              address: pickedItem.address,
+              id: 0,
+            } as IToken,
+          } as ITokensDiff);
+        })
+        .catch((error) => {
+          const { response } = error;
+          console.log('add new token error', response);
+        });
     };
     return (
       <Form name="form-rebalance" className="form-rebalance">
@@ -179,22 +173,12 @@ const Rebalance: React.FC<FormikProps<IRebalance> & IRebalance> = observer(
                 </div>
               </div>
 
-              <div className="rebalance-add-token">
-                <Search
-                  data={searchTokens}
-                  onChange={(e) => handleNewTokenNameChange(e)}
-                  onPick={handleSearchPick}
-                />
-                <Button
-                  styledType="outline"
-                  colorScheme="green"
-                  className="rebalance-add-token__btn"
-                  onClick={() => handleAddNewToken(arrayHelper)}
-                >
-                  <GreenPlus />
-                  Add Token
-                </Button>
-              </div>
+              <Search
+                className="rebalance-search"
+                data={searchTokens}
+                onChange={(e) => handleNewTokenNameChange(e)}
+                onPick={(pickedToken: ISearchToken) => handleAddNewToken(arrayHelper, pickedToken)}
+              />
             </div>
           )}
         />
