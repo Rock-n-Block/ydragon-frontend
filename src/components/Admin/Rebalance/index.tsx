@@ -78,7 +78,7 @@ const Rebalance: React.FC<RebalanceProps> = observer(({ status, tokens }) => {
         <Table dataSource={dataSource} columns={columns} className="rebalance-table">
           <div className="rebalance-table__btn-row ">
             <Button onClick={handleRebalanceOpen} disabled={rebalanceInProgress}>
-              rebalance index
+              Rebalance index
             </Button>
           </div>
         </Table>
