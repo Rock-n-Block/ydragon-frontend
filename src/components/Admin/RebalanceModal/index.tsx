@@ -25,7 +25,7 @@ const RebalanceModal: React.FC<RebalanceModalProps> = observer(({ name, tokens }
       className="m-rebalance"
       handleCancel={handleClose}
       closeIcon
-      width={510}
+      width={560}
     >
       <div className="m-rebalance__content">
         <div className="rebalance-modal">

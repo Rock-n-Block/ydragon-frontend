@@ -1,5 +1,5 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import BigNumber from 'bignumber.js/bignumber';
 import { withFormik } from 'formik';
 import { observer } from 'mobx-react-lite';
@@ -8,6 +8,9 @@ import { ITokensDiff } from '../../../pages/Admin';
 import { indexesApi } from '../../../services/api';
 import Rebalance, { IRebalance } from '../component';
 
+interface IIndexId {
+  indexId: string;
+}
 interface RebalanceFormProps {
   name: string;
   tokens: Array<ITokensDiff>;
@@ -15,6 +18,7 @@ interface RebalanceFormProps {
 
 const RebalanceForm: React.FC<RebalanceFormProps> = ({ name, tokens }) => {
   const history = useHistory();
+  const { indexId } = useParams<IIndexId>();
   const FormWithFormik = withFormik<any, IRebalance>({
     enableReinitialize: true,
     mapPropsToValues: () => ({
@@ -23,6 +27,7 @@ const RebalanceForm: React.FC<RebalanceFormProps> = ({ name, tokens }) => {
         tokens.map((tokenDiff) => {
           return {
             ...tokenDiff,
+            deleting: false,
             new_weight: `${new BigNumber(tokenDiff.new_weight).multipliedBy(100).toNumber()}`,
           };
         }) || ([] as Array<ITokensDiff>),
@@ -35,12 +40,8 @@ const RebalanceForm: React.FC<RebalanceFormProps> = ({ name, tokens }) => {
       setFieldValue('isLoading', true);
       const tokens_diff = values.tokens.map((tokenDiff) => {
         return {
-          token: {
-            count: tokenDiff.token.count,
-            address: tokenDiff.token.address,
-          },
           id: tokenDiff.id,
-          new_weight: tokenDiff.token.current_weight / 100,
+          new_weight: new BigNumber(tokenDiff.new_weight).dividedBy(100).toString(10),
         };
       });
       const term = +values.days * 24 + +values.hours;
@@ -58,11 +59,11 @@ const RebalanceForm: React.FC<RebalanceFormProps> = ({ name, tokens }) => {
         attempts_count: +values.steps,
       };
       indexesApi
-        .putIndexesRebalance(2, newData)
+        .putIndexesRebalance(+indexId, newData)
         .then(({ data }) => {
           console.log('put rebalance success', data);
           indexesApi
-            .launchRebalance(2)
+            .launchRebalance(+indexId)
             .then((response) => {
               console.log('launch rebalance success', response);
             })

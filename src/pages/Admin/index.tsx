@@ -14,6 +14,8 @@ export interface ITokensDiff {
   diff: number;
   id: number;
   new_weight: string;
+  to_delete: boolean;
+  pending: boolean;
 }
 
 export interface IIndex {
