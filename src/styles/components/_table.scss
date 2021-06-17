@@ -78,6 +78,14 @@
           border-top-right-radius: 16px;
         }
       }
+      & > tr.ant-table-placeholder:hover > td>.ant-empty>.ant-empty-description {
+        color: rgba($black,0.5);
+      }
+    }
+    .ant-empty{
+      &-description{
+        color:white;
+      }
     }
   }
   &-bottom-unbordered {

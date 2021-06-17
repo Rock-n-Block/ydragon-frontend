@@ -1,23 +1,22 @@
 import React, { useEffect, useState } from 'react';
-// import BigNumber from 'bignumber.js/bignumber';
+import BigNumber from 'bignumber.js/bignumber';
 import { observer } from 'mobx-react-lite';
 import moment from 'moment';
 
 import coinIcon from '../../assets/img/future/icon-2.svg';
-// import { useWalletConnectorContext } from '../../../services/walletConnect';
 import { useMst } from '../../store/store';
 import { Button } from '../index';
 
 import './EventBanner.scss';
+import { useWalletConnectorContext } from '../../services/walletConnect';
 
 const EventBanner: React.FC = observer(() => {
   const { modals } = useMst();
-  // const walletConnector = useWalletConnectorContext();
-  // const [start, setStart] = useState(moment());
-  const mockStart = moment('20211007', 'YYYYDDMM');
-  // const [end, setEnd] = useState(moment());
-  // const mockEnd = moment('20211008', 'YYYYDDMM');
+  const walletConnector = useWalletConnectorContext();
+  const [start, setStart] = useState(moment());
+  const [end, setEnd] = useState(moment());
   const [now, setNow] = useState(moment());
+  const [imeEnabled, setImeEnabled] = useState<boolean>(false);
   const handleGetIn = () => {
     modals.getIn.open();
   };
@@ -28,8 +27,13 @@ const EventBanner: React.FC = observer(() => {
     return () => {
       clearInterval(interval);
     };
-  }, []);
-  /*  useEffect(() => {
+    if (end.diff(now, 'seconds') < 0) {
+      setImeEnabled(true);
+    } else {
+      setImeEnabled(false);
+    }
+  }, [end, now]);
+  useEffect(() => {
     walletConnector.metamaskService
       .getStartDate()
       .then((data: any) => {
@@ -48,7 +52,7 @@ const EventBanner: React.FC = observer(() => {
       .catch((err: any) => {
         console.log('get balance error', err);
       });
-  }, [walletConnector.metamaskService]); */
+  }, [walletConnector.metamaskService]);
   return (
     <div className="event-banner">
       <div className="container">
@@ -62,23 +66,19 @@ const EventBanner: React.FC = observer(() => {
 
             <div className="event-banner-timer__row">
               <span className="event-banner-timer__time">
-                {/* {start.diff(now, 'days') < 0 ? 0 : start.diff(now, 'days')} */}
-                {mockStart.diff(now, 'days') < 0 ? 0 : mockStart.diff(now, 'days')}
+                {start.diff(now, 'days') < 0 ? 0 : start.diff(now, 'days')}
               </span>
               <span className="event-banner-timer__colon">:</span>
               <span className="event-banner-timer__time">
-                {/* {start.diff(now, 'hours') < 0 ? 0 : start.diff(now, 'hours') % 24} */}
-                {mockStart.diff(now, 'hours') < 0 ? 0 : mockStart.diff(now, 'hours') % 24}
+                {start.diff(now, 'hours') < 0 ? 0 : start.diff(now, 'hours') % 24}
               </span>
               <span className="event-banner-timer__colon">:</span>
               <span className="event-banner-timer__time">
-                {/* {start.diff(now, 'minutes') < 0 ? 0 : start.diff(now, 'minutes') % 60} */}
-                {mockStart.diff(now, 'minutes') < 0 ? 0 : mockStart.diff(now, 'minutes') % 60}
+                {start.diff(now, 'minutes') < 0 ? 0 : start.diff(now, 'minutes') % 60}
               </span>
               <span className="event-banner-timer__colon">:</span>
               <span className="event-banner-timer__time">
-                {/* {start.diff(now, 'seconds') < 0 ? 0 : start.diff(now, 'seconds') % 60} */}
-                {mockStart.diff(now, 'seconds') < 0 ? 0 : mockStart.diff(now, 'seconds') % 60}
+                {start.diff(now, 'seconds') < 0 ? 0 : start.diff(now, 'seconds') % 60}
               </span>
             </div>
             <div className="event-banner-timer__unit">
@@ -91,9 +91,9 @@ const EventBanner: React.FC = observer(() => {
 
           <div className="event-banner__btns">
             <div className="event-banner__btns-inner">
-              <Button onClick={handleGetIn} className="event-banner__get-btn" disabled>
+              <Button onClick={handleGetIn} className="event-banner__get-btn" disabled={imeEnabled}>
                 {' '}
-                GET IN!
+                Enter!
               </Button>
 
               <Button
