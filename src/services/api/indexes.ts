@@ -1,7 +1,7 @@
-import { axiosWithToken } from '../../core/axios';
+import axios, { axiosWithToken } from '../../core/axios';
 
 export default {
-  getUserIndexes: () => axiosWithToken.get('indexes/user'),
+  getUserIndexes: () => axios.get('indexes/user'),
   getAdminIndexes: () => axiosWithToken.get('indexes/admin'),
   getIndexById: (id: number) => axiosWithToken.get(`indexes/${id}`),
   getIndexesRebalance: (indexId: number) => axiosWithToken.get(`indexes/${indexId}/rebalance/`),

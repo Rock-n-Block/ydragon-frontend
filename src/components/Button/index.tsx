@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropsWithChildren } from 'react';
 import { Link } from 'react-router-dom';
 import { Button as BtnAntd, ButtonProps } from 'antd';
 import classNames from 'classnames';
@@ -26,14 +26,13 @@ interface IButton extends IStyledType, IColorScheme, IBorderSize, IBackground, B
   link?: string;
   linkClassName?: string;
 }
-const Button: React.FC<IButton> = (props) => {
+const Button: React.FC<IButton> = (props: PropsWithChildren<IButton>) => {
   const {
     styledType = 'filled',
     colorScheme,
     background,
     link,
     linkClassName,
-    borderSize = 'md',
     className,
     children,
     ...otherButtonProps
@@ -44,36 +43,22 @@ const Button: React.FC<IButton> = (props) => {
         'btn',
         `btn-${styledType}`,
         `btn-${background}`,
-        styledType === 'outline' ? '' : className,
+        `btn-${colorScheme}`,
+        className,
       )}
       {...otherButtonProps}
     >
       {children}
     </BtnAntd>
   );
-  let outlineBtn;
-  if (styledType === 'outline') {
-    outlineBtn = (
-      <div
-        className={classNames(
-          'btn-outline',
-          `btn-outline-${colorScheme}`,
-          `btn-outline-${borderSize}`,
-          className,
-        )}
-      >
-        {Btn}
-      </div>
-    );
-  }
   if (link) {
     return (
       <Link className={classNames('btn-link', linkClassName)} to={link}>
-        {styledType === 'outline' ? outlineBtn : Btn}
+        {Btn}
       </Link>
     );
   }
-  return outlineBtn || Btn;
+  return Btn;
 };
 
 export default Button;
