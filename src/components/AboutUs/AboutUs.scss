@@ -1,0 +1,209 @@
+@import '../../styles/_variables.scss';
+@import '../../styles/mixins';
+
+.AboutUs{
+    position: relative;
+    height: 3792px;
+}
+.about-us {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+  
+    min-height: calc(100vh - 178px);
+  
+    &__title-wrapper {
+      position: relative;
+  
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      left: 248px;
+      top: 90px;
+    }
+  
+    &__title {
+      font-size: 144px;
+      line-height: 173px;
+    }
+  
+    &__sub-title {
+      position: absolute;
+  
+      font-family: 'Rubik', sans-serif;
+      font-size: 44px;
+      line-height: 70px;
+      font-style: normal;
+      font-weight: bold;
+      text-transform: uppercase;
+  
+      color: $white;
+    }
+  }
+.description__title{
+    position: absolute;
+    width: 261px;
+    height: 29px;
+    left: 150px;
+    top: 385px;
+
+    font-family: 'Monument Extended';
+    font-style: normal;
+    font-weight: normal;
+    font-size: 24px;
+    line-height: 29px;
+    /* identical to box height */
+
+    font-feature-settings: 'liga' off;
+
+    color: #FFFFFF;
+}
+.description__text--wrapper {
+    position: absolute;
+    width: 605px;
+    height: 288px;
+    left: 150px;
+    top: 426px;
+}
+.description__text{
+    font-family: 'Rubik';
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 150%;
+    /* or 24px */
+    
+    letter-spacing: 0.035em;
+    font-feature-settings: 'liga' off;
+    
+    color: #FFFFFF;   
+}
+
+.description__btns-row{
+    margin-top: 30px;
+
+    display: flex;
+    justify-content: center;
+}
+.description__btn {
+    width: 100%;
+    max-width: 250px;
+    flex-shrink: 0;
+
+    & + & {
+      margin-left: 30px;
+    }
+}
+.video{
+    position: relative;
+    width: 462px;
+    height: 312px;
+    left: 828px;
+    top: 245px;
+    background-color: #fff;
+}
+.video__img{
+    width: 462px;
+    height: 312px;
+}
+.play{
+    position: absolute;
+    width: 64px;
+    height: 64px;
+    left: 199px;
+    top: 124px;
+}
+.video__info {
+    position: relative;
+    width: 250px;
+    height: 30px;
+    top: 343px;
+
+    font-family: 'Rubik';
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 30px;
+    /* identical to box height, or 187% */
+
+
+    /* YD/BG Additional */
+
+    color: #F7F8FD;
+}
+.video__info--link {
+  text-decoration: underline;
+  color: #F47C45;
+}
+.team {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+  
+    &__title-wrapper {
+      position: absolute;
+  
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      left: 478px;
+      top: 0px;
+    }
+  
+    &__title {
+      font-size: 48px;
+      line-height: 58px;
+    }
+}
+.features__wrapper{
+    position: absolute;
+    width: 1141px;
+    left: 149px;
+    top: 1064px;
+}
+.features__items{
+    margin-top: 142px;
+}
+.features__row{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-column-gap: 118px;
+}
+.feature{
+    display: flex;
+    max-width: 512px;
+    margin-bottom: 40px;
+}
+.feature__info{
+    margin-left: 24px;
+    display: flex;
+    flex-direction: column;
+}
+.feature__info--title{
+    font-family: 'Monument Extended';
+    font-style: normal;
+    font-weight: normal;
+    font-size: 24px;
+    line-height: 29px;
+    margin-bottom: 12px;
+    /* identical to box height */
+
+    font-feature-settings: 'liga' off;
+
+    color: #FFFFFF;
+}
+.feature__info--text{
+    font-family: 'Rubik';
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 150%;
+    /* or 24px */
+
+    letter-spacing: 0.035em;
+    font-feature-settings: 'liga' off;
+
+    color: #FFFFFF;
+}

@@ -5,6 +5,7 @@ import { Indexes } from './components/Admin';
 import AdminIndex from './pages/AdminIndex';
 import { EventBanner, Footer, Header, MetamaskErrModal } from './components';
 import { Admin, Auth, Home, Index, IndexDashboard, StakePage, YdrToken } from './pages';
+import AboutUs from'./components/AboutUs'
 
 import './styles/index.scss';
 
@@ -44,6 +45,9 @@ export const App: React.FC = () => {
         </Route>
         <Route exact path="/indexes">
           <IndexDashboard />
+        </Route>
+        <Route exact path="/about_us">
+          <AboutUs />
         </Route>
       </Switch>
       <MetamaskErrModal />
