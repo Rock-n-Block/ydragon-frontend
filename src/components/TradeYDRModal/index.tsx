@@ -134,6 +134,7 @@ const TradeYDRModal: React.FC = observer(() => {
               onSelectChange={handleSelectChange}
               onChange={(event) => setPayInput(event.target.value)}
               type="number"
+              placeholder="0.0"
             />
           ) : (
             <InputWithSelect
@@ -141,6 +142,7 @@ const TradeYDRModal: React.FC = observer(() => {
               onChange={(event) => setPayInput(event.target.value)}
               tokens={platformToken}
               type="number"
+              placeholder="0.0"
             />
           )}
         </div>
@@ -150,12 +152,18 @@ const TradeYDRModal: React.FC = observer(() => {
           </div>
 
           {modals.tradeYDR.method === 'sell' ? (
-            <InputWithSelect tokens={tokensArray} onSelectChange={handleSelectChange} />
+            <InputWithSelect
+              placeholder="0.0"
+              tokens={tokensArray}
+              onSelectChange={handleSelectChange}
+              disabled
+            />
           ) : (
             <InputWithSelect
-              value="0.0"
+              placeholder="0.0"
               tokens={platformToken}
               onSelectChange={handleSelectChange}
+              disabled
             />
           )}
         </div>
