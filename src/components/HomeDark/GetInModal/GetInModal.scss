@@ -1,30 +1,38 @@
-.m-get-in{
-  &__content{
+.m-get-in {
+  &__content {
     padding: 30px 20px;
   }
-  &__title{
+
+  &__title {
     margin-bottom: 20px;
-    font-family: MER,sans-serif;
+
+    font-family: MER, sans-serif;
     font-size: 20px;
     line-height: 24px;
   }
-  &__user{
+
+  &__user {
     margin-bottom: 40px;
-    .m-get-in__title{
+
+    .m-get-in__title {
       margin-top: 60px;
     }
   }
-  &__you-pay{
+
+  &__you-pay {
     text-align: center;
     text-transform: uppercase;
   }
-  &__btns{
+
+  &__btns {
     margin-top: 20px;
+
     display: flex;
     justify-content: center;
-    gap:20px;
+    gap: 20px;
   }
-  &__btn{
+
+  &__btn {
     max-width: 180px;
   }
 }

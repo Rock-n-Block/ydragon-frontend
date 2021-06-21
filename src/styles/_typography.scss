@@ -21,11 +21,13 @@
     &::selection {
       -webkit-text-fill-color: $white;
     }
+
     ::selection {
       -webkit-text-fill-color: $white;
     }
   }
-  &-MER{
-    font-family: "MER", sans-serif;
+
+  &-MER {
+    font-family: 'MER', sans-serif;
   }
 }

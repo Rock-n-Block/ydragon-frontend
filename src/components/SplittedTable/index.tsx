@@ -1,6 +1,8 @@
 import React from 'react';
 import nextId from 'react-id-generator';
+
 import TokenMini, { TokenMiniProps } from '../TokenMini';
+
 import './SplittedTable.scss';
 
 interface SplittedTableProps {

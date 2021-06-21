@@ -1,35 +1,45 @@
-.table-splitted{
-  &__header{
+.table-splitted {
+  &__header {
+    margin-bottom: 8px;
     padding: 0 25px 0 15px;
+
     display: grid;
-    grid-column-gap: 40px;
-    text-align: center;
+
     font-family: MER, sans-serif;
     font-size: 12px;
     line-height: 14px;
+    text-align: center;
+
     opacity: 0.5;
-    margin-bottom: 8px;
+    grid-column-gap: 40px;
   }
-  &__body{
+
+  &__body {
     display: flex;
     flex-direction: column;
-    gap:15px;
+    gap: 15px;
   }
-  &__row{
-    display: grid;
-    grid-column-gap: 40px;
+
+  &__row {
     padding: 25px 25px 25px 15px;
+
+    display: grid;
+
     background: rgba(white, 0.05);
     border-radius: 40px;
+    grid-column-gap: 40px;
   }
-  &__cell{
+
+  &__cell {
     display: flex;
-    align-items: center;
     justify-content: center;
-    font-family: TNR,sans-serif;
+    align-items: center;
+
+    font-family: TNR, sans-serif;
     font-size: 20px;
     line-height: 23px;
-    .token-mini{
+
+    .token-mini {
       margin-right: auto;
     }
   }

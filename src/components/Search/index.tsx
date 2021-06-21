@@ -1,7 +1,9 @@
 import React, { ChangeEvent, useState } from 'react';
-import { Button } from '../index';
-import { ReactComponent as GreenPlus } from '../../assets/img/icons/icon-plus-green.svg';
+
 import Clear from '../../assets/img/icons/icon-close-red.svg';
+import { ReactComponent as GreenPlus } from '../../assets/img/icons/icon-plus-green.svg';
+import { Button } from '../index';
+
 import './Search.scss';
 
 export interface ISearchToken {

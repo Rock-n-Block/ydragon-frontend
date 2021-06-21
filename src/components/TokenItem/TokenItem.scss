@@ -13,7 +13,6 @@
   background: rgba(255, 255, 255, 0.05);
   border-radius: 40px;
 
-
   &__weight {
     position: relative;
 
@@ -42,7 +41,6 @@
 
       padding: 3px;
 
-
       background: rgb(35, 38, 60);
       background-clip: content-box;
       border-radius: 60px;
@@ -50,6 +48,7 @@
 
     span {
       position: relative;
+
       color: white;
     }
   }

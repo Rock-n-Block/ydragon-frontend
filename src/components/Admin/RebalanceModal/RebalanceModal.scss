@@ -18,7 +18,7 @@
     align-items: center;
 
     &-name {
-      font-family:'TNR',sans-serif;
+      font-family: 'TNR', sans-serif;
       font-size: 18px;
       line-height: 21px;
 
@@ -37,8 +37,9 @@
       }
     }
 
-    .input{
-      background:  linear-gradient(180deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0) 100%), linear-gradient(171.49deg, #1A1E3A 3.83%, #161A2A 100%);
+    .input {
+      background: linear-gradient(180deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0) 100%),
+        linear-gradient(171.49deg, #1a1e3a 3.83%, #161a2a 100%);
     }
   }
 
@@ -49,7 +50,6 @@
       font-family: 'MER', sans-serif;
       font-size: 20px;
       line-height: 24px;
-
     }
 
     &__btn-row {
@@ -59,8 +59,9 @@
       justify-content: center;
 
       .btn {
-        max-width: 207px;
         padding: 14px 40px;
+
+        max-width: 207px;
       }
     }
   }
@@ -69,8 +70,8 @@
     margin-top: 20px;
 
     &__head {
-      padding: 0 16px;
       margin-bottom: 10px;
+      padding: 0 16px;
 
       display: grid;
 
@@ -82,7 +83,8 @@
       color: rgba(white, 0.5);
       grid-template-columns: 1fr 134px 102px;
       grid-column-gap: 15px;
-      &-col{
+
+      &-col {
         grid-column-start: 2;
       }
     }
@@ -98,15 +100,19 @@
     align-items: center;
 
     box-sizing: border-box;
+
     background: rgba(255, 255, 255, 0.05);
     border-radius: 40px;
-    .input{
+
+    .input {
       background: rgb(35, 38, 60);
-      &[disabled]{
-        color:rgba(white,0.25);
+
+      &[disabled] {
+        color: rgba(white, 0.25);
         background: rgb(35, 38, 60);
       }
     }
+
     & + & {
       margin-top: 10px;
     }
@@ -143,13 +149,15 @@
     }
   }
 
-  &-search{
-    border-top: 1px solid rgba(white,0.1);
+  &-search {
     padding: 20px 0;
+
+    border-top: 1px solid rgba(white, 0.1);
   }
 
   &-options {
-margin-right: 13px;
+    margin-right: 13px;
+
     display: flex;
     gap: 10px;
 
@@ -168,10 +176,11 @@ margin-right: 13px;
       border-bottom: 1px solid rgba(white, 0.1);
 
       &__title {
+        max-width: 103px;
+
         font-family: 'TNR', sans-serif;
         font-size: 18px;
         line-height: 21px;
-        max-width: 103px;
       }
     }
   }
@@ -186,8 +195,9 @@ margin-right: 13px;
       width: 100px;
     }
 
-    .input{
-      background:  linear-gradient(180deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0) 100%), linear-gradient(171.49deg, #1A1E3A 3.83%, #161A2A 100%);
+    .input {
+      background: linear-gradient(180deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0) 100%),
+        linear-gradient(171.49deg, #1a1e3a 3.83%, #161a2a 100%);
     }
   }
 }

@@ -1,9 +1,10 @@
-.token-mini{
+.token-mini {
   display: flex;
   align-items: center;
 
   &__name-wrapper {
     margin-left: 10px;
+
     color: white;
   }
 
@@ -11,13 +12,13 @@
     font-family: 'TNB', sans-serif;
     font-size: 18px;
     line-height: 21px;
-
   }
 
   &__symbol {
     font-size: 18px;
     line-height: 21px;
     text-transform: uppercase;
+
     opacity: 0.4;
   }
 }

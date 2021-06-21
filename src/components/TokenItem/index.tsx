@@ -1,7 +1,8 @@
 import React from 'react';
 
-import './TokenItem.scss';
 import TokenMini from '../TokenMini';
+
+import './TokenItem.scss';
 
 const TokenItem: React.FC<{ icon: string; name: string; abbr: string; weight: string }> = ({
   icon,

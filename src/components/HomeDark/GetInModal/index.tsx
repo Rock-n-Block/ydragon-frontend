@@ -1,14 +1,15 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { observer } from 'mobx-react-lite';
 
+import mockBinanceLogo from '../../../assets/img/tokens/bnb.svg';
 import { useWalletConnectorContext } from '../../../services/walletConnect';
 import { useMst } from '../../../store/store';
+import { TokenMiniNameTypes, tokensArray } from '../../../utils/tokenMini';
 import { Button, InputWithSelect, Modal } from '../../index';
-import './GetInModal.scss';
 import SplittedTable, { ITableColumn, ITableData } from '../../SplittedTable';
 import { TokenMiniProps } from '../../TokenMini';
-import mockBinanceLogo from '../../../assets/img/tokens/bnb.svg';
-import { TokenMiniNameTypes, tokensArray } from '../../../utils/tokenMini';
+
+import './GetInModal.scss';
 
 const mockTotalData: ITableData[] = [
   [
@@ -80,19 +81,10 @@ const userColumns: ITableColumn[] = [
 const GetInModal: React.FC = observer(() => {
   const { modals, user } = useMst();
   const walletConnector = useWalletConnectorContext();
-  // const history = useHistory();
-
-  // const [isWBNBAllowed, setIsWBNBAllowed] = useState<boolean>(false);
-  // const [isUSDTAllowed, setIsUSDTAllowed] = useState<boolean>(false);
 
   const handleClose = (): void => {
     modals.getIn.close();
   };
-  /* const setToken = (spender: ContractTypes) => {
-    user.setToken(spender);
-    handleClose();
-    history.push('/index/2');
-  }; */
 
   const [firstCurrency, setFirstCurrency] = useState<TokenMiniNameTypes>(tokensArray[0].name);
   const [payInput, setPayInput] = useState<string>('0');
@@ -145,65 +137,9 @@ const GetInModal: React.FC = observer(() => {
       checkAllowance();
     }
   }, [checkAllowance, user.address]);
-  /* const getTokenList = useCallback(() => {
-    walletConnector.metamaskService.getTokensForIME();
-  }, [walletConnector.metamaskService]);
-  useEffect(() => {
-    walletConnector.metamaskService
-      .checkAllowance('WBNB')
-      .then((data: boolean) => {
-        console.log('check WBNB allowance', data);
-        setIsWBNBAllowed(data);
-      })
-      .catch((err: any) => {
-        console.log('check WBNB allowance error', err);
-      });
-    walletConnector.metamaskService
-      .checkAllowance('USDT')
-      .then((data: boolean) => {
-        console.log('check USDT allowance', data);
-        setIsUSDTAllowed(data);
-      })
-      .catch((err: any) => {
-        console.log('check USDT allowance error', err);
-      });
-  }, [walletConnector.metamaskService]);
-  useEffect(() => {
-    getTokenList();
-  }, [getTokenList]); */
   return (
     <Modal isVisible={modals.getIn.isOpen} handleCancel={handleClose} className="m-get-in">
       <div className="m-get-in__content">
-        {/* <ul>
-          <li>
-            {' '}
-            <Button onClick={() => setToken('BNB')}>BNB</Button>
-          </li>
-          {isWBNBAllowed && (
-            <li>
-              <Button onClick={() => setToken('WBNB')}>WBNB</Button>
-            </li>
-          )}
-          {isUSDTAllowed && (
-            <li>
-              <Button onClick={() => setToken('USDT')}>USDT</Button>
-            </li>
-          )}
-        </ul>
-        <h2>Or approve new token</h2>
-        <ul>
-          {!isWBNBAllowed && (
-            <li>
-              <Button onClick={() => handleApprove('WBNB')}>Approve WBNB</Button>
-            </li>
-          )}
-
-          {!isUSDTAllowed && (
-            <li>
-              <Button onClick={() => handleApprove('USDT')}>Approve USDT</Button>
-            </li>
-          )}
-        </ul> */}
         <section className="m-get-in__total">
           <h2 className="m-get-in__title">Total for index</h2>
           <SplittedTable columns={totalColumns} data={mockTotalData} />
