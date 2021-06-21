@@ -1,9 +1,10 @@
 @import '../../styles/_variables.scss';
 @import '../../styles/mixins';
 
-.AboutUs{
+.section__about-us{
     position: relative;
-    height: 3792px;
+    // height: 3792px;
+    width: 100%;
 }
 .about-us {
     display: flex;
@@ -48,7 +49,7 @@
     left: 150px;
     top: 385px;
 
-    font-family: 'Monument Extended';
+    font-family: 'MEB';
     font-style: normal;
     font-weight: normal;
     font-size: 24px;
@@ -67,7 +68,7 @@
     top: 426px;
 }
 .description__text{
-    font-family: 'Rubik';
+    font-family: 'RR';
     font-style: normal;
     font-weight: normal;
     font-size: 16px;

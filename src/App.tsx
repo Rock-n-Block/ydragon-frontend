@@ -4,8 +4,7 @@ import { Route, Switch, useRouteMatch } from 'react-router-dom';
 import { Indexes } from './components/Admin';
 import AdminIndex from './pages/AdminIndex';
 import { EventBanner, Footer, Header, MetamaskErrModal } from './components';
-import { Admin, Auth, Home, Index, IndexDashboard, StakePage, YdrToken } from './pages';
-import AboutUs from'./components/AboutUs'
+import { Admin, Auth, Home, Index, IndexDashboard, StakePage, YdrToken, AboutUs } from './pages';
 
 import './styles/index.scss';
 
@@ -46,7 +45,7 @@ export const App: React.FC = () => {
         <Route exact path="/indexes">
           <IndexDashboard />
         </Route>
-        <Route exact path="/about_us">
+        <Route exact path="/about-us">
           <AboutUs />
         </Route>
       </Switch>

@@ -1,17 +1,18 @@
-import React from 'react';
-import { observer } from 'mobx-react-lite';
-import './AboutUs.scss';
-import { Button } from '../index';
-import iconPlay from '../../assets/img/icons/icon-play.svg';
-import iconRadien from '../../assets/img/icons/icon-raiden.svg';
-import iconOctal from '../../assets/img/icons/icon-octal.svg';
-import iconLeon from '../../assets/img/icons/icon-leon.svg';
-import iconHalfDan from '../../assets/img/icons/icon-halfdan.svg';
+// import React from 'react';
+// import { observer } from 'mobx-react-lite';
+// import './AboutUs.scss';
+export { default as Title } from './Title';
+// import { Button } from '../index';
+// import iconPlay from '../../assets/img/icons/icon-play.svg';
+// import iconRadien from '../../assets/img/icons/icon-raiden.svg';
+// import iconOctal from '../../assets/img/icons/icon-octal.svg';
+// import iconLeon from '../../assets/img/icons/icon-leon.svg';
+// import iconHalfDan from '../../assets/img/icons/icon-halfdan.svg';
 
-const AboutUs: React.FC = observer(() => {
-  return (
-    <div className="AboutUs">
-      <div className="about-us__title-wrapper">
+// const AboutUs: React.FC = observer(() => {
+//   return (
+//     <section className="section__about-us">
+      {/* <div className="about-us__title-wrapper">
         <h1 className="about-us__title text-outline">YDRAGON</h1>
         <span className="about-us__sub-title">ABOUT US</span>
       </div>
@@ -118,9 +119,9 @@ const AboutUs: React.FC = observer(() => {
             </div>
           </div>
         </div>
-      </div>
-    </div>
-  );
-});
+      </div> */}
+//     </section>
+//   );
+// });
 
-export default AboutUs;
+// export default AboutUs;
