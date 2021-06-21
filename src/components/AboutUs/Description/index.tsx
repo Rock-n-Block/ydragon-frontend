@@ -6,8 +6,8 @@ import iconPlay from '../../../assets/img/icons/icon-play.svg';
 const Description: React.FC = () => {
   return (
     <section className="section description">
-      <span className="description__title">About YDRAGON</span>
       <div className="description__text--wrapper">
+      <span className="description__title">About YDRAGON</span>
         <span className="description__text">
           At YDragon we are committed to solving the problems of DeFi. As investors ourselves, we
           understand how costly and difficult the DeFi space can be to navigate and to create a
@@ -31,10 +31,10 @@ const Description: React.FC = () => {
         </div>
       </div>
       <div className="description__video">
-        <img alt="#" src={iconPlay} className="play" />
-        <span className="description__video__info">
+        <img alt="#" src={iconPlay} className="description__video--play" />
+        <span className="description__video--info">
           For more info on YDragon{' '}
-          <a className="description__video__info--link" href="/about-us">
+          <a className="description__video--link" href="/about-us">
             go here
           </a>
         </span>

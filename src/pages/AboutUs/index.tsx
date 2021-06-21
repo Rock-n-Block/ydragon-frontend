@@ -2,7 +2,8 @@ import React from 'react';
 
 import {
   Title,
-  Description
+  Description,
+  Features
 } from '../../components/AboutUs';
 
 const AboutUs: React.FC = () => {
@@ -10,6 +11,7 @@ const AboutUs: React.FC = () => {
     <main className="container">
       <Title />
       <Description />
+      <Features />
     </main>
   );
 };
