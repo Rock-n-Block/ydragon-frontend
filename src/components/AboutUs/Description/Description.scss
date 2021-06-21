@@ -1,0 +1,63 @@
+.description {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    &__title{
+        position: absolute;
+        width: 261px;
+        height: 29px;
+        left: 150px;
+        top: 385px;
+
+        font-family: 'MEB';
+        font-style: normal;
+        font-weight: normal;
+        font-size: 24px;
+        line-height: 29px;
+        /* identical to box height */
+
+        font-feature-settings: 'liga' off;
+
+        color: #FFFFFF;
+    }
+
+    &__text--wrapper {
+        position: absolute;
+        width: 605px;
+        height: 288px;
+        left: 150px;
+        top: 426px;
+    }
+    
+    &__text{
+        font-family: 'RR';
+        font-style: normal;
+        font-weight: normal;
+        font-size: 16px;
+        line-height: 150%;
+        /* or 24px */
+        
+        letter-spacing: 0.035em;
+        font-feature-settings: 'liga' off;
+        
+        color: #FFFFFF;   
+    }
+
+    &__btns-row{
+        margin-top: 30px;
+
+        display: flex;
+        justify-content: center;
+    }
+    &__btn {
+        width: 100%;
+        max-width: 250px;
+        flex-shrink: 0;
+
+        & + & {
+        margin-left: 30px;
+        }
+    }
+}

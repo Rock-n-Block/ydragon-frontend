@@ -1,0 +1,46 @@
+import React from 'react';
+import { Button } from '../../index';
+import './Description.scss';
+import iconPlay from '../../../assets/img/icons/icon-play.svg';
+
+const Description: React.FC = () => {
+  return (
+    <section className="section description">
+      <span className="description__title">About YDRAGON</span>
+      <div className="description__text--wrapper">
+        <span className="description__text">
+          At YDragon we are committed to solving the problems of DeFi. As investors ourselves, we
+          understand how costly and difficult the DeFi space can be to navigate and to create a
+          diversified portfolio with an effective risk strategy. With that in mind, we decided to
+          create indexes that can give investors the opportunity to own index tokens that offer
+          cross-chain yield generation, auto-rebalancing and a simplified way to passively manage
+          your funds. <br />
+          <br />
+          <br /> To further develop our ecosystem and to give more control to our investors we
+          created the YDR token. YDR will act as our governance token that would allows you to vote
+          on the composition of indexes, thus allowing you to be actively involved in the future
+          success of YDragon
+        </span>
+        <div className="description__btns-row">
+          <Button linkClassName="description__btn" link="/ydrtoken">
+            Buy YDR
+          </Button>
+          <Button className="description__btn" styledType="outline">
+            Whitepaper
+          </Button>
+        </div>
+      </div>
+      <div className="description__video">
+        <img alt="#" src={iconPlay} className="play" />
+        <span className="description__video__info">
+          For more info on YDragon{' '}
+          <a className="description__video__info--link" href="/about-us">
+            go here
+          </a>
+        </span>
+      </div>
+    </section>
+  );
+};
+
+export default Description;

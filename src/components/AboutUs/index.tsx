@@ -2,6 +2,7 @@
 // import { observer } from 'mobx-react-lite';
 // import './AboutUs.scss';
 export { default as Title } from './Title';
+export { default as Description } from './Description';
 // import { Button } from '../index';
 // import iconPlay from '../../assets/img/icons/icon-play.svg';
 // import iconRadien from '../../assets/img/icons/icon-raiden.svg';
@@ -12,7 +13,7 @@ export { default as Title } from './Title';
 // const AboutUs: React.FC = observer(() => {
 //   return (
 //     <section className="section__about-us">
-      {/* <div className="about-us__title-wrapper">
+      /* <div className="about-us__title-wrapper">
         <h1 className="about-us__title text-outline">YDRAGON</h1>
         <span className="about-us__sub-title">ABOUT US</span>
       </div>
@@ -119,7 +120,7 @@ export { default as Title } from './Title';
             </div>
           </div>
         </div>
-      </div> */}
+      </div> */
 //     </section>
 //   );
 // });

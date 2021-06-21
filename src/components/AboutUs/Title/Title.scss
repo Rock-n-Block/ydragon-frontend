@@ -1,0 +1,37 @@
+@import '../../../styles/_variables.scss';
+@import '../../../styles/mixins';
+
+.about-us {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  
+    min-height: calc(100vh - 178px);
+  
+    &__title-wrapper {
+      position: relative;
+  
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+    }
+  
+    &__title {
+      font-size: 144px;
+      line-height: 173px;
+    }
+  
+    &__sub-title {
+      position: absolute;
+  
+      font-family: 'Rubik', sans-serif;
+      font-size: 44px;
+      line-height: 70px;
+      font-style: normal;
+      font-weight: bold;
+      text-transform: uppercase;
+  
+      color: $white;
+    }
+  }
