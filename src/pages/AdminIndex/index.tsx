@@ -15,6 +15,8 @@ interface IRebalance extends IIndexStatus {
   id: number;
   term: number;
   attempts_count: number;
+  market_cap: number;
+  price: number;
 }
 const AdminIndex: React.FC = () => {
   const { indexId } = useParams<IIndexId>();
@@ -36,7 +38,7 @@ const AdminIndex: React.FC = () => {
   }, [getIndexComposition]);
   return (
     <main className="container">
-      <IndexInfo />
+      <IndexInfo marketCap={index.market_cap} price={index.price} />
       <Composition status={index.status} tokens={index.tokens_diff} />
       <Rebalance status={index.status} tokens={index.tokens_diff} />
       <RebalanceModal name={index.index?.name} tokens={index.tokens_diff} />
