@@ -13,3 +13,4 @@ export { default as TradeYDRModal } from './TradeYDRModal';
 export { default as EventBanner } from './EventBanner';
 export { default as Table } from './Table';
 export { default as Search } from './Search';
+export { default as TokenMini } from './TokenMini';
