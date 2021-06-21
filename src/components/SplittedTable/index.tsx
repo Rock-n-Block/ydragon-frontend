@@ -15,7 +15,6 @@ export interface ITableColumn {
 export type ITableData = Array<number | string | TokenMiniProps>;
 
 const SplittedTable: React.FC<SplittedTableProps> = ({ columns, data }) => {
-  console.log(data);
   return (
     <div className="table-splitted">
       <section
