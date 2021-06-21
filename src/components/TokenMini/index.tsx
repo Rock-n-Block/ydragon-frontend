@@ -1,7 +1,7 @@
 import React from 'react';
 import './TokenMini.scss';
 
-interface TokenMiniProps {
+export interface TokenMiniProps {
   icon: string;
   name: string;
   symbol?: string;

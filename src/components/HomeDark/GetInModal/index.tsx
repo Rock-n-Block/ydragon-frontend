@@ -7,6 +7,57 @@ import { ContractTypes } from '../../../services/web3';
 import { useMst } from '../../../store/store';
 import { Button, Modal } from '../../index';
 import './GetInModal.scss';
+import SplittedTable, { ITableColumn, ITableData } from '../../SplittedTable';
+import { TokenMiniProps } from '../../TokenMini';
+import mockBinanceLogo from '../../../assets/img/tokens/bnb.svg';
+
+const mockData: ITableData[] = [
+  [
+    {
+      icon: mockBinanceLogo,
+      name: 'Binance',
+      symbol: 'bnb',
+    } as TokenMiniProps,
+    500000,
+    '$367.81',
+    183905000,
+  ],
+  [
+    {
+      icon: mockBinanceLogo,
+      name: 'Binance',
+      symbol: 'bnb',
+    } as TokenMiniProps,
+    500000,
+    '$367.81',
+    183905000,
+  ],
+  [
+    {
+      icon: mockBinanceLogo,
+      name: 'Binance',
+      symbol: 'bnb',
+    } as TokenMiniProps,
+    500000,
+    '$367.81',
+    183905000,
+  ],
+];
+const totalColumns: ITableColumn[] = [
+  {
+    name: 'token',
+    unShow: true,
+  },
+  {
+    name: 'Quantity',
+  },
+  {
+    name: 'Token price',
+  },
+  {
+    name: 'Total price',
+  },
+];
 
 const GetInModal: React.FC = observer(() => {
   const { modals, user } = useMst();
@@ -101,6 +152,8 @@ const GetInModal: React.FC = observer(() => {
             </li>
           )}
         </ul>
+
+        <SplittedTable columns={totalColumns} data={mockData} />
       </div>
     </Modal>
   );
