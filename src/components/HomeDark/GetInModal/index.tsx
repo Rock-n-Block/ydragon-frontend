@@ -125,26 +125,15 @@ const GetInModal: React.FC = observer(() => {
         console.log('approve error', response);
       });
   };
-  const handleBuy = (): void => {
+  const handleEnter = (): void => {
     walletConnector.metamaskService
-      .buyYDRToken(payInput, firstCurrency)
+      .enterIme(payInput, firstCurrency)
       .then((data: any) => {
-        console.log(`buy of index for ${firstCurrency} success`, data);
+        console.log('mint', data);
       })
       .catch((err: any) => {
         const { response } = err;
-        console.log('buy error', response);
-      });
-  };
-  const handleSell = (): void => {
-    walletConnector.metamaskService
-      .sellYDRToken(payInput, firstCurrency)
-      .then((data: any) => {
-        console.log(`sell of index for ${firstCurrency} success`, data);
-      })
-      .catch((err: any) => {
-        const { response } = err;
-        console.log('sell error', response);
+        console.log('mint error', response);
       });
   };
 
@@ -239,13 +228,8 @@ const GetInModal: React.FC = observer(() => {
               </Button>
             )}
             {modals.tradeYDR.method === 'buy' && (!isNeedApprove || firstCurrency === 'BNB') && (
-              <Button className="m-trade-ydr__btn" onClick={handleBuy}>
-                Buy
-              </Button>
-            )}
-            {modals.tradeYDR.method === 'sell' && (!isNeedApprove || firstCurrency === 'BNB') && (
-              <Button className="m-trade-ydr__btn" onClick={handleSell}>
-                Sell
+              <Button className="m-trade-ydr__btn" onClick={handleEnter}>
+                Enter
               </Button>
             )}
           </div>

@@ -279,6 +279,25 @@ export default class MetamaskService {
     }
   }
 
+  enterIme(value: string, spenderToken: ContractTypes) {
+    const methodName = spenderToken === 'BNB' ? 'enterImeNative' : 'enterImeToken';
+    const mintMethod = MetamaskService.getMethodInterface(config.MAIN.ABI, methodName);
+    let signature = this.encodeFunctionCall(mintMethod, []);
+    if (spenderToken !== 'BNB') {
+      signature = this.encodeFunctionCall(mintMethod, [
+        config[spenderToken].ADDRESS,
+        MetamaskService.calcTransactionAmount(value, 18),
+      ]);
+    }
+
+    return this.sendTransaction({
+      from: this.walletAddress,
+      to: config.MAIN.ADDRESS,
+      data: signature,
+      value: spenderToken === 'BNB' ? MetamaskService.calcTransactionAmount(value, 18) : '',
+    });
+  }
+
   buyYDRToken(value: string, spenderToken: ContractTypes, address?: string) {
     let methodName: 'swapExactETHForTokens' | 'swapExactTokensForTokens';
     let otherTokenAddress = address;

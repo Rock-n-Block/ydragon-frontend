@@ -22,7 +22,9 @@ const SplittedTable: React.FC<SplittedTableProps> = ({ columns, data }) => {
         style={{ gridTemplateColumns: `repeat(${columns.length},1fr)` }}
       >
         {columns.map((column) => (
-          <>{!column.unShow ? <h3>{column.name}</h3> : <div />}</>
+          <React.Fragment key={nextId()}>
+            {!column.unShow ? <h3>{column.name}</h3> : <div />}
+          </React.Fragment>
         ))}
       </section>
       <section className="table-splitted__body">
