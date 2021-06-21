@@ -23,8 +23,8 @@
     width: 131px;
     height: 131px;
 
-    background: #191c34;
-    border: 9px solid #fff;
+    background: white;
+    border: 9px solid #181C33;
     border-radius: 50%;
 
     transform: translate(-50%, 0);
@@ -47,7 +47,6 @@
     line-height: 24px;
     text-transform: uppercase;
 
-    color: $black;
 
     span {
       color: $orange-l;
@@ -70,7 +69,7 @@
     font-size: 12px;
     line-height: 14px;
 
-    color: rgba($black, 0.5);
+    opacity: 0.5;
   }
 
   &__fee {
@@ -81,5 +80,8 @@
     margin: 26px auto 0;
 
     width: unset !important;
+  }
+  .input{
+    background: rgb(23,27,49) ;
   }
 }

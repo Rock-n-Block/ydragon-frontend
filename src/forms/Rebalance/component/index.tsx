@@ -136,6 +136,7 @@ const Rebalance: React.FC<FormikProps<IRebalance> & IRebalance> = observer(
                         value={tokenDiff.new_weight}
                         onChange={handleChange}
                         onBlur={handleBlur}
+                        type="number"
                       />
                     </div>
 
@@ -194,6 +195,7 @@ const Rebalance: React.FC<FormikProps<IRebalance> & IRebalance> = observer(
                   value={values.days}
                   onChange={handleChange}
                   onBlur={handleBlur}
+                  type="number"
                 />
               </div>
             </div>
@@ -206,6 +208,7 @@ const Rebalance: React.FC<FormikProps<IRebalance> & IRebalance> = observer(
                   value={values.hours}
                   onChange={handleChange}
                   onBlur={handleBlur}
+                  type="number"
                 />
               </div>
             </div>
@@ -218,6 +221,7 @@ const Rebalance: React.FC<FormikProps<IRebalance> & IRebalance> = observer(
                   value={values.steps}
                   onChange={handleChange}
                   onBlur={handleBlur}
+                  type="number"
                 />
               </div>
             </div>
