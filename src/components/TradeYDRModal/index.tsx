@@ -149,7 +149,11 @@ const TradeYDRModal: React.FC = observer(() => {
           </div>
 
           {modals.tradeYDR.method === 'sell' ? (
-            <InputWithSelect value="0.0" tokens={tokensArray} onSelectChange={handleSelectChange} />
+            <InputWithSelect
+              type="number"
+              tokens={tokensArray}
+              onSelectChange={handleSelectChange}
+            />
           ) : (
             <InputWithSelect
               value="0.0"
