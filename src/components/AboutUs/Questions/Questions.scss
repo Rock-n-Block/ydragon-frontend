@@ -1,0 +1,27 @@
+@import '../../../styles/_variables.scss';
+@import '../../../styles/mixins';
+
+.questions {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  
+    &__title-wrapper {
+  
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 84px;
+    }
+  
+    &__title {
+      font-size: 48px;
+      line-height: 58px;
+    }
+
+    &__wrapper{
+      max-width: 1140px;
+      width: 100%;
+    }
+}
