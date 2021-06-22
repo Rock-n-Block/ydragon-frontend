@@ -3,7 +3,6 @@ import React from 'react';
 import {
   Advantages,
   Features,
-  GetInModal,
   InitialMintEvent,
   Machine,
   Main,
@@ -19,7 +18,6 @@ const Home: React.FC = () => {
       <Features />
       <Advantages />
       <Partners />
-      <GetInModal />
     </main>
   );
 };

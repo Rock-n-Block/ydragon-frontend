@@ -8,6 +8,7 @@ import { EventBanner, Footer, Header, MetamaskErrModal } from './components';
 import { Admin, Auth, Home, Index, IndexDashboard, StakePage, YdrToken } from './pages';
 
 import './styles/index.scss';
+import { GetInModal } from './components/HomeDark';
 
 export const App: React.FC = () => {
   const match = useRouteMatch();
@@ -49,6 +50,7 @@ export const App: React.FC = () => {
       </Switch>
       <MetamaskErrModal />
       <InfoModal />
+      <GetInModal />
       <Footer />
     </div>
   );
