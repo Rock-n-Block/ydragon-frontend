@@ -7,6 +7,7 @@ import {
   Options,
   Rebalance,
   RebalanceModal,
+  TokensStructure,
   XYStructure,
 } from '../../components/Admin';
 import { indexesApi, vaultsApi } from '../../services/api';
@@ -77,9 +78,6 @@ const AdminIndex: React.FC = () => {
   useEffect(() => {
     getVaults();
   }, [getVaults]);
-  useEffect(() => {
-    console.log(vault);
-  }, [vault]);
   return (
     <main className="container">
       <IndexInfo marketCap={index.market_cap} price={index.price} />
@@ -87,6 +85,7 @@ const AdminIndex: React.FC = () => {
       <Rebalance status={index.status} tokens={index.tokens_diff} />
       <Options address={index.index?.address} />
       <XYStructure vaults={vaultMini} />
+      <TokensStructure vaults={vault} />
       <RebalanceModal name={index.index?.name} tokens={index.tokens_diff} />
     </main>
   );
