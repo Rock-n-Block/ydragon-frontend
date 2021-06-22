@@ -317,12 +317,14 @@ export default class MetamaskService {
   enterIme(value: string, spenderToken: ContractTypes) {
     const methodName = spenderToken === 'BNB' ? 'enterImeNative' : 'enterImeToken';
     const mintMethod = MetamaskService.getMethodInterface(config.MAIN.ABI, methodName);
-    let signature = this.encodeFunctionCall(mintMethod, []);
+    let signature;
     if (spenderToken !== 'BNB') {
       signature = this.encodeFunctionCall(mintMethod, [
         config[spenderToken].ADDRESS,
         MetamaskService.calcTransactionAmount(value, 18),
       ]);
+    } else {
+      signature = this.encodeFunctionCall(mintMethod, []);
     }
 
     return this.sendTransaction({
@@ -364,8 +366,9 @@ export default class MetamaskService {
       signature = this.encodeFunctionCall(buyMethod, [
         MetamaskService.calcTransactionAmount(value, 18),
         0,
-        config.WBNB.ADDRESS,
-        config.YDR.ADDRESS,
+        otherTokenAddress
+          ? [otherTokenAddress, config.WBNB.ADDRESS, config.YDR.ADDRESS]
+          : [config.WBNB.ADDRESS, config.YDR.ADDRESS],
         this.walletAddress,
         moment().add(30, 'minutes').format('X'),
       ]);
