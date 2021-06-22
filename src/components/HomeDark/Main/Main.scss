@@ -48,11 +48,12 @@
   &__btns-row {
     margin-top: 30px;
 
-    width: 100%;
     display: flex;
     justify-content: center;
 
-    .btn{
+    width: 100%;
+
+    .btn {
       padding: 17px 0;
     }
   }

@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { IVaultMini } from '../../../pages/AdminIndex';
-import './XYStructure.scss';
-import { Table } from '../../index';
 import BigNumber from 'bignumber.js/bignumber';
+
+import { IVaultMini } from '../../../pages/AdminIndex';
+import { Table } from '../../index';
+
+import './XYStructure.scss';
 
 interface XYStructureProps {
   vaults: IVaultMini[];

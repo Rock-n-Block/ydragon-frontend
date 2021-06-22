@@ -1,7 +1,7 @@
 .input-border {
+  padding: 3px;
 
   width: fit-content;
-  padding: 3px;
 
   height: 53px;
 
@@ -125,9 +125,10 @@
       color: rgba(0, 0, 0, 0);
     }
   }
-  .ant-input[disabled]{
-    background: $black;
+
+  .ant-input[disabled] {
     color: unset;
+    background: $black;
   }
 }
 
@@ -136,15 +137,19 @@
   justify-content: space-between;
   align-items: center;
 }
-.ant-input-number{
+
+.ant-input-number {
   display: flex;
   justify-content: center;
   align-items: center;
+
   max-width: 144px;
-  &-handler-wrap{
+
+  &-handler-wrap {
     display: none;
   }
-  .ant-input-number-input{
+
+  .ant-input-number-input {
     text-align: center;
   }
 }

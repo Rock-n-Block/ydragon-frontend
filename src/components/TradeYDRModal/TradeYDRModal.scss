@@ -24,7 +24,7 @@
     height: 131px;
 
     background: white;
-    border: 9px solid #181C33;
+    border: 9px solid #181c33;
     border-radius: 50%;
 
     transform: translate(-50%, 0);
@@ -46,7 +46,6 @@
     font-size: 20px;
     line-height: 24px;
     text-transform: uppercase;
-
 
     span {
       color: $orange-l;
@@ -81,7 +80,8 @@
 
     width: unset !important;
   }
-  .input{
-    background: rgb(23,27,49) ;
+
+  .input {
+    background: rgb(23, 27, 49);
   }
 }

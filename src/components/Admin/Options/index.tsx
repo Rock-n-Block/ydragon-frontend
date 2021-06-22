@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Switch } from '../../index';
-import './Options.scss';
-import { InputNumber } from '../../Input';
-import { useWalletConnectorContext } from '../../../services/walletConnect';
 import BigNumber from 'bignumber.js/bignumber';
-import { useMst } from '../../../store/store';
 import { observer } from 'mobx-react-lite';
+
+import { useWalletConnectorContext } from '../../../services/walletConnect';
+import { useMst } from '../../../store/store';
+import { Button, Switch } from '../../index';
+import { InputNumber } from '../../Input';
+
+import './Options.scss';
 
 interface OptionsProps {
   address: string;
