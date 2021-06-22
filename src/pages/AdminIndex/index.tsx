@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { Composition, IndexInfo, Rebalance, RebalanceModal } from '../../components/Admin';
+import { Composition, IndexInfo, Options, Rebalance, RebalanceModal } from '../../components/Admin';
 import { indexesApi } from '../../services/api';
 import { IIndex, IIndexStatus, ITokensDiff } from '../Admin';
 
@@ -41,6 +41,7 @@ const AdminIndex: React.FC = () => {
       <IndexInfo marketCap={index.market_cap} price={index.price} />
       <Composition status={index.status} tokens={index.tokens_diff} />
       <Rebalance status={index.status} tokens={index.tokens_diff} />
+      <Options address={index.index?.address} />
       <RebalanceModal name={index.index?.name} tokens={index.tokens_diff} />
     </main>
   );

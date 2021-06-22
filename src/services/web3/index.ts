@@ -100,6 +100,10 @@ export default class MetamaskService {
     );
   }
 
+  getContractByAddress(address: string, abi: Array<any>) {
+    return new this.web3Provider.eth.Contract(abi, address);
+  }
+
   public connect() {
     const currentChain = this.wallet.chainId;
 
@@ -229,6 +233,26 @@ export default class MetamaskService {
     } catch (error) {
       return false;
     }
+  }
+
+  checkAutoXYRebalaceAllowance(address: string) {
+    return this.getContractByAddress(address, config.MAIN.ABI)
+      .methods.isAllowedAutoXYRebalace()
+      .call();
+  }
+
+  changeAutoXYRebalaceAllowance(address: string, value: boolean) {
+    const method = MetamaskService.getMethodInterface(
+      config.MAIN.ABI,
+      'setIsAllowedAutoXYRebalace',
+    );
+    const signature = this.encodeFunctionCall(method, [value]);
+
+    return this.sendTransaction({
+      from: this.walletAddress,
+      to: address,
+      data: signature,
+    });
   }
 
   mint(value: string, spenderToken: ContractTypes) {
