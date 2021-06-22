@@ -1,28 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import './Switch.scss';
+import React from 'react';
+import { Switch as AntdSwitch, SwitchProps } from 'antd';
 
-interface SwitchProps {
-  checked?: boolean;
-  onChange?: (checked: boolean) => void;
-}
-
-const Switch: React.FC<SwitchProps> = ({ checked = false, onChange }) => {
-  const [isChecked, setIsChecked] = useState(checked);
-
-  const handleChange = (): void => {
-    setIsChecked(!isChecked);
-  };
-  useEffect(() => {
-    console.log(isChecked);
+const Switch: React.FC<SwitchProps> = ({ onChange, ...otherSwitchProps }) => {
+  const handleChange = (isChecked: boolean, e: any) => {
     if (onChange) {
-      onChange(isChecked);
+      onChange(isChecked, e);
     }
-  }, [onChange, isChecked]);
+  };
   return (
-    <label className="switch">
-      <input type="checkbox" checked={isChecked} onClick={handleChange} />
-      <span className="slider" />
-    </label>
+    <div className="switch">
+      <AntdSwitch onChange={handleChange} {...otherSwitchProps} />
+    </div>
   );
 };
 export default Switch;
