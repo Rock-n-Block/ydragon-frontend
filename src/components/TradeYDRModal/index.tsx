@@ -20,6 +20,7 @@ const TradeYDRModal: React.FC = observer(() => {
     modals.tradeYDR.method === 'sell' ? tokensArray[0].name : 'YDR',
   );
   const [payInput, setPayInput] = useState<string>('0');
+  const [viewOnlyInputValue, setViewOnlyInputValue] = useState<string>('0.0');
   const [balance, setBalance] = useState<number>(0);
   const [isNeedApprove, setIsNeedApprove] = useState<boolean>(true);
   const handleClose = (): void => {
@@ -37,6 +38,25 @@ const TradeYDRModal: React.FC = observer(() => {
         console.log('getBalance error', response);
       });
   }, [walletConnector.metamaskService, firstCurrency]);
+
+  const getBuyCource = useCallback(
+    (e: any) => {
+      walletConnector.metamaskService
+        .getBuyYDRCource(firstCurrency, e.target.value)
+        .then((data: any) => {
+          console.log(`Cource of ${firstCurrency} to YDR `, data[data.length - 1]);
+          setViewOnlyInputValue(
+            new BigNumber(data[data.length - 1]).dividedBy(new BigNumber(10).pow(18)).toFixed(5),
+          );
+        })
+        .catch((err: any) => {
+          const { response } = err;
+          console.log('getCource error', response);
+        });
+    },
+    [firstCurrency, walletConnector.metamaskService],
+  );
+
   const checkAllowance = useCallback(() => {
     walletConnector.metamaskService
       .checkAllowance(firstCurrency, 'Router')
@@ -50,10 +70,13 @@ const TradeYDRModal: React.FC = observer(() => {
       });
   }, [walletConnector.metamaskService, firstCurrency, secondCurrency]);
   const handleSelectChange = (value: any) => {
-    console.log(value);
     if (modals.tradeYDR.method === 'sell') {
       setSecondCurrency(value);
-    } else setFirstCurrency(value);
+    } else {
+      setFirstCurrency(value);
+      setPayInput('');
+      setViewOnlyInputValue('0.0');
+    }
   };
   const handleApprove = (): void => {
     walletConnector.metamaskService
@@ -135,6 +158,7 @@ const TradeYDRModal: React.FC = observer(() => {
               onChange={(event) => setPayInput(event.target.value)}
               type="number"
               placeholder="0.0"
+              onBlur={getBuyCource}
             />
           ) : (
             <InputWithSelect
@@ -153,14 +177,14 @@ const TradeYDRModal: React.FC = observer(() => {
 
           {modals.tradeYDR.method === 'sell' ? (
             <InputWithSelect
-              placeholder="0.0"
+              placeholder={viewOnlyInputValue}
               tokens={tokensArray}
               onSelectChange={handleSelectChange}
               disabled
             />
           ) : (
             <InputWithSelect
-              placeholder="0.0"
+              placeholder={viewOnlyInputValue}
               tokens={platformToken}
               onSelectChange={handleSelectChange}
               disabled

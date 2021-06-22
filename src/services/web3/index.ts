@@ -335,6 +335,22 @@ export default class MetamaskService {
     });
   }
 
+  getBuyYDRCource(spenderToken: ContractTypes, value: string, address?: string) {
+    let otherTokenAddress = address;
+    if (spenderToken === 'USDT') {
+      otherTokenAddress = config.USDT.ADDRESS;
+    }
+
+    return this.getContract('Router')
+      .methods.getAmountsOut(
+        MetamaskService.calcTransactionAmount(value, 18),
+        otherTokenAddress
+          ? [otherTokenAddress, config.WBNB.ADDRESS, config.YDR.ADDRESS]
+          : [config.WBNB.ADDRESS, config.YDR.ADDRESS],
+      )
+      .call();
+  }
+
   buyYDRToken(value: string, spenderToken: ContractTypes, address?: string) {
     let methodName: 'swapExactETHForTokens' | 'swapExactTokensForTokens';
     let otherTokenAddress = address;
