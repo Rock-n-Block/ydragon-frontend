@@ -255,6 +255,17 @@ export default class MetamaskService {
     });
   }
 
+  startXyRebalance(address: string, value: number) {
+    const method = MetamaskService.getMethodInterface(config.MAIN.ABI, 'xyRebalance');
+    const signature = this.encodeFunctionCall(method, [value]);
+
+    return this.sendTransaction({
+      from: this.walletAddress,
+      to: address,
+      data: signature,
+    });
+  }
+
   mint(value: string, spenderToken: ContractTypes) {
     const mintMethod = MetamaskService.getMethodInterface(config.MAIN.ABI, 'mint');
     const signature = this.encodeFunctionCall(mintMethod, [

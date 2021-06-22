@@ -1,20 +1,22 @@
 @import 'src/styles/variables';
 
-.m-success {
+.m-info {
   z-index: 9999;
 
   &__content {
     padding: 30px;
+    border-radius: 16px;
 
     display: flex;
     flex-direction: column;
     align-items: center;
 
     max-width: 380px;
+    font-family: MER, sans-serif;
 
     text-align: center;
 
-    background: #fff;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0) 100%), linear-gradient(171.49deg, #1A1E3A 3.83%, #161A2A 100%);
   }
 
   &__title {

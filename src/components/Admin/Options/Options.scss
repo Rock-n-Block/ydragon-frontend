@@ -1,3 +1,4 @@
+@import "src/styles/variables";
 .options {
   margin-top: 40px;
   padding: 30px 40px;
@@ -12,6 +13,14 @@
     display: flex;
     align-items: center;
     gap: 30px;
+    &__input-wrapper{
+      position: relative;
+    }
+    &-error{
+      position: absolute;
+      font-size: 0.7em;
+      color:$red;
+    }
     &-name {
       font-family: MER, sans-serif;
       max-width: 213px;

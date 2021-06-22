@@ -7,6 +7,7 @@ import { EventBanner, Footer, Header, MetamaskErrModal } from './components';
 import { Admin, Auth, Home, Index, IndexDashboard, StakePage, YdrToken } from './pages';
 
 import './styles/index.scss';
+import InfoModal from './components/InfoModal';
 
 export const App: React.FC = () => {
   const match = useRouteMatch();
@@ -47,6 +48,7 @@ export const App: React.FC = () => {
         </Route>
       </Switch>
       <MetamaskErrModal />
+      <InfoModal />
       <Footer />
     </div>
   );
