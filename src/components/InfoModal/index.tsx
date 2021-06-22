@@ -23,7 +23,7 @@ const InfoModal: React.FC = observer(() => {
     >
       <div className="m-info__content">
         <h3 className={`m-info__title m-info__title-${modals.info.type}`}>{modals.info.title}</h3>
-        <p className="">{modals.info.msg}</p>
+        <p className="m-info___msg">{modals.info.msg}</p>
         <Button onClick={handleClose}>Ok</Button>
       </div>
     </Modal>
