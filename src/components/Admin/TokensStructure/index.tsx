@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import { IVault } from '../../../pages/AdminIndex';
 import { Table } from '../../index';
+import BigNumber from 'bignumber.js/bignumber';
 
 interface TokensStructureProps {
   vaults: IVault[];
@@ -24,12 +25,13 @@ const TokensStructure: React.FC<TokensStructureProps> = ({ vaults }) => {
       title: 'X Vault',
       dataIndex: 'x_vault',
       key: 'x_vault',
-      render: (item: any) => <span className="text-gradient">{item}</span>,
+      render: (item: any) => <span className="text-gradient">{item}%</span>,
     },
     {
       title: 'Y Vault',
       dataIndex: 'y_vault',
       key: 'y_vault',
+      render: (item: any) => <span>{item}%</span>,
     },
     {
       title: 'Farm',
@@ -44,8 +46,8 @@ const TokensStructure: React.FC<TokensStructureProps> = ({ vaults }) => {
         return {
           key: index,
           name: { image: '', name: vault.token_name },
-          x_vault: vault.x_balance,
-          y_vault: vault.y_balance,
+          x_vault: new BigNumber(vault.x_percent).toFixed(2),
+          y_vault: new BigNumber(vault.y_percent).toFixed(2),
           farm: vault.farm_balance,
         };
       });
