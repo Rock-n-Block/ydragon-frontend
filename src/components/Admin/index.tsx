@@ -7,3 +7,4 @@ export { default as Stake } from './Stake';
 export { default as StakingStatistics } from './StakingStatistics';
 export { default as IndexInfo } from './IndexInfo';
 export { default as Options } from './Options';
+export { default as XYStructure } from './XYStructure';
