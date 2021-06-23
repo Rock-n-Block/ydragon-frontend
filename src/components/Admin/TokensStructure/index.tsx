@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
+import BigNumber from 'bignumber.js/bignumber';
 
 import { IVault } from '../../../pages/AdminIndex';
 import { Table } from '../../index';
-import BigNumber from 'bignumber.js/bignumber';
 
 interface TokensStructureProps {
   vaults: IVault[];
