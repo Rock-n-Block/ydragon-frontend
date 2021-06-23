@@ -31,6 +31,7 @@ const Description: React.FC = () => {
         </div>
       </div>
       <div className="description__video">
+        <span className='description__video--text'>Coming soon</span>
         <img alt="#" src={iconPlay} className="description__video--play" />
         <span className="description__video--info">
           For more info on YDragon{' '}

@@ -70,10 +70,31 @@
         background-color: #fff;
         border-radius: 16px;
 
+        &--text{
+            position: absolute;
+            left: 120px;
+            bottom: 25px;
+            
+            height: 29px;
+
+            font-family: 'MER';
+            font-style: normal;
+            font-weight: normal;
+            font-size: 24px;
+            line-height: 29px;
+            /* identical to box height */
+
+            font-feature-settings: 'liga' off;
+        }
+
         &--play{
             position: absolute;
             left: 199px;
             top: 124px;
+            
+            :hover{
+                cursor: pointer;
+            }
         }
 
         &--info {

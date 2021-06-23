@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import { observer } from 'mobx-react-lite';
+import React, { useState, PropsWithChildren } from 'react';
 import iconDown from '../../../../assets/img/icons/icon-arrow-down-white.svg';
 import iconUp from '../../../../assets/img/icons/icon-arrow-up-white.svg';
 
@@ -7,17 +6,21 @@ import './Question.scss';
 
 interface QuestionProps {
   title: string;
-  text: string;
+  children: React.ReactNode;
 }
 
-const Question: React.FC<QuestionProps> = observer(({ title, text }) => {
+const Question: React.FC<QuestionProps> = (props: PropsWithChildren<QuestionProps>) => {
   const [collapsed, setCollapsed] = useState(true);
-
+  const {
+    title,
+    children
+  } = props;
+  const element = <span className={`question__text ${collapsed ? 'invisible' : 'visible'}`}/>
   return (
     <div className="question">
-      <div className="question__text--wrapper">
-        <span className={`question__title ${collapsed ? null : 'color'}`}>{title}</span>
-        {!collapsed && <span className="question__text">{text}</span>}
+      <div className={`question__text--wrapper ${collapsed ? 'collapse' : 'expand'}`}>
+        <span className={`question__title ${collapsed ? 'colorWhite' : 'colorOrange'}`}>{title}</span>
+        {React.cloneElement(element, {children})}
       </div>
       <div
         role="button"
@@ -29,6 +32,6 @@ const Question: React.FC<QuestionProps> = observer(({ title, text }) => {
       </div>
     </div>
   );
-});
+};
 
 export default Question;

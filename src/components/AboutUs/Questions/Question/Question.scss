@@ -19,6 +19,8 @@
         display: flex;
         flex-direction: column;
         align-items: flex-start;
+        transition: all 1s;
+        overflow: hidden;
     }
 
     &__title{
@@ -31,8 +33,6 @@
         /* identical to box height, or 29px */
 
         font-feature-settings: 'liga' off;
-
-        color: #FFFFFF;
     }
 
     &__text{
@@ -45,12 +45,19 @@
         font-weight: normal;
         font-size: 16px;
         line-height: 150%;
+
+        color: #FFFFFF;
         /* or 24px */
         
         letter-spacing: 0.035em;
         font-feature-settings: 'liga' off;
         
-        color: #FFFFFF;
+        transition-delay: 2s;
+    
+        &--link {
+            text-decoration: underline;
+            color: #F47C45;
+            }
     }
 
     &__icon{
@@ -63,6 +70,23 @@
         cursor: pointer;
     }
 }
-.color{
+.colorOrange{
     color: #E95B40;
+    transition-duration: 1s;
+}
+.colorWhite{
+    color: #FFFFFF;
+    transition-duration: 1s;
+}
+.collapse{
+    min-height: 29px;
+}
+.expand{
+    min-height: 97px;
+}
+.invisible{
+    display: none;
+}
+.visible{
+    display: inline;
 }
