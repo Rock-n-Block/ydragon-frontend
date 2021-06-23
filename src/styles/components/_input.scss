@@ -1,6 +1,8 @@
 .input-border {
   padding: 3px;
 
+  width: fit-content;
+
   height: 53px;
 
   background: linear-gradient(180deg, rgb(39, 68, 146) 0%, rgb(40, 84, 206) 100%);
@@ -20,7 +22,7 @@
   text-align: center;
 
   color: $white;
-  background: $black;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0) 100%), linear-gradient(171.49deg, #1A1E3A 3.83%, #161A2A 100%);
   border: none;
   border-radius: 60px;
   outline: none;
@@ -123,12 +125,33 @@
       color: rgba(0, 0, 0, 0);
     }
   }
+
+  .ant-input[disabled] {
+    color: unset;
+    background: $black;
+  }
 }
 
 .ant-select-item-option-content {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.ant-input-number {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  max-width: 144px;
+
+  &-handler-wrap {
+    display: none;
+  }
+
+  .ant-input-number-input {
+    text-align: center;
+  }
 }
 // hidding arrows from number input
 

@@ -44,8 +44,8 @@ const Header: React.FC = observer(() => {
                 </Link>
               </li>
               <li className="header-nav__item">
-                <Link to="/indexes" className="header-nav__link">
-                  Dashboard
+                <Link to="/staking" className="header-nav__link">
+                  Staking
                 </Link>
               </li>
               <li className="header-nav__item">

@@ -2,6 +2,8 @@ body {
   margin: 0;
 
   font-family: 'RR', sans-serif;
+
+  color: white;
 }
 
 img {
@@ -12,8 +14,12 @@ h1,
 h2,
 h3,
 h4,
+h5,
+h6,
 p {
   margin: 0;
+
+  color: white;
 }
 
 .page-wrapper {
@@ -145,7 +151,7 @@ main {
     font-size: 16px;
     line-height: 19px;
 
-    color: $black;
+    color: white;
   }
 }
 

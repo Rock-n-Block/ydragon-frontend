@@ -2,15 +2,20 @@ import React from 'react';
 
 import { TokenPanel } from '../../index';
 
-const IndexInfo: React.FC = () => {
+interface IndexInfoProps {
+  marketCap: string | number;
+  price: string | number;
+}
+
+const IndexInfo: React.FC<IndexInfoProps> = ({ marketCap, price }) => {
   const panelInfo = [
     {
       label: 'Index price',
-      value: '50836,13935',
+      value: `${marketCap}$`,
     },
     {
       label: 'Price ',
-      value: '5,083613935',
+      value: `${price}$`,
     },
   ];
   return (

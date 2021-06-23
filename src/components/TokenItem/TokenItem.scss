@@ -13,31 +13,6 @@
   background: rgba(255, 255, 255, 0.05);
   border-radius: 40px;
 
-  &__info {
-    display: flex;
-    align-items: center;
-  }
-
-  &__name-wrapper {
-    margin-left: 10px;
-
-    color: white;
-  }
-
-  &__name {
-    font-family: 'TNB', sans-serif;
-    font-size: 18px;
-    line-height: 21px;
-  }
-
-  &__abbr {
-    font-size: 18px;
-    line-height: 21px;
-    text-transform: uppercase;
-
-    opacity: 0.4;
-  }
-
   &__weight {
     position: relative;
 

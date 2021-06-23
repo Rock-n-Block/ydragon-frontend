@@ -1,5 +1,7 @@
 import React from 'react';
 
+import TokenMini from '../TokenMini';
+
 import './TokenItem.scss';
 
 const TokenItem: React.FC<{ icon: string; name: string; abbr: string; weight: string }> = ({
@@ -10,14 +12,7 @@ const TokenItem: React.FC<{ icon: string; name: string; abbr: string; weight: st
 }) => {
   return (
     <div className="token-item">
-      <div className="token-item__info">
-        <img src={icon} alt="" width="36" height="36" className="token-item__icon" />
-
-        <div className="token-item__name-wrapper">
-          <div className="token-item__name">{name}</div>
-          <div className="token-item__abbr">{abbr}</div>
-        </div>
-      </div>
+      <TokenMini name={name} icon={icon} symbol={abbr} />
 
       <div className="token-item__weight">
         <span>{weight}</span>

@@ -1,0 +1,45 @@
+@import 'src/styles/variables';
+
+.options {
+  margin-top: 40px;
+  padding: 30px 40px;
+
+  display: flex;
+  flex-direction: column;
+
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0) 100%),
+    linear-gradient(171.49deg, #1a1e3a 3.83%, #161a2a 100%);
+  border-radius: 16px;
+  box-shadow: -8px 8px 36px rgba(0, 0, 0, 0.5);
+  gap: 60px;
+
+  &__option {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+
+    &__input-wrapper {
+      position: relative;
+    }
+
+    &-error {
+      position: absolute;
+
+      font-size: 0.7em;
+
+      color: $red;
+    }
+
+    &-name {
+      max-width: 213px;
+
+      font-family: MER, sans-serif;
+      font-size: 18px;
+      line-height: 22px;
+    }
+
+    &-btn {
+      max-width: 140px;
+    }
+  }
+}

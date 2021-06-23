@@ -1,0 +1,46 @@
+.table-splitted {
+  &__header {
+    margin-bottom: 8px;
+    padding: 0 25px 0 15px;
+
+    display: grid;
+
+    font-family: MER, sans-serif;
+    font-size: 12px;
+    line-height: 14px;
+    text-align: center;
+
+    opacity: 0.5;
+    grid-column-gap: 40px;
+  }
+
+  &__body {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  &__row {
+    padding: 25px 25px 25px 15px;
+
+    display: grid;
+
+    background: rgba(white, 0.05);
+    border-radius: 40px;
+    grid-column-gap: 40px;
+  }
+
+  &__cell {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-family: TNR, sans-serif;
+    font-size: 20px;
+    line-height: 23px;
+
+    .token-mini {
+      margin-right: auto;
+    }
+  }
+}

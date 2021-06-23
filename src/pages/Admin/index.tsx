@@ -3,6 +3,7 @@ import { observer } from 'mobx-react-lite';
 
 import { Indexes } from '../../components/Admin';
 import { IToken } from '../../components/IndexPage/IndexTable';
+import { CreateIndexModal } from '../../components/Modals';
 
 export interface IIndexStatus {
   status: 'CREATED' | 'PROCESSING' | 'FINISHED ';
@@ -34,6 +35,7 @@ const Admin: React.FC = observer(() => {
     <main className="container">
       {/* <Structure /> */}
       <Indexes />
+      <CreateIndexModal />
     </main>
   );
 });

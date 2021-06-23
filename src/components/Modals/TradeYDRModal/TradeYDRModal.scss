@@ -1,0 +1,87 @@
+@import '../../../styles/variables';
+@import '../../../styles/mixins';
+
+.m-trade-ydr {
+  &__content {
+    position: relative;
+
+    padding: 100px 20px 26px;
+    @include shadow-block;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__logo {
+    position: absolute;
+    top: -42px;
+    left: 50%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 131px;
+    height: 131px;
+
+    background: white;
+    border: 9px solid #181c33;
+    border-radius: 50%;
+
+    transform: translate(-50%, 0);
+
+    img {
+      width: 55px;
+      height: 100%;
+    }
+  }
+
+  &__header {
+    margin-bottom: 32px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    font-family: 'MER', sans-serif;
+    font-size: 20px;
+    line-height: 24px;
+    text-transform: uppercase;
+
+    span {
+      color: $orange-l;
+    }
+  }
+
+  &__field {
+    margin-bottom: 20px;
+  }
+
+  &__labels {
+    margin-bottom: 6px;
+
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__label {
+    font-family: 'MER', sans-serif;
+    font-size: 12px;
+    line-height: 14px;
+
+    opacity: 0.5;
+  }
+
+  &__fee {
+    text-align: center;
+  }
+
+  &__btn {
+    margin: 26px auto 0;
+
+    width: unset !important;
+  }
+
+  .input {
+    background: rgb(23, 27, 49);
+  }
+}

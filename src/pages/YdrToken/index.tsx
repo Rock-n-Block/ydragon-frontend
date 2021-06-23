@@ -2,8 +2,9 @@ import React from 'react';
 import { observer } from 'mobx-react-lite';
 
 import logo from '../../assets/img/icons/logo.svg';
-import { TokenPanel, TradeYDRModal } from '../../components';
+import { TokenPanel } from '../../components';
 import { useMst } from '../../store/store';
+import { TradeYDRModal } from '../../components/Modals';
 // import { useWalletConnectorContext } from '../../services/walletConnect';
 
 const YdrToken: React.FC = observer(() => {

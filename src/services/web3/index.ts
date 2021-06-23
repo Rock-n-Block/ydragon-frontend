@@ -20,7 +20,7 @@ interface IMetamaskService {
   isProduction?: boolean;
 }
 
-export type ContractTypes = 'BNB' | 'WBNB' | 'MAIN' | 'USDT' | 'YDR' | 'Router';
+export type ContractTypes = 'BNB' | 'WBNB' | 'MAIN' | 'USDT' | 'YDR' | 'Router' | 'Factory';
 
 const networks: INetworks = {
   mainnet: '0x1',
@@ -100,6 +100,10 @@ export default class MetamaskService {
     );
   }
 
+  getContractByAddress(address: string, abi: Array<any>) {
+    return new this.web3Provider.eth.Contract(abi, address);
+  }
+
   public connect() {
     const currentChain = this.wallet.chainId;
 
@@ -169,8 +173,8 @@ export default class MetamaskService {
     return +new BigNumber(totalSupply).dividedBy(new BigNumber(10).pow(tokenDecimals)).toString(10);
   }
 
-  async getDecimals(contractName: ContractTypes) {
-    const decimals = await this.getContract(contractName).methods.decimals().call();
+  async getDecimals(address: string, abi: any[]) {
+    const decimals = await this.getContractByAddress(address, abi).methods.decimals().call();
     return +decimals;
   }
 
@@ -231,6 +235,37 @@ export default class MetamaskService {
     }
   }
 
+  checkAutoXYRebalaceAllowance(address: string) {
+    return this.getContractByAddress(address, config.MAIN.ABI)
+      .methods.isAllowedAutoXYRebalace()
+      .call();
+  }
+
+  changeAutoXYRebalaceAllowance(address: string, value: boolean) {
+    const method = MetamaskService.getMethodInterface(
+      config.MAIN.ABI,
+      'setIsAllowedAutoXYRebalace',
+    );
+    const signature = this.encodeFunctionCall(method, [value]);
+
+    return this.sendTransaction({
+      from: this.walletAddress,
+      to: address,
+      data: signature,
+    });
+  }
+
+  startXyRebalance(address: string, value: number) {
+    const method = MetamaskService.getMethodInterface(config.MAIN.ABI, 'xyRebalance');
+    const signature = this.encodeFunctionCall(method, [value]);
+
+    return this.sendTransaction({
+      from: this.walletAddress,
+      to: address,
+      data: signature,
+    });
+  }
+
   mint(value: string, spenderToken: ContractTypes) {
     const mintMethod = MetamaskService.getMethodInterface(config.MAIN.ABI, 'mint');
     const signature = this.encodeFunctionCall(mintMethod, [
@@ -279,6 +314,48 @@ export default class MetamaskService {
     }
   }
 
+  enterIme(value: string, spenderToken: ContractTypes) {
+    const methodName = spenderToken === 'BNB' ? 'enterImeNative' : 'enterImeToken';
+    const mintMethod = MetamaskService.getMethodInterface(config.MAIN.ABI, methodName);
+    let signature;
+    if (spenderToken !== 'BNB') {
+      signature = this.encodeFunctionCall(mintMethod, [
+        config[spenderToken].ADDRESS,
+        MetamaskService.calcTransactionAmount(value, 18),
+      ]);
+    } else {
+      signature = this.encodeFunctionCall(mintMethod, []);
+    }
+
+    return this.sendTransaction({
+      from: this.walletAddress,
+      to: config.MAIN.ADDRESS,
+      data: signature,
+      value: spenderToken === 'BNB' ? MetamaskService.calcTransactionAmount(value, 18) : '',
+    });
+  }
+
+  getYDRCourse(spenderToken: ContractTypes, value: string, buy: boolean, address?: string) {
+    let otherTokenAddress = address;
+    let path;
+    if (spenderToken === 'USDT') {
+      otherTokenAddress = config.USDT.ADDRESS;
+    }
+    if (buy) {
+      path = otherTokenAddress
+        ? [otherTokenAddress, config.WBNB.ADDRESS, config.YDR.ADDRESS]
+        : [config.WBNB.ADDRESS, config.YDR.ADDRESS];
+    } else {
+      path = otherTokenAddress
+        ? [config.YDR.ADDRESS, config.WBNB.ADDRESS, otherTokenAddress]
+        : [config.YDR.ADDRESS, config.WBNB.ADDRESS];
+    }
+
+    return this.getContract('Router')
+      .methods.getAmountsOut(MetamaskService.calcTransactionAmount(value, 18), path)
+      .call();
+  }
+
   buyYDRToken(value: string, spenderToken: ContractTypes, address?: string) {
     let methodName: 'swapExactETHForTokens' | 'swapExactTokensForTokens';
     let otherTokenAddress = address;
@@ -310,8 +387,9 @@ export default class MetamaskService {
       signature = this.encodeFunctionCall(buyMethod, [
         MetamaskService.calcTransactionAmount(value, 18),
         0,
-        config.WBNB.ADDRESS,
-        config.YDR.ADDRESS,
+        otherTokenAddress
+          ? [otherTokenAddress, config.WBNB.ADDRESS, config.YDR.ADDRESS]
+          : [config.WBNB.ADDRESS, config.YDR.ADDRESS],
         this.walletAddress,
         moment().add(30, 'minutes').format('X'),
       ]);
@@ -375,6 +453,30 @@ export default class MetamaskService {
       to: config.Router.ADDRESS,
       data: signature,
       value: spenderToken === 'BNB' ? MetamaskService.calcTransactionAmount(value, 18) : '',
+    });
+  }
+
+  createNewIndex(
+    name: string,
+    symbol: string,
+    imeTimeParameters: string[],
+    tokenAddresses: string[],
+    tokenWeights: string[],
+  ) {
+    const method = MetamaskService.getMethodInterface(config.Factory.ABI, 'deployNewAsset');
+
+    const signature = this.encodeFunctionCall(method, [
+      name,
+      symbol,
+      imeTimeParameters,
+      tokenAddresses,
+      tokenWeights,
+    ]);
+
+    return this.sendTransaction({
+      from: this.walletAddress,
+      to: config.Factory.ADDRESS,
+      data: signature,
     });
   }
 

@@ -5,11 +5,10 @@ import moment from 'moment';
 
 import logo from '../../assets/img/icons/logo.svg';
 import { TokenPanel } from '../../components';
-import GetInModal from '../../components/Home/GetInModal';
 import { IndexTable, RebalanceHistory } from '../../components/IndexPage';
 import { IToken } from '../../components/IndexPage/IndexTable';
-import MintModal from '../../components/IndexPage/MintModal';
-import RedeemModal from '../../components/IndexPage/RedeemModal';
+import MintModal from '../../components/Modals/MintModal';
+import RedeemModal from '../../components/Modals/RedeemModal';
 import { indexesApi } from '../../services/api';
 import { useMst } from '../../store/store';
 
@@ -77,7 +76,6 @@ const Index: React.FC = observer(() => {
       <RebalanceHistory lastRebalance={indexData?.rebalance_date} />
       <IndexTable tokens={indexData?.tokens} />
       {/* <About /> */}
-      <GetInModal />
       <MintModal />
       <RedeemModal />
     </main>

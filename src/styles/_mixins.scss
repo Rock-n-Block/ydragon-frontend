@@ -46,7 +46,7 @@
   letter-spacing: 0.8em;
   text-transform: uppercase;
 
-  color: $black;
+  color: white;
 }
 
 @mixin normal-text {
@@ -54,7 +54,7 @@
   line-height: 24px;
   letter-spacing: 0.035em;
 
-  color: $black;
+  color: white;
 }
 
 @mixin shadow-block {
