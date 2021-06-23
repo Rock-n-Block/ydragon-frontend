@@ -1,13 +1,15 @@
 import React from 'react';
-import { Button } from '../../index';
-import './Description.scss';
+
 import iconPlay from '../../../assets/img/icons/icon-play.svg';
+import { Button } from '../../index';
+
+import './Description.scss';
 
 const Description: React.FC = () => {
   return (
     <section className="section description">
       <div className="description__text--wrapper">
-      <span className="description__title">About YDRAGON</span>
+        <span className="description__title">About YDRAGON</span>
         <span className="description__text">
           At YDragon we are committed to solving the problems of DeFi. As investors ourselves, we
           understand how costly and difficult the DeFi space can be to navigate and to create a
@@ -31,7 +33,7 @@ const Description: React.FC = () => {
         </div>
       </div>
       <div className="description__video">
-        <span className='description__video--text'>Coming soon</span>
+        <span className="description__video--text">Coming soon</span>
         <img alt="#" src={iconPlay} className="description__video--play" />
         <span className="description__video--info">
           For more info on YDragon{' '}

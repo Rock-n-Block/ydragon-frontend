@@ -3,8 +3,9 @@
 
 .ant-modal {
   &-content {
-    color: #FFFFFF;
-    background: linear-gradient(180deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0) 100%), linear-gradient(171.49deg, #1A1E3A 3.83%, #161A2A 100%);
+    color: #fff;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0) 100%),
+      linear-gradient(171.49deg, #1a1e3a 3.83%, #161a2a 100%);
     border-radius: 16px;
     box-shadow: $shadow-dark;
   }
@@ -21,7 +22,7 @@
 
     cursor: pointer;
 
-    background: #D53038;;
+    background: #d53038;
     border-radius: 0 30px 30px 0;
 
     transform: translateX(100%);

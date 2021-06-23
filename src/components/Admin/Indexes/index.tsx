@@ -4,10 +4,10 @@ import moment from 'moment';
 
 import { IIndex } from '../../../pages/Admin';
 import { indexesApi } from '../../../services/api';
+import { Sorter } from '../../../utils/sorter';
 import { Button, Table } from '../../index';
 
 import './Indexes.scss';
-import { Sorter } from '../../../utils/sorter';
 
 const Indexes: React.FC = () => {
   const [indexes, setIndexes] = useState<Array<IIndex>>();

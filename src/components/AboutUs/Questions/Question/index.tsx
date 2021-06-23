@@ -1,4 +1,5 @@
-import React, { useState, PropsWithChildren } from 'react';
+import React, { PropsWithChildren, useState } from 'react';
+
 import iconDown from '../../../../assets/img/icons/icon-arrow-down-white.svg';
 import iconUp from '../../../../assets/img/icons/icon-arrow-up-white.svg';
 
@@ -11,16 +12,15 @@ interface QuestionProps {
 
 const Question: React.FC<QuestionProps> = (props: PropsWithChildren<QuestionProps>) => {
   const [collapsed, setCollapsed] = useState(true);
-  const {
-    title,
-    children
-  } = props;
-  const element = <span className={`question__text ${collapsed ? 'invisible' : 'visible'}`}/>
+  const { title, children } = props;
+  const element = <span className={`question__text ${collapsed ? 'invisible' : 'visible'}`} />;
   return (
     <div className="question">
-      <div className='question__text--wrapper'>
-        <span className={`question__title ${collapsed ? 'colorWhite' : 'colorOrange'}`}>{title}</span>
-        {React.cloneElement(element, {children})}
+      <div className="question__text--wrapper">
+        <span className={`question__title ${collapsed ? 'colorWhite' : 'colorOrange'}`}>
+          {title}
+        </span>
+        {React.cloneElement(element, { children })}
       </div>
       <div
         role="button"

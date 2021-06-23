@@ -20,6 +20,7 @@
 
   &__name-wrapper {
     margin-left: 10px;
+
     color: white;
   }
 
@@ -27,14 +28,14 @@
     font-family: 'TNB', sans-serif;
     font-size: 18px;
     line-height: 21px;
-
   }
 
   &__abbr {
     font-size: 18px;
     line-height: 21px;
     text-transform: uppercase;
-opacity: 0.4;
+
+    opacity: 0.4;
   }
 
   &__weight {
@@ -65,7 +66,6 @@ opacity: 0.4;
 
       padding: 3px;
 
-
       background: rgb(35, 38, 60);
       background-clip: content-box;
       border-radius: 60px;
@@ -73,6 +73,7 @@ opacity: 0.4;
 
     span {
       position: relative;
+
       color: white;
     }
   }

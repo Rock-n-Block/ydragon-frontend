@@ -6,6 +6,7 @@ import { useWalletConnectorContext } from '../../../services/walletConnect';
 import { ContractTypes } from '../../../services/web3';
 import { useMst } from '../../../store/store';
 import { Button, Modal } from '../../index';
+
 import './GetInModal.scss';
 
 const GetInModal: React.FC = observer(() => {

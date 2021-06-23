@@ -2,123 +2,131 @@
 @import '../../../styles/mixins';
 
 .description {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+
+  width: 100%;
+  max-width: 1140px;
+
+  &__text--wrapper {
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: flex-start;
-    max-width: 1140px;
+    flex-direction: column;
+
     width: 100%;
+    max-width: 605px;
+  }
 
-    &__text--wrapper {
-        max-width: 605px;
-        width: 100%;
-        display: flex;
-        flex-direction: column;
+  &__title {
+    height: 29px;
+
+    font-family: 'MER';
+    font-size: 24px;
+    font-weight: normal;
+    font-style: normal;
+    line-height: 29px;
+
+    color: #fff;
+
+    /* identical to box height */
+    font-feature-settings: 'liga' off;
+  }
+
+  &__text {
+    margin-top: 12px;
+
+    font-family: 'RR';
+    font-size: 16px;
+    font-weight: normal;
+    font-style: normal;
+    line-height: 150%;
+
+    /* or 24px */
+    letter-spacing: 0.035em;
+
+    color: #fff;
+    font-feature-settings: 'liga' off;
+  }
+
+  &__btns-row {
+    margin-top: 30px;
+
+    display: flex;
+    justify-content: center;
+  }
+
+  &__btn {
+    width: 100%;
+    max-width: 250px;
+    flex-shrink: 0;
+
+    & + & {
+      margin-left: 30px;
+    }
+  }
+
+  &__video {
+    position: relative;
+
+    margin-top: 29px;
+
+    width: 462px;
+    height: 312px;
+
+    background-color: #fff;
+    border-radius: 16px;
+
+    &--text {
+      position: absolute;
+      left: 120px;
+      bottom: 25px;
+
+      height: 29px;
+
+      font-family: 'MER';
+      font-size: 24px;
+      font-weight: normal;
+      font-style: normal;
+      line-height: 29px;
+
+      /* identical to box height */
+      font-feature-settings: 'liga' off;
     }
 
-    &__title{
-        height: 29px;
+    &--play {
+      position: absolute;
+      top: 124px;
+      left: 199px;
 
-        font-family: 'MER';
-        font-style: normal;
-        font-weight: normal;
-        font-size: 24px;
-        line-height: 29px;
-        /* identical to box height */
-
-        font-feature-settings: 'liga' off;
-
-        color: #FFFFFF;
+      :hover {
+        cursor: pointer;
+      }
     }
 
-    &__text{
-        font-family: 'RR';
-        font-style: normal;
-        font-weight: normal;
-        font-size: 16px;
-        line-height: 150%;
-        margin-top: 12px;
-        /* or 24px */
-        
-        letter-spacing: 0.035em;
-        font-feature-settings: 'liga' off;
-        
-        color: #FFFFFF;   
+    &--info {
+      position: relative;
+      top: 343px;
+
+      width: 250px;
+      height: 30px;
+
+      font-family: 'RR', sans-serif;
+      font-size: 16px;
+      font-weight: normal;
+      font-style: normal;
+      line-height: 30px;
+
+      /* identical to box height, or 187% */
+
+      /* YD/BG Additional */
+      color: #f7f8fd;
     }
 
-    &__btns-row{
-        margin-top: 30px;
+    &--link {
+      text-decoration: underline;
 
-        display: flex;
-        justify-content: center;
+      color: #f47c45;
     }
-    &__btn {
-        width: 100%;
-        max-width: 250px;
-        flex-shrink: 0;
-
-        & + & {
-        margin-left: 30px;
-        }
-    }
-
-    &__video{
-        position: relative;
-        width: 462px;
-        height: 312px;
-        margin-top: 29px;
-        background-color: #fff;
-        border-radius: 16px;
-
-        &--text{
-            position: absolute;
-            left: 120px;
-            bottom: 25px;
-            
-            height: 29px;
-
-            font-family: 'MER';
-            font-style: normal;
-            font-weight: normal;
-            font-size: 24px;
-            line-height: 29px;
-            /* identical to box height */
-
-            font-feature-settings: 'liga' off;
-        }
-
-        &--play{
-            position: absolute;
-            left: 199px;
-            top: 124px;
-            
-            :hover{
-                cursor: pointer;
-            }
-        }
-
-        &--info {
-            position: relative;
-            width: 250px;
-            height: 30px;
-            top: 343px;
-
-            font-family: 'RR', sans-serif;
-            font-style: normal;
-            font-weight: normal;
-            font-size: 16px;
-            line-height: 30px;
-            /* identical to box height, or 187% */
-
-
-            /* YD/BG Additional */
-
-            color: #F7F8FD;
-        }
-
-        &--link {
-        text-decoration: underline;
-        color: #F47C45;
-        }
-    }
+  }
 }

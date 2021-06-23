@@ -4,7 +4,7 @@ import { Route, Switch, useRouteMatch } from 'react-router-dom';
 import { Indexes } from './components/Admin';
 import AdminIndex from './pages/AdminIndex';
 import { EventBanner, Footer, Header, MetamaskErrModal } from './components';
-import { Admin, Auth, Home, Index, IndexDashboard, StakePage, YdrToken, AboutUs } from './pages';
+import { AboutUs, Admin, Auth, Home, Index, IndexDashboard, StakePage, YdrToken } from './pages';
 
 import './styles/index.scss';
 

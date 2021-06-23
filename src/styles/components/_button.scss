@@ -131,9 +131,9 @@
 //}
 .btn {
   display: flex;
-  align-items: center;
   justify-content: center;
-  gap: 13px;
+  align-items: center;
+
   width: 100%;
   height: auto;
 
@@ -144,6 +144,7 @@
   border: none;
   border-radius: 12px;
   box-shadow: none;
+  gap: 13px;
 
   &-filled {
     padding: 20px;
@@ -193,22 +194,28 @@
 
   &-clear {
     padding: 0;
-    background: transparent;
+
     width: fit-content;
+
+    background: transparent;
   }
-  &-red{
+
+  &-red {
     padding: 10px 20px;
-    color: #D53038;
+
+    color: #d53038;
+    border: 3px solid #d53038;
 
     border-radius: 40px;
-    border: 3px solid #D53038;
   }
-  &-green{
+
+  &-green {
     padding: 10px 20px;
-    color: #27CD91;
+
+    color: #27cd91;
+    border: 3px solid #27cd91;
 
     border-radius: 40px;
-    border: 3px solid #27CD91;
   }
 }
 

@@ -1,10 +1,11 @@
 import React from 'react';
 
-import './Features.scss';
-import iconRadien from '../../../assets/img/icons/icon-raiden.svg';
-import iconOctal from '../../../assets/img/icons/icon-octal.svg';
-import iconLeon from '../../../assets/img/icons/icon-leon.svg';
 import iconHalfDan from '../../../assets/img/icons/icon-halfdan.svg';
+import iconLeon from '../../../assets/img/icons/icon-leon.svg';
+import iconOctal from '../../../assets/img/icons/icon-octal.svg';
+import iconRadien from '../../../assets/img/icons/icon-raiden.svg';
+
+import './Features.scss';
 
 const Features: React.FC = () => {
   return (

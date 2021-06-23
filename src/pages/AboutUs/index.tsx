@@ -1,11 +1,6 @@
 import React from 'react';
 
-import {
-  Title,
-  Description,
-  Features,
-  Questions
-} from '../../components/AboutUs';
+import { Description, Features, Questions, Title } from '../../components/AboutUs';
 
 const AboutUs: React.FC = () => {
   return (

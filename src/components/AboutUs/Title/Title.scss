@@ -2,35 +2,36 @@
 @import '../../../styles/mixins';
 
 .about-us {
-    display: flex;
-    flex-direction: column;
+  margin-top: 134px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  &__title-wrapper {
+    position: relative;
+
+    display: inline-flex;
     justify-content: center;
     align-items: center;
-    margin-top: 134px;
-  
-    &__title-wrapper {
-      position: relative;
-  
-      display: inline-flex;
-      justify-content: center;
-      align-items: center;
-    }
-  
-    &__title {
-      font-size: 144px;
-      line-height: 173px;
-    }
-  
-    &__sub-title {
-      position: absolute;
-  
-      font-family: 'Rubik', sans-serif;
-      font-size: 44px;
-      line-height: 70px;
-      font-style: normal;
-      font-weight: bold;
-      text-transform: uppercase;
-  
-      color: $white;
-    }
   }
+
+  &__title {
+    font-size: 144px;
+    line-height: 173px;
+  }
+
+  &__sub-title {
+    position: absolute;
+
+    font-family: 'Rubik', sans-serif;
+    font-size: 44px;
+    font-weight: bold;
+    font-style: normal;
+    line-height: 70px;
+    text-transform: uppercase;
+
+    color: $white;
+  }
+}

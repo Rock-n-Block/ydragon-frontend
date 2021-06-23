@@ -2,85 +2,90 @@
 @import '../../../styles/mixins';
 
 .features {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  &__title-wrapper {
+    //   position: absolute;
+    display: inline-flex;
     justify-content: center;
     align-items: center;
-  
-    &__title-wrapper {
-    //   position: absolute;
-  
-      display: inline-flex;
-      justify-content: center;
-      align-items: center;
     //   left: 478px;
     //   top: 0px;
-    }
-  
-    &__title {
-      font-size: 48px;
-      line-height: 58px;
-    }
+  }
 
-    &__wrapper{
-        // position: absolute;
-        width: 1141px;
-        // left: 149px;
-        // top: 1064px;
-    }
+  &__title {
+    font-size: 48px;
+    line-height: 58px;
+  }
 
-    &__items{
-        margin-top: 84px;
-    }
+  &__wrapper {
+    // position: absolute;
+    width: 1141px;
+    // left: 149px;
+    // top: 1064px;
+  }
 
-    &__row{
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        grid-column-gap: 118px;
-    }
+  &__items {
+    margin-top: 84px;
+  }
+
+  &__row {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-column-gap: 118px;
+  }
 }
-.feature{
+
+.feature {
+  margin-bottom: 40px;
+
+  display: flex;
+
+  max-width: 512px;
+
+  &__info {
+    margin-left: 24px;
+
     display: flex;
-    max-width: 512px;
-    margin-bottom: 40px;
+    flex-direction: column;
+  }
 
-    &__info{
-        margin-left: 24px;
-        display: flex;
-        flex-direction: column;
-    }
+  &__info--title {
+    margin-bottom: 12px;
 
-    &__info--title{
-        font-family: 'MER', sans-serif;
-        font-style: normal;
-        font-weight: normal;
-        font-size: 24px;
-        line-height: 29px;
-        margin-bottom: 12px;
-        /* identical to box height */
+    font-family: 'MER', sans-serif;
+    font-size: 24px;
+    font-weight: normal;
+    font-style: normal;
+    line-height: 29px;
 
-        font-feature-settings: 'liga' off;
+    color: #fff;
 
-        color: #FFFFFF;
-    }
+    /* identical to box height */
+    font-feature-settings: 'liga' off;
+  }
 
-    &__info--text{
-        font-family: 'RR', sans-serif;
-        font-style: normal;
-        font-weight: normal;
-        max-width: 424px;
-        width: 100%;
-        font-size: 16px;
-        line-height: 150%;
-        /* or 24px */
+  &__info--text {
+    width: 100%;
+    max-width: 424px;
 
-        letter-spacing: 0.035em;
-        font-feature-settings: 'liga' off;
+    font-family: 'RR', sans-serif;
+    font-size: 16px;
+    font-weight: normal;
+    font-style: normal;
+    line-height: 150%;
 
-        color: #FFFFFF;
-    }
+    /* or 24px */
+    letter-spacing: 0.035em;
 
-    &__img{
-        border-radius: 50%;
-    }
+    color: #fff;
+    font-feature-settings: 'liga' off;
+  }
+
+  &__img {
+    border-radius: 50%;
+  }
 }

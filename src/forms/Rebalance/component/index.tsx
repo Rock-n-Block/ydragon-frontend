@@ -1,15 +1,14 @@
 import React, { useState } from 'react';
-
+import { useParams } from 'react-router-dom';
+import BigNumber from 'bignumber.js/bignumber';
 import { FieldArray, FieldArrayRenderProps, Form, FormikProps } from 'formik';
 import { observer } from 'mobx-react-lite';
 
 import { Button, Input, Search } from '../../../components';
-import { ITokensDiff } from '../../../pages/Admin';
-import BigNumber from 'bignumber.js/bignumber';
-import { coinsApi, indexesApi } from '../../../services/api';
-import { ISearchToken } from '../../../components/Search';
 import { IToken } from '../../../components/IndexPage/IndexTable';
-import { useParams } from 'react-router-dom';
+import { ISearchToken } from '../../../components/Search';
+import { ITokensDiff } from '../../../pages/Admin';
+import { coinsApi, indexesApi } from '../../../services/api';
 
 interface IIndexId {
   indexId: string;
