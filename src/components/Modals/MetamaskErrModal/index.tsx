@@ -1,8 +1,8 @@
 import React from 'react';
 import { observer } from 'mobx-react-lite';
 
-import MetamaskImg from '../../assets/img/auth/metamask.svg';
-import { useMst } from '../../store/store';
+import MetamaskImg from '../../../assets/img/auth/metamask.svg';
+import { useMst } from '../../../store/store';
 import { Modal } from '../index';
 
 import './MetamaskErrModal.scss';

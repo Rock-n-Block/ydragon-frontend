@@ -12,6 +12,18 @@ const RebalanceModal = types
       self.isOpen = false;
     },
   }));
+const CreateIndexModal = types
+  .model({
+    isOpen: types.boolean,
+  })
+  .actions((self) => ({
+    open() {
+      self.isOpen = true;
+    },
+    close() {
+      self.isOpen = false;
+    },
+  }));
 const GetInModal = types
   .model({
     isOpen: types.boolean,
@@ -96,6 +108,7 @@ const MetamaskModal = types
 export const Modals = types
   .model({
     rebalance: RebalanceModal,
+    createIndex: CreateIndexModal,
     getIn: GetInModal,
     mint: MintModal,
     redeem: RedeemModal,
@@ -111,5 +124,6 @@ export const Modals = types
       self.redeem.close();
       self.tradeYDR.close();
       self.rebalance.close();
+      self.createIndex.close();
     },
   }));

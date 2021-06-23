@@ -7,8 +7,8 @@ import logo from '../../assets/img/icons/logo.svg';
 import { TokenPanel } from '../../components';
 import { IndexTable, RebalanceHistory } from '../../components/IndexPage';
 import { IToken } from '../../components/IndexPage/IndexTable';
-import MintModal from '../../components/IndexPage/MintModal';
-import RedeemModal from '../../components/IndexPage/RedeemModal';
+import MintModal from '../../components/Modals/MintModal';
+import RedeemModal from '../../components/Modals/RedeemModal';
 import { indexesApi } from '../../services/api';
 import { useMst } from '../../store/store';
 

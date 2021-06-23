@@ -2,11 +2,12 @@ import React, { useCallback, useEffect, useState } from 'react';
 import BigNumber from 'bignumber.js/bignumber';
 import { observer } from 'mobx-react-lite';
 
-import YDRLogo from '../../assets/img/icons/logo.svg';
-import { useWalletConnectorContext } from '../../services/walletConnect';
-import { useMst } from '../../store/store';
-import { platformToken, TokenMiniNameTypes, tokensArray } from '../../utils/tokenMini';
-import { Button, InputWithSelect, Modal } from '../index';
+import YDRLogo from '../../../assets/img/icons/logo.svg';
+import { useWalletConnectorContext } from '../../../services/walletConnect';
+import { useMst } from '../../../store/store';
+import { platformToken, TokenMiniNameTypes, tokensArray } from '../../../utils/tokenMini';
+import { Button, InputWithSelect } from '../../index';
+import { Modal } from '../index';
 
 import './TradeYDRModal.scss';
 

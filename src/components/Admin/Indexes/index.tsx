@@ -8,8 +8,11 @@ import { Sorter } from '../../../utils/sorter';
 import { Button, Table } from '../../index';
 
 import './Indexes.scss';
+import { observer } from 'mobx-react-lite';
+import { useMst } from '../../../store/store';
 
-const Indexes: React.FC = () => {
+const Indexes: React.FC = observer(() => {
+  const { modals } = useMst();
   const [indexes, setIndexes] = useState<Array<IIndex>>();
 
   const columns: any[] = [
@@ -52,6 +55,9 @@ const Indexes: React.FC = () => {
         console.log('get indexes error', response);
       });
   }, []);
+  const handleCreate = (): void => {
+    modals.createIndex.open();
+  };
   useEffect(() => {
     getIndexes();
   }, [getIndexes]);
@@ -74,12 +80,14 @@ const Indexes: React.FC = () => {
       <div className="section__title-row">
         <h2 className="section__title text-outline">Indexes</h2>
 
-        <Button className="index-create-btn">create new index</Button>
+        <Button className="index-create-btn" onClick={handleCreate}>
+          create new index
+        </Button>
       </div>
 
       {indexes && <Table dataSource={dataSource} columns={columns} className="rebalance-table" />}
     </section>
   );
-};
+});
 
 export default Indexes;

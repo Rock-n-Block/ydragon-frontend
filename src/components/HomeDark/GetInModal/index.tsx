@@ -5,11 +5,12 @@ import mockBinanceLogo from '../../../assets/img/tokens/bnb.svg';
 import { useWalletConnectorContext } from '../../../services/walletConnect';
 import { useMst } from '../../../store/store';
 import { TokenMiniNameTypes, tokensArray } from '../../../utils/tokenMini';
-import { Button, InputWithSelect, Modal } from '../../index';
+import { Button, InputWithSelect } from '../../index';
 import SplittedTable, { ITableColumn, ITableData } from '../../SplittedTable';
 import { TokenMiniProps } from '../../TokenMini';
 
 import './GetInModal.scss';
+import { Modal } from '../../Modals';
 
 const mockTotalData: ITableData[] = [
   [

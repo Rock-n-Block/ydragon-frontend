@@ -2,7 +2,7 @@ import React from 'react';
 import { Modal as ModalAntd } from 'antd';
 import classNames from 'classnames';
 
-import { ReactComponent as CloseImg } from '../../assets/img/icons/icon-close.svg';
+import { ReactComponent as CloseImg } from '../../../assets/img/icons/icon-close.svg';
 
 interface IModal {
   isVisible: boolean;

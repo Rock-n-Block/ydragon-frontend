@@ -1,8 +1,9 @@
 import React from 'react';
 import { observer } from 'mobx-react-lite';
 
-import { useMst } from '../../store/store';
-import { Button, Modal } from '../index';
+import { useMst } from '../../../store/store';
+import { Button } from '../../index';
+import { Modal } from '../index';
 
 import './InfoModal.scss';
 

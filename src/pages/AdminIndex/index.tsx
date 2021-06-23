@@ -6,12 +6,12 @@ import {
   IndexInfo,
   Options,
   Rebalance,
-  RebalanceModal,
   TokensStructure,
   XYStructure,
 } from '../../components/Admin';
 import { indexesApi, vaultsApi } from '../../services/api';
 import { IIndex, IIndexStatus, ITokensDiff } from '../Admin';
+import { RebalanceModal } from '../../components/Modals';
 
 interface IIndexId {
   indexId: string;
