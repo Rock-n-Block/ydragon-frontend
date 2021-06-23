@@ -18,7 +18,7 @@ const Question: React.FC<QuestionProps> = (props: PropsWithChildren<QuestionProp
   const element = <span className={`question__text ${collapsed ? 'invisible' : 'visible'}`}/>
   return (
     <div className="question">
-      <div className={`question__text--wrapper ${collapsed ? 'collapse' : 'expand'}`}>
+      <div className='question__text--wrapper'>
         <span className={`question__title ${collapsed ? 'colorWhite' : 'colorOrange'}`}>{title}</span>
         {React.cloneElement(element, {children})}
       </div>

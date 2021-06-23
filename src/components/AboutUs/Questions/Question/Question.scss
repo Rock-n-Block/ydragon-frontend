@@ -19,8 +19,6 @@
         display: flex;
         flex-direction: column;
         align-items: flex-start;
-        transition: all 1s;
-        overflow: hidden;
     }
 
     &__title{
@@ -45,16 +43,15 @@
         font-weight: normal;
         font-size: 16px;
         line-height: 150%;
+        overflow: hidden;
 
         color: #FFFFFF;
         /* or 24px */
         
         letter-spacing: 0.035em;
         font-feature-settings: 'liga' off;
-        
-        transition-delay: 2s;
     
-        &--link {
+        &--link{
             text-decoration: underline;
             color: #F47C45;
             }
@@ -72,21 +69,17 @@
 }
 .colorOrange{
     color: #E95B40;
-    transition-duration: 1s;
+    transition-duration: 0.4s;
 }
 .colorWhite{
     color: #FFFFFF;
-    transition-duration: 1s;
-}
-.collapse{
-    min-height: 29px;
-}
-.expand{
-    min-height: 97px;
+    transition-duration: 0.4s;
 }
 .invisible{
-    display: none;
+    max-height: 0;
+    transition: max-height 0.4s ease-out;
 }
 .visible{
-    display: inline;
+    max-height: 100px;
+    transition: max-height 0.4s ease-out;
 }
