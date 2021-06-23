@@ -28,6 +28,7 @@ interface IRebalance extends IIndexStatus {
 }
 export interface IVault {
   token_name: string;
+  token_image: string;
   x_balance: string;
   y_balance: string;
   farm_balance: string;

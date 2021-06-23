@@ -45,7 +45,7 @@ const TokensStructure: React.FC<TokensStructureProps> = ({ vaults }) => {
       const newData = vaults.map((vault, index) => {
         return {
           key: index,
-          name: { image: '', name: vault.token_name },
+          name: { image: vault.token_image, name: vault.token_name },
           x_vault: new BigNumber(vault.x_percent).toFixed(2),
           y_vault: new BigNumber(vault.y_percent).toFixed(2),
           farm: vault.farm_balance,
