@@ -335,19 +335,24 @@ export default class MetamaskService {
     });
   }
 
-  getBuyYDRCource(spenderToken: ContractTypes, value: string, address?: string) {
+  getYDRCourse(spenderToken: ContractTypes, value: string, buy: boolean, address?: string) {
     let otherTokenAddress = address;
+    let path;
     if (spenderToken === 'USDT') {
       otherTokenAddress = config.USDT.ADDRESS;
     }
+    if (buy) {
+      path = otherTokenAddress
+        ? [otherTokenAddress, config.WBNB.ADDRESS, config.YDR.ADDRESS]
+        : [config.WBNB.ADDRESS, config.YDR.ADDRESS];
+    } else {
+      path = otherTokenAddress
+        ? [config.YDR.ADDRESS, config.WBNB.ADDRESS, otherTokenAddress]
+        : [config.YDR.ADDRESS, config.WBNB.ADDRESS];
+    }
 
     return this.getContract('Router')
-      .methods.getAmountsOut(
-        MetamaskService.calcTransactionAmount(value, 18),
-        otherTokenAddress
-          ? [otherTokenAddress, config.WBNB.ADDRESS, config.YDR.ADDRESS]
-          : [config.WBNB.ADDRESS, config.YDR.ADDRESS],
-      )
+      .methods.getAmountsOut(MetamaskService.calcTransactionAmount(value, 18), path)
       .call();
   }
 

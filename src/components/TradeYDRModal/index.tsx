@@ -19,12 +19,14 @@ const TradeYDRModal: React.FC = observer(() => {
   const [secondCurrency, setSecondCurrency] = useState<TokenMiniNameTypes>(
     modals.tradeYDR.method === 'sell' ? tokensArray[0].name : 'YDR',
   );
-  const [payInput, setPayInput] = useState<string>('0');
+  const [payInput, setPayInput] = useState<string>('');
   const [viewOnlyInputValue, setViewOnlyInputValue] = useState<string>('0.0');
   const [balance, setBalance] = useState<number>(0);
   const [isNeedApprove, setIsNeedApprove] = useState<boolean>(true);
   const handleClose = (): void => {
     modals.tradeYDR.close();
+    setPayInput('');
+    setViewOnlyInputValue('0.0');
   };
   const getBalance = useCallback(() => {
     walletConnector.metamaskService
@@ -39,23 +41,34 @@ const TradeYDRModal: React.FC = observer(() => {
       });
   }, [walletConnector.metamaskService, firstCurrency]);
 
-  const getBuyCource = useCallback(
-    (e: any) => {
-      walletConnector.metamaskService
-        .getBuyYDRCource(firstCurrency, e.target.value)
-        .then((data: any) => {
-          console.log(`Cource of ${firstCurrency} to YDR `, data[data.length - 1]);
-          setViewOnlyInputValue(
-            new BigNumber(data[data.length - 1]).dividedBy(new BigNumber(10).pow(18)).toFixed(5),
-          );
-        })
-        .catch((err: any) => {
-          const { response } = err;
-          console.log('getCource error', response);
-        });
-    },
-    [firstCurrency, walletConnector.metamaskService],
-  );
+  const getBuyCourse = useCallback(() => {
+    walletConnector.metamaskService
+      .getYDRCourse(firstCurrency, payInput, true)
+      .then((data: any) => {
+        console.log(`Cource of ${firstCurrency} to YDR `, data[data.length - 1]);
+        setViewOnlyInputValue(
+          new BigNumber(data[data.length - 1]).dividedBy(new BigNumber(10).pow(18)).toFixed(5),
+        );
+      })
+      .catch((err: any) => {
+        const { response } = err;
+        console.log('getCource error', response);
+      });
+  }, [payInput, firstCurrency, walletConnector.metamaskService]);
+  const getSellCourse = useCallback(() => {
+    walletConnector.metamaskService
+      .getYDRCourse(secondCurrency, payInput, false)
+      .then((data: any) => {
+        console.log(`Cource of YDR  to ${secondCurrency} `, data[data.length - 1]);
+        setViewOnlyInputValue(
+          new BigNumber(data[data.length - 1]).dividedBy(new BigNumber(10).pow(18)).toFixed(5),
+        );
+      })
+      .catch((err: any) => {
+        const { response } = err;
+        console.log('getCource error', response);
+      });
+  }, [payInput, secondCurrency, walletConnector.metamaskService]);
 
   const checkAllowance = useCallback(() => {
     walletConnector.metamaskService
@@ -72,10 +85,11 @@ const TradeYDRModal: React.FC = observer(() => {
   const handleSelectChange = (value: any) => {
     if (modals.tradeYDR.method === 'sell') {
       setSecondCurrency(value);
+      setViewOnlyInputValue('0.0');
+      getSellCourse();
     } else {
       setFirstCurrency(value);
-      setPayInput('');
-      setViewOnlyInputValue('0.0');
+      getBuyCourse();
     }
   };
   const handleApprove = (): void => {
@@ -125,7 +139,14 @@ const TradeYDRModal: React.FC = observer(() => {
     if (user.address) {
       checkAllowance();
     }
-  }, [checkAllowance, user.address]);
+  }, [checkAllowance, user.address]); /*
+  useEffect(() => {
+    if (modals.tradeYDR.method === 'buy') {
+      getBuyCourse();
+    } else {
+      getSellCourse();
+    }
+  }, [modals.tradeYDR.method, getBuyCourse, getSellCourse]); */
   return (
     <Modal
       isVisible={modals.tradeYDR.isOpen}
@@ -158,7 +179,7 @@ const TradeYDRModal: React.FC = observer(() => {
               onChange={(event) => setPayInput(event.target.value)}
               type="number"
               placeholder="0.0"
-              onBlur={getBuyCource}
+              onBlur={getBuyCourse}
             />
           ) : (
             <InputWithSelect
@@ -167,6 +188,7 @@ const TradeYDRModal: React.FC = observer(() => {
               tokens={platformToken}
               type="number"
               placeholder="0.0"
+              onBlur={getSellCourse}
             />
           )}
         </div>
