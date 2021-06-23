@@ -42,32 +42,36 @@ const TradeYDRModal: React.FC = observer(() => {
   }, [walletConnector.metamaskService, firstCurrency]);
 
   const getBuyCourse = useCallback(() => {
-    walletConnector.metamaskService
-      .getYDRCourse(firstCurrency, payInput, true)
-      .then((data: any) => {
-        console.log(`Cource of ${firstCurrency} to YDR `, data[data.length - 1]);
-        setViewOnlyInputValue(
-          new BigNumber(data[data.length - 1]).dividedBy(new BigNumber(10).pow(18)).toFixed(5),
-        );
-      })
-      .catch((err: any) => {
-        const { response } = err;
-        console.log('getCource error', response);
-      });
+    if (payInput) {
+      walletConnector.metamaskService
+        .getYDRCourse(firstCurrency, payInput, true)
+        .then((data: any) => {
+          console.log(`Cource of ${firstCurrency} to YDR `, data[data.length - 1]);
+          setViewOnlyInputValue(
+            new BigNumber(data[data.length - 1]).dividedBy(new BigNumber(10).pow(18)).toFixed(5),
+          );
+        })
+        .catch((err: any) => {
+          const { response } = err;
+          console.log('getCource error', response);
+        });
+    }
   }, [payInput, firstCurrency, walletConnector.metamaskService]);
   const getSellCourse = useCallback(() => {
-    walletConnector.metamaskService
-      .getYDRCourse(secondCurrency, payInput, false)
-      .then((data: any) => {
-        console.log(`Cource of YDR  to ${secondCurrency} `, data[data.length - 1]);
-        setViewOnlyInputValue(
-          new BigNumber(data[data.length - 1]).dividedBy(new BigNumber(10).pow(18)).toFixed(5),
-        );
-      })
-      .catch((err: any) => {
-        const { response } = err;
-        console.log('getCource error', response);
-      });
+    if (payInput) {
+      walletConnector.metamaskService
+        .getYDRCourse(secondCurrency, payInput, false)
+        .then((data: any) => {
+          console.log(`Cource of YDR  to ${secondCurrency} `, data[data.length - 1]);
+          setViewOnlyInputValue(
+            new BigNumber(data[data.length - 1]).dividedBy(new BigNumber(10).pow(18)).toFixed(5),
+          );
+        })
+        .catch((err: any) => {
+          const { response } = err;
+          console.log('getCource error', response);
+        });
+    }
   }, [payInput, secondCurrency, walletConnector.metamaskService]);
 
   const checkAllowance = useCallback(() => {
