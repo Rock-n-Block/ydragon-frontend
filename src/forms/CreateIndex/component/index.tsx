@@ -3,23 +3,31 @@ import BigNumber from 'bignumber.js/bignumber';
 import { FieldArray, FieldArrayRenderProps, Form, FormikProps } from 'formik';
 import { observer } from 'mobx-react-lite';
 
-import { Button, Input, Search, TokenMini } from '../../../components';
+import { Button, Input, RangePicker, Search, TokenMini } from '../../../components';
 import { IToken } from '../../../components/IndexPage/IndexTable';
 import { ISearchToken } from '../../../components/Search';
 import { ITokensDiff } from '../../../pages/Admin';
 import { coinsApi } from '../../../services/api';
 import DangerCircle from '../../../assets/img/icons/icon-danger-circle.svg';
+import moment from 'moment';
 
 export interface ICreateIndex {
   name: string;
   symbol: string;
+  startDate: string;
+  endDate: string;
   tokens: Array<ITokensDiff>;
   isLoading?: boolean;
 }
 
 const CreateIndex: React.FC<FormikProps<ICreateIndex> & ICreateIndex> = observer(
-  ({ handleChange, handleBlur, values, handleSubmit }) => {
+  ({ setFieldValue, handleChange, handleBlur, values, handleSubmit }) => {
     const [searchTokens, setSearchTokens] = useState<ISearchToken[]>([] as ISearchToken[]);
+
+    const disabledDate = (current: any) => {
+      // Can not select days before today and today
+      return current && current < moment().endOf('day');
+    };
     const weightsSum = values.tokens
       .map((tokenDiff) => +tokenDiff.new_weight)
       .reduce((prevSum, newItem) => prevSum.plus(newItem), new BigNumber(0))
@@ -62,6 +70,21 @@ const CreateIndex: React.FC<FormikProps<ICreateIndex> & ICreateIndex> = observer
         } as ITokensDiff);
       }
     };
+    // rangepicker
+    const onOk = (value: any[] | null) => {
+      if (value) {
+        setFieldValue('startDate', moment(value[0]).format('X'));
+        setFieldValue('endDate', moment(value[1]).format('X'));
+      } else {
+        setFieldValue('startDate', '');
+        setFieldValue('endDate', '');
+      }
+    };
+
+    const onRangePickerChange = (value: any, dateString: any) => {
+      console.log('Selected Time: ', value);
+      console.log('Formatted Selected Time: ', dateString);
+    };
     return (
       <Form name="form-create-index" className="form-create-index">
         <div className="form-create-index__inputs">
@@ -86,6 +109,16 @@ const CreateIndex: React.FC<FormikProps<ICreateIndex> & ICreateIndex> = observer
             />
           </div>
         </div>
+        <RangePicker
+          disabledDate={disabledDate}
+          showTime={{
+            hideDisabledOptions: true,
+          }}
+          format="YYYY-MM-DD HH:mm"
+          onChange={onRangePickerChange}
+          onOk={onOk}
+        />
+
         <FieldArray
           name="tokens"
           render={(arrayHelper) => (
@@ -160,7 +193,9 @@ const CreateIndex: React.FC<FormikProps<ICreateIndex> & ICreateIndex> = observer
               values.tokens.length === 0 ||
               weightsSum !== '100' ||
               values.name === '' ||
-              values.symbol === ''
+              values.symbol === '' ||
+              values.startDate === '' ||
+              values.endDate === ''
             }
           >
             Create

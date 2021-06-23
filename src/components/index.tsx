@@ -7,6 +7,7 @@ export { InputWithSelect } from './Input';
 export { default as TokenPanel } from './TokenPanel';
 export { default as Dashboard } from './Dashboard';
 export { default as TokenItem } from './TokenItem';
+export { default as RangePicker } from './RangePicker';
 export { default as EventBanner } from './EventBanner';
 export { default as Table } from './Table';
 export { default as Search } from './Search';

@@ -20,7 +20,7 @@ interface IMetamaskService {
   isProduction?: boolean;
 }
 
-export type ContractTypes = 'BNB' | 'WBNB' | 'MAIN' | 'USDT' | 'YDR' | 'Router';
+export type ContractTypes = 'BNB' | 'WBNB' | 'MAIN' | 'USDT' | 'YDR' | 'Router' | 'Factory';
 
 const networks: INetworks = {
   mainnet: '0x1',
@@ -173,8 +173,8 @@ export default class MetamaskService {
     return +new BigNumber(totalSupply).dividedBy(new BigNumber(10).pow(tokenDecimals)).toString(10);
   }
 
-  async getDecimals(contractName: ContractTypes) {
-    const decimals = await this.getContract(contractName).methods.decimals().call();
+  async getDecimals(address: string, abi: any[]) {
+    const decimals = await this.getContractByAddress(address, abi).methods.decimals().call();
     return +decimals;
   }
 
@@ -453,6 +453,30 @@ export default class MetamaskService {
       to: config.Router.ADDRESS,
       data: signature,
       value: spenderToken === 'BNB' ? MetamaskService.calcTransactionAmount(value, 18) : '',
+    });
+  }
+
+  createNewIndex(
+    name: string,
+    symbol: string,
+    imeTimeParameters: string[],
+    tokenAddresses: string[],
+    tokenWeights: string[],
+  ) {
+    const method = MetamaskService.getMethodInterface(config.Factory.ABI, 'deployNewAsset');
+
+    const signature = this.encodeFunctionCall(method, [
+      name,
+      symbol,
+      imeTimeParameters,
+      tokenAddresses,
+      tokenWeights,
+    ]);
+
+    return this.sendTransaction({
+      from: this.walletAddress,
+      to: config.Factory.ADDRESS,
+      data: signature,
     });
   }
 
