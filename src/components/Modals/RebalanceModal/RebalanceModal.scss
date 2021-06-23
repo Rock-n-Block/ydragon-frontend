@@ -8,39 +8,8 @@
 }
 
 .rebalance {
-  &__total {
-    padding: 20px 16px;
-
-    display: grid;
-    grid-template-columns: 1fr 134px 102px;
-    grid-gap: 15px;
-
-    align-items: center;
-
-    &-name {
-      font-family: 'TNR', sans-serif;
-      font-size: 18px;
-      line-height: 21px;
-
-      color: white;
-    }
-
-    .input-border {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-
-      .input {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-    }
-
-    .input {
-      background: linear-gradient(180deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0) 100%),
-        linear-gradient(171.49deg, #1a1e3a 3.83%, #161a2a 100%);
-    }
+  &-items {
+    margin-top: 20px;
   }
 
   &-modal {
@@ -66,9 +35,54 @@
     }
   }
 
-  &-items {
-    margin-top: 20px;
+  &-options {
+    margin-right: 13px;
 
+    display: flex;
+    gap: 10px;
+
+    &-row {
+      padding: 20px 0;
+
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      font-size: 14px;
+      line-height: 17px;
+
+      color: white;
+      border-top: 1px solid rgba(white, 0.1);
+      border-bottom: 1px solid rgba(white, 0.1);
+
+      &__title {
+        max-width: 103px;
+
+        font-family: 'TNR', sans-serif;
+        font-size: 18px;
+        line-height: 21px;
+      }
+    }
+  }
+
+  &-option {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+
+    &__input-wrapper {
+      width: 100px;
+    }
+
+    .input {
+      background: linear-gradient(180deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0) 100%),
+        linear-gradient(171.49deg, #1a1e3a 3.83%, #161a2a 100%);
+    }
+  }
+}
+.token-weights {
+  &-items {
     &__head {
       margin-bottom: 10px;
       padding: 0 16px;
@@ -87,6 +101,15 @@
       &-col {
         grid-column-start: 2;
       }
+    }
+    &__empty {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      margin: 25px 0;
+      font-family: MER, sans-serif;
+      font-size: 16px;
+      line-height: 19px;
     }
   }
 
@@ -149,55 +172,44 @@
     }
   }
 
-  &-search {
-    padding: 20px 0;
+  &__total {
+    padding: 20px 16px;
 
-    border-top: 1px solid rgba(white, 0.1);
-  }
+    display: grid;
+    grid-template-columns: 1fr 134px 102px;
+    grid-gap: 15px;
 
-  &-options {
-    margin-right: 13px;
+    align-items: center;
 
-    display: flex;
-    gap: 10px;
-
-    &-row {
-      padding: 20px 0;
-
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-
-      font-size: 14px;
-      line-height: 17px;
+    &-name {
+      font-family: 'TNR', sans-serif;
+      font-size: 18px;
+      line-height: 21px;
 
       color: white;
-      border-top: 1px solid rgba(white, 0.1);
-      border-bottom: 1px solid rgba(white, 0.1);
-
-      &__title {
-        max-width: 103px;
-
-        font-family: 'TNR', sans-serif;
-        font-size: 18px;
-        line-height: 21px;
-      }
     }
-  }
 
-  &-option {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 5px;
+    .input-border {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
 
-    &__input-wrapper {
-      width: 100px;
+      .input {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
     }
 
     .input {
       background: linear-gradient(180deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0) 100%),
         linear-gradient(171.49deg, #1a1e3a 3.83%, #161a2a 100%);
     }
+  }
+  &__search {
+    padding: 20px 0;
+
+    border-top: 1px solid rgba(white, 0.1);
   }
 }

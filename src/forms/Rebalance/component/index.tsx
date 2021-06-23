@@ -4,7 +4,7 @@ import BigNumber from 'bignumber.js/bignumber';
 import { FieldArray, FieldArrayRenderProps, Form, FormikProps } from 'formik';
 import { observer } from 'mobx-react-lite';
 
-import { Button, Input, Search } from '../../../components';
+import { Button, Input, Search, TokenMini } from '../../../components';
 import { IToken } from '../../../components/IndexPage/IndexTable';
 import { ISearchToken } from '../../../components/Search';
 import { ITokensDiff } from '../../../pages/Admin';
@@ -107,29 +107,22 @@ const Rebalance: React.FC<FormikProps<IRebalance> & IRebalance> = observer(
         <FieldArray
           name="tokens"
           render={(arrayHelper) => (
-            <div className="rebalance-items">
-              <div className="rebalance-items__head">
-                <div className="rebalance-items__head-col">Weight%</div>
+            <div className="rebalance-items token-weights">
+              <div className="token-weights-items__head">
+                <div className="token-weights-items__head-col">Weight%</div>
               </div>
               {values.tokens && values.tokens.length > 0 ? (
                 values.tokens?.map((tokenDiff, index) => (
-                  <div className="rebalance-item" key={`token ${tokenDiff.token.name}`}>
-                    <div className="rebalance-item__info">
-                      <img
-                        src={tokenDiff.token.image}
-                        alt=""
-                        width="36"
-                        height="36"
-                        className="rebalance-item__icon"
+                  <div className="token-weights-item" key={`token ${tokenDiff.token.name}`}>
+                    <div className="token-weights-item__info">
+                      <TokenMini
+                        icon={tokenDiff.token.image}
+                        name={tokenDiff.token.name}
+                        symbol={tokenDiff.token.symbol}
                       />
-
-                      <div className="rebalance-item__name-wrapper">
-                        <div className="rebalance-item__name">{tokenDiff.token.name}</div>
-                        <div className="rebalance-item__abbr">{tokenDiff.token.symbol}</div>
-                      </div>
                     </div>
 
-                    <div className="rebalance-item__input-wrapper">
+                    <div className="token-weights-item__input-wrapper">
                       <Input
                         disabled={tokenDiff.to_delete}
                         name={`tokens[${index}].new_weight`}
@@ -144,7 +137,7 @@ const Rebalance: React.FC<FormikProps<IRebalance> & IRebalance> = observer(
                       <Button
                         styledType="outline"
                         colorScheme="red"
-                        className="rebalance-item__remove"
+                        className="token-weights-item__remove"
                         onClick={() => handleRemove(arrayHelper, index)}
                         disabled={values.tokens.length === 1}
                       >
@@ -154,7 +147,7 @@ const Rebalance: React.FC<FormikProps<IRebalance> & IRebalance> = observer(
                       <Button
                         styledType="outline"
                         colorScheme="green"
-                        className="rebalance-item__remove"
+                        className="token-weights-item__remove"
                         onClick={() => handleAddBack(arrayHelper, index)}
                         disabled={values.tokens.length === 1}
                       >
@@ -166,15 +159,15 @@ const Rebalance: React.FC<FormikProps<IRebalance> & IRebalance> = observer(
               ) : (
                 <></>
               )}
-              <div className="rebalance__total">
-                <h3 className="rebalance__total-name">Total weight</h3>
+              <div className="token-weights__total">
+                <h3 className="token-weights__total-name">Total weight</h3>
                 <div className="input-border">
                   <span className="input">{weightsSum}</span>
                 </div>
               </div>
 
               <Search
-                className="rebalance-search"
+                className="token-weights__search"
                 data={searchTokens}
                 onChange={(e) => handleNewTokenNameChange(e)}
                 onPick={(pickedToken: ISearchToken) => handleAddNewToken(arrayHelper, pickedToken)}
