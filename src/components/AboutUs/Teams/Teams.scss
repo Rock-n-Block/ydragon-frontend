@@ -1,7 +1,7 @@
 @import '../../../styles/_variables.scss';
 @import '../../../styles/mixins';
 
-.features {
+.teams {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -47,7 +47,7 @@
   }
 }
 
-.feature {
+.team {
   margin-bottom: 40px;
 
   display: flex;
@@ -66,8 +66,6 @@
 
     font-family: 'MER', sans-serif;
     font-size: 24px;
-    font-weight: normal;
-    font-style: normal;
     line-height: 29px;
 
     color: #fff;
@@ -82,8 +80,6 @@
 
     font-family: 'RR', sans-serif;
     font-size: 16px;
-    font-weight: normal;
-    font-style: normal;
     line-height: 150%;
 
     /* or 24px */

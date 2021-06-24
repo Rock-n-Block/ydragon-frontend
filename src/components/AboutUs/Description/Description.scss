@@ -4,11 +4,8 @@
 .description {
   display: flex;
   flex-direction: column;
-  // justify-content: space-between;
-  // align-items: flex-start;
 
   width: 100%;
-  max-width: 1140px;
 
   &__items {
     display: flex;
@@ -34,12 +31,8 @@
   }
 
   &__title {
-    height: 29px;
-
     font-family: 'MER';
     font-size: 24px;
-    font-weight: normal;
-    font-style: normal;
     line-height: 29px;
 
     color: #fff;
@@ -53,8 +46,6 @@
 
     font-family: 'RR';
     font-size: 16px;
-    font-weight: normal;
-    font-style: normal;
     line-height: 150%;
 
     /* or 24px */
@@ -69,6 +60,7 @@
 
     display: flex;
     justify-content: flex-start;
+    gap: 30px;
 
     // width: 100%;
     // max-width: 530px;
@@ -77,13 +69,14 @@
       margin-top: 89px;
       flex-direction: column;
       align-items: center;
+      gap: 20px;
     }
 
     .btn {
       padding: 17px 0;
     }
 
-    a{
+    a {
       width: 100%;
       max-width: 250px;
 
@@ -100,15 +93,6 @@
 
     @include b('tablet') {
       min-width: 350px;
-    }
-
-    a + & {
-      margin-left: 30px;
-
-      @include b('tablet') {
-        margin-left: 0;
-        margin-top: 20px;
-      }
     }
   }
 
@@ -137,8 +121,6 @@
 
       font-family: 'MER';
       font-size: 24px;
-      font-weight: normal;
-      font-style: normal;
       line-height: 29px;
 
       /* identical to box height */
@@ -166,7 +148,7 @@
         top: 104.92px;
       }
 
-      :hover {
+      &:hover {
         cursor: pointer;
       }
     }
@@ -176,7 +158,6 @@
       top: 343px;
 
       width: 250px;
-      height: 30px;
 
       font-family: 'RR', sans-serif;
       font-size: 16px;

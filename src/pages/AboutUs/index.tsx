@@ -1,13 +1,13 @@
 import React from 'react';
 
-import { Description, Features, Questions, Title } from '../../components/AboutUs';
+import { Description, Teams, Questions, Title } from '../../components/AboutUs';
 
 const AboutUs: React.FC = () => {
   return (
     <main className="container">
       <Title />
       <Description />
-      <Features />
+      <Teams />
       <Questions />
     </main>
   );

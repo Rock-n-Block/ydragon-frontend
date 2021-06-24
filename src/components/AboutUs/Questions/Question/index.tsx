@@ -1,7 +1,6 @@
 import React, { PropsWithChildren, useState } from 'react';
 
 import iconDown from '../../../../assets/img/icons/icon-arrow-down-white.svg';
-import iconUp from '../../../../assets/img/icons/icon-arrow-up-white.svg';
 
 import './Question.scss';
 
@@ -28,7 +27,7 @@ const Question: React.FC<QuestionProps> = (props: PropsWithChildren<QuestionProp
         onKeyDown={() => setCollapsed(!collapsed)}
         onClick={() => setCollapsed(!collapsed)}
       >
-        <img alt="#" src={collapsed ? iconDown : iconUp} className="question__icon" />
+        <img alt="#" src={iconDown} className={`question__icon ${collapsed ? '' : 'down'}`} />
       </div>
     </div>
   );
