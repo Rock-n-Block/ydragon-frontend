@@ -52,6 +52,40 @@
         }
       }
     }
+
+    &-btns {
+      padding: 10px;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 9px;
+
+      width: 288px;
+      height: 62px;
+
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 31px;
+    }
+
+    &-btn {
+      padding: 10px 19px;
+
+      font-family: 'TNB', sans-serif;
+      font-size: 16px;
+
+      cursor: pointer;
+
+      color: #fff;
+
+      background: rgba(255, 255, 255, 0.1);
+
+      border-radius: 21px;
+    }
+
+    .active {
+      background: linear-gradient(to right bottom, #b12e2a, #f47c45);
+    }
   }
 
   &-container {
