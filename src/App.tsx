@@ -4,7 +4,7 @@ import { Route, Switch, useRouteMatch } from 'react-router-dom';
 import { Indexes } from './components/Admin';
 import AdminIndex from './pages/AdminIndex';
 import { EventBanner, Footer, Header } from './components';
-import { Admin, Auth, Home, Index, IndexDashboard, StakePage, YdrToken } from './pages';
+import { AboutUs, Admin, Auth, Home, Index, IndexDashboard, StakePage, YdrToken } from './pages';
 
 import './styles/index.scss';
 import { MetamaskErrModal, InfoModal, GetInModal } from './components/Modals';
@@ -45,6 +45,9 @@ export const App: React.FC = () => {
         </Route>
         <Route exact path="/indexes">
           <IndexDashboard />
+        </Route>
+        <Route exact path="/about-us">
+          <AboutUs />
         </Route>
       </Switch>
       <MetamaskErrModal />

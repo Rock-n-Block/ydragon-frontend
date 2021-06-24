@@ -49,7 +49,7 @@ const Header: React.FC = observer(() => {
                 </Link>
               </li>
               <li className="header-nav__item">
-                <Link to="/" className="header-nav__link">
+                <Link to="/about-us" className="header-nav__link">
                   About
                 </Link>
               </li>
