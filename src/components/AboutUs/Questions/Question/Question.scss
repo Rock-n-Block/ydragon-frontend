@@ -26,8 +26,8 @@
   }
   &__text--wrapper {
     position: relative;
-    top: 35px;
-    left: 105px;
+    margin-top: 35px;
+    margin-left: 105px;
 
     display: flex;
     flex-direction: column;
@@ -37,15 +37,13 @@
     max-width: 941px;
 
     @include b('tablet') {
-      top: 45px;
-      left: 35px;
+      margin-top: 45px;
+      margin-left: 35px;
 
-      width: 90%;
     }
 
     @include b('mobile') {
-      top: 0;
-      left: 0;
+      margin: 0;
     }
   }
 
@@ -53,7 +51,12 @@
     font-family: 'MER',sans-serif;
     font-size: 24px;
     line-height: 120%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 
+    gap: 43px;
+    width: 100%;
     outline: none;
 
     /* identical to box height, or 29px */
@@ -65,6 +68,7 @@
     @include b('mobile') {
       font-size: 16px;
       line-height: 19px;
+      gap: 8px;
     }
 
     @include b('tablet') {
@@ -104,19 +108,9 @@
   }
 
   &__icon {
-    position: absolute;
-    top: 50px;
-    right: 46px;
-
+    outline: none;
     transition: transform 0.4s;
 
-    @include b('mobile') {
-      top: 0;
-      right: 0;
-    }
-    &-wrapper{
-      outline: none;
-    }
   }
 
   &__icon:hover {
