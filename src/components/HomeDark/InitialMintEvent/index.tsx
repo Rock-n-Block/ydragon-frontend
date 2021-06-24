@@ -1,10 +1,11 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { observer } from 'mobx-react-lite';
 
-import './InitialMintEvent.scss';
 import { indexesApi } from '../../../services/api';
-import { InitialMintEventItem } from '../index';
 import { useMst } from '../../../store/store';
+import { InitialMintEventItem } from '../index';
+
+import './InitialMintEvent.scss';
 
 export interface IIme {
   id: number;

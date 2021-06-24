@@ -1,17 +1,17 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { observer } from 'mobx-react-lite';
 
+import { indexesApi } from '../../../services/api';
 import { useWalletConnectorContext } from '../../../services/walletConnect';
 import { useMst } from '../../../store/store';
 import { TokenMiniNameTypes, tokensArray } from '../../../utils/tokenMini';
+import { IIme } from '../../HomeDark/InitialMintEvent';
 import { Button, InputWithSelect } from '../../index';
 import SplittedTable, { ITableColumn, ITableData } from '../../SplittedTable';
 import { TokenMiniProps } from '../../TokenMini';
+import { Modal } from '../index';
 
 import './GetInModal.scss';
-import { Modal } from '../index';
-import { indexesApi } from '../../../services/api';
-import { IIme } from '../../HomeDark/InitialMintEvent';
 
 const totalColumns: ITableColumn[] = [
   {

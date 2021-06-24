@@ -18,7 +18,7 @@
 
   @include b('mobile') {
     background: none;
-    border-radius: 0px;
+    border-radius: 0;
 
     box-shadow: none;
   }
@@ -36,9 +36,10 @@
     max-width: 941px;
 
     @include b('tablet') {
-      width: 90%;
-      left: 35px;
       top: 45px;
+      left: 35px;
+
+      width: 90%;
     }
 
     @include b('mobile') {
@@ -96,6 +97,7 @@
     position: absolute;
     top: 50px;
     right: 46px;
+
     transition: transform 0.4s;
 
     @include b('mobile') {

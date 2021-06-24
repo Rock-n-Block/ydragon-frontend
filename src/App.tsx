@@ -2,12 +2,12 @@ import React from 'react';
 import { Route, Switch, useRouteMatch } from 'react-router-dom';
 
 import { Indexes } from './components/Admin';
+import { GetInModal, InfoModal, MetamaskErrModal } from './components/Modals';
 import AdminIndex from './pages/AdminIndex';
 import { EventBanner, Footer, Header } from './components';
 import { AboutUs, Admin, Auth, Home, Index, IndexDashboard, StakePage, YdrToken } from './pages';
 
 import './styles/index.scss';
-import { MetamaskErrModal, InfoModal, GetInModal } from './components/Modals';
 
 export const App: React.FC = () => {
   const match = useRouteMatch();
