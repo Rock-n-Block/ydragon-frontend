@@ -58,7 +58,7 @@ const Footer: React.FC = () => {
             <div className="footer__copyright">© 2021 YDRAGON</div>
           </div>
 
-          <div className="footer__col">
+          {/*  <div className="footer__col">
             <div className="footer__links-title">Product</div>
 
             <div className="footer__links">
@@ -104,7 +104,7 @@ const Footer: React.FC = () => {
                 <a href="/">Become Partner</a>
               </span>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </footer>

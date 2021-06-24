@@ -8,7 +8,10 @@
   align-items: center;
 
   min-height: calc(100vh - 178px);
-
+@include b('tablet'){
+  margin-top: 30px;
+  min-height: unset;
+}
   &__title-wrapper {
     position: relative;
 
@@ -20,6 +23,11 @@
   &__title {
     font-size: 144px;
     line-height: 173px;
+    @include b('tablet'){
+
+      font-size: 52px;
+      line-height: 62px;
+    }
   }
 
   &__sub-title {
@@ -32,6 +40,11 @@
     text-transform: uppercase;
 
     color: $white;
+    @include b('tablet'){
+
+      font-size: 9px;
+      line-height: 10px;
+    }
   }
 
   &__descr {
@@ -43,6 +56,10 @@
     letter-spacing: 0.035em;
 
     color: $white;
+    @include b('tablet'){
+      line-height: 22px;
+      max-width: 350px;
+    }
   }
 
   &__btns-row {
