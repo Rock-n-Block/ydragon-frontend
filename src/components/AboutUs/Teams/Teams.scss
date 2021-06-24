@@ -1,0 +1,95 @@
+@import '../../../styles/_variables.scss';
+@import '../../../styles/mixins';
+
+.teams {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  &__title-wrapper {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__title {
+    font-size: 48px;
+    line-height: 58px;
+
+    @include b('mobile') {
+      font-size: 30px;
+      line-height: 36px;
+    }
+  }
+
+  &__wrapper {
+    width: 1141px;
+  }
+
+  &__items {
+    margin-top: 84px;
+
+    @include b('mobile') {
+      margin-top: 30px;
+    }
+  }
+
+  &__row {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-column-gap: 118px;
+
+    @include b('mobile') {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+}
+
+.team {
+  margin-bottom: 40px;
+
+  display: flex;
+
+  max-width: 512px;
+
+  &__info {
+    margin-left: 24px;
+
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__info--title {
+    margin-bottom: 12px;
+
+    font-family: 'MER', sans-serif;
+    font-size: 24px;
+    line-height: 29px;
+
+    color: #fff;
+
+    /* identical to box height */
+    font-feature-settings: 'liga' off;
+  }
+
+  &__info--text {
+    width: 100%;
+    max-width: 424px;
+
+    font-family: 'RR', sans-serif;
+    font-size: 16px;
+    line-height: 150%;
+
+    /* or 24px */
+    letter-spacing: 0.035em;
+
+    color: #fff;
+    font-feature-settings: 'liga' off;
+  }
+
+  &__img {
+    border-radius: 50%;
+  }
+}

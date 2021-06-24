@@ -1,0 +1,138 @@
+@import '../../../../styles/_variables.scss';
+@import '../../../../styles/mixins';
+
+.question {
+  position: relative;
+
+  margin-bottom: 24px;
+  padding-bottom: 35px;
+
+  width: 100%;
+  max-width: 1140px;
+  min-height: 99px;
+
+  background: linear-gradient(238.88deg, #000316 31.18%, #050c25 99.47%);
+  border-radius: 32px;
+
+  box-shadow: -8px 8px 36px rgba(0, 0, 0, 0.5);
+
+  @include b('mobile') {
+    background: none;
+    border-radius: 0px;
+
+    box-shadow: none;
+  }
+
+  &__text--wrapper {
+    position: relative;
+    top: 35px;
+    left: 105px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    width: 100%;
+    max-width: 941px;
+
+    @include b('tablet') {
+      width: 90%;
+      left: 35px;
+      top: 45px;
+    }
+
+    @include b('mobile') {
+      top: 0;
+      left: 0;
+    }
+  }
+
+  &__title {
+    font-family: 'MER';
+    font-size: 24px;
+    line-height: 120%;
+
+    /* identical to box height, or 29px */
+    font-feature-settings: 'liga' off;
+
+    @include b('mobile') {
+      font-size: 16px;
+      line-height: 19px;
+    }
+
+    @include b('tablet') {
+      font-size: 20px;
+      line-height: 23px;
+    }
+  }
+
+  &__text {
+    margin-top: 20px;
+    margin-bottom: 35px;
+
+    overflow: hidden;
+
+    width: 100%;
+    max-width: 941px;
+
+    font-family: 'RR';
+    font-size: 16px;
+    line-height: 150%;
+
+    /* or 24px */
+    letter-spacing: 0.035em;
+
+    color: #fff;
+    font-feature-settings: 'liga' off;
+
+    &--link {
+      text-decoration: underline;
+
+      color: #f47c45;
+    }
+  }
+
+  &__icon {
+    position: absolute;
+    top: 50px;
+    right: 46px;
+    transition: transform 0.4s;
+
+    @include b('mobile') {
+      top: 0;
+      right: 0;
+    }
+  }
+
+  &__icon:hover {
+    cursor: pointer;
+  }
+}
+
+.colorOrange {
+  color: #e95b40;
+
+  transition-duration: 0.4s;
+}
+
+.colorWhite {
+  color: #fff;
+
+  transition-duration: 0.4s;
+}
+
+.invisible {
+  max-height: 0;
+
+  transition: max-height 0.4s ease-out;
+}
+
+.visible {
+  max-height: 100px;
+
+  transition: max-height 0.4s ease-out;
+}
+
+.down {
+  transform: rotate(180deg);
+}

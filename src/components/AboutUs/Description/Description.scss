@@ -1,0 +1,198 @@
+@import '../../../styles/_variables.scss';
+@import '../../../styles/mixins';
+
+.description {
+  display: flex;
+  flex-direction: column;
+
+  width: 100%;
+
+  &__items {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    @include b('tablet') {
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+
+  &__text--wrapper {
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+    max-width: 605px;
+
+    @include b('mobile') {
+      max-width: 334px;
+    }
+  }
+
+  &__title {
+    font-family: 'MER';
+    font-size: 24px;
+    line-height: 29px;
+
+    color: #fff;
+
+    /* identical to box height */
+    font-feature-settings: 'liga' off;
+  }
+
+  &__text {
+    margin-top: 12px;
+
+    font-family: 'RR';
+    font-size: 16px;
+    line-height: 150%;
+
+    /* or 24px */
+    letter-spacing: 0.035em;
+
+    color: #fff;
+    font-feature-settings: 'liga' off;
+  }
+
+  &__btns-row {
+    margin-top: 30px;
+
+    display: flex;
+    justify-content: flex-start;
+    gap: 30px;
+
+    // width: 100%;
+    // max-width: 530px;
+
+    @include b('tablet') {
+      margin-top: 89px;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .btn {
+      padding: 17px 0;
+    }
+
+    a {
+      width: 100%;
+      max-width: 250px;
+
+      @include b('tablet') {
+        max-width: 350px;
+      }
+    }
+  }
+
+  &__btn {
+    width: 100%;
+    max-width: 250px;
+    flex-shrink: 0;
+
+    @include b('tablet') {
+      min-width: 350px;
+    }
+  }
+
+  &__video {
+    position: relative;
+
+    margin-top: 29px;
+
+    width: 462px;
+    height: 312px;
+
+    @include b('mobile') {
+      width: 390.92px;
+      height: 264px;
+    }
+
+    background-color: #fff;
+    border-radius: 16px;
+
+    &--text {
+      position: absolute;
+      left: 120px;
+      bottom: 25px;
+
+      height: 29px;
+
+      font-family: 'MER';
+      font-size: 24px;
+      line-height: 29px;
+
+      /* identical to box height */
+      font-feature-settings: 'liga' off;
+
+      color: #000;
+
+      @include b('mobile') {
+        font-size: 21px;
+        line-height: 26px;
+        left: 103px;
+        bottom: 25px;
+      }
+    }
+
+    &--play {
+      position: absolute;
+      top: 124px;
+      left: 199px;
+
+      @include b('mobile') {
+        width: 54.15px;
+        height: 54.15px;
+        left: 168.38px;
+        top: 104.92px;
+      }
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+
+    &--info {
+      position: relative;
+      top: 343px;
+
+      width: 250px;
+
+      font-family: 'RR', sans-serif;
+      font-size: 16px;
+      font-weight: normal;
+      font-style: normal;
+      line-height: 30px;
+
+      /* identical to box height, or 187% */
+
+      /* YD/BG Additional */
+      color: #f7f8fd;
+
+      @include b('mobile') {
+        top: 283px;
+      }
+
+      @include b('tablet') {
+        left: calc(50% - 250px / 2);
+      }
+    }
+
+    &--link {
+      text-decoration: underline;
+
+      color: #f47c45;
+    }
+  }
+}
+
+.section + .section {
+  @include b('tablet') {
+    margin-top: 100px !important;
+  }
+  
+  @include b('mobile') {
+    margin-top: 50px !important;
+  }
+}
