@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Button } from '../../index';
+// import { Button } from '../../index';
 
 import './Main.scss';
 
@@ -17,19 +17,19 @@ const Main: React.FC = () => {
         <br /> interoperable cross-asset experience. Made by investors, for investors.
       </p>
 
-      <div className="home__btns-row">
+      {/* <div className="home__btns-row">
         <Button linkClassName="home__btn" link="/ydrtoken">
           Buy YDR
         </Button>
         <Button className="home__btn" styledType="outline" disabled>
           Whitepaper
         </Button>
-      </div>
+      </div> */}
 
-      <div className="home__currently-price">
+      {/* <div className="home__currently-price">
         &quot;The YDragon project has currently <span>XXXX$</span> diversified among indexes&quot;.
         (TVL)
-      </div>
+      </div> */}
     </section>
   );
 };

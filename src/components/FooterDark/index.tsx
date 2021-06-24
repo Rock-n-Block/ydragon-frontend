@@ -58,6 +58,19 @@ const Footer: React.FC = () => {
             <div className="footer__copyright">© 2021 YDRAGON</div>
           </div>
 
+          <div className="footer__col">
+            <div className="footer__links-title">Engage</div>
+
+            <div className="footer__links">
+              <Link to="/about-us">About Us</Link>
+              {/* <span className="isDisabled">
+                <a href="/">Tutorial</a>
+              </span>
+              <span className="isDisabled">
+                <a href="/">FAQ</a>
+              </span> */}
+            </div>
+          </div>
           {/*  <div className="footer__col">
             <div className="footer__links-title">Product</div>
 
@@ -77,21 +90,6 @@ const Footer: React.FC = () => {
             </div>
           </div>
 
-          <div className="footer__col">
-            <div className="footer__links-title">Engage</div>
-
-            <div className="footer__links">
-              <span className="isDisabled">
-                <a href="/">About Us</a>
-              </span>
-              <span className="isDisabled">
-                <a href="/">Tutorial</a>
-              </span>
-              <span className="isDisabled">
-                <a href="/">FAQ</a>
-              </span>
-            </div>
-          </div>
 
           <div className="footer__col">
             <div className="footer__links-title">DeFi</div>

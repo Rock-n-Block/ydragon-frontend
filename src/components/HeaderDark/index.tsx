@@ -3,14 +3,14 @@ import { Link } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 
 import logo from '../../assets/img/icons/logo.svg';
-import { useWalletConnectorContext } from '../../services/walletConnect';
-import { useMst } from '../../store/store';
-import { Button } from '../index';
+// import { useWalletConnectorContext } from '../../services/walletConnect';
+// import { useMst } from '../../store/store';
+// import { Button } from '../index';
 
 import './Header.scss';
 
 const Header: React.FC = observer(() => {
-  const { user } = useMst();
+  /* const { user } = useMst();
   const walletConnector = useWalletConnectorContext();
 
   const handleLogOut = () => {
@@ -19,7 +19,7 @@ const Header: React.FC = observer(() => {
 
   const connectWallet = (): void => {
     walletConnector.connect();
-  };
+  }; */
   return (
     <header className="header">
       <div className="container">
@@ -38,7 +38,7 @@ const Header: React.FC = observer(() => {
                   Home
                 </Link>
               </li>
-              <li className="header-nav__item">
+              {/* <li className="header-nav__item">
                 <Link to="/indexes" className="header-nav__link">
                   Index Products
                 </Link>
@@ -47,7 +47,7 @@ const Header: React.FC = observer(() => {
                 <Link to="/staking" className="header-nav__link">
                   Staking
                 </Link>
-              </li>
+              </li> */}
               <li className="header-nav__item">
                 <Link to="/about-us" className="header-nav__link">
                   About
@@ -63,7 +63,7 @@ const Header: React.FC = observer(() => {
             </ul>
           </nav>
 
-          <div className="header__sign">
+          {/* <div className="header__sign">
             <ul className="header-nav">
               {user.address && (
                 <li className="header-nav__item">
@@ -85,7 +85,7 @@ const Header: React.FC = observer(() => {
                 </li>
               )}
             </ul>
-          </div>
+          </div> */}
         </div>
       </div>
     </header>

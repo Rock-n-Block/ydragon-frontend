@@ -22,7 +22,6 @@
 
     box-shadow: none;
   }
-
   &__text--wrapper {
     position: relative;
     top: 35px;
@@ -56,6 +55,9 @@
     /* identical to box height, or 29px */
     font-feature-settings: 'liga' off;
 
+    &:hover {
+      cursor: pointer;
+    }
     @include b('mobile') {
       font-size: 16px;
       line-height: 19px;

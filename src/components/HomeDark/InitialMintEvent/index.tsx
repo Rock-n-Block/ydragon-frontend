@@ -46,9 +46,10 @@ const InitialMintEvent: React.FC = observer(() => {
     <section className="section">
       <h2 className="section__title text-outline">INITIAL minting Event</h2>
       <p className="section__sub-title">FUNDED YDR ALLOCATION FOR INDEX STAKERS</p>
-      {imeList.map((imeItem) => (
+      {/* {imeList.map((imeItem) => (
         <InitialMintEventItem imeItem={imeItem} />
-      ))}
+      ))} */}
+      <InitialMintEventItem />
     </section>
   ) : (
     <></>

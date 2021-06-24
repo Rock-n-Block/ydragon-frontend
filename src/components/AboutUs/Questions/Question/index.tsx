@@ -16,7 +16,13 @@ const Question: React.FC<QuestionProps> = (props: PropsWithChildren<QuestionProp
   return (
     <div className="question">
       <div className="question__text--wrapper">
-        <span className={`question__title ${collapsed ? 'colorWhite' : 'colorOrange'}`}>
+        <span
+          className={`question__title ${collapsed ? 'colorWhite' : 'colorOrange'}`}
+          role="button"
+          tabIndex={0}
+          onKeyDown={() => setCollapsed(!collapsed)}
+          onClick={() => setCollapsed(!collapsed)}
+        >
           {title}
         </span>
         {React.cloneElement(element, { children })}
