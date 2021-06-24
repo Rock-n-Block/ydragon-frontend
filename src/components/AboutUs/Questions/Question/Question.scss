@@ -9,7 +9,6 @@
 
   width: 100%;
   max-width: 1140px;
-  min-height: 99px;
 
   background: linear-gradient(238.88deg, #000316 31.18%, #050c25 99.47%);
   border-radius: 32px;
@@ -22,7 +21,9 @@
     padding-bottom: 30px;
     box-shadow: none;
   }
-
+  &:last-child {
+    padding: 0;
+  }
   &__text--wrapper {
     position: relative;
     top: 35px;
@@ -49,11 +50,11 @@
   }
 
   &__title {
-    font-family: 'MER';
+    font-family: 'MER',sans-serif;
     font-size: 24px;
     line-height: 120%;
 
-    outline:none;
+    outline: none;
 
     /* identical to box height, or 29px */
     font-feature-settings: 'liga' off;
@@ -137,14 +138,13 @@
 
 .invisible {
   max-height: 0;
-
-  transition: max-height 0.4s ease-out;
+  margin: 0;
+  transition: all 0.4s ease-out;
 }
 
 .visible {
-  max-height: 100px;
-
-  transition: max-height 0.4s ease-out;
+  max-height: 360px;
+  transition: all 0.4s ease-out;
 }
 
 .down {
