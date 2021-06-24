@@ -2,7 +2,7 @@ import React from 'react';
 import { observer } from 'mobx-react-lite';
 
 import logo from '../../assets/img/icons/logo.svg';
-import { TokenPanel, TradeYDRModal } from '../../components';
+import { TokenChart, TokenPanel, TradeYDRModal } from '../../components';
 import { useMst } from '../../store/store';
 // import { useWalletConnectorContext } from '../../services/walletConnect';
 
@@ -15,6 +15,7 @@ const YdrToken: React.FC = observer(() => {
       value: '$257',
     },
   ];
+  const page = 'YDR Token';
   const handleBuy = () => {
     modals.tradeYDR.open('buy');
     // walletConnector.metamaskService.buyYDRToken().then().catch();
@@ -37,6 +38,7 @@ const YdrToken: React.FC = observer(() => {
 
       <TokenPanel panelContent={panelInfo} handleBuy={handleBuy} handleSell={handleSell} />
       <TradeYDRModal />
+      <TokenChart page={page} />
     </main>
   );
 });
