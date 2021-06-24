@@ -188,11 +188,11 @@
 }
 
 .section + .section {
-  @include b('mobile') {
-    margin-top: 50px !important;
-  }
-
   @include b('tablet') {
     margin-top: 100px !important;
+  }
+  
+  @include b('mobile') {
+    margin-top: 50px !important;
   }
 }

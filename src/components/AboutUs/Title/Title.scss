@@ -47,14 +47,14 @@
 
     color: $white;
 
-    @include b('mobile') {
-      font-size: 22px !important;
-      line-height: 26px !important;
-    }
-
     @include b('tablet') {
       font-size: 33px;
       line-height: 50px;
+    }
+
+    @include b('mobile') {
+      font-size: 22px;
+      line-height: 26px;
     }
   }
 }
