@@ -29,7 +29,6 @@ const MintModal: React.FC = observer(() => {
   };
   const handleGetInOpen = (): void => {
     handleClose();
-    modals.getIn.open();
   };
   return (
     <Modal isVisible={modals.mint.isOpen} className="m-mint" handleCancel={handleClose}>

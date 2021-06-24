@@ -26,14 +26,17 @@ const CreateIndexModal = types
   }));
 const GetInModal = types
   .model({
-    isOpen: types.boolean,
+    id: types.maybeNull(types.number),
+    address: types.maybeNull(types.string),
   })
   .actions((self) => ({
-    open() {
-      self.isOpen = true;
+    open(id: number, address: string) {
+      self.id = id;
+      self.address = address;
     },
     close() {
-      self.isOpen = false;
+      self.id = null;
+      self.address = null;
     },
   }));
 const MintModal = types

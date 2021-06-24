@@ -186,13 +186,13 @@ export default class MetamaskService {
     return this.web3Provider.eth.personal.sign(msg, this.walletAddress, '');
   }
 
-  getStartDate() {
-    return this.getContract('MAIN').methods.imeStartTimestamp().call();
+  getStartDate(address: string) {
+    return this.getContractByAddress(address, config.MAIN.ABI).methods.imeStartTimestamp().call();
   }
 
-  getEndDate() {
+  getEndDate(address: string) {
     // TODO: change this to normal contract later
-    return this.getContract('MAIN').methods.imeEndTimestamp().call();
+    return this.getContractByAddress(address, config.MAIN.ABI).methods.imeEndTimestamp().call();
   }
 
   async getTokensForIME() {
@@ -222,10 +222,10 @@ export default class MetamaskService {
     }
   }
 
-  async checkAllowance(toContract: ContractTypes, spender?: ContractTypes) {
+  async checkAllowance(toContract: ContractTypes, spender?: ContractTypes, address?: string) {
     try {
       const result = await this.getContract(toContract)
-        .methods.allowance(this.walletAddress, config[spender || 'MAIN'].ADDRESS)
+        .methods.allowance(this.walletAddress, address || config[spender || 'MAIN'].ADDRESS)
         .call();
 
       if (result === '0') return false;
@@ -295,12 +295,12 @@ export default class MetamaskService {
     });
   }
 
-  async approve(toContract: ContractTypes, from?: ContractTypes) {
+  async approve(toContract: ContractTypes, from?: ContractTypes, address?: string) {
     try {
       const approveMethod = MetamaskService.getMethodInterface(config[toContract].ABI, 'approve');
 
       const approveSignature = this.encodeFunctionCall(approveMethod, [
-        config[from || 'MAIN'].ADDRESS,
+        address || config[from || 'MAIN'].ADDRESS,
         '0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff',
       ]);
 
@@ -314,7 +314,7 @@ export default class MetamaskService {
     }
   }
 
-  enterIme(value: string, spenderToken: ContractTypes) {
+  enterIme(value: string, spenderToken: ContractTypes, imeAddress: string) {
     const methodName = spenderToken === 'BNB' ? 'enterImeNative' : 'enterImeToken';
     const mintMethod = MetamaskService.getMethodInterface(config.MAIN.ABI, methodName);
     let signature;
@@ -329,7 +329,7 @@ export default class MetamaskService {
 
     return this.sendTransaction({
       from: this.walletAddress,
-      to: config.MAIN.ADDRESS,
+      to: imeAddress,
       data: signature,
       value: spenderToken === 'BNB' ? MetamaskService.calcTransactionAmount(value, 18) : '',
     });

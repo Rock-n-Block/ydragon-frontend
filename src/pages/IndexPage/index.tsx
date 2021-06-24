@@ -42,9 +42,7 @@ const Index: React.FC = observer(() => {
   const handleRedeem = () => {
     modals.redeem.open();
   };
-  const handleGetIn = () => {
-    modals.getIn.open();
-  };
+  const handleGetIn = () => {};
   useEffect(() => {
     getCurrentIndex();
   }, [getCurrentIndex]);

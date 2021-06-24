@@ -3,10 +3,12 @@ import { Instance, onSnapshot, types } from 'mobx-state-tree';
 
 import { Modals } from './Modals';
 import { User } from './User';
+import { BannerIme } from './BannerIme';
 
 const RootModel = types.model({
   modals: Modals,
   user: User,
+  ime: BannerIme,
 });
 
 export const Store = RootModel.create({
@@ -14,7 +16,7 @@ export const Store = RootModel.create({
     metamask: {},
     rebalance: { isOpen: false },
     createIndex: { isOpen: false },
-    getIn: { isOpen: false },
+    getIn: { id: null, address: null },
     mint: { isOpen: false },
     info: { msg: '', title: '', type: 'info' },
     redeem: { isOpen: false },
@@ -23,6 +25,10 @@ export const Store = RootModel.create({
   user: {
     address: '',
     token: '',
+  },
+  ime: {
+    id: null,
+    address: null,
   },
 });
 

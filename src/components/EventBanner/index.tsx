@@ -11,14 +11,16 @@ import { Button } from '../index';
 import './EventBanner.scss';
 
 const EventBanner: React.FC = observer(() => {
-  const { modals } = useMst();
+  const { ime, modals } = useMst();
   const walletConnector = useWalletConnectorContext();
   const [start, setStart] = useState(moment());
   const [end, setEnd] = useState(moment());
   const [now, setNow] = useState(moment());
   const [imeEnabled, setImeEnabled] = useState<boolean>(false);
   const handleGetIn = () => {
-    modals.getIn.open();
+    if (ime.id && ime.address) {
+      modals.getIn.open(ime.id, ime.address);
+    }
   };
   useEffect(() => {
     const interval = setInterval(() => {
@@ -34,25 +36,27 @@ const EventBanner: React.FC = observer(() => {
     }
   }, [end, now]);
   useEffect(() => {
-    walletConnector.metamaskService
-      .getStartDate()
-      .then((data: any) => {
-        const dateInMilliseconds = new BigNumber(data).multipliedBy(1000).toString();
-        setStart(moment(new Date(+dateInMilliseconds)));
-      })
-      .catch((err: any) => {
-        console.log('get balance error', err);
-      });
-    walletConnector.metamaskService
-      .getEndDate()
-      .then((data: any) => {
-        const dateInMilliseconds = new BigNumber(data).multipliedBy(1000).toString();
-        setEnd(moment(new Date(+dateInMilliseconds)));
-      })
-      .catch((err: any) => {
-        console.log('get balance error', err);
-      });
-  }, [walletConnector.metamaskService]);
+    if (ime.address) {
+      walletConnector.metamaskService
+        .getStartDate(ime.address)
+        .then((data: any) => {
+          const dateInMilliseconds = new BigNumber(data).multipliedBy(1000).toString();
+          setStart(moment(new Date(+dateInMilliseconds)));
+        })
+        .catch((err: any) => {
+          console.log('get balance error', err);
+        });
+      walletConnector.metamaskService
+        .getEndDate(ime.address)
+        .then((data: any) => {
+          const dateInMilliseconds = new BigNumber(data).multipliedBy(1000).toString();
+          setEnd(moment(new Date(+dateInMilliseconds)));
+        })
+        .catch((err: any) => {
+          console.log('get balance error', err);
+        });
+    }
+  }, [ime.address, walletConnector.metamaskService]);
   return (
     <div className="event-banner">
       <div className="container">
