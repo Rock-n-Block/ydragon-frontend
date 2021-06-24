@@ -8,34 +8,42 @@
   align-items: center;
 
   &__title-wrapper {
-    //   position: absolute;
     display: inline-flex;
     justify-content: center;
     align-items: center;
-    //   left: 478px;
-    //   top: 0px;
   }
 
   &__title {
     font-size: 48px;
     line-height: 58px;
+
+    @include b('mobile') {
+      font-size: 30px;
+      line-height: 36px;
+    }
   }
 
   &__wrapper {
-    // position: absolute;
     width: 1141px;
-    // left: 149px;
-    // top: 1064px;
   }
 
   &__items {
     margin-top: 84px;
+
+    @include b('mobile') {
+      margin-top: 30px;
+    }
   }
 
   &__row {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-column-gap: 118px;
+
+    @include b('mobile') {
+      display: flex;
+      flex-direction: column;
+    }
   }
 }
 

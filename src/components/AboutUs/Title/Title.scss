@@ -4,6 +4,10 @@
 .about-us {
   margin-top: 134px;
 
+  @include b('mobile') {
+    margin-top: 45.77px;
+  }
+
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -20,6 +24,16 @@
   &__title {
     font-size: 144px;
     line-height: 173px;
+
+    @include b('mobile') {
+      font-size: 52px;
+      line-height: 62px;
+    }
+
+    @include b('tablet') {
+      font-size: 100px;
+      line-height: 125px;
+    }
   }
 
   &__sub-title {
@@ -33,5 +47,15 @@
     text-transform: uppercase;
 
     color: $white;
+
+    @include b('mobile') {
+      font-size: 22px;
+      line-height: 26px;
+    }
+
+    @include b('tablet') {
+      font-size: 33px;
+      line-height: 50px;
+    }
   }
 }
