@@ -70,38 +70,38 @@ const EventBanner: React.FC = observer(() => {
               <span className="event-banner-timer__time">
                 {/* {start.diff(now, 'days') < 0 ? 0 : start.diff(now, 'days')} */}
                 <span className="text-gradient">
-{start.diff(now, 'days') <= 0 ? end.diff(now, 'days') : start.diff(now, 'days')}
-                              </span>
+                  {start.diff(now, 'days') <= 0 ? end.diff(now, 'days') : start.diff(now, 'days')}
+                </span>
                 <span className="event-banner-timer__time-unit">Day</span>
               </span>
               <span className="event-banner-timer__colon text-gradient">:</span>
               <span className="event-banner-timer__time">
                 {/* {start.diff(now, 'hours') < 0 ? 0 : start.diff(now, 'hours') % 24} */}
                 <span className="text-gradient">
-{start.diff(now, 'hours') < 0
-  ? end.diff(now, 'hours') % 24
-  : start.diff(now, 'hours') % 24}
-                              </span>
+                  {start.diff(now, 'hours') < 0
+                    ? end.diff(now, 'hours') % 24
+                    : start.diff(now, 'hours') % 24}
+                </span>
                 <span className="event-banner-timer__unit-item">Hours</span>
               </span>
               <span className="event-banner-timer__colon text-gradient">:</span>
               <span className="event-banner-timer__time">
                 {/* {start.diff(now, 'minutes') < 0 ? 0 : start.diff(now, 'minutes') % 60} */}
                 <span className="text-gradient">
-{start.diff(now, 'minutes') < 0
-  ? end.diff(now, 'minutes') % 60
-  : start.diff(now, 'minutes') % 60}
-                              </span>
+                  {start.diff(now, 'minutes') < 0
+                    ? end.diff(now, 'minutes') % 60
+                    : start.diff(now, 'minutes') % 60}
+                </span>
                 <span className="event-banner-timer__unit-item">Min</span>
               </span>
               <span className="event-banner-timer__colon text-gradient">:</span>
               <span className="event-banner-timer__time">
                 {/* {start.diff(now, 'seconds') < 0 ? 0 : start.diff(now, 'seconds') % 60} */}
                 <span className="text-gradient">
-{start.diff(now, 'seconds') < 0
-  ? end.diff(now, 'seconds') % 60
-  : start.diff(now, 'seconds') % 60}
-                              </span>
+                  {start.diff(now, 'seconds') < 0
+                    ? end.diff(now, 'seconds') % 60
+                    : start.diff(now, 'seconds') % 60}
+                </span>
                 <span className="event-banner-timer__unit-item">Sec</span>
               </span>
             </div>

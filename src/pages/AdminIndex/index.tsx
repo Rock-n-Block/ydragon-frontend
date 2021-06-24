@@ -9,9 +9,9 @@ import {
   TokensStructure,
   XYStructure,
 } from '../../components/Admin';
+import { RebalanceModal } from '../../components/Modals';
 import { indexesApi, vaultsApi } from '../../services/api';
 import { IIndex, IIndexStatus, ITokensDiff } from '../Admin';
-import { RebalanceModal } from '../../components/Modals';
 
 interface IIndexId {
   indexId: string;

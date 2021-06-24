@@ -9,9 +9,10 @@
 
   @include shadow-dark-block;
   @include b('tablet') {
+    padding: 0;
+
     display: flex;
     flex-direction: column;
-    padding: 0;
   }
 }
 
@@ -26,6 +27,7 @@
   @include b('tablet') {
     width: 100%;
   }
+
   &--yd {
     padding: 40px 50px;
 
@@ -86,11 +88,14 @@
   background-blend-mode: lighten;
 
   @include b('tablet') {
+    position: unset;
+
     margin-top: 40px;
     padding-top: 30px;
+
     width: 100%;
-    position: unset;
   }
+
   &__title {
     @include title-text;
     position: absolute;

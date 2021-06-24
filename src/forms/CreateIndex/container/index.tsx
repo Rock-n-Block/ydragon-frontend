@@ -1,11 +1,11 @@
 import React from 'react';
+import BigNumber from 'bignumber.js/bignumber';
 import { withFormik } from 'formik';
 import { observer } from 'mobx-react-lite';
 
 import { ITokensDiff } from '../../../pages/Admin';
-import CreateIndex, { ICreateIndex } from '../component';
 import { useWalletConnectorContext } from '../../../services/walletConnect';
-import BigNumber from 'bignumber.js/bignumber';
+import CreateIndex, { ICreateIndex } from '../component';
 
 const CreateIndexForm: React.FC = () => {
   const walletConnector = useWalletConnectorContext();

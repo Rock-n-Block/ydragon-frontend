@@ -1,5 +1,5 @@
 @import '../../styles/_variables.scss';
-@import "../../styles/mixins";
+@import '../../styles/mixins';
 
 .header {
   &__inner {
@@ -9,7 +9,7 @@
     grid-template-columns: 1fr 410px 1fr;
 
     align-items: center;
-    @include b('tablet'){
+    @include b('tablet') {
       display: flex;
       justify-content: center;
     }

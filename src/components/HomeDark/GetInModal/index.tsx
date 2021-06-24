@@ -6,11 +6,11 @@ import { useWalletConnectorContext } from '../../../services/walletConnect';
 import { useMst } from '../../../store/store';
 import { TokenMiniNameTypes, tokensArray } from '../../../utils/tokenMini';
 import { Button, InputWithSelect } from '../../index';
+import { Modal } from '../../Modals';
 import SplittedTable, { ITableColumn, ITableData } from '../../SplittedTable';
 import { TokenMiniProps } from '../../TokenMini';
 
 import './GetInModal.scss';
-import { Modal } from '../../Modals';
 
 const mockTotalData: ITableData[] = [
   [

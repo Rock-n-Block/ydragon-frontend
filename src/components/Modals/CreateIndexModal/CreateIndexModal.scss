@@ -2,49 +2,63 @@
   &__content {
     padding: 30px;
   }
+
   &__title {
     font-family: MER, sans-serif;
     font-size: 20px;
     line-height: 24px;
   }
-  .form-create-index{
+
+  .form-create-index {
     margin-top: 30px;
-    &__inputs{
+
+    &__inputs {
       margin-bottom: 30px;
+
       display: grid;
       grid-template-columns: 1fr 100px;
       grid-column-gap: 20px;
     }
-    &__input{
-      &-label{
+
+    &__input {
+      &-label {
         margin-bottom: 10px;
+
         font-family: MER, sans-serif;
         font-size: 12px;
         line-height: 14px;
+
         opacity: 0.5;
       }
-      .input-border{
-        width: 100%;
-        .input{
 
-          background: linear-gradient(180deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0) 100%), linear-gradient(171.49deg, #1A1E3A 3.83%, #161A2A 100%);
+      .input-border {
+        width: 100%;
+
+        .input {
+          background: linear-gradient(180deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0) 100%),
+            linear-gradient(171.49deg, #1a1e3a 3.83%, #161a2a 100%);
         }
       }
-      &:last-child{
-        p{
+
+      &:last-child {
+        p {
           text-align: center;
         }
-        .input{
+
+        .input {
           text-transform: uppercase;
         }
       }
     }
-    .token-weights__search{
-      border-bottom: 1px solid rgba(white,0.1);
+
+    .token-weights__search {
+      border-bottom: 1px solid rgba(white, 0.1);
     }
-    &__btn-row{
-      .btn{
+
+    &__btn-row {
+      .btn {
         margin: 20px auto 0;
+
         max-width: 135px;
       }
     }

@@ -81,6 +81,7 @@
     }
   }
 }
+
 .token-weights {
   &-items {
     &__head {
@@ -102,14 +103,17 @@
         grid-column-start: 2;
       }
     }
+
     &__empty {
+      margin: 25px 0;
+
       display: flex;
       align-items: center;
-      gap: 9px;
-      margin: 25px 0;
+
       font-family: MER, sans-serif;
       font-size: 16px;
       line-height: 19px;
+      gap: 9px;
     }
   }
 
@@ -193,6 +197,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
+
       width: 100%;
 
       .input {
@@ -207,6 +212,7 @@
         linear-gradient(171.49deg, #1a1e3a 3.83%, #161a2a 100%);
     }
   }
+
   &__search {
     padding: 20px 0;
 

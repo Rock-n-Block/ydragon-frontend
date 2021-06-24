@@ -8,10 +8,10 @@
   grid-template-columns: repeat(2, 1fr);
   grid-column-gap: 120px;
   grid-row-gap: 60px;
-  @include b('tablet'){
+  @include b('tablet') {
     //margin-top:70px;
     grid-template-columns: unset;
-    grid-template-rows: repeat(4,1fr);
+    grid-template-rows: repeat(4, 1fr);
   }
 }
 
@@ -20,7 +20,7 @@
 
   &__content {
     margin-left: 20px;
-    @include b('tablet'){
+    @include b('tablet') {
       margin-left: 15px;
     }
   }
@@ -31,7 +31,7 @@
     line-height: 29px;
 
     color: $white;
-    @include b('tablet'){
+    @include b('tablet') {
       font-size: 20px;
       line-height: 24px;
     }
@@ -45,7 +45,7 @@
 
     color: $white;
 
-    @include b('tablet'){
+    @include b('tablet') {
       font-size: 16px;
       line-height: 24px;
       letter-spacing: 0.035em;

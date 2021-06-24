@@ -60,6 +60,7 @@ main {
 .section {
   $this: &;
   position: relative;
+
   & + & {
     margin-top: 220px;
   }
@@ -84,7 +85,7 @@ main {
     font-size: 48px;
     line-height: 58px;
     text-align: center;
-    @include b('tablet'){
+    @include b('tablet') {
       font-size: 30px;
       line-height: 36px;
       letter-spacing: 0.035em;
@@ -98,8 +99,9 @@ main {
     text-align: center;
 
     color: $white;
-    @include b('tablet'){
+    @include b('tablet') {
       margin: 20px auto 0;
+
       font-size: 14px;
       line-height: 17px;
     }

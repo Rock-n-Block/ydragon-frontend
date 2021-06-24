@@ -1,11 +1,11 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
+import nextId from 'react-id-generator';
 
 import Clear from '../../assets/img/icons/icon-close-red.svg';
 import { ReactComponent as GreenPlus } from '../../assets/img/icons/icon-plus-green.svg';
 import { Button } from '../index';
 
 import './Search.scss';
-import nextId from 'react-id-generator';
 
 export interface ISearchToken {
   name: string;

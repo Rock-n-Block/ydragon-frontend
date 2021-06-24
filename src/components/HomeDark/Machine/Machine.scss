@@ -7,11 +7,13 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-@include b('tablet'){
-  margin-top: 70px;
-  flex-direction: column;
-  overflow: hidden;
-}
+  @include b('tablet') {
+    margin-top: 70px;
+
+    overflow: hidden;
+    flex-direction: column;
+  }
+
   &__descr {
     max-width: 420px;
 
@@ -19,16 +21,17 @@
     line-height: 30px;
 
     color: $white;
-    @include b('tablet'){
+    @include b('tablet') {
       font-size: 16px;
       line-height: 24px;
     }
   }
-  &__img{
 
-    @include b('tablet'){
+  &__img {
+    @include b('tablet') {
       width: 100%;
-      img{
+
+      img {
         width: 100%;
       }
     }
