@@ -70,7 +70,8 @@
     display: flex;
     justify-content: flex-start;
 
-    width: 100%;
+    // width: 100%;
+    // max-width: 530px;
 
     @include b('tablet') {
       margin-top: 89px;
@@ -80,6 +81,15 @@
 
     .btn {
       padding: 17px 0;
+    }
+
+    a{
+      width: 100%;
+      max-width: 250px;
+
+      @include b('tablet') {
+        max-width: 350px;
+      }
     }
   }
 

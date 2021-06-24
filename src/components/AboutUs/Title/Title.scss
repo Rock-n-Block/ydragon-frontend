@@ -26,8 +26,8 @@
     line-height: 173px;
 
     @include b('mobile') {
-      font-size: 52px;
-      line-height: 62px;
+      font-size: 52px !important;
+      line-height: 62px !important;
     }
 
     @include b('tablet') {
@@ -49,8 +49,8 @@
     color: $white;
 
     @include b('mobile') {
-      font-size: 22px;
-      line-height: 26px;
+      font-size: 22px !important;
+      line-height: 26px !important;
     }
 
     @include b('tablet') {
