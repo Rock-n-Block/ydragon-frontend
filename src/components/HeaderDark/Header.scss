@@ -1,8 +1,36 @@
 @import '../../styles/_variables.scss';
 @import '../../styles/mixins';
 
+.expand{
+  position: relative;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  width: 100vw;
+
+  min-height: 100vh;
+  transition: min-height 1s ease-out;
+}
+
+.collapse{
+  transition: min-height 1s ease-out;
+  min-height: 122px;
+}
+
 .header {
+  &__menu {
+    display: none;
+
+    @include b('tablet') {
+      display: block;
+      position: relative;
+      top: 0;
+      left: 0;
+    }
+  }
+
   &__inner {
+    position: relative;
     padding: 40px 0;
 
     display: grid;
@@ -11,13 +39,20 @@
     align-items: center;
     @include b('tablet') {
       display: flex;
-      justify-content: center;
+      margin: 0 auto;
+      max-width: 605px;
+      width: 100%;
+      justify-content: space-between;
+      height: 122px;
     }
   }
 
   &__logo {
     display: flex;
     align-items: center;
+    @include b('tablet') {
+      margin: 0 auto;
+    }
   }
 
   &__logo-text {
@@ -29,6 +64,11 @@
     letter-spacing: 0.93em;
 
     color: $white;
+    @include b('tablet') {
+      font-family: 'MEB';
+      font-size: 6.96671px;
+      line-height: 8px;
+    }
   }
 
   &__nav {
@@ -39,6 +79,13 @@
   &__sign {
     display: flex;
     justify-content: flex-end;
+  }
+
+  &__nav,
+  &__sign {
+    @include b('tablet') {
+      display: none;
+    }
   }
 }
 
@@ -74,5 +121,71 @@
     display: inline-block;
 
     width: 150px;
+  }
+}
+
+.menu {
+  max-width: 605px;
+  width: 100%;
+  margin: 0 auto;
+
+  &__nav {
+    display: flex;
+    justify-content: flex-start;
+  }
+
+  &__sign {
+    display: flex;
+    justify-content: flex-end;
+  }
+}
+
+.menu-nav {
+  margin: 0;
+  padding: 0;
+
+  display: flex;
+  align-items: end;
+  flex-direction: column;
+
+  list-style: none;
+  gap: 30px;
+
+  &__link {
+    font-family: 'MEB';
+    font-size: 18px;
+    line-height: 120%;
+    text-decoration: none;
+
+    color: #f7f8fd;
+
+    &:hover,
+    &:active {
+      color: #f7f8fd;
+    }
+  }
+
+  &__btn {
+    display: inline-block;
+
+    width: 150px;
+  }
+}
+
+.footer {
+  &__wrapper {
+    margin-top: 54px;
+  }
+  &__col {
+    align-items: flex-start !important;
+    & + & {
+      margin-bottom: 30px;
+    }
+  }
+  &__links {
+    margin-top: 0 !important;
+  }
+  &__socials {
+    justify-content: center;
   }
 }
