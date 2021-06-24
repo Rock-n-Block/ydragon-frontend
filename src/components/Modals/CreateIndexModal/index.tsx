@@ -1,9 +1,11 @@
 import React from 'react';
 import { observer } from 'mobx-react-lite';
+
+import { CreateIndexForm } from '../../../forms';
 import { useMst } from '../../../store/store';
 import { Modal } from '../index';
+
 import './CreateIndexModal.scss';
-import { CreateIndexForm } from '../../../forms';
 
 const CreateIndexModal: React.FC = observer(() => {
   const { modals } = useMst();

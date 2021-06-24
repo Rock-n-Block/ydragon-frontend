@@ -1,15 +1,15 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { observer } from 'mobx-react-lite';
 import moment from 'moment';
 
 import { IIndex } from '../../../pages/Admin';
 import { indexesApi } from '../../../services/api';
+import { useMst } from '../../../store/store';
 import { Sorter } from '../../../utils/sorter';
 import { Button, Table } from '../../index';
 
 import './Indexes.scss';
-import { observer } from 'mobx-react-lite';
-import { useMst } from '../../../store/store';
 
 const Indexes: React.FC = observer(() => {
   const { modals } = useMst();

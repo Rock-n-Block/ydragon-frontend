@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 import BigNumber from 'bignumber.js/bignumber';
 import { FieldArray, FieldArrayRenderProps, Form, FormikProps } from 'formik';
 import { observer } from 'mobx-react-lite';
+import moment from 'moment';
 
+import DangerCircle from '../../../assets/img/icons/icon-danger-circle.svg';
 import { Button, Input, RangePicker, Search, TokenMini } from '../../../components';
 import { IToken } from '../../../components/IndexPage/IndexTable';
 import { ISearchToken } from '../../../components/Search';
 import { ITokensDiff } from '../../../pages/Admin';
 import { coinsApi } from '../../../services/api';
-import DangerCircle from '../../../assets/img/icons/icon-danger-circle.svg';
-import moment from 'moment';
 
 export interface ICreateIndex {
   name: string;

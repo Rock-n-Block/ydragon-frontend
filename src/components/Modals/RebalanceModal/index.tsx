@@ -5,6 +5,7 @@ import RebalanceForm from '../../../forms/Rebalance/container';
 import { ITokensDiff } from '../../../pages/Admin';
 import { useMst } from '../../../store/store';
 import { Modal } from '../index';
+
 import './RebalanceModal.scss';
 
 interface RebalanceModalProps {
