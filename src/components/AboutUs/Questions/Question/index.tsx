@@ -32,6 +32,7 @@ const Question: React.FC<QuestionProps> = (props: PropsWithChildren<QuestionProp
         tabIndex={0}
         onKeyDown={() => setCollapsed(!collapsed)}
         onClick={() => setCollapsed(!collapsed)}
+        className="question__icon-wrapper"
       >
         <img alt="#" src={iconDown} className={`question__icon ${collapsed ? '' : 'down'}`} />
       </div>

@@ -6,7 +6,6 @@ import moment from 'moment';
 // import { useMst } from '../../../store/store';
 // import { Button } from '../../index';
 // import { IIme } from '../InitialMintEvent';
-
 import './InitialMintEventItem.scss';
 
 /* interface InitialMintEventItemProps {

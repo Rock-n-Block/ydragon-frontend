@@ -12,6 +12,7 @@
     @include b('tablet') {
       display: flex;
       justify-content: center;
+      flex-direction: column;
     }
   }
 

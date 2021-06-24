@@ -3,10 +3,10 @@ import { Link } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 
 import logo from '../../assets/img/icons/logo.svg';
+
 // import { useWalletConnectorContext } from '../../services/walletConnect';
 // import { useMst } from '../../store/store';
 // import { Button } from '../index';
-
 import './Header.scss';
 
 const Header: React.FC = observer(() => {
