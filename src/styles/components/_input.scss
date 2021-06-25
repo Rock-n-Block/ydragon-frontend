@@ -154,6 +154,20 @@
     text-align: center;
   }
 }
+.text-area{
+  width: 100%;
+  height: unset;
+  border-radius: 10px;
+  .input{
+    font-family: TNR, sans-serif;
+    text-align: unset;
+    font-feature-settings: 'liga' off;
+    padding: 15px 20px;
+    border-radius: 10px;
+    font-size: 17px;
+    line-height: 20px;
+  }
+}
 // hidding arrows from number input
 
 /* Chrome, Safari, Edge, Opera */

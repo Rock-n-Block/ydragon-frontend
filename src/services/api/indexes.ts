@@ -8,6 +8,11 @@ export default {
     axiosWithToken.get(`indexes/ime/${id}${address ? `?address=${address}` : '/'}`),
   getIndexById: (id: number) => axiosWithToken.get(`indexes/${id}`),
   getIndexesRebalance: (indexId: number) => axiosWithToken.get(`indexes/${indexId}/rebalance/`),
+  addDescriptionToIndex: (tx_hash: string, description: string) =>
+    axiosWithToken.post('indexes/description', {
+      tx_hash,
+      description,
+    }),
   putIndexesRebalance: (indexId: number, data: any) =>
     axiosWithToken.put(`indexes/${indexId}/rebalance/`, data),
   launchRebalance: (indexId: number) =>

@@ -9,6 +9,7 @@ import './InitialMintEvent.scss';
 
 export interface IIme {
   id: number;
+  description: string | null;
   tokens: Array<IImeToken>;
   name: string;
   address: string;
