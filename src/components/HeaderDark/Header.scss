@@ -1,8 +1,11 @@
 @import '../../styles/_variables.scss';
 @import '../../styles/mixins';
 
-.expand{
-  position: absolute;
+.fixed {
+  position: fixed;
+}
+
+.expand {
   background: url('../../assets/img/home-dark-bg.png');
   background-repeat: no-repeat;
   background-position: center;
@@ -10,16 +13,22 @@
   background-blend-mode: lighten;
   background-color: #000;
 
-  z-index: 10;
+  z-index: 100;
   width: 100vw;
 
-  min-height: 100vh;
-  transition: min-height 1s ease-out;
+  height: 100vh;
+  transition: all 0.4s;
+  overflow: auto;
 }
 
-.collapse{
-  transition: min-height 1s ease-out;
-  min-height: 122px;
+.collapse {
+  transition: all 0.4s;
+  height: 122px;
+  // position: fixed;
+  z-index: 100;
+  width: 100vw;
+
+  overflow: hidden;
 }
 
 .header {
@@ -186,6 +195,9 @@
     align-items: flex-start !important;
     & + & {
       margin-bottom: 30px;
+    }
+    &:not(:first-child) {
+      display: block !important;
     }
   }
   &__links {

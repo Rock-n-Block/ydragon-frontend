@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 
@@ -17,6 +17,7 @@ import './Header.scss';
 
 const Header: React.FC = observer(() => {
   const [collapsed, setCollapsed] = useState(true);
+  const [fixed, setFixed] = useState(true);
   const { user } = useMst();
   const walletConnector = useWalletConnectorContext();
 
@@ -27,8 +28,15 @@ const Header: React.FC = observer(() => {
   const connectWallet = (): void => {
     walletConnector.connect();
   };
+
+  useEffect(() => {
+    if (!collapsed) {
+      setTimeout(() => setFixed(true), 400);
+    } else {setFixed(false)}
+  }, [collapsed]);
+
   return (
-    <header className={`header ${collapsed ? 'collapse' :'expand'}`}> 
+    <header className={`header ${collapsed ? 'collapse' : 'expand'} ${fixed ? 'fixed' : ''}`}>
       <div className="container">
         <div className="header__inner">
           <div
@@ -129,7 +137,8 @@ const Header: React.FC = observer(() => {
             </ul>
           </div>
         </div>
-        {!collapsed && <nav className="menu">
+        {/* <div className={`${collapsed ? 'collapse' : 'expand'}`}> */}
+        <nav className="menu">
           <nav className="menu__nav">
             <ul className="menu-nav">
               <li className="menu-nav__item">
@@ -161,8 +170,8 @@ const Header: React.FC = observer(() => {
               )}
             </ul>
           </nav>
-        </nav>}
-        {!collapsed && <div className="footer__wrapper">
+        </nav>
+        <div className="footer__wrapper">
           <div className="footer__col">
             <div className="footer__links-title">Product</div>
 
@@ -237,8 +246,9 @@ const Header: React.FC = observer(() => {
               <img src={dis} alt="logo" width="16" height="16" />
             </a>
           </div>
-        </div>}
+        </div>
       </div>
+      {/* </div> */}
     </header>
   );
 });
