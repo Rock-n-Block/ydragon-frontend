@@ -6,19 +6,22 @@
 }
 
 .expand {
-  background: url('../../assets/img/home-dark-bg.png');
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: auto 100%;
-  background-blend-mode: lighten;
-  background-color: #000;
-
   z-index: 100;
+
+  overflow: auto;
+
   width: 100vw;
 
   height: 100vh;
+
+  background: url('../../assets/img/home-dark-bg.png');
+  background-color: #000;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: auto 100%;
+
   transition: all 0.4s;
-  overflow: auto;
+  background-blend-mode: lighten;
   @include b('tablet') {
     padding-top: 144px;
   }
@@ -29,12 +32,14 @@
 }
 
 .collapse {
-  transition: all 0.4s;
-  height: 122px;
   z-index: 100;
-  width: 100vw;
 
   overflow: hidden;
+
+  width: 100vw;
+  height: 122px;
+
+  transition: all 0.4s;
 }
 
 .header {
@@ -42,16 +47,19 @@
     display: none;
 
     @include b('tablet') {
-      display: block;
       position: relative;
       top: 0;
       left: 0;
+
+      display: block;
+
       cursor: pointer;
     }
   }
 
   &__inner {
     position: relative;
+
     padding: 40px 0;
 
     display: grid;
@@ -59,11 +67,13 @@
 
     align-items: center;
     @include b('tablet') {
-      display: flex;
       margin: 0 auto;
-      max-width: 605px;
-      width: 100%;
+
+      display: flex;
       justify-content: space-between;
+
+      width: 100%;
+      max-width: 605px;
       height: 122px;
     }
   }
@@ -130,18 +140,23 @@
   .footer {
     &__col {
       align-items: flex-start;
+
       & + & {
         margin-bottom: 30px;
       }
+
       &:not(:first-child) {
         display: block;
       }
     }
+
     &__links {
       margin-top: 0;
     }
+
     &__socials {
       justify-content: center;
+
       &-item {
         width: 48px;
         height: 48px;
@@ -186,9 +201,10 @@
 }
 
 .menu {
-  max-width: 605px;
-  width: 100%;
   margin: 0 auto;
+
+  width: 100%;
+  max-width: 605px;
 
   &__nav {
     display: flex;
@@ -206,8 +222,8 @@
   padding: 0;
 
   display: flex;
-  align-items: end;
   flex-direction: column;
+  align-items: end;
 
   list-style: none;
   gap: 30px;
@@ -221,12 +237,15 @@
 
 .footer {
   &__wrapper {
-    max-width: 605px;
     margin: 54px auto 0;
+
+    max-width: 605px;
   }
+
   &__logo {
     margin: 0 auto;
   }
+
   &__content {
     flex-direction: column;
     align-items: center;

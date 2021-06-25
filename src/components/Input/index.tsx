@@ -8,10 +8,10 @@ import {
   InputProps,
   Select,
 } from 'antd';
+import { TextAreaProps } from 'antd/lib/input';
 
 import { ReactComponent as ArrowDown } from '../../assets/img/icons/icon-arrow-down.svg';
 import { ITokenMini } from '../../utils/tokenMini';
-import { TextAreaProps } from 'antd/lib/input';
 
 const { Option } = Select;
 const { TextArea } = InputAntd;

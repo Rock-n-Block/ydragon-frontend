@@ -15,16 +15,18 @@
 
   box-shadow: -8px 8px 36px rgba(0, 0, 0, 0.5);
   @include b('mobile') {
+    margin: 0;
+    padding: 0 0 30px 0;
+
     background: none;
     border-radius: 0;
-    margin: 0;
-    padding:0 0 30px 0;
     box-shadow: none;
 
     &:last-child {
-      padding-bottom:0;
+      padding-bottom: 0;
     }
   }
+
   &__text--wrapper {
     position: relative;
 
@@ -38,7 +40,6 @@
     @include b('tablet') {
       margin-top: 45px;
       margin-left: 35px;
-
     }
 
     @include b('mobile') {
@@ -47,16 +48,19 @@
   }
 
   &__title {
-    font-family: 'MER',sans-serif;
-    font-size: 24px;
-    line-height: 120%;
     display: flex;
     justify-content: space-between;
     align-items: center;
 
-    gap: 43px;
     width: 100%;
+
+    font-family: 'MER', sans-serif;
+    font-size: 24px;
+    line-height: 120%;
+
     outline: none;
+
+    gap: 43px;
 
     /* identical to box height, or 29px */
     font-feature-settings: 'liga' off;
@@ -108,8 +112,8 @@
 
   &__icon {
     outline: none;
-    transition: transform 0.4s;
 
+    transition: transform 0.4s;
   }
 
   &__icon:hover {
@@ -130,13 +134,16 @@
 }
 
 .invisible {
-  max-height: 0;
   margin: 0;
+
+  max-height: 0;
+
   transition: all 0.4s ease-out;
 }
 
 .visible {
   max-height: 360px;
+
   transition: all 0.4s ease-out;
 }
 
