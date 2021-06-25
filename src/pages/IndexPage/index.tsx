@@ -13,6 +13,9 @@ import { indexesApi } from '../../services/api';
 import { useMst } from '../../store/store';
 
 import './Index.scss';
+import { GetInIndexModal } from '../../components/Modals';
+import { ITableData } from '../../components/SplittedTable';
+import { TokenMiniProps } from '../../components/TokenMini';
 
 interface IIndexId {
   indexId: string;
@@ -20,6 +23,9 @@ interface IIndexId {
 export interface IIndex {
   id: number;
   name: string;
+  address: string;
+  description: string;
+  market_cap: string;
   tokens: Array<IToken>;
   created_at: Date | string;
   rebalance_date?: Date | string;
@@ -29,20 +35,37 @@ const Index: React.FC = observer(() => {
   const { indexId } = useParams<IIndexId>();
   const { modals } = useMst();
   const [indexData, setIndexData] = useState<IIndex | undefined>();
+  const [totalData, setTotalData] = useState<ITableData[]>([] as ITableData[]);
 
   const getCurrentIndex = useCallback(() => {
     indexesApi.getIndexById(+indexId).then(({ data }) => {
       setIndexData(data);
-      console.log('getIndexes', data);
+      setTotalData(
+        data.tokens.map((token: IToken) => {
+          return [
+            {
+              icon: token.image,
+              name: token.name,
+              symbol: token.symbol,
+            } as TokenMiniProps,
+            token.count,
+            `$${token.price_for_one}`,
+            `$${token.price_total}`,
+          ];
+        }),
+      );
+      console.log('getIndexes', data, setTotalData);
     });
   }, [indexId]);
-  const handleMint = () => {
+  /* const handleMint = () => {
     modals.mint.open();
   };
   const handleRedeem = () => {
     modals.redeem.open();
+  }; */
+  const handleGetIn = () => {
+    modals.getInIndex.open();
   };
-  const handleGetIn = () => {};
   useEffect(() => {
     getCurrentIndex();
   }, [getCurrentIndex]);
@@ -67,8 +90,6 @@ const Index: React.FC = observer(() => {
               .toString(),
           },
         ]}
-        handleBuy={handleMint}
-        handleSell={handleRedeem}
         handleGetIn={handleGetIn}
       />
       <RebalanceHistory lastRebalance={indexData?.rebalance_date} />
@@ -76,6 +97,7 @@ const Index: React.FC = observer(() => {
       {/* <About /> */}
       <MintModal />
       <RedeemModal />
+      <GetInIndexModal totalData={totalData} indexAddress={indexData?.address ?? ''} />
     </main>
   );
 });
