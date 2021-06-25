@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router';
 import { Link } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 
 import logo from '../../assets/img/icons/logo.svg';
+import cross from '../../assets/img/icons/icon-cross.svg';
 import iconMenu from '../../assets/img/icons/icon-menu.svg';
 import { useWalletConnectorContext } from '../../services/walletConnect';
 import { useMst } from '../../store/store';
@@ -20,19 +22,29 @@ const Header: React.FC = observer(() => {
   const [fixed, setFixed] = useState(true);
   const { user } = useMst();
   const walletConnector = useWalletConnectorContext();
+  const history = useHistory();
 
   const handleLogOut = () => {
+    setCollapsed(true);
     walletConnector.disconnect();
   };
 
   const connectWallet = (): void => {
+    setCollapsed(true);
     walletConnector.connect();
+  };
+
+  const redirectHandler = (path: string) => {
+    setCollapsed(true);
+    history.push(path);
   };
 
   useEffect(() => {
     if (!collapsed) {
       setTimeout(() => setFixed(true), 400);
-    } else {setFixed(false)}
+    } else {
+      setFixed(false);
+    }
   }, [collapsed]);
 
   return (
@@ -46,13 +58,13 @@ const Header: React.FC = observer(() => {
             onClick={() => setCollapsed(!collapsed)}
             className="header__menu"
           >
-            <img alt="#" src={iconMenu} />
+            <img alt="#" src={collapsed ? iconMenu : cross} />
           </div>
           {collapsed ? (
             <div className="header__logo">
-              <Link to="/">
+              <Button styledType="clear" onClick={() => redirectHandler('/')}>
                 <img src={logo} alt="logo" width="40" height="36" />
-              </Link>
+              </Button>
               <div className="header__logo-text">YDRAGON</div>
             </div>
           ) : (
@@ -137,35 +149,54 @@ const Header: React.FC = observer(() => {
             </ul>
           </div>
         </div>
-        {/* <div className={`${collapsed ? 'collapse' : 'expand'}`}> */}
         <nav className="menu">
           <nav className="menu__nav">
             <ul className="menu-nav">
               <li className="menu-nav__item">
-                <Link to="/" className="menu-nav__link">
+                <Button
+                  styledType="clear"
+                  onClick={() => redirectHandler('/')}
+                  className="menu-nav__link"
+                >
                   Home
-                </Link>
+                </Button>
               </li>
               <li className="menu-nav__item">
-                <Link to="/indexes" className="menu-nav__link">
+                <Button
+                  styledType="clear"
+                  onClick={() => redirectHandler('/indexes')}
+                  className="menu-nav__link"
+                >
                   Index Products
-                </Link>
+                </Button>
               </li>
               <li className="menu-nav__item">
-                <Link to="/staking" className="menu-nav__link">
+                <Button
+                  styledType="clear"
+                  onClick={() => redirectHandler('/staking')}
+                  className="menu-nav__link"
+                >
                   Staking
-                </Link>
+                </Button>
               </li>
               <li className="menu-nav__item">
-                <Link to="/about-us" className="menu-nav__link">
+                <Button
+                  styledType="clear"
+                  onClick={() => redirectHandler('/about-us')}
+                  className="menu-nav__link"
+                >
                   About
-                </Link>
+                </Button>
               </li>
               {localStorage.yd_token && (
                 <li className="menu-nav__item">
-                  <Link to="/admin" className="menu-nav__link">
+                  <Button
+                    styledType="clear"
+                    onClick={() => redirectHandler('/admin')}
+                    className="menu-nav__link"
+                  >
                     Admin panel
-                  </Link>
+                  </Button>
                 </li>
               )}
             </ul>
@@ -226,7 +257,7 @@ const Header: React.FC = observer(() => {
               rel="noopener noreferrer"
               className="footer__socials-item"
             >
-              <img src={tg} alt="logo" width="16" height="16" />
+              <img src={tg} alt="logo" width="24" height="20" />
             </a>
 
             <a
@@ -235,20 +266,41 @@ const Header: React.FC = observer(() => {
               rel="noopener noreferrer"
               className="footer__socials-item"
             >
-              <img src={tw} alt="logo" width="16" height="16" />
+              <img src={tw} alt="logo" width="24" height="20" />
             </a>
 
             <a href="/" className="footer__socials-item">
-              <img src={md} alt="logo" width="16" height="16" />
+              <img src={md} alt="logo" width="24" height="20" />
             </a>
 
             <a href="/" className="footer__socials-item">
-              <img src={dis} alt="logo" width="16" height="16" />
+              <img src={dis} alt="logo" width="24" height="20" />
             </a>
           </div>
         </div>
       </div>
       {/* </div> */}
+      <footer className="footer">
+        <div className="container">
+          <div className="footer__content">
+            <div className="footer__col">
+              <div className="footer__logo">
+                <Button styledType="clear" onClick={() => redirectHandler('/')}>
+                  <img src={logo} alt="logo" width="40" height="36" />
+                </Button>
+                <div className="footer__logo-text">YDRAGON</div>
+              </div>
+
+              <div className="footer__descr">
+                YDragon is a cross-chain index ecosystem with yield bearing collateral, providing a
+                true interoperable cross-asset experience.
+              </div>
+            </div>
+
+            <div className="footer__copyright">© 2021 YDRAGON</div>
+          </div>
+        </div>
+      </footer>
     </header>
   );
 });
