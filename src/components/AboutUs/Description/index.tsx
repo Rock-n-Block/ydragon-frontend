@@ -1,8 +1,8 @@
 import React from 'react';
 
 import iconPlay from '../../../assets/img/icons/icon-play.svg';
-import { Button } from '../../index';
 
+// import { Button } from '../../index';
 import './Description.scss';
 
 const Description: React.FC = () => {
@@ -28,23 +28,23 @@ const Description: React.FC = () => {
         <div className="description__video">
           <span className="description__video--text">Coming soon</span>
           <img alt="#" src={iconPlay} className="description__video--play" />
-          <span className="description__video--info">
+          {/* <span className="description__video--info">
             For more info on YDragon{' '}
             <a className="description__video--link" href="/about-us">
               go here
             </a>
-          </span>
+          </span> */}
         </div>
       </div>
 
-      <div className="description__btns-row">
+      {/* <div className="description__btns-row">
         <Button className="description__btn" link="/ydrtoken" styledType="filled">
           Buy YDR
         </Button>
         <Button className="description__btn" styledType="outline">
           Whitepaper
         </Button>
-      </div>
+      </div> */}
     </section>
   );
 };

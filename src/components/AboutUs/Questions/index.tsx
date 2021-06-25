@@ -65,10 +65,11 @@ const Questions: React.FC = () => {
           A minting event is simply a period during which a user can purchase shares in an index
           that is going live shortly after the end of the minting event. Participating in a minting
           event awards the user select benefits exclusive to a particular minting event. Details
-          about these benefits will be announced before every minting event. Read more{' '}
+          about these benefits will be announced before every minting event.
+          {/* Read more{' '}
           <a className="question__text--link" href="about-us">
             here
-          </a>
+          </a> */}
         </>
       ),
     },

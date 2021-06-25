@@ -54,6 +54,9 @@
 
   max-width: 512px;
 
+  @include b('mobile') {
+    margin-bottom: 30px;
+  }
   &__info {
     margin-left: 24px;
 
@@ -72,6 +75,11 @@
 
     /* identical to box height */
     font-feature-settings: 'liga' off;
+
+    @include b('mobile') {
+      font-size: 20px;
+      line-height: 24px;
+    }
   }
 
   &__info--text {

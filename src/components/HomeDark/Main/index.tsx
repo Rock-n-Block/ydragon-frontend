@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { Button } from '../../index';
-
 import './Main.scss';
 
 const Main: React.FC = () => {

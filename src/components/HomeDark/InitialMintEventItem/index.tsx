@@ -6,7 +6,6 @@ import { useWalletConnectorContext } from '../../../services/walletConnect';
 import { useMst } from '../../../store/store';
 import { Button } from '../../index';
 import { IIme } from '../InitialMintEvent';
-
 import './InitialMintEventItem.scss';
 
 interface InitialMintEventItemProps {
@@ -16,6 +15,7 @@ interface InitialMintEventItemProps {
 const InitialMintEventItem: React.FC<InitialMintEventItemProps> = ({ imeItem }) => {
   const { modals } = useMst();
   const walletConnector = useWalletConnectorContext();
+  // const mockStart = moment('20211207', 'YYYYDDMM');
   const [start, setStart] = useState(moment());
   const [end, setEnd] = useState(moment());
   const [now, setNow] = useState(moment());
@@ -35,7 +35,7 @@ const InitialMintEventItem: React.FC<InitialMintEventItemProps> = ({ imeItem }) 
     return () => {
       clearInterval(interval);
     };
-  }, [end, now, start]);
+  }, [now, end, start]);
   useEffect(() => {
     walletConnector.metamaskService
       .getStartDate(imeItem.address)
@@ -67,18 +67,22 @@ const InitialMintEventItem: React.FC<InitialMintEventItemProps> = ({ imeItem }) 
           <p className="initial-mint-event__timer">
             <span className="initial-mint-event__timer-time">
               {start.diff(now, 'days') < 0 ? 0 : start.diff(now, 'days')}
+              {/* {mockStart.diff(now, 'days') < 0 ? 0 : mockStart.diff(now, 'days')} */}
             </span>
             <span className="initial-mint-event__timer-colon">:</span>
             <span className="initial-mint-event__timer-time">
               {start.diff(now, 'hours') < 0 ? 0 : start.diff(now, 'hours') % 24}
+              {/* {mockStart.diff(now, 'hours') < 0 ? 0 : mockStart.diff(now, 'hours') % 24} */}
             </span>
             <span className="initial-mint-event__timer-colon">:</span>
             <span className="initial-mint-event__timer-time">
               {start.diff(now, 'minutes') < 0 ? 0 : start.diff(now, 'minutes') % 60}
+              {/* {mockStart.diff(now, 'minutes') < 0 ? 0 : mockStart.diff(now, 'minutes') % 60} */}
             </span>
             <span className="initial-mint-event__timer-colon">:</span>
             <span className="initial-mint-event__timer-time">
               {start.diff(now, 'seconds') < 0 ? 0 : start.diff(now, 'seconds') % 60}
+              {/* {mockStart.diff(now, 'seconds') < 0 ? 0 : mockStart.diff(now, 'seconds') % 60} */}
             </span>
           </p>
           <div className="initial-mint-event__unit">
@@ -119,7 +123,7 @@ const InitialMintEventItem: React.FC<InitialMintEventItemProps> = ({ imeItem }) 
       </div>
 
       <div className="initial-mint-event__content">
-        <h3 className="initial-mint-event__title">{imeItem.name}</h3>
+        <h3 className="initial-mint-event__title">B5 Index {imeItem.name} </h3>
 
         <p className="initial-mint-event__description">
           The BSC Top 5 Reputable Projects is a selection of the top 5 tokens listed across multiple

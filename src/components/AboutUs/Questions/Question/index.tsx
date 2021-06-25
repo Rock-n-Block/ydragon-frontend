@@ -16,18 +16,17 @@ const Question: React.FC<QuestionProps> = (props: PropsWithChildren<QuestionProp
   return (
     <div className="question">
       <div className="question__text--wrapper">
-        <span className={`question__title ${collapsed ? 'colorWhite' : 'colorOrange'}`}>
+        <div
+          className={`question__title ${collapsed ? 'colorWhite' : 'colorOrange'}`}
+          role="button"
+          tabIndex={0}
+          onKeyDown={() => setCollapsed(!collapsed)}
+          onClick={() => setCollapsed(!collapsed)}
+        >
           {title}
-        </span>
+          <img alt="#" src={iconDown} className={`question__icon ${collapsed ? '' : 'down'}`} />
+        </div>
         {React.cloneElement(element, { children })}
-      </div>
-      <div
-        role="button"
-        tabIndex={0}
-        onKeyDown={() => setCollapsed(!collapsed)}
-        onClick={() => setCollapsed(!collapsed)}
-      >
-        <img alt="#" src={iconDown} className={`question__icon ${collapsed ? '' : 'down'}`} />
       </div>
     </div>
   );

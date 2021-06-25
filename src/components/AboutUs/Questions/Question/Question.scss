@@ -5,28 +5,28 @@
   position: relative;
 
   margin-bottom: 24px;
-  padding-bottom: 35px;
+  padding: 35px 81px 35px 105px;
 
   width: 100%;
   max-width: 1140px;
-  min-height: 99px;
 
   background: linear-gradient(238.88deg, #000316 31.18%, #050c25 99.47%);
   border-radius: 32px;
 
   box-shadow: -8px 8px 36px rgba(0, 0, 0, 0.5);
-
   @include b('mobile') {
     background: none;
     border-radius: 0;
-
+    margin: 0;
+    padding:0 0 30px 0;
     box-shadow: none;
-  }
 
+    &:last-child {
+      padding-bottom:0;
+    }
+  }
   &__text--wrapper {
     position: relative;
-    top: 35px;
-    left: 105px;
 
     display: flex;
     flex-direction: column;
@@ -36,29 +36,38 @@
     max-width: 941px;
 
     @include b('tablet') {
-      top: 45px;
-      left: 35px;
+      margin-top: 45px;
+      margin-left: 35px;
 
-      width: 90%;
     }
 
     @include b('mobile') {
-      top: 0;
-      left: 0;
+      margin: 0;
     }
   }
 
   &__title {
-    font-family: 'MER';
+    font-family: 'MER',sans-serif;
     font-size: 24px;
     line-height: 120%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    gap: 43px;
+    width: 100%;
+    outline: none;
 
     /* identical to box height, or 29px */
     font-feature-settings: 'liga' off;
 
+    &:hover {
+      cursor: pointer;
+    }
     @include b('mobile') {
       font-size: 16px;
       line-height: 19px;
+      gap: 8px;
     }
 
     @include b('tablet') {
@@ -91,19 +100,16 @@
 
       color: #f47c45;
     }
+
+    @include b('tablet') {
+      margin-top: 10px;
+    }
   }
 
   &__icon {
-    position: absolute;
-    top: 50px;
-    right: 46px;
-
+    outline: none;
     transition: transform 0.4s;
 
-    @include b('mobile') {
-      top: 0;
-      right: 0;
-    }
   }
 
   &__icon:hover {
@@ -125,14 +131,13 @@
 
 .invisible {
   max-height: 0;
-
-  transition: max-height 0.4s ease-out;
+  margin: 0;
+  transition: all 0.4s ease-out;
 }
 
 .visible {
-  max-height: 100px;
-
-  transition: max-height 0.4s ease-out;
+  max-height: 360px;
+  transition: all 0.4s ease-out;
 }
 
 .down {
