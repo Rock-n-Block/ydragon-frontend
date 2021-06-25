@@ -1,6 +1,6 @@
 export default {
   MAIN: {
-    ADDRESS: '0xeD86087c760EcB754D42b9030B606b4C974bA718',
+    ADDRESS: '0xb034D614d12984716F8e36E2Ffd276F39BFCC971',
     ABI: [
       { inputs: [], stateMutability: 'nonpayable', type: 'constructor' },
       {
@@ -48,17 +48,13 @@ export default {
         type: 'event',
       },
       {
-        inputs: [],
-        name: 'MANAGER_ROLE',
-        outputs: [{ internalType: 'bytes32', name: '', type: 'bytes32' }],
-        stateMutability: 'view',
-        type: 'function',
-      },
-      {
         inputs: [
-          { internalType: 'string', name: 'name', type: 'string' },
-          { internalType: 'string', name: 'symbol', type: 'string' },
-          { internalType: 'address[3]', name: 'oracleDexRouterAndZVault', type: 'address[3]' },
+          { internalType: 'string[2]', name: 'nameSymbol', type: 'string[2]' },
+          {
+            internalType: 'address[4]',
+            name: 'oracleDexRouterDexFactoryAndZVault',
+            type: 'address[4]',
+          },
           { internalType: 'uint256[2]', name: 'imeTimeInfo', type: 'uint256[2]' },
           { internalType: 'address[]', name: '_tokenWhitelist', type: 'address[]' },
           { internalType: 'address[]', name: '_tokensInAsset', type: 'address[]' },
@@ -107,13 +103,6 @@ export default {
         type: 'function',
       },
       {
-        inputs: [{ internalType: 'address', name: 'newOracle', type: 'address' }],
-        name: 'changeOracle',
-        outputs: [],
-        stateMutability: 'nonpayable',
-        type: 'function',
-      },
-      {
         inputs: [],
         name: 'decimals',
         outputs: [{ internalType: 'uint8', name: '', type: 'uint8' }],
@@ -139,6 +128,20 @@ export default {
         name: 'depositToIndex',
         outputs: [],
         stateMutability: 'payable',
+        type: 'function',
+      },
+      {
+        inputs: [],
+        name: 'description',
+        outputs: [{ internalType: 'string', name: '', type: 'string' }],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
+        inputs: [],
+        name: 'dexFactory',
+        outputs: [{ internalType: 'address', name: '', type: 'address' }],
+        stateMutability: 'view',
         type: 'function',
       },
       {
@@ -321,6 +324,13 @@ export default {
         ],
         name: 'redeem',
         outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+        stateMutability: 'nonpayable',
+        type: 'function',
+      },
+      {
+        inputs: [{ internalType: 'string', name: 'newValue', type: 'string' }],
+        name: 'setDescription',
+        outputs: [],
         stateMutability: 'nonpayable',
         type: 'function',
       },
@@ -834,12 +844,13 @@ export default {
     ],
   },
   Factory: {
-    ADDRESS: '0x0a7831b68338Dc0781EE0C83C68aB6E418E35b08',
+    ADDRESS: '0x6aF2a5653f809b628bE2529D6f8b863c41A339DA',
     ABI: [
       {
         inputs: [
           { internalType: 'address', name: '_deployCodeContract', type: 'address' },
           { internalType: 'address', name: '_dexRouter', type: 'address' },
+          { internalType: 'address', name: '_dexFactory', type: 'address' },
         ],
         stateMutability: 'nonpayable',
         type: 'constructor',
@@ -954,6 +965,13 @@ export default {
       },
       {
         inputs: [],
+        name: 'defaultTokenWhitelistLen',
+        outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
+        inputs: [],
         name: 'deployCodeContract',
         outputs: [{ internalType: 'address', name: '', type: 'address' }],
         stateMutability: 'view',
@@ -970,6 +988,13 @@ export default {
         name: 'deployNewAsset',
         outputs: [{ internalType: 'address', name: '', type: 'address' }],
         stateMutability: 'nonpayable',
+        type: 'function',
+      },
+      {
+        inputs: [],
+        name: 'dexFactory',
+        outputs: [{ internalType: 'address', name: '', type: 'address' }],
+        stateMutability: 'view',
         type: 'function',
       },
       {
@@ -1044,6 +1069,13 @@ export default {
         inputs: [{ internalType: 'bytes4', name: 'interfaceId', type: 'bytes4' }],
         name: 'supportsInterface',
         outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
+        inputs: [],
+        name: 'weth',
+        outputs: [{ internalType: 'address', name: '', type: 'address' }],
         stateMutability: 'view',
         type: 'function',
       },
@@ -1398,17 +1430,13 @@ export default {
         type: 'event',
       },
       {
-        inputs: [],
-        name: 'MANAGER_ROLE',
-        outputs: [{ internalType: 'bytes32', name: '', type: 'bytes32' }],
-        stateMutability: 'view',
-        type: 'function',
-      },
-      {
         inputs: [
-          { internalType: 'string', name: 'name', type: 'string' },
-          { internalType: 'string', name: 'symbol', type: 'string' },
-          { internalType: 'address[3]', name: 'oracleDexRouterAndZVault', type: 'address[3]' },
+          { internalType: 'string[2]', name: 'nameSymbol', type: 'string[2]' },
+          {
+            internalType: 'address[4]',
+            name: 'oracleDexRouterDexFactoryAndZVault',
+            type: 'address[4]',
+          },
           { internalType: 'uint256[2]', name: 'imeTimeInfo', type: 'uint256[2]' },
           { internalType: 'address[]', name: '_tokenWhitelist', type: 'address[]' },
           { internalType: 'address[]', name: '_tokensInAsset', type: 'address[]' },
@@ -1457,13 +1485,6 @@ export default {
         type: 'function',
       },
       {
-        inputs: [{ internalType: 'address', name: 'newOracle', type: 'address' }],
-        name: 'changeOracle',
-        outputs: [],
-        stateMutability: 'nonpayable',
-        type: 'function',
-      },
-      {
         inputs: [],
         name: 'decimals',
         outputs: [{ internalType: 'uint8', name: '', type: 'uint8' }],
@@ -1489,6 +1510,20 @@ export default {
         name: 'depositToIndex',
         outputs: [],
         stateMutability: 'payable',
+        type: 'function',
+      },
+      {
+        inputs: [],
+        name: 'description',
+        outputs: [{ internalType: 'string', name: '', type: 'string' }],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
+        inputs: [],
+        name: 'dexFactory',
+        outputs: [{ internalType: 'address', name: '', type: 'address' }],
+        stateMutability: 'view',
         type: 'function',
       },
       {
@@ -1671,6 +1706,13 @@ export default {
         ],
         name: 'redeem',
         outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+        stateMutability: 'nonpayable',
+        type: 'function',
+      },
+      {
+        inputs: [{ internalType: 'string', name: 'newValue', type: 'string' }],
+        name: 'setDescription',
+        outputs: [],
         stateMutability: 'nonpayable',
         type: 'function',
       },

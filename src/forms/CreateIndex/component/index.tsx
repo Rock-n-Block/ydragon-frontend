@@ -5,7 +5,7 @@ import { observer } from 'mobx-react-lite';
 import moment from 'moment';
 
 import DangerCircle from '../../../assets/img/icons/icon-danger-circle.svg';
-import { Button, Input, RangePicker, Search, TokenMini } from '../../../components';
+import { Button, Input, RangePicker, Search, TextArea, TokenMini } from '../../../components';
 import { IToken } from '../../../components/IndexPage/IndexTable';
 import { ISearchToken } from '../../../components/Search';
 import { ITokensDiff } from '../../../pages/Admin';
@@ -16,6 +16,7 @@ export interface ICreateIndex {
   symbol: string;
   startDate: string;
   endDate: string;
+  description: string;
   tokens: Array<ITokensDiff>;
   isLoading?: boolean;
 }
@@ -26,7 +27,7 @@ const CreateIndex: React.FC<FormikProps<ICreateIndex> & ICreateIndex> = observer
 
     const disabledDate = (current: any) => {
       // Can not select days before today and today
-      return current && current < moment().endOf('day');
+      return current && current < moment().startOf('day');
     };
     const weightsSum = values.tokens
       .map((tokenDiff) => +tokenDiff.new_weight)
@@ -118,7 +119,15 @@ const CreateIndex: React.FC<FormikProps<ICreateIndex> & ICreateIndex> = observer
           onChange={onRangePickerChange}
           onOk={onOk}
         />
-
+        <TextArea
+          autoSize={{ minRows: 2 }}
+          placeholder="Enter description"
+          className="form-create-index__description"
+          name="description"
+          value={values.description}
+          onChange={handleChange}
+          onBlur={handleBlur}
+        />
         <FieldArray
           name="tokens"
           render={(arrayHelper) => (
@@ -195,7 +204,8 @@ const CreateIndex: React.FC<FormikProps<ICreateIndex> & ICreateIndex> = observer
               values.name === '' ||
               values.symbol === '' ||
               values.startDate === '' ||
-              values.endDate === ''
+              values.endDate === '' ||
+              values.description === ''
             }
           >
             Create
