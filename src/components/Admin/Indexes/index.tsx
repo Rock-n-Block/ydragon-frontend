@@ -8,6 +8,7 @@ import { indexesApi } from '../../../services/api';
 import { useMst } from '../../../store/store';
 import { Sorter } from '../../../utils/sorter';
 import { Button, Table } from '../../index';
+import { IndexCardMobile } from './IndexCardMobile/index';
 
 import './Indexes.scss';
 
@@ -75,6 +76,7 @@ const Indexes: React.FC = observer(() => {
       setDataSource(newData);
     }
   }, [indexes]);
+
   return (
     <section className="section section--admin">
       <div className="section__title-row">
@@ -84,8 +86,18 @@ const Indexes: React.FC = observer(() => {
           create new index
         </Button>
       </div>
-
-      {indexes && <Table dataSource={dataSource} columns={columns} className="rebalance-table" />}
+      {indexes && (
+        <>
+          <div className="indexs__table-big">
+            <Table dataSource={dataSource} columns={columns} className="rebalance-table" />
+          </div>
+          <div className="indexs__table-small">
+            {dataSource.map((data) => (
+              <IndexCardMobile {...data} />
+            ))}
+          </div>
+        </>
+      )}
     </section>
   );
 });
