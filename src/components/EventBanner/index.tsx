@@ -28,16 +28,24 @@ const EventBanner: React.FC = observer(() => {
     const interval = setInterval(() => {
       setNow(moment());
     }, 1000);
-    if (end.diff(now, 'seconds') < 0 || start.diff(now, 'seconds') > 0) {
-      setImeEnabled(true);
-    } else {
-      setImeEnabled(false);
-      if (end.diff(now, 'seconds') > 0) setImeHidden(true);
-      else setImeHidden(false);
-    }
     return () => {
       clearInterval(interval);
     };
+  }, [start, end, now]);
+  useEffect(() => {
+    const endDiff = end.diff(now, 'seconds');
+    const startDiff = start.diff(now, 'seconds');
+    if (endDiff > 0 && startDiff < 0) {
+      setImeEnabled(true);
+      setImeHidden(false);
+    } else {
+      setImeEnabled(false);
+      if (endDiff < 0) {
+        setImeHidden(true);
+      } else {
+        setImeHidden(false);
+      }
+    }
   }, [start, end, now]);
   useEffect(() => {
     if (ime.address) {
@@ -61,7 +69,7 @@ const EventBanner: React.FC = observer(() => {
         });
     }
   }, [ime.address, walletConnector.metamaskService]);
-  return imeHidden ? (
+  return !imeHidden ? (
     <div className="event-banner">
       <div className="container">
         <div className="event-banner__inner">
@@ -71,7 +79,7 @@ const EventBanner: React.FC = observer(() => {
 
           <div className="event-banner-timer">
             <p className="event-banner-timer__title">
-              INITIAL minting Event <span>{imeEnabled ? 'Starts in' : 'ends in'} </span>
+              INITIAL minting Event <span>{!imeEnabled ? 'Starts in' : 'Ends in'} </span>
             </p>
 
             <div className="event-banner-timer__row">
