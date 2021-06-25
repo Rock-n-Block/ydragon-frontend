@@ -15,7 +15,9 @@
   height: 100vh;
 
   background: url('../../assets/img/home-dark-bg.png');
-  background-color: #000;
+  background-color: #0e1a37;
+
+  box-shadow: -8px 8px 12px rgba(13, 36, 82, 0.1);
   background-repeat: no-repeat;
   background-position: center;
   background-size: auto 100%;
@@ -40,6 +42,11 @@
   height: 122px;
 
   transition: all 0.4s;
+  position: sticky;
+  top:0;
+  background-color: #0e1a37;
+
+  box-shadow: -8px 8px 12px rgba(13, 36, 82, 0.1);
 }
 
 .header {
@@ -56,7 +63,7 @@
       cursor: pointer;
     }
   }
-
+  
   &__inner {
     position: relative;
 
@@ -135,6 +142,13 @@
         }
       }
     }
+    .header__inner {
+      .header__logo {
+        .btn-clear {
+          background: transparent;
+        }
+      }
+    }
   }
 
   .footer {
@@ -147,6 +161,11 @@
 
       &:not(:first-child) {
         display: block;
+      }
+      .footer__logo {
+        .btn-clear {
+          background: transparent;
+        }
       }
     }
 
@@ -162,6 +181,10 @@
         height: 48px;
       }
     }
+  }
+
+  .btn-clear {
+    background: transparent;
   }
 }
 
