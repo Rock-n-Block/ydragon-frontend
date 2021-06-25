@@ -2,9 +2,14 @@
 @import '../../styles/mixins';
 
 .expand{
-  position: relative;
-  top: 0;
-  left: 0;
+  position: absolute;
+  background: url('../../assets/img/home-dark-bg.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: auto 100%;
+  background-blend-mode: lighten;
+  background-color: #000;
+
   z-index: 10;
   width: 100vw;
 
@@ -174,7 +179,8 @@
 
 .footer {
   &__wrapper {
-    margin-top: 54px;
+    max-width: 605px;
+    margin: 54px auto 0;
   }
   &__col {
     align-items: flex-start !important;
