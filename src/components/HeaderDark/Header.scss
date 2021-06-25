@@ -35,15 +35,19 @@
 
 .collapse {
   z-index: 100;
-
-  overflow: hidden;
-
-  width: 100vw;
+  
   height: 122px;
 
-  transition: all 0.4s;
+  overflow: hidden;
   position: sticky;
   top:0;
+  @include b('tablet') {
+
+  
+    width: 100vw;
+  
+    transition: all 0.4s;
+  }
   background-color: #0e1a37;
 
   box-shadow: -8px 8px 12px rgba(13, 36, 82, 0.1);
