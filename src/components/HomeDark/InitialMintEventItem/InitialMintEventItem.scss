@@ -21,6 +21,9 @@
 
   &__content {
     max-width: 305px;
+    @include b('tablet') {
+      margin: 0 auto;
+    }
   }
 
   &__title {

@@ -126,8 +126,9 @@ const InitialMintEventItem: React.FC<InitialMintEventItemProps> = ({ imeItem }) 
         <h3 className="initial-mint-event__title">B5 Index {imeItem.name} </h3>
 
         <p className="initial-mint-event__description">
-          The BSC Top 5 Reputable Projects is a selection of the top 5 tokens listed across multiple
-          chains on binance, in addition to YDR, that have the ability to produce a high yield.
+          {/* The BSC Top 5 Reputable Projects is a selection of the top 5 tokens listed across multiple
+          chains on binance, in addition to YDR, that have the ability to produce a high yield. */}
+          {imeItem.description ? imeItem.description : ''}
         </p>
 
         <Button onClick={handleGetIn} className="initial-mint-event__get-btn" disabled={imeEnabled}>
