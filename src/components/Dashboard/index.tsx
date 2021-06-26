@@ -146,7 +146,7 @@ const Dashboard: React.FC = () => {
                       style={{ backgroundColor: '#F7931E' }}
                     />
                     <span className="index-dashboard__token-name">
-                      {index.tokens ? index.tokens[0].symbol : ''}
+                      {index.tokens.length ? index.tokens[0].symbol : ''}
                     </span>
                   </div>
                   {index.tokens && index.tokens?.length >= 2 && (
@@ -192,7 +192,7 @@ const Dashboard: React.FC = () => {
                     className="index-dashboard__token-percent"
                     style={{
                       width: `${
-                        index.tokens
+                        index.tokens.length
                           ? new BigNumber(index.tokens[0].current_weight)
                               .multipliedBy(100)
                               .toString()
@@ -201,7 +201,7 @@ const Dashboard: React.FC = () => {
                       borderColor: '#F7931E',
                     }}
                   >
-                    {index.tokens
+                    {index.tokens.length
                       ? new BigNumber(index.tokens[0].current_weight).multipliedBy(100).toString()
                       : ''}
                     %
