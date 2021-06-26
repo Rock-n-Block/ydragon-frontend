@@ -25,7 +25,7 @@
   transition: all 0.4s;
   background-blend-mode: lighten;
   @include b('tablet') {
-    padding-top: 144px;
+    // padding-top: 144px;
   }
 
   @include b('mobile') {
@@ -40,7 +40,8 @@
 
   overflow: hidden;
   position: sticky;
-  top: 137.2px;
+  top: 0;
+  // top: 137.2px;
   background-color: #0e1a37;
 
   box-shadow: -8px 8px 12px rgba(13, 36, 82, 0.1);
@@ -166,6 +167,7 @@
   }
 
   .footer {
+    margin-top: 240px;   
     &__col {
       align-items: flex-start;
 
@@ -189,6 +191,7 @@
 
     &__socials {
       justify-content: center;
+      margin-top: 70px;
 
       &-item {
         width: 48px;
