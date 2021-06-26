@@ -25,11 +25,12 @@
   transition: all 0.4s;
   background-blend-mode: lighten;
   @include b('tablet') {
-    padding-top: 144px;
+    position: fixed;
+    top: 137.2px;
   }
 
   @include b('mobile') {
-    padding-top: 0;
+    top: 0;
   }
 }
 
@@ -40,14 +41,17 @@
 
   overflow: hidden;
   position: sticky;
-  top: 137.2px;
   background-color: #0e1a37;
+  top: 0;
 
   box-shadow: -8px 8px 12px rgba(13, 36, 82, 0.1);
   @include b('tablet') {
     width: 100vw;
-    top: 0;
+    top: 137.2px;
     transition: all 0.4s;
+  }
+  @include b('mobile') {
+    top: 0;
   }
 }
 
@@ -163,7 +167,7 @@
   }
 
   .footer {
-    margin-top: 240px;   
+    margin-top: 240px;
     &__col {
       align-items: flex-start;
 
@@ -287,7 +291,7 @@
     align-items: center;
   }
 
-  &__descr{
+  &__descr {
     max-width: 350px;
   }
 }
