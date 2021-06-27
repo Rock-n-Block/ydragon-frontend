@@ -48,7 +48,7 @@ const Header: React.FC = observer(() => {
   }, [collapsed]);
 
   return (
-    <>
+    <div>
     <EventBanner />
       <header className={`header ${collapsed ? 'collapse' : 'expand'} ${fixed ? 'fixed' : ''}`}>
         <div className="container">
@@ -311,7 +311,7 @@ const Header: React.FC = observer(() => {
           </div>
         </footer>
       </header>
-    </>
+    </div>
   );
 });
 
