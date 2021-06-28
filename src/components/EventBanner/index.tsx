@@ -3,6 +3,7 @@ import BigNumber from 'bignumber.js/bignumber';
 import { observer } from 'mobx-react-lite';
 import moment from 'moment';
 
+import cross from '../../assets/img/icons/icon-close.svg';
 import coinIcon from '../../assets/img/future/icon-2.svg';
 import { useWalletConnectorContext } from '../../services/walletConnect';
 import { useMst } from '../../store/store';
@@ -19,6 +20,7 @@ const EventBanner: React.FC = observer(() => {
   // const mockStart = moment('20211207', 'YYYYDDMM');
   const [imeEnabled, setImeEnabled] = useState<boolean>(false);
   const [imeHidden, setImeHidden] = useState<boolean>(false);
+  const [bannerHidden, setBannerHidden] = useState<boolean>(false);
   const handleGetIn = () => {
     if (ime.id && ime.address) {
       modals.getIn.open(ime.id, ime.address);
@@ -70,8 +72,17 @@ const EventBanner: React.FC = observer(() => {
     }
   }, [ime.address, walletConnector.metamaskService]);
   return !imeHidden ? (
-    <div className="event-banner">
+    <div className={bannerHidden ? 'hidden' : 'event-banner'}>
       <div className="container">
+        <div
+          role="button"
+          tabIndex={0}
+          onClick={() => setBannerHidden(true)}
+          className="event-banner__close"
+          onKeyDown={() => setBannerHidden(true)}
+        >
+          <img src={cross} alt="" width="20" height="20" />
+        </div>
         <div className="event-banner__inner">
           <div className="event-banner__icon">
             <img src={coinIcon} alt="" width="66" height="75" />
