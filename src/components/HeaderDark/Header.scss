@@ -13,7 +13,7 @@
   overflow: auto;
 
   width: 100vw;
-  height: 100vmax;
+  height: 100vh;
   
   background-image: url('../../assets/img/home-dark-bg.png');
   background-repeat: no-repeat;
@@ -172,9 +172,7 @@
   }
 
   .footer {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
+    margin-top: 240px;
 
     &__col {
       align-items: flex-start;
