@@ -11,20 +11,20 @@ import './styles/index.scss';
 
 export const App: React.FC = () => {
   const main = useRouteMatch();
-  const about = useRouteMatch('/about-us')
+  const about = useRouteMatch('/about-us');
 
   const addClass = () => {
-    let result
+    let result;
     if (main.isExact) {
-      result = 'page-wrapper page-wrapper--home'
+      result = 'page-wrapper page-wrapper--home';
     } else if (about) {
-      result = 'page-wrapper page-wrapper--about'
-    } else result = 'page-wrapper'
-    return result
-  }
+      result = 'page-wrapper page-wrapper--about';
+    } else result = 'page-wrapper';
+    return result;
+  };
 
   return (
-    <div className={match.isExact ? 'page-wrapper page-wrapper--home' : 'page-wrapper'}>
+    <div className={addClass()}>
       <Header />
 
       <Switch>
