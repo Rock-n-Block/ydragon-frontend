@@ -1,28 +1,27 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import BigNumber from 'bignumber.js/bignumber';
 import { observer } from 'mobx-react-lite';
 import moment from 'moment';
 
 import coinIcon from '../../assets/img/future/icon-2.svg';
-import { useWalletConnectorContext } from '../../services/walletConnect';
 import { useMst } from '../../store/store';
 import { Button } from '../index';
 
 import './EventBanner.scss';
+import { indexesApi } from '../../services/api';
+import { IIme } from '../HomeDark/InitialMintEvent';
 
 const EventBanner: React.FC = observer(() => {
-  const { ime, modals } = useMst();
-  const walletConnector = useWalletConnectorContext();
+  const { modals } = useMst();
   const [start, setStart] = useState(moment());
   const [end, setEnd] = useState(moment());
   const [now, setNow] = useState(moment());
   // const mockStart = moment('20211207', 'YYYYDDMM');
+  const [imeItem, setImeItem] = useState<IIme>({} as IIme);
   const [imeEnabled, setImeEnabled] = useState<boolean>(false);
   const [imeHidden, setImeHidden] = useState<boolean>(false);
   const handleGetIn = () => {
-    if (ime.id && ime.address) {
-      modals.getIn.open(ime.id, ime.address);
-    }
+    modals.getIn.open(imeItem.id, imeItem.address);
   };
   useEffect(() => {
     const interval = setInterval(() => {
@@ -47,7 +46,7 @@ const EventBanner: React.FC = observer(() => {
       }
     }
   }, [start, end, now]);
-  useEffect(() => {
+  /* useEffect(() => {
     if (ime.address) {
       walletConnector.metamaskService
         .getStartDate(ime.address)
@@ -68,7 +67,30 @@ const EventBanner: React.FC = observer(() => {
           console.log('get balance error', err);
         });
     }
-  }, [ime.address, walletConnector.metamaskService]);
+  }, [ime.address, walletConnector.metamaskService]); */
+
+  const getImeList = useCallback(() => {
+    indexesApi
+      .getImeIndexes()
+      .then(({ data }) => {
+        setImeItem(data[0]);
+      })
+      .catch((error) => {
+        const { response } = error;
+        console.log('get ime list error', response);
+      });
+  }, []);
+  useEffect(() => {
+    getImeList();
+  }, [getImeList]);
+  useEffect(() => {
+    setEnd(
+      moment(new Date(+new BigNumber(imeItem.ime_end_timestamp).multipliedBy(1000).toString())),
+    );
+    setStart(
+      moment(new Date(+new BigNumber(imeItem.ime_start_timestamp).multipliedBy(1000).toString())),
+    );
+  }, [imeItem.ime_end_timestamp, imeItem.ime_start_timestamp]);
   return !imeHidden ? (
     <div className="event-banner">
       <div className="container">
@@ -79,13 +101,16 @@ const EventBanner: React.FC = observer(() => {
 
           <div className="event-banner-timer">
             <p className="event-banner-timer__title">
-              INITIAL minting Event <span>{!imeEnabled ? 'Starts in' : 'Ends in'} </span>
+              INITIAL minting Event{' '}
+              <span>{start.diff(now, 'seconds') > 0 ? 'Starts in' : 'Ends in'} </span>
             </p>
 
             <div className="event-banner-timer__row">
               <span className="event-banner-timer__time">
                 <span className="text-gradient">
-                  {start.diff(now, 'days') <= 0 ? end.diff(now, 'days') : start.diff(now, 'days')}
+                  {start.diff(now, 'seconds') <= 0
+                    ? end.diff(now, 'days')
+                    : start.diff(now, 'days')}
                   {/* {mockStart.diff(now, 'days') < 0 ? 0 : mockStart.diff(now, 'days')} */}
                 </span>
                 <span className="event-banner-timer__time-unit">Day</span>
@@ -93,7 +118,7 @@ const EventBanner: React.FC = observer(() => {
               <span className="event-banner-timer__colon text-gradient">:</span>
               <span className="event-banner-timer__time">
                 <span className="text-gradient">
-                  {start.diff(now, 'hours') < 0
+                  {start.diff(now, 'seconds') <= 0
                     ? end.diff(now, 'hours') % 24
                     : start.diff(now, 'hours') % 24}
                   {/* {mockStart.diff(now, 'hours') < 0 ? 0 : mockStart.diff(now, 'hours') % 24} */}
@@ -103,7 +128,7 @@ const EventBanner: React.FC = observer(() => {
               <span className="event-banner-timer__colon text-gradient">:</span>
               <span className="event-banner-timer__time">
                 <span className="text-gradient">
-                  {start.diff(now, 'minutes') < 0
+                  {start.diff(now, 'seconds') <= 0
                     ? end.diff(now, 'minutes') % 60
                     : start.diff(now, 'minutes') % 60}
                   {/* {mockStart.diff(now, 'minutes') < 0 ? 0 : mockStart.diff(now, 'minutes') % 60} */}
@@ -113,7 +138,7 @@ const EventBanner: React.FC = observer(() => {
               <span className="event-banner-timer__colon text-gradient">:</span>
               <span className="event-banner-timer__time">
                 <span className="text-gradient">
-                  {start.diff(now, 'seconds') < 0
+                  {start.diff(now, 'seconds') <= 0
                     ? end.diff(now, 'seconds') % 60
                     : start.diff(now, 'seconds') % 60}
                   {/* {mockStart.diff(now, 'seconds') < 0 ? 0 : mockStart.diff(now, 'seconds') % 60} */}
