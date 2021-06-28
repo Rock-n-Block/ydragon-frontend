@@ -1,5 +1,5 @@
-@import '../../../styles/_variables.scss';
-@import '../../../styles/_mixins.scss';
+@import '../../styles/variables';
+@import '../../styles/mixins';
 
 .stake {
   @include shadow-block;
@@ -10,9 +10,10 @@
     font-family: 'MER', sans-serif;
     font-size: 12px;
     line-height: 14px;
+    margin-right: 40px;
     text-align: right;
 
-    color: rgba($black, 0.5);
+    color: rgba(white, 0.5);
   }
 
   &__content {
@@ -92,25 +93,27 @@
 .stake-amount {
   $this: &;
   margin-top: 50px;
+  display: flex;
+  flex-direction: column;
 
   &__title {
-    @include gradient-text;
+    margin: 0 auto;
     font-size: 20px;
     line-height: 24px;
-    text-align: center;
   }
 
   &__input-wrapper {
     position: relative;
 
-    margin-top: 15px;
+    margin: 15px auto 0;
+    width: 100%;
+    max-width: 500px;
 
     display: flex;
     justify-content: center;
 
     .input-border {
       width: 100%;
-      max-width: 500px;
       height: 100px;
     }
 
@@ -122,7 +125,8 @@
 
   &__all {
     position: absolute;
-    bottom: 10px;
+    top: 40px;
+    right: 36px;
 
     font-family: 'TNB', sans-serif;
     font-size: 16px;
@@ -130,7 +134,7 @@
 
     cursor: pointer;
 
-    color: rgba($black, 0.4);
+    color: rgba(white, 0.4);
   }
 
   &__time-row {

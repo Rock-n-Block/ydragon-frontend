@@ -1,7 +1,7 @@
 import React from 'react';
 
-import btc from '../../../assets/img/tokens/btc.svg';
-import { Button, Input } from '../../index';
+import btc from '../../assets/img/tokens/btc.svg';
+import { Button, Input } from '../index';
 
 import './Stake.scss';
 
@@ -55,10 +55,11 @@ const Stake: React.FC = () => {
         </div>
 
         <div className="stake-amount">
-          <div className="stake-amount__title">Amount to stake</div>
+          <div className="stake-amount__title text-gradient">Amount to stake</div>
 
           <div className="stake-amount__input-wrapper">
-            <Input value="0.0" />
+            <Input placeholder="0.0" type="number" />
+
             <span className="stake-amount__all">All Available</span>
           </div>
 
