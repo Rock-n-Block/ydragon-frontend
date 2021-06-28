@@ -1,12 +1,20 @@
 import React from 'react';
 import nextId from 'react-id-generator';
 import Icon from '@ant-design/icons';
-import { Input as InputAntd, InputProps, Select } from 'antd';
+import {
+  Input as InputAntd,
+  InputNumber as InputNumberAntd,
+  InputNumberProps,
+  InputProps,
+  Select,
+} from 'antd';
+import { TextAreaProps } from 'antd/lib/input';
 
 import { ReactComponent as ArrowDown } from '../../assets/img/icons/icon-arrow-down.svg';
 import { ITokenMini } from '../../utils/tokenMini';
 
 const { Option } = Select;
+const { TextArea } = InputAntd;
 
 const Input: React.FC<InputProps> = (props) => {
   return (
@@ -62,5 +70,22 @@ export const InputWithSelect: React.FC<InputWithSelectProps> = (props) => {
     </div>
   );
 };
-
+export const InputNumber: React.FC<InputNumberProps> = (props) => {
+  return (
+    <div className="input-border">
+      <InputNumberAntd className="input" {...props} />
+    </div>
+  );
+};
+interface ITextArea extends TextAreaProps {
+  textAreaClassName?: string;
+}
+export const StyledTextArea: React.FC<ITextArea> = (props) => {
+  const { textAreaClassName, className, ...otherProps } = props;
+  return (
+    <div className={`input-border text-area ${className || ''}`}>
+      <TextArea className={`input ${textAreaClassName || ''}`} {...otherProps} />
+    </div>
+  );
+};
 export default Input;

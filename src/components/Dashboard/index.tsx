@@ -49,7 +49,7 @@ const Dashboard: React.FC = () => {
       <div className="index-dashboard">
         <div className="index-dashboard__row index-dashboard__row--head">
           <div className="index-dashboard__col">
-            <div className="index-dashboard__sort index-dashboard__sort--up">Name</div>
+            {/* <div className="index-dashboard__sort index-dashboard__sort--up">Name</div> */}
           </div>
           <div className="index-dashboard__col">
             <div className="index-dashboard__sort">Market cap</div>
@@ -146,7 +146,7 @@ const Dashboard: React.FC = () => {
                       style={{ backgroundColor: '#F7931E' }}
                     />
                     <span className="index-dashboard__token-name">
-                      {index.tokens ? index.tokens[0].symbol : ''}
+                      {index.tokens.length ? index.tokens[0].symbol : ''}
                     </span>
                   </div>
                   {index.tokens && index.tokens?.length >= 2 && (
@@ -171,7 +171,7 @@ const Dashboard: React.FC = () => {
                     <div className="index-dashboard__token">
                       <span
                         className="index-dashboard__token-color"
-                        style={{ backgroundColor: '#000316' }}
+                        style={{ backgroundColor: '#FFFFFF' }}
                       />
                       <span className="index-dashboard__token-name">{index.tokens[3].symbol}</span>
                     </div>
@@ -180,7 +180,7 @@ const Dashboard: React.FC = () => {
                     <div className="index-dashboard__token">
                       <span
                         className="index-dashboard__token-color"
-                        style={{ backgroundColor: '#000316' }}
+                        style={{ backgroundColor: '#FFFFFF' }}
                       />
                       <span className="index-dashboard__token-name">Others</span>
                     </div>
@@ -192,7 +192,7 @@ const Dashboard: React.FC = () => {
                     className="index-dashboard__token-percent"
                     style={{
                       width: `${
-                        index.tokens
+                        index.tokens.length
                           ? new BigNumber(index.tokens[0].current_weight)
                               .multipliedBy(100)
                               .toString()
@@ -201,7 +201,7 @@ const Dashboard: React.FC = () => {
                       borderColor: '#F7931E',
                     }}
                   >
-                    {index.tokens
+                    {index.tokens.length
                       ? new BigNumber(index.tokens[0].current_weight).multipliedBy(100).toString()
                       : ''}
                     %
@@ -239,7 +239,7 @@ const Dashboard: React.FC = () => {
                         width: `${new BigNumber(index.tokens[3].current_weight)
                           .multipliedBy(100)
                           .toString()}%`,
-                        borderColor: '#000316',
+                        borderColor: '#FFFFFF',
                       }}
                     >
                       {new BigNumber(index.tokens[3].current_weight).multipliedBy(100).toString()}%
@@ -250,7 +250,7 @@ const Dashboard: React.FC = () => {
                       className="index-dashboard__token-percent"
                       style={{
                         width: `${calculateOthersWeight(index).multipliedBy(100).toString()}%`,
-                        borderColor: '#000316',
+                        borderColor: '#FFFFFF',
                       }}
                     >
                       {calculateOthersWeight(index).multipliedBy(100).toString()}%

@@ -64,7 +64,14 @@ module.exports = {
     '@typescript-eslint/no-unused-vars': 'error',
     'prettier/prettier': ['warn', prettierConfig],
     'quote-props': ['error', 'consistent-as-needed'],
-
+    'jsx-a11y/label-has-associated-control': [
+      'error',
+      {
+        required: {
+          some: ['nesting', 'id'],
+        },
+      },
+    ],
     'react/prop-types': 'off',
     'react/destructuring-assignment': 'off',
     'react/jsx-filename-extension': ['error', { extensions: ['.jsx', '.tsx'] }],

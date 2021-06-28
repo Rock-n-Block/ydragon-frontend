@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { observer } from 'mobx-react-lite';
 
 import logo from '../../assets/img/icons/logo.svg';
-import { TokenPanel, TradeYDRModal, YDRTokenChart } from '../../components';
+import { TokenPanel, YDRTokenChart } from '../../components';
+import { TradeYDRModal } from '../../components/Modals';
 import { useMst } from '../../store/store';
 // import { useWalletConnectorContext } from '../../services/walletConnect';
 

@@ -3,11 +3,10 @@ import React from 'react';
 import {
   Advantages,
   Features,
-  GetInModal,
   InitialMintEvent,
   Machine,
   Main,
-  Partners,
+  // Partners,
 } from '../../components/HomeDark';
 
 const Home: React.FC = () => {
@@ -18,8 +17,7 @@ const Home: React.FC = () => {
       <Machine />
       <Features />
       <Advantages />
-      <Partners />
-      <GetInModal />
+      {/* <Partners /> */}
     </main>
   );
 };

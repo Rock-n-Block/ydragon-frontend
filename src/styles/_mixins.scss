@@ -1,3 +1,35 @@
+@import './variables';
+
+@mixin b($point) {
+  @if $point==desktop {
+    @media (max-width: $mediaWidthLaptop) {
+      @content;
+    }
+  } @else if $point==tablet {
+    @media (max-width: $mediaWidthDesktop) {
+      @content;
+    }
+  } @else if $point==mobile {
+    @media (max-width: $mediaWidthTablet) {
+      @content;
+    }
+  } @else if $point==extramobile {
+    @media (max-width: $mediaWidthMobile) {
+      @content;
+    }
+  } @else if $point==mobile3x {
+    @media only screen and (-webkit-min-device-pixel-ratio: 3),
+      only screen and (min-resolution: 3dppx),
+      only screen and (min-resolution: 350dpi) {
+      @content;
+    }
+  } @else {
+    @media (max-width: $point + 'px') {
+      @content;
+    }
+  }
+}
+
 @mixin respond-above($breakpoint) {
   @if map-has-key($breakpoints, $breakpoint) {
     $breakpoint-value: map-get($breakpoints, $breakpoint);

@@ -1,0 +1,59 @@
+@import '../../../styles/_variables.scss';
+@import '../../../styles/mixins';
+
+.about-us {
+  margin-top: 134px;
+
+  @include b('mobile') {
+    margin-top: 45.77px;
+  }
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  &__title-wrapper {
+    position: relative;
+
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__title {
+    font-size: 144px;
+    line-height: 173px;
+
+    @include b('mobile') {
+      font-size: 52px !important;
+      line-height: 62px !important;
+    }
+
+    @include b('tablet') {
+      font-size: 100px;
+      line-height: 125px;
+    }
+  }
+
+  &__sub-title {
+    position: absolute;
+
+    font-family: 'Rubik', sans-serif;
+    font-size: 44px;
+    font-weight: bold;
+    line-height: 70px;
+    text-transform: uppercase;
+
+    color: $white;
+
+    @include b('tablet') {
+      font-size: 33px;
+      line-height: 50px;
+    }
+
+    @include b('mobile') {
+      font-size: 22px;
+      line-height: 26px;
+    }
+  }
+}

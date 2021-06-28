@@ -12,7 +12,7 @@ const RebalanceModal = types
       self.isOpen = false;
     },
   }));
-const GetInModal = types
+const CreateIndexModal = types
   .model({
     isOpen: types.boolean,
   })
@@ -22,6 +22,33 @@ const GetInModal = types
     },
     close() {
       self.isOpen = false;
+    },
+  }));
+const GetInIndexModal = types
+  .model({
+    isOpen: types.boolean,
+  })
+  .actions((self) => ({
+    open() {
+      self.isOpen = true;
+    },
+    close() {
+      self.isOpen = false;
+    },
+  }));
+const GetInModal = types
+  .model({
+    id: types.maybeNull(types.number),
+    address: types.maybeNull(types.string),
+  })
+  .actions((self) => ({
+    open(id: number, address: string) {
+      self.id = id;
+      self.address = address;
+    },
+    close() {
+      self.id = null;
+      self.address = null;
     },
   }));
 const MintModal = types
@@ -96,7 +123,9 @@ const MetamaskModal = types
 export const Modals = types
   .model({
     rebalance: RebalanceModal,
+    createIndex: CreateIndexModal,
     getIn: GetInModal,
+    getInIndex: GetInIndexModal,
     mint: MintModal,
     redeem: RedeemModal,
     info: InfoModal,
@@ -111,5 +140,6 @@ export const Modals = types
       self.redeem.close();
       self.tradeYDR.close();
       self.rebalance.close();
+      self.createIndex.close();
     },
   }));

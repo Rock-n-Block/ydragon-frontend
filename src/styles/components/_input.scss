@@ -1,6 +1,8 @@
 .input-border {
   padding: 3px;
 
+  width: fit-content;
+
   height: 53px;
 
   background: linear-gradient(180deg, rgb(39, 68, 146) 0%, rgb(40, 84, 206) 100%);
@@ -20,7 +22,8 @@
   text-align: center;
 
   color: $white;
-  background: $black;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0) 100%),
+    linear-gradient(171.49deg, #1a1e3a 3.83%, #161a2a 100%);
   border: none;
   border-radius: 60px;
   outline: none;
@@ -123,9 +126,10 @@
       color: rgba(0, 0, 0, 0);
     }
   }
-  .ant-input[disabled]{
-    background: $black;
+
+  .ant-input[disabled] {
     color: unset;
+    background: $black;
   }
 }
 
@@ -133,6 +137,41 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.ant-input-number {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  max-width: 144px;
+
+  &-handler-wrap {
+    display: none;
+  }
+
+  .ant-input-number-input {
+    text-align: center;
+  }
+}
+
+.text-area {
+  width: 100%;
+  height: unset;
+
+  border-radius: 10px;
+
+  .input {
+    padding: 15px 20px;
+
+    font-family: TNR, sans-serif;
+    font-size: 17px;
+    line-height: 20px;
+    text-align: unset;
+
+    border-radius: 10px;
+    font-feature-settings: 'liga' off;
+  }
 }
 // hidding arrows from number input
 

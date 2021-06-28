@@ -3,7 +3,7 @@
 
 .event-banner {
   position: sticky;
-  z-index: 1;
+  z-index: 999;
   top: 0;
 
   background-color: #01051b;
@@ -12,6 +12,10 @@
   background-repeat: no-repeat;
   background-position: left center;
   background-size: auto 100%;
+
+  @include b('mobile') {
+    display: none;
+  }
 
   &__inner {
     padding: 20px 0;
@@ -54,8 +58,6 @@
   align-items: center;
 
   &__title {
-    display: flex;
-    flex-direction: column;
     @include title-text;
     text-align: center;
 
@@ -70,12 +72,22 @@
     font-size: 28px;
     line-height: 34px;
     text-align: center;
-
-    @include gradient-text;
   }
 
   &__time {
+    display: flex;
+    flex-direction: column;
+
     min-width: 55px;
+
+    &-unit {
+      font-size: 12px;
+      line-height: 14px;
+      text-align: center;
+      letter-spacing: 0.035em;
+
+      color: rgba($white, 0.4);
+    }
   }
 
   &__colon {

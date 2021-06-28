@@ -1,4 +1,5 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
+import nextId from 'react-id-generator';
 
 import Clear from '../../assets/img/icons/icon-close-red.svg';
 import { ReactComponent as GreenPlus } from '../../assets/img/icons/icon-plus-green.svg';
@@ -22,6 +23,7 @@ interface SearchProps {
 }
 
 const Search: React.FC<SearchProps> = ({ data, className, onChange, onPick }) => {
+  const [tokenList, setTokenList] = useState(data);
   const [newTokenName, setNewTokenName] = useState<string>('');
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setNewTokenName(e.target.value);
@@ -31,6 +33,9 @@ const Search: React.FC<SearchProps> = ({ data, className, onChange, onPick }) =>
     setNewTokenName('');
     onChange('');
   };
+  useEffect(() => {
+    setTokenList(data);
+  }, [data]);
   return (
     <div className={`search ${className}`}>
       <div className="search__inputs">
@@ -54,8 +59,8 @@ const Search: React.FC<SearchProps> = ({ data, className, onChange, onPick }) =>
       </div>
 
       <ul className="search__items">
-        {data?.map((item) => (
-          <li className="search__item" key={`search-${item.symbol}`}>
+        {tokenList?.map((item) => (
+          <li className="search__item" key={nextId()}>
             <div className="search__item-info">
               <img src={item.image} alt={`${item.name} icon`} className="search__icon" />
               <div className="search__name">

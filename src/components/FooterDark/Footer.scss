@@ -1,15 +1,34 @@
 @import '../../styles/_variables.scss';
+@import '../../styles/mixins';
 
 .footer {
   margin-top: 240px;
   padding: 60px 0;
 
   background-color: $footer-dark-bg;
+  @include b('tablet') {
+    margin-top: 140px;
+
+    &__col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      &:not(:first-child) {
+        display: none;
+      }
+    }
+  }
 
   &__content {
     display: grid;
     grid-template-columns: 380px repeat(3, 1fr);
     grid-column-gap: 145px;
+
+    @include b('tablet') {
+      display: flex;
+      justify-content: center;
+    }
   }
 
   &__logo {
@@ -36,6 +55,9 @@
     letter-spacing: 0.035em;
 
     color: $white;
+    @include b('tablet') {
+      text-align: center;
+    }
   }
 
   &__socials {

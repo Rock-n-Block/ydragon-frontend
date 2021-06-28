@@ -1,0 +1,32 @@
+@import '../../../styles/_variables.scss';
+@import '../../../styles/mixins';
+
+.questions {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  &__title-wrapper {
+    margin-bottom: 84px;
+
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__title {
+    font-size: 48px;
+    line-height: 58px;
+
+    @include b('mobile') {
+      font-size: 30px;
+      line-height: 36px;
+    }
+  }
+
+  &__wrapper {
+    width: 100%;
+    max-width: 1140px;
+  }
+}

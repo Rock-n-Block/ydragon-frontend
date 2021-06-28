@@ -23,8 +23,6 @@
       font-family: 'MER', sans-serif;
       font-size: 12px;
       line-height: 14px;
-
-      color: rgba($black, 0.5);
     }
   }
 
@@ -59,8 +57,6 @@
   &__content {
     font-size: 18px;
     line-height: 21px;
-
-    color: $black;
   }
 
   &__item {
@@ -86,15 +82,13 @@
     font-size: 14px;
     line-height: 17px;
 
-    color: $black;
+    color: white;
   }
 
   &__market-cup {
     font-family: 'MER', sans-serif;
     font-size: 18px;
     line-height: 22px;
-
-    color: $black;
   }
 
   &__price {
@@ -102,8 +96,6 @@
     font-family: 'MER', sans-serif;
     font-size: 18px;
     line-height: 22px;
-
-    color: $black;
   }
 
   &__percent {
@@ -165,10 +157,10 @@
   }
 
   &__token-name {
+    font-family: TNR, sans-serif;
     font-size: 14px;
     line-height: 17px;
-
-    color: $black;
+    text-transform: uppercase;
   }
 
   &__composition {
@@ -184,7 +176,6 @@
     line-height: 17px;
     text-align: right;
 
-    color: $black;
     border-top: 3px solid;
     border-radius: 1px;
 

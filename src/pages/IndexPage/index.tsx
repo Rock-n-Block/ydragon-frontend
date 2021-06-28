@@ -5,11 +5,13 @@ import moment from 'moment';
 
 import logo from '../../assets/img/icons/logo.svg';
 import { TokenPanel } from '../../components';
-import GetInModal from '../../components/Home/GetInModal';
 import { IndexChart, IndexTable, RebalanceHistory } from '../../components/IndexPage';
 import { IToken } from '../../components/IndexPage/IndexTable';
-import MintModal from '../../components/IndexPage/MintModal';
-import RedeemModal from '../../components/IndexPage/RedeemModal';
+import { GetInIndexModal } from '../../components/Modals';
+import MintModal from '../../components/Modals/MintModal';
+import RedeemModal from '../../components/Modals/RedeemModal';
+import { ITableData } from '../../components/SplittedTable';
+import { TokenMiniProps } from '../../components/TokenMini';
 import { indexesApi } from '../../services/api';
 import { useMst } from '../../store/store';
 
@@ -21,6 +23,9 @@ interface IIndexId {
 export interface IIndex {
   id: number;
   name: string;
+  address: string;
+  description: string;
+  market_cap: string;
   tokens: Array<IToken>;
   created_at: Date | string;
   rebalance_date?: Date | string;
@@ -30,25 +35,40 @@ const Index: React.FC = observer(() => {
   const { indexId } = useParams<IIndexId>();
   const { modals } = useMst();
   const [tokens, setTokens] = useState();
-  const [indexData, setIndexData] = useState<IIndex>();
-
   const getTokens = (value: React.SetStateAction<any>) => {
     setTokens(value);
   };
+  const [indexData, setIndexData] = useState<IIndex | undefined>();
+  const [totalData, setTotalData] = useState<ITableData[]>([] as ITableData[]);
 
   const getCurrentIndex = useCallback(() => {
     indexesApi.getIndexById(+indexId).then(({ data }) => {
       setIndexData(data);
+      setTotalData(
+        data.tokens.map((token: IToken) => {
+          return [
+            {
+              icon: token.image,
+              name: token.name,
+              symbol: token.symbol,
+            } as TokenMiniProps,
+            token.count,
+            `$${token.price_for_one}`,
+            `$${token.price_total}`,
+          ];
+        }),
+      );
+      console.log('getIndexes', data, setTotalData);
     });
   }, [indexId]);
-  const handleMint = () => {
+  /* const handleMint = () => {
     modals.mint.open();
   };
   const handleRedeem = () => {
     modals.redeem.open();
-  };
+  }; */
   const handleGetIn = () => {
-    modals.getIn.open();
+    modals.getInIndex.open();
   };
   useEffect(() => {
     getCurrentIndex();
@@ -74,17 +94,15 @@ const Index: React.FC = observer(() => {
               .toString(),
           },
         ]}
-        handleBuy={handleMint}
-        handleSell={handleRedeem}
         handleGetIn={handleGetIn}
       />
       <RebalanceHistory lastRebalance={indexData?.rebalance_date} />
       <IndexChart tokens={getTokens} indexId={indexId} />
       <IndexTable tokens={tokens || indexData?.tokens} />
       {/* <About /> */}
-      <GetInModal />
       <MintModal />
       <RedeemModal />
+      <GetInIndexModal totalData={totalData} indexAddress={indexData?.address ?? ''} />
     </main>
   );
 });
