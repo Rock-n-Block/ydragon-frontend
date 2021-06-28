@@ -36,7 +36,6 @@ p {
   background-blend-mode: unset;
   // background-position: top 36px center;
   // background-blend-mode: overlay;
-
   &--home {
     background-image: url('../assets/img/home-dark-bg.png'),
       url('../assets/img/home-dark-bg-bottom.png');
@@ -45,7 +44,7 @@ p {
     background-blend-mode: unset;
   }
 
-  &--about{
+  &--about {
     background-color: #000316;
     background-image: url('../assets/img/home-dark-bg.png'),
       url('../assets/img/home-dark-bg-bottom.png');
@@ -53,7 +52,7 @@ p {
     background-size: contain;
     background-blend-mode: unset;
 
-    @include b('tablet'){
+    @include b('tablet') {
       background-image: url('../assets/img/home-dark-bg.png');
       background-position: top center;
       background-size: contain;

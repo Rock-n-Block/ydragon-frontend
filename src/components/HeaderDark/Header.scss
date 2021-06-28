@@ -16,11 +16,11 @@
 
   background: url('../../assets/img/home-dark-bg.png');
   background-color: #0e1a37;
-
-  box-shadow: -8px 8px 12px rgba(13, 36, 82, 0.1);
   background-repeat: no-repeat;
   background-position: center;
   background-size: auto 100%;
+
+  box-shadow: -8px 8px 12px rgba(13, 36, 82, 0.1);
 
   transition: all 0.4s;
   background-blend-mode: lighten;
@@ -36,29 +36,33 @@
 .collapse {
   z-index: 100;
 
+  overflow: hidden;
+
   height: 122px;
 
-  overflow: hidden;
   background-color: #0e1a37;
 
   box-shadow: -8px 8px 12px rgba(13, 36, 82, 0.1);
   @include b('tablet') {
     width: 100vw;
+
     transition: all 0.4s;
   }
 }
 
-.header__wrapper{
+.header__wrapper {
+  position: sticky;
+  z-index: 999;
+  top: 0;
+
   display: flex;
   flex-direction: column;
-  position: sticky;
-  top: 0;
-  z-index: 999;
-
 }
 
 .header {
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0) 100%), linear-gradient(171.49deg, #1A1E3A 3.83%, #161A2A 100%);
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0) 100%),
+    linear-gradient(171.49deg, #1a1e3a 3.83%, #161a2a 100%);
+
   &__menu {
     display: none;
 
@@ -151,6 +155,7 @@
         }
       }
     }
+
     .header__inner {
       .header__logo {
         .btn-clear {
@@ -158,6 +163,7 @@
         }
       }
     }
+
     .menu__nav {
       .menu-nav {
         &__item {
@@ -171,6 +177,7 @@
 
   .footer {
     margin-top: 240px;
+
     &__col {
       align-items: flex-start;
 
@@ -181,6 +188,7 @@
       &:not(:first-child) {
         display: block;
       }
+
       .footer__logo {
         .btn-clear {
           background: transparent;
@@ -193,8 +201,9 @@
     }
 
     &__socials {
-      justify-content: center;
       margin-top: 70px;
+
+      justify-content: center;
 
       &-item {
         width: 48px;

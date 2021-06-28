@@ -12,8 +12,8 @@ import tg from '../../assets/img/socials/telegram.svg';
 import tw from '../../assets/img/socials/twitter.svg';
 import { useWalletConnectorContext } from '../../services/walletConnect';
 import { useMst } from '../../store/store';
-import { Button } from '../index';
 import EventBanner from '../EventBanner';
+import { Button } from '../index';
 
 import './Header.scss';
 

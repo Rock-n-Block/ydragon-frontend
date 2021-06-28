@@ -7,10 +7,11 @@
   padding: 40px;
 
   &__title {
+    margin-right: 40px;
+
     font-family: 'MER', sans-serif;
     font-size: 12px;
     line-height: 14px;
-    margin-right: 40px;
     text-align: right;
 
     color: rgba(white, 0.5);
@@ -93,11 +94,13 @@
 .stake-amount {
   $this: &;
   margin-top: 50px;
+
   display: flex;
   flex-direction: column;
 
   &__title {
     margin: 0 auto;
+
     font-size: 20px;
     line-height: 24px;
   }
@@ -106,11 +109,12 @@
     position: relative;
 
     margin: 15px auto 0;
-    width: 100%;
-    max-width: 500px;
 
     display: flex;
     justify-content: center;
+
+    width: 100%;
+    max-width: 500px;
 
     .input-border {
       width: 100%;
