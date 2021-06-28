@@ -150,7 +150,11 @@ const EventBanner: React.FC = observer(() => {
 
           <div className="event-banner__btns">
             <div className="event-banner__btns-inner">
-              <Button onClick={handleGetIn} className="event-banner__get-btn" disabled={imeEnabled}>
+              <Button
+                onClick={handleGetIn}
+                className="event-banner__get-btn"
+                disabled={!imeEnabled}
+              >
                 {' '}
                 Enter!
               </Button>
@@ -159,7 +163,7 @@ const EventBanner: React.FC = observer(() => {
                 link="/"
                 type="text"
                 styledType="clear"
-                className="isDisabled event-banner__more-link"
+                className="isDisabled  event-banner__more-link"
               >
                 Learn more
               </Button>
