@@ -22,7 +22,12 @@
   &__content {
     max-width: 305px;
     @include b('tablet') {
-      margin: 0 auto;
+      max-width: 350px;
+      width: 100%;
+      align-self: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
   }
 
@@ -133,7 +138,7 @@
 
     width: 100%;
 
-    @include b('tablet'){
+    @include b('tablet') {
       max-width: 350px;
     }
   }
