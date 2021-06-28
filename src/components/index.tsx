@@ -13,6 +13,7 @@ export { default as EventBanner } from './EventBanner';
 export { default as Table } from './Table';
 export { default as Search } from './Search';
 export { default as TokenMini } from './TokenMini';
+export { default as YDRTokenChart } from './YDRTokenChart';
 export { default as Switch } from './Switch';
 export { default as Stake } from './Stake';
 export { default as StakeItem } from './StakeItem';
