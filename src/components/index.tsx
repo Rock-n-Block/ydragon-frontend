@@ -15,4 +15,5 @@ export { default as Search } from './Search';
 export { default as TokenMini } from './TokenMini';
 export { default as Switch } from './Switch';
 export { default as Stake } from './Stake';
+export { default as StakeItem } from './StakeItem';
 export { default as StakingStatistics } from './StakingStatistics';
