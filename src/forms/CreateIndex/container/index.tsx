@@ -2,13 +2,13 @@ import React from 'react';
 import BigNumber from 'bignumber.js/bignumber';
 import { withFormik } from 'formik';
 import { observer } from 'mobx-react-lite';
+import { TransactionReceipt } from 'web3-core';
 
 import { ITokensDiff } from '../../../pages/Admin';
-import { useWalletConnectorContext } from '../../../services/walletConnect';
-import CreateIndex, { ICreateIndex } from '../component';
 import { indexesApi } from '../../../services/api';
+import { useWalletConnectorContext } from '../../../services/walletConnect';
 import { useMst } from '../../../store/store';
-import { TransactionReceipt } from 'web3-core';
+import CreateIndex, { ICreateIndex } from '../component';
 
 const CreateIndexForm: React.FC = () => {
   const { modals } = useMst();

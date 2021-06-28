@@ -19,9 +19,11 @@
       grid-template-columns: 1fr 100px;
       grid-column-gap: 20px;
     }
+
     &__description {
-      margin:33px 0;
+      margin: 33px 0;
     }
+
     &__input {
       &-label {
         margin-bottom: 10px;

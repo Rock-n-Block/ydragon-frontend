@@ -4,10 +4,10 @@ import { observer } from 'mobx-react-lite';
 import moment from 'moment';
 
 import coinIcon from '../../assets/img/future/icon-2.svg';
-
 import { useWalletConnectorContext } from '../../services/walletConnect';
 import { useMst } from '../../store/store';
 import { Button } from '../index';
+
 import './EventBanner.scss';
 
 const EventBanner: React.FC = observer(() => {
