@@ -78,6 +78,17 @@ const GetInIndexModal: React.FC<GetInIndexModalProps> = observer(({ totalData, i
         console.log('mint error', response);
       });
   };
+  const handleSell = (): void => {
+    walletConnector.metamaskService
+      .redeem(payInput, firstCurrency, indexAddress)
+      .then((data: any) => {
+        console.log('mint', data);
+      })
+      .catch((err: any) => {
+        const { response } = err;
+        console.log('mint error', response);
+      });
+  };
   useEffect(() => {
     setFirstCurrency(tokensArray[0].name);
   }, [modals.tradeYDR.method]);
@@ -108,10 +119,15 @@ const GetInIndexModal: React.FC<GetInIndexModalProps> = observer(({ totalData, i
                 Approve
               </Button>
             )}
-            {modals.tradeYDR.method === 'buy' && (!isNeedApprove || firstCurrency === 'BNB') && (
-              <Button className="m-trade-ydr__btn" onClick={handleBuy}>
-                Buy
-              </Button>
+            {(!isNeedApprove || firstCurrency === 'BNB') && (
+              <>
+                <Button className="m-trade-ydr__btn" onClick={handleBuy}>
+                  Buy
+                </Button>
+                <Button className="m-trade-ydr__btn" onClick={handleSell}>
+                  Sell
+                </Button>
+              </>
             )}
           </div>
         </section>
