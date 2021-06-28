@@ -48,7 +48,7 @@ const Header: React.FC = observer(() => {
   }, [collapsed]);
 
   return (
-    <div>
+    <div className={collapsed ? 'header__wrapper' : ''}>
     <EventBanner />
       <header className={`header ${collapsed ? 'collapse' : 'expand'} ${fixed ? 'fixed' : ''}`}>
         <div className="container">
