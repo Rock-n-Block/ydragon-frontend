@@ -39,7 +39,6 @@ const Index: React.FC = observer(() => {
   const getCurrentIndex = useCallback(() => {
     indexesApi.getIndexById(+indexId).then(({ data }) => {
       setIndexData(data);
-      console.log('getIndexes', data);
     });
   }, [indexId]);
   const handleMint = () => {

@@ -116,7 +116,7 @@ const YDRTokenChart: React.FC<TokenChartProps> = ({ price }) => {
           data: item[1],
         });
       });
-    const lineChartData = {
+    return {
       labels: [],
       datasets: [
         {
@@ -131,8 +131,6 @@ const YDRTokenChart: React.FC<TokenChartProps> = ({ price }) => {
         },
       ],
     };
-    console.log('lineChartData:', lineChartData);
-    return lineChartData;
   };
 
   const [clickedElement, setClickedElement] = useState(
@@ -153,7 +151,6 @@ const YDRTokenChart: React.FC<TokenChartProps> = ({ price }) => {
 
   const axiosData = useCallback(() => {
     axios.get(url).then((res) => {
-      console.log('Response:', res.data.prices);
       refDataLength.current = res.data.prices.length;
       const currentPrice = res.data.prices[refDataLength.current - 1][1];
       setChartData(getChartData(res.data.prices));

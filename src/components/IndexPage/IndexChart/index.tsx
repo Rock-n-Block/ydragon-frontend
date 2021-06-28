@@ -81,13 +81,11 @@ const IndexChart: React.FC<IndexChartProps> = ({ tokens, indexId }) => {
 
   const axiosData = useCallback(() => {
     axios.get(url).then((res: AxiosResponse) => {
-      console.log(res);
       refAxiosData.current = res.data;
       refAxiosData.current.forEach((item: any) => {
         refData.current.push({ time: item.time, data: item.market_cap });
       });
       const dataLength = refData.current.length;
-      console.log(dataLength);
       setClickedElement(refData.current[dataLength - 1].data);
       setChartData({
         labels: [],
