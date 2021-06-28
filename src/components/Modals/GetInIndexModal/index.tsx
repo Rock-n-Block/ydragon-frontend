@@ -3,7 +3,7 @@ import { observer } from 'mobx-react-lite';
 
 import { useWalletConnectorContext } from '../../../services/walletConnect';
 import { useMst } from '../../../store/store';
-import { TokenMiniNameTypes, tokensArray } from '../../../utils/tokenMini';
+import { TokenMiniNameTypes, defaultTokens } from '../../../utils/tokenMini';
 import { Button, InputWithSelect } from '../../index';
 import SplittedTable, { ITableColumn, ITableData } from '../../SplittedTable';
 import { Modal } from '../index';
@@ -36,7 +36,7 @@ const GetInIndexModal: React.FC<GetInIndexModalProps> = observer(({ totalData, i
   const handleClose = (): void => {
     modals.getInIndex.close();
   };
-  const [firstCurrency, setFirstCurrency] = useState<TokenMiniNameTypes>(tokensArray[0].name);
+  const [firstCurrency, setFirstCurrency] = useState<TokenMiniNameTypes>(defaultTokens[0].name);
   const [payInput, setPayInput] = useState<string>('0');
   const [isNeedApprove, setIsNeedApprove] = useState<boolean>(true);
   const checkAllowance = useCallback(() => {
@@ -90,7 +90,7 @@ const GetInIndexModal: React.FC<GetInIndexModalProps> = observer(({ totalData, i
       });
   };
   useEffect(() => {
-    setFirstCurrency(tokensArray[0].name);
+    setFirstCurrency(defaultTokens[0].name);
   }, [modals.tradeYDR.method]);
   useEffect(() => {
     if (user.address) {
@@ -107,7 +107,7 @@ const GetInIndexModal: React.FC<GetInIndexModalProps> = observer(({ totalData, i
         <section className="m-get-in__you-pay">
           <h2 className="m-get-in__title">You pay</h2>
           <InputWithSelect
-            tokens={tokensArray}
+            tokens={defaultTokens}
             onSelectChange={handleSelectChange}
             value={payInput}
             onChange={(event) => setPayInput(event.target.value)}
