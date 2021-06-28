@@ -36,14 +36,9 @@
     max-width: 941px;
 
     @include b('tablet') {
-      margin-top: 45px;
-      margin-left: 35px;
-
-    }
-
-    @include b('mobile') {
       margin: 0;
     }
+
   }
 
   &__title {
