@@ -4,7 +4,7 @@ import { observer } from 'mobx-react-lite';
 import { indexesApi } from '../../../services/api';
 import { useWalletConnectorContext } from '../../../services/walletConnect';
 import { useMst } from '../../../store/store';
-import { TokenMiniNameTypes, tokensArray } from '../../../utils/tokenMini';
+import { TokenMiniNameTypes, defaultTokens } from '../../../utils/tokenMini';
 import { IIme } from '../../HomeDark/InitialMintEvent';
 import { Button, InputWithSelect } from '../../index';
 import SplittedTable, { ITableColumn, ITableData } from '../../SplittedTable';
@@ -48,7 +48,7 @@ const GetInModal: React.FC = observer(() => {
   const [currentIme, setCurrentIme] = useState<IIme | undefined>();
   const [totalData, setTotalData] = useState<ITableData[]>([] as ITableData[]);
   const [userData, setUserData] = useState<ITableData[]>([] as ITableData[]);
-  const [firstCurrency, setFirstCurrency] = useState<TokenMiniNameTypes>(tokensArray[0].name);
+  const [firstCurrency, setFirstCurrency] = useState<TokenMiniNameTypes>(defaultTokens[0].name);
   const [payInput, setPayInput] = useState<string>('0');
   const [isNeedApprove, setIsNeedApprove] = useState<boolean>(true);
   const checkAllowance = useCallback(() => {
@@ -107,7 +107,7 @@ const GetInModal: React.FC = observer(() => {
     getCurrentIme();
   }, [getCurrentIme]);
   useEffect(() => {
-    setFirstCurrency(tokensArray[0].name);
+    setFirstCurrency(defaultTokens[0].name);
   }, [modals.tradeYDR.method]);
   useEffect(() => {
     if (user.address) {
@@ -160,7 +160,7 @@ const GetInModal: React.FC = observer(() => {
         <section className="m-get-in__you-pay">
           <h2 className="m-get-in__title">You pay</h2>
           <InputWithSelect
-            tokens={tokensArray}
+            tokens={defaultTokens}
             onSelectChange={handleSelectChange}
             value={payInput}
             onChange={(event) => setPayInput(event.target.value)}

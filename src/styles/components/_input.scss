@@ -154,18 +154,23 @@
     text-align: center;
   }
 }
-.text-area{
+
+.text-area {
   width: 100%;
   height: unset;
+
   border-radius: 10px;
-  .input{
-    font-family: TNR, sans-serif;
-    text-align: unset;
-    font-feature-settings: 'liga' off;
+
+  .input {
     padding: 15px 20px;
-    border-radius: 10px;
+
+    font-family: TNR, sans-serif;
     font-size: 17px;
     line-height: 20px;
+    text-align: unset;
+
+    border-radius: 10px;
+    font-feature-settings: 'liga' off;
   }
 }
 // hidding arrows from number input

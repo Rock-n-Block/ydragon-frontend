@@ -25,10 +25,10 @@ const CreateIndex: React.FC<FormikProps<ICreateIndex> & ICreateIndex> = observer
   ({ setFieldValue, handleChange, handleBlur, values, handleSubmit }) => {
     const [searchTokens, setSearchTokens] = useState<ISearchToken[]>([] as ISearchToken[]);
 
-    const disabledDate = (current: any) => {
+    /*  const disabledDate = (current: any) => {
       // Can not select days before today and today
       return current && current < moment().startOf('day');
-    };
+    }; */
     const weightsSum = values.tokens
       .map((tokenDiff) => +tokenDiff.new_weight)
       .reduce((prevSum, newItem) => prevSum.plus(newItem), new BigNumber(0))
@@ -111,7 +111,7 @@ const CreateIndex: React.FC<FormikProps<ICreateIndex> & ICreateIndex> = observer
           </div>
         </div>
         <RangePicker
-          disabledDate={disabledDate}
+          // disabledDate={disabledDate}
           showTime={{
             hideDisabledOptions: true,
           }}

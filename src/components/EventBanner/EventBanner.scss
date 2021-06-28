@@ -13,9 +13,6 @@
   background-position: left center;
   background-size: auto 100%;
 
-  @include b('tablet') {
-    position: relative;
-  }
   @include b('mobile') {
     display: none;
   }

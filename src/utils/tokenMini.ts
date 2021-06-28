@@ -9,7 +9,7 @@ export interface ITokenMini {
   logo: string;
 }
 export const platformToken: ITokenMini = { name: 'YDR', logo: YDRLogo };
-export const tokensArray: Array<ITokenMini> = [
+export const defaultTokens: Array<ITokenMini> = [
   { name: 'BNB', logo: BinanceLogo },
   { name: 'WBNB', logo: BinanceLogo },
   { name: 'USDT', logo: USDTLogo },
