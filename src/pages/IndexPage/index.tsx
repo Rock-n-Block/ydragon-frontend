@@ -6,7 +6,7 @@ import moment from 'moment';
 import logo from '../../assets/img/icons/logo.svg';
 import { TokenPanel } from '../../components';
 import GetInModal from '../../components/Home/GetInModal';
-import { IndexTable, RebalanceHistory } from '../../components/IndexPage';
+import { IndexChart, IndexTable, RebalanceHistory } from '../../components/IndexPage';
 import { IToken } from '../../components/IndexPage/IndexTable';
 import MintModal from '../../components/IndexPage/MintModal';
 import RedeemModal from '../../components/IndexPage/RedeemModal';
@@ -29,7 +29,12 @@ export interface IIndex {
 const Index: React.FC = observer(() => {
   const { indexId } = useParams<IIndexId>();
   const { modals } = useMst();
-  const [indexData, setIndexData] = useState<IIndex | undefined>();
+  const [tokens, setTokens] = useState();
+  const [indexData, setIndexData] = useState<IIndex>();
+
+  const getTokens = (value: React.SetStateAction<any>) => {
+    setTokens(value);
+  };
 
   const getCurrentIndex = useCallback(() => {
     indexesApi.getIndexById(+indexId).then(({ data }) => {
@@ -75,7 +80,8 @@ const Index: React.FC = observer(() => {
         handleGetIn={handleGetIn}
       />
       <RebalanceHistory lastRebalance={indexData?.rebalance_date} />
-      <IndexTable tokens={indexData?.tokens} />
+      <IndexChart tokens={getTokens} indexId={indexId} />
+      <IndexTable tokens={tokens || indexData?.tokens} />
       {/* <About /> */}
       <GetInModal />
       <MintModal />

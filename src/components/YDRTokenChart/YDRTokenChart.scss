@@ -25,30 +25,25 @@
         &-down {
           padding: 5px;
 
+          display: flex;
+          align-items: center;
+          gap: 5px;
+
           color: #de3f3a;
           border: 2px solid #de3f3a;
           border-radius: 20px;
-
-          &-icon {
-            color: #de3f3a;
-
-            ::before {
-              background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 10 10'%3E%3Cpath stroke='%23DE3F3A' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M9 6L5 9 1 6M5 7V1'/%3E%3C/svg%3E");
-            }
-          }
         }
 
         &-up {
+          padding: 5px;
+
+          display: flex;
+          align-items: center;
+          gap: 5px;
+
           color: #0cbd68;
-          border: 1px solid #0cbd68;
-
-          &-icon {
-            color: #0cbd68;
-
-            ::before {
-              background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 10 10'%3E%3Cpath stroke='%2338DEA2' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M1 4l4-3 4 3M5 3v6'/%3E%3C/svg%3E");
-            }
-          }
+          border: 2px solid #0cbd68;
+          border-radius: 20px;
         }
       }
     }
@@ -86,10 +81,5 @@
     .active {
       background: linear-gradient(to right bottom, #b12e2a, #f47c45);
     }
-  }
-
-  &-container {
-    width: 100%;
-    height: 150px;
   }
 }

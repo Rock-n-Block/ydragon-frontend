@@ -1,0 +1,20 @@
+.chart {
+  margin-top: 66px;
+
+  &-panel {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    &-title {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+
+      font-family: 'MER', sans-serif;
+      font-size: 50px;
+
+      color: #fff;
+    }
+  }
+}
