@@ -498,6 +498,22 @@ export default class MetamaskService {
     return { address, name: tokenName, symbol: tokenSymbol, balance: tokenBalance };
   }
 
+  startStake(tokenAddress: string, amount: string, timeIntervalIndex: number) {
+    const method = MetamaskService.getMethodInterface(config.Staking.ABI, 'stakeStart');
+
+    const signature = this.encodeFunctionCall(method, [
+      tokenAddress,
+      MetamaskService.calcTransactionAmount(amount, 18),
+      timeIntervalIndex,
+    ]);
+
+    return this.sendTransaction({
+      from: this.walletAddress,
+      to: config.Staking.ADDRESS,
+      data: signature,
+    });
+  }
+
   createNewIndex(
     name: string,
     symbol: string,

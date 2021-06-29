@@ -1,40 +1,15 @@
 import React, { useEffect, useState } from 'react';
 
 import { Button } from '../index';
-import mockBsc from '../../assets/img/icons/logo-binance.svg';
 
 import './Stake.scss';
 import StakeItem, { IStakeItem } from '../StakeItem';
 import { InputNumber } from '../Input';
 import nextId from 'react-id-generator';
 import BigNumber from 'bignumber.js/bignumber';
+import { useWalletConnectorContext } from '../../services/walletConnect';
+import { useMst } from '../../store/store';
 
-const mockStakeItems: IStakeItem[] = [
-  {
-    token: {
-      icon: mockBsc,
-      symbol: 'bsc',
-      name: 'Binance',
-    },
-    available: '100',
-  },
-  {
-    token: {
-      icon: mockBsc,
-      symbol: 'bsc',
-      name: 'Binance',
-    },
-    available: '33',
-  },
-  {
-    token: {
-      icon: mockBsc,
-      symbol: 'bsc',
-      name: 'Binance',
-    },
-    available: '155',
-  },
-];
 export interface IStakeToken {
   address: string;
   name: string;
@@ -45,17 +20,34 @@ interface StakeProps {
   tokens: IStakeToken[];
 }
 const Stake: React.FC<StakeProps> = ({ tokens }) => {
+  const walletConnector = useWalletConnectorContext();
+  const { modals } = useMst();
   const [tokensList, setTokensList] = useState<IStakeItem[]>([] as IStakeItem[]);
   const [activeStakeIndex, setActiveStakeIndex] = useState<number>(0);
   const [stakeValue, setStakeValue] = useState<string>('');
+  const [intervalIndex, setIntervalIndex] = useState<0 | 1 | 2>(0);
   const handleStakeItemClick = (index: number) => {
     setActiveStakeIndex(index);
   };
   const handleAllClick = () => {
-    setStakeValue(mockStakeItems[activeStakeIndex].available);
+    setStakeValue(tokensList[activeStakeIndex].available);
   };
   const handleStakeValueChange = (e: any) => {
     setStakeValue(e.target.value);
+  };
+  const handleRadioChange = (e: any) => {
+    setIntervalIndex(e.target.value);
+  };
+  const handleStakeStart = () => {
+    walletConnector.metamaskService
+      .startStake(tokens[activeStakeIndex].address, stakeValue, intervalIndex)
+      .then(() => {
+        modals.info.setMsg('Success', 'You started staking', 'success');
+      })
+      .catch((error: any) => {
+        const { response } = error;
+        modals.info.setMsg('Error', response, 'error');
+      });
   };
   useEffect(() => {
     setTokensList(
@@ -117,6 +109,8 @@ const Stake: React.FC<StakeProps> = ({ tokens }) => {
                   type="radio"
                   name="amount-time"
                   className="stake-amount__time-radio"
+                  value={0}
+                  onClick={(e) => handleRadioChange(e)}
                   defaultChecked
                 />
                 <span className="stake-amount__time-label">1 Month</span>
@@ -124,13 +118,25 @@ const Stake: React.FC<StakeProps> = ({ tokens }) => {
 
               {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
               <label className="stake-amount__time">
-                <input type="radio" name="amount-time" className="stake-amount__time-radio" />
+                <input
+                  type="radio"
+                  name="amount-time"
+                  className="stake-amount__time-radio"
+                  value={1}
+                  onClick={(e) => handleRadioChange(e)}
+                />
                 <span className="stake-amount__time-label">3 Month</span>
               </label>
 
               {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
               <label className="stake-amount__time">
-                <input type="radio" name="amount-time" className="stake-amount__time-radio" />
+                <input
+                  type="radio"
+                  name="amount-time"
+                  className="stake-amount__time-radio"
+                  value={2}
+                  onClick={(e) => handleRadioChange(e)}
+                />
                 <span className="stake-amount__time-label">12 Month</span>
               </label>
             </div>
@@ -138,7 +144,9 @@ const Stake: React.FC<StakeProps> = ({ tokens }) => {
         </div>
 
         <div className="stake__btn-row">
-          <Button>Approve</Button>
+          <Button onClick={handleStakeStart} disabled>
+            Approve
+          </Button>
         </div>
       </div>
     </section>
