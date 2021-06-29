@@ -49,7 +49,7 @@ export const App: React.FC = () => {
         <Route exact path="/admin/index/:indexId">
           <AdminIndex />
         </Route>
-        <Route exact path="/stake">
+        <Route exact path="/staking">
           <StakePage />
         </Route>
         <Route exact path="/indexes">

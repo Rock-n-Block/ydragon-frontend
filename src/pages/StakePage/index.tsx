@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { Stake, StakingStatistics } from '../../components';
 
 const StakePage: React.FC = () => {

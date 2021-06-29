@@ -4,7 +4,7 @@ import { observer } from 'mobx-react-lite';
 import { indexesApi } from '../../../services/api';
 import { useWalletConnectorContext } from '../../../services/walletConnect';
 import { useMst } from '../../../store/store';
-import { TokenMiniNameTypes, defaultTokens } from '../../../utils/tokenMini';
+import { defaultTokens, TokenMiniNameTypes } from '../../../utils/tokenMini';
 import { IIme } from '../../HomeDark/InitialMintEvent';
 import { Button, InputWithSelect } from '../../index';
 import SplittedTable, { ITableColumn, ITableData } from '../../SplittedTable';

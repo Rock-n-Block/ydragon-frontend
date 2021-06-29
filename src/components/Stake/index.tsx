@@ -1,11 +1,51 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-import btc from '../../assets/img/tokens/btc.svg';
-import { Button, Input } from '../index';
+import { Button } from '../index';
+import mockBsc from '../../assets/img/icons/logo-binance.svg';
 
 import './Stake.scss';
+import StakeItem, { IStakeItem } from '../StakeItem';
+import { InputNumber } from '../Input';
+
+const mockStakeItems: IStakeItem[] = [
+  {
+    token: {
+      icon: mockBsc,
+      symbol: 'bsc',
+      name: 'Binance',
+    },
+    available: '100',
+  },
+  {
+    token: {
+      icon: mockBsc,
+      symbol: 'bsc',
+      name: 'Binance',
+    },
+    available: '33',
+  },
+  {
+    token: {
+      icon: mockBsc,
+      symbol: 'bsc',
+      name: 'Binance',
+    },
+    available: '155',
+  },
+];
 
 const Stake: React.FC = () => {
+  const [activeStakeIndex, setActiveStakeIndex] = useState<number>(0);
+  const [stakeValue, setStakeValue] = useState<string>('');
+  const handleStakeItemClick = (index: number) => {
+    setActiveStakeIndex(index);
+  };
+  const handleAllClick = () => {
+    setStakeValue(mockStakeItems[activeStakeIndex].available);
+  };
+  const handleStakeValueChange = (e: any) => {
+    setStakeValue(e.target.value);
+  };
   return (
     <section className="section section--admin">
       <h2 className="section__title text-outline">Stake</h2>
@@ -14,53 +54,34 @@ const Stake: React.FC = () => {
         <div className="stake__title">Available to stake</div>
 
         <div className="stake__content">
-          <div className="stake-item stake-item--active">
-            <div className="stake-item__info">
-              <img src={btc} alt="" width="36" height="36" className="stake-item__icon" />
-
-              <div className="stake-item__name-wrapper">
-                <div className="stake-item__name">Token</div>
-                <div className="stake-item__abbr">Token</div>
-              </div>
-            </div>
-
-            <div className="stake-item__amount">15,235.532.743</div>
-          </div>
-
-          <div className="stake-item">
-            <div className="stake-item__info">
-              <img src={btc} alt="" width="36" height="36" className="stake-item__icon" />
-
-              <div className="stake-item__name-wrapper">
-                <div className="stake-item__name">Token</div>
-                <div className="stake-item__abbr">Token</div>
-              </div>
-            </div>
-
-            <div className="stake-item__amount">22,502</div>
-          </div>
-
-          <div className="stake-item">
-            <div className="stake-item__info">
-              <img src={btc} alt="" width="36" height="36" className="stake-item__icon" />
-
-              <div className="stake-item__name-wrapper">
-                <div className="stake-item__name">Token</div>
-                <div className="stake-item__abbr">Token</div>
-              </div>
-            </div>
-
-            <div className="stake-item__amount">0,41</div>
-          </div>
+          {mockStakeItems.map((item, index) => (
+            <StakeItem
+              item={item}
+              onClick={() => handleStakeItemClick(index)}
+              active={activeStakeIndex === index}
+            />
+          ))}
         </div>
 
         <div className="stake-amount">
           <div className="stake-amount__title text-gradient">Amount to stake</div>
 
           <div className="stake-amount__input-wrapper">
-            <Input placeholder="0.0" type="number" />
-
-            <span className="stake-amount__all">All Available</span>
+            <InputNumber
+              value={stakeValue}
+              type="number"
+              placeholder="0.0"
+              onChange={handleStakeValueChange}
+            />
+            <span
+              className="stake-amount__all"
+              onClick={handleAllClick}
+              role="button"
+              tabIndex={0}
+              onKeyDown={handleAllClick}
+            >
+              All Available
+            </span>
           </div>
 
           <div className="stake-amount__time-row">
