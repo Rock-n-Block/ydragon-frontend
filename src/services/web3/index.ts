@@ -251,6 +251,19 @@ export default class MetamaskService {
     }
   }
 
+  async checkStakingAllowance(tokenAddress: string) {
+    try {
+      const result = await this.getContractByAddress(tokenAddress, config.Token.ABI)
+        .methods.allowance(this.walletAddress, config.Staking.ADDRESS)
+        .call();
+
+      if (result === '0') return false;
+      return true;
+    } catch (error) {
+      return false;
+    }
+  }
+
   checkAutoXYRebalaceAllowance(address: string) {
     return this.getContractByAddress(address, config.MAIN.ABI)
       .methods.isAllowedAutoXYRebalace()
@@ -323,6 +336,25 @@ export default class MetamaskService {
       return this.sendTransaction({
         from: this.walletAddress,
         to: config[toContract].ADDRESS,
+        data: approveSignature,
+      });
+    } catch (error) {
+      return error;
+    }
+  }
+
+  async approveStake(address: string) {
+    try {
+      const approveMethod = MetamaskService.getMethodInterface(config.Token.ABI, 'approve');
+
+      const approveSignature = this.encodeFunctionCall(approveMethod, [
+        config.Staking.ADDRESS,
+        '0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff',
+      ]);
+
+      return this.sendTransaction({
+        from: this.walletAddress,
+        to: address,
         data: approveSignature,
       });
     } catch (error) {

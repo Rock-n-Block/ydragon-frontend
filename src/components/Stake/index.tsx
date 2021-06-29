@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 import { Button } from '../index';
 
@@ -26,14 +26,16 @@ const Stake: React.FC<StakeProps> = ({ tokens }) => {
   const [activeStakeIndex, setActiveStakeIndex] = useState<number>(0);
   const [stakeValue, setStakeValue] = useState<string>('');
   const [intervalIndex, setIntervalIndex] = useState<0 | 1 | 2>(0);
+  const [isAllowed, setIsAllowed] = useState(false);
   const handleStakeItemClick = (index: number) => {
     setActiveStakeIndex(index);
   };
   const handleAllClick = () => {
     setStakeValue(tokensList[activeStakeIndex].available);
   };
-  const handleStakeValueChange = (e: any) => {
-    setStakeValue(e.target.value);
+  const handleStakeValueChange = (value: any) => {
+    // console.log(e);
+    setStakeValue(value || '');
   };
   const handleRadioChange = (e: any) => {
     setIntervalIndex(e.target.value);
@@ -42,13 +44,36 @@ const Stake: React.FC<StakeProps> = ({ tokens }) => {
     walletConnector.metamaskService
       .startStake(tokens[activeStakeIndex].address, stakeValue, intervalIndex)
       .then(() => {
-        modals.info.setMsg('Success', 'You started staking', 'success');
+        modals.info.setMsg('Success', 'Staking has been started', 'success');
       })
       .catch((error: any) => {
         const { response } = error;
         modals.info.setMsg('Error', response, 'error');
       });
   };
+  const approveToken = () => {
+    walletConnector.metamaskService
+      .approveStake(tokens[activeStakeIndex].address)
+      .then(() => {
+        setIsAllowed(!isAllowed);
+      })
+      .catch((error: any) => {
+        const { response } = error;
+        modals.info.setMsg('Error', response, 'error');
+      });
+  };
+  const checkAllowance = useCallback(() => {
+    walletConnector.metamaskService
+      .checkStakingAllowance(tokens[activeStakeIndex].address)
+      .then((result: boolean) => {
+        setIsAllowed(result);
+        console.log(`${tokens[activeStakeIndex].name} need approve: ${!result}`);
+      })
+      .catch((err: any) => {
+        const { response } = err;
+        console.log('stake allowance error', response);
+      });
+  }, [walletConnector.metamaskService, tokens, activeStakeIndex]);
   useEffect(() => {
     setTokensList(
       tokens.map((token) => {
@@ -62,6 +87,11 @@ const Stake: React.FC<StakeProps> = ({ tokens }) => {
       }),
     );
   }, [tokens]);
+  useEffect(() => {
+    if (tokens.length) {
+      checkAllowance();
+    }
+  }, [tokens.length, checkAllowance]);
   return (
     <section className="section section--admin">
       <h2 className="section__title text-outline">Stake</h2>
@@ -144,9 +174,11 @@ const Stake: React.FC<StakeProps> = ({ tokens }) => {
         </div>
 
         <div className="stake__btn-row">
-          <Button onClick={handleStakeStart} disabled>
-            Approve
-          </Button>
+          {isAllowed ? (
+            <Button onClick={handleStakeStart}>Stake</Button>
+          ) : (
+            <Button onClick={approveToken}>Approve</Button>
+          )}
         </div>
       </div>
     </section>
