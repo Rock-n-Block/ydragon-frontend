@@ -29,7 +29,8 @@ export type ContractTypes =
   | 'Router'
   | 'Factory'
   | 'Staking'
-  | 'DexFactory';
+  | 'DexFactory'
+  | 'Token';
 
 const networks: INetworks = {
   mainnet: '0x1',
@@ -174,7 +175,7 @@ export default class MetamaskService {
   }
 
   async getBalanceByAddress(address: string) {
-    return this.getContractByAddress(address, config.WBNB.ABI)
+    return this.getContractByAddress(address, config.Token.ABI)
       .methods.balanceOf(this.walletAddress)
       .call();
   }
@@ -484,11 +485,11 @@ export default class MetamaskService {
   }
 
   getTokenName(address: string) {
-    return this.getContractByAddress(address, config.WBNB.ABI).methods.name().call();
+    return this.getContractByAddress(address, config.Token.ABI).methods.name().call();
   }
 
   getTokenSymbol(address: string) {
-    return this.getContractByAddress(address, config.WBNB.ABI).methods.symbol().call();
+    return this.getContractByAddress(address, config.Token.ABI).methods.symbol().call();
   }
 
   async getTokenInfoByAddress(address: string) {
