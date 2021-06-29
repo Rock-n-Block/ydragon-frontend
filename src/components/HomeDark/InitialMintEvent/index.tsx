@@ -47,7 +47,7 @@ const InitialMintEvent: React.FC = observer(() => {
   }, [getImeList]);
   return (
     <section className="section">
-      <div className='spinner__wrapper'>
+      <div className='spinner'>
       {loading && <img alt="" src={spinner} width='50' height='50' />}
       </div>
       {!loading &&

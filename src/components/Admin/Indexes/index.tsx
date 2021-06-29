@@ -9,6 +9,8 @@ import { useMst } from '../../../store/store';
 import { Sorter } from '../../../utils/sorter';
 import { Button, Table } from '../../index';
 
+import spinner from '../../../assets/img/icons/spinner.svg';
+
 import './Indexes.scss';
 
 const Indexes: React.FC = observer(() => {
@@ -44,7 +46,10 @@ const Indexes: React.FC = observer(() => {
     },
   ];
   const [dataSource, setDataSource] = useState<any[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+
   const getIndexes = useCallback(() => {
+    setLoading(true);
     indexesApi
       .getAdminIndexes()
       .then(({ data }) => {
@@ -53,7 +58,8 @@ const Indexes: React.FC = observer(() => {
       .catch((error) => {
         const { response } = error;
         console.log('get indexes error', response);
-      });
+        setLoading(false)
+      })
   }, []);
   const handleCreate = (): void => {
     modals.createIndex.open();
@@ -73,6 +79,7 @@ const Indexes: React.FC = observer(() => {
         };
       });
       setDataSource(newData);
+      setLoading(false)
     }
   }, [indexes]);
   return (
@@ -85,7 +92,13 @@ const Indexes: React.FC = observer(() => {
         </Button>
       </div>
 
-      {indexes && <Table dataSource={dataSource} columns={columns} className="rebalance-table" />}
+      {loading ? (
+        <div className="spinner">
+          <img alt="" src={spinner} width="50" height="50" />
+        </div>
+      ) : (
+        indexes && <Table dataSource={dataSource} columns={columns} className="rebalance-table" />
+      )}
     </section>
   );
 });
