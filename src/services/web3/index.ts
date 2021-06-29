@@ -20,7 +20,16 @@ interface IMetamaskService {
   isProduction?: boolean;
 }
 
-export type ContractTypes = 'BNB' | 'WBNB' | 'MAIN' | 'USDT' | 'YDR' | 'Router' | 'Factory';
+export type ContractTypes =
+  | 'BNB'
+  | 'WBNB'
+  | 'MAIN'
+  | 'USDT'
+  | 'YDR'
+  | 'Router'
+  | 'Factory'
+  | 'Staking'
+  | 'DexFactory';
 
 const networks: INetworks = {
   mainnet: '0x1',
@@ -153,7 +162,7 @@ export default class MetamaskService {
     })[0];
   }
 
-  get getBNBBalance() {
+  getBNBBalance() {
     return this.web3Provider.eth.getBalance(this.walletAddress);
   }
 
@@ -162,6 +171,12 @@ export default class MetamaskService {
       return this.getBNBBalance;
     }
     return this.getContract(currency).methods.balanceOf(this.walletAddress).call();
+  }
+
+  async getBalanceByAddress(address: string) {
+    return this.getContractByAddress(address, config.WBNB.ABI)
+      .methods.balanceOf(this.walletAddress)
+      .call();
   }
 
   encodeFunctionCall(abi: any, data: Array<any>) {
@@ -454,6 +469,33 @@ export default class MetamaskService {
       data: signature,
       value: spenderToken === 'BNB' ? MetamaskService.calcTransactionAmount(value, 18) : '',
     });
+  }
+
+  getStakingTokensLen() {
+    return this.getContract('Staking').methods.tokensToEnterLen().call();
+  }
+
+  getStakingTokenToEnter(index: number) {
+    return this.getContract('Staking').methods.tokensToEnter(index).call();
+  }
+
+  getStakingPair(address: string) {
+    return this.getContract('DexFactory').methods.getPair(address, config.WBNB.ADDRESS).call();
+  }
+
+  getTokenName(address: string) {
+    return this.getContractByAddress(address, config.WBNB.ABI).methods.name().call();
+  }
+
+  getTokenSymbol(address: string) {
+    return this.getContractByAddress(address, config.WBNB.ABI).methods.symbol().call();
+  }
+
+  async getTokenInfoByAddress(address: string) {
+    const tokenName = await this.getTokenName(address);
+    const tokenSymbol = await this.getTokenSymbol(address);
+    const tokenBalance = await this.getBalanceByAddress(address);
+    return { address, name: tokenName, symbol: tokenSymbol, balance: tokenBalance };
   }
 
   createNewIndex(

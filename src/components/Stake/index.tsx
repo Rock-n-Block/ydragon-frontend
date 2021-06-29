@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { Button } from '../index';
 import mockBsc from '../../assets/img/icons/logo-binance.svg';
@@ -6,6 +6,7 @@ import mockBsc from '../../assets/img/icons/logo-binance.svg';
 import './Stake.scss';
 import StakeItem, { IStakeItem } from '../StakeItem';
 import { InputNumber } from '../Input';
+import nextId from 'react-id-generator';
 
 const mockStakeItems: IStakeItem[] = [
   {
@@ -33,8 +34,17 @@ const mockStakeItems: IStakeItem[] = [
     available: '155',
   },
 ];
-
-const Stake: React.FC = () => {
+export interface IStakeToken {
+  address: string;
+  name: string;
+  symbol: string;
+  balance: string;
+}
+interface StakeProps {
+  tokens: IStakeToken[];
+}
+const Stake: React.FC<StakeProps> = ({ tokens }) => {
+  const [tokensList, setTokensList] = useState<IStakeItem[]>([] as IStakeItem[]);
   const [activeStakeIndex, setActiveStakeIndex] = useState<number>(0);
   const [stakeValue, setStakeValue] = useState<string>('');
   const handleStakeItemClick = (index: number) => {
@@ -46,6 +56,19 @@ const Stake: React.FC = () => {
   const handleStakeValueChange = (e: any) => {
     setStakeValue(e.target.value);
   };
+  useEffect(() => {
+    setTokensList(
+      tokens.map((token) => {
+        return {
+          token: {
+            symbol: token.symbol,
+            name: token.name,
+          },
+          available: token.balance,
+        };
+      }),
+    );
+  }, [tokens]);
   return (
     <section className="section section--admin">
       <h2 className="section__title text-outline">Stake</h2>
@@ -54,8 +77,9 @@ const Stake: React.FC = () => {
         <div className="stake__title">Available to stake</div>
 
         <div className="stake__content">
-          {mockStakeItems.map((item, index) => (
+          {tokensList.map((item, index) => (
             <StakeItem
+              key={nextId()}
               item={item}
               onClick={() => handleStakeItemClick(index)}
               active={activeStakeIndex === index}
