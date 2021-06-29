@@ -15,9 +15,6 @@ interface OptionsProps {
 
 const Options: React.FC<OptionsProps> = observer(({ address }) => {
   const { modals } = useMst();
-  const [isAutoRebalanceEnabled, setIsAutoRebalanceEnabled] = useState<boolean | undefined>(
-    undefined,
-  );
   const [isAutoRebalanceChecked, setIsAutoRebalanceChecked] = useState<boolean | undefined>(
     undefined,
   );
@@ -26,12 +23,12 @@ const Options: React.FC<OptionsProps> = observer(({ address }) => {
   const walletConnector = useWalletConnectorContext();
 
   const handleAutoRebalanceChange = (isChecked: boolean) => {
-    setIsAutoRebalanceChecked(isChecked)
+    setIsAutoRebalanceChecked(isChecked);
     walletConnector.metamaskService
       .changeAutoXYRebalaceAllowance(address, isChecked)
       .catch((error: any) => {
         if (error.code === 4001) {
-          setIsAutoRebalanceChecked(!isChecked)
+          setIsAutoRebalanceChecked(!isChecked);
         }
         console.log(error);
       });
@@ -66,7 +63,6 @@ const Options: React.FC<OptionsProps> = observer(({ address }) => {
       walletConnector.metamaskService
         .checkAutoXYRebalaceAllowance(address)
         .then((data: boolean) => {
-          setIsAutoRebalanceEnabled(data);
           setIsAutoRebalanceChecked(data);
         })
         .catch((error: any) => {
@@ -80,12 +76,8 @@ const Options: React.FC<OptionsProps> = observer(({ address }) => {
       <h2 className="section__title text-outline">Index options</h2>
       <div className="options">
         <div className="options__option">
-          {isAutoRebalanceEnabled !== undefined && isAutoRebalanceChecked !== undefined && (
-            <Switch
-              defaultChecked={isAutoRebalanceEnabled}
-              checked={isAutoRebalanceChecked}
-              onChange={handleAutoRebalanceChange}
-            />
+          {isAutoRebalanceChecked !== undefined && (
+            <Switch checked={isAutoRebalanceChecked} onChange={handleAutoRebalanceChange} />
           )}
           <p className="options__option-name">Automatic rebalancing</p>
         </div>
