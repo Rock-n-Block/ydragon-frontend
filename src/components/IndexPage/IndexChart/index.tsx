@@ -5,44 +5,6 @@ import BigNumber from 'bignumber.js/bignumber';
 
 import './IndexChart.scss';
 
-const options = {
-  aspectRatio: 4,
-  parsing: {
-    xAxisKey: 'time',
-    yAxisKey: 'data',
-  },
-  plugins: {
-    legend: {
-      display: false,
-    },
-  },
-  scales: {
-    xAxis: {
-      ticks: {
-        maxRotation: 0,
-        autoSkip: true,
-        padding: 10,
-      },
-      offset: true,
-      grid: {
-        display: true,
-        offset: true,
-        color: '#4A578F',
-        lineWidth: 0.5,
-      },
-    },
-  },
-  elements: {
-    point: {
-      radius: 0,
-      borderWidth: 0,
-      hoverRadius: 10,
-      hoverBorderWidth: 5,
-      hitRadius: 400,
-    },
-  },
-};
-
 interface IndexChartProps {
   tokens: any;
   indexId: any;
@@ -52,6 +14,7 @@ const IndexChart: React.FC<IndexChartProps> = ({ tokens, indexId }) => {
   const url = `https://dev-ydragon.rocknblock.io/api/indexes/info/${indexId}`;
   const refAxiosData: React.MutableRefObject<any> = useRef([]);
   const refData: React.MutableRefObject<any> = useRef([]);
+  const refMax = useRef(0);
   const [chartData, setChartData] = useState({
     labels: [],
     datasets: [
@@ -69,6 +32,51 @@ const IndexChart: React.FC<IndexChartProps> = ({ tokens, indexId }) => {
   });
   const [clickedElement, setClickedElement] = useState('');
 
+  const options = {
+    layout: {
+      padding: 10,
+    },
+    aspectRatio: 4,
+    parsing: {
+      xAxisKey: 'time',
+      yAxisKey: 'data',
+    },
+    plugins: {
+      legend: {
+        display: false,
+      },
+    },
+    scales: {
+      xAxis: {
+        ticks: {
+          maxRotation: 0,
+          autoSkip: true,
+          padding: 10,
+        },
+        offset: true,
+        grid: {
+          display: true,
+          offset: true,
+          color: '#4A578F',
+          lineWidth: 0.5,
+        },
+      },
+      yAxis: {
+        suggestedMin: 0,
+        suggestedMax: refMax.current,
+      },
+    },
+    elements: {
+      point: {
+        radius: 0,
+        borderWidth: 0,
+        hoverRadius: 10,
+        hoverBorderWidth: 5,
+        hitRadius: 400,
+      },
+    },
+  };
+
   const getElementAtEvent = (element: string | any[]) => {
     if (!element.length) return;
 
@@ -81,10 +89,18 @@ const IndexChart: React.FC<IndexChartProps> = ({ tokens, indexId }) => {
 
   const axiosData = useCallback(() => {
     axios.get(url).then((res: AxiosResponse) => {
+      const arr: number[] = [];
       refAxiosData.current = res.data;
       refAxiosData.current.forEach((item: any) => {
-        refData.current.push({ time: item.time, data: item.market_cap });
+        arr.push(Number(item.market_cap));
+        const date = new Date(item.time);
+        const parsedDate = `${date.getHours()}:${date.getMinutes()}`;
+        refData.current.push({
+          time: parsedDate,
+          data: item.market_cap,
+        });
       });
+      refMax.current = Math.max(...arr) + 10;
       const dataLength = refData.current.length;
       setClickedElement(refData.current[dataLength - 1].data);
       setChartData({
