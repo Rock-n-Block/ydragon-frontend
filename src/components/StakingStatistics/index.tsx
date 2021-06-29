@@ -184,7 +184,7 @@ const StakingStatistics: React.FC = () => {
         style={{ marginBottom: (exampleData.length - 1) * -15 }}
       >
         {exampleData.map((data, index) => (
-          <SmallTableCard {...data} index={index} />
+          <SmallTableCard hoverFeature {...data} index={index} />
         ))}
       </div>
       <Table columns={columns} />

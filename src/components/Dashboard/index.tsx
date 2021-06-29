@@ -29,6 +29,8 @@ const Dashboard: React.FC = () => {
     return sum;
   };
 
+  const colorsClassNames = ['yellow', 'blue', 'red'];
+
   const getIndexes = useCallback(() => {
     indexesApi
       .getUserIndexes()
@@ -44,6 +46,8 @@ const Dashboard: React.FC = () => {
   useEffect(() => {
     getIndexes();
   }, [getIndexes]);
+
+  console.log(indexes);
   return (
     <section className="section section--admin">
       <h2 className="section__title text-outline">Indexes</h2>
@@ -142,49 +146,15 @@ const Dashboard: React.FC = () => {
                   </div>
 
                   <div className="index-dashboard__tokens">
-                    <div className="index-dashboard__token">
-                      <span
-                        className="index-dashboard__token-color"
-                        style={{ backgroundColor: '#F7931E' }}
-                      />
-                      <span className="index-dashboard__token-name">
-                        {index.tokens.length ? index.tokens[0].symbol : ''}
-                      </span>
-                    </div>
-                    {index.tokens && index.tokens?.length >= 2 && (
-                      <div className="index-dashboard__token">
-                        <span
-                          className="index-dashboard__token-color"
-                          style={{ backgroundColor: '#2754CD' }}
-                        />
-                        <span className="index-dashboard__token-name">
-                          {index.tokens[1].symbol}
-                        </span>
-                      </div>
-                    )}
-                    {index.tokens && index.tokens?.length >= 3 && (
-                      <div className="index-dashboard__token">
-                        <span
-                          className="index-dashboard__token-color"
-                          style={{ backgroundColor: '#D53038' }}
-                        />
-                        <span className="index-dashboard__token-name">
-                          {index.tokens[2].symbol}
-                        </span>
-                      </div>
-                    )}
-                    {index.tokens && index.tokens?.length === 4 && (
-                      <div className="index-dashboard__token">
-                        <span
-                          className="index-dashboard__token-color"
-                          style={{ backgroundColor: '#FFFFFF' }}
-                        />
-                        <span className="index-dashboard__token-name">
-                          {index.tokens[3].symbol}
-                        </span>
-                      </div>
-                    )}
-                    {index.tokens && index.tokens?.length > 4 && (
+                    {index.tokens &&
+                      index.tokens.slice(0, 3).map((token, i) => (
+                        <div className="index-dashboard__token">
+                          <span className={`index-dashboard__token-color ${colorsClassNames[i]}`} />
+                          <span className="index-dashboard__token-name">{token.symbol}</span>
+                        </div>
+                      ))}
+
+                    {index.tokens.length > 3 && (
                       <div className="index-dashboard__token">
                         <span
                           className="index-dashboard__token-color"
@@ -194,74 +164,29 @@ const Dashboard: React.FC = () => {
                       </div>
                     )}
                   </div>
-
                   <div className="index-dashboard__composition">
-                    <div
-                      className="index-dashboard__token-percent"
-                      style={{
-                        width: `${
-                          index.tokens.length
-                            ? new BigNumber(index.tokens[0].current_weight)
-                                .multipliedBy(100)
-                                .toString()
-                            : ''
-                        }%`,
-                        borderColor: '#F7931E',
-                      }}
-                    >
-                      {index.tokens.length
-                        ? new BigNumber(index.tokens[0].current_weight).multipliedBy(100).toString()
-                        : ''}
-                      %
-                    </div>
-                    {index.tokens && index.tokens?.length >= 2 && (
-                      <div
-                        className="index-dashboard__token-percent"
-                        style={{
-                          width: `${new BigNumber(index.tokens[1].current_weight)
-                            .multipliedBy(100)
-                            .toString()}%`,
-                          borderColor: '#2754CD',
-                        }}
-                      >
-                        {new BigNumber(index.tokens[1].current_weight).multipliedBy(100).toString()}
-                        %
-                      </div>
-                    )}
-                    {index.tokens && index.tokens?.length >= 3 && (
-                      <div
-                        className="index-dashboard__token-percent"
-                        style={{
-                          width: `${new BigNumber(index.tokens[2].current_weight)
-                            .multipliedBy(100)
-                            .toString()}%`,
-                          borderColor: '#D53038',
-                        }}
-                      >
-                        {new BigNumber(index.tokens[2].current_weight).multipliedBy(100).toString()}
-                        %
-                      </div>
-                    )}
-                    {index.tokens && index.tokens?.length === 4 && (
-                      <div
-                        className="index-dashboard__token-percent"
-                        style={{
-                          width: `${new BigNumber(index.tokens[3].current_weight)
-                            .multipliedBy(100)
-                            .toString()}%`,
-                          borderColor: '#FFFFFF',
-                        }}
-                      >
-                        {new BigNumber(index.tokens[3].current_weight).multipliedBy(100).toString()}
-                        %
-                      </div>
-                    )}
-                    {index.tokens && index.tokens?.length > 4 && (
+                    {index.tokens &&
+                      index.tokens.slice(0, 3).map((token, i) => (
+                        <>
+                          {+token.current_weight > 0 && (
+                            <div
+                              className={`index-dashboard__token-percent ${colorsClassNames[i]}`}
+                              style={{
+                                width: `${new BigNumber(token.current_weight)
+                                  .multipliedBy(100)
+                                  .toString()}%`,
+                              }}
+                            >
+                              {new BigNumber(token.current_weight).multipliedBy(100).toString()}%
+                            </div>
+                          )}
+                        </>
+                      ))}
+                    {index.tokens.length > 3 && (
                       <div
                         className="index-dashboard__token-percent"
                         style={{
                           width: `${calculateOthersWeight(index).multipliedBy(100).toString()}%`,
-                          borderColor: '#FFFFFF',
                         }}
                       >
                         {calculateOthersWeight(index).multipliedBy(100).toString()}%

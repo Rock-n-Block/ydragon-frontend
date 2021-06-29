@@ -4,6 +4,7 @@
   border-radius: 16px 16px 0 0;
   background-color: #171b2f;
   overflow: hidden;
+
   &:last-child {
     border-radius: 16px;
   }
@@ -41,6 +42,13 @@
     grid-template-columns: repeat(2, 1fr);
     align-items: flex-end;
     grid-gap: 18px;
+    transition: background-color 0.4s ease;
+
+    &--hover {
+      &:hover {
+        background-color: #3a3a66;
+      }
+    }
   }
 
   &__title {

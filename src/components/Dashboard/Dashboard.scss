@@ -162,6 +162,19 @@
   }
 
   &__token-color {
+    --color: #fff;
+
+    &.yellow {
+      --color: #f7931e;
+    }
+    &.blue {
+      --color: #2754cd;
+    }
+    &.red {
+      --color: #d53038;
+    }
+    
+    background-color: var(--color);
     margin-right: 5px;
 
     width: 5px;
@@ -184,6 +197,18 @@
   }
 
   &__token-percent {
+    --color: #fff;
+
+    &.yellow {
+      --color: #f7931e;
+    }
+    &.blue {
+      --color: #2754cd;
+    }
+    &.red {
+      --color: #d53038;
+    }
+
     padding-top: 3px;
 
     font-size: 14px;
@@ -191,6 +216,7 @@
     text-align: right;
 
     border-top: 3px solid;
+    border-color: var(--color);
     border-radius: 1px;
 
     & + & {

@@ -7,6 +7,7 @@ interface ISmallTableCardProps {
   headerTitle?: string;
   data: Array<Array<string>>;
   index: number;
+  hoverFeature?: boolean;
 }
 
 const SmallTableCard: React.FC<ISmallTableCardProps> = ({
@@ -15,6 +16,7 @@ const SmallTableCard: React.FC<ISmallTableCardProps> = ({
   index,
   data,
   tokenLogo,
+  hoverFeature,
 }) => {
   return (
     <section className="small-card" style={{ top: -index * 15 }}>
@@ -27,7 +29,7 @@ const SmallTableCard: React.FC<ISmallTableCardProps> = ({
           {tokenLogo && <img src={tokenLogo} alt="token-logo" />}
         </div>
       </div>
-      <div className="small-card__body">
+      <div className={`small-card__body ${hoverFeature ? 'small-card__body--hover' : ''}`}>
         {data.map((cell, i) => (
           <div className="small-card__cell">
             <div className="small-card__title">{cell[0]}</div>
