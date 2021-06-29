@@ -56,6 +56,8 @@ const TradeYDRModal: React.FC = observer(() => {
           const { response } = err;
           console.log('getCource error', response);
         });
+    } else {
+      setViewOnlyInputValue('0.0')
     }
   }, [payInput, firstCurrency, walletConnector.metamaskService]);
   const getSellCourse = useCallback(() => {
@@ -72,6 +74,8 @@ const TradeYDRModal: React.FC = observer(() => {
           const { response } = err;
           console.log('getCource error', response);
         });
+    } else {
+      setViewOnlyInputValue('0.0')
     }
   }, [payInput, secondCurrency, walletConnector.metamaskService]);
 
@@ -144,14 +148,14 @@ const TradeYDRModal: React.FC = observer(() => {
     if (user.address) {
       checkAllowance();
     }
-  }, [checkAllowance, user.address]); /*
+  }, [checkAllowance, user.address]);
   useEffect(() => {
     if (modals.tradeYDR.method === 'buy') {
       getBuyCourse();
     } else {
       getSellCourse();
     }
-  }, [modals.tradeYDR.method, getBuyCourse, getSellCourse]); */
+  }, [modals.tradeYDR.method, getBuyCourse, getSellCourse, payInput]);
   return (
     <Modal
       isVisible={modals.tradeYDR.isOpen}
