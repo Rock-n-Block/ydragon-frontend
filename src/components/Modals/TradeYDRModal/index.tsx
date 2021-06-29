@@ -5,7 +5,7 @@ import { observer } from 'mobx-react-lite';
 import YDRLogo from '../../../assets/img/icons/logo.svg';
 import { useWalletConnectorContext } from '../../../services/walletConnect';
 import { useMst } from '../../../store/store';
-import { platformToken, TokenMiniNameTypes, tokensArray } from '../../../utils/tokenMini';
+import { defaultTokens, platformToken, TokenMiniNameTypes } from '../../../utils/tokenMini';
 import { Button, InputWithSelect } from '../../index';
 import { Modal } from '../index';
 
@@ -15,10 +15,10 @@ const TradeYDRModal: React.FC = observer(() => {
   const walletConnector = useWalletConnectorContext();
   const { user, modals } = useMst();
   const [firstCurrency, setFirstCurrency] = useState<TokenMiniNameTypes>(
-    modals.tradeYDR.method === 'sell' ? 'YDR' : tokensArray[0].name,
+    modals.tradeYDR.method === 'sell' ? 'YDR' : defaultTokens[0].name,
   );
   const [secondCurrency, setSecondCurrency] = useState<TokenMiniNameTypes>(
-    modals.tradeYDR.method === 'sell' ? tokensArray[0].name : 'YDR',
+    modals.tradeYDR.method === 'sell' ? defaultTokens[0].name : 'YDR',
   );
   const [payInput, setPayInput] = useState<string>('');
   const [viewOnlyInputValue, setViewOnlyInputValue] = useState<string>('0.0');
@@ -132,8 +132,8 @@ const TradeYDRModal: React.FC = observer(() => {
       });
   };
   useEffect(() => {
-    setFirstCurrency(modals.tradeYDR.method === 'sell' ? 'YDR' : tokensArray[0].name);
-    setSecondCurrency(modals.tradeYDR.method !== 'sell' ? 'YDR' : tokensArray[0].name);
+    setFirstCurrency(modals.tradeYDR.method === 'sell' ? 'YDR' : defaultTokens[0].name);
+    setSecondCurrency(modals.tradeYDR.method !== 'sell' ? 'YDR' : defaultTokens[0].name);
   }, [modals.tradeYDR.method]);
   useEffect(() => {
     if (user.address) {
@@ -179,7 +179,7 @@ const TradeYDRModal: React.FC = observer(() => {
           {modals.tradeYDR.method === 'buy' ? (
             <InputWithSelect
               value={payInput}
-              tokens={tokensArray}
+              tokens={defaultTokens}
               onSelectChange={handleSelectChange}
               onChange={(event) => setPayInput(event.target.value)}
               type="number"
@@ -205,7 +205,7 @@ const TradeYDRModal: React.FC = observer(() => {
           {modals.tradeYDR.method === 'sell' ? (
             <InputWithSelect
               placeholder={viewOnlyInputValue}
-              tokens={tokensArray}
+              tokens={defaultTokens}
               onSelectChange={handleSelectChange}
               disabled
             />

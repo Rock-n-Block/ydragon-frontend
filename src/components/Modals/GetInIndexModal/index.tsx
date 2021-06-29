@@ -1,17 +1,14 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { observer } from 'mobx-react-lite';
 
-import { indexesApi } from '../../../services/api';
 import { useWalletConnectorContext } from '../../../services/walletConnect';
 import { useMst } from '../../../store/store';
 import { defaultTokens, TokenMiniNameTypes } from '../../../utils/tokenMini';
-import { IIme } from '../../HomeDark/InitialMintEvent';
 import { Button, InputWithSelect } from '../../index';
 import SplittedTable, { ITableColumn, ITableData } from '../../SplittedTable';
-import { TokenMiniProps } from '../../TokenMini';
 import { Modal } from '../index';
 
-import './GetInModal.scss';
+import './GetInIndexModal.scss';
 
 const totalColumns: ITableColumn[] = [
   {
@@ -28,32 +25,23 @@ const totalColumns: ITableColumn[] = [
     name: 'Total price',
   },
 ];
-const userColumns: ITableColumn[] = [
-  {
-    name: 'token',
-    unShow: true,
-  },
-  {
-    name: 'Quantity',
-  },
-];
-
-const GetInModal: React.FC = observer(() => {
+interface GetInIndexModalProps {
+  totalData: ITableData[];
+  indexAddress: string;
+}
+const GetInIndexModal: React.FC<GetInIndexModalProps> = observer(({ totalData, indexAddress }) => {
   const { modals, user } = useMst();
   const walletConnector = useWalletConnectorContext();
 
   const handleClose = (): void => {
-    modals.getIn.close();
+    modals.getInIndex.close();
   };
-  const [currentIme, setCurrentIme] = useState<IIme | undefined>();
-  const [totalData, setTotalData] = useState<ITableData[]>([] as ITableData[]);
-  const [userData, setUserData] = useState<ITableData[]>([] as ITableData[]);
   const [firstCurrency, setFirstCurrency] = useState<TokenMiniNameTypes>(defaultTokens[0].name);
   const [payInput, setPayInput] = useState<string>('0');
   const [isNeedApprove, setIsNeedApprove] = useState<boolean>(true);
   const checkAllowance = useCallback(() => {
     walletConnector.metamaskService
-      .checkAllowance(firstCurrency, 'MAIN', modals.getIn.address)
+      .checkAllowance(firstCurrency, 'MAIN', indexAddress)
       .then((data: boolean) => {
         console.log(`allowance of ${firstCurrency}: ${data} `);
         setIsNeedApprove(!data);
@@ -62,14 +50,14 @@ const GetInModal: React.FC = observer(() => {
         const { response } = err;
         console.log('allowance error', response);
       });
-  }, [modals.getIn.address, walletConnector.metamaskService, firstCurrency]);
+  }, [indexAddress, walletConnector.metamaskService, firstCurrency]);
   const handleSelectChange = (value: any) => {
     console.log(value);
     setFirstCurrency(value);
   };
   const handleApprove = (): void => {
     walletConnector.metamaskService
-      .approve(firstCurrency, undefined, modals.getIn.address)
+      .approve(firstCurrency, undefined, indexAddress)
       .then((data: any) => {
         setIsNeedApprove(false);
         console.log(`approve of ${firstCurrency} to IME success`, data);
@@ -79,9 +67,9 @@ const GetInModal: React.FC = observer(() => {
         console.log('approve error', response);
       });
   };
-  const handleEnter = (): void => {
+  const handleBuy = (): void => {
     walletConnector.metamaskService
-      .enterIme(payInput, firstCurrency, modals.getIn.address)
+      .mint(payInput, firstCurrency, indexAddress)
       .then((data: any) => {
         console.log('mint', data);
       })
@@ -90,22 +78,17 @@ const GetInModal: React.FC = observer(() => {
         console.log('mint error', response);
       });
   };
-  const getCurrentIme = useCallback(() => {
-    if (modals.getIn.id) {
-      indexesApi
-        .getImeById(modals.getIn.id, user.address ? user.address : undefined)
-        .then(({ data }) => {
-          setCurrentIme(data);
-        })
-        .catch((err: any) => {
-          const { response } = err;
-          console.log('mint error', response);
-        });
-    }
-  }, [user.address, modals.getIn.id]);
-  useEffect(() => {
-    getCurrentIme();
-  }, [getCurrentIme]);
+  const handleSell = (): void => {
+    walletConnector.metamaskService
+      .redeem(payInput, firstCurrency, indexAddress)
+      .then((data: any) => {
+        console.log('mint', data);
+      })
+      .catch((err: any) => {
+        const { response } = err;
+        console.log('mint error', response);
+      });
+  };
   useEffect(() => {
     setFirstCurrency(defaultTokens[0].name);
   }, [modals.tradeYDR.method]);
@@ -114,48 +97,12 @@ const GetInModal: React.FC = observer(() => {
       checkAllowance();
     }
   }, [checkAllowance, user.address]);
-  useEffect(() => {
-    if (currentIme) {
-      setTotalData(
-        currentIme.tokens.map((token) => {
-          return [
-            {
-              icon: token.image,
-              name: token.name,
-              symbol: token.symbol,
-            } as TokenMiniProps,
-            token.total_quantity,
-            `$${token.price}`,
-            `$${token.total_price}`,
-          ];
-        }),
-      );
-      if (user.address) {
-        setUserData(
-          currentIme.tokens.map((token) => {
-            return [
-              {
-                icon: token.image,
-                name: token.name,
-                symbol: token.symbol,
-              } as TokenMiniProps,
-              token.user_quantity ?? '0',
-            ];
-          }),
-        );
-      }
-    }
-  }, [user.address, currentIme]);
   return (
-    <Modal isVisible={!!modals.getIn.id} handleCancel={handleClose} className="m-get-in">
+    <Modal isVisible={!!modals.getInIndex.isOpen} handleCancel={handleClose} className="m-get-in">
       <div className="m-get-in__content">
         <section className="m-get-in__total">
           <h2 className="m-get-in__title">Total for index</h2>
           <SplittedTable columns={totalColumns} data={totalData} />
-        </section>
-        <section className="m-get-in__user">
-          <h2 className="m-get-in__title">Total for User</h2>
-          <SplittedTable columns={userColumns} data={userData} />
         </section>
         <section className="m-get-in__you-pay">
           <h2 className="m-get-in__title">You pay</h2>
@@ -172,10 +119,15 @@ const GetInModal: React.FC = observer(() => {
                 Approve
               </Button>
             )}
-            {modals.tradeYDR.method === 'buy' && (!isNeedApprove || firstCurrency === 'BNB') && (
-              <Button className="m-trade-ydr__btn" onClick={handleEnter}>
-                Enter
-              </Button>
+            {(!isNeedApprove || firstCurrency === 'BNB') && (
+              <>
+                <Button className="m-trade-ydr__btn" onClick={handleBuy}>
+                  Buy
+                </Button>
+                <Button className="m-trade-ydr__btn" onClick={handleSell}>
+                  Sell
+                </Button>
+              </>
             )}
           </div>
         </section>
@@ -183,4 +135,4 @@ const GetInModal: React.FC = observer(() => {
     </Modal>
   );
 });
-export default GetInModal;
+export default GetInIndexModal;

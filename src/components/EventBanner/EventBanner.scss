@@ -1,8 +1,13 @@
 @import '../../styles/variables';
 @import '../../styles/mixins';
 
+.hidden {
+  display: none;
+}
+
 .event-banner {
-  position: sticky;
+  position: relative;
+  width: 100%;
   z-index: 999;
   top: 0;
 
@@ -13,11 +18,23 @@
   background-position: left center;
   background-size: auto 100%;
 
-  @include b('tablet') {
-    position: relative;
-  }
   @include b('mobile') {
     display: none;
+  }
+
+  &__close {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &:hover {
+      cursor: pointer;
+    }
   }
 
   &__inner {

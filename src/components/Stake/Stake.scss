@@ -1,5 +1,5 @@
-@import '../../../styles/_variables.scss';
-@import '../../../styles/_mixins.scss';
+@import '../../styles/variables';
+@import '../../styles/mixins';
 
 .stake {
   @include shadow-block;
@@ -7,6 +7,8 @@
   padding: 40px;
 
   &__title {
+    margin-right: 40px;
+
     font-family: 'MER', sans-serif;
     font-size: 12px;
     line-height: 14px;
@@ -20,7 +22,8 @@
   }
 
   &__btn-row {
-    margin-top: 40px;
+    margin: 40px auto 0;
+    max-width: 205px;
 
     display: flex;
     justify-content: center;
@@ -98,24 +101,29 @@
   $this: &;
   margin-top: 50px;
 
+  display: flex;
+  flex-direction: column;
+
   &__title {
-    @include gradient-text;
+    margin: 0 auto;
+
     font-size: 20px;
     line-height: 24px;
-    text-align: center;
   }
 
   &__input-wrapper {
     position: relative;
 
-    margin-top: 15px;
+    margin: 15px auto 0;
 
     display: flex;
     justify-content: center;
 
+    width: 100%;
+    max-width: 500px;
+
     .input-border {
       width: 100%;
-      max-width: 500px;
       height: 100px;
     }
 
@@ -123,11 +131,15 @@
       font-size: 30px;
       line-height: 35px;
     }
+    .ant-input-number {
+      max-width: unset;
+    }
   }
 
   &__all {
     position: absolute;
-    bottom: 10px;
+    top: 40px;
+    right: 36px;
 
     font-family: 'TNB', sans-serif;
     font-size: 16px;
@@ -135,7 +147,7 @@
 
     cursor: pointer;
 
-    color: rgba($black, 0.4);
+    color: rgba(white, 0.4);
   }
 
   &__time-row {
@@ -152,7 +164,7 @@
 
     box-sizing: border-box;
 
-    border: 3px solid #e9ebf3;
+    border: 3px solid rgba(255, 255, 255, 0.1);
     border-radius: 40px;
   }
 
@@ -190,8 +202,7 @@
     font-size: 16px;
     line-height: 19px;
 
-    color: $black;
-    background: $white;
+    background: rgba(255, 255, 255, 0.1);
     border-radius: 40px;
 
     transition: all 0.3s;

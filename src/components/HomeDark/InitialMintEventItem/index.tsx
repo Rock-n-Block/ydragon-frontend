@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react';
 import BigNumber from 'bignumber.js/bignumber';
 import moment from 'moment';
 
-import { useWalletConnectorContext } from '../../../services/walletConnect';
 import { useMst } from '../../../store/store';
 import { Button } from '../../index';
 import { IIme } from '../InitialMintEvent';
+
 import './InitialMintEventItem.scss';
 
 interface InitialMintEventItemProps {
@@ -14,7 +14,6 @@ interface InitialMintEventItemProps {
 
 const InitialMintEventItem: React.FC<InitialMintEventItemProps> = ({ imeItem }) => {
   const { modals } = useMst();
-  const walletConnector = useWalletConnectorContext();
   // const mockStart = moment('20211207', 'YYYYDDMM');
   const [start, setStart] = useState(moment());
   const [end, setEnd] = useState(moment());
@@ -37,28 +36,13 @@ const InitialMintEventItem: React.FC<InitialMintEventItemProps> = ({ imeItem }) 
     };
   }, [now, end, start]);
   useEffect(() => {
-    walletConnector.metamaskService
-      .getStartDate(imeItem.address)
-      .then((data: any) => {
-        const dateInMilliseconds = new BigNumber(data).multipliedBy(1000).toString();
-        setStart(moment(new Date(+dateInMilliseconds)));
-      })
-      .catch((err: any) => {
-        console.log('get balance error', err);
-      });
-    walletConnector.metamaskService
-      .getEndDate(imeItem.address)
-      .then((data: any) => {
-        const dateInMilliseconds = new BigNumber(data).multipliedBy(1000).toString();
-        setEnd(moment(new Date(+dateInMilliseconds)));
-      })
-      .catch((err: any) => {
-        console.log('get balance error', err);
-      });
-  }, [imeItem.address, walletConnector.metamaskService]);
-  useEffect(() => {
-    console.log(imeItem);
-  }, [imeItem]);
+    setEnd(
+      moment(new Date(+new BigNumber(imeItem.ime_end_timestamp).multipliedBy(1000).toString())),
+    );
+    setStart(
+      moment(new Date(+new BigNumber(imeItem.ime_start_timestamp).multipliedBy(1000).toString())),
+    );
+  }, [imeItem.ime_end_timestamp, imeItem.ime_start_timestamp]);
   return (
     <div className="initial-mint-event">
       <div className="initial-mint-event__timings">
@@ -123,11 +107,9 @@ const InitialMintEventItem: React.FC<InitialMintEventItemProps> = ({ imeItem }) 
       </div>
 
       <div className="initial-mint-event__content">
-        <h3 className="initial-mint-event__title">B5 Index {imeItem.name} </h3>
+        <h3 className="initial-mint-event__title">{imeItem.name} </h3>
 
         <p className="initial-mint-event__description">
-          {/* The BSC Top 5 Reputable Projects is a selection of the top 5 tokens listed across multiple
-          chains on binance, in addition to YDR, that have the ability to produce a high yield. */}
           {imeItem.description ? imeItem.description : ''}
         </p>
 

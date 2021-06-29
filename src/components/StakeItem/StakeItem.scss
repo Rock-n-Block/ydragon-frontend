@@ -1,0 +1,34 @@
+@import 'src/styles/variables';
+.stake-item {
+  padding: 21px 40px 21px 16px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  box-sizing: border-box;
+
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 40px;
+
+  transition: background-color 0.3s;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.2);
+  }
+
+  & + & {
+    margin-top: 15px;
+  }
+
+  &--active {
+    background: rgba(255, 255, 255, 0.2);
+  }
+
+  &__amount {
+    font-family: 'TNB', sans-serif;
+    font-size: 20px;
+    line-height: 24px;
+  }
+}

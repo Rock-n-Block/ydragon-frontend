@@ -266,7 +266,7 @@ export default class MetamaskService {
     });
   }
 
-  mint(value: string, spenderToken: ContractTypes) {
+  mint(value: string, spenderToken: ContractTypes, address: string) {
     const mintMethod = MetamaskService.getMethodInterface(config.MAIN.ABI, 'mint');
     const signature = this.encodeFunctionCall(mintMethod, [
       config[spenderToken].ADDRESS,
@@ -275,13 +275,13 @@ export default class MetamaskService {
 
     return this.sendTransaction({
       from: this.walletAddress,
-      to: config.MAIN.ADDRESS,
+      to: address,
       data: signature,
       value: spenderToken === 'BNB' ? MetamaskService.calcTransactionAmount(value, 18) : '',
     });
   }
 
-  redeem(value: string, spenderToken: ContractTypes) {
+  redeem(value: string, spenderToken: ContractTypes, address: string) {
     const redeemMethod = MetamaskService.getMethodInterface(config.MAIN.ABI, 'redeem');
     const signature = this.encodeFunctionCall(redeemMethod, [
       MetamaskService.calcTransactionAmount(value, 18),
@@ -290,7 +290,7 @@ export default class MetamaskService {
 
     return this.sendTransaction({
       from: this.walletAddress,
-      to: config.MAIN.ADDRESS,
+      to: address,
       data: signature,
     });
   }

@@ -24,6 +24,18 @@ const CreateIndexModal = types
       self.isOpen = false;
     },
   }));
+const GetInIndexModal = types
+  .model({
+    isOpen: types.boolean,
+  })
+  .actions((self) => ({
+    open() {
+      self.isOpen = true;
+    },
+    close() {
+      self.isOpen = false;
+    },
+  }));
 const GetInModal = types
   .model({
     id: types.maybeNull(types.number),
@@ -113,6 +125,7 @@ export const Modals = types
     rebalance: RebalanceModal,
     createIndex: CreateIndexModal,
     getIn: GetInModal,
+    getInIndex: GetInIndexModal,
     mint: MintModal,
     redeem: RedeemModal,
     info: InfoModal,
