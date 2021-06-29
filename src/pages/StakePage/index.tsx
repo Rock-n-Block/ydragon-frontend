@@ -24,14 +24,14 @@ const StakePage: React.FC = () => {
         // eslint-disable-next-line no-await-in-loop
         const newPair = await getPair(newAddress);
         console.log(newAddress, newPair);
-        if (newPair[0]) {
+        if (newAddress) {
           // eslint-disable-next-line no-await-in-loop
-          const newTokenFirst = await getTokenInfo(newPair[0]);
+          const newTokenFirst = await getTokenInfo(newAddress);
           tokensList.push(newTokenFirst);
         }
-        if (newPair[1]) {
+        if (newPair !== '0x0000000000000000000000000000000000000000') {
           // eslint-disable-next-line no-await-in-loop
-          const newTokenSecond = await getTokenInfo(newPair[1]);
+          const newTokenSecond = await getTokenInfo(newPair);
           tokensList.push(newTokenSecond);
         }
       }

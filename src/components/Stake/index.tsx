@@ -7,6 +7,7 @@ import './Stake.scss';
 import StakeItem, { IStakeItem } from '../StakeItem';
 import { InputNumber } from '../Input';
 import nextId from 'react-id-generator';
+import BigNumber from 'bignumber.js/bignumber';
 
 const mockStakeItems: IStakeItem[] = [
   {
@@ -64,7 +65,7 @@ const Stake: React.FC<StakeProps> = ({ tokens }) => {
             symbol: token.symbol,
             name: token.name,
           },
-          available: token.balance,
+          available: new BigNumber(token.balance).dividedBy(new BigNumber(10).pow(18)).toFixed(6),
         };
       }),
     );
