@@ -1,3 +1,5 @@
+@import '../../../styles/mixins';
+
 .xy-structure-table {
   margin-top: 40px;
 
@@ -6,5 +8,20 @@
 
     font-size: 18px;
     line-height: 21px;
+  }
+
+  &__big {
+    display: block;
+    @include b(tablet) {
+      display: none;
+    }
+  }
+
+  &__small {
+    padding-top: 15px;
+    display: none;
+    @include b(tablet) {
+      display: block;
+    }
   }
 }

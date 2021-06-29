@@ -3,6 +3,9 @@ import BigNumber from 'bignumber.js/bignumber';
 
 import { IVault } from '../../../pages/AdminIndex';
 import { Table } from '../../index';
+import SmallTableCard from '../../SmallTableCard/index';
+
+import './TokensStructure.scss';
 
 interface TokensStructureProps {
   vaults: IVault[];
@@ -59,7 +62,27 @@ const TokensStructure: React.FC<TokensStructureProps> = ({ vaults }) => {
       <h2 className="section__title text-outline">Tokens structure</h2>
 
       {vaults && (
-        <Table dataSource={dataSource} columns={columns} className="tokens-structure-table" />
+        <>
+          <div className="token-structure-table__big">
+            <Table dataSource={dataSource} columns={columns} className="tokens-structure-table" />
+          </div>
+          <div className="token-structure-table__small">
+            {dataSource.map((data, i) => (
+              <SmallTableCard
+                key={data.key}
+                headerTitle="Tokens per index"
+                tokenName={data.name.name}
+                tokenLogo={data.name.image}
+                index={i}
+                data={[
+                  ['X Vault', `${data.x_vault}%`],
+                  ['Y Vault', `${data.y_vault}%`],
+                  ['Farm', data.farm],
+                ]}
+              />
+            ))}
+          </div>
+        </>
       )}
     </section>
   );

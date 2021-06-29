@@ -36,7 +36,8 @@
   }
 
   &__token {
-    font-family: 'TNR', sans-serif;
+
+    font-family: "TNR", sans-serif;
     font-size: 18px;
     line-height: 21px;
 
@@ -53,6 +54,7 @@
 
     width: 31px;
     height: 31px;
+    border-radius: 50%;
   }
 
   &__quantity {

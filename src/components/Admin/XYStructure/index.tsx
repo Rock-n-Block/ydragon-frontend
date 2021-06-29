@@ -3,6 +3,7 @@ import BigNumber from 'bignumber.js/bignumber';
 
 import { IVaultMini } from '../../../pages/AdminIndex';
 import { Table } from '../../index';
+import SmallTableCard from '../../SmallTableCard/index';
 
 import './XYStructure.scss';
 
@@ -50,13 +51,37 @@ const XYStructure: React.FC<XYStructureProps> = ({ vaults }) => {
         },
       ];
       setDataSource(newData);
+      console.log({ newData });
     }
   }, [vaults]);
   return (
     <section className="section section--admin">
       <h2 className="section__title text-outline">XY Structure</h2>
-
-      {vaults && <Table dataSource={dataSource} columns={columns} className="xy-structure-table" />}
+      {vaults && (
+        <>
+          <div className="xy-structure-table__big">
+            <Table dataSource={dataSource} columns={columns} className="xy-structure-table" />
+          </div>
+          <div className="xy-structure-table__small">
+            <SmallTableCard
+              tokenName="X Vault"
+              index={0}
+              data={[
+                ['', dataSource[0]?.price],
+                ['', dataSource[0]?.weight],
+              ]}
+            />
+            <SmallTableCard
+              tokenName="X Vault"
+              index={1}
+              data={[
+                ['', dataSource[1]?.price],
+                ['', dataSource[1]?.weight],
+              ]}
+            />
+          </div>
+        </>
+      )}
     </section>
   );
 };

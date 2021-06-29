@@ -1,0 +1,23 @@
+@import '../../../styles/mixins';
+
+.token-structure-table {
+  &__big {
+    display: block;
+    @include b(tablet) {
+      display: none;
+    }
+  }
+
+  &__small {
+    padding-top: 15px;
+    display: none;
+    @include b(tablet) {
+      display: block;
+    }
+  }
+}
+
+
+.table__col-with-logo__image{
+  border-radius: 50%;
+}
