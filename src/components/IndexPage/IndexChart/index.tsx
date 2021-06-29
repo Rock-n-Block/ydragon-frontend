@@ -15,6 +15,7 @@ const IndexChart: React.FC<IndexChartProps> = ({ tokens, indexId }) => {
   const refAxiosData: React.MutableRefObject<any> = useRef([]);
   const refData: React.MutableRefObject<any> = useRef([]);
   const refMax = useRef(0);
+  const refMin = useRef(0);
   const [chartData, setChartData] = useState({
     labels: [],
     datasets: [
@@ -62,7 +63,7 @@ const IndexChart: React.FC<IndexChartProps> = ({ tokens, indexId }) => {
         },
       },
       yAxis: {
-        suggestedMin: 0,
+        suggestedMin: refMin.current,
         suggestedMax: refMax.current,
       },
     },
@@ -100,7 +101,8 @@ const IndexChart: React.FC<IndexChartProps> = ({ tokens, indexId }) => {
           data: item.market_cap,
         });
       });
-      refMax.current = Math.max(...arr) + 10;
+      refMax.current = Math.max(...arr) + 1;
+      refMin.current = Math.min(...arr) - 1;
       const dataLength = refData.current.length;
       setClickedElement(refData.current[dataLength - 1].data);
       setChartData({
