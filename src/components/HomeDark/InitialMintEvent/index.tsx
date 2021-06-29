@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { observer } from 'mobx-react-lite';
 
+import nextId from 'react-id-generator';
 import { indexesApi } from '../../../services/api';
 import { InitialMintEventItem } from '../index';
 import spinner from '../../../assets/img/icons/spinner.svg';
@@ -55,9 +56,8 @@ const InitialMintEvent: React.FC = observer(() => {
             <h2 className="section__title text-outline">INITIAL minting Event</h2>
             <p className="section__sub-title">FUNDED YDR ALLOCATION FOR INDEX STAKERS</p>
             {imeList.map((imeItem) => (
-              <InitialMintEventItem imeItem={imeItem} />
+              <InitialMintEventItem key={nextId()} imeItem={imeItem} />
             ))}
-            )
           </>
         ) : (
           <p className="section__sub-title">There is no IME yet</p>
