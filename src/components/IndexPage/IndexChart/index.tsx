@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Line } from 'react-chartjs-2';
 import axios, { AxiosResponse } from 'axios';
-import BigNumber from 'bignumber.js';
+import BigNumber from 'bignumber.js/bignumber';
 
 import './IndexChart.scss';
 
