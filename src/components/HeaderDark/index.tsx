@@ -289,7 +289,7 @@ const Header: React.FC = observer(() => {
             </div>
           </div>
         </div>
-        <footer className='footer'>
+        <footer className="footer">
           <div className="container">
             <div className="footer__content">
               <div className="footer__col">

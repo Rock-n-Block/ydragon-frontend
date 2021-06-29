@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 
-import { Button } from '../index';
 import mockBsc from '../../assets/img/icons/logo-binance.svg';
+import { Button } from '../index';
+import { InputNumber } from '../Input';
+import StakeItem, { IStakeItem } from '../StakeItem';
 
 import './Stake.scss';
-import StakeItem, { IStakeItem } from '../StakeItem';
-import { InputNumber } from '../Input';
 
 const mockStakeItems: IStakeItem[] = [
   {

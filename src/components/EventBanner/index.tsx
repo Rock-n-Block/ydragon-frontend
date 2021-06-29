@@ -3,14 +3,14 @@ import BigNumber from 'bignumber.js/bignumber';
 import { observer } from 'mobx-react-lite';
 import moment from 'moment';
 
-import cross from '../../assets/img/icons/icon-close.svg';
 import coinIcon from '../../assets/img/future/icon-2.svg';
+import cross from '../../assets/img/icons/icon-close.svg';
+import { indexesApi } from '../../services/api';
 import { useMst } from '../../store/store';
+import { IIme } from '../HomeDark/InitialMintEvent';
 import { Button } from '../index';
 
 import './EventBanner.scss';
-import { indexesApi } from '../../services/api';
-import { IIme } from '../HomeDark/InitialMintEvent';
 
 const EventBanner: React.FC = observer(() => {
   const { modals } = useMst();

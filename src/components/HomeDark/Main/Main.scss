@@ -111,7 +111,7 @@
       line-height: 30px;
     }
 
-    @include b('tablet'){
+    @include b('tablet') {
       padding: 20px;
     }
   }
