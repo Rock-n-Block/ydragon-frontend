@@ -68,11 +68,18 @@
 
     display: flex;
     justify-content: center;
+    gap: 30px;
 
     width: 100%;
 
     .btn {
       padding: 17px 0;
+    }
+
+    @include b('tablet') {
+      flex-direction: column;
+      gap: 20px;
+      align-items: center;
     }
   }
 
@@ -81,8 +88,8 @@
     max-width: 250px;
     flex-shrink: 0;
 
-    & + & {
-      margin-left: 30px;
+    @include b('tablet') {
+      max-width: 350px;
     }
   }
 
@@ -90,8 +97,6 @@
     @include shadow-dark-block;
     margin-top: 100px;
     padding: 35px 85px;
-
-    display: inline-flex;
 
     font-size: 22px;
     line-height: 30px;
@@ -104,6 +109,10 @@
 
       font-size: 22px;
       line-height: 30px;
+    }
+
+    @include b('tablet') {
+      padding: 20px;
     }
   }
 }

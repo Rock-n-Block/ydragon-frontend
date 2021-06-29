@@ -4,12 +4,13 @@ import { observer } from 'mobx-react-lite';
 import moment from 'moment';
 
 import coinIcon from '../../assets/img/future/icon-2.svg';
+import cross from '../../assets/img/icons/icon-close.svg';
+import { indexesApi } from '../../services/api';
 import { useMst } from '../../store/store';
+import { IIme } from '../HomeDark/InitialMintEvent';
 import { Button } from '../index';
 
 import './EventBanner.scss';
-import { indexesApi } from '../../services/api';
-import { IIme } from '../HomeDark/InitialMintEvent';
 
 const EventBanner: React.FC = observer(() => {
   const { modals } = useMst();
@@ -20,6 +21,7 @@ const EventBanner: React.FC = observer(() => {
   const [imeItem, setImeItem] = useState<IIme>({} as IIme);
   const [imeEnabled, setImeEnabled] = useState<boolean>(false);
   const [imeHidden, setImeHidden] = useState<boolean>(false);
+  const [bannerHidden, setBannerHidden] = useState<boolean>(false);
   const handleGetIn = () => {
     modals.getIn.open(imeItem.id, imeItem.address);
   };
@@ -92,8 +94,17 @@ const EventBanner: React.FC = observer(() => {
     );
   }, [imeItem.ime_end_timestamp, imeItem.ime_start_timestamp]);
   return !imeHidden ? (
-    <div className="event-banner">
+    <div className={bannerHidden ? 'hidden' : 'event-banner'}>
       <div className="container">
+        <div
+          role="button"
+          tabIndex={0}
+          onClick={() => setBannerHidden(true)}
+          className="event-banner__close"
+          onKeyDown={() => setBannerHidden(true)}
+        >
+          <img src={cross} alt="" width="20" height="20" />
+        </div>
         <div className="event-banner__inner">
           <div className="event-banner__icon">
             <img src={coinIcon} alt="" width="66" height="75" />
