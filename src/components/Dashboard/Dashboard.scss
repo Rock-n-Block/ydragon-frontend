@@ -4,6 +4,20 @@
 .index-dashboard {
   margin-top: 30px;
 
+  &__big {
+    @include b(tablet) {
+      display: none;
+    }
+  }
+
+  &__small {
+    padding-top: 15px;
+    display: none;
+    @include b(tablet) {
+      display: block;
+    }
+  }
+
   &__row {
     display: grid;
     align-items: center;

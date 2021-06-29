@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 import moment from 'moment';
+import BigNumber from 'bignumber.js/bignumber';
 
 import logo from '../../assets/img/icons/logo.svg';
 import { TokenPanel } from '../../components';
@@ -11,6 +12,7 @@ import MintModal from '../../components/Modals/MintModal';
 import RedeemModal from '../../components/Modals/RedeemModal';
 import { indexesApi } from '../../services/api';
 import { useMst } from '../../store/store';
+import SmallTableCard from '../../components/SmallTableCard/index';
 
 import './Index.scss';
 
@@ -46,6 +48,9 @@ const Index: React.FC = observer(() => {
   useEffect(() => {
     getCurrentIndex();
   }, [getCurrentIndex]);
+
+  console.log(indexData?.tokens);
+
   return (
     <main className="container page">
       <div className="page__title-row">
@@ -72,7 +77,30 @@ const Index: React.FC = observer(() => {
         handleGetIn={handleGetIn}
       />
       <RebalanceHistory lastRebalance={indexData?.rebalance_date} />
-      <IndexTable tokens={indexData?.tokens} />
+      <div className="index-table__big">
+        <IndexTable tokens={indexData?.tokens} />
+      </div>
+      <div className="index-table__small">
+        {indexData?.tokens.map((token, i) => (
+          <SmallTableCard
+            index={i}
+            data={[
+              [
+                'Quantity per Set',
+                `${new BigNumber(token.count)
+                  .multipliedBy(new BigNumber(10).pow(-token.decimal))
+                  .toFixed(2)}`,
+              ],
+              ['Token Price', `$${token.price_for_one}`],
+              ['Current Weight', `${Number(token.current_weight).toFixed(2)}%`],
+              ['Total Price per Set', `$${token.price_total}`],
+            ]}
+            headerTitle="Token"
+            tokenName={token.name}
+            tokenLogo={token.image}
+          />
+        ))}
+      </div>
       {/* <About /> */}
       <MintModal />
       <RedeemModal />

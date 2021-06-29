@@ -36,10 +36,12 @@
   }
 
   &__token {
+
+    font-family: "TNR", sans-serif;
     font-size: 18px;
     line-height: 21px;
 
-    color: $black;
+    color: $white;
   }
 
   &__first-col {
@@ -52,6 +54,7 @@
 
     width: 31px;
     height: 31px;
+    border-radius: 50%;
   }
 
   &__quantity {
@@ -65,7 +68,7 @@
     font-size: 18px;
     line-height: 22px;
 
-    color: $black;
+    color: $white;
   }
 
   &__percent-change {

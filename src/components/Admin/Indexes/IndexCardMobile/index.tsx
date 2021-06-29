@@ -15,16 +15,16 @@ interface IIndexCardProps {
 
 export const IndexCardMobile: React.FC<IIndexCardProps> = ({ name, cap, price, created }) => {
   return (
-    <div className="index-card-mobile">
+    <section className="index-card-mobile">
       <div className="index-card-mobile__name">
-        <div className="index-card-mobile__title">Name</div>
+        <h3 className="index-card-mobile__title">Name</h3>
         <Link to={`/admin/index/${name.id}`} className="index-card-mobile__value">
           {name.name}
         </Link>
       </div>
       <div className="index-card-mobile__info">
         <div className="index-card-mobile__cap">
-          <div className="index-card-mobile__title">Market cap</div>
+          <h3 className="index-card-mobile__title">Market cap</h3>
           <div className="index-card-mobile__value">{cap}</div>
         </div>
         <div className="index-card-mobile__price">
@@ -33,9 +33,9 @@ export const IndexCardMobile: React.FC<IIndexCardProps> = ({ name, cap, price, c
         </div>
       </div>
       <div className="index-card-mobile__created">
-        <div className="index-card-mobile__title">Created</div>
+        <h3 className="index-card-mobile__title">Created</h3>
         <div className="index-card-mobile__value">{created}</div>
       </div>
-    </div>
+    </section>
   );
 };
