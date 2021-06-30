@@ -169,7 +169,7 @@ export default class MetamaskService {
 
   getBalanceOf(currency: ContractTypes) {
     if (currency === 'BNB') {
-      return this.getBNBBalance;
+      return this.getBNBBalance();
     }
     return this.getContract(currency).methods.balanceOf(this.walletAddress).call();
   }
