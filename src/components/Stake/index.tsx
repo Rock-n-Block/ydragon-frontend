@@ -19,9 +19,10 @@ export interface IStakeToken {
   balance: string;
 }
 interface StakeProps {
-  tokens: IStakeToken[];
+  tokens: IStakeToken[],
+  propsLoading: boolean;
 }
-const Stake: React.FC<StakeProps> = ({ tokens }) => {
+const Stake: React.FC<StakeProps> = ({ tokens, propsLoading }) => {
   const walletConnector = useWalletConnectorContext();
   const { modals } = useMst();
   const [tokensList, setTokensList] = useState<IStakeItem[]>([] as IStakeItem[]);
@@ -29,7 +30,7 @@ const Stake: React.FC<StakeProps> = ({ tokens }) => {
   const [stakeValue, setStakeValue] = useState<string>('');
   const [intervalIndex, setIntervalIndex] = useState<0 | 1 | 2>(0);
   const [isAllowed, setIsAllowed] = useState(false);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(propsLoading);
   const handleStakeItemClick = (index: number) => {
     setActiveStakeIndex(index);
   };
@@ -84,6 +85,7 @@ const Stake: React.FC<StakeProps> = ({ tokens }) => {
       .finally(() => setLoading(false));
   }, [walletConnector.metamaskService, tokens, activeStakeIndex]);
   useEffect(() => {
+    setLoading(true);
     setTokensList(
       tokens.map((token) => {
         return {
@@ -103,6 +105,7 @@ const Stake: React.FC<StakeProps> = ({ tokens }) => {
   }, [tokens.length, checkAllowance]);
   return (
     <section className="section section--admin">
+      {console.log(loading)}
       <h2 className="section__title text-outline">Stake</h2>
 
       <div className="stake">

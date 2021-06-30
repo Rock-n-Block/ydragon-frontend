@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 
 import { Stake, StakingStatistics } from '../../components';
 import { useWalletConnectorContext } from '../../services/walletConnect';
-import spinner from '../../assets/img/icons/spinner.svg';
 
 const StakePage: React.FC = () => {
   const walletConnector = useWalletConnectorContext();
@@ -48,13 +47,7 @@ const StakePage: React.FC = () => {
   }, []);
   return (
     <main className="container">
-      {loading ? (
-        <div className="spinner">
-          <img alt="" src={spinner} width="50" height="50" />
-        </div>
-      ) : (
-        <Stake tokens={stakeTokensList} />
-      )}
+      <Stake tokens={stakeTokensList} propsLoading={loading} />
       <StakingStatistics />
     </main>
   );
