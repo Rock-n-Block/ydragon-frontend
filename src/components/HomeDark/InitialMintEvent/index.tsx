@@ -56,7 +56,7 @@ const InitialMintEvent: React.FC = observer(() => {
       <Spinner loading={loading} />
       {imeList.length
         ? imeList.map((imeItem) => <InitialMintEventItem key={nextId()} imeItem={imeItem} />)
-        : !loading && <p className="section__sub-title">There is no IME yet</p>}
+        : !loading && <h2 className="section__title text-outline">There is no IME yet</h2>}
     </section>
   );
 });
