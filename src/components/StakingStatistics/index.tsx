@@ -1,5 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import SmallTableCard from '../SmallTableCard/index';
+
+import { useMst } from '../../store/store';
+import { indexesApi } from '../../services/api';
 
 import { Button, Table } from '../index';
 
@@ -32,7 +35,51 @@ const exampleData = [
   },
 ];
 
+const exampleDataSource = [
+  {
+    key: 1,
+    token: {
+      image:
+        "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 31 31'%3E%3Cpath fill='%238594BE' d='M31 15.5C31 24.06 24.06 31 15.5 31 6.94 31 0 24.06 0 15.5 0 6.94 6.94 0 15.5 0 24.06 0 31 6.94 31 15.5z'/%3E%3Cpath fill='%23fff' d='M15.309 8.611l-.097.328v9.529l.097.096 4.423-2.614-4.423-7.339z'/%3E%3Cpath fill='%23fff' d='M15.31 8.611l-4.424 7.339 4.423 2.614V8.611zM15.31 19.835l-.055.067v3.394l.054.159 4.426-6.233-4.426 2.613z'/%3E%3Cpath fill='%23fff' d='M15.309 23.455v-3.62l-4.423-2.613 4.423 6.233z'/%3E%3C/svg%3E",
+      name: 'Index Token',
+    },
+    month: 3,
+    endDate: '01.04.2021',
+    staked: '5,000',
+    availableRewards: '9',
+    withdrawnRewards: '9',
+    estimatedRewards: '9',
+  },
+];
+
 const StakingStatistics: React.FC = () => {
+  const { user } = useMst();
+  const [userAdress, setUserAdress] = useState(user.address);
+
+  // при первом рендере изначально user.adress пустой, поэтому такой костылик
+  useEffect(() => {
+    if (!userAdress) {
+      setTimeout(() => {
+        setUserAdress(user.address);
+      }, 1000);
+    }
+  }, [user.address, userAdress]);
+
+  const getStakingIndexes = useCallback(async (address: string) => {
+    try {
+      const res = await indexesApi.getStakingIndexes(address);
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (userAdress) {
+      getStakingIndexes(userAdress);
+    }
+  }, [getStakingIndexes, userAdress]);
+
   const columns: any[] = [
     {
       title: 'Token',
@@ -187,7 +234,7 @@ const StakingStatistics: React.FC = () => {
           <SmallTableCard hoverFeature {...data} index={index} />
         ))}
       </div>
-      <Table columns={columns} />
+      <Table dataSource={exampleDataSource} columns={columns} />
     </section>
   );
 };

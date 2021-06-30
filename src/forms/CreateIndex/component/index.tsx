@@ -204,8 +204,7 @@ const CreateIndex: React.FC<FormikProps<ICreateIndex> & ICreateIndex> = observer
               values.name === '' ||
               values.symbol === '' ||
               values.startDate === '' ||
-              values.endDate === '' ||
-              values.description === ''
+              values.endDate === '' 
             }
           >
             Create
