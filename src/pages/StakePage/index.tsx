@@ -2,11 +2,14 @@ import React, { useEffect, useState } from 'react';
 
 import { Stake, StakingStatistics } from '../../components';
 import { useWalletConnectorContext } from '../../services/walletConnect';
+import spinner from '../../assets/img/icons/spinner.svg';
 
 const StakePage: React.FC = () => {
   const walletConnector = useWalletConnectorContext();
   const [stakeTokensList, setStakeTokensList] = useState<any[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
   useEffect(() => {
+    setLoading(true);
     walletConnector.metamaskService.getStakingTokensLen().then(async (tokensLength: number) => {
       const tokensList: Array<any> = [];
       const getAddress = async (index: number) => {
@@ -36,6 +39,7 @@ const StakePage: React.FC = () => {
         }
       }
       setStakeTokensList(tokensList);
+      setLoading(false);
     });
   }, [walletConnector.metamaskService]);
 
@@ -44,7 +48,13 @@ const StakePage: React.FC = () => {
   }, []);
   return (
     <main className="container">
-      <Stake tokens={stakeTokensList} />
+      {loading ? (
+        <div className="spinner">
+          <img alt="" src={spinner} width="50" height="50" />
+        </div>
+      ) : (
+        <Stake tokens={stakeTokensList} />
+      )}
       <StakingStatistics />
     </main>
   );

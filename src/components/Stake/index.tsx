@@ -10,6 +10,8 @@ import BigNumber from 'bignumber.js/bignumber';
 import { useWalletConnectorContext } from '../../services/walletConnect';
 import { useMst } from '../../store/store';
 
+import spinner from '../../assets/img/icons/spinner.svg';
+
 export interface IStakeToken {
   address: string;
   name: string;
@@ -27,6 +29,7 @@ const Stake: React.FC<StakeProps> = ({ tokens }) => {
   const [stakeValue, setStakeValue] = useState<string>('');
   const [intervalIndex, setIntervalIndex] = useState<0 | 1 | 2>(0);
   const [isAllowed, setIsAllowed] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const handleStakeItemClick = (index: number) => {
     setActiveStakeIndex(index);
   };
@@ -41,6 +44,7 @@ const Stake: React.FC<StakeProps> = ({ tokens }) => {
     setIntervalIndex(e.target.value);
   };
   const handleStakeStart = () => {
+    setLoading(true);
     walletConnector.metamaskService
       .startStake(tokens[activeStakeIndex].address, stakeValue, intervalIndex)
       .then(() => {
@@ -49,9 +53,11 @@ const Stake: React.FC<StakeProps> = ({ tokens }) => {
       .catch((error: any) => {
         const { response } = error;
         modals.info.setMsg('Error', response, 'error');
-      });
+      })
+      .finally(() => setLoading(false));
   };
   const approveToken = () => {
+    setLoading(true);
     walletConnector.metamaskService
       .approveStake(tokens[activeStakeIndex].address)
       .then(() => {
@@ -60,9 +66,11 @@ const Stake: React.FC<StakeProps> = ({ tokens }) => {
       .catch((error: any) => {
         const { response } = error;
         modals.info.setMsg('Error', response, 'error');
-      });
+      })
+      .finally(() => setLoading(false));
   };
   const checkAllowance = useCallback(() => {
+    setLoading(true);
     walletConnector.metamaskService
       .checkStakingAllowance(tokens[activeStakeIndex].address)
       .then((result: boolean) => {
@@ -72,7 +80,8 @@ const Stake: React.FC<StakeProps> = ({ tokens }) => {
       .catch((err: any) => {
         const { response } = err;
         console.log('stake allowance error', response);
-      });
+      })
+      .finally(() => setLoading(false));
   }, [walletConnector.metamaskService, tokens, activeStakeIndex]);
   useEffect(() => {
     setTokensList(
@@ -100,14 +109,21 @@ const Stake: React.FC<StakeProps> = ({ tokens }) => {
         <div className="stake__title">Available to stake</div>
 
         <div className="stake__content">
-          {tokensList.map((item, index) => (
-            <StakeItem
-              key={nextId()}
-              item={item}
-              onClick={() => handleStakeItemClick(index)}
-              active={activeStakeIndex === index}
-            />
-          ))}
+          {
+          loading ? (
+            <div className="spinner">
+              <img alt="" src={spinner} width="50" height="50" />
+            </div>
+          ) : (
+            tokensList.map((item, index) => (
+              <StakeItem
+                key={nextId()}
+                item={item}
+                onClick={() => handleStakeItemClick(index)}
+                active={activeStakeIndex === index}
+              />
+            ))
+          )}
         </div>
 
         <div className="stake-amount">

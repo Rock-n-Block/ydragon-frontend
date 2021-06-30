@@ -96,15 +96,13 @@ const EventBanner: React.FC = observer(() => {
   return !imeHidden ? (
     <div className={bannerHidden ? 'hidden' : 'event-banner'}>
       <div className="container">
-        <div
-          role="button"
-          tabIndex={0}
+        <Button
           onClick={() => setBannerHidden(true)}
           className="event-banner__close"
-          onKeyDown={() => setBannerHidden(true)}
+          styledType='clear'
         >
           <img src={cross} alt="" width="20" height="20" />
-        </div>
+        </Button>
         <div className="event-banner__inner">
           <div className="event-banner__icon">
             <img src={coinIcon} alt="" width="66" height="75" />

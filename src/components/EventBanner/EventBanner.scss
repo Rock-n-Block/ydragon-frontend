@@ -22,21 +22,6 @@
     display: none;
   }
 
-  &__close {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    width: 30px;
-    height: 30px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    &:hover {
-      cursor: pointer;
-    }
-  }
-
   &__inner {
     padding: 20px 0;
 
@@ -69,6 +54,23 @@
     margin-top: 10px;
 
     display: inline-block;
+  }
+
+  .container {
+    .event-banner__close {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      width: 30px;
+      height: 30px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
   }
 }
 
