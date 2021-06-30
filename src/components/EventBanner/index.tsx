@@ -36,7 +36,9 @@ const EventBanner: React.FC = observer(() => {
   useEffect(() => {
     const endDiff = end.diff(now, 'seconds');
     const startDiff = start.diff(now, 'seconds');
-    if (endDiff > 0 && startDiff < 0) {
+    if (Number.isNaN(endDiff) || Number.isNaN(startDiff)) {
+      setImeHidden(true);
+    } else if (endDiff > 0 && startDiff < 0) {
       setImeEnabled(true);
       setImeHidden(false);
     } else {
