@@ -14,7 +14,7 @@
     line-height: 14px;
     text-align: right;
 
-    color: rgba(white, 0.5);
+    color: rgba($white, 0.5);
   }
 
   &__content {
@@ -30,6 +30,72 @@
   }
 }
 
+.stake-item {
+  padding: 16px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  box-sizing: border-box;
+
+  cursor: pointer;
+
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 40px;
+
+  transition: background-color 0.3s;
+
+  &:hover,
+  &--active {
+    background-color: darken($gray-bg, 3%);
+
+    .stake-item__amount,
+    .stake-item__name {
+      color: $black;
+    }
+    .stake-item__abbr {
+      color: rgba($black, 0.4);
+    }
+  }
+
+  & + & {
+    margin-top: 15px;
+  }
+
+  &__info {
+    display: flex;
+    align-items: center;
+  }
+
+  &__name-wrapper {
+    margin-left: 10px;
+  }
+
+  &__name {
+    font-family: 'TNB', sans-serif;
+    font-size: 18px;
+    line-height: 21px;
+
+    color: $white;
+  }
+
+  &__abbr {
+    font-size: 18px;
+    line-height: 21px;
+    text-transform: uppercase;
+
+    color: rgba($white, 0.4);
+  }
+
+  &__amount {
+    font-family: 'TNB', sans-serif;
+    font-size: 20px;
+    line-height: 24px;
+
+    color: $white;
+  }
+}
 
 .stake-amount {
   $this: &;
@@ -65,7 +131,7 @@
       font-size: 30px;
       line-height: 35px;
     }
-    .ant-input-number{
+    .ant-input-number {
       max-width: unset;
     }
   }

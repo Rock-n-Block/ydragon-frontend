@@ -9,15 +9,29 @@
   justify-content: space-between;
   align-items: center;
 
+  @include b('mobile') {
+    flex-direction: column;
+    gap: 20px;
+  }
+
   @include shadow-block;
 
   &__content {
     display: flex;
+    align-self: start;
   }
 
   &__btns {
     display: flex;
     gap: 20px;
+    @include b('mobile') {
+      width: 100%;
+      justify-content: center;
+
+      .token-panel__btn {
+        max-width: 155px;
+      }
+    }
   }
 }
 

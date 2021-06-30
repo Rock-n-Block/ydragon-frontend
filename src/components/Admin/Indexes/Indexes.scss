@@ -66,3 +66,16 @@
     padding-top: 50px;
   }
 }
+
+.indexs__table-big {
+  @include b(tablet) {
+    display: none;
+  }
+}
+
+.indexs__table-small {
+  display: none;
+  @include b(tablet) {
+    display: block;
+  }
+}

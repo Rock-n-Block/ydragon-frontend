@@ -20,7 +20,17 @@ interface IMetamaskService {
   isProduction?: boolean;
 }
 
-export type ContractTypes = 'BNB' | 'WBNB' | 'MAIN' | 'USDT' | 'YDR' | 'Router' | 'Factory';
+export type ContractTypes =
+  | 'BNB'
+  | 'WBNB'
+  | 'MAIN'
+  | 'USDT'
+  | 'YDR'
+  | 'Router'
+  | 'Factory'
+  | 'Staking'
+  | 'DexFactory'
+  | 'Token';
 
 const networks: INetworks = {
   mainnet: '0x1',
@@ -153,7 +163,7 @@ export default class MetamaskService {
     })[0];
   }
 
-  get getBNBBalance() {
+  getBNBBalance() {
     return this.web3Provider.eth.getBalance(this.walletAddress);
   }
 
@@ -162,6 +172,12 @@ export default class MetamaskService {
       return this.getBNBBalance;
     }
     return this.getContract(currency).methods.balanceOf(this.walletAddress).call();
+  }
+
+  async getBalanceByAddress(address: string) {
+    return this.getContractByAddress(address, config.Token.ABI)
+      .methods.balanceOf(this.walletAddress)
+      .call();
   }
 
   encodeFunctionCall(abi: any, data: Array<any>) {
@@ -226,6 +242,19 @@ export default class MetamaskService {
     try {
       const result = await this.getContract(toContract)
         .methods.allowance(this.walletAddress, address || config[spender || 'MAIN'].ADDRESS)
+        .call();
+
+      if (result === '0') return false;
+      return true;
+    } catch (error) {
+      return false;
+    }
+  }
+
+  async checkStakingAllowance(tokenAddress: string) {
+    try {
+      const result = await this.getContractByAddress(tokenAddress, config.Token.ABI)
+        .methods.allowance(this.walletAddress, config.Staking.ADDRESS)
         .call();
 
       if (result === '0') return false;
@@ -307,6 +336,25 @@ export default class MetamaskService {
       return this.sendTransaction({
         from: this.walletAddress,
         to: config[toContract].ADDRESS,
+        data: approveSignature,
+      });
+    } catch (error) {
+      return error;
+    }
+  }
+
+  async approveStake(address: string) {
+    try {
+      const approveMethod = MetamaskService.getMethodInterface(config.Token.ABI, 'approve');
+
+      const approveSignature = this.encodeFunctionCall(approveMethod, [
+        config.Staking.ADDRESS,
+        '0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff',
+      ]);
+
+      return this.sendTransaction({
+        from: this.walletAddress,
+        to: address,
         data: approveSignature,
       });
     } catch (error) {
@@ -453,6 +501,49 @@ export default class MetamaskService {
       to: config.Router.ADDRESS,
       data: signature,
       value: spenderToken === 'BNB' ? MetamaskService.calcTransactionAmount(value, 18) : '',
+    });
+  }
+
+  getStakingTokensLen() {
+    return this.getContract('Staking').methods.tokensToEnterLen().call();
+  }
+
+  getStakingTokenToEnter(index: number) {
+    return this.getContract('Staking').methods.tokensToEnter(index).call();
+  }
+
+  getStakingPair(address: string) {
+    return this.getContract('DexFactory').methods.getPair(address, config.WBNB.ADDRESS).call();
+  }
+
+  getTokenName(address: string) {
+    return this.getContractByAddress(address, config.Token.ABI).methods.name().call();
+  }
+
+  getTokenSymbol(address: string) {
+    return this.getContractByAddress(address, config.Token.ABI).methods.symbol().call();
+  }
+
+  async getTokenInfoByAddress(address: string) {
+    const tokenName = await this.getTokenName(address);
+    const tokenSymbol = await this.getTokenSymbol(address);
+    const tokenBalance = await this.getBalanceByAddress(address);
+    return { address, name: tokenName, symbol: tokenSymbol, balance: tokenBalance };
+  }
+
+  startStake(tokenAddress: string, amount: string, timeIntervalIndex: number) {
+    const method = MetamaskService.getMethodInterface(config.Staking.ABI, 'stakeStart');
+
+    const signature = this.encodeFunctionCall(method, [
+      tokenAddress,
+      MetamaskService.calcTransactionAmount(amount, 18),
+      timeIntervalIndex,
+    ]);
+
+    return this.sendTransaction({
+      from: this.walletAddress,
+      to: config.Staking.ADDRESS,
+      data: signature,
     });
   }
 

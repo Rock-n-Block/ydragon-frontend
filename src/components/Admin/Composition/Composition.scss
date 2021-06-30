@@ -22,6 +22,10 @@
     grid-template-columns: repeat(3, 1fr);
     grid-column-gap: 20px;
     grid-row-gap: 25px;
+
+    @include b(tablet) {
+      grid-template-columns: repeat(1, 1fr);
+    }
   }
 
   &__change-btn {

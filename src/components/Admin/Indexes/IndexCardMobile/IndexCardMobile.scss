@@ -1,0 +1,31 @@
+.index-card-mobile {
+  background-color: #171b31;
+  padding: 20px 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  font-family: 'MER', sans-serif;
+
+  &:first-child {
+    border-radius: 16px 16px 0 0;
+    margin-top: 12px;
+  }
+
+  &:last-child {
+    border-bottom: none;
+    border-radius: 0 0 16px 16px;
+  }
+
+  &__title {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.5);
+  }
+  &__value {
+    font-size: 18px;
+    color: #fff;
+  }
+
+  &__info {
+    margin: 20px 0;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

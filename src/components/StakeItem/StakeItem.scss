@@ -1,6 +1,6 @@
-@import "src/styles/variables";
+@import 'src/styles/variables';
 .stake-item {
-  padding:21px 40px 21px 16px;
+  padding: 21px 40px 21px 16px;
 
   display: flex;
   justify-content: space-between;
@@ -26,11 +26,9 @@
     background: rgba(255, 255, 255, 0.2);
   }
 
-
   &__amount {
     font-family: 'TNB', sans-serif;
     font-size: 20px;
     line-height: 24px;
-
   }
 }

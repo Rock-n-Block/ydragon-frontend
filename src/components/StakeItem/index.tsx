@@ -1,7 +1,9 @@
 import React from 'react';
-import './StakeItem.scss';
+
 import { TokenMini } from '../index';
 import { TokenMiniProps } from '../TokenMini';
+
+import './StakeItem.scss';
 
 interface StakeItemProps {
   item: IStakeItem;

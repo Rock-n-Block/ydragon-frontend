@@ -3,18 +3,22 @@
 
 .fixed {
   position: fixed;
+  z-index: 100;
 }
 
 .expand {
   z-index: 100;
+  position: relative;
 
   overflow: auto;
 
   width: 100vw;
-
   height: 100vh;
 
-  background: url('../../assets/img/home-dark-bg.png');
+  background-image: url('../../assets/img/home-dark-bg.png');
+  background-repeat: no-repeat;
+  background-blend-mode: unset;
+  background-position: top center;
   background-color: #0e1a37;
   background-repeat: no-repeat;
   background-position: center;
@@ -25,7 +29,7 @@
   transition: all 0.4s;
   background-blend-mode: lighten;
   @include b('tablet') {
-    position: fixed;
+    // position: fixed;
   }
 
   @include b('mobile') {

@@ -16,6 +16,21 @@
 }
 
 .staking-statistics-table {
+  
+  &__big {
+    @include b(tablet) {
+      display: none;
+    }
+  }
+
+  &__small {
+    padding-top: 15px;
+    display: none;
+    @include b(tablet) {
+      display: block;
+    }
+  }
+
   margin-top: 30px;
 
   &__row {
@@ -40,7 +55,7 @@
       font-size: 12px;
       line-height: 14px;
 
-      color: rgba($black, 0.5);
+      color: rgba($white, 0.5);
     }
   }
 
@@ -56,7 +71,7 @@
     font-size: 18px;
     line-height: 21px;
 
-    color: $black;
+    color: $white;
 
     &::before {
       content: '';
@@ -82,7 +97,7 @@
     font-size: 18px;
     line-height: 21px;
 
-    color: $black;
+    color: $white;
   }
 
   &__value {
@@ -90,6 +105,6 @@
     font-size: 18px;
     line-height: 22px;
 
-    color: $black;
+    color: $white;
   }
 }
