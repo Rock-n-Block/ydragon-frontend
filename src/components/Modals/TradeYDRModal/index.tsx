@@ -21,7 +21,7 @@ const TradeYDRModal: React.FC = observer(() => {
     modals.tradeYDR.method === 'sell' ? defaultTokens[0].name : 'YDR',
   );
   const [payInput, setPayInput] = useState<string>('');
-  const [placeholder, setPlaceholder] = useState<string>('0.0');
+
   const [viewOnlyInputValue, setViewOnlyInputValue] = useState<string>('0.0');
   const [balance, setBalance] = useState<number>(0);
   const [isNeedApprove, setIsNeedApprove] = useState<boolean>(true);
@@ -191,9 +191,8 @@ const TradeYDRModal: React.FC = observer(() => {
               onSelectChange={handleSelectChange}
               onChange={(event) => setPayInput(event.target.value)}
               type="number"
-              placeholder={placeholder}
-              onBlur={() => setPlaceholder('0.0')}
-              onFocus={() => setPlaceholder('')}
+              placeholder="0.0"
+              onBlur={getBuyCourse}
             />
           ) : (
             <InputWithSelect
@@ -201,9 +200,8 @@ const TradeYDRModal: React.FC = observer(() => {
               onChange={(event) => setPayInput(event.target.value)}
               tokens={platformToken}
               type="number"
-              placeholder={placeholder}
-              onBlur={() => setPlaceholder('0.0')}
-              onFocus={() => setPlaceholder('')}
+              placeholder="0.0"
+              onBlur={getSellCourse}
             />
           )}
         </div>
