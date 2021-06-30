@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import BigNumber from 'bignumber.js/bignumber';
 
 import logo from '../../assets/img/icons/logo.svg';
+import spinner from '../../assets/img/icons/spinner.svg';
 import { IIndex } from '../../pages/Admin';
 import { indexesApi } from '../../services/api';
 
@@ -18,6 +19,7 @@ interface IUserIndex extends IIndex {
 
 const Dashboard: React.FC = () => {
   const [indexes, setIndexes] = useState<Array<IUserIndex>>();
+  const [loading, setLoading] = useState<boolean>(false);
 
   const calculateOthersWeight = (index: IUserIndex) => {
     const othersArray = index.tokens?.slice(3);
@@ -29,6 +31,7 @@ const Dashboard: React.FC = () => {
   };
 
   const getIndexes = useCallback(() => {
+    setLoading(true);
     indexesApi
       .getUserIndexes()
       .then(({ data }) => {
@@ -37,7 +40,8 @@ const Dashboard: React.FC = () => {
       .catch((error) => {
         const { response } = error;
         console.log('get indexes error', response);
-      });
+      })
+      .finally(() => setLoading(false));
   }, []);
   useEffect(() => {
     getIndexes();
@@ -72,7 +76,9 @@ const Dashboard: React.FC = () => {
         </div>
 
         <div className="index-dashboard__content">
-          {indexes?.map((index: IUserIndex) => (
+          {loading ? <div className="spinner">
+          <img alt="" src={spinner} width="50" height="50" />
+        </div> : indexes?.map((index: IUserIndex) => (
             <div className="index-dashboard__item" key={nextId()}>
               <div className="index-dashboard__row">
                 <Link to={`/index/${index.id}`} className="index-dashboard__col">
