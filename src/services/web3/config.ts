@@ -1,6 +1,6 @@
 export default {
   MAIN: {
-    ADDRESS: '0xb034D614d12984716F8e36E2Ffd276F39BFCC971',
+    ADDRESS: '0xBd78b9097568e05084286B2F2BEfb0Cc9Ac3AbDD',
     ABI: [
       { inputs: [], stateMutability: 'nonpayable', type: 'constructor' },
       {
@@ -289,7 +289,7 @@ export default {
           { internalType: 'uint256', name: 'amount', type: 'uint256' },
         ],
         name: 'mint',
-        outputs: [],
+        outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
         stateMutability: 'payable',
         type: 'function',
       },
@@ -844,7 +844,7 @@ export default {
     ],
   },
   Factory: {
-    ADDRESS: '0x6aF2a5653f809b628bE2529D6f8b863c41A339DA',
+    ADDRESS: '0xDE86B1B612ce49fB24f7707BaF1d41dB158Bc931',
     ABI: [
       {
         inputs: [
@@ -1089,7 +1089,7 @@ export default {
     ],
   },
   Staking: {
-    ADDRESS: '0xbC07aC0976803ae75504a36Ebc6DF27fB6cB6029',
+    ADDRESS: '0x383B364D12bCf8B4854d4Ca85ec5276b8d598De5',
     ABI: [
       {
         inputs: [
@@ -1322,6 +1322,31 @@ export default {
         name: 'treasuryWithdraw',
         outputs: [],
         stateMutability: 'nonpayable',
+        type: 'function',
+      },
+      {
+        inputs: [
+          { internalType: 'address', name: 'user', type: 'address' },
+          { internalType: 'uint256', name: 'from', type: 'uint256' },
+          { internalType: 'uint256', name: 'to', type: 'uint256' },
+        ],
+        name: 'userStakesInfo',
+        outputs: [
+          {
+            components: [
+              { internalType: 'address', name: 'tokenStaked', type: 'address' },
+              { internalType: 'bool', name: 'isLp', type: 'bool' },
+              { internalType: 'uint8', name: 'timeIntervalIndex', type: 'uint8' },
+              { internalType: 'uint256', name: 'timestampStakeStart', type: 'uint256' },
+              { internalType: 'uint256', name: 'amountStaked', type: 'uint256' },
+              { internalType: 'uint256', name: 'amountOfDividends', type: 'uint256' },
+            ],
+            internalType: 'struct Staking.StakeInfoFront[]',
+            name: 'result',
+            type: 'tuple[]',
+          },
+        ],
+        stateMutability: 'view',
         type: 'function',
       },
       {
