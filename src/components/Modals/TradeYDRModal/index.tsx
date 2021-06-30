@@ -57,7 +57,7 @@ const TradeYDRModal: React.FC = observer(() => {
           console.log('getCource error', response);
         });
     } else {
-      setViewOnlyInputValue('0.0')
+      setViewOnlyInputValue('0.0');
     }
   }, [payInput, firstCurrency, walletConnector.metamaskService]);
   const getSellCourse = useCallback(() => {
@@ -75,7 +75,7 @@ const TradeYDRModal: React.FC = observer(() => {
           console.log('getCource error', response);
         });
     } else {
-      setViewOnlyInputValue('0.0')
+      setViewOnlyInputValue('0.0');
     }
   }, [payInput, secondCurrency, walletConnector.metamaskService]);
 
@@ -94,7 +94,7 @@ const TradeYDRModal: React.FC = observer(() => {
   const handleSelectChange = (value: any) => {
     if (modals.tradeYDR.method === 'sell') {
       setSecondCurrency(value);
-      setViewOnlyInputValue('0.0');
+      setPayInput('');
       getSellCourse();
     } else {
       setFirstCurrency(value);
@@ -105,6 +105,7 @@ const TradeYDRModal: React.FC = observer(() => {
     walletConnector.metamaskService
       .approve(firstCurrency, 'Router')
       .then((data: any) => {
+        setPayInput('');
         setIsNeedApprove(false);
         console.log(`approve of ${firstCurrency} to ${secondCurrency} success`, data);
       })
@@ -117,6 +118,7 @@ const TradeYDRModal: React.FC = observer(() => {
     walletConnector.metamaskService
       .buyYDRToken(payInput, firstCurrency)
       .then((data: any) => {
+        setPayInput('');
         console.log(`buy of ${secondCurrency} for ${firstCurrency} success`, data);
       })
       .catch((err: any) => {
@@ -128,6 +130,7 @@ const TradeYDRModal: React.FC = observer(() => {
     walletConnector.metamaskService
       .sellYDRToken(payInput, firstCurrency)
       .then((data: any) => {
+        setPayInput('');
         console.log(`sell of ${firstCurrency} for ${secondCurrency} success`, data);
       })
       .catch((err: any) => {
