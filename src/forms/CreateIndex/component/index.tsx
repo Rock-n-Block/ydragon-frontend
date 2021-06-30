@@ -121,7 +121,7 @@ const CreateIndex: React.FC<FormikProps<ICreateIndex> & ICreateIndex> = observer
         />
         <TextArea
           autoSize={{ minRows: 2 }}
-          placeholder="Enter description"
+          placeholder="Please enter description, you can't do it later"
           className="form-create-index__description"
           name="description"
           value={values.description}
@@ -204,8 +204,7 @@ const CreateIndex: React.FC<FormikProps<ICreateIndex> & ICreateIndex> = observer
               values.name === '' ||
               values.symbol === '' ||
               values.startDate === '' ||
-              values.endDate === '' ||
-              values.description === ''
+              values.endDate === ''
             }
           >
             Create
