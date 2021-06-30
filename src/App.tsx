@@ -4,14 +4,18 @@ import { Route, Switch, useRouteMatch } from 'react-router-dom';
 import { Indexes } from './components/Admin';
 import { GetInModal, InfoModal, MetamaskErrModal } from './components/Modals';
 import AdminIndex from './pages/AdminIndex';
-import { Footer, Header } from './components';
-import { AboutUs, Admin, Auth, Home, Index, IndexDashboard, StakePage, YdrToken } from './pages';
+import { Footer, Header, GuardedRoute } from './components';
+import { AboutUs, Admin, Home, Index, IndexDashboard, StakePage, YdrToken } from './pages';
+
 
 import './styles/index.scss';
 
 export const App: React.FC = () => {
   const main = useRouteMatch();
   const about = useRouteMatch('/about-us');
+
+  const user = !!localStorage?.yd_address || false
+  const admin = !!localStorage?.yd_token || false
 
   const addClass = () => {
     let result;
@@ -31,30 +35,16 @@ export const App: React.FC = () => {
         <Route exact path="/">
           <Home />
         </Route>
-        <Route exact path="/auth">
+        {/* <Route exact path="/auth">
           <Auth />
-        </Route>
-        <Route exact path="/index/:indexId">
-          <Index />
-        </Route>
-        <Route exact path="/ydrtoken">
-          <YdrToken />
-        </Route>
-        <Route exact path="/admin">
-          <Admin />
-        </Route>
-        <Route exact path="/admin">
-          <Indexes />
-        </Route>
-        <Route exact path="/admin/index/:indexId">
-          <AdminIndex />
-        </Route>
-        <Route exact path="/staking">
-          <StakePage />
-        </Route>
-        <Route exact path="/indexes">
-          <IndexDashboard />
-        </Route>
+        </Route> */}
+        <GuardedRoute exact path="/index/:indexId" component={Index} auth={user}/>
+        <GuardedRoute exact path="/ydrtoken" component={YdrToken} auth={user}/>
+        <GuardedRoute exact path="/admin" component={Admin} auth={admin}/>
+        <GuardedRoute exact path="/admin" component={Indexes} auth={admin}/>
+        <GuardedRoute exact path="/admin/index/:indexId" component={AdminIndex} auth={admin}/>
+        <GuardedRoute exact path="/staking" component={StakePage} auth={user}/>
+        <GuardedRoute exact path="/indexes" component={IndexDashboard} auth={user}/>
         <Route exact path="/about-us">
           <AboutUs />
         </Route>
@@ -65,4 +55,4 @@ export const App: React.FC = () => {
       <Footer />
     </div>
   );
-};
+}

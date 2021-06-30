@@ -2,6 +2,7 @@ export { default as Header } from './HeaderDark';
 export { default as Footer } from './FooterDark';
 export { default as Button } from './Button';
 export { default as Input } from './Input';
+export { default as GuardedRoute } from './GuardedRoute';
 export { StyledTextArea as TextArea } from './Input';
 export { InputWithSelect } from './Input';
 // eslint-disable-next-line import/no-cycle
