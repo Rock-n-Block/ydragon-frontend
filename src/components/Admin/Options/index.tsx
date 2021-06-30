@@ -19,7 +19,7 @@ const Options: React.FC<OptionsProps> = observer(({ address }) => {
     undefined,
   );
   const [isError, setIsError] = useState<boolean>(false);
-  const [inputValue, setInputValue] = useState<number>(20);
+  const [inputValue, setInputValue] = useState<string>('');
   const walletConnector = useWalletConnectorContext();
 
   const handleAutoRebalanceChange = (isChecked: boolean) => {
@@ -31,15 +31,17 @@ const Options: React.FC<OptionsProps> = observer(({ address }) => {
       });
   };
   const handleManualRebalanceStart = () => {
-    walletConnector.metamaskService
-      .startXyRebalance(address, +new BigNumber(inputValue).multipliedBy(100).toString(10))
-      .then(() => {
-        modals.info.setMsg('Operation success', 'Rebalance started', 'success');
-      })
-      .catch((error: any) => {
-        const { request } = error;
-        console.log(request);
-      });
+    if (inputValue) {
+      walletConnector.metamaskService
+        .startXyRebalance(address, +new BigNumber(inputValue).multipliedBy(100).toString(10))
+        .then(() => {
+          modals.info.setMsg('Operation success', 'Rebalance started', 'success');
+        })
+        .catch((error: any) => {
+          const { request } = error;
+          console.log(request);
+        });
+    }
   };
   const handleInputChange = (value: any) => {
     setInputValue(value);
@@ -84,6 +86,7 @@ const Options: React.FC<OptionsProps> = observer(({ address }) => {
               value={inputValue}
               min={0}
               max={20}
+              placeholder="20%"
               formatter={(value) => `${value}%`}
               onChange={handleInputChange}
             />
