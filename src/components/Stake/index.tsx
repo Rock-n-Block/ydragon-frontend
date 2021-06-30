@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 
-import { Button } from '../index';
+import { Button, Spinner } from '../index';
 
 import './Stake.scss';
 import StakeItem, { IStakeItem } from '../StakeItem';
@@ -10,8 +10,6 @@ import BigNumber from 'bignumber.js/bignumber';
 import { useWalletConnectorContext } from '../../services/walletConnect';
 import { useMst } from '../../store/store';
 
-import spinner from '../../assets/img/icons/spinner.svg';
-
 export interface IStakeToken {
   address: string;
   name: string;
@@ -19,7 +17,7 @@ export interface IStakeToken {
   balance: string;
 }
 interface StakeProps {
-  tokens: IStakeToken[],
+  tokens: IStakeToken[];
   propsLoading: boolean;
 }
 const Stake: React.FC<StakeProps> = ({ tokens, propsLoading }) => {
@@ -105,28 +103,21 @@ const Stake: React.FC<StakeProps> = ({ tokens, propsLoading }) => {
   }, [tokens.length, checkAllowance]);
   return (
     <section className="section section--admin">
-      {console.log(loading)}
       <h2 className="section__title text-outline">Stake</h2>
 
       <div className="stake">
         <div className="stake__title">Available to stake</div>
 
         <div className="stake__content">
-          {
-          loading ? (
-            <div className="spinner">
-              <img alt="" src={spinner} width="50" height="50" />
-            </div>
-          ) : (
-            tokensList.map((item, index) => (
-              <StakeItem
-                key={nextId()}
-                item={item}
-                onClick={() => handleStakeItemClick(index)}
-                active={activeStakeIndex === index}
-              />
-            ))
-          )}
+          <Spinner loading={loading} />
+          {tokensList.map((item, index) => (
+            <StakeItem
+              key={nextId()}
+              item={item}
+              onClick={() => handleStakeItemClick(index)}
+              active={activeStakeIndex === index}
+            />
+          ))}
         </div>
 
         <div className="stake-amount">

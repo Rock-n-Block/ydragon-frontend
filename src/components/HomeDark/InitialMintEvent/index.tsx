@@ -4,7 +4,7 @@ import { observer } from 'mobx-react-lite';
 import nextId from 'react-id-generator';
 import { indexesApi } from '../../../services/api';
 import { InitialMintEventItem } from '../index';
-import spinner from '../../../assets/img/icons/spinner.svg';
+import { Spinner } from '../../index';
 
 import './InitialMintEvent.scss';
 
@@ -47,21 +47,16 @@ const InitialMintEvent: React.FC = observer(() => {
   }, [getImeList]);
   return (
     <section className="section">
-      <div className='spinner'>
-      {loading && <img alt="" src={spinner} width='50' height='50' />}
-      </div>
-      {!loading &&
-        (imeList.length ? (
-          <>
-            <h2 className="section__title text-outline">INITIAL minting Event</h2>
-            <p className="section__sub-title">FUNDED YDR ALLOCATION FOR INDEX STAKERS</p>
-            {imeList.map((imeItem) => (
-              <InitialMintEventItem key={nextId()} imeItem={imeItem} />
-            ))}
-          </>
-        ) : (
-          <p className="section__sub-title">There is no IME yet</p>
-        ))}
+      {(loading || imeList.length) &&
+        <>
+          <h2 className="section__title text-outline">INITIAL minting Event</h2>
+          <p className="section__sub-title">FUNDED YDR ALLOCATION FOR INDEX STAKERS</p>
+        </>
+      }
+      <Spinner loading={loading} />
+      {imeList.length
+        ? imeList.map((imeItem) => <InitialMintEventItem key={nextId()} imeItem={imeItem} />)
+        : !loading && <p className="section__sub-title">There is no IME yet</p>}
     </section>
   );
 });
