@@ -16,7 +16,7 @@ interface OptionsProps {
 
 const Options: React.FC<OptionsProps> = observer(({ address, onManualInputChange }) => {
   const { modals } = useMst();
-  const [isAutoRebalanceEnabled, setIsAutoRebalanceEnabled] = useState<boolean | undefined>(
+  const [isAutoRebalanceChecked, setIsAutoRebalanceChecked] = useState<boolean | undefined>(
     undefined,
   );
   const [isError, setIsError] = useState<boolean>(false);
@@ -24,11 +24,14 @@ const Options: React.FC<OptionsProps> = observer(({ address, onManualInputChange
   const walletConnector = useWalletConnectorContext();
 
   const handleAutoRebalanceChange = (isChecked: boolean) => {
+    setIsAutoRebalanceChecked(isChecked);
     walletConnector.metamaskService
       .changeAutoXYRebalaceAllowance(address, isChecked)
       .catch((error: any) => {
-        const { request } = error;
-        console.log(request);
+        if (error.code === 4001) {
+          setIsAutoRebalanceChecked(!isChecked);
+        }
+        console.log(error);
       });
   };
   const handleManualRebalanceStart = () => {
@@ -64,7 +67,7 @@ const Options: React.FC<OptionsProps> = observer(({ address, onManualInputChange
       walletConnector.metamaskService
         .checkAutoXYRebalaceAllowance(address)
         .then((data: boolean) => {
-          setIsAutoRebalanceEnabled(data);
+          setIsAutoRebalanceChecked(data);
         })
         .catch((error: any) => {
           const { request } = error;
@@ -77,8 +80,8 @@ const Options: React.FC<OptionsProps> = observer(({ address, onManualInputChange
       <h2 className="section__title text-outline">Index options</h2>
       <div className="options">
         <div className="options__option">
-          {isAutoRebalanceEnabled !== undefined && (
-            <Switch defaultChecked={isAutoRebalanceEnabled} onChange={handleAutoRebalanceChange} />
+          {isAutoRebalanceChecked !== undefined && (
+            <Switch checked={isAutoRebalanceChecked} onChange={handleAutoRebalanceChange} />
           )}
           <p className="options__option-name">Automatic rebalancing</p>
         </div>
