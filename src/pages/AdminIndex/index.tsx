@@ -46,13 +46,17 @@ const AdminIndex: React.FC = () => {
   const [index, setIndex] = useState<IRebalance>({} as IRebalance);
   const [vault, setVault] = useState<IVault[]>([] as IVault[]);
   const [vaultMini, setVaultMini] = useState<IVaultMini[]>([] as IVaultMini[]);
+  const [manualRebalanceValue, setManualRebalanceValue] = useState<string>('');
+
+  const handleManualRebalanceValueChange = (value: string) => {
+    setManualRebalanceValue(value);
+  };
   const getIndexComposition = useCallback(() => {
     // TODO: change indexId dynamically
     indexesApi
       .getIndexesRebalance(+indexId)
       .then(({ data }) => {
         setIndex(data);
-        console.log(data);
       })
       .catch((err) => {
         const { response } = err;
@@ -84,9 +88,12 @@ const AdminIndex: React.FC = () => {
       <IndexInfo marketCap={index.market_cap} price={index.price} />
       <Composition status={index.status} tokens={index.tokens_diff} />
       <Rebalance status={index.status} tokens={index.tokens_diff} />
-      <Options address={index.index?.address} />
+      <Options
+        address={index.index?.address}
+        onManualInputChange={handleManualRebalanceValueChange}
+      />
       <XYStructure vaults={vaultMini} />
-      <TokensStructure vaults={vault} />
+      <TokensStructure vaults={vault} manualRebalanceValue={manualRebalanceValue} />
       <RebalanceModal name={index.index?.name} tokens={index.tokens_diff} />
     </main>
   );
