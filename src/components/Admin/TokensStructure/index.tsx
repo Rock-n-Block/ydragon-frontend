@@ -77,7 +77,7 @@ const TokensStructure: React.FC<TokensStructureProps> = ({ vaults, manualRebalan
         const estimated = new BigNumber(x_vault)
           .plus(y_vault)
           .plus(farm)
-          .multipliedBy(new BigNumber(manualRebalanceValue).dividedBy(100))
+          .multipliedBy(new BigNumber(manualRebalanceValue || 0).dividedBy(100))
           .toFixed(5); // TODO: change multiplier
         const returnValue = new BigNumber(estimated).minus(x_vault).minus(y_vault).isLessThan(0)
           ? '0'
@@ -113,8 +113,8 @@ const TokensStructure: React.FC<TokensStructureProps> = ({ vaults, manualRebalan
                 tokenLogo={data.name.image}
                 index={i}
                 data={[
-                  ['X Vault', `${data.x_vault}%`],
-                  ['Y Vault', `${data.y_vault}%`],
+                  ['X Vault', data.x_vault],
+                  ['Y Vault', data.y_vault],
                   ['Farm', data.farm],
                   ['Estimated X Vault', data.estimated],
                   ['Must be returned from the farm', data.returnValue],

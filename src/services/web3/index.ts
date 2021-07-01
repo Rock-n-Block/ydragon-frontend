@@ -484,9 +484,9 @@ export default class MetamaskService {
       }
     }
 
-    const buyMethod = MetamaskService.getMethodInterface(config.Router.ABI, methodName);
+    const sellMethod = MetamaskService.getMethodInterface(config.Router.ABI, methodName);
 
-    const signature = this.encodeFunctionCall(buyMethod, [
+    const signature = this.encodeFunctionCall(sellMethod, [
       MetamaskService.calcTransactionAmount(value, 18),
       '0x0000000000000000000000000000000000000000',
       otherTokenAddress
@@ -500,7 +500,6 @@ export default class MetamaskService {
       from: this.walletAddress,
       to: config.Router.ADDRESS,
       data: signature,
-      value: spenderToken === 'BNB' ? MetamaskService.calcTransactionAmount(value, 18) : '',
     });
   }
 

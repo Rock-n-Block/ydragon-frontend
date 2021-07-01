@@ -122,7 +122,7 @@ const TradeYDRModal: React.FC = observer(() => {
   };
   const handleSell = (): void => {
     walletConnector.metamaskService
-      .sellYDRToken(payInput, firstCurrency)
+      .sellYDRToken(payInput, secondCurrency)
       .then((data: any) => {
         console.log(`sell of ${firstCurrency} for ${secondCurrency} success`, data);
       })

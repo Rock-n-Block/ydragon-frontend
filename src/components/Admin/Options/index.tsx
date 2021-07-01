@@ -11,10 +11,10 @@ import './Options.scss';
 
 interface OptionsProps {
   address: string;
-  onManualInputBlur: (value: string) => void;
+  onManualInputChange: (value: string) => void;
 }
 
-const Options: React.FC<OptionsProps> = observer(({ address, onManualInputBlur }) => {
+const Options: React.FC<OptionsProps> = observer(({ address, onManualInputChange }) => {
   const { modals } = useMst();
   const [isAutoRebalanceEnabled, setIsAutoRebalanceEnabled] = useState<boolean | undefined>(
     undefined,
@@ -57,9 +57,7 @@ const Options: React.FC<OptionsProps> = observer(({ address, onManualInputBlur }
         setIsError(false);
       }
     }
-  };
-  const handleInputBlur = (value: any) => {
-    console.log(value, onManualInputBlur);
+    onManualInputChange(value);
   };
   useEffect(() => {
     if (address) {
@@ -93,7 +91,6 @@ const Options: React.FC<OptionsProps> = observer(({ address, onManualInputBlur }
               placeholder="20%"
               formatter={(value) => `${value}%`}
               onChange={handleInputChange}
-              onBlur={handleInputBlur}
             />
             {isError && <p className="options__option-error">Minimal decimals equals to 0.01</p>}
           </div>
