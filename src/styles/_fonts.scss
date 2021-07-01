@@ -1,8 +1,16 @@
 @import './_mixins';
 
 //Monument Extended
-@include font-face('Monument Extended', '../assets/fonts/Monument-Extended/Monument-Extended-Regular', normal);
-@include font-face('Monument Extended', '../assets/fonts/Monument-Extended/Monument-Extended-Bold', 800);
+@include font-face(
+  'Monument Extended',
+  '../assets/fonts/Monument-Extended/Monument-Extended-Regular',
+  normal
+);
+@include font-face(
+  'Monument Extended',
+  '../assets/fonts/Monument-Extended/Monument-Extended-Bold',
+  800
+);
 
 // //Rubik
 @include font-face('Rubik', '../assets/fonts/Rubik/Rubik-Regular', normal);

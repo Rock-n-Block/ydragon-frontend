@@ -25,8 +25,9 @@
     display: flex;
     gap: 20px;
     @include b('mobile') {
-      width: 100%;
       justify-content: center;
+
+      width: 100%;
 
       .token-panel__btn {
         max-width: 155px;
@@ -50,9 +51,9 @@
     margin-top: 5px;
 
     font-family: 'TTNorms';
-font-weight: normal;
 
     font-size: 16px;
+    font-weight: normal;
     line-height: 19px;
 
     color: white;

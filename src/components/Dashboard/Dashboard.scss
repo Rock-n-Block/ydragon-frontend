@@ -12,6 +12,7 @@
 
   &__small {
     padding-top: 15px;
+
     display: none;
     @include b(tablet) {
       display: block;
@@ -35,8 +36,8 @@
       align-items: end;
 
       font-family: 'Monument Extended';
-font-weight: normal;
       font-size: 12px;
+      font-weight: normal;
       line-height: 14px;
     }
   }
@@ -94,8 +95,8 @@ font-weight: normal;
 
   &__name {
     font-family: 'Monument Extended';
-font-weight: normal;
     font-size: 14px;
+    font-weight: normal;
     line-height: 17px;
 
     color: white;
@@ -103,16 +104,16 @@ font-weight: normal;
 
   &__market-cup {
     font-family: 'Monument Extended';
-font-weight: normal;
     font-size: 18px;
+    font-weight: normal;
     line-height: 22px;
   }
 
   &__price {
     @include gradient-text;
     font-family: 'Monument Extended';
-font-weight: normal;
     font-size: 18px;
+    font-weight: normal;
     line-height: 22px;
   }
 
@@ -167,30 +168,32 @@ font-weight: normal;
 
   &__token-color {
     --color: #fff;
-
-    &.yellow {
-      --color: #f7931e;
-    }
-    &.blue {
-      --color: #2754cd;
-    }
-    &.red {
-      --color: #d53038;
-    }
-    
-    background-color: var(--color);
     margin-right: 5px;
 
     width: 5px;
     height: 5px;
 
+    background-color: var(--color);
+
     border-radius: 50%;
+
+    &.yellow {
+      --color: #f7931e;
+    }
+
+    &.blue {
+      --color: #2754cd;
+    }
+
+    &.red {
+      --color: #d53038;
+    }
   }
 
   &__token-name {
     font-family: 'TTNorms';
-font-weight: normal;
     font-size: 14px;
+    font-weight: normal;
     line-height: 17px;
     text-transform: uppercase;
   }
@@ -203,26 +206,28 @@ font-weight: normal;
 
   &__token-percent {
     --color: #fff;
-
-    &.yellow {
-      --color: #f7931e;
-    }
-    &.blue {
-      --color: #2754cd;
-    }
-    &.red {
-      --color: #d53038;
-    }
-
     padding-top: 3px;
 
     font-size: 14px;
     line-height: 17px;
     text-align: right;
 
-    border-top: 3px solid;
     border-color: var(--color);
+
+    border-top: 3px solid;
     border-radius: 1px;
+
+    &.yellow {
+      --color: #f7931e;
+    }
+
+    &.blue {
+      --color: #2754cd;
+    }
+
+    &.red {
+      --color: #d53038;
+    }
 
     & + & {
       margin-left: 10px;

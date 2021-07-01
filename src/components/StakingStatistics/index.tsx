@@ -1,7 +1,7 @@
 import React from 'react';
-import SmallTableCard from '../SmallTableCard/index';
 
 import { Button, Table } from '../index';
+import SmallTableCard from '../SmallTableCard/index';
 
 import './StakingStatistics.scss';
 

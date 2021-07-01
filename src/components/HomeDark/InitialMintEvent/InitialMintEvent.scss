@@ -1,12 +1,14 @@
 .no-ime {
+  margin-top: 50px;
+  padding: 70px 60px;
+
   display: flex;
   justify-content: center;
   align-items: center;
+
   background: linear-gradient(238.88deg, #000316 31.18%, #050c25 99.47%);
   border-radius: 32px;
   box-shadow: -8px 8px 36px (0 0 0 / 50%);
-  padding: 70px 60px;
-  margin-top: 50px;
 
   .no-ime__text {
     font-size: 24px;

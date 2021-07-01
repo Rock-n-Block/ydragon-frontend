@@ -3,10 +3,10 @@ import BigNumber from 'bignumber.js/bignumber';
 
 import { IVault } from '../../../pages/AdminIndex';
 import { Table } from '../../index';
+import { InputNumber } from '../../Input';
 import SmallTableCard from '../../SmallTableCard/index';
 
 import './TokensStructure.scss';
-import { InputNumber } from '../../Input';
 
 interface TokensStructureProps {
   vaults: IVault[];

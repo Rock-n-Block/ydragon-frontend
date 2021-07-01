@@ -35,8 +35,8 @@
     position: absolute;
 
     font-family: 'Monument Extended';
-font-weight: 800;
     font-size: 25px;
+    font-weight: 800;
     line-height: 29px;
     letter-spacing: 0.87em;
     text-transform: uppercase;
@@ -80,6 +80,7 @@ font-weight: 800;
     @include b('tablet') {
       flex-direction: column;
       gap: 20px;
+
       align-items: center;
     }
   }

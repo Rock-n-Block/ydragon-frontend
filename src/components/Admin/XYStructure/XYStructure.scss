@@ -5,9 +5,9 @@
 
   &__first-col {
     font-family: 'TTNorms';
-font-weight: normal;
 
     font-size: 18px;
+    font-weight: normal;
     line-height: 21px;
   }
 
@@ -20,6 +20,7 @@ font-weight: normal;
 
   &__small {
     padding-top: 15px;
+
     display: none;
     @include b(tablet) {
       display: block;

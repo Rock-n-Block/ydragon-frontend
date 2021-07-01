@@ -2,7 +2,7 @@ body {
   margin: 0;
 
   font-family: 'Rubik';
-font-weight: normal;
+  font-weight: normal;
 
   color: white;
 }
@@ -33,9 +33,9 @@ p {
   background-color: $main-dark-bg;
   background-image: url('../assets/img/home-dark-bg.png');
   background-repeat: no-repeat;
+  background-position: top center;
   background-size: cover;
   background-blend-mode: unset;
-  background-position: top center;
   // background-blend-mode: overlay;
   &--home {
     background-image: url('../assets/img/home-dark-bg.png'),

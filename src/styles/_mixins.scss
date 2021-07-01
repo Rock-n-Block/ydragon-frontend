@@ -1,17 +1,12 @@
 @import './variables';
 
-@mixin font-face(
-  $font-family,
-  $file-path,
-  $weight: normal,
-  $style: normal
-) {
+@mixin font-face($font-family, $file-path, $weight: normal, $style: normal) {
   @font-face {
     font-family: $font-family;
     font-weight: $weight;
     font-style: $style;
     font-display: swap;
-    src: url('#{$file-path}.woff') format('woff')
+    src: url('#{$file-path}.woff') format('woff');
   }
 }
 
@@ -71,7 +66,7 @@
 
 @mixin gradient-text {
   font-family: 'Monument Extended';
-font-weight: normal;
+  font-weight: normal;
   letter-spacing: 0.1em;
 
   background: $gradient;
@@ -89,11 +84,12 @@ font-weight: normal;
 
 @mixin title-text {
   font-family: 'Monument Extended';
-font-weight: 800;
   font-size: 15px;
+  font-weight: 800;
   line-height: 20px;
   letter-spacing: 0.8em;
   text-transform: uppercase;
+
   color: white;
 }
 

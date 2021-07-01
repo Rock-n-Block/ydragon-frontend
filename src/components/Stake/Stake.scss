@@ -10,8 +10,8 @@
     margin-right: 40px;
 
     font-family: 'Monument Extended';
-font-weight: normal;
     font-size: 12px;
+    font-weight: normal;
     line-height: 14px;
     text-align: right;
 
@@ -24,10 +24,11 @@ font-weight: normal;
 
   &__btn-row {
     margin: 40px auto 0;
-    max-width: 205px;
 
     display: flex;
     justify-content: center;
+
+    max-width: 205px;
   }
 }
 
@@ -55,6 +56,7 @@ font-weight: normal;
     .stake-item__name {
       color: $black;
     }
+
     .stake-item__abbr {
       color: rgba($black, 0.4);
     }
@@ -75,8 +77,8 @@ font-weight: normal;
 
   &__name {
     font-family: 'TTNorms';
-font-weight: 700;
     font-size: 18px;
+    font-weight: 700;
     line-height: 21px;
 
     color: $white;
@@ -92,8 +94,8 @@ font-weight: 700;
 
   &__amount {
     font-family: 'TTNorms';
-font-weight: 700;
     font-size: 20px;
+    font-weight: 700;
     line-height: 24px;
 
     color: $white;
@@ -134,6 +136,7 @@ font-weight: 700;
       font-size: 30px;
       line-height: 35px;
     }
+
     .ant-input-number {
       max-width: unset;
     }
@@ -145,8 +148,8 @@ font-weight: 700;
     right: 36px;
 
     font-family: 'TTNorms';
-font-weight: 700;
     font-size: 16px;
+    font-weight: 700;
     line-height: 19px;
 
     cursor: pointer;
@@ -203,8 +206,8 @@ font-weight: 700;
     height: 100%;
 
     font-family: 'TTNorms';
-font-weight: 700;
     font-size: 16px;
+    font-weight: 700;
     line-height: 19px;
 
     background: rgba(255, 255, 255, 0.1);

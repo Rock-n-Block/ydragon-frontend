@@ -22,19 +22,20 @@
   &__content {
     max-width: 305px;
     @include b('tablet') {
-      max-width: 350px;
-      width: 100%;
-      align-self: center;
       display: flex;
       flex-direction: column;
       align-items: center;
+
+      width: 100%;
+      max-width: 350px;
+      align-self: center;
     }
   }
 
   &__title {
     font-family: 'Monument Extended';
-font-weight: normal;
     font-size: 24px;
+    font-weight: normal;
     line-height: 29px;
 
     color: $white;
@@ -85,8 +86,8 @@ font-weight: normal;
     display: flex;
 
     font-family: 'Monument Extended';
-font-weight: normal;
     font-size: 48px;
+    font-weight: normal;
     line-height: 58px;
     text-align: center;
 

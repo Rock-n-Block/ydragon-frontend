@@ -1,4 +1,5 @@
 import React from 'react';
+
 import './SmallTableCard.scss';
 
 interface ISmallTableCardProps {
