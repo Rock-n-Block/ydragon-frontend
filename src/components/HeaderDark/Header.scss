@@ -44,7 +44,10 @@
 
   height: 120px;
 
-  background-color: #0e1a37;
+  
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0) 100%),
+    linear-gradient(171.49deg, #1a1e3a 3.83%, #161a2a 100%);
+
 
   box-shadow: -8px 8px 12px rgba(13, 36, 82, 0.1);
   @include b('tablet') {
@@ -64,8 +67,6 @@
 }
 
 .header {
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0) 100%),
-    linear-gradient(171.49deg, #1a1e3a 3.83%, #161a2a 100%);
 
   &__menu {
     display: none;
@@ -113,14 +114,16 @@
   &__logo-text {
     margin-left: 15px;
 
-    font-family: 'MEB';
+    font-family: 'Monument Extended';
+font-weight: 800;
     font-size: 16px;
     line-height: 19px;
     letter-spacing: 0.93em;
 
     color: $white;
     @include b('tablet') {
-      font-family: 'MEB';
+      font-family: 'Monument Extended';
+font-weight: 800;
       font-size: 6.96671px;
       line-height: 8px;
     }
@@ -146,7 +149,8 @@
   .container {
     .menu-nav {
       &__link {
-        font-family: 'MEB';
+        font-family: 'Monument Extended';
+font-weight: 800;
         font-size: 18px;
         line-height: 120%;
         text-decoration: none;

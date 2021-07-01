@@ -7,7 +7,8 @@
   border-radius: 16px;
   padding: 25px 20px;
   margin-bottom: 20px;
-  font-family: 'MER', sans-serif;
+  font-family: 'Monument Extended';
+font-weight: normal;
 
   &__header {
     display: flex;
@@ -84,7 +85,8 @@
 
       &__value {
         font-size: 15px;
-        font-family: 'TNB', sans-serif;
+        font-family: 'TTNorms';
+font-weight: 700;
         color: #e7e7e7;
         display: flex;
         align-items: center;
@@ -118,7 +120,8 @@
   }
 
   &__percents {
-    font-family: 'TNB', sans-serif;
+    font-family: 'TTNorms';
+font-weight: 700;
 
     &--item {
       --color: #fff;

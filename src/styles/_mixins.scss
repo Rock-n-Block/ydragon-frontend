@@ -1,5 +1,20 @@
 @import './variables';
 
+@mixin font-face(
+  $font-family,
+  $file-path,
+  $weight: normal,
+  $style: normal
+) {
+  @font-face {
+    font-family: $font-family;
+    font-weight: $weight;
+    font-style: $style;
+    font-display: swap;
+    src: url('#{$file-path}.woff') format('woff')
+  }
+}
+
 @mixin b($point) {
   @if $point==desktop {
     @media (max-width: $mediaWidthLaptop) {
@@ -55,7 +70,8 @@
 }
 
 @mixin gradient-text {
-  font-family: 'MER';
+  font-family: 'Monument Extended';
+font-weight: normal;
   letter-spacing: 0.1em;
 
   background: $gradient;
@@ -72,12 +88,12 @@
 }
 
 @mixin title-text {
-  font-family: 'MEB';
+  font-family: 'Monument Extended';
+font-weight: 800;
   font-size: 15px;
   line-height: 20px;
   letter-spacing: 0.8em;
   text-transform: uppercase;
-
   color: white;
 }
 

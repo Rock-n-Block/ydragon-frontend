@@ -37,7 +37,8 @@
 //
 //    box-sizing: border-box;
 //
-//    font-family: 'MEB';
+//    font-family: 'Monument Extended';
+// font-weight: 800;
 //    font-size: 15px;
 //    line-height: 16px;
 //    text-align: center;
@@ -59,7 +60,8 @@
 //  &-outline {
 //    padding: 10px 20px;
 //
-//    font-family: 'TNB', sans-serif;
+//    font-family: 'TTNorms';
+// font-weight: 700;
 //    font-size: 16px;
 //    line-height: 20px;
 //
@@ -137,7 +139,8 @@
   width: 100%;
   height: auto;
 
-  font-family: 'RB';
+  font-family: 'Rubik';
+font-weight: 700;
   font-size: 16px;
   line-height: 20px;
 
@@ -178,7 +181,8 @@
   &-nav {
     padding: 10px 20px;
 
-    font-family: 'RM';
+    font-family: 'Rubik';
+font-weight: 500;
 
     color: #d53038;
     background-color: transparent;
@@ -220,7 +224,8 @@
 }
 
 .ant-btn-text {
-  font-family: 'RM';
+  font-family: 'Rubik';
+font-weight: 500;
 
   color: $white;
 

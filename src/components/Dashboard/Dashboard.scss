@@ -34,7 +34,8 @@
 
       align-items: end;
 
-      font-family: 'MER', sans-serif;
+      font-family: 'Monument Extended';
+font-weight: normal;
       font-size: 12px;
       line-height: 14px;
     }
@@ -92,7 +93,8 @@
   }
 
   &__name {
-    font-family: 'MER', sans-serif;
+    font-family: 'Monument Extended';
+font-weight: normal;
     font-size: 14px;
     line-height: 17px;
 
@@ -100,14 +102,16 @@
   }
 
   &__market-cup {
-    font-family: 'MER', sans-serif;
+    font-family: 'Monument Extended';
+font-weight: normal;
     font-size: 18px;
     line-height: 22px;
   }
 
   &__price {
     @include gradient-text;
-    font-family: 'MER', sans-serif;
+    font-family: 'Monument Extended';
+font-weight: normal;
     font-size: 18px;
     line-height: 22px;
   }
@@ -184,7 +188,8 @@
   }
 
   &__token-name {
-    font-family: TNR, sans-serif;
+    font-family: 'TTNorms';
+font-weight: normal;
     font-size: 14px;
     line-height: 17px;
     text-transform: uppercase;
