@@ -50,28 +50,6 @@ const EventBanner: React.FC = observer(() => {
       }
     }
   }, [start, end, now]);
-  /* useEffect(() => {
-    if (ime.address) {
-      walletConnector.metamaskService
-        .getStartDate(ime.address)
-        .then((data: any) => {
-          const dateInMilliseconds = new BigNumber(data).multipliedBy(1000).toString();
-          setStart(moment(new Date(+dateInMilliseconds)));
-        })
-        .catch((err: any) => {
-          console.log('get balance error', err);
-        });
-      walletConnector.metamaskService
-        .getEndDate(ime.address)
-        .then((data: any) => {
-          const dateInMilliseconds = new BigNumber(data).multipliedBy(1000).toString();
-          setEnd(moment(new Date(+dateInMilliseconds)));
-        })
-        .catch((err: any) => {
-          console.log('get balance error', err);
-        });
-    }
-  }, [ime.address, walletConnector.metamaskService]); */
 
   const getImeList = useCallback(() => {
     indexesApi
@@ -88,20 +66,22 @@ const EventBanner: React.FC = observer(() => {
     getImeList();
   }, [getImeList]);
   useEffect(() => {
-    setEnd(
-      moment(new Date(+new BigNumber(imeItem.ime_end_timestamp).multipliedBy(1000).toString())),
-    );
-    setStart(
-      moment(new Date(+new BigNumber(imeItem.ime_start_timestamp).multipliedBy(1000).toString())),
-    );
-  }, [imeItem.ime_end_timestamp, imeItem.ime_start_timestamp]);
+    if (imeItem) {
+      setEnd(
+        moment(new Date(+new BigNumber(imeItem.ime_end_timestamp).multipliedBy(1000).toString())),
+      );
+      setStart(
+        moment(new Date(+new BigNumber(imeItem.ime_start_timestamp).multipliedBy(1000).toString())),
+      );
+    }
+  }, [imeItem]);
   return !imeHidden ? (
     <div className={bannerHidden ? 'hidden' : 'event-banner'}>
       <div className="container">
         <Button
           onClick={() => setBannerHidden(true)}
           className="event-banner__close"
-          styledType='clear'
+          styledType="clear"
         >
           <img src={cross} alt="" width="20" height="20" />
         </Button>
