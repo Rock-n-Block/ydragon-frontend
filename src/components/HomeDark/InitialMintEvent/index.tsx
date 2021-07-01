@@ -47,18 +47,14 @@ const InitialMintEvent: React.FC = observer(() => {
   }, [getImeList]);
   return (
     <section className="section">
-      {(loading || imeList.length) && (
-        <>
-          <h2 className="section__title text-outline">INITIAL minting Event</h2>
-          <p className="section__sub-title">FUNDED YDR ALLOCATION FOR INDEX STAKERS</p>
-        </>
-      )}
+      <h2 className="section__title text-outline">INITIAL minting Event</h2>
+      <p className="section__sub-title">FUNDED YDR ALLOCATION FOR INDEX STAKERS</p>
       <Spinner loading={loading} />
       {imeList.length
         ? imeList.map((imeItem) => <InitialMintEventItem key={nextId()} imeItem={imeItem} />)
         : !loading && (
-            <div  className="no-ime">
-              <p className="no-ime__text">There is no IME yet</p>
+            <div className="no-ime">
+              <p className="no-ime__text text-gradient">There is no IME yet</p>
             </div>
           )}
     </section>
