@@ -65,7 +65,7 @@
 }
 
 @mixin gradient-text {
-  font-family: 'Monument Extended';
+  font-family: 'Monument Extended', sans-serif;
   font-weight: normal;
   letter-spacing: 0.1em;
 
@@ -83,7 +83,7 @@
 }
 
 @mixin title-text {
-  font-family: 'Monument Extended';
+  font-family: 'Monument Extended', sans-serif;
   font-size: 15px;
   font-weight: 800;
   line-height: 20px;

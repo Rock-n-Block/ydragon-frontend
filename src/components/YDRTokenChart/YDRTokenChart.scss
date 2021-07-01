@@ -11,7 +11,7 @@
       flex-direction: row;
       align-items: center;
 
-      font-family: 'Monument Extended';
+      font-family: 'Monument Extended', sans-serif;
       font-size: 50px;
       font-weight: normal;
 
@@ -20,7 +20,7 @@
       .diff {
         margin-left: 20px;
 
-        font-family: 'TTNorms';
+        font-family: 'TTNorms', sans-serif;
         font-size: 15px;
         font-weight: normal;
 
@@ -68,7 +68,7 @@
     &-btn {
       padding: 10px 19px;
 
-      font-family: 'TTNorms';
+      font-family: 'TTNorms', sans-serif;
       font-size: 16px;
       font-weight: 700;
 

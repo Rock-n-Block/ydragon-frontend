@@ -1,6 +1,6 @@
 .text {
   &-outline {
-    font-family: 'Monument Extended';
+    font-family: 'Monument Extended', sans-serif;
     font-weight: 800;
     letter-spacing: 0.035em;
     text-transform: uppercase;
@@ -14,7 +14,7 @@
   &-gradient {
     display: inline-block;
 
-    font-family: 'Monument Extended';
+    font-family: 'Monument Extended', sans-serif;
     font-weight: normal;
     letter-spacing: 0.1em;
 
@@ -32,7 +32,7 @@
   }
 
   &-MER {
-    font-family: 'Monument Extended';
+    font-family: 'Monument Extended', sans-serif;
     font-weight: normal;
   }
 }

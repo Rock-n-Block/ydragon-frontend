@@ -22,7 +22,7 @@
 
       align-items: end;
 
-      font-family: 'Monument Extended';
+      font-family: 'Monument Extended', sans-serif;
       font-size: 12px;
       font-weight: normal;
       line-height: 14px;
@@ -37,7 +37,8 @@
   }
 
   &__token {
-    font-family: 'TNR', sans-serif;
+    font-family: 'TTNorms', sans-serif;
+    font-weight: normal;
     font-size: 18px;
     line-height: 21px;
 
@@ -65,7 +66,7 @@
   }
 
   &__price {
-    font-family: 'Monument Extended';
+    font-family: 'Monument Extended', sans-serif;
     font-size: 18px;
     font-weight: normal;
     line-height: 22px;
@@ -84,7 +85,7 @@
 
     width: fit-content;
 
-    font-family: 'TTNorms';
+    font-family: 'TTNorms', sans-serif;
     font-size: 15px;
     font-weight: 700;
     line-height: 18px;

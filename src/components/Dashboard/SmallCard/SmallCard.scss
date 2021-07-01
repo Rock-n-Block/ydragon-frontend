@@ -4,7 +4,7 @@
   margin-bottom: 20px;
   padding: 25px 20px;
 
-  font-family: 'Monument Extended';
+  font-family: 'Monument Extended', sans-serif;
   font-weight: normal;
 
   background: linear-gradient(180deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0) 100%),
@@ -101,7 +101,7 @@
         display: flex;
         align-items: center;
 
-        font-family: 'TTNorms';
+        font-family: 'TTNorms', sans-serif;
         font-size: 15px;
         font-weight: 700;
 
@@ -139,7 +139,7 @@
   }
 
   &__percents {
-    font-family: 'TTNorms';
+    font-family: 'TTNorms', sans-serif;
     font-weight: 700;
 
     &--item {
