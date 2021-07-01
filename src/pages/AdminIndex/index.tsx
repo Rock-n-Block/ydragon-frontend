@@ -27,6 +27,8 @@ interface IRebalance extends IIndexStatus {
   price: number;
 }
 export interface IVault {
+  id: number;
+  apr: null | string;
   token_name: string;
   token_image: string;
   x_balance: string;
@@ -92,8 +94,8 @@ const AdminIndex: React.FC = () => {
         address={index.index?.address}
         onManualInputChange={handleManualRebalanceValueChange}
       />
-      <XYStructure vaults={vaultMini} />
       <TokensStructure vaults={vault} manualRebalanceValue={manualRebalanceValue} />
+      <XYStructure vaults={vaultMini} />
       <RebalanceModal name={index.index?.name} tokens={index.tokens_diff} />
     </main>
   );
