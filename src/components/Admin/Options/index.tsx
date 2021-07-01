@@ -11,9 +11,10 @@ import './Options.scss';
 
 interface OptionsProps {
   address: string;
+  onManualInputBlur: (value: string) => void;
 }
 
-const Options: React.FC<OptionsProps> = observer(({ address }) => {
+const Options: React.FC<OptionsProps> = observer(({ address, onManualInputBlur }) => {
   const { modals } = useMst();
   const [isAutoRebalanceEnabled, setIsAutoRebalanceEnabled] = useState<boolean | undefined>(
     undefined,
@@ -57,6 +58,9 @@ const Options: React.FC<OptionsProps> = observer(({ address }) => {
       }
     }
   };
+  const handleInputBlur = (value: any) => {
+    console.log(value, onManualInputBlur);
+  };
   useEffect(() => {
     if (address) {
       walletConnector.metamaskService
@@ -89,6 +93,7 @@ const Options: React.FC<OptionsProps> = observer(({ address }) => {
               placeholder="20%"
               formatter={(value) => `${value}%`}
               onChange={handleInputChange}
+              onBlur={handleInputBlur}
             />
             {isError && <p className="options__option-error">Minimal decimals equals to 0.01</p>}
           </div>

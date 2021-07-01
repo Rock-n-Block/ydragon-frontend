@@ -10,9 +10,10 @@ import { InputNumber } from '../../Input';
 
 interface TokensStructureProps {
   vaults: IVault[];
+  manualRebalanceValue: string;
 }
 
-const TokensStructure: React.FC<TokensStructureProps> = ({ vaults }) => {
+const TokensStructure: React.FC<TokensStructureProps> = ({ vaults, manualRebalanceValue }) => {
   const columns: any[] = [
     {
       title: 'Tokens per index',
@@ -76,7 +77,7 @@ const TokensStructure: React.FC<TokensStructureProps> = ({ vaults }) => {
         const estimated = new BigNumber(x_vault)
           .plus(y_vault)
           .plus(farm)
-          .multipliedBy(0.2)
+          .multipliedBy(new BigNumber(manualRebalanceValue).dividedBy(100))
           .toFixed(5); // TODO: change multiplier
         const returnValue = new BigNumber(estimated).minus(x_vault).minus(y_vault).isLessThan(0)
           ? '0'
@@ -93,7 +94,7 @@ const TokensStructure: React.FC<TokensStructureProps> = ({ vaults }) => {
       });
       setDataSource(newData);
     }
-  }, [vaults]);
+  }, [manualRebalanceValue, vaults]);
   return (
     <section className="section section--admin">
       <h2 className="section__title text-outline">Tokens structure</h2>
