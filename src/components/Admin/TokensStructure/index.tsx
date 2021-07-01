@@ -7,13 +7,37 @@ import SmallTableCard from '../../SmallTableCard/index';
 
 import './TokensStructure.scss';
 import { InputNumber } from '../../Input';
+import { indexesApi } from '../../../services/api';
+import { useParams } from 'react-router-dom';
 
+interface IIndexId {
+  indexId: string;
+}
 interface TokensStructureProps {
   vaults: IVault[];
   manualRebalanceValue: string;
 }
 
 const TokensStructure: React.FC<TokensStructureProps> = ({ vaults, manualRebalanceValue }) => {
+  const { indexId } = useParams<IIndexId>();
+  const [dataSource, setDataSource] = useState<any[]>([]);
+  const [inputs, setInputs] = useState<any[]>([]);
+  const handleInputChange = (value: string | number, index: number) => {
+    const newArr = [...inputs]; // copying the old datas array
+    newArr[index] = value; // replace e.target.value with whatever you want to change it to
+    setInputs(newArr);
+  };
+  const handleSubmitChange = () => {
+    const aprArray = vaults.map((vault, index) => {
+      return {
+        id: vault.id,
+        apr: inputs[index] || '0',
+      };
+    });
+    indexesApi.patchIndexesApr(+indexId, aprArray).catch((err) => {
+      console.log(err);
+    });
+  };
   const columns: any[] = [
     {
       title: 'Tokens per index',
@@ -57,11 +81,24 @@ const TokensStructure: React.FC<TokensStructureProps> = ({ vaults, manualRebalan
       dataIndex: 'apr',
       key: 'apr',
       render: (item: any) => (
-        <InputNumber type="number" defaultValue={item} placeholder="0" min={0} max={20} />
+        <InputNumber
+          type="number"
+          value={item.apr}
+          onChange={(value) => handleInputChange(value, item.index)}
+          onBlur={handleSubmitChange}
+          placeholder="0"
+          min={0}
+          max={100}
+        />
       ),
     },
   ];
-  const [dataSource, setDataSource] = useState<any[]>([]);
+  useEffect(() => {
+    if (vaults) {
+      const aprArray = vaults.map((vault) => vault.apr || '');
+      setInputs(aprArray);
+    }
+  }, [vaults]);
   useEffect(() => {
     if (vaults) {
       const newData = vaults.map((vault, index) => {
@@ -90,11 +127,12 @@ const TokensStructure: React.FC<TokensStructureProps> = ({ vaults, manualRebalan
           farm,
           estimated,
           returnValue,
+          apr: { apr: inputs[index], index },
         };
       });
       setDataSource(newData);
     }
-  }, [manualRebalanceValue, vaults]);
+  }, [inputs, manualRebalanceValue, vaults]);
   return (
     <section className="section section--admin">
       <h2 className="section__title text-outline">Tokens structure</h2>
@@ -118,7 +156,18 @@ const TokensStructure: React.FC<TokensStructureProps> = ({ vaults, manualRebalan
                   ['Farm', data.farm],
                   ['Estimated X Vault', data.estimated],
                   ['Must be returned from the farm', data.returnValue],
-                  ['APR, %', <InputNumber type="number" placeholder="0" min={0} max={20} />],
+                  [
+                    'APR, %',
+                    <InputNumber
+                      type="number"
+                      value={data.apr.apr}
+                      onChange={(value) => handleInputChange(value, data.apr.index)}
+                      onBlur={handleSubmitChange}
+                      placeholder="0"
+                      min={0}
+                      max={100}
+                    />,
+                  ],
                 ]}
               />
             ))}
