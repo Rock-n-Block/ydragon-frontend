@@ -5,7 +5,7 @@ import { Indexes } from './components/Admin';
 import { GetInModal, InfoModal, MetamaskErrModal } from './components/Modals';
 import AdminIndex from './pages/AdminIndex';
 import { Footer, Header, GuardedRoute } from './components';
-import { AboutUs, Admin, Home, Index, IndexDashboard, StakePage, YdrToken } from './pages';
+import { AboutUs, Admin, Home, Index, IndexDashboard, StakePage, YdrToken, NoPageFound } from './pages';
 
 
 import './styles/index.scss';
@@ -48,6 +48,7 @@ export const App: React.FC = () => {
         <Route exact path="/about-us">
           <AboutUs />
         </Route>
+        <Route component={NoPageFound} />
       </Switch>
       <MetamaskErrModal />
       <InfoModal />
