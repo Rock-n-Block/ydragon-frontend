@@ -61,6 +61,12 @@
   } */
 }
 
+.section--admin {
+  .spinner {
+    padding-top: 50px;
+  }
+}
+
 .indexs__table-big {
   @include b(tablet) {
     display: none;
