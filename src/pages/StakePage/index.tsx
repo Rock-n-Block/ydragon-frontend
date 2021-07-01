@@ -6,7 +6,9 @@ import { useWalletConnectorContext } from '../../services/walletConnect';
 const StakePage: React.FC = () => {
   const walletConnector = useWalletConnectorContext();
   const [stakeTokensList, setStakeTokensList] = useState<any[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
   useEffect(() => {
+    setLoading(true);
     walletConnector.metamaskService.getStakingTokensLen().then(async (tokensLength: number) => {
       const tokensList: Array<any> = [];
       const getAddress = async (index: number) => {
@@ -36,6 +38,7 @@ const StakePage: React.FC = () => {
         }
       }
       setStakeTokensList(tokensList);
+      setLoading(false);
     });
   }, [walletConnector.metamaskService]);
 
@@ -44,7 +47,7 @@ const StakePage: React.FC = () => {
   }, []);
   return (
     <main className="container">
-      <Stake tokens={stakeTokensList} />
+      <Stake tokens={stakeTokensList} propsLoading={loading} />
       <StakingStatistics />
     </main>
   );

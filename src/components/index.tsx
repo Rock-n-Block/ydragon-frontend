@@ -1,6 +1,7 @@
 export { default as Header } from './HeaderDark';
 export { default as Footer } from './FooterDark';
 export { default as Button } from './Button';
+export { default as Spinner } from './Spinner';
 export { default as Input } from './Input';
 export { StyledTextArea as TextArea } from './Input';
 export { InputWithSelect } from './Input';
