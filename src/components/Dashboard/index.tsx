@@ -8,6 +8,8 @@ import { IIndex } from '../../pages/Admin';
 import { indexesApi } from '../../services/api';
 import IndexSmallCard from './SmallCard/index';
 
+import { Spinner } from '../index';
+
 import './Dashboard.scss';
 
 export interface IUserIndex extends IIndex {
@@ -19,6 +21,7 @@ export interface IUserIndex extends IIndex {
 
 const Dashboard: React.FC = () => {
   const [indexes, setIndexes] = useState<Array<IUserIndex>>();
+  const [loading, setLoading] = useState<boolean>(false);
 
   const calculateOthersWeight = (index: IUserIndex) => {
     const othersArray = index.tokens?.slice(3);
@@ -32,6 +35,7 @@ const Dashboard: React.FC = () => {
   const colorsClassNames = ['yellow', 'blue', 'red'];
 
   const getIndexes = useCallback(() => {
+    setLoading(true);
     indexesApi
       .getUserIndexes()
       .then(({ data }) => {
@@ -40,7 +44,8 @@ const Dashboard: React.FC = () => {
       .catch((error) => {
         const { response } = error;
         console.log('get indexes error', response);
-      });
+      })
+      .finally(() => setLoading(false));
   }, []);
 
   useEffect(() => {
@@ -78,6 +83,7 @@ const Dashboard: React.FC = () => {
           </div>
 
           <div className="index-dashboard__content">
+            <Spinner loading={loading} />
             {indexes?.map((index: IUserIndex) => (
               <div className="index-dashboard__item" key={nextId()}>
                 <div className="index-dashboard__row">
