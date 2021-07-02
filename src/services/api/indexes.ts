@@ -1,7 +1,6 @@
 import axios, { axiosWithToken } from '../../core/axios';
 
 export default {
-  getStakingIndexes: (address: string) => axiosWithToken.get(`indexes/staking/${address}`),
   getUserIndexes: () => axios.get('indexes/user'),
   getAdminIndexes: () => axiosWithToken.get('indexes/admin'),
   getImeIndexes: () => axiosWithToken.get('indexes/ime'),

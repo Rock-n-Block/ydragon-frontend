@@ -112,7 +112,6 @@ const StakingStatistics: React.FC = () => {
     getStakingStatistic();
   }, [getStakingStatistic]);
 
-  console.log(dataSource);
   return (
     <section className="section section--admin staking-statistics">
       <h2 className="section__title text-outline">Staking Statistics</h2>

@@ -24,6 +24,11 @@ const SmallTableCard: React.FC<ISmallTableCardProps> = ({
   onSelect,
   isSelected,
 }) => {
+  const handleSelect = () => {
+    if (onSelect) {
+      onSelect(originData);
+    }
+  };
   return (
     <section className="small-card" style={{ top: -index * 15 }}>
       <div className="small-card__header">
@@ -42,9 +47,7 @@ const SmallTableCard: React.FC<ISmallTableCardProps> = ({
         className={`small-card__body ${hoverFeature ? 'small-card__body--hover' : ''} ${
           isSelected && 'small-card__body--selected'
         }`}
-        // eslint-disable-next-line
-        // @ts-ignore
-        onClick={() => onSelect(originData)}
+        onClick={handleSelect}
       >
         {data.map((cell, i) => (
           <div className="small-card__cell">
