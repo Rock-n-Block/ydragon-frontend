@@ -4,6 +4,7 @@ import SmallTableCard from '../SmallTableCard/index';
 import { indexesApi } from '../../services/api';
 
 import { Button, Table } from '../index';
+import SmallTableCard from '../SmallTableCard/index';
 
 import './StakingStatistics.scss';
 import moment from 'moment';

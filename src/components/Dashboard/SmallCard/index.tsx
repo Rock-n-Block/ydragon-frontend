@@ -1,9 +1,11 @@
 import React from 'react';
-import './SmallCard.scss';
-import { IUserIndex } from '../index';
-import logo from '../../../assets/img/icons/logo.svg';
 import { Link } from 'react-router-dom';
 import BigNumber from 'bignumber.js/bignumber';
+
+import logo from '../../../assets/img/icons/logo.svg';
+import { IUserIndex } from '../index';
+
+import './SmallCard.scss';
 
 // colors for line in the card
 const colorsClassNames = ['yellow', 'blue', 'red', 'white'];

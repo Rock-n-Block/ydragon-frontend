@@ -1,4 +1,5 @@
 import React, { Dispatch } from 'react';
+
 import './SmallTableCard.scss';
 
 interface ISmallTableCardProps {

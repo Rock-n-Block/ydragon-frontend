@@ -1,60 +1,22 @@
-@font-face {
-  font-family: 'MER';
-  src: url('../assets/fonts/Monument-Extended-Regular.woff2') format('woff2'),
-    url('../assets/fonts/Monument-Extended-Regular.woff') format('woff');
+@import './_mixins';
 
-  font-weight: normal;
-  font-style: normal;
-}
+//Monument Extended
+@include font-face(
+  'Monument Extended',
+  '../assets/fonts/Monument-Extended/Monument-Extended-Regular',
+  normal
+);
+@include font-face(
+  'Monument Extended',
+  '../assets/fonts/Monument-Extended/Monument-Extended-Bold',
+  800
+);
 
-@font-face {
-  font-family: 'MEB';
-  src: url('../assets/fonts/Monument-Extended-Bold.woff2') format('woff2'),
-    url('../assets/fonts/Monument-Extended-Bold.woff') format('woff');
+// //Rubik
+@include font-face('Rubik', '../assets/fonts/Rubik/Rubik-Regular', normal);
+@include font-face('Rubik', '../assets/fonts/Rubik/Rubik-Medium', 500);
+@include font-face('Rubik', '../assets/fonts/Rubik/Rubik-Bold', 700);
 
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'RR';
-  src: url('../assets/fonts/Rubik-Regular.woff2') format('woff2'),
-    url('../assets/fonts/Rubik-Regular.woff') format('woff');
-
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'RM';
-  src: url('../assets/fonts/Rubik-Medium.woff2') format('woff2'),
-    url('../assets/fonts/Rubik-Medium.woff') format('woff');
-
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'RB';
-  src: url('../assets/fonts/Rubik-Bold.woff2') format('woff2'),
-    url('../assets/fonts/Rubik-Bold.woff') format('woff');
-
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'TNR';
-  src: url('../assets/fonts/TTNorms-Regular.woff') format('woff');
-
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'TNB';
-  src: url('../assets/fonts/TTNorms-Bold.woff') format('woff');
-
-  font-weight: normal;
-  font-style: normal;
-}
+// //TTNorms
+@include font-face('TTNorms', '../assets/fonts/TTNorms/TTNorms-Regular', normal);
+@include font-face('TTNorms', '../assets/fonts/TTNorms/TTNorms-Bold', 700);
