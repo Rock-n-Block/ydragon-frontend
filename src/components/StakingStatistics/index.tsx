@@ -13,9 +13,11 @@ interface IStakingStat {
   months: number;
   end_date: string | Date;
   staked: number | string;
-  reward: number | string;
+  stake_id: number;
+  estimated_rewards: number | string;
+  withdrawn_rewards: number | string;
+  available_rewards: number | string;
   name: string;
-  dividends: number | string;
 }
 
 const StakingStatistics: React.FC = () => {
@@ -64,7 +66,7 @@ const StakingStatistics: React.FC = () => {
     },
   ];
 
-  const [selectedRowKeys, setSelectedRowKeys] = useState<any[]>([]);
+  const [selectedRowKeys, setSelectedRowKeys] = useState<any[]>([0]);
   const selectRow = (record: any) => {
     setSelectedRowKeys([record.key]);
   };
@@ -83,17 +85,22 @@ const StakingStatistics: React.FC = () => {
         const newData = data['binance-smart-chain'].map((stake: IStakingStat, index: number) => {
           return {
             key: index,
+            id: stake.stake_id,
             token: stake.name,
             month: stake.months,
             endDate: moment(stake.end_date).format('MM.DD.YYYY'),
             staked: new BigNumber(stake.staked).dividedBy(new BigNumber(10).pow(18)).toFixed(5),
-            availableRewards: new BigNumber(stake.reward)
+            availableRewards: new BigNumber(stake.available_rewards)
               .dividedBy(new BigNumber(10).pow(18))
               .toFixed(5),
-            withdrawnRewards: 'In progress...',
-            estimatedRewards: new BigNumber(stake.dividends)
+            withdrawnRewards: new BigNumber(stake.withdrawn_rewards)
               .dividedBy(new BigNumber(10).pow(18))
               .toFixed(5),
+            estimatedRewards: stake.estimated_rewards
+              ? new BigNumber(stake.estimated_rewards)
+                  .dividedBy(new BigNumber(10).pow(18))
+                  .toFixed(5)
+              : 'In progress...',
           };
         });
         setDataSource(newData);
