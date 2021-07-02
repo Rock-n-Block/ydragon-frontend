@@ -8,7 +8,7 @@ import logo from '../../assets/img/icons/logo.svg';
 import { TokenPanel } from '../../components';
 import { IndexChart, IndexTable, RebalanceHistory } from '../../components/IndexPage';
 import { IToken } from '../../components/IndexPage/IndexTable';
-import { GetInIndexModal } from '../../components/Modals';
+import { GetInIndexModal, TradeIndexModal } from '../../components/Modals';
 import MintModal from '../../components/Modals/MintModal';
 import RedeemModal from '../../components/Modals/RedeemModal';
 import { ITableData } from '../../components/SplittedTable';
@@ -69,9 +69,18 @@ const Index: React.FC = observer(() => {
   const handleRedeem = () => {
     modals.redeem.open();
   }; */
-  const handleGetIn = () => {
-    modals.getInIndex.open();
+  // const handleGetIn = () => {
+  //   modals.getInIndex.open();
+  // };
+
+  const handleBuy = () => {
+    modals.tradeIndex.open('buy');
+    // walletConnector.metamaskService.buyYDRToken().then().catch();
   };
+  const handleSell = () => {
+    modals.tradeIndex.open('sell');
+  };
+
   useEffect(() => {
     getCurrentIndex();
   }, [getCurrentIndex]);
@@ -99,7 +108,9 @@ const Index: React.FC = observer(() => {
               .toString(),
           },
         ]}
-        handleGetIn={handleGetIn}
+        // handleGetIn={handleGetIn}
+        handleBuy={handleBuy}
+        handleSell={handleSell}
       />
       <RebalanceHistory lastRebalance={indexData?.rebalance_date} />
       <div className="index-table__big">
@@ -129,6 +140,7 @@ const Index: React.FC = observer(() => {
       <IndexChart tokens={getTokens} indexId={indexId} />
       <IndexTable tokens={tokens || indexData?.tokens} />
       {/* <About /> */}
+      <TradeIndexModal token={indexData?.name ? indexData.name : ''} />
       <MintModal />
       <RedeemModal />
       <GetInIndexModal totalData={totalData} indexAddress={indexData?.address ?? ''} />
