@@ -92,7 +92,7 @@ const Options: React.FC<OptionsProps> = observer(({ address, onManualInputChange
               min={0}
               max={20}
               placeholder="20%"
-              formatter={(value) => `${value}%`}
+              formatter={(value) => {return value ? `${value}%` : ''}}
               onChange={handleInputChange}
             />
             {isError && <p className="options__option-error">Minimal decimals equals to 0.01</p>}
