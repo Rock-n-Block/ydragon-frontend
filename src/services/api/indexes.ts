@@ -13,6 +13,10 @@ export default {
       tx_hash,
       description,
     }),
+  patchIndexesApr: (indexId: number, token_info: any) =>
+    axiosWithToken.patch(`indexes/apr/${indexId}`, {
+      token_info,
+    }),
   putIndexesRebalance: (indexId: number, data: any) =>
     axiosWithToken.put(`indexes/${indexId}/rebalance/`, data),
   launchRebalance: (indexId: number) =>
