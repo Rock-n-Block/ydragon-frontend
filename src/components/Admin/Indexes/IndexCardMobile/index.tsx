@@ -1,6 +1,7 @@
 import React from 'react';
-import './IndexCardMobile.scss';
 import { Link } from 'react-router-dom';
+
+import './IndexCardMobile.scss';
 
 interface IIndexCardProps {
   cap: string;

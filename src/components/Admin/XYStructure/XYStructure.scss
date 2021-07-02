@@ -4,9 +4,10 @@
   margin-top: 40px;
 
   &__first-col {
-    font-family: TNR, sans-serif;
+    font-family: 'TTNorms', sans-serif;
 
     font-size: 18px;
+    font-weight: normal;
     line-height: 21px;
   }
 
@@ -19,6 +20,7 @@
 
   &__small {
     padding-top: 15px;
+
     display: none;
     @include b(tablet) {
       display: block;

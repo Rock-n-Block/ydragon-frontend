@@ -4,8 +4,9 @@
       padding-top: 20px;
       padding-bottom: 20px;
 
-      font-family: 'MER', sans-serif;
+      font-family: 'Monument Extended', sans-serif;
       font-size: 18px;
+      font-weight: normal;
       line-height: 22px;
 
       color: #fff;
@@ -34,7 +35,8 @@
     display: flex;
     align-items: center;
 
-    font-family: 'TNR', sans-serif;
+    font-family: 'TTNorms', sans-serif;
+    font-weight: normal;
 
     &__image {
       margin-right: 10px;
@@ -68,8 +70,9 @@
       .ant-table-cell {
         padding-bottom: 13px;
 
-        font-family: 'MER', sans-serif;
+        font-family: 'Monument Extended', sans-serif;
         font-size: 12px;
+        font-weight: normal;
         line-height: 14px;
 
         color: rgba(white, 0.5);

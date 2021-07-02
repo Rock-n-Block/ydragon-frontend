@@ -4,8 +4,9 @@
   }
 
   &__title {
-    font-family: MER, sans-serif;
+    font-family: 'Monument Extended', sans-serif;
     font-size: 20px;
+    font-weight: normal;
     line-height: 24px;
   }
 
@@ -28,8 +29,9 @@
       &-label {
         margin-bottom: 10px;
 
-        font-family: MER, sans-serif;
+        font-family: 'Monument Extended', sans-serif;
         font-size: 12px;
+        font-weight: normal;
         line-height: 14px;
 
         opacity: 0.5;

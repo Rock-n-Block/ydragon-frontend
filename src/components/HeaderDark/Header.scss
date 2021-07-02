@@ -7,26 +7,27 @@
 }
 
 .expand {
-  z-index: 100;
   position: relative;
+  z-index: 100;
 
   overflow: auto;
 
   width: 100vw;
   height: 100vh;
 
+  background-color: #0e1a37;
+
   background-image: url('../../assets/img/home-dark-bg.png');
   background-repeat: no-repeat;
-  background-blend-mode: unset;
-  background-position: top center;
-  background-color: #0e1a37;
   background-repeat: no-repeat;
+  background-position: top center;
   background-position: center;
   background-size: auto 100%;
 
   box-shadow: -8px 8px 12px rgba(13, 36, 82, 0.1);
 
   transition: all 0.4s;
+  background-blend-mode: unset;
   background-blend-mode: lighten;
   @include b('tablet') {
     // position: fixed;
@@ -44,7 +45,8 @@
 
   height: 120px;
 
-  background-color: #0e1a37;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0) 100%),
+    linear-gradient(171.49deg, #1a1e3a 3.83%, #161a2a 100%);
 
   box-shadow: -8px 8px 12px rgba(13, 36, 82, 0.1);
   @include b('tablet') {
@@ -59,15 +61,13 @@
   z-index: 999;
   top: 0;
 
+  margin-bottom: 30px;
+
   display: flex;
   flex-direction: column;
-  margin-bottom: 30px;
 }
 
 .header {
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0) 100%),
-    linear-gradient(171.49deg, #1a1e3a 3.83%, #161a2a 100%);
-
   &__menu {
     display: none;
 
@@ -114,15 +114,17 @@
   &__logo-text {
     margin-left: 15px;
 
-    font-family: 'MEB';
+    font-family: 'Monument Extended', sans-serif;
     font-size: 16px;
+    font-weight: 800;
     line-height: 19px;
     letter-spacing: 0.93em;
 
     color: $white;
     @include b('tablet') {
-      font-family: 'MEB';
+      font-family: 'Monument Extended', sans-serif;
       font-size: 6.96671px;
+      font-weight: 800;
       line-height: 8px;
     }
   }
@@ -147,8 +149,9 @@
   .container {
     .menu-nav {
       &__link {
-        font-family: 'MEB';
+        font-family: 'Monument Extended', sans-serif;
         font-size: 18px;
+        font-weight: 800;
         line-height: 120%;
         text-decoration: none;
 

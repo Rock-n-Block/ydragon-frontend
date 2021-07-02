@@ -7,7 +7,8 @@ import { IIndex } from '../../../pages/Admin';
 import { indexesApi } from '../../../services/api';
 import { useMst } from '../../../store/store';
 import { Sorter } from '../../../utils/sorter';
-import { Button, Table, Spinner } from '../../index';
+import { Button, Spinner, Table } from '../../index';
+
 import { IndexCardMobile } from './IndexCardMobile/index';
 
 import './Indexes.scss';

@@ -1,10 +1,10 @@
 import React, { useCallback, useEffect, useState } from 'react';
+import nextId from 'react-id-generator';
 import { observer } from 'mobx-react-lite';
 
-import nextId from 'react-id-generator';
 import { indexesApi } from '../../../services/api';
-import { InitialMintEventItem } from '../index';
 import { Spinner } from '../../index';
+import { InitialMintEventItem } from '../index';
 
 import './InitialMintEvent.scss';
 
