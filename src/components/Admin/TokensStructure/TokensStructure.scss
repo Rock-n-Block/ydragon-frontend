@@ -6,6 +6,9 @@
     @include b(tablet) {
       display: none;
     }
+    .ant-input-number{
+      max-width: unset;
+    }
   }
 
   &__small {

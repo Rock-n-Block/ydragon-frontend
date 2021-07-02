@@ -36,7 +36,9 @@ const EventBanner: React.FC = observer(() => {
   useEffect(() => {
     const endDiff = end.diff(now, 'seconds');
     const startDiff = start.diff(now, 'seconds');
-    if (endDiff > 0 && startDiff < 0) {
+    if (Number.isNaN(endDiff) || Number.isNaN(startDiff)) {
+      setImeHidden(true);
+    } else if (endDiff > 0 && startDiff < 0) {
       setImeEnabled(true);
       setImeHidden(false);
     } else {
@@ -48,28 +50,6 @@ const EventBanner: React.FC = observer(() => {
       }
     }
   }, [start, end, now]);
-  /* useEffect(() => {
-    if (ime.address) {
-      walletConnector.metamaskService
-        .getStartDate(ime.address)
-        .then((data: any) => {
-          const dateInMilliseconds = new BigNumber(data).multipliedBy(1000).toString();
-          setStart(moment(new Date(+dateInMilliseconds)));
-        })
-        .catch((err: any) => {
-          console.log('get balance error', err);
-        });
-      walletConnector.metamaskService
-        .getEndDate(ime.address)
-        .then((data: any) => {
-          const dateInMilliseconds = new BigNumber(data).multipliedBy(1000).toString();
-          setEnd(moment(new Date(+dateInMilliseconds)));
-        })
-        .catch((err: any) => {
-          console.log('get balance error', err);
-        });
-    }
-  }, [ime.address, walletConnector.metamaskService]); */
 
   const getImeList = useCallback(() => {
     indexesApi
@@ -86,25 +66,25 @@ const EventBanner: React.FC = observer(() => {
     getImeList();
   }, [getImeList]);
   useEffect(() => {
-    setEnd(
-      moment(new Date(+new BigNumber(imeItem.ime_end_timestamp).multipliedBy(1000).toString())),
-    );
-    setStart(
-      moment(new Date(+new BigNumber(imeItem.ime_start_timestamp).multipliedBy(1000).toString())),
-    );
-  }, [imeItem.ime_end_timestamp, imeItem.ime_start_timestamp]);
+    if (imeItem) {
+      setEnd(
+        moment(new Date(+new BigNumber(imeItem.ime_end_timestamp).multipliedBy(1000).toString())),
+      );
+      setStart(
+        moment(new Date(+new BigNumber(imeItem.ime_start_timestamp).multipliedBy(1000).toString())),
+      );
+    }
+  }, [imeItem]);
   return !imeHidden ? (
     <div className={bannerHidden ? 'hidden' : 'event-banner'}>
       <div className="container">
-        <div
-          role="button"
-          tabIndex={0}
+        <Button
           onClick={() => setBannerHidden(true)}
           className="event-banner__close"
-          onKeyDown={() => setBannerHidden(true)}
+          styledType="clear"
         >
           <img src={cross} alt="" width="20" height="20" />
-        </div>
+        </Button>
         <div className="event-banner__inner">
           <div className="event-banner__icon">
             <img src={coinIcon} alt="" width="66" height="75" />

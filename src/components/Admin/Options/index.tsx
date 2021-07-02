@@ -11,35 +11,41 @@ import './Options.scss';
 
 interface OptionsProps {
   address: string;
+  onManualInputChange: (value: string) => void;
 }
 
-const Options: React.FC<OptionsProps> = observer(({ address }) => {
+const Options: React.FC<OptionsProps> = observer(({ address, onManualInputChange }) => {
   const { modals } = useMst();
-  const [isAutoRebalanceEnabled, setIsAutoRebalanceEnabled] = useState<boolean | undefined>(
+  const [isAutoRebalanceChecked, setIsAutoRebalanceChecked] = useState<boolean | undefined>(
     undefined,
   );
   const [isError, setIsError] = useState<boolean>(false);
-  const [inputValue, setInputValue] = useState<number>(20);
+  const [inputValue, setInputValue] = useState<string>('');
   const walletConnector = useWalletConnectorContext();
 
   const handleAutoRebalanceChange = (isChecked: boolean) => {
+    setIsAutoRebalanceChecked(isChecked);
     walletConnector.metamaskService
       .changeAutoXYRebalaceAllowance(address, isChecked)
       .catch((error: any) => {
-        const { request } = error;
-        console.log(request);
+        if (error.code === 4001) {
+          setIsAutoRebalanceChecked(!isChecked);
+        }
+        console.log(error);
       });
   };
   const handleManualRebalanceStart = () => {
-    walletConnector.metamaskService
-      .startXyRebalance(address, +new BigNumber(inputValue).multipliedBy(100).toString(10))
-      .then(() => {
-        modals.info.setMsg('Operation success', 'Rebalance started', 'success');
-      })
-      .catch((error: any) => {
-        const { request } = error;
-        console.log(request);
-      });
+    if (inputValue) {
+      walletConnector.metamaskService
+        .startXyRebalance(address, +new BigNumber(inputValue).multipliedBy(100).toString(10))
+        .then(() => {
+          modals.info.setMsg('Operation success', 'Rebalance started', 'success');
+        })
+        .catch((error: any) => {
+          const { request } = error;
+          console.log(request);
+        });
+    }
   };
   const handleInputChange = (value: any) => {
     setInputValue(value);
@@ -54,13 +60,14 @@ const Options: React.FC<OptionsProps> = observer(({ address }) => {
         setIsError(false);
       }
     }
+    onManualInputChange(value);
   };
   useEffect(() => {
     if (address) {
       walletConnector.metamaskService
         .checkAutoXYRebalaceAllowance(address)
         .then((data: boolean) => {
-          setIsAutoRebalanceEnabled(data);
+          setIsAutoRebalanceChecked(data);
         })
         .catch((error: any) => {
           const { request } = error;
@@ -73,8 +80,8 @@ const Options: React.FC<OptionsProps> = observer(({ address }) => {
       <h2 className="section__title text-outline">Index options</h2>
       <div className="options">
         <div className="options__option">
-          {isAutoRebalanceEnabled !== undefined && (
-            <Switch defaultChecked={isAutoRebalanceEnabled} onChange={handleAutoRebalanceChange} />
+          {isAutoRebalanceChecked !== undefined && (
+            <Switch checked={isAutoRebalanceChecked} onChange={handleAutoRebalanceChange} />
           )}
           <p className="options__option-name">Automatic rebalancing</p>
         </div>
@@ -84,6 +91,7 @@ const Options: React.FC<OptionsProps> = observer(({ address }) => {
               value={inputValue}
               min={0}
               max={20}
+              placeholder="20%"
               formatter={(value) => `${value}%`}
               onChange={handleInputChange}
             />
