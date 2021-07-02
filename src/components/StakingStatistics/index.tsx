@@ -1,39 +1,14 @@
 import React, { useCallback, useEffect, useState } from 'react';
 
+import { indexesApi } from '../../services/api';
+
 import { Button, Table } from '../index';
 import SmallTableCard from '../SmallTableCard/index';
 
 import './StakingStatistics.scss';
-import { indexesApi } from '../../services/api';
 import moment from 'moment';
 import BigNumber from 'bignumber.js/bignumber';
 
-const exampleData = [
-  {
-    tokenName: 'Token 1',
-    headerTitle: 'Token',
-    data: [
-      ['Month', '3'],
-      ['End date', '01.07.2021'],
-      ['Already staked', '5.000'],
-      ['Rewards availavle to withdraw', '0'],
-      ['Already withdrawn rewards', '10'],
-      ['Estimated rewards', '22'],
-    ],
-  },
-  {
-    tokenName: 'Token 1',
-    headerTitle: 'Token',
-    data: [
-      ['Month', '3'],
-      ['End date', '01.07.2021'],
-      ['Already staked', '5.000'],
-      ['Rewards availavle to withdraw', '0'],
-      ['Already withdrawn rewards', '10'],
-      ['Estimated rewards', '22'],
-    ],
-  },
-];
 interface IStakingStat {
   months: number;
   end_date: string | Date;
@@ -129,9 +104,14 @@ const StakingStatistics: React.FC = () => {
       });
   }, []);
 
+  // small card select feature
+  // прокидываешь колбэк и по клику он записывает объект карточки
+  const [selectedCardData, setSelectedCardData] = useState<any>(null);
+
   useEffect(() => {
     getStakingStatistic();
   }, [getStakingStatistic]);
+
   return (
     <section className="section section--admin staking-statistics">
       <h2 className="section__title text-outline">Staking Statistics</h2>
@@ -144,102 +124,29 @@ const StakingStatistics: React.FC = () => {
           Harvest and unstake
         </Button>
       </div>
-      <div className="staking-statistics-table__big">
-        <div className="staking-statistics-table">
-          <div className="staking-statistics-table__row staking-statistics-table__row--head">
-            <div className="staking-statistics-table__col">Token</div>
-            <div className="staking-statistics-table__col">Month</div>
-            <div className="staking-statistics-table__col">End date</div>
-            <div className="staking-statistics-table__col">Already staked</div>
-            <div className="staking-statistics-table__col">
-              Rewards <br /> available to withdraw
-            </div>
-            <div className="staking-statistics-table__col">Already withdrawn rewards</div>
-            <div className="staking-statistics-table__col">Estimated rewards</div>
-          </div>
-
-          <div className="staking-statistics-table__content">
-            <div className="staking-statistics-table__row">
-              <div className="staking-statistics-table__col">
-                <div className="staking-statistics-table__token">Token 1</div>
-              </div>
-              <div className="staking-statistics-table__col">
-                <div className="staking-statistics-table__time">3</div>
-              </div>
-              <div className="staking-statistics-table__col">
-                <div className="staking-statistics-table__date">01.07.2021</div>
-              </div>
-              <div className="staking-statistics-table__col">
-                <div className="staking-statistics-table__value">5,000</div>
-              </div>
-              <div className="staking-statistics-table__col">
-                <div className="staking-statistics-table__value">0</div>
-              </div>
-              <div className="staking-statistics-table__col">
-                <div className="staking-statistics-table__value">10</div>
-              </div>
-              <div className="staking-statistics-table__col">
-                <div className="staking-statistics-table__value">0</div>
-              </div>
-            </div>
-
-            <div className="staking-statistics-table__row">
-              <div className="staking-statistics-table__col">
-                <div className="staking-statistics-table__token">Token 1</div>
-              </div>
-              <div className="staking-statistics-table__col">
-                <div className="staking-statistics-table__time">3</div>
-              </div>
-              <div className="staking-statistics-table__col">
-                <div className="staking-statistics-table__date">01.07.2021</div>
-              </div>
-              <div className="staking-statistics-table__col">
-                <div className="staking-statistics-table__value">5,000</div>
-              </div>
-              <div className="staking-statistics-table__col">
-                <div className="staking-statistics-table__value">0</div>
-              </div>
-              <div className="staking-statistics-table__col">
-                <div className="staking-statistics-table__value">10</div>
-              </div>
-              <div className="staking-statistics-table__col">
-                <div className="staking-statistics-table__value">0</div>
-              </div>
-            </div>
-
-            <div className="staking-statistics-table__row">
-              <div className="staking-statistics-table__col">
-                <div className="staking-statistics-table__token">Token 1</div>
-              </div>
-              <div className="staking-statistics-table__col">
-                <div className="staking-statistics-table__time">3</div>
-              </div>
-              <div className="staking-statistics-table__col">
-                <div className="staking-statistics-table__date">01.07.2021</div>
-              </div>
-              <div className="staking-statistics-table__col">
-                <div className="staking-statistics-table__value">5,000</div>
-              </div>
-              <div className="staking-statistics-table__col">
-                <div className="staking-statistics-table__value">0</div>
-              </div>
-              <div className="staking-statistics-table__col">
-                <div className="staking-statistics-table__value">10</div>
-              </div>
-              <div className="staking-statistics-table__col">
-                <div className="staking-statistics-table__value">0</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
       {/* marginBottom нужен, чтобы выравнить таблицу внизу, тк карточки наславиваются друг на друга через position: relative */}
       <div
         className="staking-statistics-table__small"
-        style={{ marginBottom: (exampleData.length - 1) * -15 }}
+        style={{ marginBottom: (dataSource.length - 1) * -15 }}
       >
-        {exampleData.map((data, index) => (
-          <SmallTableCard hoverFeature {...data} index={index} />
+        {dataSource.map((data, index) => (
+          <SmallTableCard
+            tokenName={data.token}
+            headerTitle="Token"
+            data={[
+              ['Month', data.month],
+              ['End date', data.endDate],
+              ['Already staked', data.staked],
+              ['Rewards available to withdrawn', data.availableRewards],
+              ['Already withdrawn rewards', data.withdrawnRewards],
+              ['Estimated rewards', data.estimatedRewards],
+            ]}
+            index={index}
+            hoverFeature
+            originData={data}
+            onSelect={setSelectedCardData}
+            isSelected={selectedCardData?.key === data.key}
+          />
         ))}
       </div>
       <Table
