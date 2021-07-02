@@ -1,8 +1,8 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import BigNumber from 'bignumber.js/bignumber';
 import { observer } from 'mobx-react-lite';
 import moment from 'moment';
-import BigNumber from 'bignumber.js/bignumber';
 
 import logo from '../../assets/img/icons/logo.svg';
 import { TokenPanel } from '../../components';
@@ -11,11 +11,11 @@ import { IToken } from '../../components/IndexPage/IndexTable';
 import { GetInIndexModal } from '../../components/Modals';
 import MintModal from '../../components/Modals/MintModal';
 import RedeemModal from '../../components/Modals/RedeemModal';
+import SmallTableCard from '../../components/SmallTableCard/index';
 import { ITableData } from '../../components/SplittedTable';
 import { TokenMiniProps } from '../../components/TokenMini';
 import { indexesApi } from '../../services/api';
 import { useMst } from '../../store/store';
-import SmallTableCard from '../../components/SmallTableCard/index';
 
 import './Index.scss';
 

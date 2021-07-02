@@ -1,14 +1,14 @@
 import React, { useCallback, useEffect, useState } from 'react';
-
-import { Button, Spinner } from '../index';
-
-import './Stake.scss';
-import StakeItem, { IStakeItem } from '../StakeItem';
-import { InputNumber } from '../Input';
 import nextId from 'react-id-generator';
 import BigNumber from 'bignumber.js/bignumber';
+
 import { useWalletConnectorContext } from '../../services/walletConnect';
 import { useMst } from '../../store/store';
+import { Button, Spinner } from '../index';
+import { InputNumber } from '../Input';
+import StakeItem, { IStakeItem } from '../StakeItem';
+
+import './Stake.scss';
 
 export interface IStakeToken {
   address: string;

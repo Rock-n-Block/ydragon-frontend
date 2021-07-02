@@ -7,8 +7,9 @@
   padding: 50px 40px 20px;
 
   &__title {
-    font-family: 'MER', sans-serif;
+    font-family: 'Monument Extended', sans-serif;
     font-size: 20px;
+    font-weight: normal;
     line-height: 24px;
 
     color: $black;
@@ -25,8 +26,9 @@
   &__info {
     margin-top: 40px;
 
-    font-family: 'MER', sans-serif;
+    font-family: 'Monument Extended', sans-serif;
     font-size: 20px;
+    font-weight: normal;
     line-height: 24px;
 
     color: rgba($black, 0.4);
