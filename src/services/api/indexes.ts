@@ -17,6 +17,7 @@ export default {
     axiosWithToken.patch(`indexes/apr/${indexId}`, {
       token_info,
     }),
+  getStakingStatistic: (address: string) => axiosWithToken.get(`indexes/staking/${address}`),
   putIndexesRebalance: (indexId: number, data: any) =>
     axiosWithToken.put(`indexes/${indexId}/rebalance/`, data),
   launchRebalance: (indexId: number) =>

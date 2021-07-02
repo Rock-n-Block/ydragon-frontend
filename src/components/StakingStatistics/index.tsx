@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import SmallTableCard from '../SmallTableCard/index';
 
 import { Button, Table } from '../index';
 
 import './StakingStatistics.scss';
+import { indexesApi } from '../../services/api';
+import moment from 'moment';
+import BigNumber from 'bignumber.js/bignumber';
 
 const exampleData = [
   {
@@ -31,8 +34,17 @@ const exampleData = [
     ],
   },
 ];
+interface IStakingStat {
+  months: number;
+  end_date: string | Date;
+  staked: number | string;
+  reward: number | string;
+  name: string;
+  dividends: number | string;
+}
 
 const StakingStatistics: React.FC = () => {
+  const [dataSource, setDataSource] = useState<any[]>([]);
   const columns: any[] = [
     {
       title: 'Token',
@@ -40,8 +52,7 @@ const StakingStatistics: React.FC = () => {
       key: 'token',
       render: (item: any) => (
         <div className="table__col-with-logo">
-          <img src={item.image} className="table__col-with-logo__image" alt={`${item.name} logo`} />
-          <span className="table__col-with-logo__text">{item.name}</span>
+          <span className="table__col-with-logo__text">{item}</span>
         </div>
       ),
     },
@@ -77,6 +88,50 @@ const StakingStatistics: React.FC = () => {
       key: 'estimatedRewards',
     },
   ];
+
+  const [selectedRowKeys, setSelectedRowKeys] = useState<any[]>([]);
+  const selectRow = (record: any) => {
+    setSelectedRowKeys([record.key]);
+  };
+  const onSelectedRowKeysChange = (selectedRow: any) => {
+    setSelectedRowKeys(selectedRow);
+  };
+  const rowSelection = {
+    selectedRowKeys,
+    onChange: onSelectedRowKeysChange,
+  };
+
+  const getStakingStatistic = useCallback(() => {
+    indexesApi
+      .getStakingStatistic(localStorage.yd_address)
+      .then(({ data }) => {
+        const newData = data['binance-smart-chain'].map((stake: IStakingStat, index: number) => {
+          return {
+            key: index,
+            token: stake.name,
+            month: stake.months,
+            endDate: moment(stake.end_date).format('MM.DD.YYYY'),
+            staked: new BigNumber(stake.staked).dividedBy(new BigNumber(10).pow(18)).toFixed(5),
+            availableRewards: new BigNumber(stake.reward)
+              .dividedBy(new BigNumber(10).pow(18))
+              .toFixed(5),
+            withdrawnRewards: 'In progress...',
+            estimatedRewards: new BigNumber(stake.dividends)
+              .dividedBy(new BigNumber(10).pow(18))
+              .toFixed(5),
+          };
+        });
+        setDataSource(newData);
+      })
+      .catch((error) => {
+        const { response } = error;
+        console.log('Error in getting staking stat', response);
+      });
+  }, []);
+
+  useEffect(() => {
+    getStakingStatistic();
+  }, [getStakingStatistic]);
   return (
     <section className="section section--admin staking-statistics">
       <h2 className="section__title text-outline">Staking Statistics</h2>
@@ -187,7 +242,20 @@ const StakingStatistics: React.FC = () => {
           <SmallTableCard hoverFeature {...data} index={index} />
         ))}
       </div>
-      <Table columns={columns} />
+      <Table
+        rowSelection={{
+          type: 'radio',
+          ...rowSelection,
+        }}
+        onRow={(record) => ({
+          onClick: () => {
+            selectRow(record);
+          },
+        })}
+        dataSource={dataSource}
+        columns={columns}
+        className="staking-statistics-table__big"
+      />
     </section>
   );
 };
