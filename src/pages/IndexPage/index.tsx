@@ -140,7 +140,7 @@ const Index: React.FC = observer(() => {
       <IndexChart tokens={getTokens} indexId={indexId} />
       <IndexTable tokens={tokens || indexData?.tokens} />
       {/* <About /> */}
-      <TradeIndexModal token={indexData?.name ? indexData.name : ''} />
+      <TradeIndexModal token={indexData?.name ?? ''} indexAddress={indexData?.address ?? ''} />
       <MintModal />
       <RedeemModal />
       <GetInIndexModal totalData={totalData} indexAddress={indexData?.address ?? ''} />

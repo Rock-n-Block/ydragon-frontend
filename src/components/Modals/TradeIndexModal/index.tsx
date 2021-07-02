@@ -13,9 +13,10 @@ import './TradeIndexModal.scss';
 
 interface TradeIndexModalProps {
   token: string;
+  indexAddress: string;
 }
 
-const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(({ token }) => {
+const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(({ token, indexAddress }) => {
   const walletConnector = useWalletConnectorContext();
   const { user, modals } = useMst();
   const [firstCurrency, setFirstCurrency] = useState<TokenMiniNameTypes>(
@@ -86,33 +87,26 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(({ token }) => 
 
   const checkAllowance = useCallback(() => {
     walletConnector.metamaskService
-      .checkAllowance(firstCurrency, 'Router')
+      .checkAllowance(firstCurrency, 'MAIN', indexAddress)
       .then((data: boolean) => {
-        console.log(`allowance of ${firstCurrency} to ${secondCurrency}: ${data} `);
+        console.log(`allowance of ${firstCurrency}: ${data} `);
         setIsNeedApprove(!data);
       })
       .catch((err: any) => {
         const { response } = err;
         console.log('allowance error', response);
       });
-  }, [walletConnector.metamaskService, firstCurrency, secondCurrency]);
+  }, [indexAddress, walletConnector.metamaskService, firstCurrency]);
   const handleSelectChange = (value: any) => {
-    if (modals.tradeIndex.method === 'sell') {
-      setSecondCurrency(value);
-      setPayInput('');
-      getSellCourse();
-    } else {
-      setFirstCurrency(value);
-      getBuyCourse();
-    }
+    console.log(value);
+    setFirstCurrency(value);
   };
   const handleApprove = (): void => {
     walletConnector.metamaskService
-      .approve(firstCurrency, 'Router')
+      .approve(firstCurrency, undefined, indexAddress)
       .then((data: any) => {
-        setPayInput('');
         setIsNeedApprove(false);
-        console.log(`approve of ${firstCurrency} to ${secondCurrency} success`, data);
+        console.log(`approve of ${firstCurrency} to IME success`, data);
       })
       .catch((err: any) => {
         const { response } = err;
@@ -121,26 +115,24 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(({ token }) => 
   };
   const handleBuy = (): void => {
     walletConnector.metamaskService
-      .buyYDRToken(payInput, firstCurrency)
+      .mint(payInput, firstCurrency, indexAddress)
       .then((data: any) => {
-        setPayInput('');
-        console.log(`buy of ${secondCurrency} for ${firstCurrency} success`, data);
+        console.log('mint', data);
       })
       .catch((err: any) => {
         const { response } = err;
-        console.log('buy error', response);
+        console.log('mint error', response);
       });
   };
   const handleSell = (): void => {
     walletConnector.metamaskService
-      .sellYDRToken(payInput, secondCurrency)
+      .redeem(payInput, firstCurrency, indexAddress)
       .then((data: any) => {
-        setPayInput('');
-        console.log(`sell of ${firstCurrency} for ${secondCurrency} success`, data);
+        console.log('mint', data);
       })
       .catch((err: any) => {
         const { response } = err;
-        console.log('sell error', response);
+        console.log('mint error', response);
       });
   };
   useEffect(() => {
