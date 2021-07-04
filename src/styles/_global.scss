@@ -20,15 +20,63 @@ h6,
 p {
   margin: 0;
 
-  color: white;
+  // color: white;
 }
 
-.dark{
-  background-color: $main-dark-bg;
+.dark {
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p,
+  .section__sub-title,
+  .page__title-label {
+    color: white;
+  }
+  .page-wrapper {
+    background-image: url('../assets/img/home-dark-bg.png');
+    background-color: $main-dark-bg;
+
+    &--home,
+    &--about {
+      background-image: url('../assets/img/home-dark-bg.png'), url('../assets/img/home-dark-bg-bottom.png');
+
+      @include b('tablet') {
+        background-image: url('../assets/img/home-dark-bg.png');
+      }
+    }
+  }
 }
 
-.light{
-  background-color: $main-bg !important;
+.light {
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p,
+  .section__sub-title,
+  .page__title-label {
+    color: $black;
+  }
+  .page-wrapper {
+    background-image: url('../assets/img/home-bg.png');
+    background-color: $main-bg;
+
+    &--home,
+    &--about {
+      background-image: url('../assets/img/home-bg.png'), url('../assets/img/home-bg-bottom.png');
+
+      @include b('tablet') {
+        background-image: url('../assets/img/home-bg.png');
+      }
+    }
+  }
 }
 
 .page-wrapper {
@@ -37,9 +85,8 @@ p {
   justify-content: space-between;
 
   min-height: 100vh;
-  background-color: $main-dark-bg;
+  // background-color: $bg-color;
 
-  background-image: url('../assets/img/home-dark-bg.png');
   background-repeat: no-repeat;
   background-position: top center;
   background-size: cover;
@@ -47,24 +94,17 @@ p {
   // background-blend-mode: overlay;
 
   &--home {
-    background-image: url('../assets/img/home-dark-bg.png'),
-      url('../assets/img/home-dark-bg-bottom.png');
     background-position: top center, bottom 390px center;
     background-size: contain;
     background-blend-mode: unset;
-
   }
 
   &--about {
-    background-color: #000316;
-    background-image: url('../assets/img/home-dark-bg.png'),
-      url('../assets/img/home-dark-bg-bottom.png');
     background-position: top center, bottom 681px center;
     background-size: contain;
     background-blend-mode: unset;
 
     @include b('tablet') {
-      background-image: url('../assets/img/home-dark-bg.png');
       background-position: top center;
       background-size: contain;
       background-blend-mode: unset;
@@ -126,7 +166,7 @@ main {
 
     text-align: center;
 
-    color: $white;
+    // color: $white;
     @include b('tablet') {
       margin: 20px auto 0;
 
@@ -195,7 +235,7 @@ main {
     font-size: 16px;
     line-height: 19px;
 
-    color: white;
+    // color: white;
   }
 }
 

@@ -1,12 +1,21 @@
 @import '../../../styles/_variables.scss';
 @import '../../../styles/mixins';
 
+.dark{
+  .protocols-used__title{
+    color: $white
+  }
+}
+.light{
+  .protocols-used__title{
+    color: $black
+  }
+}
+
 .protocols-used {
   &__title {
     @include title-text;
     text-align: center;
-
-    color: $white;
   }
 
   &__row {
