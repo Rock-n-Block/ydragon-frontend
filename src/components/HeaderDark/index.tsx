@@ -13,16 +13,24 @@ import tw from '../../assets/img/socials/twitter.svg';
 import { useWalletConnectorContext } from '../../services/walletConnect';
 import { useMst } from '../../store/store';
 import EventBanner from '../EventBanner';
-import { Button } from '../index';
+import { Button, Switch } from '../index';
 
 import './Header.scss';
 
 const Header: React.FC = observer(() => {
   const [collapsed, setCollapsed] = useState(true);
   const [fixed, setFixed] = useState(true);
-  const { user } = useMst();
+  const { user, theme } = useMst();
   const walletConnector = useWalletConnectorContext();
   const history = useHistory();
+
+  const handleChangeTheme = () => {
+    if (localStorage.theme === 'light') {
+      theme.setTheme('dark');
+    } else {
+      theme.setTheme('light');
+    }
+  };
 
   const handleLogOut = () => {
     setCollapsed(true);
@@ -136,6 +144,7 @@ const Header: React.FC = observer(() => {
             </nav>
 
             <div className="header__sign">
+            <Switch checked={theme.value === 'dark'} onChange={handleChangeTheme} />
               <ul className="header-nav">
                 {user.address && (
                   <li className="header-nav__item">

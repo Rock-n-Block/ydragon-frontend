@@ -1,5 +1,6 @@
 import React from 'react';
 import { Route, Switch, useRouteMatch } from 'react-router-dom';
+import { observer } from 'mobx-react-lite';
 
 import { Indexes } from './components/Admin';
 import { GetInModal, InfoModal, MetamaskErrModal } from './components/Modals';
@@ -16,11 +17,15 @@ import {
   YdrToken,
 } from './pages';
 
+import { useMst } from './store/store';
+
 import './styles/index.scss';
 
-export const App: React.FC = () => {
+export const App: React.FC = observer(() => {
   const main = useRouteMatch();
   const about = useRouteMatch('/about-us');
+  const { theme } = useMst();
+
 
   const user = !!localStorage?.yd_address || false;
   const admin = !!localStorage?.yd_token || false;
@@ -28,10 +33,10 @@ export const App: React.FC = () => {
   const addClass = () => {
     let result;
     if (main.isExact) {
-      result = 'page-wrapper page-wrapper--home';
+      result = `page-wrapper page-wrapper--home ${theme.value}`;
     } else if (about) {
-      result = 'page-wrapper page-wrapper--about';
-    } else result = 'page-wrapper';
+      result = `page-wrapper page-wrapper--about ${theme.value}`;
+    } else result = `page-wrapper ${theme.value}`;
     return result;
   };
 
@@ -64,4 +69,4 @@ export const App: React.FC = () => {
       <Footer />
     </div>
   );
-};
+});

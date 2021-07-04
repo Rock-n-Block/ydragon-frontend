@@ -23,26 +23,36 @@ p {
   color: white;
 }
 
+.dark{
+  background-color: $main-dark-bg;
+}
+
+.light{
+  background-color: $main-bg !important;
+}
+
 .page-wrapper {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 
   min-height: 100vh;
-
   background-color: $main-dark-bg;
+
   background-image: url('../assets/img/home-dark-bg.png');
   background-repeat: no-repeat;
   background-position: top center;
   background-size: cover;
   background-blend-mode: unset;
   // background-blend-mode: overlay;
+
   &--home {
     background-image: url('../assets/img/home-dark-bg.png'),
       url('../assets/img/home-dark-bg-bottom.png');
     background-position: top center, bottom 390px center;
     background-size: contain;
     background-blend-mode: unset;
+
   }
 
   &--about {
