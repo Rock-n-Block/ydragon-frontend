@@ -111,9 +111,7 @@ const StakingStatistics: React.FC = () => {
       });
   }, []);
 
-  // small card select feature
-  // прокидываешь колбэк и по клику он записывает объект карточки
-  const [selectedCardData, setSelectedCardData] = useState<any>(null);
+  const handleHarvest = useCallback(() => {}, []);
 
   useEffect(() => {
     getStakingStatistic();
@@ -124,7 +122,7 @@ const StakingStatistics: React.FC = () => {
       <h2 className="section__title text-outline">Staking Statistics</h2>
 
       <div className="staking-statistics__btn-row">
-        <Button className="staking-statistics__btn" styledType="outline">
+        <Button className="staking-statistics__btn" styledType="outline" onClick={handleHarvest}>
           Harvest
         </Button>
         <Button className="staking-statistics__btn" styledType="outline">
@@ -151,8 +149,8 @@ const StakingStatistics: React.FC = () => {
             index={index}
             hoverFeature
             originData={data}
-            onSelect={setSelectedCardData}
-            isSelected={selectedCardData?.key === data.key}
+            onSelect={selectRow}
+            isSelected={selectedRowKeys[0] === data.key}
           />
         ))}
       </div>
