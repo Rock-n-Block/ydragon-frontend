@@ -1,6 +1,32 @@
 @import '../../../styles/_variables.scss';
 @import '../../../styles/_mixins.scss';
 
+.dark {
+  .index-table {
+    &__content {
+      @include shadow-block;
+    }
+    &__token,
+    &__price {
+      color: white;
+    }
+    &__row--head{
+      color: rgba(255, 255, 255, 0.4);
+    }
+  }
+}
+.light {
+  .index-table {
+    &__content {
+      @include shadow-light-block;
+    }
+    &__token,
+    &__price,
+    &__row--head {
+      color: $black;
+    }
+  }
+}
 .index-table {
   margin-top: 60px;
 
@@ -26,13 +52,10 @@
       font-size: 12px;
       font-weight: normal;
       line-height: 14px;
-
-      color: rgba(255, 255, 255, 0.4);
     }
   }
 
   &__content {
-    @include shadow-block;
     padding: 0 20px;
   }
 
@@ -41,8 +64,6 @@
     font-weight: normal;
     font-size: 18px;
     line-height: 21px;
-
-    color: $white;
   }
 
   &__first-col {
@@ -70,8 +91,6 @@
     font-size: 18px;
     font-weight: normal;
     line-height: 22px;
-
-    color: $white;
   }
 
   &__percent-change {

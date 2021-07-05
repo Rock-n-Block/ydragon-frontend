@@ -1,6 +1,46 @@
 @import '../../styles/variables';
 @import '../../styles/mixins';
 
+.dark {
+  .staking-statistics-table {
+    &__row {
+      & + & {
+        border-top: 1px solid rgba($white, 0.1);
+      }
+      &--head {
+        color: rgba($white, 0.5);
+      }
+    }
+    &__content {
+      @include shadow-block;
+    }
+    &__token,
+    &__date,
+    &__value {
+      color: $white;
+    }
+  }
+}
+.light {
+  .staking-statistics-table {
+    &__row {
+      & + & {
+        border-top: 1px solid rgba($black, 0.1);
+      }
+      &--head {
+        color: rgba($black, 0.5);
+      }
+    }
+    &__content {
+      @include light-block;
+    }
+    &__token,
+    &__date,
+    &__value {
+      color: $black;
+    }
+  }
+}
 .staking-statistics {
   &__btn-row {
     margin-top: 20px;
@@ -41,10 +81,6 @@
     grid-template-columns: 220px 60px 100px repeat(4, 1fr);
     grid-column-gap: 20px;
 
-    & + & {
-      border-top: 1px solid rgba($black, 0.1);
-    }
-
     &--head {
       margin-bottom: 10px;
       padding: 0 30px;
@@ -55,14 +91,11 @@
       font-size: 12px;
       font-weight: normal;
       line-height: 14px;
-
-      color: rgba($white, 0.5);
     }
   }
 
   &__content {
     padding: 0 20px;
-    @include shadow-block;
   }
 
   &__token {
@@ -71,8 +104,6 @@
 
     font-size: 18px;
     line-height: 21px;
-
-    color: $white;
 
     &::before {
       content: '';
@@ -97,8 +128,6 @@
   &__date {
     font-size: 18px;
     line-height: 21px;
-
-    color: $white;
   }
 
   &__value {
@@ -106,7 +135,5 @@
     font-size: 18px;
     font-weight: normal;
     line-height: 22px;
-
-    color: $white;
   }
 }

@@ -1,8 +1,10 @@
 import React from 'react';
 import { Modal as ModalAntd } from 'antd';
 import classNames from 'classnames';
+import { observer } from 'mobx-react-lite';
 
 import { ReactComponent as CloseImg } from '../../../assets/img/icons/icon-close.svg';
+import { useMst } from '../../../store/store';
 
 interface IModal {
   isVisible: boolean;
@@ -13,7 +15,7 @@ interface IModal {
   closeIcon?: boolean;
 }
 
-const Modal: React.FC<IModal> = ({
+const Modal: React.FC<IModal> = observer(({
   children,
   isVisible,
   handleCancel,
@@ -22,6 +24,7 @@ const Modal: React.FC<IModal> = ({
   destroyOnClose = false,
   closeIcon = false,
 }) => {
+  const { theme } = useMst();
   return (
     <ModalAntd
       title={false}
@@ -33,11 +36,11 @@ const Modal: React.FC<IModal> = ({
       centered
       destroyOnClose={destroyOnClose}
       width={width}
-      className={classNames('modal', className)}
+      className={classNames(`${theme.value} modal`, className)}
     >
       {children}
     </ModalAntd>
   );
-};
+})
 
 export default Modal;

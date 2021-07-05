@@ -1,11 +1,42 @@
 @import '../../styles/_variables.scss';
 @import '../../styles/mixins';
 
+.dark {
+  .footer {
+    background-color: $footer-dark-bg;
+    &__logo-text,
+    &__descr {
+      color: $white;
+    }
+    &__copyright {
+      color: #afb5c0;
+    }
+    &__links-title {
+      color: #c7cfe2;
+    }
+    &__socials-item {
+      background-color: #0b1532;
+    }
+  }
+}
+.light {
+  .footer {
+    background-color: $footer-bg;
+    &__logo-text,
+    &__descr,
+    &__copyright,
+    &__links-title {
+      color: $black;
+    }
+    &__socials-item {
+      background-color: #e9ebf3;
+    }
+  }
+}
 .footer {
   margin-top: 240px;
   padding: 60px 0;
 
-  background-color: $footer-dark-bg;
   @include b('tablet') {
     margin-top: 140px;
 
@@ -44,8 +75,6 @@
     font-weight: 800;
     line-height: 19px;
     letter-spacing: 0.93em;
-
-    color: $white;
   }
 
   &__descr {
@@ -55,7 +84,6 @@
     line-height: 24px;
     letter-spacing: 0.035em;
 
-    color: $white;
     @include b('tablet') {
       text-align: center;
     }
@@ -75,7 +103,6 @@
     width: 32px;
     height: 32px;
 
-    background-color: #0b1532;
     border-radius: 50%;
     box-shadow: 0 13px 18px rgba(17, 19, 35, 0.08);
 
@@ -89,8 +116,6 @@
 
     font-size: 16px;
     line-height: 30px;
-
-    color: #afb5c0;
   }
 
   &__links-title {
@@ -98,8 +123,6 @@
     font-size: 18px;
     font-weight: 500;
     line-height: 30px;
-
-    color: #c7cfe2;
   }
 
   &__links {

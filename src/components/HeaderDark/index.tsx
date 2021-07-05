@@ -4,7 +4,9 @@ import { Link } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 
 import cross from '../../assets/img/icons/icon-cross.svg';
+import crossBlack from '../../assets/img/icons/icon-cross-black.svg';
 import iconMenu from '../../assets/img/icons/icon-menu.svg';
+import iconMenuBlack from '../../assets/img/icons/icon-menu-black.svg';
 import logo from '../../assets/img/icons/logo.svg';
 import dis from '../../assets/img/socials/discord.svg';
 import md from '../../assets/img/socials/medium.svg';
@@ -68,7 +70,11 @@ const Header: React.FC = observer(() => {
               onClick={() => setCollapsed(!collapsed)}
               className="header__menu"
             >
-              <img alt="#" src={collapsed ? iconMenu : cross} />
+              {theme.value === 'dark' ? (
+                <img alt="#" src={collapsed ? iconMenu : cross} />
+              ) : (
+                <img alt="#" src={collapsed ? iconMenuBlack : crossBlack} />
+              )}
             </div>
             {collapsed ? (
               <div className="header__logo">
@@ -79,6 +85,7 @@ const Header: React.FC = observer(() => {
               </div>
             ) : (
               <div className="menu__sign">
+              <Switch checked={theme.value === 'dark'} onChange={handleChangeTheme} />
                 <ul className="menu-nav">
                   {user.address && (
                     <li className="menu-nav__item">
@@ -144,7 +151,7 @@ const Header: React.FC = observer(() => {
             </nav>
 
             <div className="header__sign">
-            <Switch checked={theme.value === 'dark'} onChange={handleChangeTheme} />
+              <Switch checked={theme.value === 'dark'} onChange={handleChangeTheme} />
               <ul className="header-nav">
                 {user.address && (
                   <li className="header-nav__item">

@@ -4,7 +4,12 @@ body {
   font-family: 'Rubik', sans-serif;
   font-weight: normal;
 
-  color: white;
+  .dark {
+    color: white;
+  }
+  .light {
+    color: #000316;
+  }
 }
 
 img {
@@ -24,7 +29,6 @@ p {
 }
 
 .dark {
-
   h1,
   h2,
   h3,
@@ -42,17 +46,20 @@ p {
 
     &--home,
     &--about {
-      background-image: url('../assets/img/home-dark-bg.png'), url('../assets/img/home-dark-bg-bottom.png');
+      background-image: url('../assets/img/home-dark-bg.png'),
+        url('../assets/img/home-dark-bg-bottom.png');
 
       @include b('tablet') {
         background-image: url('../assets/img/home-dark-bg.png');
       }
     }
   }
+  .page__title-icon--index {
+    @include shadow-block;
+  }
 }
 
 .light {
-
   h1,
   h2,
   h3,
@@ -76,6 +83,9 @@ p {
         background-image: url('../assets/img/home-bg.png');
       }
     }
+  }
+  .page__title-icon--index {
+    @include shadow-light-block;
   }
 }
 
@@ -207,10 +217,6 @@ main {
     height: 64px;
 
     border-radius: 50% !important;
-
-    &--index {
-      @include shadow-block;
-    }
 
     &--ydr {
       background-color: #191c34;
