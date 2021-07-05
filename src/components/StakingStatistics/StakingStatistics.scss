@@ -20,6 +20,11 @@
       color: $white;
     }
   }
+  .staking-statistics__btn{
+    color: $white !important;
+    background-color: transparent;
+    border: 1px solid $white !important;
+  }
 }
 .light {
   .staking-statistics-table {
@@ -39,6 +44,11 @@
     &__value {
       color: $black;
     }
+  }
+  .staking-statistics__btn{
+    color: $black !important;
+    background-color: transparent;
+    border: 1px solid $black !important;
   }
 }
 .staking-statistics {

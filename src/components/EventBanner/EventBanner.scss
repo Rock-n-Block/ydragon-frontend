@@ -1,6 +1,20 @@
 @import '../../styles/variables';
 @import '../../styles/mixins';
 
+.dark {
+  .event-banner-timer {
+    &__title {
+      color: $white;
+    }
+  }
+}
+.light {
+  .event-banner-timer {
+    &__title {
+      color: $white;
+    }
+  }
+}
 .hidden {
   display: none;
 }
@@ -87,8 +101,6 @@
   &__title {
     @include title-text;
     text-align: center;
-
-    color: $white;
   }
 
   &__row {
