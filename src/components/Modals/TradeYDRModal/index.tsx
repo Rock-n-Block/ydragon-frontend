@@ -10,6 +10,7 @@ import { Button, InputWithSelect } from '../../index';
 import { Modal } from '../index';
 
 import './TradeYDRModal.scss';
+import config from '../../../services/web3/config';
 
 const TradeYDRModal: React.FC = observer(() => {
   const walletConnector = useWalletConnectorContext();
@@ -32,7 +33,7 @@ const TradeYDRModal: React.FC = observer(() => {
   };
   const getBalance = useCallback(() => {
     walletConnector.metamaskService
-      .getBalanceOf(firstCurrency)
+      .getBalanceOf(config[firstCurrency].ADDRESS)
       .then((data: any) => {
         console.log(`Balance: ${data} ${firstCurrency}`);
         setBalance(data);

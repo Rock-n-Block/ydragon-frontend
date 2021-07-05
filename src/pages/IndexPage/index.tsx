@@ -8,12 +8,10 @@ import logo from '../../assets/img/icons/logo.svg';
 import { TokenPanel } from '../../components';
 import { IndexChart, IndexTable, RebalanceHistory } from '../../components/IndexPage';
 import { IToken } from '../../components/IndexPage/IndexTable';
-import { GetInIndexModal, TradeIndexModal } from '../../components/Modals';
+import { TradeIndexModal } from '../../components/Modals';
 import MintModal from '../../components/Modals/MintModal';
 import RedeemModal from '../../components/Modals/RedeemModal';
 import SmallTableCard from '../../components/SmallTableCard/index';
-import { ITableData } from '../../components/SplittedTable';
-import { TokenMiniProps } from '../../components/TokenMini';
 import { indexesApi } from '../../services/api';
 import { useMst } from '../../store/store';
 
@@ -41,41 +39,16 @@ const Index: React.FC = observer(() => {
     setTokens(value);
   };
   const [indexData, setIndexData] = useState<IIndex | undefined>();
-  const [totalData, setTotalData] = useState<ITableData[]>([] as ITableData[]);
 
   const getCurrentIndex = useCallback(() => {
     indexesApi.getIndexById(+indexId).then(({ data }) => {
       setIndexData(data);
-      setTotalData(
-        data.tokens.map((token: IToken) => {
-          return [
-            {
-              icon: token.image,
-              name: token.name,
-              symbol: token.symbol,
-            } as TokenMiniProps,
-            token.count,
-            `$${token.price_for_one}`,
-            `$${token.price_total}`,
-          ];
-        }),
-      );
-      console.log('getIndexes', data, setTotalData);
+      console.log('getIndexes', data);
     });
   }, [indexId]);
-  /* const handleMint = () => {
-    modals.mint.open();
-  };
-  const handleRedeem = () => {
-    modals.redeem.open();
-  }; */
-  // const handleGetIn = () => {
-  //   modals.getInIndex.open();
-  // };
 
   const handleBuy = () => {
     modals.tradeIndex.open('buy');
-    // walletConnector.metamaskService.buyYDRToken().then().catch();
   };
   const handleSell = () => {
     modals.tradeIndex.open('sell');
@@ -108,7 +81,6 @@ const Index: React.FC = observer(() => {
               .toString(),
           },
         ]}
-        // handleGetIn={handleGetIn}
         handleBuy={handleBuy}
         handleSell={handleSell}
       />
@@ -143,7 +115,6 @@ const Index: React.FC = observer(() => {
       <TradeIndexModal token={indexData?.name ?? ''} indexAddress={indexData?.address ?? ''} />
       <MintModal />
       <RedeemModal />
-      <GetInIndexModal totalData={totalData} indexAddress={indexData?.address ?? ''} />
     </main>
   );
 });

@@ -167,11 +167,13 @@ export default class MetamaskService {
     return this.web3Provider.eth.getBalance(this.walletAddress);
   }
 
-  getBalanceOf(currency: ContractTypes) {
-    if (currency === 'BNB') {
+  getBalanceOf(address: string) {
+    if (address === '0x0000000000000000000000000000000000000000') {
       return this.getBNBBalance();
     }
-    return this.getContract(currency).methods.balanceOf(this.walletAddress).call();
+    return this.getContractByAddress(address, config.Token.ABI)
+      .methods.balanceOf(this.walletAddress)
+      .call();
   }
 
   async getBalanceByAddress(address: string) {
@@ -242,6 +244,19 @@ export default class MetamaskService {
     try {
       const result = await this.getContract(toContract)
         .methods.allowance(this.walletAddress, address || config[spender || 'MAIN'].ADDRESS)
+        .call();
+
+      if (result === '0') return false;
+      return true;
+    } catch (error) {
+      return false;
+    }
+  }
+
+  async checkAllowanceById(toContract: string, abi: Array<any>, spenderAddress: string) {
+    try {
+      const result = await this.getContractByAddress(toContract, abi)
+        .methods.allowance(this.walletAddress, spenderAddress)
         .call();
 
       if (result === '0') return false;
@@ -401,6 +416,17 @@ export default class MetamaskService {
 
     return this.getContract('Router')
       .methods.getAmountsOut(MetamaskService.calcTransactionAmount(value, 18), path)
+      .call();
+  }
+
+  getIndexCourse(currencyAddress: string, value: string, buy: boolean, indexAddress: string) {
+    if (buy) {
+      return this.getContractByAddress(indexAddress, config.MAIN.ABI)
+        .methods.getBuyAmountOut(currencyAddress, MetamaskService.calcTransactionAmount(value, 18))
+        .call();
+    }
+    return this.getContract('MAIN')
+      .methods.getSellAmountOut(currencyAddress, MetamaskService.calcTransactionAmount(value, 18))
       .call();
   }
 

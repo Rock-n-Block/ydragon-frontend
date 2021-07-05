@@ -15,7 +15,6 @@ export const Store = RootModel.create({
     rebalance: { isOpen: false },
     createIndex: { isOpen: false },
     getIn: { id: null, address: null },
-    getInIndex: { isOpen: false },
     mint: { isOpen: false },
     info: { msg: '', title: '', type: 'info' },
     redeem: { isOpen: false },
