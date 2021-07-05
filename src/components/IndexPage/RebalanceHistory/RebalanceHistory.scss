@@ -11,7 +11,7 @@
 }
 .light {
   .index-rebalance-history {
-    @include shadow-light-block;
+    @include light-block;
     &__title {
       color: $black;
     }

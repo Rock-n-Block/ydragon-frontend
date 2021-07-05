@@ -14,7 +14,7 @@
 .light {
   .index-dashboard {
     &__item {
-      @include shadow-light-block;
+      @include light-block;
     }
     &__name{
       color: $black

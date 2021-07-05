@@ -1,5 +1,58 @@
-@import 'src/styles/variables';
+@import '../../styles/_variables.scss';
+@import '../../styles/mixins';
 
+.dark {
+  .search {
+    &__items,
+    &__inputs{
+      .btn-green {
+        &:hover,
+        &:focus {
+          color: $white;
+          background-color: transparent;
+          border-color: $white;
+        }
+      }
+    }
+    &__inputs {
+      &::before {
+        background-image: url('../../assets/img/icons/icon-search-white.svg');
+      }
+    }
+    &__input {
+      color: $white;
+      &::placeholder {
+        color: $white;
+      }
+    }
+  }
+}
+.light {
+  .search {
+    &__items,
+    &__inputs{
+      .btn-green {
+        &:hover,
+        &:focus {
+          color: $black;
+          background-color: transparent;
+          border-color: $black;
+        }
+      }
+    }
+    &__inputs {
+      &::before {
+        background-image: url('../../assets/img/icons/icon-search-black.svg');
+      }
+    }
+    &__input {
+      color: $black;
+      &::placeholder {
+        color: $black;
+      }
+    }
+  }
+}
 .search {
   display: flex;
   flex-direction: column;
@@ -21,7 +74,6 @@
       max-width: 24px;
       height: 24px;
 
-      background-image: url('../../assets/img/icons/icon-search-white.svg');
       background-repeat: no-repeat;
       background-position: center;
     }
@@ -38,13 +90,11 @@
     font-weight: normal;
     line-height: 21px;
 
-    color: white;
     background: transparent;
     border: none;
     outline: none;
 
     &::placeholder {
-      color: white;
       opacity: 1;
     }
   }

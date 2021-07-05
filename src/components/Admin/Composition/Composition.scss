@@ -1,8 +1,17 @@
 @import '../../../styles/_variables.scss';
 @import '../../../styles/_mixins.scss';
 
+.dark {
+  .composition {
+    @include shadow-block;
+  }
+}
+.light {
+  .composition {
+    @include light-block;
+  }
+}
 .composition {
-  @include shadow-block;
   margin-top: 60px;
   padding: 40px;
 

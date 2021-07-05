@@ -18,7 +18,7 @@
 .light {
   .index-table {
     &__content {
-      @include shadow-light-block;
+      @include light-block;
     }
     &__token,
     &__price,

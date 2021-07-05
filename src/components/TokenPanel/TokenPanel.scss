@@ -11,7 +11,7 @@
 }
 .light {
   .token-panel {  
-    @include shadow-light-block;
+    @include light-block;
     &-item__label{
       color: $black;
     }
