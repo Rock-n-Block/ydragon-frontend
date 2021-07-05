@@ -64,6 +64,9 @@
     &--selected {
       background-color: #3a3a66;
     }
+    &--clickable{
+      cursor: pointer;
+    }
   }
 
   &__title {

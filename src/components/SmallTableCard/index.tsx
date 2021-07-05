@@ -1,5 +1,6 @@
 import React, { Dispatch } from 'react';
 import './SmallTableCard.scss';
+import nextId from 'react-id-generator';
 
 interface ISmallTableCardProps {
   tokenName: string;
@@ -44,13 +45,13 @@ const SmallTableCard: React.FC<ISmallTableCardProps> = ({
         tabIndex={0}
         role="button"
         onKeyDown={() => {}}
-        className={`small-card__body ${hoverFeature ? 'small-card__body--hover' : ''} ${
-          isSelected && 'small-card__body--selected'
-        }`}
+        className={`small-card__body ${onSelect ? 'small-card__body--clickable' : ''} ${
+          hoverFeature ? 'small-card__body--hover' : ''
+        } ${isSelected && 'small-card__body--selected'}`}
         onClick={handleSelect}
       >
         {data.map((cell, i) => (
-          <div className="small-card__cell">
+          <div className="small-card__cell" key={nextId()}>
             <div className="small-card__title">{cell[0]}</div>
             <div className={`small-card__subtitle ${i === 0 ? 'text-gradient' : ''}`}>
               {cell[1]}

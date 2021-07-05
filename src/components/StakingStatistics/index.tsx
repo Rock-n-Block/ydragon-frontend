@@ -8,6 +8,8 @@ import SmallTableCard from '../SmallTableCard/index';
 import './StakingStatistics.scss';
 import moment from 'moment';
 import BigNumber from 'bignumber.js/bignumber';
+import { useWalletConnectorContext } from '../../services/walletConnect';
+import nextId from 'react-id-generator';
 
 interface IStakingStat {
   months: number;
@@ -21,6 +23,7 @@ interface IStakingStat {
 }
 
 const StakingStatistics: React.FC = () => {
+  const walletConnector = useWalletConnectorContext();
   const [dataSource, setDataSource] = useState<any[]>([]);
   const columns: any[] = [
     {
@@ -111,9 +114,27 @@ const StakingStatistics: React.FC = () => {
       });
   }, []);
 
-  // small card select feature
-  // прокидываешь колбэк и по клику он записывает объект карточки
-  const [selectedCardData, setSelectedCardData] = useState<any>(null);
+  const handleHarvest = useCallback(() => {
+    walletConnector.metamaskService
+      .harvestStakeItem(dataSource[selectedRowKeys[0]].id)
+      .then((data: any) => {
+        console.log('harvest', data);
+      })
+      .catch((err: any) => {
+        console.log('harvest', err);
+      });
+  }, [dataSource, selectedRowKeys, walletConnector.metamaskService]);
+
+  const handleStakeEnd = useCallback(() => {
+    walletConnector.metamaskService
+      .endStake(dataSource[selectedRowKeys[0]].id)
+      .then((data: any) => {
+        console.log('stakeEnd', data);
+      })
+      .catch((err: any) => {
+        console.log('stakeEnd', err);
+      });
+  }, [dataSource, selectedRowKeys, walletConnector.metamaskService]);
 
   useEffect(() => {
     getStakingStatistic();
@@ -124,10 +145,10 @@ const StakingStatistics: React.FC = () => {
       <h2 className="section__title text-outline">Staking Statistics</h2>
 
       <div className="staking-statistics__btn-row">
-        <Button className="staking-statistics__btn" styledType="outline">
+        <Button className="staking-statistics__btn" styledType="outline" onClick={handleHarvest}>
           Harvest
         </Button>
-        <Button className="staking-statistics__btn" styledType="outline">
+        <Button className="staking-statistics__btn" styledType="outline" onClick={handleStakeEnd}>
           Harvest and unstake
         </Button>
       </div>
@@ -138,6 +159,7 @@ const StakingStatistics: React.FC = () => {
       >
         {dataSource.map((data, index) => (
           <SmallTableCard
+            key={nextId()}
             tokenName={data.token}
             headerTitle="Token"
             data={[
@@ -151,8 +173,8 @@ const StakingStatistics: React.FC = () => {
             index={index}
             hoverFeature
             originData={data}
-            onSelect={setSelectedCardData}
-            isSelected={selectedCardData?.key === data.key}
+            onSelect={selectRow}
+            isSelected={selectedRowKeys[0] === data.key}
           />
         ))}
       </div>
