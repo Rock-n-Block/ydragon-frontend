@@ -11,27 +11,29 @@
       flex-direction: row;
       align-items: center;
 
-      font-family: 'MER', sans-serif;
+      font-family: 'Monument Extended', sans-serif;
       font-size: 50px;
+      font-weight: normal;
 
       color: #fff;
 
       .diff {
         margin-left: 20px;
 
-        font-family: 'TNR', sans-serif;
+        font-family: 'TTNorms', sans-serif;
         font-size: 15px;
+        font-weight: normal;
 
         &-down {
           padding: 5px;
 
           display: flex;
           align-items: center;
-          gap: 5px;
 
           color: #de3f3a;
           border: 2px solid #de3f3a;
           border-radius: 20px;
+          gap: 5px;
         }
 
         &-up {
@@ -39,11 +41,11 @@
 
           display: flex;
           align-items: center;
-          gap: 5px;
 
           color: #0cbd68;
           border: 2px solid #0cbd68;
           border-radius: 20px;
+          gap: 5px;
         }
       }
     }
@@ -66,8 +68,9 @@
     &-btn {
       padding: 10px 19px;
 
-      font-family: 'TNB', sans-serif;
+      font-family: 'TTNorms', sans-serif;
       font-size: 16px;
+      font-weight: 700;
 
       cursor: pointer;
 

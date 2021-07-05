@@ -69,7 +69,6 @@ const Rebalance: React.FC<RebalanceProps> = observer(({ status, tokens }) => {
         };
       });
       setDataSource(newData);
-      console.log({ wow: newData });
     }
   }, [tokens]);
   return (

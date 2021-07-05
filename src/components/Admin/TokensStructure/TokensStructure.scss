@@ -13,6 +13,7 @@
 
   &__small {
     padding-top: 15px;
+
     display: none;
     @include b(tablet) {
       display: block;
@@ -20,7 +21,6 @@
   }
 }
 
-
-.table__col-with-logo__image{
+.table__col-with-logo__image {
   border-radius: 50%;
 }

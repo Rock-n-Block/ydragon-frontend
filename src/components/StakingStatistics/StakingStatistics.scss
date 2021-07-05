@@ -16,7 +16,8 @@
 }
 
 .staking-statistics-table {
-  
+  margin-top: 30px;
+
   &__big {
     @include b(tablet) {
       display: none;
@@ -25,13 +26,12 @@
 
   &__small {
     padding-top: 15px;
+
     display: none;
     @include b(tablet) {
       display: block;
     }
   }
-
-  margin-top: 30px;
 
   &__row {
     padding: 20px 10px;
@@ -51,8 +51,9 @@
 
       align-items: end;
 
-      font-family: 'MER', sans-serif;
+      font-family: 'Monument Extended', sans-serif;
       font-size: 12px;
+      font-weight: normal;
       line-height: 14px;
 
       color: rgba($white, 0.5);
@@ -60,8 +61,8 @@
   }
 
   &__content {
-    @include shadow-block;
     padding: 0 20px;
+    @include shadow-block;
   }
 
   &__token {
@@ -88,9 +89,9 @@
   }
 
   &__time {
-    @include gradient-text;
     font-size: 18px;
     line-height: 22px;
+    @include gradient-text;
   }
 
   &__date {
@@ -101,8 +102,9 @@
   }
 
   &__value {
-    font-family: 'MER', sans-serif;
+    font-family: 'Monument Extended', sans-serif;
     font-size: 18px;
+    font-weight: normal;
     line-height: 22px;
 
     color: $white;
