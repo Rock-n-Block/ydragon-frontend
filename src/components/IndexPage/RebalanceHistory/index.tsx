@@ -12,9 +12,13 @@ const RebalanceHistory: React.FC<RebalanceHistoryProps> = ({ lastRebalance }) =>
     <div className="index-rebalance-history">
       <div className="index-rebalance-history__title">Time Since Last Rebalance</div>
       {lastRebalance ? (
-        <div className="index-rebalance-history__value">{moment(lastRebalance).fromNow()}</div>
+        <div className="index-rebalance-history__value text-gradient">
+          {moment(lastRebalance).fromNow()}
+        </div>
       ) : (
-        <div className="index-rebalance-history__value">Index hasn&apos;t been rebalanced yet</div>
+        <div className="index-rebalance-history__value text-gradient">
+          Index hasn&apos;t been rebalanced yet
+        </div>
       )}
     </div>
   );
