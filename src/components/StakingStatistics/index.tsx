@@ -8,6 +8,8 @@ import SmallTableCard from '../SmallTableCard/index';
 import './StakingStatistics.scss';
 import moment from 'moment';
 import BigNumber from 'bignumber.js/bignumber';
+import { useWalletConnectorContext } from '../../services/walletConnect';
+import nextId from 'react-id-generator';
 
 interface IStakingStat {
   months: number;
@@ -21,6 +23,7 @@ interface IStakingStat {
 }
 
 const StakingStatistics: React.FC = () => {
+  const walletConnector = useWalletConnectorContext();
   const [dataSource, setDataSource] = useState<any[]>([]);
   const columns: any[] = [
     {
@@ -111,7 +114,27 @@ const StakingStatistics: React.FC = () => {
       });
   }, []);
 
-  const handleHarvest = useCallback(() => {}, []);
+  const handleHarvest = useCallback(() => {
+    walletConnector.metamaskService
+      .harvestStakeItem(dataSource[selectedRowKeys[0]].id)
+      .then((data: any) => {
+        console.log('harvest', data);
+      })
+      .catch((err: any) => {
+        console.log('harvest', err);
+      });
+  }, [dataSource, selectedRowKeys, walletConnector.metamaskService]);
+
+  const handleStakeEnd = useCallback(() => {
+    walletConnector.metamaskService
+      .endStake(dataSource[selectedRowKeys[0]].id)
+      .then((data: any) => {
+        console.log('stakeEnd', data);
+      })
+      .catch((err: any) => {
+        console.log('stakeEnd', err);
+      });
+  }, [dataSource, selectedRowKeys, walletConnector.metamaskService]);
 
   useEffect(() => {
     getStakingStatistic();
@@ -125,7 +148,7 @@ const StakingStatistics: React.FC = () => {
         <Button className="staking-statistics__btn" styledType="outline" onClick={handleHarvest}>
           Harvest
         </Button>
-        <Button className="staking-statistics__btn" styledType="outline">
+        <Button className="staking-statistics__btn" styledType="outline" onClick={handleStakeEnd}>
           Harvest and unstake
         </Button>
       </div>
@@ -136,6 +159,7 @@ const StakingStatistics: React.FC = () => {
       >
         {dataSource.map((data, index) => (
           <SmallTableCard
+            key={nextId()}
             tokenName={data.token}
             headerTitle="Token"
             data={[

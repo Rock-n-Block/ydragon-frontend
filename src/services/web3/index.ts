@@ -529,6 +529,30 @@ export default class MetamaskService {
     });
   }
 
+  harvestStakeItem(id: string | number) {
+    const method = MetamaskService.getMethodInterface(config.Staking.ABI, 'claimDividends');
+
+    const signature = this.encodeFunctionCall(method, [id, '0']);
+
+    return this.sendTransaction({
+      from: this.walletAddress,
+      to: config.Staking.ADDRESS,
+      data: signature,
+    });
+  }
+
+  endStake(id: string | number) {
+    const method = MetamaskService.getMethodInterface(config.Staking.ABI, 'stakeEnd');
+
+    const signature = this.encodeFunctionCall(method, [id]);
+
+    return this.sendTransaction({
+      from: this.walletAddress,
+      to: config.Staking.ADDRESS,
+      data: signature,
+    });
+  }
+
   getStakingTokensLen() {
     return this.getContract('Staking').methods.tokensToEnterLen().call();
   }

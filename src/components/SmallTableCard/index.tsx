@@ -45,9 +45,9 @@ const SmallTableCard: React.FC<ISmallTableCardProps> = ({
         tabIndex={0}
         role="button"
         onKeyDown={() => {}}
-        className={`small-card__body ${hoverFeature ? 'small-card__body--hover' : ''} ${
-          isSelected && 'small-card__body--selected'
-        }`}
+        className={`small-card__body ${onSelect ? 'small-card__body--clickable' : ''} ${
+          hoverFeature ? 'small-card__body--hover' : ''
+        } ${isSelected && 'small-card__body--selected'}`}
         onClick={handleSelect}
       >
         {data.map((cell, i) => (
