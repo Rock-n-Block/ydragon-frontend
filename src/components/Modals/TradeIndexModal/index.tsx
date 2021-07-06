@@ -4,14 +4,14 @@ import { observer } from 'mobx-react-lite';
 
 import YDRLogo from '../../../assets/img/icons/logo.svg';
 import { useWalletConnectorContext } from '../../../services/walletConnect';
+import config from '../../../services/web3/config';
+import { ProviderRpcError } from '../../../types/errors';
 import { useMst } from '../../../store/store';
 import { defaultTokens, TokenMiniNameTypes } from '../../../utils/tokenMini';
 import { Button, Input, InputWithSelect } from '../../index';
 import { Modal } from '../index';
 
 import './TradeIndexModal.scss';
-import config from '../../../services/web3/config';
-import { ProviderRpcError } from '../../../types/errors';
 
 interface TradeIndexModalProps {
   token: string;

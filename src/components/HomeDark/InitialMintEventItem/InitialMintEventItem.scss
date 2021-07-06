@@ -1,14 +1,38 @@
 @import '../../../styles/variables';
 @import '../../../styles/mixins';
 
+.dark {
+  .initial-mint-event {
+    @include shadow-dark-block;
+
+    &__title,
+    &__description,
+    &__timer,
+    &__unit-item {
+      color: $white;
+    }
+  }
+}
+
+.light {
+  .initial-mint-event {
+    @include shadow-light-block;
+
+    &__title,
+    &__description,
+    &__timer,
+    &__unit-item {
+      color: $black;
+    }
+  }
+}
+
 .initial-mint-event {
   margin-top: 80px;
   padding: 70px 60px;
 
   display: flex;
   justify-content: space-between;
-
-  @include shadow-dark-block;
 
   @include b('tablet') {
     margin-top: 40px;
@@ -38,7 +62,7 @@
     font-weight: normal;
     line-height: 29px;
 
-    color: $white;
+    // color: $white;
     @include b('tablet') {
       margin-top: 30px;
     }
@@ -50,7 +74,7 @@
     font-size: 18px;
     line-height: 30px;
 
-    color: $white;
+    // color: $white;
     @include b('tablet') {
       font-size: 16px;
       line-height: 24px;
@@ -91,7 +115,7 @@
     line-height: 58px;
     text-align: center;
 
-    color: $white;
+    // color: $white;
     @include b('tablet') {
       font-size: 35px;
       line-height: 42px;

@@ -50,34 +50,36 @@ const Advantages: React.FC = () => {
 
           <div className="advantages advantages--yd">
             <div className="advantages__item">
-              <div className="advantages__item-title">Reduced costs</div>
-              <div className="advantages__item-descr">
+              <div className="advantages-yd__item-title">Reduced costs</div>
+              <div className="advantages-yd__item-descr">
                 One-time investment to own a diversified portfolio
               </div>
             </div>
 
             <div className="advantages__item">
-              <div className="advantages__item-title">Time saving</div>
-              <div className="advantages__item-descr">
+              <div className="advantages-yd__item-title">Time saving</div>
+              <div className="advantages-yd__item-descr">
                 Less transactions needed to build <br /> your portfolio
               </div>
             </div>
 
             <div className="advantages__item">
-              <div className="advantages__item-title">Simplified portfolio management</div>
-              <div className="advantages__item-descr">
+              <div className="advantages-yd__item-title">Simplified portfolio management</div>
+              <div className="advantages-yd__item-descr">
                 Indexes are cross chain and held in one place for ease of tracking
               </div>
             </div>
 
             <div className="advantages__item">
-              <div className="advantages__item-title">Easy to use</div>
-              <div className="advantages__item-descr">Simple and easy to use platform</div>
+              <div className="advantages-yd__item-title">Easy to use</div>
+              <div className="advantages-yd__item-descr">Simple and easy to use platform</div>
             </div>
 
             <div className="advantages__item">
-              <div className="advantages__item-title">Risk Diversification</div>
-              <div className="advantages__item-descr">Basket of funds improves risk strategy</div>
+              <div className="advantages-yd__item-title">Risk Diversification</div>
+              <div className="advantages-yd__item-descr">
+                Basket of funds improves risk strategy
+              </div>
             </div>
           </div>
         </div>

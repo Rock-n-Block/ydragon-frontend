@@ -1,4 +1,43 @@
+@import '../../../styles/_variables.scss';
 @import '../../../styles/mixins';
+
+.dark {
+  .index-small-card {
+    background: $dark-bg;
+
+    &__header {
+      &--logo::after {
+        background-color: #fff;
+      }
+
+      &--name {
+        color: #fff;
+      }
+    }
+    &__percents--item{
+      --color: white
+    }
+  }
+}
+
+.light {
+  .index-small-card {
+    @include shadow-light-block;
+
+    &__header {
+      &--logo::after {
+        background-color: transparent;
+      }
+
+      &--name {
+        color: $black;
+      }
+    }
+    &__percents--item{
+      --color: #000136
+    }
+  }
+}
 
 .index-small-card {
   margin-bottom: 20px;
@@ -7,8 +46,6 @@
   font-family: 'Monument Extended', sans-serif;
   font-weight: normal;
 
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0) 100%),
-    linear-gradient(171.49deg, #1a1e3a 3.83%, #161a2a 100%);
   border-radius: 16px;
   box-shadow: -8px 8px 12px rgba(13, 36, 82, 0.1);
 
@@ -33,7 +70,6 @@
         width: 31px;
         height: 28px;
 
-        background-color: #fff;
         border-radius: 50%;
       }
 
@@ -48,8 +84,6 @@
 
     &--name {
       font-size: 14px;
-
-      color: #fff;
     }
   }
 
@@ -143,7 +177,7 @@
     font-weight: 700;
 
     &--item {
-      --color: #fff;
+      // --color: #fff;
       margin-bottom: 10px;
 
       &.yellow {

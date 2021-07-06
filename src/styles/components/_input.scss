@@ -1,3 +1,28 @@
+@import '../variables';
+@import '../mixins';
+
+.dark {
+  .input {
+    color: $white;
+    background: $dark-bg;
+  }
+
+  .ant-input[disabled] {
+    background: $black;
+  }
+}
+
+.light {
+  .input {
+    color: $black;
+    background: $white;
+  }
+
+  .ant-input[disabled] {
+    background: $white !important;
+  }
+}
+
 .input-border {
   padding: 3px;
 
@@ -22,9 +47,6 @@
   line-height: 24px;
   text-align: center;
 
-  color: $white;
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0) 100%),
-    linear-gradient(171.49deg, #1a1e3a 3.83%, #161a2a 100%);
   border: none;
   border-radius: 60px;
   outline: none;
@@ -131,7 +153,6 @@
 
   .ant-input[disabled] {
     color: unset;
-    background: $black;
   }
 }
 

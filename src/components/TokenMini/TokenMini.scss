@@ -1,11 +1,22 @@
+@import '../../styles/variables';
+@import '../../styles/mixins';
+
+// .dark {
+//   .token-mini__name-wrapper {
+//     color: $white;
+//   }
+// }
+// .light {
+//   .token-mini__name-wrapper {
+//     color: $black;
+//   }
+// }
 .token-mini {
   display: flex;
   align-items: center;
 
   &__name-wrapper {
     margin-left: 10px;
-
-    color: white;
   }
 
   &__name {

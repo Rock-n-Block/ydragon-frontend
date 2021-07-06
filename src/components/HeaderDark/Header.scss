@@ -1,6 +1,90 @@
 @import '../../styles/_variables.scss';
 @import '../../styles/mixins';
 
+.dark {
+  .expand {
+    background-color: $black;
+    background-image: url('../../assets/img/home-dark-bg.png');
+  }
+
+  .collapse {
+    background: $dark-bg;
+    box-shadow: $shadow-dark;
+  }
+
+  .header {
+    &__logo-text {
+      color: $white;
+    }
+
+    &-nav {
+      &__link {
+        color: #f7f8fd;
+
+        &:hover,
+        &:active {
+          color: #f7f8fd;
+        }
+      }
+    }
+
+    .container {
+      .menu-nav {
+        &__link {
+          color: #f7f8fd;
+
+          &:hover,
+          &:active {
+            color: #f7f8fd;
+          }
+        }
+      }
+    }
+  }
+}
+
+.light {
+  .expand {
+    background-image: url('../../assets/img/home-bg.jpg');
+  }
+
+  .collapse {
+    background: $white;
+
+    box-shadow: $shadow;
+  }
+
+  .header {
+    &__logo-text {
+      color: $black;
+    }
+
+    &-nav {
+      &__link {
+        color: $black;
+
+        &:hover,
+        &:active {
+          color: $black;
+        }
+      }
+    }
+
+    .container {
+      .menu-nav {
+        &__link {
+          color: $black;
+
+          &:hover,
+          &:active {
+            color: $black;
+          }
+        }
+      }
+    }
+  }
+}
+
 .fixed {
   position: fixed;
   z-index: 100;
@@ -15,23 +99,15 @@
   width: 100vw;
   height: 100vh;
 
-  background-color: #0e1a37;
-
-  background-image: url('../../assets/img/home-dark-bg.png');
   background-repeat: no-repeat;
   background-repeat: no-repeat;
   background-position: top center;
   background-position: center;
   background-size: auto 100%;
 
-  box-shadow: -8px 8px 12px rgba(13, 36, 82, 0.1);
-
   transition: all 0.4s;
   background-blend-mode: unset;
   background-blend-mode: lighten;
-  @include b('tablet') {
-    // position: fixed;
-  }
 
   @include b('mobile') {
     top: 0;
@@ -44,11 +120,6 @@
   overflow: hidden;
 
   height: 120px;
-
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0) 100%),
-    linear-gradient(171.49deg, #1a1e3a 3.83%, #161a2a 100%);
-
-  box-shadow: -8px 8px 12px rgba(13, 36, 82, 0.1);
   @include b('tablet') {
     width: 100vw;
 
@@ -120,7 +191,6 @@
     line-height: 19px;
     letter-spacing: 0.93em;
 
-    color: $white;
     @include b('tablet') {
       font-family: 'Monument Extended', sans-serif;
       font-size: 6.96671px;
@@ -137,6 +207,8 @@
   &__sign {
     display: flex;
     justify-content: flex-end;
+    gap: 40px;
+    align-items: center;
   }
 
   &__nav,
@@ -154,13 +226,6 @@
         font-weight: 800;
         line-height: 120%;
         text-decoration: none;
-
-        color: #f7f8fd;
-
-        &:hover,
-        &:active {
-          color: #f7f8fd;
-        }
       }
     }
 
@@ -244,13 +309,6 @@
     font-size: 16px;
     line-height: 20px;
     text-decoration: none;
-
-    color: #f7f8fd;
-
-    &:hover,
-    &:active {
-      color: #f7f8fd;
-    }
   }
 
   &__btn {
@@ -274,6 +332,8 @@
   &__sign {
     display: flex;
     justify-content: flex-end;
+    align-items: center;
+    gap: 30px;
   }
 }
 

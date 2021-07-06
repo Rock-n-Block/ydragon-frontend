@@ -164,7 +164,6 @@ const Dashboard: React.FC = () => {
                       <div className="index-dashboard__token">
                         <span
                           className="index-dashboard__token-color"
-                          style={{ backgroundColor: '#FFFFFF' }}
                         />
                         <span className="index-dashboard__token-name">Others</span>
                       </div>
