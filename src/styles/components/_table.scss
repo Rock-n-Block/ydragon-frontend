@@ -2,6 +2,9 @@
 @import '../../styles/mixins';
 
 .dark {
+  .ant-table-tbody > tr.ant-table-placeholder:hover > td {
+    background: rgba($white, 0.5);
+  }
   .table {
     &:hover {
       & > td {

@@ -16,16 +16,8 @@
 
   transition: background-color 0.3s;
 
-  &:hover {
-    background: rgba(255, 255, 255, 0.2);
-  }
-
   & + & {
     margin-top: 15px;
-  }
-
-  &--active {
-    background: rgba(255, 255, 255, 0.2);
   }
 
   &__amount {

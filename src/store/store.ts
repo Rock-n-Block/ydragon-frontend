@@ -28,7 +28,7 @@ export const Store = RootModel.create({
     token: '',
   },
   theme: {
-    value: localStorage.theme ?? '',
+    value: localStorage.theme ?? 'light',
   },
 });
 

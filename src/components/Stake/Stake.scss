@@ -46,7 +46,7 @@
 
       &:hover,
       &--active {
-        background-color: darken($main-dark-bg, 3%);
+        background: $dark-bg;
 
         .stake-item__amount,
         .token-mini {

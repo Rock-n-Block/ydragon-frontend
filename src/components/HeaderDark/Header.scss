@@ -45,7 +45,7 @@
 
 .light {
   .expand {
-    background-image: url('../../assets/img/home-bg.png');
+    background-image: url('../../assets/img/home-bg.jpg');
   }
 
   .collapse {
@@ -208,6 +208,7 @@
     display: flex;
     justify-content: flex-end;
     gap: 40px;
+    align-items: center;
   }
 
   &__nav,
@@ -331,6 +332,7 @@
   &__sign {
     display: flex;
     justify-content: flex-end;
+    align-items: center;
     gap: 30px;
   }
 }
