@@ -1,15 +1,14 @@
 import React, { useCallback, useEffect, useState } from 'react';
+import nextId from 'react-id-generator';
+import BigNumber from 'bignumber.js/bignumber';
+import moment from 'moment';
 
 import { indexesApi } from '../../services/api';
-
+import { useWalletConnectorContext } from '../../services/walletConnect';
 import { Button, Table } from '../index';
 import SmallTableCard from '../SmallTableCard/index';
 
 import './StakingStatistics.scss';
-import moment from 'moment';
-import BigNumber from 'bignumber.js/bignumber';
-import { useWalletConnectorContext } from '../../services/walletConnect';
-import nextId from 'react-id-generator';
 
 interface IStakingStat {
   months: number;

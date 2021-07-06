@@ -61,7 +61,8 @@
       border-radius: 16px;
       box-shadow: -8px 8px 12px rgba(13, 36, 82, 0.1);
 
-      & tr th.ant-table-selection-column, & tr td.ant-table-selection-column {
+      & tr th.ant-table-selection-column,
+      & tr td.ant-table-selection-column {
         display: none;
       }
     }
@@ -99,8 +100,7 @@
       }
 
       tr:first-child {
-
-        .ant-table-selection-column + .ant-table-cell{
+        .ant-table-selection-column + .ant-table-cell {
           border-top-left-radius: 16px;
         }
         td:first-child {
