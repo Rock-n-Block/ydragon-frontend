@@ -1,6 +1,55 @@
 @import '../../styles/_variables.scss';
 @import '../../styles/_mixins.scss';
 
+.dark {
+  .token-item {
+    &__weight {
+      &::before {
+        content: '';
+  
+        position: absolute;
+        top: 0;
+        right: 0;
+        left: 0;
+        bottom: 0;
+  
+        padding: 3px;
+  
+        background: rgb(35, 38, 60);
+        background-clip: content-box;
+        border-radius: 60px;
+      }
+      span {
+        color: $white;
+      }
+    }
+  }
+}
+
+.light {
+  .token-item {
+    &__weight {
+      &::before {
+        content: '';
+  
+        position: absolute;
+        top: 0;
+        right: 0;
+        left: 0;
+        bottom: 0;
+  
+        padding: 3px;
+  
+        background: rgb(255, 255, 255);
+        background-clip: content-box;
+        border-radius: 60px;
+      }
+      span {
+        color: $black;
+      }
+    }
+  }
+}
 .token-item {
   padding: 16px;
 
@@ -31,26 +80,8 @@
     background: linear-gradient(180deg, #5381ff 0%, #1944b9 100%);
     border-radius: 60px;
 
-    &::before {
-      content: '';
-
-      position: absolute;
-      top: 0;
-      right: 0;
-      left: 0;
-      bottom: 0;
-
-      padding: 3px;
-
-      background: rgb(35, 38, 60);
-      background-clip: content-box;
-      border-radius: 60px;
-    }
-
     span {
       position: relative;
-
-      color: white;
     }
   }
 }

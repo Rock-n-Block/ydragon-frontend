@@ -30,6 +30,7 @@ p {
 }
 
 .dark {
+  transition: all 0.4s;
   h1,
   h2,
   h3,
@@ -63,6 +64,7 @@ p {
 }
 
 .light {
+  transition: all 0.4s;
   h1,
   h2,
   h3,

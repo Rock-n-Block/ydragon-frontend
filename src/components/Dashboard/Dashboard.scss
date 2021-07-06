@@ -6,9 +6,28 @@
     &__item {
       @include shadow-block;
     }
-
     &__name {
       color: $white;
+    }
+    &__token-color {
+      --color: white;
+
+      &.yellow {
+        --color: #f7931e;
+      }
+
+      &.blue {
+        --color: #2754cd;
+      }
+
+      &.red {
+        --color: #d53038;
+      }
+
+      background-color: var(--color);
+    }
+    &__token-percent {
+      --color: $white;
     }
   }
 }
@@ -18,9 +37,28 @@
     &__item {
       @include light-block;
     }
-
     &__name {
       color: $black;
+    }
+    &__token-color {
+      --color: #000136;
+
+      &.yellow {
+        --color: #f7931e;
+      }
+
+      &.blue {
+        --color: #2754cd;
+      }
+
+      &.red {
+        --color: #d53038;
+      }
+
+      background-color: var(--color);
+    }
+    &__token-percent {
+      --color: $black;
     }
   }
 }
@@ -190,27 +228,26 @@
   }
 
   &__token-color {
-    --color: #fff;
     margin-right: 5px;
 
     width: 5px;
     height: 5px;
 
-    background-color: var(--color);
-
     border-radius: 50%;
 
-    &.yellow {
-      --color: #f7931e;
-    }
+    // &.yellow {
+    //   --color: #f7931e;
+    // }
 
-    &.blue {
-      --color: #2754cd;
-    }
+    // &.blue {
+    //   --color: #2754cd;
+    // }
 
-    &.red {
-      --color: #d53038;
-    }
+    // &.red {
+    //   --color: #d53038;
+    // }
+
+    // background-color: var(--color);
   }
 
   &__token-name {
@@ -228,14 +265,11 @@
   }
 
   &__token-percent {
-    --color: #fff;
     padding-top: 3px;
 
     font-size: 14px;
     line-height: 17px;
     text-align: right;
-
-    border-color: var(--color);
 
     border-top: 3px solid;
 
@@ -252,6 +286,8 @@
     &.red {
       --color: #d53038;
     }
+
+    border-color: var(--color);
 
     & + & {
       margin-left: 10px;
