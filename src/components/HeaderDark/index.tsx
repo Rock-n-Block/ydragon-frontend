@@ -121,7 +121,7 @@ const Header: React.FC = observer(() => {
                     Home
                   </Link>
                 </li>
-                {localStorage.yd_address && (
+                {/* {localStorage.yd_address && (
                   <li className="header-nav__item">
                     <Link to="/indexes" className="header-nav__link">
                       Index Products
@@ -134,19 +134,19 @@ const Header: React.FC = observer(() => {
                       Staking
                     </Link>
                   </li>
-                )}
+                )} */}
                 <li className="header-nav__item">
                   <Link to="/about-us" className="header-nav__link">
                     About
                   </Link>
                 </li>
-                {localStorage.yd_token && (
+                {/*  {localStorage.yd_token && (
                   <li className="header-nav__item">
                     <Link to="/admin" className="header-nav__link">
                       Admin panel
                     </Link>
                   </li>
-                )}
+                )} */}
               </ul>
             </nav>
 
@@ -218,7 +218,7 @@ const Header: React.FC = observer(() => {
                     About
                   </Button>
                 </li>
-                {localStorage.yd_token && (
+                {/*  {localStorage.yd_token && (
                   <li className="menu-nav__item">
                     <Button
                       styledType="clear"
@@ -228,7 +228,7 @@ const Header: React.FC = observer(() => {
                       Admin panel
                     </Button>
                   </li>
-                )}
+                )} */}
               </ul>
             </nav>
           </nav>

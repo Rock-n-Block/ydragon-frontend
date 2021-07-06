@@ -3,6 +3,7 @@
     &-nav {
       color: $orange;
       border-color: $orange;
+
       &:hover,
       &:focus {
         color: $black;
@@ -29,6 +30,7 @@
   border-radius: 12px;
   box-shadow: none;
   gap: 13px;
+
   transition: all 0.5s ease-in-out;
 
   &-filled {
@@ -37,12 +39,13 @@
     color: $white;
     background: #d53038;
     box-shadow: 0 16px 32px rgba(213, 48, 56, 0.3);
+
     transition: all 0s;
 
     &:hover,
     &:focus {
       color: $white;
-      background: linear-gradient(180deg, #DF3F3A 0%, #F47C45 100%);
+      background: linear-gradient(180deg, #df3f3a 0%, #f47c45 100%);
     }
   }
 

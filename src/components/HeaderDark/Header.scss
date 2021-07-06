@@ -203,6 +203,7 @@
     display: flex;
     justify-content: flex-end;
     gap: 40px;
+
     align-items: center;
   }
 
@@ -304,6 +305,7 @@
     font-size: 16px;
     line-height: 20px;
     text-decoration: none;
+
     transition: all 0.5s ease-in-out;
 
     &:hover,
@@ -371,6 +373,7 @@
 .footer {
   &__wrapper {
     margin: 54px auto 0;
+
     display: flex;
     flex-direction: column;
     gap: 30px;

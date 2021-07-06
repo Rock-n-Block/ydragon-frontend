@@ -1,11 +1,11 @@
 import React /* , { useEffect, useState } */ from 'react';
+
 // import BigNumber from 'bignumber.js/bignumber';
 // import moment from 'moment';
 //
 // import { useMst } from '../../../store/store';
 // import { Button } from '../../index';
 // import { IIme } from '../InitialMintEvent';
-
 import './InitialMintEventItem.scss';
 
 /* interface InitialMintEventItemProps {
