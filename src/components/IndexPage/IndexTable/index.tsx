@@ -85,9 +85,9 @@ const IndexTable: React.FC<IndexTableProps> = ({ tokens }) => {
               <div className="index-table__col">
                 <div className="index-table__price">
                   $
-                  {new BigNumber(
-                    'price_total' in token ? token.price_total : token.total_price,
-                  ).toFixed(2)}
+                  {new BigNumber('price_total' in token ? token.price_total : token.total_price)
+                    .multipliedBy('price_total' in token ? 1 : 100)
+                    .toFixed(2)}
                 </div>
               </div>
             </div>

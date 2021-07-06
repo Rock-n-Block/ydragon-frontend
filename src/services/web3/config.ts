@@ -1,6 +1,6 @@
 export default {
   MAIN: {
-    ADDRESS: '0x9eB38506eD0b6522764804BA553Cf9F0F46aD80C',
+    ADDRESS: '0x702ceE8B4C6F39A05717e8dB191591F7826c9B97',
     ABI: [
       { inputs: [], stateMutability: 'nonpayable', type: 'constructor' },
       {
@@ -879,7 +879,7 @@ export default {
     ],
   },
   Factory: {
-    ADDRESS: '0x3c4769920D52759044401dFf23217929EF93F843',
+    ADDRESS: '0xe31F74f8eA6749Dc0b9B0404B36432647cD0ffCf',
     ABI: [
       {
         inputs: [
@@ -1133,7 +1133,7 @@ export default {
     ],
   },
   Staking: {
-    ADDRESS: '0x8E4e4c24b56D4a6E2dB480b377069EbDEAB03D8b',
+    ADDRESS: '0x62938fcf57D2dA2033992E6a8aa0C5191Af4123B',
     ABI: [
       {
         inputs: [
@@ -1163,6 +1163,13 @@ export default {
         inputs: [],
         name: 'FACTORY',
         outputs: [{ internalType: 'address', name: '', type: 'address' }],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
+        inputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+        name: 'TIME_DURATIONS',
+        outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
         stateMutability: 'view',
         type: 'function',
       },
@@ -1324,7 +1331,6 @@ export default {
           { internalType: 'uint256', name: 'amountClaimed', type: 'uint256' },
           { internalType: 'uint256', name: 'timestampStakeStart', type: 'uint256' },
           { internalType: 'uint8', name: 'timeIntervalIndex', type: 'uint8' },
-          { internalType: 'bool', name: 'isClaimed', type: 'bool' },
         ],
         stateMutability: 'view',
         type: 'function',
