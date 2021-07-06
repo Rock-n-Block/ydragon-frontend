@@ -7,7 +7,7 @@ import moment from 'moment';
 import logo from '../../assets/img/icons/logo.svg';
 import { TokenPanel } from '../../components';
 import { IndexChart, IndexTable, RebalanceHistory } from '../../components/IndexPage';
-import { IToken } from '../../components/IndexPage/IndexTable';
+import { ITableToken, IToken } from '../../components/IndexPage/IndexTable';
 import { TradeIndexModal } from '../../components/Modals';
 import MintModal from '../../components/Modals/MintModal';
 import RedeemModal from '../../components/Modals/RedeemModal';
@@ -20,6 +20,7 @@ import './Index.scss';
 interface IIndexId {
   indexId: string;
 }
+
 export interface IIndex {
   id: number;
   name: string;
@@ -34,7 +35,7 @@ export interface IIndex {
 const Index: React.FC = observer(() => {
   const { indexId } = useParams<IIndexId>();
   const { modals } = useMst();
-  const [tokens, setTokens] = useState();
+  const [tokens, setTokens] = useState<Array<ITableToken>>();
   const getTokens = (value: React.SetStateAction<any>) => {
     setTokens(value);
   };
@@ -43,7 +44,6 @@ const Index: React.FC = observer(() => {
   const getCurrentIndex = useCallback(() => {
     indexesApi.getIndexById(+indexId).then(({ data }) => {
       setIndexData(data);
-      console.log('getIndexes', data);
     });
   }, [indexId]);
 
@@ -57,8 +57,6 @@ const Index: React.FC = observer(() => {
   useEffect(() => {
     getCurrentIndex();
   }, [getCurrentIndex]);
-
-  console.log(indexData?.tokens);
 
   return (
     <main className="container page">
@@ -85,32 +83,49 @@ const Index: React.FC = observer(() => {
         handleSell={handleSell}
       />
       <RebalanceHistory lastRebalance={indexData?.rebalance_date} />
+      <IndexChart tokens={getTokens} indexId={indexId} />
       <div className="index-table__big">
-        <IndexTable tokens={indexData?.tokens} />
+        <IndexTable tokens={tokens || indexData?.tokens} />
       </div>
       <div className="index-table__small">
-        {indexData?.tokens.map((token, i) => (
-          <SmallTableCard
-            index={i}
-            data={[
-              [
-                'Quantity per Set',
-                `${new BigNumber(token.count)
-                  .multipliedBy(new BigNumber(10).pow(-token.decimal))
-                  .toFixed(2)}`,
-              ],
-              ['Token Price', `$${token.price_for_one}`],
-              ['Current Weight', `${Number(token.current_weight).toFixed(2)}%`],
-              ['Total Price per Set', `$${token.price_total}`],
-            ]}
-            headerTitle="Token"
-            tokenName={token.name}
-            tokenLogo={token.image}
-          />
-        ))}
+        {tokens !== undefined
+          ? tokens.map((token, i) => (
+              <SmallTableCard
+                index={i}
+                data={[
+                  ['Quantity per Set', `${new BigNumber(token.repr_count).toFixed(2)}`],
+                  ['Token Price', `$${token.rate}`],
+                  ['Current Weight', `${Number(token.weight).toFixed(2)}%`],
+                  [
+                    'Total Price per Set',
+                    `$${new BigNumber(token.total_price).multipliedBy(100).toFixed(0)}`,
+                  ],
+                ]}
+                headerTitle="Token"
+                tokenName={token.token_name}
+                tokenLogo={token.token_image}
+              />
+            ))
+          : indexData?.tokens.map((token, i) => (
+              <SmallTableCard
+                index={i}
+                data={[
+                  [
+                    'Quantity per Set',
+                    `${new BigNumber(token.count)
+                      .multipliedBy(new BigNumber(10).pow(-token.decimal))
+                      .toFixed(2)}`,
+                  ],
+                  ['Token Price', `$${token.price_for_one}`],
+                  ['Current Weight', `${Number(token.current_weight).toFixed(2)}%`],
+                  ['Total Price per Set', `$${token.price_total}`],
+                ]}
+                headerTitle="Token"
+                tokenName={token.name}
+                tokenLogo={token.image}
+              />
+            ))}
       </div>
-      <IndexChart tokens={getTokens} indexId={indexId} />
-      <IndexTable tokens={tokens || indexData?.tokens} />
       {/* <About /> */}
       <TradeIndexModal token={indexData?.name ?? ''} indexAddress={indexData?.address ?? ''} />
       <MintModal />
