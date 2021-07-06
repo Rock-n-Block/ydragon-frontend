@@ -6,9 +6,9 @@ import BigNumber from 'bignumber.js/bignumber';
 import logo from '../../assets/img/icons/logo.svg';
 import { IIndex } from '../../pages/Admin';
 import { indexesApi } from '../../services/api';
-import IndexSmallCard from './SmallCard/index';
-
 import { Spinner } from '../index';
+
+import IndexSmallCard from './SmallCard/index';
 
 import './Dashboard.scss';
 

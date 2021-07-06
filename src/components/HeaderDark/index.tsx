@@ -106,16 +106,20 @@ const Header: React.FC = observer(() => {
                     Home
                   </Link>
                 </li>
-                {localStorage.yd_address && <li className="header-nav__item">
-                  <Link to="/indexes" className="header-nav__link">
-                    Index Products
-                  </Link>
-                </li>}
-                {localStorage.yd_address && <li className="header-nav__item">
-                  <Link to="/staking" className="header-nav__link">
-                    Staking
-                  </Link>
-                </li>}
+                {localStorage.yd_address && (
+                  <li className="header-nav__item">
+                    <Link to="/indexes" className="header-nav__link">
+                      Index Products
+                    </Link>
+                  </li>
+                )}
+                {localStorage.yd_address && (
+                  <li className="header-nav__item">
+                    <Link to="/staking" className="header-nav__link">
+                      Staking
+                    </Link>
+                  </li>
+                )}
                 <li className="header-nav__item">
                   <Link to="/about-us" className="header-nav__link">
                     About

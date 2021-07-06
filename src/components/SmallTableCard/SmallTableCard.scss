@@ -1,35 +1,44 @@
 .small-card {
-  font-family: 'MER', sans-serif;
   position: relative;
-  border-radius: 16px 16px 0 0;
-  background-color: #171b2f;
+
   overflow: hidden;
+
+  font-family: 'Monument Extended', sans-serif;
+  font-weight: normal;
+
+  background-color: #171b2f;
+  border-radius: 16px 16px 0 0;
 
   &:last-child {
     border-radius: 16px;
   }
 
   &__header {
-    background-color: rgba(242, 243, 248, 0.1);
     padding: 12px;
+
     display: flex;
     justify-content: space-between;
     align-items: center;
 
+    background-color: rgba(242, 243, 248, 0.1);
+
     &--title {
       font-size: 12px;
+
       opacity: 0.5;
     }
 
     &--subtitle {
+      font-family: 'TTNorms', sans-serif;
       font-size: 18px;
-      font-family: 'TNR', sans-serif;
+      font-weight: normal;
     }
 
     &--right {
       img {
         width: 31px;
         height: 31px;
+
         border-radius: 50%;
       }
     }
@@ -38,21 +47,31 @@
   &__body {
     padding: 20px 12px;
     padding-bottom: 25px;
+
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
     align-items: flex-end;
-    grid-gap: 18px;
+
     transition: background-color 0.4s ease;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 18px;
 
     &--hover {
       &:hover {
         background-color: #3a3a66;
       }
     }
+
+    &--selected {
+      background-color: #3a3a66;
+    }
+    &--clickable{
+      cursor: pointer;
+    }
   }
 
   &__title {
     font-size: 12px;
+
     color: #fff;
     opacity: 0.5;
   }

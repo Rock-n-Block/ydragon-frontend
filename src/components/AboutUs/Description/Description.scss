@@ -31,8 +31,9 @@
   }
 
   &__title {
-    font-family: 'MER';
+    font-family: 'Monument Extended', sans-serif;
     font-size: 24px;
+    font-weight: normal;
     line-height: 29px;
 
     color: #fff;
@@ -44,8 +45,9 @@
   &__text {
     margin-top: 12px;
 
-    font-family: 'RR';
+    font-family: 'Rubik', sans-serif;
     font-size: 16px;
+    font-weight: normal;
     line-height: 150%;
 
     /* or 24px */
@@ -119,14 +121,15 @@
 
       height: 29px;
 
-      font-family: 'MER';
+      font-family: 'Monument Extended', sans-serif;
       font-size: 24px;
+      font-weight: normal;
       line-height: 29px;
+
+      color: #000;
 
       /* identical to box height */
       font-feature-settings: 'liga' off;
-
-      color: #000;
 
       @include b('mobile') {
         left: 103px;
@@ -161,8 +164,9 @@
 
       width: 250px;
 
-      font-family: 'RR', sans-serif;
+      font-family: 'Rubik', sans-serif;
       font-size: 16px;
+      font-weight: normal;
       font-weight: normal;
       font-style: normal;
       line-height: 30px;

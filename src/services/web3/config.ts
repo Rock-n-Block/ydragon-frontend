@@ -1,6 +1,6 @@
 export default {
   MAIN: {
-    ADDRESS: '0xBd78b9097568e05084286B2F2BEfb0Cc9Ac3AbDD',
+    ADDRESS: '0x9eB38506eD0b6522764804BA553Cf9F0F46aD80C',
     ABI: [
       { inputs: [], stateMutability: 'nonpayable', type: 'constructor' },
       {
@@ -11,6 +11,16 @@ export default {
           { indexed: false, internalType: 'uint256', name: 'value', type: 'uint256' },
         ],
         name: 'Approval',
+        type: 'event',
+      },
+      {
+        anonymous: false,
+        inputs: [
+          { indexed: true, internalType: 'address', name: 'user', type: 'address' },
+          { indexed: true, internalType: 'address', name: 'token', type: 'address' },
+          { indexed: false, internalType: 'uint256', name: 'amount', type: 'uint256' },
+        ],
+        name: 'EnterIme',
         type: 'event',
       },
       {
@@ -30,6 +40,45 @@ export default {
       {
         anonymous: false,
         inputs: [
+          { indexed: true, internalType: 'address', name: 'user', type: 'address' },
+          { indexed: true, internalType: 'address', name: 'tokenEnter', type: 'address' },
+          { indexed: false, internalType: 'uint256', name: 'amountEnter', type: 'uint256' },
+          { indexed: false, internalType: 'uint256', name: 'amountMinted', type: 'uint256' },
+          { indexed: false, internalType: 'address[]', name: 'tokensInAsset', type: 'address[]' },
+          { indexed: false, internalType: 'uint256[]', name: 'buyAmounts', type: 'uint256[]' },
+        ],
+        name: 'MintAsset',
+        type: 'event',
+      },
+      {
+        anonymous: false,
+        inputs: [
+          { indexed: false, internalType: 'address[]', name: 'tokensOld', type: 'address[]' },
+          { indexed: false, internalType: 'uint256[]', name: 'sellAmounts', type: 'uint256[]' },
+          { indexed: false, internalType: 'address[]', name: 'tokensNew', type: 'address[]' },
+          { indexed: false, internalType: 'uint256[]', name: 'buyAmounts', type: 'uint256[]' },
+          { indexed: false, internalType: 'bool', name: 'isIme', type: 'bool' },
+        ],
+        name: 'Rebase',
+        type: 'event',
+      },
+      {
+        anonymous: false,
+        inputs: [
+          { indexed: true, internalType: 'address', name: 'user', type: 'address' },
+          { indexed: true, internalType: 'address', name: 'tokenExit', type: 'address' },
+          { indexed: false, internalType: 'uint256', name: 'amountOfTokenExit', type: 'uint256' },
+          { indexed: false, internalType: 'uint256', name: 'amountOfAssetExit', type: 'uint256' },
+          { indexed: false, internalType: 'address[]', name: 'tokensInAsset', type: 'address[]' },
+          { indexed: false, internalType: 'uint256[]', name: 'sellAmounts', type: 'uint256[]' },
+          { indexed: false, internalType: 'uint256[]', name: 'feePercentages', type: 'uint256[]' },
+        ],
+        name: 'RedeemAsset',
+        type: 'event',
+      },
+      {
+        anonymous: false,
+        inputs: [
           { indexed: true, internalType: 'address', name: 'from', type: 'address' },
           { indexed: true, internalType: 'address', name: 'to', type: 'address' },
           { indexed: false, internalType: 'uint256', name: 'value', type: 'uint256' },
@@ -40,7 +89,7 @@ export default {
       {
         anonymous: false,
         inputs: [
-          { indexed: false, internalType: 'address', name: 'user', type: 'address' },
+          { indexed: true, internalType: 'address', name: 'user', type: 'address' },
           { indexed: false, internalType: 'uint256', name: 'userWeight', type: 'uint256' },
           { indexed: false, internalType: 'uint256', name: 'tokenAmount', type: 'uint256' },
         ],
@@ -128,13 +177,6 @@ export default {
         name: 'depositToIndex',
         outputs: [],
         stateMutability: 'payable',
-        type: 'function',
-      },
-      {
-        inputs: [],
-        name: 'description',
-        outputs: [{ internalType: 'string', name: '', type: 'string' }],
-        stateMutability: 'view',
         type: 'function',
       },
       {
@@ -324,13 +366,6 @@ export default {
         ],
         name: 'redeem',
         outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
-        stateMutability: 'nonpayable',
-        type: 'function',
-      },
-      {
-        inputs: [{ internalType: 'string', name: 'newValue', type: 'string' }],
-        name: 'setDescription',
-        outputs: [],
         stateMutability: 'nonpayable',
         type: 'function',
       },
@@ -844,7 +879,7 @@ export default {
     ],
   },
   Factory: {
-    ADDRESS: '0xDE86B1B612ce49fB24f7707BaF1d41dB158Bc931',
+    ADDRESS: '0x3c4769920D52759044401dFf23217929EF93F843',
     ABI: [
       {
         inputs: [
@@ -902,6 +937,15 @@ export default {
           { indexed: true, internalType: 'address', name: 'sender', type: 'address' },
         ],
         name: 'RoleRevoked',
+        type: 'event',
+      },
+      {
+        anonymous: false,
+        inputs: [
+          { indexed: true, internalType: 'address', name: 'token', type: 'address' },
+          { indexed: false, internalType: 'bool', name: 'newValue', type: 'bool' },
+        ],
+        name: 'WhitelistChange',
         type: 'event',
       },
       {
@@ -1089,7 +1133,7 @@ export default {
     ],
   },
   Staking: {
-    ADDRESS: '0x383B364D12bCf8B4854d4Ca85ec5276b8d598De5',
+    ADDRESS: '0x8E4e4c24b56D4a6E2dB480b377069EbDEAB03D8b',
     ABI: [
       {
         inputs: [
@@ -1340,6 +1384,8 @@ export default {
               { internalType: 'uint256', name: 'timestampStakeStart', type: 'uint256' },
               { internalType: 'uint256', name: 'amountStaked', type: 'uint256' },
               { internalType: 'uint256', name: 'amountOfDividends', type: 'uint256' },
+              { internalType: 'uint256', name: 'amountClaimed', type: 'uint256' },
+              { internalType: 'uint256', name: 'id', type: 'uint256' },
             ],
             internalType: 'struct Staking.StakeInfoFront[]',
             name: 'result',
