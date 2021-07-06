@@ -39,10 +39,10 @@ const Description: React.FC = () => {
       </div>
 
       <div className="description__btns-row">
-        <Button className="description__btn" link="/ydrtoken" styledType="filled">
+        <Button className="description__btn" link="/ydrtoken" styledType="filled" disabled>
           Buy YDR
         </Button>
-        <Button className="description__btn" styledType="outline">
+        <Button className="description__btn" styledType="outline" disabled>
           Whitepaper
         </Button>
       </div>
