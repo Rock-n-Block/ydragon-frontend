@@ -231,9 +231,10 @@
     line-height: 17px;
     text-align: right;
 
-    border-color: var(--color);
 
     border-top: 3px solid;
+    border-color: var(--color);
+
     border-radius: 1px;
 
     &.yellow {

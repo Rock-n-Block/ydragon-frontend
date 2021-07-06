@@ -53,7 +53,7 @@
 }
 .staking-statistics {
   &__btn-row {
-    margin-top: 20px;
+    margin: 20px 0;
 
     display: flex;
   }
@@ -62,6 +62,12 @@
     & + & {
       margin-left: 20px;
     }
+  }
+  .btn{
+    width: unset;
+  }
+  .btn-outline{
+    padding: 18px 50px;
   }
 }
 
