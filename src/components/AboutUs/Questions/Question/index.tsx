@@ -1,8 +1,8 @@
 import React, { PropsWithChildren, useState } from 'react';
 import { observer } from 'mobx-react-lite';
 
-import iconDown from '../../../../assets/img/icons/icon-arrow-down-white.svg';
 import iconDownBlack from '../../../../assets/img/icons/icon-arrow-down-black.svg';
+import iconDown from '../../../../assets/img/icons/icon-arrow-down-white.svg';
 import { useMst } from '../../../../store/store';
 
 import './Question.scss';

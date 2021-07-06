@@ -7,6 +7,7 @@ body {
   .dark {
     color: white;
   }
+
   .light {
     color: #000316;
   }
@@ -40,9 +41,10 @@ p {
   .page__title-label {
     color: white;
   }
+
   .page-wrapper {
-    background-image: url('../assets/img/home-dark-bg.png');
     background-color: $main-dark-bg;
+    background-image: url('../assets/img/home-dark-bg.png');
 
     &--home,
     &--about {
@@ -54,6 +56,7 @@ p {
       }
     }
   }
+
   .page__title-icon--index {
     @include shadow-block;
   }
@@ -71,9 +74,10 @@ p {
   .page__title-label {
     color: $black;
   }
+
   .page-wrapper {
-    background-image: url('../assets/img/home-bg.png');
     background-color: $main-bg;
+    background-image: url('../assets/img/home-bg.png');
 
     &--home,
     &--about {
@@ -84,6 +88,7 @@ p {
       }
     }
   }
+
   .page__title-icon--index {
     @include shadow-light-block;
   }
@@ -96,13 +101,11 @@ p {
 
   min-height: 100vh;
   // background-color: $bg-color;
-
   background-repeat: no-repeat;
   background-position: top center;
   background-size: cover;
   background-blend-mode: unset;
   // background-blend-mode: overlay;
-
   &--home {
     background-position: top center, bottom 390px center;
     background-size: contain;

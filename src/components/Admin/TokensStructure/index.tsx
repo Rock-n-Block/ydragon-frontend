@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import BigNumber from 'bignumber.js/bignumber';
 
 import { IVault } from '../../../pages/AdminIndex';
+import { indexesApi } from '../../../services/api';
 import { Table } from '../../index';
+import { InputNumber } from '../../Input';
 import SmallTableCard from '../../SmallTableCard/index';
 
 import './TokensStructure.scss';
-import { InputNumber } from '../../Input';
-import { indexesApi } from '../../../services/api';
-import { useParams } from 'react-router-dom';
 
 interface IIndexId {
   indexId: string;

@@ -77,7 +77,9 @@ const Advantages: React.FC = () => {
 
             <div className="advantages__item">
               <div className="advantages-yd__item-title">Risk Diversification</div>
-              <div className="advantages-yd__item-descr">Basket of funds improves risk strategy</div>
+              <div className="advantages-yd__item-descr">
+                Basket of funds improves risk strategy
+              </div>
             </div>
           </div>
         </div>

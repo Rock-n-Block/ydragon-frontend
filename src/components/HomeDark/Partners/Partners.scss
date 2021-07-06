@@ -1,14 +1,15 @@
 @import '../../../styles/_variables.scss';
 @import '../../../styles/mixins';
 
-.dark{
-  .protocols-used__title{
-    color: $white
+.dark {
+  .protocols-used__title {
+    color: $white;
   }
 }
-.light{
-  .protocols-used__title{
-    color: $black
+
+.light {
+  .protocols-used__title {
+    color: $black;
   }
 }
 

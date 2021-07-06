@@ -1,6 +1,7 @@
 import React, { Dispatch } from 'react';
-import './SmallTableCard.scss';
 import nextId from 'react-id-generator';
+
+import './SmallTableCard.scss';
 
 interface ISmallTableCardProps {
   tokenName: string;

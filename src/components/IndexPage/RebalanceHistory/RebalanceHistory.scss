@@ -4,19 +4,23 @@
 .dark {
   .index-rebalance-history {
     @include shadow-block;
+
     &__title {
       color: white;
     }
   }
 }
+
 .light {
   .index-rebalance-history {
     @include light-block;
+
     &__title {
       color: $black;
     }
   }
 }
+
 .index-rebalance-history {
   margin-top: 60px;
   padding: 50px 40px 20px;
@@ -27,8 +31,7 @@
     font-weight: normal;
     line-height: 24px;
 
-    @include b('tablet'){
-
+    @include b('tablet') {
       font-size: 14px;
       line-height: 17px;
     }
@@ -39,8 +42,7 @@
 
     font-size: 70px;
     line-height: 84px;
-    @include b('tablet'){
-
+    @include b('tablet') {
       font-size: 50px;
       line-height: 60px;
     }

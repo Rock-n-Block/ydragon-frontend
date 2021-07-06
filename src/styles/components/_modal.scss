@@ -7,17 +7,18 @@
     @include shadow-block;
   }
 }
+
 .light {
   .ant-modal-content {
     color: $black;
     @include shadow-light-block;
   }
 }
+
 .modal {
 }
 
 .ant-modal {
-
   &-close {
     top: 30px;
 

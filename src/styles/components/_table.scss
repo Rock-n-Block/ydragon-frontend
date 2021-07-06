@@ -8,6 +8,7 @@
         background: #14265a !important;
       }
     }
+
     &-row {
       .ant-table-cell {
         color: $white;
@@ -17,11 +18,14 @@
         }
       }
     }
+
     .ant-table-tbody {
       background: $dark-bg;
+
       & > tr.ant-table-placeholder:hover > td > .ant-empty > .ant-empty-description {
         color: rgba($black, 0.5);
       }
+
       .ant-empty {
         &-description {
           color: white;
@@ -29,22 +33,26 @@
       }
     }
   }
+
   .ant-table-thead {
     .ant-table-cell {
       color: rgba($white, 0.5);
     }
   }
 }
+
 .light {
-  .ant-table-tbody > tr.ant-table-placeholder:hover > td{
+  .ant-table-tbody > tr.ant-table-placeholder:hover > td {
     background: $black;
   }
+
   .table {
     &:hover {
       & > td {
         background: $white !important;
       }
     }
+
     &-row {
       .ant-table-cell {
         color: $black;
@@ -57,14 +65,17 @@
 
     .ant-table-tbody {
       @include light-block;
+
       & > tr.ant-table-placeholder:hover > td > .ant-empty > .ant-empty-description {
         color: rgba($white, 0.5) !important;
       }
+
       &-description {
         color: $white;
       }
     }
   }
+
   .ant-table-thead {
     .ant-table-cell {
       color: rgba($black, 0.5);
@@ -75,6 +86,7 @@
     }
   }
 }
+
 .table {
   &-row {
     .ant-table-cell {
@@ -96,7 +108,6 @@
     //     background: #14265a !important;
     //   }
     // }
-
     td.ant-table-column-sort {
       background: #14265a;
     }
@@ -170,6 +181,7 @@
         .ant-table-selection-column + .ant-table-cell {
           border-top-left-radius: 16px;
         }
+
         td:first-child {
           border-top-left-radius: 16px;
         }

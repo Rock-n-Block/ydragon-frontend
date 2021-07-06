@@ -6,11 +6,13 @@
     background: rgba(white, 0.05);
   }
 }
+
 .light {
   .table-splitted__row {
     background: $gray-bg;
   }
 }
+
 .table-splitted {
   &__header {
     margin-bottom: 8px;

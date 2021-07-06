@@ -109,9 +109,9 @@
 }
 
 @mixin light-block {
-  background: #FFFFFF;
-box-shadow: $shadow;
-border-radius: 16px;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: $shadow;
 }
 
 @mixin shadow-dark-block {
@@ -121,7 +121,7 @@ border-radius: 16px;
 }
 
 @mixin shadow-light-block {
-  background: linear-gradient(355.19deg, #FFFFFF 0%, #DDE1F0 100%);
-  box-shadow: -8px 8px 36px rgba(203, 209, 230, 0.3);
+  background: linear-gradient(355.19deg, #fff 0%, #dde1f0 100%);
   border-radius: 32px;
+  box-shadow: -8px 8px 36px rgba(203, 209, 230, 0.3);
 }

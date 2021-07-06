@@ -15,32 +15,34 @@ interface IModal {
   closeIcon?: boolean;
 }
 
-const Modal: React.FC<IModal> = observer(({
-  children,
-  isVisible,
-  handleCancel,
-  width = 'fit-content',
-  className,
-  destroyOnClose = false,
-  closeIcon = false,
-}) => {
-  const { theme } = useMst();
-  return (
-    <ModalAntd
-      title={false}
-      visible={isVisible}
-      footer={false}
-      closable={closeIcon}
-      closeIcon={<CloseImg />}
-      onCancel={handleCancel}
-      centered
-      destroyOnClose={destroyOnClose}
-      width={width}
-      className={classNames(`${theme.value} modal`, className)}
-    >
-      {children}
-    </ModalAntd>
-  );
-})
+const Modal: React.FC<IModal> = observer(
+  ({
+    children,
+    isVisible,
+    handleCancel,
+    width = 'fit-content',
+    className,
+    destroyOnClose = false,
+    closeIcon = false,
+  }) => {
+    const { theme } = useMst();
+    return (
+      <ModalAntd
+        title={false}
+        visible={isVisible}
+        footer={false}
+        closable={closeIcon}
+        closeIcon={<CloseImg />}
+        onCancel={handleCancel}
+        centered
+        destroyOnClose={destroyOnClose}
+        width={width}
+        className={classNames(`${theme.value} modal`, className)}
+      >
+        {children}
+      </ModalAntd>
+    );
+  },
+);
 
 export default Modal;

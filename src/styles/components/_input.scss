@@ -4,21 +4,25 @@
 .dark {
   .input {
     color: $white;
-    background: $dark-bg
+    background: $dark-bg;
   }
+
   .ant-input[disabled] {
     background: $black;
   }
 }
+
 .light {
   .input {
     color: $black;
-    background: $white
+    background: $white;
   }
+
   .ant-input[disabled] {
     background: $white;
   }
 }
+
 .input-border {
   padding: 3px;
 

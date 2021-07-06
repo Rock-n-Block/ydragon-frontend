@@ -4,35 +4,43 @@
 .dark {
   .footer {
     background-color: $footer-dark-bg;
+
     &__logo-text,
     &__descr {
       color: $white;
     }
+
     &__copyright {
       color: #afb5c0;
     }
+
     &__links-title {
       color: #c7cfe2;
     }
+
     &__socials-item {
       background-color: #0b1532;
     }
   }
 }
+
 .light {
   .footer {
     background-color: $footer-bg;
+
     &__logo-text,
     &__descr,
     &__copyright,
     &__links-title {
       color: $black;
     }
+
     &__socials-item {
       background-color: #e9ebf3;
     }
   }
 }
+
 .footer {
   margin-top: 240px;
   padding: 60px 0;

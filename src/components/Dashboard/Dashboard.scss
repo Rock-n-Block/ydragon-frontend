@@ -6,21 +6,25 @@
     &__item {
       @include shadow-block;
     }
-    &__name{
-      color: $white
+
+    &__name {
+      color: $white;
     }
   }
 }
+
 .light {
   .index-dashboard {
     &__item {
       @include light-block;
     }
-    &__name{
-      color: $black
+
+    &__name {
+      color: $black;
     }
   }
 }
+
 .index-dashboard {
   margin-top: 30px;
 
@@ -231,9 +235,9 @@
     line-height: 17px;
     text-align: right;
 
+    border-color: var(--color);
 
     border-top: 3px solid;
-    border-color: var(--color);
 
     border-radius: 1px;
 

@@ -4,7 +4,7 @@
 .dark {
   .search {
     &__items,
-    &__inputs{
+    &__inputs {
       .btn-green {
         &:hover,
         &:focus {
@@ -14,23 +14,27 @@
         }
       }
     }
+
     &__inputs {
       &::before {
         background-image: url('../../assets/img/icons/icon-search-white.svg');
       }
     }
+
     &__input {
       color: $white;
+
       &::placeholder {
         color: $white;
       }
     }
   }
 }
+
 .light {
   .search {
     &__items,
-    &__inputs{
+    &__inputs {
       .btn-green {
         &:hover,
         &:focus {
@@ -40,19 +44,23 @@
         }
       }
     }
+
     &__inputs {
       &::before {
         background-image: url('../../assets/img/icons/icon-search-black.svg');
       }
     }
+
     &__input {
       color: $black;
+
       &::placeholder {
         color: $black;
       }
     }
   }
 }
+
 .search {
   display: flex;
   flex-direction: column;

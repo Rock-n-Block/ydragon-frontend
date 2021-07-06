@@ -5,6 +5,7 @@ import { observer } from 'mobx-react-lite';
 import { Indexes } from './components/Admin';
 import { GetInModal, InfoModal, MetamaskErrModal } from './components/Modals';
 import AdminIndex from './pages/AdminIndex';
+import { useMst } from './store/store';
 import { Footer, GuardedRoute, Header } from './components';
 import {
   AboutUs,
@@ -16,8 +17,6 @@ import {
   StakePage,
   YdrToken,
 } from './pages';
-
-import { useMst } from './store/store';
 
 import './styles/index.scss';
 

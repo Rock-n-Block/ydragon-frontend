@@ -5,11 +5,13 @@
   .ant-picker {
     @include shadow-dark-block;
     color: $white;
+
     &-input {
       input {
         color: $white;
       }
     }
+
     &-separator {
       color: rgba($white, 0.25);
     }
@@ -19,15 +21,18 @@
     }
   }
 }
+
 .light {
   .ant-picker {
     @include shadow-light-block;
     color: $black;
+
     &-input {
       input {
         color: $black;
       }
     }
+
     &-separator {
       color: rgba($black, 0.25);
     }
@@ -37,6 +42,7 @@
     }
   }
 }
+
 .ant-picker {
   width: 100%;
   height: 100%;

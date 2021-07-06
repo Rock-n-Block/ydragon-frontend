@@ -4,19 +4,22 @@
 .dark {
   .initial-mint-event {
     @include shadow-dark-block;
+
     &__title,
     &__description,
-    &__timer{
+    &__timer {
       color: $white;
     }
   }
 }
+
 .light {
   .initial-mint-event {
     @include shadow-light-block;
+
     &__title,
     &__description,
-    &__timer{
+    &__timer {
       color: $black;
     }
   }

@@ -6,23 +6,28 @@
     background-color: $black;
     background-image: url('../../assets/img/home-dark-bg.png');
   }
+
   .collapse {
     background: $dark-bg;
     box-shadow: $shadow-dark;
   }
+
   .header {
     &__logo-text {
       color: $white;
     }
+
     &-nav {
       &__link {
         color: #f7f8fd;
+
         &:hover,
         &:active {
           color: #f7f8fd;
         }
       }
     }
+
     .container {
       .menu-nav {
         &__link {
@@ -37,28 +42,34 @@
     }
   }
 }
+
 .light {
   .expand {
     background-image: url('../../assets/img/home-bg.png');
   }
+
   .collapse {
     background: $white;
 
     box-shadow: $shadow;
   }
+
   .header {
     &__logo-text {
       color: $black;
     }
+
     &-nav {
       &__link {
         color: $black;
+
         &:hover,
         &:active {
           color: $black;
         }
       }
     }
+
     .container {
       .menu-nav {
         &__link {

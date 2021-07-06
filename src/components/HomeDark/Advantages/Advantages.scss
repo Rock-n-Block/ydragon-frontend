@@ -4,29 +4,35 @@
 .dark {
   .advantages-row {
     @include shadow-dark-block;
+
     .advantages {
       color: $white;
+
       &__title {
         color: $white;
       }
     }
   }
 }
+
 .light {
   .advantages-row {
     @include shadow-light-block;
-    @include b('tablet'){
+    @include b('tablet') {
       background: transparent;
       box-shadow: none;
     }
+
     .advantages {
       color: $black;
+
       &__title {
         color: $black;
       }
     }
   }
 }
+
 .advantages-row {
   position: relative;
 
@@ -141,6 +147,7 @@
     font-size: 24px;
     font-weight: normal;
     line-height: 29px;
+
     color: $white;
   }
 
@@ -149,6 +156,7 @@
 
     font-size: 18px;
     line-height: 22px;
+
     color: $white;
   }
 }

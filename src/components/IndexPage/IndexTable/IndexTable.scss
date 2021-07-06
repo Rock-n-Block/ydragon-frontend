@@ -6,20 +6,24 @@
     &__content {
       @include shadow-block;
     }
+
     &__token,
     &__price {
       color: white;
     }
-    &__row--head{
+
+    &__row--head {
       color: rgba(255, 255, 255, 0.4);
     }
   }
 }
+
 .light {
   .index-table {
     &__content {
       @include light-block;
     }
+
     &__token,
     &__price,
     &__row--head {
@@ -27,6 +31,7 @@
     }
   }
 }
+
 .index-table {
   margin-top: 60px;
 
@@ -61,8 +66,8 @@
 
   &__token {
     font-family: 'TTNorms', sans-serif;
-    font-weight: normal;
     font-size: 18px;
+    font-weight: normal;
     line-height: 21px;
   }
 

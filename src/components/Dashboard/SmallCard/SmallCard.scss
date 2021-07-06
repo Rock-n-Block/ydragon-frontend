@@ -4,29 +4,35 @@
 .dark {
   .index-small-card {
     background: $dark-bg;
+
     &__header {
       &--logo::after {
         background-color: #fff;
       }
-      &--name{
+
+      &--name {
         color: #fff;
       }
     }
   }
 }
+
 .light {
   .index-small-card {
     @include shadow-light-block;
+
     &__header {
       &--logo::after {
         background-color: transparent;
       }
-      &--name{
+
+      &--name {
         color: $black;
       }
     }
   }
 }
+
 .index-small-card {
   margin-bottom: 20px;
   padding: 25px 20px;

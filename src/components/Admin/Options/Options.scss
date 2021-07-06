@@ -6,11 +6,13 @@
     @include shadow-block;
   }
 }
+
 .light {
   .options {
     @include light-block;
   }
 }
+
 .options {
   margin-top: 40px;
   padding: 30px 40px;

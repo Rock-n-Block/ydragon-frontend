@@ -8,11 +8,13 @@
     &__currently-price {
       color: $white;
     }
-    &__currently-price{
+
+    &__currently-price {
       @include shadow-dark-block;
     }
   }
 }
+
 .light {
   .home {
     &__sub-title,
@@ -20,7 +22,8 @@
     &__currently-price {
       color: $black;
     }
-    &__currently-price{
+
+    &__currently-price {
       @include shadow-light-block;
     }
   }

@@ -3,10 +3,10 @@ import { useHistory } from 'react-router';
 import { Link } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 
-import cross from '../../assets/img/icons/icon-cross.svg';
 import crossBlack from '../../assets/img/icons/icon-cross-black.svg';
-import iconMenu from '../../assets/img/icons/icon-menu.svg';
+import cross from '../../assets/img/icons/icon-cross.svg';
 import iconMenuBlack from '../../assets/img/icons/icon-menu-black.svg';
+import iconMenu from '../../assets/img/icons/icon-menu.svg';
 import logo from '../../assets/img/icons/logo.svg';
 import dis from '../../assets/img/socials/discord.svg';
 import md from '../../assets/img/socials/medium.svg';
@@ -85,7 +85,7 @@ const Header: React.FC = observer(() => {
               </div>
             ) : (
               <div className="menu__sign">
-              <Switch checked={theme.value === 'dark'} onChange={handleChangeTheme} />
+                <Switch checked={theme.value === 'dark'} onChange={handleChangeTheme} />
                 <ul className="menu-nav">
                   {user.address && (
                     <li className="menu-nav__item">

@@ -7,50 +7,60 @@
       & + & {
         border-top: 1px solid rgba($white, 0.1);
       }
+
       &--head {
         color: rgba($white, 0.5);
       }
     }
+
     &__content {
       @include shadow-block;
     }
+
     &__token,
     &__date,
     &__value {
       color: $white;
     }
   }
-  .staking-statistics__btn{
+
+  .staking-statistics__btn {
     color: $white !important;
     background-color: transparent;
     border: 1px solid $white !important;
   }
 }
+
 .light {
   .staking-statistics-table {
     &__row {
       & + & {
         border-top: 1px solid rgba($black, 0.1);
       }
+
       &--head {
         color: rgba($black, 0.5);
       }
     }
+
     &__content {
       @include light-block;
     }
+
     &__token,
     &__date,
     &__value {
       color: $black;
     }
   }
-  .staking-statistics__btn{
+
+  .staking-statistics__btn {
     color: $black !important;
     background-color: transparent;
     border: 1px solid $black !important;
   }
 }
+
 .staking-statistics {
   &__btn-row {
     margin: 20px 0;
@@ -63,10 +73,12 @@
       margin-left: 20px;
     }
   }
-  .btn{
+
+  .btn {
     width: unset;
   }
-  .btn-outline{
+
+  .btn-outline {
     padding: 18px 50px;
   }
 }

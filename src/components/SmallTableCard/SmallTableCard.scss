@@ -4,25 +4,31 @@
 .dark {
   .small-card {
     @include shadow-block;
+
     &__title {
       color: white;
     }
-    &__header{
+
+    &__header {
       background-color: rgba(242, 243, 248, 0.1);
     }
   }
 }
+
 .light {
   .small-card {
     @include shadow-light-block;
+
     &__title {
       color: $black;
     }
-    &__header{
+
+    &__header {
       background: $gray-bg;
     }
   }
 }
+
 .small-card {
   position: relative;
 
@@ -87,7 +93,8 @@
     &--selected {
       background-color: #3a3a66;
     }
-    &--clickable{
+
+    &--clickable {
       cursor: pointer;
     }
   }
