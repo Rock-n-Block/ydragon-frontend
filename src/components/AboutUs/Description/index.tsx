@@ -4,6 +4,7 @@ import iconPlay from '../../../assets/img/icons/icon-play.svg';
 
 // import { Button } from '../../index';
 import './Description.scss';
+import { Button } from '../../index';
 
 const Description: React.FC = () => {
   return (
@@ -37,14 +38,14 @@ const Description: React.FC = () => {
         </div>
       </div>
 
-      {/* <div className="description__btns-row">
+      <div className="description__btns-row">
         <Button className="description__btn" link="/ydrtoken" styledType="filled">
           Buy YDR
         </Button>
         <Button className="description__btn" styledType="outline">
           Whitepaper
         </Button>
-      </div> */}
+      </div>
     </section>
   );
 };
