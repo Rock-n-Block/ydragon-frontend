@@ -127,6 +127,11 @@ p {
   }
 }
 
+.expandWrapper {
+  display: none;
+  height: 0%;
+}
+
 main {
   flex: 1 1 auto;
 }

@@ -131,6 +131,29 @@
 //.ant-btn-text {
 //  color: black;
 //}
+.dark {
+  .btn-outline {
+    color: $white;
+    border: 1px solid $white;
+    &:hover,
+    &:focus {
+      color: $white;
+      border-color: $white;
+    }
+  }
+}
+
+.light {
+  .btn-outline {
+    color: $black;
+    border: 1px solid $black;
+    &:hover,
+    &:focus {
+      color: $black;
+      border-color: $black;
+    }
+  }
+}
 .btn {
   display: flex;
   justify-content: center;
@@ -166,15 +189,11 @@
   &-outline {
     padding: 20px;
 
-    color: $white;
-    background-color: transparent;
-    border: 1px solid $white;
+    background-color: transparent !important;
 
     &:hover,
     &:focus {
-      color: $white;
       background-color: transparent;
-      border-color: $white;
     }
   }
 
