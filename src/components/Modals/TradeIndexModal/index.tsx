@@ -11,6 +11,8 @@ import { Button, Input, InputWithSelect } from '../../index';
 import { Modal } from '../index';
 
 import './TradeIndexModal.scss';
+import config from '../../../services/web3/config';
+import { ProviderRpcError } from '../../../types/errors';
 
 interface TradeIndexModalProps {
   token: string;
@@ -43,8 +45,9 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(({ token, index
       .then((data: any) => {
         setBalance(data);
       })
-      .catch((err: any) => {
-        console.log('getBalance error', err);
+      .catch((err: ProviderRpcError) => {
+        const { message } = err;
+        console.log('getBalance error', message);
       });
   }, [isSell, indexAddress, walletConnector.metamaskService, firstCurrency]);
 
@@ -57,8 +60,9 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(({ token, index
             new BigNumber(data).dividedBy(new BigNumber(10).pow(18)).toFixed(5),
           );
         })
-        .catch((err: any) => {
-          console.log('getCourse error', err);
+        .catch((err: ProviderRpcError) => {
+          const { message } = err;
+          console.log('getBuyCourse error', message);
         });
     } else {
       setViewOnlyInputValue('0.0');
@@ -73,8 +77,9 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(({ token, index
             new BigNumber(data).dividedBy(new BigNumber(10).pow(18)).toFixed(5),
           );
         })
-        .catch((err: any) => {
-          console.log('getCource error', err);
+        .catch((err: ProviderRpcError) => {
+          const { message } = err;
+          console.log('getSellCourse error', message);
         });
     } else {
       setViewOnlyInputValue('0.0');
@@ -88,8 +93,9 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(({ token, index
         .then((data: boolean) => {
           setIsNeedApprove(!data);
         })
-        .catch((err: any) => {
-          console.log('allowance error', err);
+        .catch((err: ProviderRpcError) => {
+          const { message } = err;
+          console.log('allowance error', message);
         });
     } else {
       setIsNeedApprove(false);
@@ -107,9 +113,11 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(({ token, index
       .approve(firstCurrency, undefined, indexAddress)
       .then(() => {
         setIsNeedApprove(false);
+        modals.info.setMsg('Success', `You approved ${token}`, 'success');
       })
-      .catch((err: any) => {
-        console.log('approve error', err);
+      .catch((err: ProviderRpcError) => {
+        const { message } = err;
+        modals.info.setMsg('Error', `${message}`, 'error');
       });
   };
   const handleBuy = (): void => {
@@ -118,8 +126,9 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(({ token, index
       .then(() => {
         modals.info.setMsg('Success', `You bought ${token}`, 'success');
       })
-      .catch((err: any) => {
-        modals.info.setMsg('Error', `${err}`, 'error');
+      .catch((err: ProviderRpcError) => {
+        const { message } = err;
+        modals.info.setMsg('Error', `${message}`, 'error');
       });
   };
   const handleSell = (): void => {
@@ -128,8 +137,9 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(({ token, index
       .then(() => {
         modals.info.setMsg('Success', `You sold ${token}`, 'success');
       })
-      .catch((err: any) => {
-        modals.info.setMsg('Error', `${err}`, 'error');
+      .catch((err: ProviderRpcError) => {
+        const { message } = err;
+        modals.info.setMsg('Error', `${message}`, 'error');
       });
   };
   useEffect(() => {

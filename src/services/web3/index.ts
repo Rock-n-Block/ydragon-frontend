@@ -77,6 +77,7 @@ export default class MetamaskService {
     this.chainChangedObs = new Observable((subscriber) => {
       this.wallet.on('chainChanged', () => {
         const currentChain = this.wallet.chainId;
+        window.location.reload();
 
         if (currentChain !== this.usedChain) {
           subscriber.next(`Please chosse ${this.usedNetwork} network in metamask wallet.`);
@@ -87,7 +88,8 @@ export default class MetamaskService {
     });
 
     this.accountChangedObs = new Observable((subscriber) => {
-      this.wallet.on('accountChanged', () => {
+      this.wallet.on('accountsChanged', () => {
+        window.location.reload();
         subscriber.next();
       });
     });

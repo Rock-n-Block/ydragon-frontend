@@ -42,9 +42,6 @@ const StakePage: React.FC = () => {
     });
   }, [walletConnector.metamaskService]);
 
-  useEffect(() => {
-    console.log();
-  }, []);
   return (
     <main className="container">
       <Stake tokens={stakeTokensList} propsLoading={loading} />
