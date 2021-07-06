@@ -1,6 +1,22 @@
 @import '../../../styles/_variables.scss';
 @import '../../../styles/mixins';
 
+.dark {
+  .about-us {
+    &__sub-title {
+      color: $white;
+    }
+  }
+}
+
+.light {
+  .about-us {
+    &__sub-title {
+      color: $black;
+    }
+  }
+}
+
 .about-us {
   margin-top: 134px;
 
@@ -24,14 +40,14 @@
     font-size: 144px;
     line-height: 173px;
 
-    @include b('mobile') {
-      font-size: 52px !important;
-      line-height: 62px !important;
-    }
-
     @include b('tablet') {
       font-size: 100px;
       line-height: 125px;
+    }
+
+    @include b('mobile') {
+      font-size: 52px;
+      line-height: 62px;
     }
   }
 
@@ -43,8 +59,6 @@
     font-weight: bold;
     line-height: 70px;
     text-transform: uppercase;
-
-    color: $white;
 
     @include b('tablet') {
       font-size: 33px;

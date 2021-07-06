@@ -2,11 +2,13 @@ import { createContext, useContext } from 'react';
 import { Instance, onSnapshot, types } from 'mobx-state-tree';
 
 import { Modals } from './Modals';
+import { Theme } from './Theme';
 import { User } from './User';
 
 const RootModel = types.model({
   modals: Modals,
   user: User,
+  theme: Theme,
 });
 
 export const Store = RootModel.create({
@@ -24,6 +26,9 @@ export const Store = RootModel.create({
   user: {
     address: '',
     token: '',
+  },
+  theme: {
+    value: localStorage.theme ?? 'light',
   },
 });
 

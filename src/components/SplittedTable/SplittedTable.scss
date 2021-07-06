@@ -1,3 +1,18 @@
+@import '../../styles/_variables.scss';
+@import '../../styles/_mixins.scss';
+
+.dark {
+  .table-splitted__row {
+    background: rgba(white, 0.05);
+  }
+}
+
+.light {
+  .table-splitted__row {
+    background: $gray-bg;
+  }
+}
+
 .table-splitted {
   &__header {
     margin-bottom: 8px;
@@ -26,7 +41,6 @@
 
     display: grid;
 
-    background: rgba(white, 0.05);
     border-radius: 40px;
     grid-column-gap: 40px;
   }

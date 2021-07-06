@@ -1,3 +1,26 @@
+@import '../../styles/_variables.scss';
+@import '../../styles/mixins';
+
+.dark {
+  .chart-panel {
+    &-btns,
+    &-btn {
+      background: rgba(255, 255, 255, 0.1);
+    }
+  }
+}
+
+.light {
+  .chart-panel {
+    &-btns {
+      background: $white;
+    }
+    &-btn {
+      background: rgba(0, 0, 0, 0.2);
+    }
+  }
+}
+
 .chart {
   margin-top: 66px;
 
@@ -61,7 +84,6 @@
       width: 288px;
       height: 62px;
 
-      background: rgba(255, 255, 255, 0.1);
       border-radius: 31px;
     }
 
@@ -75,8 +97,6 @@
       cursor: pointer;
 
       color: #fff;
-
-      background: rgba(255, 255, 255, 0.1);
 
       border-radius: 21px;
     }

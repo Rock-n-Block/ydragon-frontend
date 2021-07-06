@@ -1,8 +1,27 @@
 @import '../../../styles/_variables.scss';
 @import '../../../styles/_mixins.scss';
 
+.dark {
+  .index-rebalance-history {
+    @include shadow-block;
+
+    &__title {
+      color: white;
+    }
+  }
+}
+
+.light {
+  .index-rebalance-history {
+    @include light-block;
+
+    &__title {
+      color: $black;
+    }
+  }
+}
+
 .index-rebalance-history {
-  @include shadow-block;
   margin-top: 60px;
   padding: 50px 40px 20px;
 

@@ -1,6 +1,26 @@
 @import '../../styles/_variables.scss';
 @import '../../styles/_mixins.scss';
 
+.dark {
+  .token-panel {
+    @include shadow-block;
+
+    &-item__label {
+      color: white;
+    }
+  }
+}
+
+.light {
+  .token-panel {
+    @include light-block;
+
+    &-item__label {
+      color: $black;
+    }
+  }
+}
+
 .token-panel {
   margin-top: 30px;
   padding: 30px 40px;
@@ -13,8 +33,6 @@
     flex-direction: column;
     gap: 20px;
   }
-
-  @include shadow-block;
 
   &__content {
     display: flex;
@@ -55,7 +73,5 @@
     font-size: 16px;
     font-weight: normal;
     line-height: 19px;
-
-    color: white;
   }
 }

@@ -1,6 +1,24 @@
 @import '../../../styles/_variables.scss';
 @import '../../../styles/mixins';
 
+.dark {
+  .description {
+    &__title,
+    &__text {
+      color: $white;
+    }
+  }
+}
+
+.light {
+  .description {
+    &__title,
+    &__text {
+      color: $black;
+    }
+  }
+}
+
 .description {
   display: flex;
   flex-direction: column;
@@ -36,8 +54,6 @@
     font-weight: normal;
     line-height: 29px;
 
-    color: #fff;
-
     /* identical to box height */
     font-feature-settings: 'liga' off;
   }
@@ -53,7 +69,6 @@
     /* or 24px */
     letter-spacing: 0.035em;
 
-    color: #fff;
     font-feature-settings: 'liga' off;
   }
 
