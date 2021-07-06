@@ -20,6 +20,16 @@
           color: $white;
         }
       }
+      &:hover {
+        & > td {
+          background: $white !important;
+          color: #14265a !important;
+          cursor: pointer;
+          a {
+            color: #14265a !important;
+          }
+        }
+      }
     }
 
     .ant-table-tbody {
@@ -64,6 +74,16 @@
           color: $black;
         }
       }
+      &:hover {
+        & > td {
+          background: #14265a !important;
+          color: $white !important;
+          cursor: pointer;
+          a {
+            color: $white !important;
+          }
+        }
+      }
     }
 
     .ant-table-tbody {
@@ -105,12 +125,6 @@
         padding-left: 31px;
       }
     }
-
-    // &:hover {
-    //   & > td {
-    //     background: #14265a !important;
-    //   }
-    // }
     td.ant-table-column-sort {
       background: #14265a;
     }

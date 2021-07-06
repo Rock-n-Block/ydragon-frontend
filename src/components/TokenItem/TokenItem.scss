@@ -28,6 +28,7 @@
 
 .light {
   .token-item {
+    background: rgba(0, 0, 0, 0.05);
     &__weight {
       &::before {
         content: '';
