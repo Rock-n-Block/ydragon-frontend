@@ -1,8 +1,19 @@
 @import '../../../styles/_variables.scss';
 @import '../../../styles/_mixins.scss';
 
+.dark {
+  .composition {
+    @include shadow-block;
+  }
+}
+
+.light {
+  .composition {
+    @include light-block;
+  }
+}
+
 .composition {
-  @include shadow-block;
   margin-top: 60px;
   padding: 40px;
 
@@ -22,6 +33,10 @@
     grid-template-columns: repeat(3, 1fr);
     grid-column-gap: 20px;
     grid-row-gap: 25px;
+
+    @include b(tablet) {
+      grid-template-columns: repeat(1, 1fr);
+    }
   }
 
   &__change-btn {

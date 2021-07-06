@@ -1,6 +1,34 @@
 @import '../../../styles/variables';
 @import '../../../styles/mixins';
 
+.dark {
+  .home {
+    &__sub-title,
+    &__descr,
+    &__currently-price {
+      color: $white;
+    }
+
+    &__currently-price {
+      @include shadow-dark-block;
+    }
+  }
+}
+
+.light {
+  .home {
+    &__sub-title,
+    &__descr,
+    &__currently-price {
+      color: $black;
+    }
+
+    &__currently-price {
+      @include shadow-light-block;
+    }
+  }
+}
+
 .home {
   display: flex;
   flex-direction: column;
@@ -34,13 +62,14 @@
   &__sub-title {
     position: absolute;
 
-    font-family: 'MEB', sans-serif;
+    font-family: 'Monument Extended', sans-serif;
     font-size: 25px;
+    font-weight: 800;
     line-height: 29px;
     letter-spacing: 0.87em;
     text-transform: uppercase;
 
-    color: $white;
+    // color: $white;
     @include b('tablet') {
       font-size: 9px;
       line-height: 10px;
@@ -55,7 +84,7 @@
     text-align: center;
     letter-spacing: 0.035em;
 
-    color: $white;
+    // color: $white;
     @include b('tablet') {
       max-width: 350px;
 
@@ -68,11 +97,19 @@
 
     display: flex;
     justify-content: center;
+    gap: 30px;
 
     width: 100%;
 
     .btn {
       padding: 17px 0;
+    }
+
+    @include b('tablet') {
+      flex-direction: column;
+      gap: 20px;
+
+      align-items: center;
     }
   }
 
@@ -81,17 +118,14 @@
     max-width: 250px;
     flex-shrink: 0;
 
-    & + & {
-      margin-left: 30px;
+    @include b('tablet') {
+      max-width: 350px;
     }
   }
 
   &__currently-price {
-    @include shadow-dark-block;
     margin-top: 100px;
     padding: 35px 85px;
-
-    display: inline-flex;
 
     font-size: 22px;
     line-height: 30px;
@@ -104,6 +138,10 @@
 
       font-size: 22px;
       line-height: 30px;
+    }
+
+    @include b('tablet') {
+      padding: 20px;
     }
   }
 }

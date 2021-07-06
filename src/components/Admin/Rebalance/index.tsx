@@ -5,6 +5,7 @@ import { observer } from 'mobx-react-lite';
 import { IIndexStatus, ITokensDiff } from '../../../pages/Admin';
 import { useMst } from '../../../store/store';
 import { Button, Table } from '../../index';
+import SmallTableCard from '../../SmallTableCard/index';
 
 import './Rebalance.scss';
 
@@ -75,13 +76,38 @@ const Rebalance: React.FC<RebalanceProps> = observer(({ status, tokens }) => {
       <h2 className="section__title text-outline">Index rebalance</h2>
 
       {tokens && (
-        <Table dataSource={dataSource} columns={columns} className="rebalance-table">
-          <div className="rebalance-table__btn-row ">
-            <Button onClick={handleRebalanceOpen} disabled={rebalanceInProgress}>
-              Rebalance index
-            </Button>
+        <>
+          <div className="rebalance-table__big">
+            <Table dataSource={dataSource} columns={columns} className="rebalance-table">
+              <div className="rebalance-table__btn-row ">
+                <Button onClick={handleRebalanceOpen} disabled={rebalanceInProgress}>
+                  Rebalance index
+                </Button>
+              </div>
+            </Table>
           </div>
-        </Table>
+          <div className="rebalance-table__small">
+            {dataSource.map((data, i) => (
+              <SmallTableCard
+                headerTitle="Token"
+                tokenLogo={data.name.image}
+                tokenName={data.name.name}
+                data={[
+                  ['Quantity per index', data.quantity],
+                  ['Token price', data.price],
+                  ['Current Price Allocation', data.weight],
+                  ['Total price per index', data.priceTotal],
+                ]}
+                index={i}
+              />
+            ))}
+            <div className="rebalance-table__btn-row ">
+              <Button onClick={handleRebalanceOpen} disabled={rebalanceInProgress}>
+                Rebalance index
+              </Button>
+            </div>
+          </div>
+        </>
       )}
     </section>
   );

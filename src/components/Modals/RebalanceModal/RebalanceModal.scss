@@ -1,6 +1,25 @@
 @import '../../../styles/variables';
 @import '../../../styles/mixins';
 
+.dark {
+  .token-weights{
+    &-items{
+      &__gead{
+        color: rgba($white, 0.5);
+      }
+    }
+  }
+}
+
+.light {
+  .token-weights{
+    &-items{
+      &__gead{
+        color: rgba($black, 0.5);
+      }
+    }
+  }
+}
 .m-rebalance {
   &__content {
     padding: 30px;
@@ -16,8 +35,9 @@
     position: relative;
 
     &__title {
-      font-family: 'MER', sans-serif;
+      font-family: 'Monument Extended', sans-serif;
       font-size: 20px;
+      font-weight: normal;
       line-height: 24px;
     }
 
@@ -58,8 +78,9 @@
       &__title {
         max-width: 103px;
 
-        font-family: 'TNR', sans-serif;
+        font-family: 'TTNorms', sans-serif;
         font-size: 18px;
+        font-weight: normal;
         line-height: 21px;
       }
     }
@@ -90,12 +111,12 @@
 
       display: grid;
 
-      font-family: 'MER', sans-serif;
+      font-family: 'Monument Extended', sans-serif;
       font-size: 12px;
+      font-weight: normal;
       line-height: 14px;
       text-align: center;
 
-      color: rgba(white, 0.5);
       grid-template-columns: 1fr 134px 102px;
       grid-column-gap: 15px;
 
@@ -110,8 +131,9 @@
       display: flex;
       align-items: center;
 
-      font-family: MER, sans-serif;
+      font-family: 'Monument Extended', sans-serif;
       font-size: 16px;
+      font-weight: normal;
       line-height: 19px;
       gap: 9px;
     }
@@ -154,8 +176,9 @@
     }
 
     &__name {
-      font-family: 'TNB', sans-serif;
+      font-family: 'TTNorms', sans-serif;
       font-size: 18px;
+      font-weight: 700;
       line-height: 21px;
 
       color: white;
@@ -186,8 +209,9 @@
     align-items: center;
 
     &-name {
-      font-family: 'TNR', sans-serif;
+      font-family: 'TTNorms', sans-serif;
       font-size: 18px;
+      font-weight: normal;
       line-height: 21px;
 
       color: white;

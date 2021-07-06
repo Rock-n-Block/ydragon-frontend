@@ -1,0 +1,34 @@
+@import '../../../styles/_variables.scss';
+@import '../../../styles/_mixins.scss';
+
+.dark {
+  .chart-panel-title {
+    color: $white;
+  }
+}
+
+.light {
+  .chart-panel-title {
+    color: $black;
+  }
+}
+
+.chart {
+  margin-top: 66px;
+
+  &-panel {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    &-title {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+
+      font-family: 'Monument Extended', sans-serif;
+      font-size: 50px;
+      font-weight: normal;
+    }
+  }
+}

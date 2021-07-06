@@ -1,16 +1,28 @@
+@import '../../styles/variables';
+@import '../../styles/mixins';
+
+// .dark {
+//   .token-mini__name-wrapper {
+//     color: $white;
+//   }
+// }
+// .light {
+//   .token-mini__name-wrapper {
+//     color: $black;
+//   }
+// }
 .token-mini {
   display: flex;
   align-items: center;
 
   &__name-wrapper {
     margin-left: 10px;
-
-    color: white;
   }
 
   &__name {
-    font-family: 'TNB', sans-serif;
+    font-family: 'TTNorms', sans-serif;
     font-size: 18px;
+    font-weight: 700;
     line-height: 21px;
   }
 

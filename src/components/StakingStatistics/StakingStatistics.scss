@@ -1,9 +1,69 @@
-@import '../../../styles/_variables.scss';
-@import '../../../styles/_mixins.scss';
+@import '../../styles/variables';
+@import '../../styles/mixins';
+
+.dark {
+  .staking-statistics-table {
+    &__row {
+      & + & {
+        border-top: 1px solid rgba($white, 0.1);
+      }
+
+      &--head {
+        color: rgba($white, 0.5);
+      }
+    }
+
+    &__content {
+      @include shadow-block;
+    }
+
+    &__token,
+    &__date,
+    &__value {
+      color: $white;
+    }
+  }
+
+  .staking-statistics__btn {
+    color: $white !important;
+    background-color: transparent;
+    border: 1px solid $white !important;
+  }
+}
+
+.light {
+  .staking-statistics-table {
+    &__row {
+      & + & {
+        border-top: 1px solid rgba($black, 0.1);
+      }
+
+      &--head {
+        color: rgba($black, 0.5);
+      }
+    }
+
+    &__content {
+      @include light-block;
+    }
+
+    &__token,
+    &__date,
+    &__value {
+      color: $black;
+    }
+  }
+
+  .staking-statistics__btn {
+    color: $black !important;
+    background-color: transparent;
+    border: 1px solid $black !important;
+  }
+}
 
 .staking-statistics {
   &__btn-row {
-    margin-top: 20px;
+    margin: 20px 0;
 
     display: flex;
   }
@@ -13,10 +73,34 @@
       margin-left: 20px;
     }
   }
+
+  .btn {
+    width: unset;
+    width: 100%;
+  }
+
+  .btn-outline {
+    padding: 18px 50px;
+  }
 }
 
 .staking-statistics-table {
   margin-top: 30px;
+
+  &__big {
+    @include b(tablet) {
+      display: none;
+    }
+  }
+
+  &__small {
+    padding-top: 15px;
+
+    display: none;
+    @include b(tablet) {
+      display: block;
+    }
+  }
 
   &__row {
     padding: 20px 10px;
@@ -26,26 +110,20 @@
     grid-template-columns: 220px 60px 100px repeat(4, 1fr);
     grid-column-gap: 20px;
 
-    & + & {
-      border-top: 1px solid rgba($black, 0.1);
-    }
-
     &--head {
       margin-bottom: 10px;
       padding: 0 30px;
 
       align-items: end;
 
-      font-family: 'MER', sans-serif;
+      font-family: 'Monument Extended', sans-serif;
       font-size: 12px;
+      font-weight: normal;
       line-height: 14px;
-
-      color: rgba($black, 0.5);
     }
   }
 
   &__content {
-    @include shadow-block;
     padding: 0 20px;
   }
 
@@ -55,8 +133,6 @@
 
     font-size: 18px;
     line-height: 21px;
-
-    color: $black;
 
     &::before {
       content: '';
@@ -73,23 +149,20 @@
   }
 
   &__time {
-    @include gradient-text;
     font-size: 18px;
     line-height: 22px;
+    @include gradient-text;
   }
 
   &__date {
     font-size: 18px;
     line-height: 21px;
-
-    color: $black;
   }
 
   &__value {
-    font-family: 'MER', sans-serif;
+    font-family: 'Monument Extended', sans-serif;
     font-size: 18px;
+    font-weight: normal;
     line-height: 22px;
-
-    color: $black;
   }
 }

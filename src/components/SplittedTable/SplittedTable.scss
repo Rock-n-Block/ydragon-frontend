@@ -1,3 +1,18 @@
+@import '../../styles/_variables.scss';
+@import '../../styles/_mixins.scss';
+
+.dark {
+  .table-splitted__row {
+    background: rgba(white, 0.05);
+  }
+}
+
+.light {
+  .table-splitted__row {
+    background: $gray-bg;
+  }
+}
+
 .table-splitted {
   &__header {
     margin-bottom: 8px;
@@ -5,8 +20,9 @@
 
     display: grid;
 
-    font-family: MER, sans-serif;
+    font-family: 'Monument Extended', sans-serif;
     font-size: 12px;
+    font-weight: normal;
     line-height: 14px;
     text-align: center;
 
@@ -25,7 +41,6 @@
 
     display: grid;
 
-    background: rgba(white, 0.05);
     border-radius: 40px;
     grid-column-gap: 40px;
   }
@@ -35,8 +50,9 @@
     justify-content: center;
     align-items: center;
 
-    font-family: TNR, sans-serif;
+    font-family: 'TTNorms', sans-serif;
     font-size: 20px;
+    font-weight: normal;
     line-height: 23px;
 
     .token-mini {

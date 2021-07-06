@@ -1,6 +1,37 @@
 @import '../../../styles/_variables.scss';
 @import '../../../styles/_mixins.scss';
 
+.dark {
+  .index-table {
+    &__content {
+      @include shadow-block;
+    }
+
+    &__token,
+    &__price {
+      color: white;
+    }
+
+    &__row--head {
+      color: rgba(255, 255, 255, 0.4);
+    }
+  }
+}
+
+.light {
+  .index-table {
+    &__content {
+      @include light-block;
+    }
+
+    &__token,
+    &__price,
+    &__row--head {
+      color: $black;
+    }
+  }
+}
+
 .index-table {
   margin-top: 60px;
 
@@ -22,24 +53,22 @@
 
       align-items: end;
 
-      font-family: 'MER', sans-serif;
+      font-family: 'Monument Extended', sans-serif;
       font-size: 12px;
+      font-weight: normal;
       line-height: 14px;
-
-      color: rgba(white, 0.4);
     }
   }
 
   &__content {
-    @include shadow-block;
     padding: 0 20px;
   }
 
   &__token {
+    font-family: 'TTNorms', sans-serif;
     font-size: 18px;
+    font-weight: normal;
     line-height: 21px;
-
-    color: $black;
   }
 
   &__first-col {
@@ -52,6 +81,8 @@
 
     width: 31px;
     height: 31px;
+
+    border-radius: 50%;
   }
 
   &__quantity {
@@ -61,11 +92,10 @@
   }
 
   &__price {
-    font-family: 'MER', sans-serif;
+    font-family: 'Monument Extended', sans-serif;
     font-size: 18px;
+    font-weight: normal;
     line-height: 22px;
-
-    color: $black;
   }
 
   &__percent-change {
@@ -79,8 +109,9 @@
 
     width: fit-content;
 
-    font-family: 'TNB', sans-serif;
+    font-family: 'TTNorms', sans-serif;
     font-size: 15px;
+    font-weight: 700;
     line-height: 18px;
 
     border-radius: 40px;

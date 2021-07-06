@@ -1,21 +1,27 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { observer } from 'mobx-react-lite';
 
 import logo from '../../assets/img/icons/logo.svg';
-import { TokenPanel } from '../../components';
+import { TokenPanel, YDRTokenChart } from '../../components';
 import { TradeYDRModal } from '../../components/Modals';
 import { useMst } from '../../store/store';
 // import { useWalletConnectorContext } from '../../services/walletConnect';
 
 const YdrToken: React.FC = observer(() => {
+  const [price, setPrice] = useState(1);
   const { modals } = useMst();
   //  const walletConnector = useWalletConnectorContext();
   const panelInfo = [
     {
       label: 'Price',
-      value: '$257',
+      value: `$${price.toFixed(6)}`,
     },
   ];
+
+  const updatePrice = (value: number) => {
+    setPrice(value);
+  };
+
   const handleBuy = () => {
     modals.tradeYDR.open('buy');
     // walletConnector.metamaskService.buyYDRToken().then().catch();
@@ -38,6 +44,7 @@ const YdrToken: React.FC = observer(() => {
 
       <TokenPanel panelContent={panelInfo} handleBuy={handleBuy} handleSell={handleSell} />
       <TradeYDRModal />
+      <YDRTokenChart price={updatePrice} />
     </main>
   );
 });

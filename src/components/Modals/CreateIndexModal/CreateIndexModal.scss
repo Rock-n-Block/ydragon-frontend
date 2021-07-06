@@ -1,11 +1,45 @@
+@import '../../../styles/_variables.scss';
+@import '../../../styles/mixins';
+
+.dark {
+  .m-create-index__content {
+    .token-weights__search {
+      border-top: 1px solid rgba($white, 0.1);
+      border-bottom: 1px solid rgba($white, 0.1);
+    }
+  }
+}
+
+.light {
+  .m-create-index__content {
+    .token-weights__search {
+      border-top: 1px solid rgba($black, 0.1);
+      border-bottom: 1px solid rgba($black, 0.1);
+    }
+    .form-create-index {
+      .ant-input {
+        background: linear-gradient(355.19deg, #fff 0%, #dde1f0 100%);
+      }
+      input,
+      .ant-input,
+      .input {
+        &::placeholder {
+          color: $black;
+        }
+      }
+    }
+  }
+}
+
 .m-create-index {
   &__content {
     padding: 30px;
   }
 
   &__title {
-    font-family: MER, sans-serif;
+    font-family: 'Monument Extended', sans-serif;
     font-size: 20px;
+    font-weight: normal;
     line-height: 24px;
   }
 
@@ -20,12 +54,17 @@
       grid-column-gap: 20px;
     }
 
+    &__description {
+      margin: 33px 0;
+    }
+
     &__input {
       &-label {
         margin-bottom: 10px;
 
-        font-family: MER, sans-serif;
+        font-family: 'Monument Extended', sans-serif;
         font-size: 12px;
+        font-weight: normal;
         line-height: 14px;
 
         opacity: 0.5;
@@ -33,11 +72,6 @@
 
       .input-border {
         width: 100%;
-
-        .input {
-          background: linear-gradient(180deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0) 100%),
-            linear-gradient(171.49deg, #1a1e3a 3.83%, #161a2a 100%);
-        }
       }
 
       &:last-child {
@@ -49,10 +83,6 @@
           text-transform: uppercase;
         }
       }
-    }
-
-    .token-weights__search {
-      border-bottom: 1px solid rgba(white, 0.1);
     }
 
     &__btn-row {

@@ -1,14 +1,43 @@
 import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import BigNumber from 'bignumber.js/bignumber';
 
 import { IVault } from '../../../pages/AdminIndex';
+import { indexesApi } from '../../../services/api';
 import { Table } from '../../index';
+import { InputNumber } from '../../Input';
+import SmallTableCard from '../../SmallTableCard/index';
 
+import './TokensStructure.scss';
+
+interface IIndexId {
+  indexId: string;
+}
 interface TokensStructureProps {
   vaults: IVault[];
+  manualRebalanceValue: string;
 }
 
-const TokensStructure: React.FC<TokensStructureProps> = ({ vaults }) => {
+const TokensStructure: React.FC<TokensStructureProps> = ({ vaults, manualRebalanceValue }) => {
+  const { indexId } = useParams<IIndexId>();
+  const [dataSource, setDataSource] = useState<any[]>([]);
+  const [inputs, setInputs] = useState<any[]>([]);
+  const handleInputChange = (value: string | number, index: number) => {
+    const newArr = [...inputs]; // copying the old datas array
+    newArr[index] = value; // replace e.target.value with whatever you want to change it to
+    setInputs(newArr);
+  };
+  const handleSubmitChange = () => {
+    const aprArray = vaults.map((vault, index) => {
+      return {
+        id: vault.id,
+        apr: inputs[index] || '0',
+      };
+    });
+    indexesApi.patchIndexesApr(+indexId, aprArray).catch((err) => {
+      console.log(err);
+    });
+  };
   const columns: any[] = [
     {
       title: 'Tokens per index',
@@ -25,41 +54,125 @@ const TokensStructure: React.FC<TokensStructureProps> = ({ vaults }) => {
       title: 'X Vault',
       dataIndex: 'x_vault',
       key: 'x_vault',
-      render: (item: any) => <span className="text-gradient">{item}%</span>,
+      render: (item: any) => <span className="text-gradient">{item}</span>,
     },
     {
       title: 'Y Vault',
       dataIndex: 'y_vault',
       key: 'y_vault',
-      render: (item: any) => <span>{item}%</span>,
     },
     {
       title: 'Farm',
       dataIndex: 'farm',
       key: 'farm',
     },
+    {
+      title: 'Estimated X Vault',
+      dataIndex: 'estimated',
+      key: 'estimated',
+    },
+    {
+      title: 'Must be returned from the farm',
+      dataIndex: 'returnValue',
+      key: 'returnValue',
+    },
+    {
+      title: 'APR, %',
+      dataIndex: 'apr',
+      key: 'apr',
+      render: (item: any) => (
+        <InputNumber
+          type="number"
+          value={item.apr}
+          onChange={(value) => handleInputChange(value, item.index)}
+          onBlur={handleSubmitChange}
+          placeholder="0"
+          min={0}
+          max={100}
+        />
+      ),
+    },
   ];
-  const [dataSource, setDataSource] = useState<any[]>([]);
+  useEffect(() => {
+    if (vaults) {
+      const aprArray = vaults.map((vault) => vault.apr || '');
+      setInputs(aprArray);
+    }
+  }, [vaults]);
   useEffect(() => {
     if (vaults) {
       const newData = vaults.map((vault, index) => {
+        const x_vault = new BigNumber(vault.x_balance)
+          .dividedBy(new BigNumber(10).pow(18))
+          .toFixed(5);
+        const y_vault = new BigNumber(vault.y_balance)
+          .dividedBy(new BigNumber(10).pow(18))
+          .toFixed(5);
+        const farm = new BigNumber(vault.farm_balance)
+          .dividedBy(new BigNumber(10).pow(18))
+          .toFixed(5);
+        const estimated = new BigNumber(x_vault)
+          .plus(y_vault)
+          .plus(farm)
+          .multipliedBy(new BigNumber(manualRebalanceValue || 0).dividedBy(100))
+          .toFixed(5); // TODO: change multiplier
+        const returnValue = new BigNumber(estimated).minus(x_vault).minus(y_vault).isLessThan(0)
+          ? '0'
+          : new BigNumber(estimated).minus(x_vault).minus(y_vault).toFixed(5);
         return {
           key: index,
           name: { image: vault.token_image, name: vault.token_name },
-          x_vault: new BigNumber(vault.x_percent).toFixed(2),
-          y_vault: new BigNumber(vault.y_percent).toFixed(2),
-          farm: vault.farm_balance,
+          x_vault,
+          y_vault,
+          farm,
+          estimated,
+          returnValue,
+          apr: { apr: inputs[index], index },
         };
       });
       setDataSource(newData);
     }
-  }, [vaults]);
+  }, [inputs, manualRebalanceValue, vaults]);
   return (
     <section className="section section--admin">
       <h2 className="section__title text-outline">Tokens structure</h2>
 
       {vaults && (
-        <Table dataSource={dataSource} columns={columns} className="tokens-structure-table" />
+        <>
+          <div className="token-structure-table__big">
+            <Table dataSource={dataSource} columns={columns} className="tokens-structure-table" />
+          </div>
+          <div className="token-structure-table__small">
+            {dataSource.map((data, i) => (
+              <SmallTableCard
+                key={data.key}
+                headerTitle="Tokens per index"
+                tokenName={data.name.name}
+                tokenLogo={data.name.image}
+                index={i}
+                data={[
+                  ['X Vault', data.x_vault],
+                  ['Y Vault', data.y_vault],
+                  ['Farm', data.farm],
+                  ['Estimated X Vault', data.estimated],
+                  ['Must be returned from the farm', data.returnValue],
+                  [
+                    'APR, %',
+                    <InputNumber
+                      type="number"
+                      value={data.apr.apr}
+                      onChange={(value) => handleInputChange(value, data.apr.index)}
+                      onBlur={handleSubmitChange}
+                      placeholder="0"
+                      min={0}
+                      max={100}
+                    />,
+                  ],
+                ]}
+              />
+            ))}
+          </div>
+        </>
       )}
     </section>
   );

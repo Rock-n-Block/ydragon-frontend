@@ -1,3 +1,35 @@
+@import '../../styles/_variables.scss';
+@import '../../styles/mixins';
+
+.dark {
+  .switch {
+    .ant-switch {
+      background: $dark-bg;
+    }
+  }
+}
+
+.light {
+  .ant-switch {
+    background: $white;
+  }
+  .collapse {
+    .switch {
+      .ant-switch {
+        background: $white;
+      }
+    }
+  }
+
+  .expand {
+    .switch {
+      .ant-switch {
+        background: $gray-bg;
+      }
+    }
+  }
+}
+
 .switch {
   position: relative;
 
@@ -19,9 +51,6 @@
     height: unset;
 
     cursor: pointer;
-
-    background: linear-gradient(180deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0) 100%),
-      linear-gradient(171.49deg, #1a1e3a 3.83%, #161a2a 100%);
 
     &-handle {
       top: 5px;

@@ -1,4 +1,17 @@
-@import 'src/styles/variables';
+@import '../../../styles/_variables.scss';
+@import '../../../styles/_mixins.scss';
+
+.dark {
+  .options {
+    @include shadow-block;
+  }
+}
+
+.light {
+  .options {
+    @include light-block;
+  }
+}
 
 .options {
   margin-top: 40px;
@@ -7,10 +20,6 @@
   display: flex;
   flex-direction: column;
 
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0) 100%),
-    linear-gradient(171.49deg, #1a1e3a 3.83%, #161a2a 100%);
-  border-radius: 16px;
-  box-shadow: -8px 8px 36px rgba(0, 0, 0, 0.5);
   gap: 60px;
 
   &__option {
@@ -33,8 +42,9 @@
     &-name {
       max-width: 213px;
 
-      font-family: MER, sans-serif;
+      font-family: 'Monument Extended', sans-serif;
       font-size: 18px;
+      font-weight: normal;
       line-height: 22px;
     }
 

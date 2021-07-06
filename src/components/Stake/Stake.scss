@@ -1,18 +1,82 @@
-@import '../../../styles/_variables.scss';
-@import '../../../styles/_mixins.scss';
+@import '../../styles/variables';
+@import '../../styles/mixins';
+
+.dark {
+  .stake {
+    @include shadow-block;
+
+    &__title {
+      color: rgba($white, 0.5);
+    }
+
+    &-item {
+      background-color: rgba(255, 255, 255, 0.05);
+
+      &:hover,
+      &--active {
+        background-color: darken($gray-bg, 3%);
+
+        .stake-item__amount,
+        .token-mini {
+          color: $black;
+        }
+
+        .stake-item__abbr {
+          color: rgba($black, 0.4);
+        }
+      }
+    }
+
+    &-amount__all {
+      color: rgba($white, 0.4);
+    }
+  }
+}
+
+.light {
+  .stake {
+    @include light-block;
+
+    &__title {
+      color: $black;
+    }
+
+    &-item {
+      background: $gray-bg;
+
+      &:hover,
+      &--active {
+        background: $dark-bg;
+
+        .stake-item__amount,
+        .token-mini {
+          color: $white;
+        }
+
+        .stake-item__abbr {
+          color: rgba($white, 0.4);
+        }
+      }
+    }
+
+    &-amount__all {
+      color: rgba($black, 0.4);
+    }
+  }
+}
 
 .stake {
-  @include shadow-block;
   margin-top: 30px;
   padding: 40px;
 
   &__title {
-    font-family: 'MER', sans-serif;
+    margin-right: 40px;
+
+    font-family: 'Monument Extended', sans-serif;
     font-size: 12px;
+    font-weight: normal;
     line-height: 14px;
     text-align: right;
-
-    color: rgba($black, 0.5);
   }
 
   &__content {
@@ -20,10 +84,12 @@
   }
 
   &__btn-row {
-    margin-top: 40px;
+    margin: 40px auto 0;
 
     display: flex;
     justify-content: center;
+
+    max-width: 205px;
   }
 }
 
@@ -38,21 +104,12 @@
 
   cursor: pointer;
 
-  background-color: $gray-bg;
   border-radius: 40px;
 
   transition: background-color 0.3s;
 
-  &:hover {
-    background-color: darken($gray-bg, 3%);
-  }
-
   & + & {
     margin-top: 15px;
-  }
-
-  &--active {
-    background-color: darken($gray-bg, 5%);
   }
 
   &__info {
@@ -65,27 +122,23 @@
   }
 
   &__name {
-    font-family: 'TNB', sans-serif;
+    font-family: 'TTNorms', sans-serif;
     font-size: 18px;
+    font-weight: 700;
     line-height: 21px;
-
-    color: $black;
   }
 
   &__abbr {
     font-size: 18px;
     line-height: 21px;
     text-transform: uppercase;
-
-    color: rgba($black, 0.4);
   }
 
   &__amount {
-    font-family: 'TNB', sans-serif;
+    font-family: 'TTNorms', sans-serif;
     font-size: 20px;
+    font-weight: 700;
     line-height: 24px;
-
-    color: $black;
   }
 }
 
@@ -93,24 +146,29 @@
   $this: &;
   margin-top: 50px;
 
+  display: flex;
+  flex-direction: column;
+
   &__title {
-    @include gradient-text;
+    margin: 0 auto;
+
     font-size: 20px;
     line-height: 24px;
-    text-align: center;
   }
 
   &__input-wrapper {
     position: relative;
 
-    margin-top: 15px;
+    margin: 15px auto 0;
 
     display: flex;
     justify-content: center;
 
+    width: 100%;
+    max-width: 500px;
+
     .input-border {
       width: 100%;
-      max-width: 500px;
       height: 100px;
     }
 
@@ -118,19 +176,23 @@
       font-size: 30px;
       line-height: 35px;
     }
+
+    .ant-input-number {
+      max-width: unset;
+    }
   }
 
   &__all {
     position: absolute;
-    bottom: 10px;
+    top: 40px;
+    right: 36px;
 
-    font-family: 'TNB', sans-serif;
+    font-family: 'TTNorms', sans-serif;
     font-size: 16px;
+    font-weight: 700;
     line-height: 19px;
 
     cursor: pointer;
-
-    color: rgba($black, 0.4);
   }
 
   &__time-row {
@@ -147,7 +209,7 @@
 
     box-sizing: border-box;
 
-    border: 3px solid #e9ebf3;
+    border: 3px solid rgba(255, 255, 255, 0.1);
     border-radius: 40px;
   }
 
@@ -181,12 +243,12 @@
     width: 100%;
     height: 100%;
 
-    font-family: 'TNB', sans-serif;
+    font-family: 'TTNorms', sans-serif;
     font-size: 16px;
+    font-weight: 700;
     line-height: 19px;
 
-    color: $black;
-    background: $white;
+    background: rgba(255, 255, 255, 0.1);
     border-radius: 40px;
 
     transition: all 0.3s;

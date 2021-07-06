@@ -1,4 +1,5 @@
 import React from 'react';
+import nextId from 'react-id-generator';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import slide1 from '../../../assets/img/partners/logo-1.png';
@@ -38,7 +39,7 @@ const Partners: React.FC = () => {
           <Swiper spaceBetween={60} slidesPerView={8} loop>
             {partners.map((partner) => (
               <SwiperSlide>
-                <img src={partner} alt="" />
+                <img src={partner} key={nextId()} alt="" />
               </SwiperSlide>
             ))}
           </Swiper>

@@ -1,8 +1,85 @@
 @import '../../styles/variables';
 @import '../../styles/mixins';
 
+.dark {
+  .index-dashboard {
+    &__item {
+      @include shadow-block;
+    }
+    &__name {
+      color: $white;
+    }
+    &__token-color {
+      --color: white;
+
+      &.yellow {
+        --color: #f7931e;
+      }
+
+      &.blue {
+        --color: #2754cd;
+      }
+
+      &.red {
+        --color: #d53038;
+      }
+
+      background-color: var(--color);
+    }
+    &__token-percent {
+      --color: $white;
+    }
+  }
+}
+
+.light {
+  .index-dashboard {
+    &__item {
+      @include light-block;
+    }
+    &__name {
+      color: $black;
+    }
+    &__token-color {
+      --color: #000136;
+
+      &.yellow {
+        --color: #f7931e;
+      }
+
+      &.blue {
+        --color: #2754cd;
+      }
+
+      &.red {
+        --color: #d53038;
+      }
+
+      background-color: var(--color);
+    }
+    &__token-percent {
+      --color: $black;
+    }
+  }
+}
+
 .index-dashboard {
   margin-top: 30px;
+
+  &__big {
+    @include b(tablet) {
+      display: none;
+    }
+  }
+
+  &__small {
+    padding-top: 15px;
+
+    display: none;
+    @include b(tablet) {
+      display: block;
+    }
+  }
 
   &__row {
     display: grid;
@@ -20,8 +97,9 @@
 
       align-items: end;
 
-      font-family: 'MER', sans-serif;
+      font-family: 'Monument Extended', sans-serif;
       font-size: 12px;
+      font-weight: normal;
       line-height: 14px;
     }
   }
@@ -60,7 +138,6 @@
   }
 
   &__item {
-    @include shadow-block;
     padding: 20px 30px;
 
     & + & {
@@ -78,23 +155,26 @@
   }
 
   &__name {
-    font-family: 'MER', sans-serif;
+    font-family: 'Monument Extended', sans-serif;
     font-size: 14px;
+    font-weight: normal;
     line-height: 17px;
 
     color: white;
   }
 
   &__market-cup {
-    font-family: 'MER', sans-serif;
+    font-family: 'Monument Extended', sans-serif;
     font-size: 18px;
+    font-weight: normal;
     line-height: 22px;
   }
 
   &__price {
     @include gradient-text;
-    font-family: 'MER', sans-serif;
+    font-family: 'Monument Extended', sans-serif;
     font-size: 18px;
+    font-weight: normal;
     line-height: 22px;
   }
 
@@ -154,11 +234,26 @@
     height: 5px;
 
     border-radius: 50%;
+
+    // &.yellow {
+    //   --color: #f7931e;
+    // }
+
+    // &.blue {
+    //   --color: #2754cd;
+    // }
+
+    // &.red {
+    //   --color: #d53038;
+    // }
+
+    // background-color: var(--color);
   }
 
   &__token-name {
-    font-family: TNR, sans-serif;
+    font-family: 'TTNorms', sans-serif;
     font-size: 14px;
+    font-weight: normal;
     line-height: 17px;
     text-transform: uppercase;
   }
@@ -177,7 +272,22 @@
     text-align: right;
 
     border-top: 3px solid;
+
     border-radius: 1px;
+
+    &.yellow {
+      --color: #f7931e;
+    }
+
+    &.blue {
+      --color: #2754cd;
+    }
+
+    &.red {
+      --color: #d53038;
+    }
+
+    border-color: var(--color);
 
     & + & {
       margin-left: 10px;

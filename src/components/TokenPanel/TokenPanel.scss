@@ -1,6 +1,26 @@
 @import '../../styles/_variables.scss';
 @import '../../styles/_mixins.scss';
 
+.dark {
+  .token-panel {
+    @include shadow-block;
+
+    &-item__label {
+      color: white;
+    }
+  }
+}
+
+.light {
+  .token-panel {
+    @include light-block;
+
+    &-item__label {
+      color: $black;
+    }
+  }
+}
+
 .token-panel {
   margin-top: 30px;
   padding: 30px 40px;
@@ -9,15 +29,28 @@
   justify-content: space-between;
   align-items: center;
 
-  @include shadow-block;
+  @include b('mobile') {
+    flex-direction: column;
+    gap: 20px;
+  }
 
   &__content {
     display: flex;
+    align-self: start;
   }
 
   &__btns {
     display: flex;
     gap: 20px;
+    @include b('mobile') {
+      justify-content: center;
+
+      width: 100%;
+
+      .token-panel__btn {
+        max-width: 155px;
+      }
+    }
   }
 }
 
@@ -35,11 +68,10 @@
   &__label {
     margin-top: 5px;
 
-    font-family: TNR, sans-serif;
+    font-family: 'TTNorms', sans-serif;
 
     font-size: 16px;
+    font-weight: normal;
     line-height: 19px;
-
-    color: white;
   }
 }

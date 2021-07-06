@@ -1,14 +1,14 @@
 import { createContext, useContext } from 'react';
 import { Instance, onSnapshot, types } from 'mobx-state-tree';
 
-import { BannerIme } from './BannerIme';
 import { Modals } from './Modals';
+import { Theme } from './Theme';
 import { User } from './User';
 
 const RootModel = types.model({
   modals: Modals,
   user: User,
-  ime: BannerIme,
+  theme: Theme,
 });
 
 export const Store = RootModel.create({
@@ -21,14 +21,14 @@ export const Store = RootModel.create({
     info: { msg: '', title: '', type: 'info' },
     redeem: { isOpen: false },
     tradeYDR: { isOpen: false, method: 'buy' },
+    tradeIndex: { isOpen: false, method: 'buy' },
   },
   user: {
     address: '',
     token: '',
   },
-  ime: {
-    id: null,
-    address: null,
+  theme: {
+    value: localStorage.theme ?? 'light',
   },
 });
 

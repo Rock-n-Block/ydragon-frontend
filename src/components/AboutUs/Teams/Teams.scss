@@ -1,6 +1,24 @@
 @import '../../../styles/_variables.scss';
 @import '../../../styles/mixins';
 
+.dark {
+  .team {
+    &__info--title,
+    &__info--text {
+      color: $white;
+    }
+  }
+}
+
+.light {
+  .team {
+    &__info--title,
+    &__info--text {
+      color: $black;
+    }
+  }
+}
+
 .teams {
   display: flex;
   flex-direction: column;
@@ -57,6 +75,7 @@
   @include b('mobile') {
     margin-bottom: 30px;
   }
+
   &__info {
     margin-left: 24px;
 
@@ -67,8 +86,9 @@
   &__info--title {
     margin-bottom: 12px;
 
-    font-family: 'MER', sans-serif;
+    font-family: 'Monument Extended', sans-serif;
     font-size: 24px;
+    font-weight: normal;
     line-height: 29px;
 
     color: #fff;
@@ -86,8 +106,9 @@
     width: 100%;
     max-width: 424px;
 
-    font-family: 'RR', sans-serif;
+    font-family: 'Rubik', sans-serif;
     font-size: 16px;
+    font-weight: normal;
     line-height: 150%;
 
     /* or 24px */

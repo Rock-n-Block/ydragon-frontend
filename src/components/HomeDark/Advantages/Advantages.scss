@@ -1,13 +1,44 @@
 @import '../../../styles/_mixins.scss';
 @import '../../../styles/_variables.scss';
 
+.dark {
+  .advantages-row {
+    @include shadow-dark-block;
+
+    .advantages {
+      color: $white;
+
+      &__title {
+        color: $white;
+      }
+    }
+  }
+}
+
+.light {
+  .advantages-row {
+    @include shadow-light-block;
+    @include b('tablet') {
+      background: transparent;
+      box-shadow: none;
+    }
+
+    .advantages {
+      color: $black;
+
+      &__title {
+        color: $black;
+      }
+    }
+  }
+}
+
 .advantages-row {
   position: relative;
 
   margin-top: 40px;
   padding: 40px 50px;
 
-  @include shadow-dark-block;
   @include b('tablet') {
     padding: 0;
 
@@ -23,7 +54,6 @@
 
   width: 40%;
 
-  color: $white;
   @include b('tablet') {
     width: 100%;
   }
@@ -55,8 +85,9 @@
   }
 
   &__item-title {
-    font-family: 'MER';
+    font-family: 'Monument Extended', sans-serif;
     font-size: 24px;
+    font-weight: normal;
     line-height: 29px;
   }
 
@@ -109,5 +140,23 @@
     @include b('tablet') {
       position: unset;
     }
+  }
+
+  &__item-title {
+    font-family: 'Monument Extended', sans-serif;
+    font-size: 24px;
+    font-weight: normal;
+    line-height: 29px;
+
+    color: $white;
+  }
+
+  &__item-descr {
+    margin-top: 10px;
+
+    font-size: 18px;
+    line-height: 22px;
+
+    color: $white;
   }
 }

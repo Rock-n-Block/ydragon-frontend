@@ -1,7 +1,10 @@
 export { default as Header } from './HeaderDark';
 export { default as Footer } from './FooterDark';
 export { default as Button } from './Button';
+export { default as Spinner } from './Spinner';
 export { default as Input } from './Input';
+export { default as GuardedRoute } from './GuardedRoute';
+export { StyledTextArea as TextArea } from './Input';
 export { InputWithSelect } from './Input';
 // eslint-disable-next-line import/no-cycle
 export { default as TokenPanel } from './TokenPanel';
@@ -12,4 +15,8 @@ export { default as EventBanner } from './EventBanner';
 export { default as Table } from './Table';
 export { default as Search } from './Search';
 export { default as TokenMini } from './TokenMini';
+export { default as YDRTokenChart } from './YDRTokenChart';
 export { default as Switch } from './Switch';
+export { default as Stake } from './Stake';
+export { default as StakeItem } from './StakeItem';
+export { default as StakingStatistics } from './StakingStatistics';

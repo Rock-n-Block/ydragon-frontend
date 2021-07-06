@@ -4,6 +4,22 @@
 .rebalance-table {
   margin-top: 60px;
 
+  &__big {
+    display: block;
+    @include b(tablet) {
+      display: none;
+    }
+  }
+
+  &__small {
+    padding-top: 15px;
+
+    display: none;
+    @include b(tablet) {
+      display: block;
+    }
+  }
+
   &__btn-row {
     padding: 40px 0;
 

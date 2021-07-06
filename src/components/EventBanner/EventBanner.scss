@@ -1,10 +1,32 @@
 @import '../../styles/variables';
 @import '../../styles/mixins';
 
+.dark {
+  .event-banner-timer {
+    &__title {
+      color: $white;
+    }
+  }
+}
+
+.light {
+  .event-banner-timer {
+    &__title {
+      color: $white;
+    }
+  }
+}
+
+.hidden {
+  display: none;
+}
+
 .event-banner {
-  position: sticky;
+  position: relative;
   z-index: 999;
   top: 0;
+
+  width: 100%;
 
   background-color: #01051b;
   background-image: url('../../assets/img/event-banner-bg.png'),
@@ -13,9 +35,6 @@
   background-position: left center;
   background-size: auto 100%;
 
-  @include b('tablet') {
-    position: relative;
-  }
   @include b('mobile') {
     display: none;
   }
@@ -53,6 +72,27 @@
 
     display: inline-block;
   }
+
+  .container {
+    .event-banner__close {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      width: 30px;
+      height: 30px;
+
+      &:hover {
+        cursor: pointer;
+
+        background-color: transparent;
+      }
+    }
+  }
 }
 
 .event-banner-timer {
@@ -63,8 +103,6 @@
   &__title {
     @include title-text;
     text-align: center;
-
-    color: $white;
   }
 
   &__row {
