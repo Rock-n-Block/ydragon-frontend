@@ -4,14 +4,23 @@
 .dark {
   .switch {
     .ant-switch {
-      background: $dark-bg
+      background: $dark-bg;
     }
   }
 }
 .light {
-  .switch {
-    .ant-switch {
-      background: $white;
+  .collapse {
+    .switch {
+      .ant-switch {
+        background: $white;
+      }
+    }
+  }
+  .expand {
+    .switch {
+      .ant-switch {
+        background: $gray-bg;
+      }
     }
   }
 }

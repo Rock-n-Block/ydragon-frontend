@@ -15,6 +15,10 @@
 .light {
   .advantages-row {
     @include shadow-light-block;
+    @include b('tablet'){
+      background: transparent;
+      box-shadow: none;
+    }
     .advantages {
       color: $black;
       &__title {
@@ -44,7 +48,6 @@
 
   width: 40%;
 
-  // color: $white;
   @include b('tablet') {
     width: 100%;
   }
