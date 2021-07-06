@@ -83,6 +83,7 @@ const Index: React.FC = observer(() => {
         handleSell={handleSell}
       />
       <RebalanceHistory lastRebalance={indexData?.rebalance_date} />
+      <IndexChart tokens={getTokens} indexId={indexId} />
       <div className="index-table__big">
         <IndexTable tokens={tokens || indexData?.tokens} />
       </div>
@@ -125,7 +126,6 @@ const Index: React.FC = observer(() => {
               />
             ))}
       </div>
-      <IndexChart tokens={getTokens} indexId={indexId} />
       {/* <About /> */}
       <TradeIndexModal token={indexData?.name ?? ''} indexAddress={indexData?.address ?? ''} />
       <MintModal />
