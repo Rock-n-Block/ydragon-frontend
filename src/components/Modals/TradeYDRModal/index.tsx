@@ -5,8 +5,8 @@ import { observer } from 'mobx-react-lite';
 import YDRLogo from '../../../assets/img/icons/logo.svg';
 import { useWalletConnectorContext } from '../../../services/walletConnect';
 import config from '../../../services/web3/config';
-import { ProviderRpcError } from '../../../types/errors';
 import { useMst } from '../../../store/store';
+import { ProviderRpcError } from '../../../types/errors';
 import { defaultTokens, platformToken, TokenMiniNameTypes } from '../../../utils/tokenMini';
 import { Button, InputWithSelect } from '../../index';
 import { Modal } from '../index';
@@ -98,10 +98,10 @@ const TradeYDRModal: React.FC = observer(() => {
     setPayInput('');
     if (modals.tradeYDR.method === 'sell') {
       setSecondCurrency(value);
-      getSellCourse();
+      setViewOnlyInputValue('0.0');
     } else {
       setFirstCurrency(value);
-      getBuyCourse();
+      setViewOnlyInputValue('0.0');
     }
   };
   const handleApprove = (): void => {
