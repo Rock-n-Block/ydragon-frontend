@@ -36,12 +36,15 @@
   }
 }
 .light {
+  .ant-table-tbody > tr.ant-table-placeholder:hover > td{
+    background: $black;
+  }
   .table {
-    // &:hover {
-    //   & > td {
-    //     background: $white !important;
-    //   }
-    // }
+    &:hover {
+      & > td {
+        background: $white !important;
+      }
+    }
     &-row {
       .ant-table-cell {
         color: $black;
@@ -51,10 +54,14 @@
         }
       }
     }
+
     .ant-table-tbody {
       @include light-block;
+      & > tr.ant-table-placeholder:hover > td > .ant-empty > .ant-empty-description {
+        color: rgba($white, 0.5) !important;
+      }
       &-description {
-        color: $black;
+        color: $white;
       }
     }
   }
@@ -195,8 +202,8 @@
 
       width: 100%;
 
-      background: linear-gradient(180deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0) 100%),
-        linear-gradient(171.49deg, #1a1e3a 3.83%, #161a2a 100%);
+      // background: linear-gradient(180deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0) 100%),
+      //   linear-gradient(171.49deg, #1a1e3a 3.83%, #161a2a 100%);
       border-bottom-right-radius: 16px;
       border-bottom-left-radius: 16px;
     }
