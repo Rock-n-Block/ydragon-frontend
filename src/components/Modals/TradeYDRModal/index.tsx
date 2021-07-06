@@ -98,11 +98,9 @@ const TradeYDRModal: React.FC = observer(() => {
     setPayInput('');
     if (modals.tradeYDR.method === 'sell') {
       setSecondCurrency(value);
-      setPayInput('');
-      getSellCourse();
+      setViewOnlyInputValue('0.0');
     } else {
       setFirstCurrency(value);
-      setPayInput('');
       setViewOnlyInputValue('0.0');
     }
   };
