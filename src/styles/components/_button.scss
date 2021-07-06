@@ -171,18 +171,20 @@
   border-radius: 12px;
   box-shadow: none;
   gap: 13px;
+  transition: all 0.5s ease-in-out;
 
   &-filled {
     padding: 14px 40px;
 
     color: $white;
-    background-color: #d53038;
+    background: #d53038;
     box-shadow: 0 16px 32px rgba(213, 48, 56, 0.3);
+    transition: all 0s;
 
     &:hover,
     &:focus {
       color: $white;
-      background-color: #d53038;
+      background: linear-gradient(180deg, #DF3F3A 0%, #F47C45 100%);
     }
   }
 
@@ -209,9 +211,9 @@
 
     &:hover,
     &:focus {
-      color: #d53038;
+      color: $white;
       background-color: transparent;
-      border-color: #d53038;
+      border-color: $white;
     }
   }
 
@@ -221,6 +223,32 @@
     width: fit-content;
 
     background: transparent;
+
+    span {
+      transition: all 0.5s ease-in-out;
+    }
+
+    &:hover,
+    &:focus {
+      background-color: transparent;
+      border-color: $orange;
+
+      span {
+        display: inline-block;
+
+        background: $gradient;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+
+        &::selection {
+          -webkit-text-fill-color: $white;
+        }
+
+        ::selection {
+          -webkit-text-fill-color: $white;
+        }
+      }
+    }
   }
 
   &-red {

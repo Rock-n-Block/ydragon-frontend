@@ -60,12 +60,12 @@
   }
 
   &__content {
-    display: grid;
-    grid-template-columns: 380px repeat(3, 1fr);
-    grid-column-gap: 145px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
 
     @include b('tablet') {
-      display: flex;
       justify-content: center;
     }
   }
@@ -148,7 +148,19 @@
 
       &:hover,
       &:active {
-        color: #c7cfe2;
+        display: inline-block;
+
+        background: $gradient;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+
+        &::selection {
+          -webkit-text-fill-color: $white;
+        }
+
+        ::selection {
+          -webkit-text-fill-color: $white;
+        }
       }
 
       & + a {
