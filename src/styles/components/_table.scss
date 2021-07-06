@@ -103,6 +103,7 @@
         .ant-table-selection-column + .ant-table-cell {
           border-top-left-radius: 16px;
         }
+
         td:first-child {
           border-top-left-radius: 16px;
         }
@@ -115,6 +116,7 @@
       & > tr.ant-table-placeholder:hover > td > .ant-empty > .ant-empty-description {
         color: rgba($black, 0.5);
       }
+
       & > tr.ant-table-row-selected > td {
         background: #14265a;
         border-color: rgba(0, 0, 0, 0.03);

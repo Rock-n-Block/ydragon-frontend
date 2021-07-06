@@ -20,14 +20,16 @@
 
     &__input-wrapper {
       position: relative;
+
       .ant-input-affix-wrapper {
         input.ant-input {
-          background: transparent;
           font-family: 'TNB', sans-serif;
           font-size: 20px;
           line-height: 24px;
           text-align: center;
+
           color: #fff;
+          background: transparent;
         }
       }
     }
