@@ -6,19 +6,20 @@
     &__weight {
       &::before {
         content: '';
-  
+
         position: absolute;
         top: 0;
         right: 0;
         left: 0;
         bottom: 0;
-  
+
         padding: 3px;
-  
+
         background: rgb(35, 38, 60);
         background-clip: content-box;
         border-radius: 60px;
       }
+
       span {
         color: $white;
       }
@@ -29,28 +30,31 @@
 .light {
   .token-item {
     background: rgba(0, 0, 0, 0.05);
+
     &__weight {
       &::before {
         content: '';
-  
+
         position: absolute;
         top: 0;
         right: 0;
         left: 0;
         bottom: 0;
-  
+
         padding: 3px;
-  
+
         background: rgb(255, 255, 255);
         background-clip: content-box;
         border-radius: 60px;
       }
+
       span {
         color: $black;
       }
     }
   }
 }
+
 .token-item {
   padding: 16px;
 

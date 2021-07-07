@@ -6,11 +6,14 @@
     &__item {
       @include shadow-block;
     }
+
     &__name {
       color: $white;
     }
+
     &__token-color {
       --color: white;
+      background-color: var(--color);
 
       &.yellow {
         --color: #f7931e;
@@ -23,9 +26,8 @@
       &.red {
         --color: #d53038;
       }
-
-      background-color: var(--color);
     }
+
     &__token-percent {
       --color: $white;
     }
@@ -37,11 +39,14 @@
     &__item {
       @include light-block;
     }
+
     &__name {
       color: $black;
     }
+
     &__token-color {
       --color: #000136;
+      background-color: var(--color);
 
       &.yellow {
         --color: #f7931e;
@@ -54,9 +59,8 @@
       &.red {
         --color: #d53038;
       }
-
-      background-color: var(--color);
     }
+
     &__token-percent {
       --color: $black;
     }
@@ -271,6 +275,8 @@
     line-height: 17px;
     text-align: right;
 
+    border-color: var(--color);
+
     border-top: 3px solid;
 
     border-radius: 1px;
@@ -286,8 +292,6 @@
     &.red {
       --color: #d53038;
     }
-
-    border-color: var(--color);
 
     & + & {
       margin-left: 10px;

@@ -2,9 +2,9 @@
 @import '../../../styles/mixins';
 
 .dark {
-  .token-weights{
-    &-items{
-      &__gead{
+  .token-weights {
+    &-items {
+      &__gead {
         color: rgba($white, 0.5);
       }
     }
@@ -19,9 +19,9 @@
 }
 
 .light {
-  .token-weights{
-    &-items{
-      &__gead{
+  .token-weights {
+    &-items {
+      &__gead {
         color: rgba($black, 0.5);
       }
     }
@@ -34,6 +34,7 @@
     }
   }
 }
+
 .m-rebalance {
   &__content {
     padding: 30px;

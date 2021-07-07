@@ -42,9 +42,15 @@ const Index: React.FC = observer(() => {
   const [indexData, setIndexData] = useState<IIndex | undefined>();
 
   const getCurrentIndex = useCallback(() => {
-    indexesApi.getIndexById(+indexId).then(({ data }) => {
-      setIndexData(data);
-    });
+    indexesApi
+      .getIndexById(+indexId)
+      .then(({ data }) => {
+        console.log('get current index success', data);
+        setIndexData(data);
+      })
+      .catch((err: any) => {
+        console.log('get current index error', err);
+      });
   }, [indexId]);
 
   const handleBuy = () => {
