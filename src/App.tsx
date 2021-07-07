@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Route, Switch, useRouteMatch } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 
@@ -24,6 +24,7 @@ export const App: React.FC = observer(() => {
   const main = useRouteMatch();
   const about = useRouteMatch('/about-us');
   const { theme } = useMst();
+  const [bodyClass, setBodyClass] = useState('');
 
   const user = !!localStorage?.yd_address || false;
   const admin = !!localStorage?.yd_token || false;
@@ -37,6 +38,19 @@ export const App: React.FC = observer(() => {
     } else result = `page-wrapper`;
     return result;
   };
+
+  useEffect(() => {
+    if (bodyClass) {
+      if (bodyClass !== theme.value) {
+        document.body.classList.remove(bodyClass);
+        document.body.classList.add(theme.value);
+        setBodyClass(theme.value)
+      }
+    } else {
+      document.body.classList.add(theme.value);
+      setBodyClass(theme.value)
+    }
+  }, [theme.value, bodyClass]);
 
   return (
     <div className={theme.value}>

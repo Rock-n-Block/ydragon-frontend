@@ -61,6 +61,15 @@ p {
   .page__title-icon--index {
     @include shadow-block;
   }
+  .ant-select-dropdown {
+    color: $white;
+    background-color: $black;
+    border: $black;
+    .ant-select-item-option-selected,
+    .ant-select-item-option-active {
+      background-color: #3a3a66;
+    }
+  }
 }
 
 .light {
@@ -93,6 +102,10 @@ p {
 
   .page__title-icon--index {
     @include shadow-light-block;
+  }
+  .ant-select-dropdown {
+    color: $black;
+    background-color: $white;
   }
 }
 
