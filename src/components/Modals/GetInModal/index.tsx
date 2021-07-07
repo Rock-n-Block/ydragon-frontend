@@ -98,12 +98,12 @@ const GetInModal: React.FC = observer(() => {
         .then(({ data }) => {
           setCurrentIme(data);
         })
-        .catch((err: ProviderRpcError) => {
-          const { message } = err;
-          modals.info.setMsg('Error', `Mint error ${message}`, 'error');
+        .catch((err: any) => {
+          const { response } = err;
+          console.log('getCurrentIme error', response);
         });
     }
-  }, [user.address, modals.getIn.id, modals.info]);
+  }, [user.address, modals.getIn.id]);
   useEffect(() => {
     getCurrentIme();
   }, [getCurrentIme]);

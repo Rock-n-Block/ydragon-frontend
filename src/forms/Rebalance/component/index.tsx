@@ -9,6 +9,8 @@ import { IToken } from '../../../components/IndexPage/IndexTable';
 import { ISearchToken } from '../../../components/Search';
 import { ITokensDiff } from '../../../pages/Admin';
 import { coinsApi, indexesApi } from '../../../services/api';
+import { ProviderRpcError } from '../../../types/errors';
+import { useMst } from '../../../store/store';
 
 interface IIndexId {
   indexId: string;
@@ -24,6 +26,7 @@ export interface IRebalance {
 
 const Rebalance: React.FC<FormikProps<IRebalance> & IRebalance> = observer(
   ({ setFieldValue, handleChange, handleBlur, values, handleSubmit }) => {
+    const { modals } = useMst()
     const { indexId } = useParams<IIndexId>();
     const [searchTokens, setSearchTokens] = useState<ISearchToken[]>([] as ISearchToken[]);
     const weightsSum = values.tokens
@@ -57,9 +60,9 @@ const Rebalance: React.FC<FormikProps<IRebalance> & IRebalance> = observer(
             arrayHelper.remove(index);
           }
         })
-        .catch((error) => {
-          const { response } = error;
-          console.log('search error', response);
+        .catch((error: ProviderRpcError) => {
+          const { message } = error;
+          modals.info.setMsg('Error',`Remove token error ${message}`, 'error');
         });
     };
     const handleAddBack = (arrayHelper: FieldArrayRenderProps, index: number) => {
@@ -72,9 +75,9 @@ const Rebalance: React.FC<FormikProps<IRebalance> & IRebalance> = observer(
             new BigNumber(data.new_weight).multipliedBy(100),
           );
         })
-        .catch((error) => {
-          const { response } = error;
-          console.log('search error', response);
+        .catch((error: ProviderRpcError) => {
+          const { message } = error;
+          modals.info.setMsg('Error',`Add token back error ${message}`, 'error');
         });
     };
     const handleAddNewToken = (arrayHelper: FieldArrayRenderProps, pickedItem: ISearchToken) => {

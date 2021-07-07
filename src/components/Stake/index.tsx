@@ -3,6 +3,7 @@ import nextId from 'react-id-generator';
 import BigNumber from 'bignumber.js/bignumber';
 
 import { useWalletConnectorContext } from '../../services/walletConnect';
+import { ProviderRpcError } from '../../types/errors';
 import { useMst } from '../../store/store';
 import { Button, Spinner } from '../index';
 import { InputNumber } from '../Input';
@@ -49,9 +50,9 @@ const Stake: React.FC<StakeProps> = ({ tokens, propsLoading }) => {
       .then(() => {
         modals.info.setMsg('Success', 'Staking has been started', 'success');
       })
-      .catch((error: any) => {
-        const { response } = error;
-        modals.info.setMsg('Error', response, 'error');
+      .catch((error: ProviderRpcError) => {
+        const { message } = error;
+        modals.info.setMsg('Error', `Stacking error ${message}`, 'error');
       })
       .finally(() => setLoading(false));
   };
@@ -62,9 +63,9 @@ const Stake: React.FC<StakeProps> = ({ tokens, propsLoading }) => {
       .then(() => {
         setIsAllowed(!isAllowed);
       })
-      .catch((error: any) => {
-        const { response } = error;
-        modals.info.setMsg('Error', response, 'error');
+      .catch((error: ProviderRpcError) => {
+        const { message } = error;
+        modals.info.setMsg('Error', `Approve token error ${message}`, 'error');
       })
       .finally(() => setLoading(false));
   };

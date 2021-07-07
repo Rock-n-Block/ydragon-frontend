@@ -3,6 +3,7 @@ import BigNumber from 'bignumber.js/bignumber';
 import { observer } from 'mobx-react-lite';
 
 import { useWalletConnectorContext } from '../../../services/walletConnect';
+import { ProviderRpcError } from '../../../types/errors';
 import { useMst } from '../../../store/store';
 import { Button, Switch } from '../../index';
 import { InputNumber } from '../../Input';
@@ -24,14 +25,15 @@ const Options: React.FC<OptionsProps> = observer(({ address, onManualInputChange
   const walletConnector = useWalletConnectorContext();
 
   const handleAutoRebalanceChange = (isChecked: boolean) => {
-    setIsAutoRebalanceChecked(isChecked);
     walletConnector.metamaskService
       .changeAutoXYRebalaceAllowance(address, isChecked)
-      .catch((error: any) => {
-        if (error.code === 4001) {
-          setIsAutoRebalanceChecked(!isChecked);
-        }
-        console.log(error);
+      .then(() => {
+        modals.info.setMsg('Operation success', 'Rebalance started', 'success');
+        setIsAutoRebalanceChecked(isChecked);
+      })
+      .catch((error: ProviderRpcError) => {
+        const { message } = error
+        modals.info.setMsg('Error', `AutoRebalance error ${message}`, 'error');
       });
   };
   const handleManualRebalanceStart = () => {
@@ -41,9 +43,9 @@ const Options: React.FC<OptionsProps> = observer(({ address, onManualInputChange
         .then(() => {
           modals.info.setMsg('Operation success', 'Rebalance started', 'success');
         })
-        .catch((error: any) => {
-          const { request } = error;
-          console.log(request);
+        .catch((error: ProviderRpcError) => {
+          const { message } = error;
+          modals.info.setMsg('Error', `Rebalance error ${message}`, 'error');
         });
     }
   };
