@@ -150,14 +150,20 @@ const YDRTokenChart: React.FC<TokenChartProps> = ({ price }) => {
   };
 
   const axiosData = useCallback(() => {
-    axios.get(url).then((res) => {
-      refDataLength.current = res.data.prices.length;
-      const currentPrice = res.data.prices[refDataLength.current - 1][1];
-      setChartData(getChartData(res.data.prices));
-      if (refPrice.current <= currentPrice) refPrice.current = currentPrice;
-      setClickedElement(refPrice.current);
-      price(refPrice.current);
-    });
+    axios
+      .get(url)
+      .then((res) => {
+        console.log('Request chartData success', res.data);
+        refDataLength.current = res.data.prices.length;
+        const currentPrice = res.data.prices[refDataLength.current - 1][1];
+        setChartData(getChartData(res.data.prices));
+        if (refPrice.current <= currentPrice) refPrice.current = currentPrice;
+        setClickedElement(refPrice.current);
+        price(refPrice.current);
+      })
+      .catch((err: any) => {
+        console.log('Request chartData error', err);
+      });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [url]);
 

@@ -62,6 +62,7 @@ const Stake: React.FC<StakeProps> = ({ tokens, propsLoading }) => {
       .approveStake(tokens[activeStakeIndex].address)
       .then(() => {
         setIsAllowed(!isAllowed);
+        console.log('Approve token success');
       })
       .catch((error: ProviderRpcError) => {
         const { message } = error;

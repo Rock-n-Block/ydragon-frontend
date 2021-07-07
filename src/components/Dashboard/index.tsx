@@ -39,6 +39,7 @@ const Dashboard: React.FC = () => {
     indexesApi
       .getUserIndexes()
       .then(({ data }) => {
+        console.log('get indexes success', data);
         setIndexes(data);
       })
       .catch((error) => {

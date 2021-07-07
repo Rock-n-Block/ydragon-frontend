@@ -90,6 +90,7 @@ const IndexChart: React.FC<IndexChartProps> = ({ tokens, indexId }) => {
 
   const axiosData = useCallback(() => {
     axios.get(url).then((res: AxiosResponse) => {
+      console.log('refData request success', res.data)
       const arr: number[] = [];
       refAxiosData.current = res.data;
       refAxiosData.current.forEach((item: any) => {

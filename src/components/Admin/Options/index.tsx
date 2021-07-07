@@ -81,6 +81,7 @@ const Options: React.FC<OptionsProps> = observer(({ address, onManualInputChange
       walletConnector.metamaskService
         .checkAutoXYRebalaceAllowance(address)
         .then((data: boolean) => {
+          console.log('AutoXYRebalace rebalance success', data)
           setIsAutoRebalanceChecked(data);
         })
         .catch((error: any) => {

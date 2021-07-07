@@ -96,6 +96,7 @@ const GetInModal: React.FC = observer(() => {
       indexesApi
         .getImeById(modals.getIn.id, user.address ? user.address : undefined)
         .then(({ data }) => {
+          console.log('getCurrentIme success', data);
           setCurrentIme(data);
         })
         .catch((err: any) => {
