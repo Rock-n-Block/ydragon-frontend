@@ -1,7 +1,8 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Line } from 'react-chartjs-2';
 import axios, { AxiosResponse } from 'axios';
-import BigNumber from 'bignumber.js/bignumber';
+
+import PriceDifferenceBag from '../../PriceDifferenceBag';
 
 import './IndexChart.scss';
 
@@ -16,6 +17,7 @@ const IndexChart: React.FC<IndexChartProps> = ({ tokens, indexId }) => {
   const refData: React.MutableRefObject<any> = useRef([]);
   const refMax = useRef(0);
   const refMin = useRef(0);
+  const refCurrentPrice = useRef('');
   const [chartData, setChartData] = useState({
     labels: [],
     datasets: [
@@ -32,6 +34,7 @@ const IndexChart: React.FC<IndexChartProps> = ({ tokens, indexId }) => {
     ],
   });
   const [clickedElement, setClickedElement] = useState('');
+  const [diff, setDiff] = useState(['up', 0.0]);
 
   const options = {
     layout: {
@@ -86,6 +89,11 @@ const IndexChart: React.FC<IndexChartProps> = ({ tokens, indexId }) => {
     const currentTokens = refAxiosData.current[index].tokens_history;
     setClickedElement(currentValue);
     tokens(currentTokens);
+
+    const value =
+      ((currentValue - Number(refCurrentPrice.current)) / Number(refCurrentPrice.current)) * 100;
+    const dir = value < 0 ? 'down' : 'up';
+    setDiff([dir, value]);
   };
 
   const axiosData = useCallback(() => {
@@ -104,7 +112,8 @@ const IndexChart: React.FC<IndexChartProps> = ({ tokens, indexId }) => {
       refMax.current = Math.max(...arr) + 1;
       refMin.current = Math.min(...arr) - 1;
       const dataLength = refData.current.length;
-      setClickedElement(refData.current[dataLength - 1].data);
+      refCurrentPrice.current = refData.current[dataLength - 1].data;
+      setClickedElement(refCurrentPrice.current);
       setChartData({
         labels: [],
         datasets: [
@@ -130,7 +139,7 @@ const IndexChart: React.FC<IndexChartProps> = ({ tokens, indexId }) => {
   return (
     <div className="chart">
       <div className="chart-panel">
-        <div className="chart-panel-title">${new BigNumber(clickedElement).toFixed(6)}</div>
+        <PriceDifferenceBag price={Number(clickedElement)} diff={diff} />
       </div>
       {Object.keys(chartData).length ? (
         <Line
