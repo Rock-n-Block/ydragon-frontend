@@ -101,10 +101,13 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(({ token, index
     }
   }, [isSell, indexAddress, walletConnector.metamaskService, firstCurrency]);
   const handleSelectChange = (value: any) => {
+    setPayInput('');
     if (isSell) {
       setSecondCurrency(value);
+      setViewOnlyInputValue('0.0');
     } else {
       setFirstCurrency(value);
+      setViewOnlyInputValue('0.0');
     }
   };
   const handleApprove = (): void => {
