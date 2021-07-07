@@ -246,9 +246,7 @@ const Header: React.FC = observer(() => {
                 <span className="isDisabled">
                   <a href="/">Terms of Service</a>
                 </span>
-                <span className="isDisabled">
-                  <a href="/">Contact us</a>
-                </span>
+                <a href="/">Contact us</a>
               </div>
             </div>
 
@@ -256,9 +254,7 @@ const Header: React.FC = observer(() => {
               <div className="footer__links-title">Engage</div>
 
               <div className="footer__links">
-                <span className="isDisabled">
-                  <a href="/">About Us</a>
-                </span>
+                <Link to="/about-us">About Us</Link>
                 <span className="isDisabled">
                   <a href="/">Tutorial</a>
                 </span>

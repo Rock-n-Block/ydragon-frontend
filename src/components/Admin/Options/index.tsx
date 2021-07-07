@@ -6,7 +6,7 @@ import { useWalletConnectorContext } from '../../../services/walletConnect';
 import { ProviderRpcError } from '../../../types/errors';
 import { useMst } from '../../../store/store';
 import { Button, Switch } from '../../index';
-import { InputNumber } from '../../Input';
+import Input from '../../Input';
 
 import './Options.scss';
 
@@ -53,7 +53,7 @@ const Options: React.FC<OptionsProps> = observer(({ address, onManualInputChange
     setInputValue(value);
     if (value) {
       const countDecimals = () => {
-        if (Math.floor(value) !== value) return value.toString().split('.')[1].length || 0;
+        if (Math.floor(+value) !== +value) return value.split('.')[1].length || 0;
         return 0;
       };
       if (countDecimals() > 2) {
@@ -63,6 +63,18 @@ const Options: React.FC<OptionsProps> = observer(({ address, onManualInputChange
       }
     }
     onManualInputChange(value);
+  };
+  const handleBlur = () => {
+    if (+inputValue <= 5) {
+      if (inputValue) {
+        setInputValue('5');
+      } else {
+        setInputValue('');
+      }
+    }
+    if (+inputValue >= 20) {
+      setInputValue('20');
+    }
   };
   useEffect(() => {
     if (address) {
@@ -89,13 +101,14 @@ const Options: React.FC<OptionsProps> = observer(({ address, onManualInputChange
         </div>
         <div className="options__option">
           <div className="options__option__input-wrapper">
-            <InputNumber
+            <Input
+              type="number"
               value={inputValue}
-              min={0}
-              max={20}
-              placeholder="20%"
-              formatter={(value) => `${value}%`}
-              onChange={handleInputChange}
+              placeholder="20"
+              onChange={(e) => handleInputChange(e.target.value)}
+              onBlur={handleBlur}
+              suffix="%"
+              className="ant-input-number input"
             />
             {isError && <p className="options__option-error">Minimal decimals equals to 0.01</p>}
           </div>
