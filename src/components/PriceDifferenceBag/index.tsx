@@ -1,5 +1,5 @@
 import React from 'react';
-import BigNumber from 'bignumber.js';
+import BigNumber from 'bignumber.js/bignumber';
 
 import arrowDown from '../../assets/img/chart/arrow-down.svg';
 import arrowUp from '../../assets/img/chart/arrow-up.svg';
