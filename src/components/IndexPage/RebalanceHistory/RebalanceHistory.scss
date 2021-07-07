@@ -46,6 +46,10 @@
       font-size: 50px;
       line-height: 60px;
     }
+    @include b('mobile') {
+      font-size: 30px;
+      line-height: 36px;
+    }
   }
 
   &__info {
