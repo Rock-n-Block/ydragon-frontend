@@ -7,6 +7,7 @@ import { TransactionReceipt } from 'web3-core';
 import { ITokensDiff } from '../../../pages/Admin';
 import { indexesApi } from '../../../services/api';
 import { useWalletConnectorContext } from '../../../services/walletConnect';
+import { ProviderRpcError } from '../../../types/errors';
 import { useMst } from '../../../store/store';
 import CreateIndex, { ICreateIndex } from '../component';
 
@@ -46,16 +47,16 @@ const CreateIndexForm: React.FC = () => {
             .then(() => {
               console.log('description added');
             })
-            .catch((error: any) => {
-              const { response } = error;
-              modals.info.setMsg('Error', response, 'error');
+            .catch((error: ProviderRpcError) => {
+              const { message } = error;
+              modals.info.setMsg('Error', message, 'error');
             });
 
           modals.info.setMsg('Success', 'Index created', 'success');
         })
-        .catch((error: any) => {
-          const { response } = error;
-          modals.info.setMsg('Error', response, 'error');
+        .catch((error: ProviderRpcError) => {
+          const { message } = error;
+          modals.info.setMsg('Error', message, 'error');
         });
       // TODO: create request to contract
     },
