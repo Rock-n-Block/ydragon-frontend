@@ -4,12 +4,12 @@ import { observer } from 'mobx-react-lite';
 import { indexesApi } from '../../../services/api';
 import { useWalletConnectorContext } from '../../../services/walletConnect';
 import { useMst } from '../../../store/store';
+import { ProviderRpcError } from '../../../types/errors';
 import { defaultTokens, TokenMiniNameTypes } from '../../../utils/tokenMini';
 import { IIme } from '../../HomeDark/InitialMintEvent';
 import { Button, InputWithSelect } from '../../index';
 import SplittedTable, { ITableColumn, ITableData } from '../../SplittedTable';
 import { TokenMiniProps } from '../../TokenMini';
-import { ProviderRpcError } from '../../../types/errors';
 import { Modal } from '../index';
 
 import './GetInModal.scss';

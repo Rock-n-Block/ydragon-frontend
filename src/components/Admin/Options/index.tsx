@@ -3,8 +3,8 @@ import BigNumber from 'bignumber.js/bignumber';
 import { observer } from 'mobx-react-lite';
 
 import { useWalletConnectorContext } from '../../../services/walletConnect';
-import { ProviderRpcError } from '../../../types/errors';
 import { useMst } from '../../../store/store';
+import { ProviderRpcError } from '../../../types/errors';
 import { Button, Switch } from '../../index';
 import Input from '../../Input';
 
@@ -32,7 +32,7 @@ const Options: React.FC<OptionsProps> = observer(({ address, onManualInputChange
         setIsAutoRebalanceChecked(isChecked);
       })
       .catch((error: ProviderRpcError) => {
-        const { message } = error
+        const { message } = error;
         modals.info.setMsg('Error', `AutoRebalance error ${message}`, 'error');
       });
   };

@@ -6,9 +6,9 @@ import { observer } from 'mobx-react-lite';
 
 import { ITokensDiff } from '../../../pages/Admin';
 import { indexesApi } from '../../../services/api';
-import Rebalance, { IRebalance } from '../component';
-import { ProviderRpcError } from '../../../types/errors';
 import { useMst } from '../../../store/store';
+import { ProviderRpcError } from '../../../types/errors';
+import Rebalance, { IRebalance } from '../component';
 
 interface IIndexId {
   indexId: string;
@@ -75,7 +75,7 @@ const RebalanceForm: React.FC<RebalanceFormProps> = observer(({ name, tokens }) 
               modals.info.setMsg('Error', `Launch rebalance error ${message}`, 'error');
               history.push('/admin');
             });
-            modals.info.setMsg('Success', 'Put rebalance success', 'success')
+          modals.info.setMsg('Success', 'Put rebalance success', 'success');
         })
         .catch((err: ProviderRpcError) => {
           const { message } = err;

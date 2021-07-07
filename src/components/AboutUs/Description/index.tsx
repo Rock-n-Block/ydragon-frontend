@@ -1,10 +1,10 @@
 import React from 'react';
 
 import iconPlay from '../../../assets/img/icons/icon-play.svg';
+import { Button } from '../../index';
 
 // import { Button } from '../../index';
 import './Description.scss';
-import { Button } from '../../index';
 
 const Description: React.FC = () => {
   return (

@@ -1,13 +1,13 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import nextId from 'react-id-generator';
 import BigNumber from 'bignumber.js/bignumber';
-import moment from 'moment';
 import { observer } from 'mobx-react-lite';
+import moment from 'moment';
 
 import { indexesApi } from '../../services/api';
 import { useWalletConnectorContext } from '../../services/walletConnect';
-import { ProviderRpcError } from '../../types/errors';
 import { useMst } from '../../store/store';
+import { ProviderRpcError } from '../../types/errors';
 import { Button, Table } from '../index';
 import SmallTableCard from '../SmallTableCard/index';
 

@@ -7,8 +7,8 @@ import { TransactionReceipt } from 'web3-core';
 import { ITokensDiff } from '../../../pages/Admin';
 import { indexesApi } from '../../../services/api';
 import { useWalletConnectorContext } from '../../../services/walletConnect';
-import { ProviderRpcError } from '../../../types/errors';
 import { useMst } from '../../../store/store';
+import { ProviderRpcError } from '../../../types/errors';
 import CreateIndex, { ICreateIndex } from '../component';
 
 const CreateIndexForm: React.FC = () => {

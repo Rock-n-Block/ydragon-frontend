@@ -3,8 +3,8 @@ import nextId from 'react-id-generator';
 import BigNumber from 'bignumber.js/bignumber';
 
 import { useWalletConnectorContext } from '../../services/walletConnect';
-import { ProviderRpcError } from '../../types/errors';
 import { useMst } from '../../store/store';
+import { ProviderRpcError } from '../../types/errors';
 import { Button, Spinner } from '../index';
 import { InputNumber } from '../Input';
 import StakeItem, { IStakeItem } from '../StakeItem';
