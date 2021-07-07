@@ -1,6 +1,154 @@
+//.btn {
+//  width: 100%;
+//  height: auto;
+//
+//  border: none;
+//  box-shadow: none;
+//  font-feature-settings: 'liga' off;
+//
+//  &-white {
+//    background-color: $white;
+//  }
+//
+//  &-gray {
+//    background-color: $gray-bg;
+//  }
+//
+//  &-nav {
+//    padding: 0 15px;
+//
+//    min-width: 120px;
+//    height: 100%;
+//
+//    font-size: 16px;
+//    line-height: 20px;
+//
+//    border-radius: 8px;
+//
+//    span {
+//      background: $gradient;
+//      background-clip: text;
+//      -webkit-text-fill-color: transparent;
+//    }
+//  }
+//
+//  &-filled {
+//    padding: 20px 40px;
+//
+//    box-sizing: border-box;
+//
+//    font-family: 'Monument Extended', sans-serif;
+// font-weight: 800;
+//    font-size: 15px;
+//    line-height: 16px;
+//    text-align: center;
+//    letter-spacing: 0.15em;
+//    text-transform: uppercase;
+//
+//    color: $white;
+//    background: $gradient;
+//
+//    border-radius: 40px;
+//
+//    &:hover,
+//    &:focus {
+//      color: $white;
+//      background: $gradient;
+//    }
+//  }
+//
+//  &-outline {
+//    padding: 10px 20px;
+//
+//    font-family: 'TTNorms', sans-serif;
+// font-weight: 700;
+//    font-size: 16px;
+//    line-height: 20px;
+//
+//    border-radius: 40px;
+//  }
+//
+//  &-clear {
+//    font-size: 16px;
+//    line-height: 19px;
+//
+//    color: #000316;
+//
+//    span {
+//      background: unset;
+//      background-clip: unset;
+//      -webkit-text-fill-color: unset;
+//    }
+//  }
+//}
+//
+//.btn-outline {
+//  border-radius: 40px;
+//
+//  &-sm {
+//    padding: 1px;
+//
+//    .btn {
+//      padding: 9px 19px;
+//    }
+//  }
+//
+//  &-md {
+//    padding: 2px;
+//
+//    .btn {
+//      padding: 8px 18px;
+//    }
+//  }
+//
+//  &-lg {
+//    padding: 3px;
+//
+//    .btn {
+//      padding: 7px 17px;
+//    }
+//  }
+//
+//  &-orange {
+//    background: $gradient;
+//
+//    span {
+//      background: $gradient;
+//      background-clip: text;
+//      -webkit-text-fill-color: transparent;
+//    }
+//  }
+//
+//  &-green {
+//    background: linear-gradient(180deg, #26cc90 0%, #29cd92 100%);
+//
+//    span {
+//      color: #27cd91;
+//    }
+//  }
+//}
+//
+//.ant-btn-text {
+//  color: black;
+//}
+.dark {
+  .btn-outline {
+    color: $white;
+    border: 1px solid $white;
+    &:hover,
+    &:focus {
+      color: $white;
+      border-color: $white;
+    }
+  }
+}
+
 .light {
-  .btn {
-    &-outline {
+  .btn-outline {
+    color: $black;
+    border: 1px solid $black;
+    &:hover,
+    &:focus {
       color: $black;
       border-color: $black;
     }
@@ -17,7 +165,20 @@
     }
   }
 }
+.dark,
+.light{
+  .btn {
+    &-red {
+      color: #d53038;
+      border: 3px solid #d53038;
+    }
 
+    &-green {
+      color: #27cd91;
+      border: 3px solid #27cd91;
+    }
+  }
+}
 .btn {
   display: flex;
   justify-content: center;
@@ -57,15 +218,11 @@
   &-outline {
     padding: 20px;
 
-    color: $white;
-    background-color: transparent;
-    border: 1px solid $white;
+    background-color: transparent !important;
 
     &:hover,
     &:focus {
-      color: $orange;
       background-color: transparent;
-      border-color: $orange;
     }
   }
 
@@ -123,19 +280,11 @@
 
   &-red {
     padding: 10px 20px;
-
-    color: #d53038;
-    border: 3px solid #d53038;
-
     border-radius: 40px;
   }
 
   &-green {
     padding: 10px 20px;
-
-    color: #27cd91;
-    border: 3px solid #27cd91;
-
     border-radius: 40px;
   }
 }

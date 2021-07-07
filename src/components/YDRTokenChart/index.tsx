@@ -1,10 +1,8 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Line } from 'react-chartjs-2';
 import axios from 'axios';
-import BigNumber from 'bignumber.js/bignumber';
 
-import arrowDown from '../../assets/img/chart/arrow-down.svg';
-import arrowUp from '../../assets/img/chart/arrow-up.svg';
+import PriceDifferenceBag from '../PriceDifferenceBag';
 
 import './YDRTokenChart.scss';
 
@@ -174,16 +172,7 @@ const YDRTokenChart: React.FC<TokenChartProps> = ({ price }) => {
   return (
     <div className="chart">
       <div className="chart-panel">
-        <div className="chart-panel-title">
-          ${new BigNumber(clickedElement).toFixed(6)}
-          <div className="diff">
-            <div className={`diff-${diff[0]}`}>
-              {diff[0] === 'up' && diff[1] !== '0.0' ? <img src={arrowUp} alt="arrow up" /> : null}
-              {diff[0] === 'down' ? <img src={arrowDown} alt="arrow down" /> : null}
-              {new BigNumber(diff[1]).toFixed(2)}%
-            </div>
-          </div>
-        </div>
+        <PriceDifferenceBag price={clickedElement} diff={diff} />
         <div className="chart-panel-btns">
           <div
             className="chart-panel-btn active"
