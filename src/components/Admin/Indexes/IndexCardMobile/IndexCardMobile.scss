@@ -43,13 +43,6 @@
     border-radius: 0 0 16px 16px;
   }
 
-  @include b('tablet') {
-    &:first-child,
-    &:last-child {
-      border-radius: 16px;
-    }
-  }
-
   &__title {
     font-size: 12px;
   }

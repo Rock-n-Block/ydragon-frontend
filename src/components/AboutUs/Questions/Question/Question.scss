@@ -29,16 +29,11 @@
 
   width: 100%;
   max-width: 1140px;
-  @include b('mobile') {
+  @include b('tablet') {
     padding: 35px 50px 35px 35px;
-
-    // background: none;
-    // border-radius: 0;
-    // box-shadow: none;
-
-    // &:last-child {
-    //   padding-bottom: 0;
-    // }
+  }
+  @include b('mobile') {
+    padding: 35px;
   }
 
   &__text--wrapper {
@@ -123,11 +118,6 @@
     outline: none;
 
     transition: transform 0.4s;
-    @include b('mobile') {
-      position: absolute;
-      right: -30px;
-      top: calc(50% - 7px);
-    }
   }
 
   &__icon:hover {
