@@ -11,7 +11,6 @@ import './TokenPanel.scss';
 interface TokenPanelProps {
   panelContent: Array<IPanelContent>;
   handleBuy?: () => void;
-  handleGetIn?: () => void;
   handleSell?: () => void;
 }
 interface IPanelContent {
@@ -20,7 +19,7 @@ interface IPanelContent {
 }
 
 const TokenPanel: React.FC<TokenPanelProps> = observer(
-  ({ panelContent, handleBuy, handleGetIn, handleSell }) => {
+  ({ panelContent, handleBuy, handleSell }) => {
     const [showTooltip, setShowTooltip] = useState(false);
     const [pickTooltip, setPickTooltip] = useState<number | undefined>(undefined);
     // const walletConnector = useWalletConnectorContext();
@@ -49,7 +48,7 @@ const TokenPanel: React.FC<TokenPanelProps> = observer(
         </div>
 
         <div className="token-panel__btns">
-          {((isTokenPicked && handleBuy) || (!isTokenPicked && handleBuy && !handleGetIn)) && (
+          {((isTokenPicked && handleBuy) || (!isTokenPicked && handleBuy)) && (
             <Button
               className="token-panel__btn"
               onClick={isUserLogged ? handleBuy : (e) => onClickHandler(e)}
@@ -71,7 +70,7 @@ const TokenPanel: React.FC<TokenPanelProps> = observer(
               Buy
             </Button>
           )}
-          {((isTokenPicked && handleSell) || (!isTokenPicked && handleSell && !handleGetIn)) && (
+          {((isTokenPicked && handleSell) || (!isTokenPicked && handleSell)) && (
             <Button
               className="token-panel__btn"
               onClick={isUserLogged ? handleSell : (e) => onClickHandler(e)}
@@ -91,11 +90,6 @@ const TokenPanel: React.FC<TokenPanelProps> = observer(
                 </div>
               )}
               Sell
-            </Button>
-          )}
-          {!isTokenPicked && handleGetIn && (
-            <Button className="token-panel__btn" onClick={handleGetIn}>
-              Enter!
             </Button>
           )}
         </div>
