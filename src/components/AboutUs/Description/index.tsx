@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import iconPlay from '../../../assets/img/icons/icon-play.svg';
 import { Button } from '../../index';
@@ -7,17 +7,6 @@ import { Button } from '../../index';
 import './Description.scss';
 
 const Description: React.FC = () => {
-  const [showTooltip, setShowTooltip] = useState(false);
-  const user = !!localStorage?.yd_address || false;
-  const onClickHandler = (e: any) => {
-    if (!user) {
-      e.preventDefault();
-      setShowTooltip(true);
-    }
-  };
-  const onBlurHandler = () => {
-    setShowTooltip(false);
-  };
   return (
     <section className="section description">
       <div className="description__items">
@@ -56,21 +45,8 @@ const Description: React.FC = () => {
         <Button
           className="description__btn"
           styledType="outline"
-          onClick={(e) => onClickHandler(e)}
-          onBlur={onBlurHandler}
+          tooltip='Please login'
         >
-          {!user && showTooltip && (
-            <div className="ant-tooltip ant-tooltip-placement-top">
-              <div className="ant-tooltip-content">
-                <div className="ant-tooltip-arrow">
-                  <span className="ant-tooltip-arrow-content" />
-                </div>
-                <div className="ant-tooltip-inner" role="tooltip">
-                  Please login
-                </div>
-              </div>
-            </div>
-          )}
           Whitepaper
         </Button>
       </div>

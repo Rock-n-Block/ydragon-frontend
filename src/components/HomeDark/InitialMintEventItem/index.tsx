@@ -19,18 +19,8 @@ const InitialMintEventItem: React.FC<InitialMintEventItemProps> = ({ imeItem }) 
   const [end, setEnd] = useState(moment());
   const [now, setNow] = useState(moment());
   const [imeEnabled, setImeEnabled] = useState<boolean>(false);
-  const [showTooltip, setShowTooltip] = useState(false);
-  const user = !!localStorage?.yd_address || false;
-  const handleGetIn = (e: any) => {
-    if (!user) {
-      e.preventDefault();
-      setShowTooltip(true);
-    } else {
+  const handleGetIn = () => {
       modals.getIn.open(imeItem.id, imeItem.address);
-    }
-  };
-  const onBlurHandler = () => {
-    setShowTooltip(false);
   };
   useEffect(() => {
     const interval = setInterval(() => {
@@ -124,23 +114,12 @@ const InitialMintEventItem: React.FC<InitialMintEventItemProps> = ({ imeItem }) 
         </p>
 
         <Button
-          onClick={(e) => handleGetIn(e)}
+          onClick={handleGetIn}
           className="initial-mint-event__get-btn"
-          disabled={!imeEnabled}
-          onBlur={onBlurHandler}
+          tooltip='Please login'
+          disabled={imeEnabled}
         >
-          {!user && showTooltip && (
-            <div className="ant-tooltip ant-tooltip-placement-top">
-              <div className="ant-tooltip-content">
-                <div className="ant-tooltip-arrow">
-                  <span className="ant-tooltip-arrow-content" />
-                </div>
-                <div className="ant-tooltip-inner" role="tooltip">
-                  Please login
-                </div>
-              </div>
-            </div>
-          )}{' '}
+          {' '}
           Enter!
         </Button>
       </div>

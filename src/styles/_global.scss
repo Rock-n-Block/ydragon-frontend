@@ -1,8 +1,6 @@
 body {
   margin: 0;
 
-  max-width: 100vw !important;
-
   font-family: 'Rubik', sans-serif;
   font-weight: normal;
 
@@ -75,6 +73,13 @@ p {
     .ant-select-item-option-active {
       background-color: #3a3a66;
     }
+  }
+  .ant-tooltip-inner {
+    background-color: $white !important;
+    color: $black !important;
+  }
+  .ant-tooltip-arrow-content {
+    background-color: $white !important;
   }
 }
 
@@ -315,8 +320,12 @@ main {
 
   pointer-events: none;
 }
-
+.tooltip{
+  position : relative !important;
+}
 .ant-tooltip {
-  top: -37px;
+  // position: relative !important;
+  // top: 6px !important;
+  // left: 74px !important;
   z-index: 10 !important;
 }

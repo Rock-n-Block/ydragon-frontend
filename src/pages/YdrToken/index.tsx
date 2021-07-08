@@ -23,6 +23,7 @@ const YdrToken: React.FC = observer(() => {
   };
 
   const handleBuy = () => {
+    console.log('handleBuy')
     modals.tradeYDR.open('buy');
     // walletConnector.metamaskService.buyYDRToken().then().catch();
   };
