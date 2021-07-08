@@ -125,12 +125,14 @@ export default class MetamaskService {
       if (!this.wallet) {
         reject(new Error('metamask wallet is not injected'));
       }
-
+      const isChainAcceptable = (currChain: string) => {
+        return !!Object.values(this.usedChain).find((chainId) => chainId === currChain);
+      };
       if (!currentChain || currentChain === null) {
         this.wallet
           .request({ method: 'eth_chainId' })
           .then((resChain: any) => {
-            if (resChain === this.usedChain) {
+            if (isChainAcceptable(resChain)) {
               this.ethRequestAccounts()
                 .then((account: any) => {
                   [this.walletAddress] = account;
@@ -145,7 +147,7 @@ export default class MetamaskService {
             }
           })
           .catch(() => reject(new Error('Not authorized')));
-      } else if (Object.values(this.usedChain).find((chainId) => chainId === currentChain)) {
+      } else if (isChainAcceptable(currentChain)) {
         this.ethRequestAccounts()
           .then((account: any) => {
             [this.walletAddress] = account;
