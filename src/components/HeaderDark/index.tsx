@@ -15,7 +15,7 @@ import tw from '../../assets/img/socials/twitter.svg';
 import { useWalletConnectorContext } from '../../services/walletConnect';
 import { useMst } from '../../store/store';
 import EventBanner from '../EventBanner';
-import { Button, Switch } from '../index';
+import { Button, SelectNetwork, Switch } from '../index';
 
 import './Header.scss';
 
@@ -24,7 +24,7 @@ interface HeaderProps {
   onCollapsedChange: (value: boolean) => void;
 }
 
-const Header: React.FC<HeaderProps> = observer(({collapsed, onCollapsedChange}) => {
+const Header: React.FC<HeaderProps> = observer(({ collapsed, onCollapsedChange }) => {
   const [fixed, setFixed] = useState(true);
   const { user, theme } = useMst();
   const walletConnector = useWalletConnectorContext();
@@ -90,6 +90,7 @@ const Header: React.FC<HeaderProps> = observer(({collapsed, onCollapsedChange}) 
             ) : (
               <div className="menu__sign">
                 <Switch checked={theme.value === 'dark'} onChange={handleChangeTheme} />
+                <SelectNetwork />
                 <ul className="menu-nav">
                   {user.address && (
                     <li className="menu-nav__item">
@@ -154,6 +155,7 @@ const Header: React.FC<HeaderProps> = observer(({collapsed, onCollapsedChange}) 
 
             <div className="header__sign">
               <Switch checked={theme.value === 'dark'} onChange={handleChangeTheme} />
+              <SelectNetwork />
               <ul className="header-nav">
                 {user.address && (
                   <li className="header-nav__item">
@@ -278,33 +280,35 @@ const Header: React.FC<HeaderProps> = observer(({collapsed, onCollapsedChange}) 
                 </span>
               </div>
             </div>
-            {!collapsed&&<div className="footer__socials">
-              <a
-                href="https://t.me/ydrmain/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="footer__socials-item"
-              >
-                <img src={tg} alt="logo" width="24" height="20" />
-              </a>
+            {!collapsed && (
+              <div className="footer__socials">
+                <a
+                  href="https://t.me/ydrmain/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="footer__socials-item"
+                >
+                  <img src={tg} alt="logo" width="24" height="20" />
+                </a>
 
-              <a
-                href="https://twitter.com/ydragons_"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="footer__socials-item"
-              >
-                <img src={tw} alt="logo" width="24" height="20" />
-              </a>
+                <a
+                  href="https://twitter.com/ydragons_"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="footer__socials-item"
+                >
+                  <img src={tw} alt="logo" width="24" height="20" />
+                </a>
 
-              <a href="/" className="footer__socials-item">
-                <img src={md} alt="logo" width="24" height="20" />
-              </a>
+                <a href="/" className="footer__socials-item">
+                  <img src={md} alt="logo" width="24" height="20" />
+                </a>
 
-              <a href="/" className="footer__socials-item">
-                <img src={dis} alt="logo" width="24" height="20" />
-              </a>
-            </div>}
+                <a href="/" className="footer__socials-item">
+                  <img src={dis} alt="logo" width="24" height="20" />
+                </a>
+              </div>
+            )}
           </div>
         </div>
       </div>

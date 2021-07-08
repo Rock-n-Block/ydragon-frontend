@@ -1,5 +1,4 @@
 import React from 'react';
-import { observer } from 'mobx-react-lite';
 
 import RebalanceForm from '../../../forms/Rebalance/container';
 import { ITokensDiff } from '../../../pages/Admin';
@@ -7,13 +6,14 @@ import { useMst } from '../../../store/store';
 import { Modal } from '../index';
 
 import './RebalanceModal.scss';
+import { observer } from 'mobx-react-lite';
 
 interface RebalanceModalProps {
   name: string;
   tokens: Array<ITokensDiff>;
 }
 
-const RebalanceModal: React.FC<RebalanceModalProps> = observer(({ name, tokens }) => {
+const RebalanceModal: React.FC<RebalanceModalProps> = ({ name, tokens }) => {
   const { modals } = useMst();
 
   const handleClose = (): void => {
@@ -36,6 +36,6 @@ const RebalanceModal: React.FC<RebalanceModalProps> = observer(({ name, tokens }
       </div>
     </Modal>
   );
-});
+};
 
-export default RebalanceModal;
+export default observer(RebalanceModal);
