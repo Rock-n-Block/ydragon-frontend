@@ -1,14 +1,14 @@
 import { applySnapshot, types } from 'mobx-state-tree';
 
-export const Networks = types.model({ network: types.string }).actions((self) => {
-  const setNetwork = (network: 'bnbt' | 'tmatic') => {
-    self.network = network;
+export const Networks = types.model({ id: types.string }).actions((self) => {
+  const setId = (id: string) => {
+    self.id = id;
   };
   const update = (networkData: any) => {
     applySnapshot(self, networkData);
   };
   return {
-    setNetwork,
+    setId,
     update,
   };
 });

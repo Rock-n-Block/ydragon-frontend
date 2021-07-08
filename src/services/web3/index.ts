@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import Web3 from 'web3';
 
 import config from './config';
+import { rootStore } from '../../store/store';
 
 declare global {
   interface Window {
@@ -78,6 +79,7 @@ export default class MetamaskService {
         if (!Object.values(this.usedChain).find((chainId) => chainId === currentChain)) {
           subscriber.next(`Please choose one of networks in header select.`);
         } else {
+          rootStore.networks.setId(this.wallet.chainId);
           subscriber.next('');
         }
       });
@@ -99,6 +101,10 @@ export default class MetamaskService {
 
   ethRequestAccounts() {
     return this.wallet.request({ method: 'eth_requestAccounts' });
+  }
+
+  ethGetCurrentChain() {
+    return this.wallet.request({ method: 'eth_chainId' });
   }
 
   getContract(contractName: ContractTypes) {
