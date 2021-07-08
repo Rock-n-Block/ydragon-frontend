@@ -4,6 +4,8 @@ import { observer } from 'mobx-react-lite';
 import { useMst } from '../../store/store';
 import { useWalletConnectorContext } from '../../services/walletConnect';
 
+import './SelectNetwork.scss';
+
 const { Option } = Select;
 
 interface AddEthereumChainParameter {
@@ -105,6 +107,7 @@ const SelectNetwork: React.FC = observer(() => {
       placeholder="Select network"
       onSelect={switchChain}
       style={{ width: 120 }}
+      className='select-network'
     >
       <Option value="bnbt">BSC</Option>
       <Option value="tmatic">Polygon</Option>

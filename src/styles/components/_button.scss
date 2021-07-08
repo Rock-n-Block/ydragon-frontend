@@ -164,9 +164,16 @@
       }
     }
   }
+  .btn-nav {
+    &:hover,
+    &:focus {
+      color: $black;
+      border-color: $black;
+    }
+  }
 }
 .dark,
-.light{
+.light {
   .btn {
     &-red {
       color: #d53038;

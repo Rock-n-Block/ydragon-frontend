@@ -1,0 +1,16 @@
+@import '../../styles/_variables.scss';
+@import '../../styles/mixins';
+
+.dark {
+  .select-network {
+    .ant-select-selector {
+      background: linear-gradient(180deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0) 100%),
+        linear-gradient(171.49deg, #1a1e3a 3.83%, #161a2a 100%)!important;
+      box-shadow: -8px 8px 36px rgba(0, 0, 0, 0.5) !important;
+      color: $white !important;
+    }
+    .ant-select-arrow{
+      color: rgba($white, 0.5) !important; 
+    }
+  }
+}

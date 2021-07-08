@@ -68,6 +68,9 @@ p {
     color: $white;
     background-color: $black;
     border: $black;
+    .ant-select-item-option {
+      color: $white;
+    }
     .ant-select-item-option-selected,
     .ant-select-item-option-active {
       background-color: #3a3a66;

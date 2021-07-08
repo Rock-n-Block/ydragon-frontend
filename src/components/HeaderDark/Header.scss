@@ -25,7 +25,8 @@
 
     .container {
       .menu-nav {
-        &__link {
+        &__link,
+        &__item {
           color: #f7f8fd;
 
           &:hover,
@@ -67,7 +68,8 @@
 
     .container {
       .menu-nav {
-        &__link {
+        &__link,
+        &__item {
           color: $black;
 
           &:hover,
