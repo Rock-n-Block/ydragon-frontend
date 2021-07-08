@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Select } from 'antd';
 import { observer } from 'mobx-react-lite';
 import { useMst } from '../../store/store';
+import { useWalletConnectorContext } from '../../services/walletConnect';
 
 const { Option } = Select;
 
@@ -18,10 +19,14 @@ interface AddEthereumChainParameter {
   iconUrls?: string[]; // Currently ignored.
 }
 
-const SelectNetwork: React.FC = observer(() => {
-  const { networks } = useMst();
+type ChainTypes = 'bnbt' | 'tmatic';
 
-  const bnbt: AddEthereumChainParameter = {
+type IChains = {
+  [key in ChainTypes]: AddEthereumChainParameter;
+};
+
+const chains: IChains = {
+  bnbt: {
     chainId: '0x61',
     chainName: 'Binance Smart Chain Testnet',
     nativeCurrency: {
@@ -31,9 +36,8 @@ const SelectNetwork: React.FC = observer(() => {
     },
     rpcUrls: ['https://data-seed-prebsc-1-s1.binance.org:8545'],
     blockExplorerUrls: ['https://testnet.bscscan.com'],
-  };
-
-  const tmatic: AddEthereumChainParameter = {
+  },
+  tmatic: {
     chainId: '0x13881',
     chainName: 'Matic Testnet Mumbai',
     nativeCurrency: {
@@ -43,14 +47,29 @@ const SelectNetwork: React.FC = observer(() => {
     },
     rpcUrls: ['https://rpc-mumbai.matic.today'],
     blockExplorerUrls: ['https://matic.network/'],
-  };
+  },
+};
 
-  const chains = {
-    bnbt,
-    tmatic,
-  };
+const SelectNetwork: React.FC = observer(() => {
+  const { networks } = useMst();
+  const walletConnector = useWalletConnectorContext();
+  const [pickedChain, setPickedChain] = useState<ChainTypes>();
 
-  const switchChain = async (chainName: 'bnbt' | 'tmatic') => {
+  const getCurrentChain = useCallback(() => {
+    const currentChain = walletConnector.metamaskService.ethGetCurrentChain();
+
+    Object.keys(chains).forEach((key) => {
+      if (chains[key as ChainTypes].chainId === currentChain) {
+        setPickedChain(key as ChainTypes);
+      }
+    });
+  }, [walletConnector.metamaskService]);
+
+  useEffect(() => {
+    getCurrentChain();
+  }, [getCurrentChain]);
+
+  const switchChain = async (chainName: ChainTypes) => {
     try {
       await window.ethereum
         .request({
@@ -59,15 +78,20 @@ const SelectNetwork: React.FC = observer(() => {
         })
         .then(() => {
           networks.setNetwork(chainName);
+          setPickedChain(chainName);
         });
     } catch (switchError) {
       // This error code indicates that the chain has not been added to MetaMask.
       if (switchError.code === 4902) {
         try {
-          await window.ethereum.request({
-            method: 'wallet_addEthereumChain',
-            params: [chains[chainName]],
-          });
+          await window.ethereum
+            .request({
+              method: 'wallet_addEthereumChain',
+              params: [chains[chainName]],
+            })
+            .then(() => {
+              setPickedChain(chainName);
+            });
         } catch (addError) {
           // handle "add" error
         }
@@ -77,7 +101,12 @@ const SelectNetwork: React.FC = observer(() => {
   };
 
   return (
-    <Select placeholder="Select network" onSelect={switchChain} style={{ width: 120 }}>
+    <Select
+      value={pickedChain}
+      placeholder="Select network"
+      onSelect={switchChain}
+      style={{ width: 120 }}
+    >
       <Option value="bnbt">BSC</Option>
       <Option value="tmatic">Polygon</Option>
     </Select>

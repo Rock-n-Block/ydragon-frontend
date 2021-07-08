@@ -101,6 +101,10 @@ export default class MetamaskService {
     return this.wallet.request({ method: 'eth_requestAccounts' });
   }
 
+  ethGetCurrentChain() {
+    return this.wallet.chainId;
+  }
+
   getContract(contractName: ContractTypes) {
     return new this.web3Provider.eth.Contract(
       config[contractName].ABI as Array<any>,
