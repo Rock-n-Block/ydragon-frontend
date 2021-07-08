@@ -4,11 +4,13 @@ import { Instance, onSnapshot, types } from 'mobx-state-tree';
 import { Modals } from './Modals';
 import { Theme } from './Theme';
 import { User } from './User';
+import { Networks } from './Networks';
 
 const RootModel = types.model({
   modals: Modals,
   user: User,
   theme: Theme,
+  networks: Networks,
 });
 
 export const Store = RootModel.create({
@@ -29,6 +31,9 @@ export const Store = RootModel.create({
   },
   theme: {
     value: localStorage.theme ?? 'dark',
+  },
+  networks: {
+    network: '',
   },
 });
 
