@@ -95,13 +95,10 @@
   height: 100vh;
 
   background-repeat: no-repeat;
-  background-repeat: no-repeat;
-  background-position: top center;
   background-position: center;
   background-size: auto 100%;
 
   transition: all 0.4s;
-  background-blend-mode: unset;
   background-blend-mode: lighten;
 
   @include b('mobile') {
@@ -113,6 +110,7 @@
   z-index: 100;
 
   margin-bottom: 30px;
+
   overflow: hidden;
 
   height: 120px;
@@ -135,6 +133,7 @@
 .header {
   &__menu {
     display: none;
+
     outline: none;
     @include b('tablet') {
       position: relative;
@@ -270,8 +269,8 @@
 
     &__socials {
       position: fixed;
-      bottom: 30px;
       left: calc(50% - 237px / 2);
+      bottom: 30px;
 
       &-item {
         width: 48px;

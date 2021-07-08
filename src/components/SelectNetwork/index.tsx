@@ -1,8 +1,9 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Select } from 'antd';
 import { observer } from 'mobx-react-lite';
-import { useMst } from '../../store/store';
+
 import { useWalletConnectorContext } from '../../services/walletConnect';
+import { useMst } from '../../store/store';
 
 const { Option } = Select;
 

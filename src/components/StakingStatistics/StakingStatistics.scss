@@ -69,20 +69,18 @@
   }
 
   &__btn {
-
     & + & {
       margin-left: 20px;
     }
   }
 
   .btn {
-    width: unset;
     width: 100%;
   }
 
   .btn-outline {
     padding: 18px 50px;
-    @include b('mobile'){
+    @include b('mobile') {
       padding: 18px;
     }
   }

@@ -1,4 +1,5 @@
 import React from 'react';
+import { observer } from 'mobx-react-lite';
 
 import RebalanceForm from '../../../forms/Rebalance/container';
 import { ITokensDiff } from '../../../pages/Admin';
@@ -6,7 +7,6 @@ import { useMst } from '../../../store/store';
 import { Modal } from '../index';
 
 import './RebalanceModal.scss';
-import { observer } from 'mobx-react-lite';
 
 interface RebalanceModalProps {
   name: string;

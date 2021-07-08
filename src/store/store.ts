@@ -2,9 +2,9 @@ import { createContext, useContext } from 'react';
 import { Instance, onSnapshot, types } from 'mobx-state-tree';
 
 import { Modals } from './Modals';
+import { Networks } from './Networks';
 import { Theme } from './Theme';
 import { User } from './User';
-import { Networks } from './Networks';
 
 const RootModel = types.model({
   modals: Modals,

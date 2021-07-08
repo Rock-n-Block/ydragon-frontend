@@ -3,8 +3,9 @@ import moment from 'moment';
 import { Observable } from 'rxjs';
 import Web3 from 'web3';
 
-import config from './config';
 import { rootStore } from '../../store/store';
+
+import config from './config';
 
 declare global {
   interface Window {
