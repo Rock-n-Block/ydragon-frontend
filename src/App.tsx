@@ -69,7 +69,9 @@ export const App: React.FC = observer(() => {
           <Auth />
         </Route> */}
             <GuardedRoute exact path="/index/:indexId" component={Index} auth={user} />
-            <GuardedRoute exact path="/ydrtoken" component={YdrToken} auth={user} />
+            <Route exact path="/ydrtoken">
+              <YdrToken />
+            </Route>
             <GuardedRoute exact path="/admin" component={Admin} auth={admin} />
             <GuardedRoute exact path="/admin" component={Indexes} auth={admin} />
             <GuardedRoute exact path="/admin/index/:indexId" component={AdminIndex} auth={admin} />

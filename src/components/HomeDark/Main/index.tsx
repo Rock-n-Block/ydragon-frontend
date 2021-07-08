@@ -6,7 +6,6 @@ import './Main.scss';
 
 const Main: React.FC = () => {
   const [showTooltip, setShowTooltip] = useState(false);
-  const [pickTooltip, setPickTooltip] = useState<number | undefined>(undefined);
   const user = !!localStorage?.yd_address || false;
 
   const onClickHandler = (e: any) => {
@@ -14,9 +13,6 @@ const Main: React.FC = () => {
       e.preventDefault();
       setShowTooltip(true);
     }
-  };
-  const onFocusHandler = (value: number) => {
-    setPickTooltip(value);
   };
   const onBlurHandler = () => {
     setShowTooltip(false);
@@ -37,22 +33,7 @@ const Main: React.FC = () => {
         <Button
           linkClassName="home__btn"
           link="/ydrtoken"
-          onClick={(e) => onClickHandler(e)}
-          onBlur={onBlurHandler}
-          onFocus={() => onFocusHandler(1)}
         >
-          {pickTooltip === 1 && !user && showTooltip && (
-            <div className="ant-tooltip ant-tooltip-placement-top">
-              <div className="ant-tooltip-content">
-                <div className="ant-tooltip-arrow">
-                  <span className="ant-tooltip-arrow-content" />
-                </div>
-                <div className="ant-tooltip-inner" role="tooltip">
-                  Please login
-                </div>
-              </div>
-            </div>
-          )}
           Buy YDR
         </Button>
         <Button
@@ -60,9 +41,8 @@ const Main: React.FC = () => {
           styledType="outline"
           onClick={(e) => onClickHandler(e)}
           onBlur={onBlurHandler}
-          onFocus={() => onFocusHandler(2)}
         >
-          {pickTooltip === 2 &&!user && showTooltip && (
+          {!user && showTooltip && (
             <div className="ant-tooltip ant-tooltip-placement-top">
               <div className="ant-tooltip-content">
                 <div className="ant-tooltip-arrow">

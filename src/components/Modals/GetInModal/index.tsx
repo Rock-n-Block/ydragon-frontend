@@ -50,7 +50,7 @@ const GetInModal: React.FC = observer(() => {
   const [totalData, setTotalData] = useState<ITableData[]>([] as ITableData[]);
   const [userData, setUserData] = useState<ITableData[]>([] as ITableData[]);
   const [firstCurrency, setFirstCurrency] = useState<TokenMiniNameTypes>(defaultTokens[0].name);
-  const [payInput, setPayInput] = useState<string>('0');
+  const [payInput, setPayInput] = useState<string>('');
   const [isNeedApprove, setIsNeedApprove] = useState<boolean>(true);
   const checkAllowance = useCallback(() => {
     walletConnector.metamaskService
@@ -165,6 +165,7 @@ const GetInModal: React.FC = observer(() => {
             tokens={defaultTokens}
             onSelectChange={handleSelectChange}
             value={payInput}
+            placeholder='0'
             onChange={(event) => setPayInput(event.target.value)}
             type="number"
           />
