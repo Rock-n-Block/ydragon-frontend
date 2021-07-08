@@ -56,42 +56,29 @@ const SelectNetwork: React.FC = observer(() => {
   const [pickedChain, setPickedChain] = useState<ChainTypes>();
 
   const getCurrentChain = useCallback(() => {
-    const currentChain = walletConnector.metamaskService.ethGetCurrentChain();
-
-    Object.keys(chains).forEach((key) => {
-      if (chains[key as ChainTypes].chainId === currentChain) {
-        setPickedChain(key as ChainTypes);
-      }
+    walletConnector.metamaskService.ethGetCurrentChain().then((currentChainId: string) => {
+      Object.keys(chains).forEach((key) => {
+        if (chains[key as ChainTypes].chainId === currentChainId) {
+          setPickedChain(key as ChainTypes);
+        }
+      });
     });
   }, [walletConnector.metamaskService]);
 
-  useEffect(() => {
-    getCurrentChain();
-  }, [getCurrentChain]);
-
   const switchChain = async (chainName: ChainTypes) => {
     try {
-      await window.ethereum
-        .request({
-          method: 'wallet_switchEthereumChain',
-          params: [{ chainId: chains[chainName].chainId }],
-        })
-        .then(() => {
-          networks.setNetwork(chainName);
-          setPickedChain(chainName);
-        });
+      await window.ethereum.request({
+        method: 'wallet_switchEthereumChain',
+        params: [{ chainId: chains[chainName].chainId }],
+      });
     } catch (switchError) {
       // This error code indicates that the chain has not been added to MetaMask.
       if (switchError.code === 4902) {
         try {
-          await window.ethereum
-            .request({
-              method: 'wallet_addEthereumChain',
-              params: [chains[chainName]],
-            })
-            .then(() => {
-              setPickedChain(chainName);
-            });
+          await window.ethereum.request({
+            method: 'wallet_addEthereumChain',
+            params: [chains[chainName]],
+          });
         } catch (addError) {
           // handle "add" error
         }
@@ -99,6 +86,18 @@ const SelectNetwork: React.FC = observer(() => {
       // handle other "switch" errors
     }
   };
+
+  useEffect(() => {
+    getCurrentChain();
+  }, [getCurrentChain]);
+
+  useEffect(() => {
+    Object.keys(chains).forEach((key) => {
+      if (chains[key as ChainTypes].chainId === networks.id) {
+        setPickedChain(key as ChainTypes);
+      }
+    });
+  }, [networks.id]);
 
   return (
     <Select
