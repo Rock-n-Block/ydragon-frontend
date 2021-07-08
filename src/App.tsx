@@ -44,11 +44,11 @@ export const App: React.FC = observer(() => {
       if (bodyClass !== theme.value) {
         document.body.classList.remove(bodyClass);
         document.body.classList.add(theme.value);
-        setBodyClass(theme.value)
+        setBodyClass(theme.value);
       }
     } else {
       document.body.classList.add(theme.value);
-      setBodyClass(theme.value)
+      setBodyClass(theme.value);
     }
   }, [theme.value, bodyClass]);
 
@@ -70,7 +70,9 @@ export const App: React.FC = observer(() => {
           <GuardedRoute exact path="/admin" component={Indexes} auth={admin} />
           <GuardedRoute exact path="/admin/index/:indexId" component={AdminIndex} auth={admin} />
           <GuardedRoute exact path="/staking" component={StakePage} auth={user} />
-          <GuardedRoute exact path="/indexes" component={IndexDashboard} auth={user} />
+          <Route exact path="/indexes">
+            <IndexDashboard />
+          </Route>
           <Route exact path="/about-us">
             <AboutUs />
           </Route>
