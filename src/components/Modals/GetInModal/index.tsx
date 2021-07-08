@@ -7,7 +7,7 @@ import { useMst } from '../../../store/store';
 import { ProviderRpcError } from '../../../types/errors';
 import { defaultTokens, TokenMiniNameTypes } from '../../../utils/tokenMini';
 import { IIme } from '../../HomeDark/InitialMintEvent';
-import { Button, InputWithSelect } from '../../index';
+import { Button, InputWithSelect, Spinner } from '../../index';
 import SplittedTable, { ITableColumn, ITableData } from '../../SplittedTable';
 import { TokenMiniProps } from '../../TokenMini';
 import { Modal } from '../index';
@@ -52,6 +52,7 @@ const GetInModal: React.FC = observer(() => {
   const [firstCurrency, setFirstCurrency] = useState<TokenMiniNameTypes>(defaultTokens[0].name);
   const [payInput, setPayInput] = useState<string>('');
   const [isNeedApprove, setIsNeedApprove] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(false);
   const checkAllowance = useCallback(() => {
     walletConnector.metamaskService
       .checkAllowance(firstCurrency, 'MAIN', modals.getIn.address)
@@ -102,10 +103,12 @@ const GetInModal: React.FC = observer(() => {
         .catch((err: any) => {
           const { response } = err;
           console.log('getCurrentIme error', response);
-        });
+        })
+        .finally(() => setLoading(false));
     }
   }, [user.address, modals.getIn.id]);
   useEffect(() => {
+    setLoading(true);
     getCurrentIme();
   }, [getCurrentIme]);
   useEffect(() => {
@@ -117,23 +120,8 @@ const GetInModal: React.FC = observer(() => {
     }
   }, [checkAllowance, user.address]);
   useEffect(() => {
-    if (currentIme) {
-      setTotalData(
-        currentIme.tokens.map((token) => {
-          return [
-            {
-              icon: token.image,
-              name: token.name,
-              symbol: token.symbol,
-            } as TokenMiniProps,
-            token.total_quantity,
-            `$${token.price}`,
-            `$${token.total_price}`,
-          ];
-        }),
-      );
-      if (user.address) {
-        setUserData(
+      if (currentIme) {
+        setTotalData(
           currentIme.tokens.map((token) => {
             return [
               {
@@ -141,31 +129,52 @@ const GetInModal: React.FC = observer(() => {
                 name: token.name,
                 symbol: token.symbol,
               } as TokenMiniProps,
-              token.user_quantity ?? '0',
+              token.total_quantity,
+              `$${token.price}`,
+              `$${token.total_price}`,
             ];
           }),
         );
+        if (user.address) {
+          setUserData(
+            currentIme.tokens.map((token) => {
+              return [
+                {
+                  icon: token.image,
+                  name: token.name,
+                  symbol: token.symbol,
+                } as TokenMiniProps,
+                token.user_quantity ?? '0',
+              ];
+            }),
+          );
+        }
       }
-    }
   }, [user.address, currentIme]);
   return (
     <Modal isVisible={!!modals.getIn.id} handleCancel={handleClose} className="m-get-in">
       <div className="m-get-in__content">
-        <section className="m-get-in__total">
-          <h2 className="m-get-in__title">Total for index</h2>
-          <SplittedTable columns={totalColumns} data={totalData} />
-        </section>
-        <section className="m-get-in__user">
-          <h2 className="m-get-in__title">Total for User</h2>
-          <SplittedTable columns={userColumns} data={userData} />
-        </section>
+        {loading ? (
+          <Spinner loading={loading} />
+        ) : (
+          <>
+            <section className="m-get-in__total">
+              <h2 className="m-get-in__title">Total for index</h2>
+              <SplittedTable columns={totalColumns} data={totalData} />
+            </section>
+            <section className="m-get-in__user">
+              <h2 className="m-get-in__title">Total for User</h2>
+              <SplittedTable columns={userColumns} data={userData} />
+            </section>
+          </>
+        )}
         <section className="m-get-in__you-pay">
           <h2 className="m-get-in__title">You pay</h2>
           <InputWithSelect
             tokens={defaultTokens}
             onSelectChange={handleSelectChange}
             value={payInput}
-            placeholder='0'
+            placeholder="0"
             onChange={(event) => setPayInput(event.target.value)}
             type="number"
           />
