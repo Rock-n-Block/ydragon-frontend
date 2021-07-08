@@ -3,6 +3,7 @@ import { observer } from 'mobx-react-lite';
 
 import { useWalletConnectorContext } from '../../../services/walletConnect';
 import { useMst } from '../../../store/store';
+import { ProviderRpcError } from '../../../types/errors';
 import { Button, Input } from '../../index';
 import { Modal } from '../index';
 
@@ -16,12 +17,12 @@ const MintModal: React.FC = observer(() => {
   const handleSubmitMint = () => {
     walletConnector.metamaskService
       .mint(value, user.token)
-      .then((data: any) => {
-        console.log('mint', data);
+      .then(() => {
+        modals.info.setMsg('Success', 'Success mint', 'success');
       })
-      .catch((err: any) => {
-        const { response } = err;
-        console.log('mint error', response);
+      .catch((err: ProviderRpcError) => {
+        const { message } = err;
+        modals.info.setMsg('mint error', message, 'error');
       });
   };
   const handleClose = (): void => {

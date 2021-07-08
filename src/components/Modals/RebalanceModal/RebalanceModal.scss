@@ -2,24 +2,39 @@
 @import '../../../styles/mixins';
 
 .dark {
-  .token-weights{
-    &-items{
-      &__gead{
+  .token-weights {
+    &-items {
+      &__gead {
         color: rgba($white, 0.5);
       }
+    }
+  }
+  .rebalance{
+    &-options-row{
+      color: $white;
+      border-top: 1px solid rgba($white, 0.1);
+      border-bottom: 1px solid rgba($white, 0.1);
     }
   }
 }
 
 .light {
-  .token-weights{
-    &-items{
-      &__gead{
+  .token-weights {
+    &-items {
+      &__gead {
         color: rgba($black, 0.5);
       }
     }
   }
+  .rebalance{
+    &-options-row{
+      color: $black;
+      border-top: 1px solid rgba($black, 0.1);
+      border-bottom: 1px solid rgba($black, 0.1);
+    }
+  }
 }
+
 .m-rebalance {
   &__content {
     padding: 30px;
@@ -70,10 +85,6 @@
 
       font-size: 14px;
       line-height: 17px;
-
-      color: white;
-      border-top: 1px solid rgba(white, 0.1);
-      border-bottom: 1px solid rgba(white, 0.1);
 
       &__title {
         max-width: 103px;

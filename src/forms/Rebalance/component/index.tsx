@@ -9,6 +9,8 @@ import { IToken } from '../../../components/IndexPage/IndexTable';
 import { ISearchToken } from '../../../components/Search';
 import { ITokensDiff } from '../../../pages/Admin';
 import { coinsApi, indexesApi } from '../../../services/api';
+import { useMst } from '../../../store/store';
+import { ProviderRpcError } from '../../../types/errors';
 
 interface IIndexId {
   indexId: string;
@@ -24,6 +26,7 @@ export interface IRebalance {
 
 const Rebalance: React.FC<FormikProps<IRebalance> & IRebalance> = observer(
   ({ setFieldValue, handleChange, handleBlur, values, handleSubmit }) => {
+    const { modals } = useMst();
     const { indexId } = useParams<IIndexId>();
     const [searchTokens, setSearchTokens] = useState<ISearchToken[]>([] as ISearchToken[]);
     const weightsSum = values.tokens
@@ -50,6 +53,7 @@ const Rebalance: React.FC<FormikProps<IRebalance> & IRebalance> = observer(
       indexesApi
         .removeTokenFromIndex(+indexId, values.tokens[index].id)
         .then(() => {
+          console.log('Remove token from index request success')
           if (values.tokens[index].pending === false) {
             setFieldValue(`tokens[${index}].to_delete`, !values.tokens[index].to_delete);
             setFieldValue(`tokens[${index}].new_weight`, 0);
@@ -57,30 +61,32 @@ const Rebalance: React.FC<FormikProps<IRebalance> & IRebalance> = observer(
             arrayHelper.remove(index);
           }
         })
-        .catch((error) => {
-          const { response } = error;
-          console.log('search error', response);
+        .catch((error: ProviderRpcError) => {
+          const { message } = error;
+          modals.info.setMsg('Error', `Remove token error ${message}`, 'error');
         });
     };
     const handleAddBack = (arrayHelper: FieldArrayRenderProps, index: number) => {
       indexesApi
         .addTokenBackToIndex(+indexId, values.tokens[index].id)
         .then(({ data }) => {
+          console.log('Add back token to index request success')
           setFieldValue(`tokens[${index}].to_delete`, !values.tokens[index].to_delete);
           setFieldValue(
             `tokens[${index}].new_weight`,
             new BigNumber(data.new_weight).multipliedBy(100),
           );
         })
-        .catch((error) => {
-          const { response } = error;
-          console.log('search error', response);
+        .catch((error: ProviderRpcError) => {
+          const { message } = error;
+          modals.info.setMsg('Error', `Add token back error ${message}`, 'error');
         });
     };
     const handleAddNewToken = (arrayHelper: FieldArrayRenderProps, pickedItem: ISearchToken) => {
       indexesApi
         .addTokenToIndex(+indexId, pickedItem.symbol)
         .then(({ data }) => {
+          console.log('Add new token success', data);
           arrayHelper.push({
             to_delete: false,
             new_weight: '0',

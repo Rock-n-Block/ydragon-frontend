@@ -4,6 +4,7 @@ import BigNumber from 'bignumber.js/bignumber';
 
 import { useWalletConnectorContext } from '../../services/walletConnect';
 import { useMst } from '../../store/store';
+import { ProviderRpcError } from '../../types/errors';
 import { Button, Spinner } from '../index';
 import { InputNumber } from '../Input';
 import StakeItem, { IStakeItem } from '../StakeItem';
@@ -49,9 +50,9 @@ const Stake: React.FC<StakeProps> = ({ tokens, propsLoading }) => {
       .then(() => {
         modals.info.setMsg('Success', 'Staking has been started', 'success');
       })
-      .catch((error: any) => {
-        const { response } = error;
-        modals.info.setMsg('Error', response, 'error');
+      .catch((error: ProviderRpcError) => {
+        const { message } = error;
+        modals.info.setMsg('Error', `Stacking error ${message}`, 'error');
       })
       .finally(() => setLoading(false));
   };
@@ -61,10 +62,11 @@ const Stake: React.FC<StakeProps> = ({ tokens, propsLoading }) => {
       .approveStake(tokens[activeStakeIndex].address)
       .then(() => {
         setIsAllowed(!isAllowed);
+        console.log('Approve token success');
       })
-      .catch((error: any) => {
-        const { response } = error;
-        modals.info.setMsg('Error', response, 'error');
+      .catch((error: ProviderRpcError) => {
+        const { message } = error;
+        modals.info.setMsg('Error', `Approve token error ${message}`, 'error');
       })
       .finally(() => setLoading(false));
   };

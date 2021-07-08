@@ -53,6 +53,7 @@ const Indexes: React.FC = observer(() => {
     indexesApi
       .getAdminIndexes()
       .then(({ data }) => {
+        console.log('get indexes success', data);
         setIndexes(data);
       })
       .catch((error) => {

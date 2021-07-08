@@ -1,10 +1,13 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import nextId from 'react-id-generator';
 import BigNumber from 'bignumber.js/bignumber';
+import { observer } from 'mobx-react-lite';
 import moment from 'moment';
 
 import { indexesApi } from '../../services/api';
 import { useWalletConnectorContext } from '../../services/walletConnect';
+import { useMst } from '../../store/store';
+import { ProviderRpcError } from '../../types/errors';
 import { Button, Table } from '../index';
 import SmallTableCard from '../SmallTableCard/index';
 
@@ -21,9 +24,10 @@ interface IStakingStat {
   name: string;
 }
 
-const StakingStatistics: React.FC = () => {
+const StakingStatistics: React.FC = observer(() => {
   const walletConnector = useWalletConnectorContext();
   const [dataSource, setDataSource] = useState<any[]>([]);
+  const { modals } = useMst();
   const columns: any[] = [
     {
       title: 'Token',
@@ -84,6 +88,7 @@ const StakingStatistics: React.FC = () => {
     indexesApi
       .getStakingStatistic(localStorage.yd_address)
       .then(({ data }) => {
+        console.log('Success in getting staking stat', data);
         const newData = data['binance-smart-chain'].map((stake: IStakingStat, index: number) => {
           return {
             key: index,
@@ -116,24 +121,26 @@ const StakingStatistics: React.FC = () => {
   const handleHarvest = useCallback(() => {
     walletConnector.metamaskService
       .harvestStakeItem(dataSource[selectedRowKeys[0]].id)
-      .then((data: any) => {
-        console.log('harvest', data);
+      .then(() => {
+        modals.info.setMsg('Success', 'Success harvest', 'success');
       })
-      .catch((err: any) => {
-        console.log('harvest', err);
+      .catch((err: ProviderRpcError) => {
+        const { message } = err;
+        modals.info.setMsg('Error', `Harvest error ${message}`, 'error');
       });
-  }, [dataSource, selectedRowKeys, walletConnector.metamaskService]);
+  }, [dataSource, selectedRowKeys, walletConnector.metamaskService, modals.info]);
 
   const handleStakeEnd = useCallback(() => {
     walletConnector.metamaskService
       .endStake(dataSource[selectedRowKeys[0]].id)
-      .then((data: any) => {
-        console.log('stakeEnd', data);
+      .then(() => {
+        modals.info.setMsg('Success', 'Success harvest and stake', 'success');
       })
-      .catch((err: any) => {
-        console.log('stakeEnd', err);
+      .catch((err: ProviderRpcError) => {
+        const { message } = err;
+        modals.info.setMsg('Error', `Harvest and stake error ${message}`, 'error');
       });
-  }, [dataSource, selectedRowKeys, walletConnector.metamaskService]);
+  }, [dataSource, selectedRowKeys, walletConnector.metamaskService, modals.info]);
 
   useEffect(() => {
     getStakingStatistic();
@@ -193,6 +200,6 @@ const StakingStatistics: React.FC = () => {
       />
     </section>
   );
-};
+});
 
 export default StakingStatistics;

@@ -4,6 +4,7 @@ import { observer } from 'mobx-react-lite';
 import { indexesApi } from '../../../services/api';
 import { useWalletConnectorContext } from '../../../services/walletConnect';
 import { useMst } from '../../../store/store';
+import { ProviderRpcError } from '../../../types/errors';
 import { defaultTokens, TokenMiniNameTypes } from '../../../utils/tokenMini';
 import { IIme } from '../../HomeDark/InitialMintEvent';
 import { Button, InputWithSelect } from '../../index';
@@ -70,24 +71,24 @@ const GetInModal: React.FC = observer(() => {
   const handleApprove = (): void => {
     walletConnector.metamaskService
       .approve(firstCurrency, undefined, modals.getIn.address)
-      .then((data: any) => {
+      .then(() => {
         setIsNeedApprove(false);
-        console.log(`approve of ${firstCurrency} to IME success`, data);
+        modals.info.setMsg('Success', `Approve of ${firstCurrency} to IME success`, 'success');
       })
-      .catch((err: any) => {
-        const { response } = err;
-        console.log('approve error', response);
+      .catch((err: ProviderRpcError) => {
+        const { message } = err;
+        modals.info.setMsg('Error', `Approve error ${message}`, 'error');
       });
   };
   const handleEnter = (): void => {
     walletConnector.metamaskService
       .enterIme(payInput, firstCurrency, modals.getIn.address)
-      .then((data: any) => {
-        console.log('mint', data);
+      .then(() => {
+        modals.info.setMsg('Success', 'Success mint', 'success');
       })
-      .catch((err: any) => {
-        const { response } = err;
-        console.log('mint error', response);
+      .catch((err: ProviderRpcError) => {
+        const { message } = err;
+        modals.info.setMsg('Error', `Mint error ${message}`, 'error');
       });
   };
   const getCurrentIme = useCallback(() => {
@@ -95,11 +96,12 @@ const GetInModal: React.FC = observer(() => {
       indexesApi
         .getImeById(modals.getIn.id, user.address ? user.address : undefined)
         .then(({ data }) => {
+          console.log('getCurrentIme success', data);
           setCurrentIme(data);
         })
         .catch((err: any) => {
           const { response } = err;
-          console.log('mint error', response);
+          console.log('getCurrentIme error', response);
         });
     }
   }, [user.address, modals.getIn.id]);

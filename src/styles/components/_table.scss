@@ -5,6 +5,7 @@
   .ant-table-tbody > tr.ant-table-placeholder:hover > td {
     background: rgba($white, 0.5);
   }
+
   .table {
     &:hover {
       & > td {
@@ -20,11 +21,14 @@
           color: $white;
         }
       }
+
       &:hover {
         & > td {
-          background: $white !important;
-          color: #14265a !important;
           cursor: pointer;
+
+          color: #14265a !important;
+          background: $white !important;
+
           a {
             color: #14265a !important;
           }
@@ -74,11 +78,14 @@
           color: $black;
         }
       }
+
       &:hover {
         & > td {
-          background: #14265a !important;
-          color: $white !important;
           cursor: pointer;
+
+          color: $white !important;
+          background: #14265a !important;
+
           a {
             color: $white !important;
           }
@@ -125,6 +132,7 @@
         padding-left: 31px;
       }
     }
+
     td.ant-table-column-sort {
       background: #14265a;
     }

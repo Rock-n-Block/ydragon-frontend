@@ -39,6 +39,7 @@ const Dashboard: React.FC = () => {
     indexesApi
       .getUserIndexes()
       .then(({ data }) => {
+        console.log('get indexes success', data);
         setIndexes(data);
       })
       .catch((error) => {
@@ -162,9 +163,7 @@ const Dashboard: React.FC = () => {
 
                     {index.tokens.length > 3 && (
                       <div className="index-dashboard__token">
-                        <span
-                          className="index-dashboard__token-color"
-                        />
+                        <span className="index-dashboard__token-color" />
                         <span className="index-dashboard__token-name">Others</span>
                       </div>
                     )}

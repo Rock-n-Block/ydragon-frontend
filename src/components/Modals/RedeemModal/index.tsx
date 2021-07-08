@@ -3,6 +3,7 @@ import { observer } from 'mobx-react-lite';
 
 import { useWalletConnectorContext } from '../../../services/walletConnect';
 import { useMst } from '../../../store/store';
+import { ProviderRpcError } from '../../../types/errors';
 import { Button, Input } from '../../index';
 import { Modal } from '../index';
 
@@ -16,12 +17,12 @@ const RedeemModal: React.FC = observer(() => {
   const handleSubmitRedeem = () => {
     walletConnector.metamaskService
       .redeem(value, user.token)
-      .then((data: any) => {
-        console.log('redeem', data);
+      .then(() => {
+        modals.info.setMsg('Success', 'redeem success', 'success');
       })
-      .catch((err: any) => {
-        const { response } = err;
-        console.log('redeem error', response);
+      .catch((err: ProviderRpcError) => {
+        const { message } = err;
+        modals.info.setMsg('Error', `Redeem error ${message}`, 'error');
       });
   };
   const handleClose = (): void => {

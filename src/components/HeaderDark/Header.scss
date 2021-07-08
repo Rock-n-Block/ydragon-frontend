@@ -81,7 +81,7 @@
 }
 
 .fixed {
-  position: fixed;
+  position: fixed !important;
   z-index: 100;
 }
 
@@ -89,7 +89,7 @@
   position: relative;
   z-index: 100;
 
-  overflow: auto;
+  overflow: scroll;
 
   width: 100vw;
   height: 100vh;
@@ -112,6 +112,7 @@
 .collapse {
   z-index: 100;
 
+  margin-bottom: 30px;
   overflow: hidden;
 
   height: 120px;
@@ -127,8 +128,6 @@
   z-index: 999;
   top: 0;
 
-  margin-bottom: 30px;
-
   display: flex;
   flex-direction: column;
 }
@@ -136,7 +135,7 @@
 .header {
   &__menu {
     display: none;
-
+    outline: none;
     @include b('tablet') {
       position: relative;
       top: 0;
@@ -203,6 +202,7 @@
     display: flex;
     justify-content: flex-end;
     gap: 40px;
+
     align-items: center;
   }
 
@@ -269,9 +269,9 @@
     }
 
     &__socials {
-      margin-top: 70px;
-
-      justify-content: center;
+      position: fixed;
+      bottom: 30px;
+      left: calc(50% - 237px / 2);
 
       &-item {
         width: 48px;
@@ -304,6 +304,7 @@
     font-size: 16px;
     line-height: 20px;
     text-decoration: none;
+
     transition: all 0.5s ease-in-out;
 
     &:hover,

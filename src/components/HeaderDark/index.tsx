@@ -19,8 +19,12 @@ import { Button, Switch } from '../index';
 
 import './Header.scss';
 
-const Header: React.FC = observer(() => {
-  const [collapsed, setCollapsed] = useState(true);
+interface HeaderProps {
+  collapsed: boolean;
+  onCollapsedChange: (value: boolean) => void;
+}
+
+const Header: React.FC<HeaderProps> = observer(({collapsed, onCollapsedChange}) => {
   const [fixed, setFixed] = useState(true);
   const { user, theme } = useMst();
   const walletConnector = useWalletConnectorContext();
@@ -35,17 +39,17 @@ const Header: React.FC = observer(() => {
   };
 
   const handleLogOut = () => {
-    setCollapsed(true);
+    onCollapsedChange(true);
     walletConnector.disconnect();
   };
 
   const connectWallet = (): void => {
-    setCollapsed(true);
+    onCollapsedChange(true);
     walletConnector.connect();
   };
 
   const redirectHandler = (path: string) => {
-    setCollapsed(true);
+    onCollapsedChange(true);
     history.push(path);
   };
 
@@ -66,8 +70,8 @@ const Header: React.FC = observer(() => {
             <div
               role="button"
               tabIndex={0}
-              onKeyDown={() => setCollapsed(!collapsed)}
-              onClick={() => setCollapsed(!collapsed)}
+              onKeyDown={() => onCollapsedChange(!collapsed)}
+              onClick={() => onCollapsedChange(!collapsed)}
               className="header__menu"
             >
               {theme.value === 'dark' ? (
@@ -274,7 +278,7 @@ const Header: React.FC = observer(() => {
                 </span>
               </div>
             </div>
-            <div className="footer__socials">
+            {!collapsed&&<div className="footer__socials">
               <a
                 href="https://t.me/ydrmain/"
                 target="_blank"
@@ -300,30 +304,9 @@ const Header: React.FC = observer(() => {
               <a href="/" className="footer__socials-item">
                 <img src={dis} alt="logo" width="24" height="20" />
               </a>
-            </div>
+            </div>}
           </div>
         </div>
-        <footer className="footer">
-          <div className="container">
-            <div className="footer__content">
-              <div className="footer__col">
-                <div className="footer__logo">
-                  <Button styledType="clear" onClick={() => redirectHandler('/')}>
-                    <img src={logo} alt="logo" width="40" height="36" />
-                  </Button>
-                  <div className="footer__logo-text">YDRAGON</div>
-                </div>
-
-                <div className="footer__descr">
-                  YDragon is a cross-chain index ecosystem with yield bearing collateral, providing
-                  a true interoperable cross-asset experience.
-                </div>
-              </div>
-
-              <div className="footer__copyright">© 2021 YDRAGON</div>
-            </div>
-          </div>
-        </footer>
       </div>
     </div>
   );

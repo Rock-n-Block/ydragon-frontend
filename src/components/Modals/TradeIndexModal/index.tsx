@@ -42,6 +42,7 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(({ token, index
     walletConnector.metamaskService
       .getBalanceOf(isSell ? indexAddress : config[firstCurrency].ADDRESS)
       .then((data: any) => {
+        console.log('getBalance success', data);
         setBalance(data);
       })
       .catch((err: ProviderRpcError) => {
@@ -55,6 +56,7 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(({ token, index
       walletConnector.metamaskService
         .getIndexCourse(config[firstCurrency].ADDRESS, payInput, true, indexAddress)
         .then((data: any) => {
+          console.log('getBuyCourse success', data);
           setViewOnlyInputValue(
             new BigNumber(data).dividedBy(new BigNumber(10).pow(18)).toFixed(5),
           );
@@ -72,6 +74,7 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(({ token, index
       walletConnector.metamaskService
         .getIndexCourse(config[secondCurrency].ADDRESS, payInput, false, indexAddress)
         .then((data: any) => {
+          console.log('getSellCourse success', data);
           setViewOnlyInputValue(
             new BigNumber(data).dividedBy(new BigNumber(10).pow(18)).toFixed(5),
           );
@@ -90,6 +93,7 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(({ token, index
       walletConnector.metamaskService
         .checkAllowanceById(config[firstCurrency].ADDRESS, config[firstCurrency].ABI, indexAddress)
         .then((data: boolean) => {
+          console.log('allowance success', data);
           setIsNeedApprove(!data);
         })
         .catch((err: ProviderRpcError) => {
