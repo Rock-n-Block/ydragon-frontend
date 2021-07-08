@@ -53,8 +53,8 @@ const Rebalance: React.FC<FormikProps<IRebalance> & IRebalance> = observer(
       indexesApi
         .removeTokenFromIndex(+indexId, values.tokens[index].id)
         .then(() => {
-          console.log('Remove token from index request success')
-          if (values.tokens[index].pending === false) {
+          console.log('Remove token from index request success');
+          if (!values.tokens[index].pending) {
             setFieldValue(`tokens[${index}].to_delete`, !values.tokens[index].to_delete);
             setFieldValue(`tokens[${index}].new_weight`, 0);
           } else {
@@ -70,7 +70,7 @@ const Rebalance: React.FC<FormikProps<IRebalance> & IRebalance> = observer(
       indexesApi
         .addTokenBackToIndex(+indexId, values.tokens[index].id)
         .then(({ data }) => {
-          console.log('Add back token to index request success')
+          console.log('Add back token to index request success');
           setFieldValue(`tokens[${index}].to_delete`, !values.tokens[index].to_delete);
           setFieldValue(
             `tokens[${index}].new_weight`,
