@@ -6,7 +6,6 @@ import moment from 'moment';
 import { IIndex } from '../../../pages/Admin';
 import { indexesApi } from '../../../services/api';
 import { useMst } from '../../../store/store';
-import { Sorter } from '../../../utils/sorter';
 import { Button, Spinner, Table } from '../../index';
 
 import { IndexCardMobile } from './IndexCardMobile/index';
@@ -23,26 +22,22 @@ const Indexes: React.FC = observer(() => {
       dataIndex: 'name',
       key: 'name',
       render: (item: any) => <Link to={`/admin/index/${item.id}`}>{item.name}</Link>,
-      sorter: Sorter.DEFAULT,
     },
     {
       title: 'Market cap',
       dataIndex: 'cap',
       key: 'cap',
-      sorter: Sorter.DEFAULT,
     },
     {
       title: 'Price',
       dataIndex: 'price',
       key: 'price',
       render: (item: any) => <span className="text-MER">{item}</span>,
-      sorter: Sorter.DEFAULT,
     },
     {
       title: 'Created',
       dataIndex: 'created',
       key: 'created',
-      sorter: Sorter.DEFAULT,
     },
   ];
   const [dataSource, setDataSource] = useState<any[]>([]);
