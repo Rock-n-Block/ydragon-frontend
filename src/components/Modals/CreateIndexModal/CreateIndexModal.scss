@@ -7,6 +7,20 @@
       border-top: 1px solid rgba($white, 0.1);
       border-bottom: 1px solid rgba($white, 0.1);
     }
+
+    .form-create-index {
+      .ant-input {
+        background: $dark-bg;
+      }
+
+      input,
+      .ant-input,
+      .input {
+        &::placeholder {
+          color: $white;
+        }
+      }
+    }
   }
 }
 
