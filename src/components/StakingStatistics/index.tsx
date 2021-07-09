@@ -128,7 +128,13 @@ const StakingStatistics: React.FC = observer(() => {
         const { message } = err;
         modals.info.setMsg('Error', `Harvest error ${message}`, 'error');
       });
-  }, [dataSource, selectedRowKeys, walletConnector.metamaskService, modals.info]);
+  }, [
+    dataSource,
+    selectedRowKeys,
+    walletConnector.metamaskService,
+    modals.info,
+    getStakingStatistic,
+  ]);
 
   const handleStakeEnd = useCallback(() => {
     walletConnector.metamaskService
@@ -141,7 +147,13 @@ const StakingStatistics: React.FC = observer(() => {
         const { message } = err;
         modals.info.setMsg('Error', `Harvest and stake error ${message}`, 'error');
       });
-  }, [dataSource, selectedRowKeys, walletConnector.metamaskService, modals.info]);
+  }, [
+    dataSource,
+    selectedRowKeys,
+    walletConnector.metamaskService,
+    modals.info,
+    getStakingStatistic,
+  ]);
 
   useEffect(() => {
     getStakingStatistic();
