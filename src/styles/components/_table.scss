@@ -48,6 +48,12 @@
           color: white;
         }
       }
+
+      & > tr.ant-table-row-selected > td {
+        color: $black;
+        background: $white;
+        border-color: rgba($white, 0.03);
+      }
     }
   }
 
@@ -102,6 +108,12 @@
 
       &-description {
         color: $white;
+      }
+
+      & > tr.ant-table-row-selected > td {
+        color: $white;
+        background: #14265a;
+        border-color: rgba(0, 0, 0, 0.03);
       }
     }
   }
@@ -220,6 +232,7 @@
       //   color: rgba($black, 0.5);
       // }
       & > tr.ant-table-row-selected > td {
+        color: $white;
         background: #14265a;
         border-color: rgba(0, 0, 0, 0.03);
       }
