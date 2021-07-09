@@ -42,7 +42,7 @@ const userColumns: ITableColumn[] = [
 const GetInModal: React.FC = observer(() => {
   const { modals, user } = useMst();
   const walletConnector = useWalletConnectorContext();
-
+ 
   const handleClose = (): void => {
     modals.getIn.close();
   };
@@ -180,12 +180,12 @@ const GetInModal: React.FC = observer(() => {
           />
           <div className="m-get-in__btns">
             {isNeedApprove && firstCurrency !== 'BNB' && (
-              <Button className="m-trade-ydr__btn" onClick={handleApprove}>
+              <Button className="m-trade-ydr__btn" onClick={handleApprove} disabled={!user.address}>
                 Approve
               </Button>
             )}
             {modals.tradeYDR.method === 'buy' && (!isNeedApprove || firstCurrency === 'BNB') && (
-              <Button className="m-trade-ydr__btn" onClick={handleEnter}>
+              <Button className="m-trade-ydr__btn" onClick={handleEnter} disabled={!user.address}>
                 Enter
               </Button>
             )}
