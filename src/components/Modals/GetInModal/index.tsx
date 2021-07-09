@@ -73,6 +73,7 @@ const GetInModal: React.FC = observer(() => {
     walletConnector.metamaskService
       .approve(firstCurrency, undefined, modals.getIn.address)
       .then(() => {
+        setPayInput('')
         setIsNeedApprove(false);
         modals.info.setMsg('Success', `Approve of ${firstCurrency} to IME success`, 'success');
       })
@@ -85,6 +86,7 @@ const GetInModal: React.FC = observer(() => {
     walletConnector.metamaskService
       .enterIme(payInput, firstCurrency, modals.getIn.address)
       .then(() => {
+        setPayInput('')
         modals.info.setMsg('Success', 'Success mint', 'success');
       })
       .catch((err: ProviderRpcError) => {
