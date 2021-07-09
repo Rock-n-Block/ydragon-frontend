@@ -88,7 +88,6 @@ const StakingStatistics: React.FC = observer(() => {
     indexesApi
       .getStakingStatistic(localStorage.yd_address)
       .then(({ data }) => {
-        console.log('Success in getting staking stat', data);
         const newData = data['binance-smart-chain'].map((stake: IStakingStat, index: number) => {
           return {
             key: index,
@@ -123,6 +122,7 @@ const StakingStatistics: React.FC = observer(() => {
       .harvestStakeItem(dataSource[selectedRowKeys[0]].id)
       .then(() => {
         modals.info.setMsg('Success', 'Success harvest', 'success');
+        getStakingStatistic();
       })
       .catch((err: ProviderRpcError) => {
         const { message } = err;
@@ -135,6 +135,7 @@ const StakingStatistics: React.FC = observer(() => {
       .endStake(dataSource[selectedRowKeys[0]].id)
       .then(() => {
         modals.info.setMsg('Success', 'Success harvest and stake', 'success');
+        getStakingStatistic();
       })
       .catch((err: ProviderRpcError) => {
         const { message } = err;
