@@ -18,9 +18,7 @@ class Connector extends React.Component<any, any> {
     super(props);
 
     this.state = {
-      provider: new MetamaskService({
-        testnet: 'bnbt',
-      }),
+      provider: new MetamaskService({}),
     };
 
     this.connect = this.connect.bind(this);

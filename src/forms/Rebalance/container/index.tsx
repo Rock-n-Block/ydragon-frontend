@@ -87,4 +87,4 @@ const RebalanceForm: React.FC<RebalanceFormProps> = observer(({ name, tokens }) 
   return <FormWithFormik />;
 });
 
-export default observer(RebalanceForm);
+export default RebalanceForm;

@@ -13,7 +13,7 @@ interface RebalanceModalProps {
   tokens: Array<ITokensDiff>;
 }
 
-const RebalanceModal: React.FC<RebalanceModalProps> = observer(({ name, tokens }) => {
+const RebalanceModal: React.FC<RebalanceModalProps> = ({ name, tokens }) => {
   const { modals } = useMst();
 
   const handleClose = (): void => {
@@ -36,6 +36,6 @@ const RebalanceModal: React.FC<RebalanceModalProps> = observer(({ name, tokens }
       </div>
     </Modal>
   );
-});
+};
 
-export default RebalanceModal;
+export default observer(RebalanceModal);

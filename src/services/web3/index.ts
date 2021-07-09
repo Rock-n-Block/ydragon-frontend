@@ -3,6 +3,8 @@ import moment from 'moment';
 import { Observable } from 'rxjs';
 import Web3 from 'web3';
 
+import { rootStore } from '../../store/store';
+
 import config from './config';
 
 declare global {
@@ -15,8 +17,9 @@ interface INetworks {
   [key: string]: string;
 }
 
+export type TestNetworkTypes = 'bnbt' | 'tmatic';
+
 interface IMetamaskService {
-  testnet: 'ropsten' | 'kovan' | 'rinkeby' | 'bnbt';
   isProduction?: boolean;
 }
 
@@ -34,10 +37,10 @@ export type ContractTypes =
 
 const networks: INetworks = {
   mainnet: '0x1',
-  ropsten: '0x3',
-  kovan: '0x2a',
-  rinkeby: '0x4',
+};
+const testNetworks: INetworks = {
   bnbt: '0x61',
+  tmatic: '0x13881',
 };
 
 export default class MetamaskService {
@@ -47,9 +50,7 @@ export default class MetamaskService {
 
   // public contract: any;
 
-  private testnet: string;
-
-  private isProduction: boolean;
+  private isProduction?: boolean;
 
   public walletAddress = '';
 
@@ -61,27 +62,25 @@ export default class MetamaskService {
 
   public usedNetwork: string;
 
-  public usedChain: string;
+  public usedChain: INetworks;
 
-  constructor({ testnet, isProduction = false }: IMetamaskService) {
+  constructor({ isProduction = false }: IMetamaskService) {
     this.wallet = window.ethereum;
 
     this.web3Provider = new Web3(window.ethereum);
-    this.testnet = testnet;
     this.isProduction = isProduction;
     // this.contract = new this.web3Provider.eth.Contract(config.ABI as Array<any>, config.ADDRESS);
 
-    this.usedNetwork = this.isProduction ? 'mainnet' : this.testnet;
-    this.usedChain = this.isProduction ? networks.mainnet : networks[this.testnet];
+    this.usedNetwork = this.isProduction ? 'mainnet' : 'testnet';
+    this.usedChain = this.isProduction ? networks : testNetworks;
 
     this.chainChangedObs = new Observable((subscriber) => {
       this.wallet.on('chainChanged', () => {
         const currentChain = this.wallet.chainId;
-        window.location.reload();
-
-        if (currentChain !== this.usedChain) {
-          subscriber.next(`Please chosse ${this.usedNetwork} network in metamask wallet.`);
+        if (!Object.values(this.usedChain).find((chainId) => chainId === currentChain)) {
+          subscriber.next(`Please choose one of networks in header select.`);
         } else {
+          rootStore.networks.setId(this.wallet.chainId);
           subscriber.next('');
         }
       });
@@ -105,6 +104,10 @@ export default class MetamaskService {
     return this.wallet.request({ method: 'eth_requestAccounts' });
   }
 
+  ethGetCurrentChain() {
+    return this.wallet.request({ method: 'eth_chainId' });
+  }
+
   getContract(contractName: ContractTypes) {
     return new this.web3Provider.eth.Contract(
       config[contractName].ABI as Array<any>,
@@ -123,12 +126,14 @@ export default class MetamaskService {
       if (!this.wallet) {
         reject(new Error('metamask wallet is not injected'));
       }
-
+      const isChainAcceptable = (currChain: string) => {
+        return !!Object.values(this.usedChain).find((chainId) => chainId === currChain);
+      };
       if (!currentChain || currentChain === null) {
         this.wallet
           .request({ method: 'eth_chainId' })
           .then((resChain: any) => {
-            if (resChain === this.usedChain) {
+            if (isChainAcceptable(resChain)) {
               this.ethRequestAccounts()
                 .then((account: any) => {
                   [this.walletAddress] = account;
@@ -139,11 +144,11 @@ export default class MetamaskService {
                 })
                 .catch(() => reject(new Error('Not authorized')));
             } else {
-              reject(new Error(`Please choose ${this.usedNetwork} network in metamask wallet`));
+              reject(new Error(`Please choose one of networks in header select.`));
             }
           })
           .catch(() => reject(new Error('Not authorized')));
-      } else if (currentChain === this.usedChain) {
+      } else if (isChainAcceptable(currentChain)) {
         this.ethRequestAccounts()
           .then((account: any) => {
             [this.walletAddress] = account;
@@ -154,7 +159,7 @@ export default class MetamaskService {
           })
           .catch(() => reject(new Error('Not authorized')));
       } else {
-        reject(new Error(`Please choose ${this.usedNetwork} network in metamask wallet`));
+        reject(new Error(`Please choose one of networks in header select.`));
       }
     });
   }

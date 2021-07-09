@@ -135,6 +135,7 @@
   .btn-outline {
     color: $white;
     border: 1px solid $white;
+
     &:hover,
     &:focus {
       color: $white;
@@ -147,6 +148,7 @@
   .btn-outline {
     color: $black;
     border: 1px solid $black;
+
     &:hover,
     &:focus {
       color: $black;
@@ -165,8 +167,9 @@
     }
   }
 }
+
 .dark,
-.light{
+.light {
   .btn {
     &-red {
       color: #d53038;
@@ -179,6 +182,7 @@
     }
   }
 }
+
 .btn {
   display: flex;
   justify-content: center;
@@ -280,11 +284,13 @@
 
   &-red {
     padding: 10px 20px;
+
     border-radius: 40px;
   }
 
   &-green {
     padding: 10px 20px;
+
     border-radius: 40px;
   }
 }
