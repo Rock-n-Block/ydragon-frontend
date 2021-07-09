@@ -4,12 +4,26 @@
 .dark {
   .options {
     @include shadow-block;
+    &__option__input-wrapper {
+      .ant-input-affix-wrapper {
+        .ant-input {
+          color: $white;
+        }
+      }
+    }
   }
 }
 
 .light {
   .options {
     @include light-block;
+    &__option__input-wrapper {
+      .ant-input-affix-wrapper {
+        .ant-input {
+          color: $black;
+        }
+      }
+    }
   }
 }
 
@@ -37,8 +51,6 @@
           font-weight: 700;
           line-height: 24px;
           text-align: center;
-
-          color: #fff;
           background: transparent;
         }
       }

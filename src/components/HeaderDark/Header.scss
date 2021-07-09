@@ -25,7 +25,8 @@
 
     .container {
       .menu-nav {
-        &__link {
+        &__link,
+        &__item {
           color: #f7f8fd;
 
           &:hover,
@@ -67,7 +68,8 @@
 
     .container {
       .menu-nav {
-        &__link {
+        &__link,
+        &__item {
           color: $black;
 
           &:hover,
@@ -200,7 +202,7 @@
   &__sign {
     display: flex;
     justify-content: flex-end;
-    gap: 40px;
+    gap: 20px;
 
     align-items: center;
   }
@@ -303,7 +305,7 @@
     font-size: 16px;
     line-height: 20px;
     text-decoration: none;
-
+    white-space: nowrap;
     transition: all 0.5s ease-in-out;
 
     &:hover,

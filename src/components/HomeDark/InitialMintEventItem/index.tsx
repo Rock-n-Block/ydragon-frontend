@@ -20,7 +20,7 @@ const InitialMintEventItem: React.FC<InitialMintEventItemProps> = ({ imeItem }) 
   const [now, setNow] = useState(moment());
   const [imeEnabled, setImeEnabled] = useState<boolean>(false);
   const handleGetIn = () => {
-    modals.getIn.open(imeItem.id, imeItem.address);
+      modals.getIn.open(imeItem.id, imeItem.address);
   };
   useEffect(() => {
     const interval = setInterval(() => {
@@ -113,7 +113,12 @@ const InitialMintEventItem: React.FC<InitialMintEventItemProps> = ({ imeItem }) 
           {imeItem.description ? imeItem.description : ''}
         </p>
 
-        <Button onClick={handleGetIn} className="initial-mint-event__get-btn" disabled={imeEnabled}>
+        <Button
+          onClick={handleGetIn}
+          className="initial-mint-event__get-btn"
+          tooltip='Please login'
+          disabled={imeEnabled}
+        >
           {' '}
           Enter!
         </Button>

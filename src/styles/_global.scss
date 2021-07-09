@@ -62,6 +62,25 @@ p {
   .page__title-icon--index {
     @include shadow-block;
   }
+  .ant-select-dropdown {
+    color: $white;
+    background-color: $black;
+    border: $black;
+    .ant-select-item-option {
+      color: $white;
+    }
+    .ant-select-item-option-selected,
+    .ant-select-item-option-active {
+      background-color: #3a3a66;
+    }
+  }
+  .ant-tooltip-inner {
+    background-color: $white !important;
+    color: $black !important;
+  }
+  .ant-tooltip-arrow-content {
+    background-color: $white !important;
+  }
 }
 
 .light {
@@ -91,10 +110,30 @@ p {
         background-image: url('../assets/img/home-bg.png');
       }
     }
+
+    .ant-tooltip-inner {
+      background-color: $gray-bg !important;
+      color: $black !important;
+    }
+    .ant-tooltip-arrow-content {
+      background-color: $gray-bg !important;
+    }
   }
 
   .page__title-icon--index {
     @include shadow-light-block;
+  }
+  .ant-select-dropdown {
+    color: $black;
+    background-color: $white;
+  }
+
+  .ant-tooltip-inner {
+    background-color: $black !important;
+    color: $white !important;
+  }
+  .ant-tooltip-arrow-content {
+    background-color: $black !important;
   }
 }
 
@@ -281,4 +320,7 @@ main {
   text-decoration: none;
 
   pointer-events: none;
+}
+.ant-tooltip {
+  z-index: 10 !important;
 }

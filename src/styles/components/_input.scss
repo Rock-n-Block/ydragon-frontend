@@ -10,6 +10,15 @@
   .ant-input[disabled] {
     background: $black;
   }
+  .input-with-select {
+    &__select {
+      background: rgba($black, 0.05);
+      .ant-select-selector {
+        background: $black !important;
+        border-color: $black !important;
+      }
+    }
+  }
 }
 
 .light {
@@ -20,6 +29,15 @@
 
   .ant-input[disabled] {
     background: $white !important;
+  }
+  .input-with-select {
+    &__select {
+      background: #eaeaea;
+      .ant-select-selector {
+        background: #eaeaea !important;
+        border-color: #eaeaea !important;
+      }
+    }
   }
 }
 
@@ -124,7 +142,6 @@
     width: 100%;
     height: 100%;
 
-    background: #eaeaea;
     border-radius: 60px;
 
     .ant-select-selector {
@@ -133,8 +150,6 @@
       width: 100%;
       height: 100% !important;
 
-      background: #eaeaea !important;
-      border-color: #eaeaea !important;
       border-radius: 60px !important;
 
       .ant-select-selection-item {

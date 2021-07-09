@@ -83,7 +83,7 @@ const TokensStructure: React.FC<TokensStructureProps> = ({ vaults, manualRebalan
       render: (item: any) => (
         <InputNumber
           type="number"
-          value={item.apr}
+          value={item.apr === '0.0' ? '' : item.apr}
           onChange={(value) => handleInputChange(value, item.index)}
           onBlur={handleSubmitChange}
           placeholder="0"
@@ -160,7 +160,7 @@ const TokensStructure: React.FC<TokensStructureProps> = ({ vaults, manualRebalan
                     'APR, %',
                     <InputNumber
                       type="number"
-                      value={data.apr.apr}
+                      value={data.apr.apr === '0.0' ? '' : data.apr.apr}
                       onChange={(value) => handleInputChange(value, data.apr.index)}
                       onBlur={handleSubmitChange}
                       placeholder="0"

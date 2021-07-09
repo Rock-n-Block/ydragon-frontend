@@ -126,13 +126,11 @@ const Header: React.FC<HeaderProps> = observer(({ collapsed, onCollapsedChange }
                     Home
                   </Link>
                 </li>
-                {localStorage.yd_address && (
                   <li className="header-nav__item">
                     <Link to="/indexes" className="header-nav__link">
                       Index Products
                     </Link>
                   </li>
-                )}
                 {localStorage.yd_address && (
                   <li className="header-nav__item">
                     <Link to="/staking" className="header-nav__link">

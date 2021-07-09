@@ -1,5 +1,4 @@
 import React from 'react';
-
 import { Button } from '../../index';
 
 import './Main.scss';
@@ -21,7 +20,11 @@ const Main: React.FC = () => {
         <Button linkClassName="home__btn" link="/ydrtoken">
           Buy YDR
         </Button>
-        <Button className="home__btn" styledType="outline">
+        <Button
+          className="home__btn"
+          styledType="outline"
+          tooltip='Please login'
+        >
           Whitepaper
         </Button>
       </div>

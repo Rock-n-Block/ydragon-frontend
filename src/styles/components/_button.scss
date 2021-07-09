@@ -166,6 +166,13 @@
       }
     }
   }
+  .btn-nav {
+    &:hover,
+    &:focus {
+      color: $black;
+      border-color: $black;
+    }
+  }
 }
 
 .dark,

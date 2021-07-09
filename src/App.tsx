@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Route, Switch, useRouteMatch } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 
@@ -21,10 +21,11 @@ import {
 import './styles/index.scss';
 
 export const App: React.FC = observer(() => {
-  const [collapsed, setCollapsed] = useState(true);
+  const [collapsed, setCollapsed] = useState<boolean>(true);
   const main = useRouteMatch();
   const about = useRouteMatch('/about-us');
   const { theme } = useMst();
+  const [bodyClass, setBodyClass] = useState('');
 
   const user = !!localStorage?.yd_address || false;
   const admin = !!localStorage?.yd_token || false;
@@ -39,6 +40,18 @@ export const App: React.FC = observer(() => {
     return result;
   };
 
+  useEffect(() => {
+    if (bodyClass) {
+      if (bodyClass !== theme.value) {
+        document.body.classList.remove(bodyClass);
+        document.body.classList.add(theme.value);
+        setBodyClass(theme.value);
+      }
+    } else {
+      document.body.classList.add(theme.value);
+      setBodyClass(theme.value);
+    }
+  }, [theme.value, bodyClass]);
   const onCollapsedChange = (value: boolean) => {
     setCollapsed(value);
   };
@@ -56,12 +69,16 @@ export const App: React.FC = observer(() => {
           <Auth />
         </Route> */}
             <GuardedRoute exact path="/index/:indexId" component={Index} auth={user} />
-            <GuardedRoute exact path="/ydrtoken" component={YdrToken} auth={user} />
+            <Route exact path="/ydrtoken">
+              <YdrToken />
+            </Route>
             <GuardedRoute exact path="/admin" component={Admin} auth={admin} />
             <GuardedRoute exact path="/admin" component={Indexes} auth={admin} />
             <GuardedRoute exact path="/admin/index/:indexId" component={AdminIndex} auth={admin} />
             <GuardedRoute exact path="/staking" component={StakePage} auth={user} />
-            <GuardedRoute exact path="/indexes" component={IndexDashboard} auth={user} />
+            <Route exact path="/indexes">
+              <IndexDashboard />
+            </Route>
             <Route exact path="/about-us">
               <AboutUs />
             </Route>
