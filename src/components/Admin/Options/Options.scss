@@ -4,9 +4,9 @@
 .dark {
   .options {
     @include shadow-block;
-    &__input-wrapper {
+    &__option__input-wrapper {
       .ant-input-affix-wrapper {
-        input.ant-input {
+        .ant-input {
           color: $white;
         }
       }
@@ -17,9 +17,9 @@
 .light {
   .options {
     @include light-block;
-    &__input-wrapper {
+    &__option__input-wrapper {
       .ant-input-affix-wrapper {
-        input.ant-input {
+        .ant-input {
           color: $black;
         }
       }
