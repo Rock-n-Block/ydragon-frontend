@@ -39,7 +39,29 @@
 }
 .select-network__dropdown {
   border-radius: 10px;
+  .ant-select-item-option-content{
+    justify-content: start;
+  }
   .ant-select-item-option-selected {
     border-radius: 10px;
+  }
+}
+.ant-select,
+.select-network {
+  .token-mini {
+    margin: 0 !important;
+  }
+  .ant-select-selector {
+    .ant-select-single,
+    .ant-select-show-arrow,
+    .ant-select-selection-item,
+    .ant-select-single.ant-select-show-arrow,
+    .ant-select-selection-placeholder {
+      display: flex;
+    }
+  }
+  .ant-select-single:not(.ant-select-customize-input),
+  .ant-select-selector {
+    padding: 0 7px !important;
   }
 }
