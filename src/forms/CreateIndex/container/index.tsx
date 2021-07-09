@@ -56,6 +56,7 @@ const CreateIndexForm: React.FC = () => {
           modals.createIndex.close()
         })
         .catch((error: ProviderRpcError) => {
+          setFieldValue('isLoading', false);
           const { message } = error;
           modals.info.setMsg('Error', message, 'error');
         });
