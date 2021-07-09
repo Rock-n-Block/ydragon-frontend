@@ -17,22 +17,23 @@ const Main: React.FC = () => {
       </p>
 
       <div className="home__btns-row">
-        <Button linkClassName="home__btn" link="/ydrtoken">
+        <Button linkClassName="home__btn" link="/ydrtoken" disabled>
           Buy YDR
         </Button>
         <Button
           className="home__btn"
           styledType="outline"
           tooltip='Please login'
+          disabled
         >
           Whitepaper
         </Button>
       </div>
 
-      <div className="home__currently-price">
+      {/*  <div className="home__currently-price">
         &quot;The YDragon project has currently <span>XXXX$</span> diversified among indexes&quot;.
         (TVL)
-      </div>
+      </div> */}
     </section>
   );
 };

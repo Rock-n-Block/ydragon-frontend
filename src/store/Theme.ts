@@ -5,7 +5,7 @@ export const Theme = types
     value: types.string,
   })
   .actions((self) => {
-    const setTheme = (thm: string) => {
+    const setTheme = (thm: 'light' | 'dark') => {
       self.value = thm;
       localStorage.theme = thm;
     };

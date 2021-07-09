@@ -30,19 +30,19 @@
 
     &__token-percent {
       --color: $white;
-      
+
       &.yellow {
         --color: #f7931e;
       }
-  
+
       &.blue {
         --color: #2754cd;
       }
-  
+
       &.red {
         --color: #d53038;
       }
-  
+
       border-color: var(--color);
     }
   }
@@ -77,19 +77,19 @@
 
     &__token-percent {
       --color: $black;
-      
+
       &.yellow {
         --color: #f7931e;
       }
-  
+
       &.blue {
         --color: #2754cd;
       }
-  
+
       &.red {
         --color: #d53038;
       }
-  
+
       border-color: var(--color);
     }
   }

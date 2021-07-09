@@ -2,20 +2,20 @@ import React, { useEffect, useState } from 'react';
 import { Route, Switch, useRouteMatch } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 
-import { Indexes } from './components/Admin';
-import { GetInModal, InfoModal, MetamaskErrModal } from './components/Modals';
-import AdminIndex from './pages/AdminIndex';
+// import { Indexes } from './components/Admin';
+// import { GetInModal, InfoModal, MetamaskErrModal } from './components/Modals';
+// import AdminIndex from './pages/AdminIndex';
 import { useMst } from './store/store';
-import { Footer, GuardedRoute, Header } from './components';
+import { Footer, /* GuardedRoute, */ Header } from './components';
 import {
   AboutUs,
-  Admin,
+  // Admin,
   Home,
-  Index,
-  IndexDashboard,
+  // Index,
+  // IndexDashboard,
   NoPageFound,
-  StakePage,
-  YdrToken,
+  // StakePage,
+  // YdrToken,
 } from './pages';
 
 import './styles/index.scss';
@@ -27,8 +27,8 @@ export const App: React.FC = observer(() => {
   const { theme } = useMst();
   const [bodyClass, setBodyClass] = useState('');
 
-  const user = !!localStorage?.yd_address || false;
-  const admin = !!localStorage?.yd_token || false;
+  // const user = !!localStorage?.yd_address || false;
+  // const admin = !!localStorage?.yd_token || false;
 
   const addClass = () => {
     let result;
@@ -68,7 +68,7 @@ export const App: React.FC = observer(() => {
             {/* <Route exact path="/auth">
           <Auth />
         </Route> */}
-            <GuardedRoute exact path="/index/:indexId" component={Index} auth={user} />
+           {/* <GuardedRoute exact path="/index/:indexId" component={Index} auth={user} />
             <Route exact path="/ydrtoken">
               <YdrToken />
             </Route>
@@ -78,15 +78,15 @@ export const App: React.FC = observer(() => {
             <GuardedRoute exact path="/staking" component={StakePage} auth={user} />
             <Route exact path="/indexes">
               <IndexDashboard />
-            </Route>
+            </Route> */}
             <Route exact path="/about-us">
               <AboutUs />
             </Route>
             <Route component={NoPageFound} />
           </Switch>
-          <MetamaskErrModal />
+         {/* <MetamaskErrModal />
           <InfoModal />
-          <GetInModal />
+          <GetInModal /> */}
           <Footer />
         </div>
       </div>

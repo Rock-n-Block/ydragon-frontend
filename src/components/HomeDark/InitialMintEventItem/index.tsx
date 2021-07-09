@@ -1,26 +1,26 @@
-import React, { useEffect, useState } from 'react';
-import BigNumber from 'bignumber.js/bignumber';
-import moment from 'moment';
+import React /* , { useEffect, useState } */ from 'react';
 
-import { useMst } from '../../../store/store';
-import { Button } from '../../index';
-import { IIme } from '../InitialMintEvent';
-
+// import BigNumber from 'bignumber.js/bignumber';
+// import moment from 'moment';
+//
+// import { useMst } from '../../../store/store';
+// import { Button } from '../../index';
+// import { IIme } from '../InitialMintEvent';
 import './InitialMintEventItem.scss';
 
-interface InitialMintEventItemProps {
+/* interface InitialMintEventItemProps {
   imeItem: IIme;
-}
+} */
 
-const InitialMintEventItem: React.FC<InitialMintEventItemProps> = ({ imeItem }) => {
-  const { modals } = useMst();
+const InitialMintEventItem: React.FC /* <InitialMintEventItemProps> */ = (/* { imeItem} */) => {
+  /*  const { modals } = useMst();
   // const mockStart = moment('20211207', 'YYYYDDMM');
   const [start, setStart] = useState(moment());
   const [end, setEnd] = useState(moment());
   const [now, setNow] = useState(moment());
   const [imeEnabled, setImeEnabled] = useState<boolean>(false);
   const handleGetIn = () => {
-      modals.getIn.open(imeItem.id, imeItem.address);
+    modals.getIn.open(imeItem.id, imeItem.address);
   };
   useEffect(() => {
     const interval = setInterval(() => {
@@ -42,7 +42,7 @@ const InitialMintEventItem: React.FC<InitialMintEventItemProps> = ({ imeItem }) 
     setStart(
       moment(new Date(+new BigNumber(imeItem.ime_start_timestamp).multipliedBy(1000).toString())),
     );
-  }, [imeItem.ime_end_timestamp, imeItem.ime_start_timestamp]);
+  }, [imeItem.ime_end_timestamp, imeItem.ime_start_timestamp]); */
   return (
     <div className="initial-mint-event">
       <div className="initial-mint-event__timings">
@@ -50,23 +50,25 @@ const InitialMintEventItem: React.FC<InitialMintEventItemProps> = ({ imeItem }) 
           <p className="initial-mint-event__timing-name">DAYS UNTIL AWAKENING</p>
           <p className="initial-mint-event__timer">
             <span className="initial-mint-event__timer-time">
-              {start.diff(now, 'days') < 0 ? 0 : start.diff(now, 'days')}
-              {/* {mockStart.diff(now, 'days') < 0 ? 0 : mockStart.diff(now, 'days')} */}
+              {/* {start.diff(now, 'days') < 0 ? 0 : start.diff(now, 'days')} */}
+              {/* {mockStart.diff(now, 'days') < 0 ? 0 : mockStart.diff(now, 'days')} */}X
             </span>
             <span className="initial-mint-event__timer-colon">:</span>
             <span className="initial-mint-event__timer-time">
-              {start.diff(now, 'hours') < 0 ? 0 : start.diff(now, 'hours') % 24}
-              {/* {mockStart.diff(now, 'hours') < 0 ? 0 : mockStart.diff(now, 'hours') % 24} */}
+              {/* {start.diff(now, 'hours') < 0 ? 0 : start.diff(now, 'hours') % 24} */}
+              {/* {mockStart.diff(now, 'hours') < 0 ? 0 : mockStart.diff(now, 'hours') % 24} */}X
             </span>
             <span className="initial-mint-event__timer-colon">:</span>
             <span className="initial-mint-event__timer-time">
-              {start.diff(now, 'minutes') < 0 ? 0 : start.diff(now, 'minutes') % 60}
+              {/* {start.diff(now, 'minutes') < 0 ? 0 : start.diff(now, 'minutes') % 60} */}
               {/* {mockStart.diff(now, 'minutes') < 0 ? 0 : mockStart.diff(now, 'minutes') % 60} */}
+              X
             </span>
             <span className="initial-mint-event__timer-colon">:</span>
             <span className="initial-mint-event__timer-time">
-              {start.diff(now, 'seconds') < 0 ? 0 : start.diff(now, 'seconds') % 60}
+              {/* {start.diff(now, 'seconds') < 0 ? 0 : start.diff(now, 'seconds') % 60} */}
               {/* {mockStart.diff(now, 'seconds') < 0 ? 0 : mockStart.diff(now, 'seconds') % 60} */}
+              X
             </span>
           </p>
           <div className="initial-mint-event__unit">
@@ -77,7 +79,7 @@ const InitialMintEventItem: React.FC<InitialMintEventItemProps> = ({ imeItem }) 
           </div>
         </div>
 
-        <div className="initial-mint-event__timing timing-finish">
+        {/* <div className="initial-mint-event__timing timing-finish">
           <p className="initial-mint-event__timing-name">DAYS BEFORE DISTRIBUTION</p>
           <p className="initial-mint-event__timer">
             <span className="initial-mint-event__timer-time">
@@ -103,17 +105,19 @@ const InitialMintEventItem: React.FC<InitialMintEventItemProps> = ({ imeItem }) 
             <span className="initial-mint-event__unit-item">Min</span>
             <span className="initial-mint-event__unit-item">Sec</span>
           </div>
-        </div>
+        </div> */}
       </div>
 
       <div className="initial-mint-event__content">
-        <h3 className="initial-mint-event__title">{imeItem.name} </h3>
+        <h3 className="initial-mint-event__title">{/* {imeItem.name} */}B5 Index</h3>
 
         <p className="initial-mint-event__description">
-          {imeItem.description ? imeItem.description : ''}
+          {/* {imeItem.description ? imeItem.description : ''} */}The BSC Top 5 Reputable Projects
+          is a selection of the top 5 tokens listed across multiple chains on binance, in addition
+          to YDR, that have the ability to produce a high yield.
         </p>
 
-        <Button
+       {/* <Button
           onClick={handleGetIn}
           className="initial-mint-event__get-btn"
           tooltip='Please login'
@@ -121,7 +125,7 @@ const InitialMintEventItem: React.FC<InitialMintEventItemProps> = ({ imeItem }) 
         >
           {' '}
           Enter!
-        </Button>
+        </Button> */}
       </div>
     </div>
   );
