@@ -10,6 +10,7 @@ import { useMst } from '../../store/store';
 import { ProviderRpcError } from '../../types/errors';
 import { Button, Table } from '../index';
 import SmallTableCard from '../SmallTableCard/index';
+import RefreshIcon from '../../assets/img/icons/icon-refresh.svg';
 
 import './StakingStatistics.scss';
 
@@ -88,7 +89,6 @@ const StakingStatistics: React.FC = observer(() => {
     indexesApi
       .getStakingStatistic(localStorage.yd_address)
       .then(({ data }) => {
-        console.log('Success in getting staking stat', data);
         const newData = data['binance-smart-chain'].map((stake: IStakingStat, index: number) => {
           return {
             key: index,
@@ -122,25 +122,47 @@ const StakingStatistics: React.FC = observer(() => {
     walletConnector.metamaskService
       .harvestStakeItem(dataSource[selectedRowKeys[0]].id)
       .then(() => {
-        modals.info.setMsg('Success', 'Success harvest', 'success');
+        modals.info.setMsg(
+          'Success',
+          'Success harvest, you need to wait before the end of transaction for updated table data',
+          'success',
+        );
+        getStakingStatistic();
       })
       .catch((err: ProviderRpcError) => {
         const { message } = err;
         modals.info.setMsg('Error', `Harvest error ${message}`, 'error');
       });
-  }, [dataSource, selectedRowKeys, walletConnector.metamaskService, modals.info]);
+  }, [
+    dataSource,
+    selectedRowKeys,
+    walletConnector.metamaskService,
+    modals.info,
+    getStakingStatistic,
+  ]);
 
   const handleStakeEnd = useCallback(() => {
     walletConnector.metamaskService
       .endStake(dataSource[selectedRowKeys[0]].id)
       .then(() => {
-        modals.info.setMsg('Success', 'Success harvest and stake', 'success');
+        modals.info.setMsg(
+          'Success',
+          'Success harvest and stake, you need to wait before the end of transaction for updated table data',
+          'success',
+        );
+        getStakingStatistic();
       })
       .catch((err: ProviderRpcError) => {
         const { message } = err;
         modals.info.setMsg('Error', `Harvest and stake error ${message}`, 'error');
       });
-  }, [dataSource, selectedRowKeys, walletConnector.metamaskService, modals.info]);
+  }, [
+    dataSource,
+    selectedRowKeys,
+    walletConnector.metamaskService,
+    modals.info,
+    getStakingStatistic,
+  ]);
 
   useEffect(() => {
     getStakingStatistic();
@@ -148,7 +170,16 @@ const StakingStatistics: React.FC = observer(() => {
 
   return (
     <section className="section section--admin staking-statistics">
-      <h2 className="section__title text-outline">Staking Statistics</h2>
+      <h2 className="section__title text-outline">
+        Staking Statistics
+        <Button
+          styledType="clear"
+          onClick={getStakingStatistic}
+          className="staking-statistics__refresh"
+        >
+          <img src={RefreshIcon} alt="refresh" />
+        </Button>
+      </h2>
 
       <div className="staking-statistics__btn-row">
         <Button className="staking-statistics__btn" styledType="outline" onClick={handleHarvest}>
