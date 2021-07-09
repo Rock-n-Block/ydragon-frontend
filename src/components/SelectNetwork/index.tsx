@@ -4,6 +4,7 @@ import { observer } from 'mobx-react-lite';
 
 import { useWalletConnectorContext } from '../../services/walletConnect';
 import { useMst } from '../../store/store';
+import arrow from'../../assets/img/icons/icon-arrow-yellow.svg'
 
 import './SelectNetwork.scss';
 
@@ -109,6 +110,8 @@ const SelectNetwork: React.FC = observer(() => {
       onSelect={switchChain}
       style={{ width: 120 }}
       className='select-network'
+      suffixIcon={<img className='select__arrow' alt='' src={arrow} />}
+      dropdownClassName='select-network__dropdown'
     >
       <Option value="bnbt">BSC</Option>
       <Option value="tmatic">Polygon</Option>
