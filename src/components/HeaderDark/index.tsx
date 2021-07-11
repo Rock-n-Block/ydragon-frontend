@@ -13,7 +13,7 @@ import md from '../../assets/img/socials/medium.svg';
 import tg from '../../assets/img/socials/telegram.svg';
 import tw from '../../assets/img/socials/twitter.svg';
 import { useWalletConnectorContext } from '../../services/walletConnect';
-import { useMst } from '../../store/store';
+import { DARK, LIGHT, useMst } from '../../store/store';
 import EventBanner from '../EventBanner';
 import { Button, SelectNetwork, Switch } from '../index';
 
@@ -31,10 +31,10 @@ const Header: React.FC<HeaderProps> = observer(({ collapsed, onCollapsedChange }
   const history = useHistory();
 
   const handleChangeTheme = () => {
-    if (localStorage.theme === 'light') {
-      theme.setTheme('dark');
+    if (LIGHT === localStorage.theme) {
+      theme.setTheme(DARK);
     } else {
-      theme.setTheme('light');
+      theme.setTheme(LIGHT);
     }
   };
 
@@ -74,7 +74,7 @@ const Header: React.FC<HeaderProps> = observer(({ collapsed, onCollapsedChange }
               onClick={() => onCollapsedChange(!collapsed)}
               className="header__menu"
             >
-              {theme.value === 'dark' ? (
+              {(DARK === theme.value) ? (
                 <img alt="#" src={collapsed ? iconMenu : cross} />
               ) : (
                 <img alt="#" src={collapsed ? iconMenuBlack : crossBlack} />
@@ -89,7 +89,7 @@ const Header: React.FC<HeaderProps> = observer(({ collapsed, onCollapsedChange }
               </div>
             ) : (
               <div className="menu__sign">
-                <Switch checked={theme.value === 'dark'} onChange={handleChangeTheme} />
+                <Switch checked={DARK === theme.value} onChange={handleChangeTheme} />
                 <SelectNetwork />
                 <ul className="menu-nav">
                   {user.address && (
@@ -154,7 +154,7 @@ const Header: React.FC<HeaderProps> = observer(({ collapsed, onCollapsedChange }
             </nav>
 
             <div className="header__sign">
-              <Switch checked={theme.value === 'dark'} onChange={handleChangeTheme} />
+              <Switch checked={DARK === theme.value} onChange={handleChangeTheme} />
               <SelectNetwork />
               <ul className="header-nav">
                 {user.address && (

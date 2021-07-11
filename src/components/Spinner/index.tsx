@@ -3,7 +3,7 @@ import { observer } from 'mobx-react-lite';
 
 import spinnerBlack from '../../assets/img/icons/spinner-black.svg';
 import spinner from '../../assets/img/icons/spinner.svg';
-import { useMst } from '../../store/store';
+import { DARK, useMst } from '../../store/store';
 
 import './Spinner.scss';
 
@@ -17,7 +17,7 @@ const Spinner: React.FC<SpinnerProps> = observer((props: PropsWithChildren<Spinn
 
   return loading ? (
     <div className="spinner">
-      <img alt="" src={theme.value === 'dark' ? spinner : spinnerBlack} width="50" height="50" />
+      <img alt="" src={(DARK === theme.value) ? spinner : spinnerBlack} width="50" height="50" />
     </div>
   ) : (
     <></>
