@@ -181,12 +181,12 @@ const GetInModal: React.FC = observer(() => {
             type="number"
           />
           <div className="m-get-in__btns">
-            {isNeedApprove && firstCurrency !== 'BNB' && (
+            {isNeedApprove && 'BNB' !== firstCurrency && (
               <Button className="m-trade-ydr__btn" onClick={handleApprove} disabled={!user.address}>
                 Approve
               </Button>
             )}
-            {modals.tradeYDR.method === 'buy' && (!isNeedApprove || firstCurrency === 'BNB') && (
+            {('buy' === modals.tradeYDR.method) && (!isNeedApprove || ('BNB' === firstCurrency)) && (
               <Button className="m-trade-ydr__btn" onClick={handleEnter} disabled={!user.address}>
                 Enter
               </Button>

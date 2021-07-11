@@ -145,7 +145,7 @@ const Rebalance: React.FC<FormikProps<IRebalance> & IRebalance> = observer(
                         colorScheme="red"
                         className="token-weights-item__remove"
                         onClick={() => handleRemove(arrayHelper, index)}
-                        disabled={values.tokens.length === 1}
+                        disabled={1 === values.tokens.length}
                       >
                         Remove
                       </Button>
@@ -155,7 +155,7 @@ const Rebalance: React.FC<FormikProps<IRebalance> & IRebalance> = observer(
                         colorScheme="green"
                         className="token-weights-item__remove"
                         onClick={() => handleAddBack(arrayHelper, index)}
-                        disabled={values.tokens.length === 1}
+                        disabled={1 === values.tokens.length}
                       >
                         Add back
                       </Button>

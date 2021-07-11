@@ -53,7 +53,7 @@ export const { Provider } = RootStoreContext;
 
 export function useMst() {
   const store = useContext(RootStoreContext);
-  if (store === null) {
+  if (null === store) {
     throw new Error('Store cannot be null, please add a context provider');
   }
   return store;

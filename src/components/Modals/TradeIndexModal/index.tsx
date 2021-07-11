@@ -21,7 +21,7 @@ interface TradeIndexModalProps {
 const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(({ token, indexAddress }) => {
   const walletConnector = useWalletConnectorContext();
   const { user, modals } = useMst();
-  const [isSell, setIsSell] = useState<boolean>(modals.tradeIndex.method === 'sell');
+  const [isSell, setIsSell] = useState<boolean>('sell' === modals.tradeIndex.method);
   const [firstCurrency, setFirstCurrency] = useState<TokenMiniNameTypes>(
     isSell ? 'YDR' : defaultTokens[0].name,
   );
@@ -148,7 +148,7 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(({ token, index
       });
   };
   useEffect(() => {
-    setIsSell(modals.tradeIndex.method === 'sell');
+    setIsSell('sell' === modals.tradeIndex.method);
   }, [modals.tradeIndex.method]);
   useEffect(() => {
     setFirstCurrency(isSell ? 'YDR' : defaultTokens[0].name);
@@ -165,7 +165,7 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(({ token, index
     }
   }, [checkAllowance, user.address]);
   useEffect(() => {
-    if (modals.tradeIndex.method === 'buy') {
+    if ('buy' === modals.tradeIndex.method) {
       getBuyCourse();
     } else {
       getSellCourse();
@@ -237,7 +237,7 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(({ token, index
             Approve
           </Button>
         )}
-        {!isSell && (!isNeedApprove || firstCurrency === 'BNB') && (
+        {!isSell && (!isNeedApprove || ('BNB' === firstCurrency)) && (
           <Button className="m-trade-ydr__btn" onClick={handleBuy}>
             Buy
           </Button>

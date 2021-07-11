@@ -17,10 +17,10 @@ const TradeYDRModal: React.FC = observer(() => {
   const walletConnector = useWalletConnectorContext();
   const { user, modals } = useMst();
   const [firstCurrency, setFirstCurrency] = useState<TokenMiniNameTypes>(
-    modals.tradeYDR.method === 'sell' ? 'YDR' : defaultTokens[0].name,
+    ('sell' === modals.tradeYDR.method) ? 'YDR' : defaultTokens[0].name,
   );
   const [secondCurrency, setSecondCurrency] = useState<TokenMiniNameTypes>(
-    modals.tradeYDR.method === 'sell' ? defaultTokens[0].name : 'YDR',
+    ('sell' === modals.tradeYDR.method) ? defaultTokens[0].name : 'YDR',
   );
   const [payInput, setPayInput] = useState<string>('');
 
@@ -96,7 +96,7 @@ const TradeYDRModal: React.FC = observer(() => {
   }, [walletConnector.metamaskService, firstCurrency, secondCurrency]);
   const handleSelectChange = (value: any) => {
     setPayInput('');
-    if (modals.tradeYDR.method === 'sell') {
+    if ('sell' === modals.tradeYDR.method) {
       setSecondCurrency(value);
       setViewOnlyInputValue('0.0');
     } else {
@@ -144,8 +144,8 @@ const TradeYDRModal: React.FC = observer(() => {
       });
   };
   useEffect(() => {
-    setFirstCurrency(modals.tradeYDR.method === 'sell' ? 'YDR' : defaultTokens[0].name);
-    setSecondCurrency(modals.tradeYDR.method !== 'sell' ? 'YDR' : defaultTokens[0].name);
+    setFirstCurrency(('sell' === modals.tradeYDR.method) ? 'YDR' : defaultTokens[0].name);
+    setSecondCurrency(('sell' !== modals.tradeYDR.method) ? 'YDR' : defaultTokens[0].name);
   }, [modals.tradeYDR.method]);
   useEffect(() => {
     if (user.address) {
@@ -158,7 +158,7 @@ const TradeYDRModal: React.FC = observer(() => {
     }
   }, [checkAllowance, user.address]);
   useEffect(() => {
-    if (modals.tradeYDR.method === 'buy') {
+    if ('buy' === modals.tradeYDR.method) {
       getBuyCourse();
     } else {
       getSellCourse();
@@ -188,7 +188,7 @@ const TradeYDRModal: React.FC = observer(() => {
               {firstCurrency}
             </span>
           </div>
-          {modals.tradeYDR.method === 'buy' ? (
+          {('buy' === modals.tradeYDR.method) ? (
             <InputWithSelect
               value={payInput}
               tokens={defaultTokens}
@@ -214,7 +214,7 @@ const TradeYDRModal: React.FC = observer(() => {
             <span className="m-trade-ydr__label">Your Receive</span>
           </div>
 
-          {modals.tradeYDR.method === 'sell' ? (
+          {('sell' === modals.tradeYDR.method) ? (
             <InputWithSelect
               placeholder={viewOnlyInputValue}
               tokens={defaultTokens}
@@ -235,12 +235,12 @@ const TradeYDRModal: React.FC = observer(() => {
             Approve
           </Button>
         )}
-        {modals.tradeYDR.method === 'buy' && (!isNeedApprove || firstCurrency === 'BNB') && (
+        {('buy' === modals.tradeYDR.method) && (!isNeedApprove || ('BNB' === firstCurrency)) && (
           <Button className="m-trade-ydr__btn" onClick={handleBuy}>
             Buy
           </Button>
         )}
-        {modals.tradeYDR.method === 'sell' && !isNeedApprove && (
+        {('sell' === modals.tradeYDR.method) && !isNeedApprove && (
           <Button className="m-trade-ydr__btn" onClick={handleSell}>
             Sell
           </Button>

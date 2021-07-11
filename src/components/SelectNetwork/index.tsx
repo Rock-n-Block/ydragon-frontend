@@ -82,7 +82,7 @@ const SelectNetwork: React.FC = observer(() => {
       });
     } catch (switchError) {
       // This error code indicates that the chain has not been added to MetaMask.
-      if (switchError.code === 4902) {
+      if (4902 === switchError.code) {
         try {
           await window.ethereum.request({
             method: 'wallet_addEthereumChain',
