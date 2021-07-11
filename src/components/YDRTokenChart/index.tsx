@@ -95,10 +95,10 @@ const YDRTokenChart: React.FC<TokenChartProps> = ({ price }) => {
   };
 
   const parseDate = (date: Date) => {
-    if ('1' === daysFromUrl) {
+    if (daysFromUrl === '1') {
       return `${date.getHours()}:${date.getMinutes()}`;
     }
-    if ('max' === daysFromUrl) {
+    if (daysFromUrl === 'max') {
       return `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`;
     }
     return `${date.getMonth() + 1}/${date.getDate()} ${date.getHours()}:${date.getMinutes()}`;

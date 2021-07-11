@@ -21,7 +21,7 @@ interface TradeIndexModalProps {
 const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(({ token, indexAddress }) => {
   const walletConnector = useWalletConnectorContext();
   const { user, modals } = useMst();
-  const [isSell, setIsSell] = useState<boolean>('sell' === modals.tradeIndex.method);
+  const [isSell, setIsSell] = useState<boolean>(modals.tradeIndex.method === 'sell');
   const [firstCurrency, setFirstCurrency] = useState<TokenMiniNameTypes>(
     isSell ? 'YDR' : defaultTokens[0].name,
   );
@@ -148,7 +148,7 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(({ token, index
       });
   };
   useEffect(() => {
-    setIsSell('sell' === modals.tradeIndex.method);
+    setIsSell(modals.tradeIndex.method === 'sell');
   }, [modals.tradeIndex.method]);
   useEffect(() => {
     setFirstCurrency(isSell ? 'YDR' : defaultTokens[0].name);
@@ -165,7 +165,7 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(({ token, index
     }
   }, [checkAllowance, user.address]);
   useEffect(() => {
-    if ('buy' === modals.tradeIndex.method) {
+    if (modals.tradeIndex.method === 'buy') {
       getBuyCourse();
     } else {
       getSellCourse();
@@ -232,12 +232,12 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(({ token, index
           )}
         </div>
         <p className="m-trade-ydr__label m-trade-ydr__fee">Service Fee 0.441 BNB</p>
-        {isNeedApprove && firstCurrency !== 'BNB' && (
+        {isNeedApprove && (firstCurrency !== 'BNB') && (
           <Button className="m-trade-ydr__btn" onClick={handleApprove}>
             Approve
           </Button>
         )}
-        {!isSell && (!isNeedApprove || ('BNB' === firstCurrency)) && (
+        {!isSell && (!isNeedApprove || (firstCurrency === 'BNB')) && (
           <Button className="m-trade-ydr__btn" onClick={handleBuy}>
             Buy
           </Button>

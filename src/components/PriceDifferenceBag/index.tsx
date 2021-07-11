@@ -14,8 +14,8 @@ const PriceDifferenceBag: React.FC<IPriceDifferenceBagProps> = ({ price, diff })
     ${new BigNumber(price).toFixed(6)}
     <div className="diff">
       <div className={`diff-${diff[0]}`}>
-        {('up' === diff[0]) && ('0.0' !== diff[1]) ? <img src={arrowUp} alt="arrow up" /> : null}
-        {('down' === diff[0]) ? <img src={arrowDown} alt="arrow down" /> : null}
+        {(diff[0] === 'up') && (diff[1] !== '0.0') ? <img src={arrowUp} alt="arrow up" /> : null}
+        {(diff[0] === 'down') ? <img src={arrowDown} alt="arrow down" /> : null}
         {new BigNumber(diff[1]).toFixed(2)}%
       </div>
     </div>

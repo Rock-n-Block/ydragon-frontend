@@ -54,7 +54,7 @@ const SmallTableCard: React.FC<ISmallTableCardProps> = ({
         {data.map((cell, i) => (
           <div className="small-card__cell" key={nextId()}>
             <div className="small-card__title">{cell[0]}</div>
-            <div className={`small-card__subtitle ${0 === i ? 'text-gradient' : ''}`}>
+            <div className={`small-card__subtitle ${i === 0 ? 'text-gradient' : ''}`}>
               {cell[1]}
             </div>
           </div>
