@@ -11,9 +11,10 @@ import './RebalanceModal.scss';
 interface RebalanceModalProps {
   name: string;
   tokens: Array<ITokensDiff>;
+  onStart: () => void;
 }
 
-const RebalanceModal: React.FC<RebalanceModalProps> = ({ name, tokens }) => {
+const RebalanceModal: React.FC<RebalanceModalProps> = ({ name, tokens, onStart }) => {
   const { modals } = useMst();
 
   const handleClose = (): void => {
@@ -31,7 +32,7 @@ const RebalanceModal: React.FC<RebalanceModalProps> = ({ name, tokens }) => {
         <div className="rebalance-modal">
           <div className="rebalance-modal__title">Rebalance {name}</div>
 
-          <RebalanceForm name={name} tokens={tokens} />
+          <RebalanceForm name={name} tokens={tokens} onStart={onStart} />
         </div>
       </div>
     </Modal>

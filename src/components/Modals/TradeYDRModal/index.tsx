@@ -16,6 +16,7 @@ import './TradeYDRModal.scss';
 const TradeYDRModal: React.FC = observer(() => {
   const walletConnector = useWalletConnectorContext();
   const { user, modals } = useMst();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [firstCurrency, setFirstCurrency] = useState<TokenMiniNameTypes>(
     (modals.tradeYDR.method === 'sell') ? 'YDR' : defaultTokens[0].name,
   );
@@ -105,6 +106,7 @@ const TradeYDRModal: React.FC = observer(() => {
     }
   };
   const handleApprove = (): void => {
+    setIsLoading(true);
     walletConnector.metamaskService
       .approve(firstCurrency, 'Router')
       .then(() => {
@@ -115,9 +117,11 @@ const TradeYDRModal: React.FC = observer(() => {
       .catch((err: ProviderRpcError) => {
         const { message } = err;
         modals.info.setMsg('Error', `${message}`, 'error');
-      });
+      })
+      .finally(() => setIsLoading(false));
   };
   const handleBuy = (): void => {
+    setIsLoading(true);
     walletConnector.metamaskService
       .buyYDRToken(payInput, firstCurrency)
       .then(() => {
@@ -128,9 +132,11 @@ const TradeYDRModal: React.FC = observer(() => {
       .catch((err: ProviderRpcError) => {
         const { message } = err;
         modals.info.setMsg('Error', `${message}`, 'error');
-      });
+      })
+      .finally(() => setIsLoading(false));
   };
   const handleSell = (): void => {
+    setIsLoading(true);
     walletConnector.metamaskService
       .sellYDRToken(payInput, secondCurrency)
       .then(() => {
@@ -141,7 +147,8 @@ const TradeYDRModal: React.FC = observer(() => {
       .catch((err: ProviderRpcError) => {
         const { message } = err;
         modals.info.setMsg('Error', `${message}`, 'error');
-      });
+      })
+      .finally(() => setIsLoading(false));
   };
   useEffect(() => {
     setFirstCurrency((modals.tradeYDR.method === 'sell') ? 'YDR' : defaultTokens[0].name);

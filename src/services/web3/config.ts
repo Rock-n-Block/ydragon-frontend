@@ -1,6 +1,6 @@
 export default {
   MAIN: {
-    ADDRESS: '0x702ceE8B4C6F39A05717e8dB191591F7826c9B97',
+    ADDRESS: '0xE587Eae96eeb7693D2e99f758C9a8795F45376E3',
     ABI: [
       { inputs: [], stateMutability: 'nonpayable', type: 'constructor' },
       {
@@ -11,6 +11,36 @@ export default {
           { indexed: false, internalType: 'uint256', name: 'value', type: 'uint256' },
         ],
         name: 'Approval',
+        type: 'event',
+      },
+      {
+        anonymous: false,
+        inputs: [
+          { indexed: false, internalType: 'uint256', name: 'assetAmount', type: 'uint256' },
+          { indexed: false, internalType: 'uint256', name: 'wethAmount', type: 'uint256' },
+        ],
+        name: 'AssetsFromFeesConvertedToWeth',
+        type: 'event',
+      },
+      {
+        anonymous: false,
+        inputs: [
+          { indexed: false, internalType: 'address[]', name: 'tokensInAsset', type: 'address[]' },
+          { indexed: false, internalType: 'uint256[]', name: 'tokenAmountsToY', type: 'uint256[]' },
+          {
+            indexed: false,
+            internalType: 'address[]',
+            name: 'tokensOfDividends',
+            type: 'address[]',
+          },
+          {
+            indexed: false,
+            internalType: 'uint256[]',
+            name: 'amountOfDividends',
+            type: 'uint256[]',
+          },
+        ],
+        name: 'DepositToAsset',
         type: 'event',
       },
       {
@@ -53,6 +83,15 @@ export default {
       {
         anonymous: false,
         inputs: [
+          { indexed: false, internalType: 'address[]', name: 'tokens', type: 'address[]' },
+          { indexed: false, internalType: 'uint256[]', name: 'newDistribution', type: 'uint256[]' },
+        ],
+        name: 'NewDistribution',
+        type: 'event',
+      },
+      {
+        anonymous: false,
+        inputs: [
           { indexed: false, internalType: 'address[]', name: 'tokensOld', type: 'address[]' },
           { indexed: false, internalType: 'uint256[]', name: 'sellAmounts', type: 'uint256[]' },
           { indexed: false, internalType: 'address[]', name: 'tokensNew', type: 'address[]' },
@@ -88,6 +127,12 @@ export default {
       },
       {
         anonymous: false,
+        inputs: [{ indexed: false, internalType: 'uint256', name: 'feeAmount', type: 'uint256' }],
+        name: 'TransferFeesInZVault',
+        type: 'event',
+      },
+      {
+        anonymous: false,
         inputs: [
           { indexed: true, internalType: 'address', name: 'user', type: 'address' },
           { indexed: false, internalType: 'uint256', name: 'userWeight', type: 'uint256' },
@@ -97,17 +142,31 @@ export default {
         type: 'event',
       },
       {
+        anonymous: false,
+        inputs: [
+          { indexed: false, internalType: 'address[]', name: 'tokens', type: 'address[]' },
+          { indexed: false, internalType: 'uint256[]', name: 'amounts', type: 'uint256[]' },
+        ],
+        name: 'WithdrawTokens',
+        type: 'event',
+      },
+      {
+        anonymous: false,
+        inputs: [
+          { indexed: false, internalType: 'uint256', name: 'newPercentage', type: 'uint256' },
+        ],
+        name: 'xyManualRebalance',
+        type: 'event',
+      },
+      {
         inputs: [
           { internalType: 'string[2]', name: 'nameSymbol', type: 'string[2]' },
-          {
-            internalType: 'address[4]',
-            name: 'oracleDexRouterDexFactoryAndZVault',
-            type: 'address[4]',
-          },
+          { internalType: 'address[2]', name: 'oracleAndZVault', type: 'address[2]' },
           { internalType: 'uint256[2]', name: 'imeTimeInfo', type: 'uint256[2]' },
           { internalType: 'address[]', name: '_tokenWhitelist', type: 'address[]' },
           { internalType: 'address[]', name: '_tokensInAsset', type: 'address[]' },
           { internalType: 'uint256[]', name: '_tokensDistribution', type: 'uint256[]' },
+          { internalType: 'address', name: 'weth_', type: 'address' },
         ],
         name: '__Asset_init',
         outputs: [],
@@ -177,20 +236,6 @@ export default {
         name: 'depositToIndex',
         outputs: [],
         stateMutability: 'payable',
-        type: 'function',
-      },
-      {
-        inputs: [],
-        name: 'dexFactory',
-        outputs: [{ internalType: 'address', name: '', type: 'address' }],
-        stateMutability: 'view',
-        type: 'function',
-      },
-      {
-        inputs: [],
-        name: 'dexRouter',
-        outputs: [{ internalType: 'address', name: '', type: 'address' }],
-        stateMutability: 'view',
         type: 'function',
       },
       {
@@ -879,13 +924,13 @@ export default {
     ],
   },
   Factory: {
-    ADDRESS: '0xe31F74f8eA6749Dc0b9B0404B36432647cD0ffCf',
+    ADDRESS: '0x8628b49f0846d00977B8051B5bab014C82f58823',
     ABI: [
       {
         inputs: [
           { internalType: 'address', name: '_deployCodeContract', type: 'address' },
-          { internalType: 'address', name: '_dexRouter', type: 'address' },
-          { internalType: 'address', name: '_dexFactory', type: 'address' },
+          { internalType: 'address', name: '_defaultDexRouter', type: 'address' },
+          { internalType: 'address', name: '_defaultDexFactory', type: 'address' },
         ],
         stateMutability: 'nonpayable',
         type: 'constructor',
@@ -963,6 +1008,17 @@ export default {
         type: 'function',
       },
       {
+        inputs: [
+          { internalType: 'address', name: 'token', type: 'address' },
+          { internalType: 'address', name: 'dexRouter', type: 'address' },
+          { internalType: 'address', name: 'dexFactory', type: 'address' },
+        ],
+        name: 'addNotDefaultDexToken',
+        outputs: [],
+        stateMutability: 'nonpayable',
+        type: 'function',
+      },
+      {
         inputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
         name: 'allAssets',
         outputs: [{ internalType: 'address', name: '', type: 'address' }],
@@ -1001,6 +1057,20 @@ export default {
         type: 'function',
       },
       {
+        inputs: [],
+        name: 'defaultDexFactory',
+        outputs: [{ internalType: 'address', name: '', type: 'address' }],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
+        inputs: [],
+        name: 'defaultDexRouter',
+        outputs: [{ internalType: 'address', name: '', type: 'address' }],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
         inputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
         name: 'defaultTokenWhitelist',
         outputs: [{ internalType: 'address', name: '', type: 'address' }],
@@ -1035,15 +1105,8 @@ export default {
         type: 'function',
       },
       {
-        inputs: [],
-        name: 'dexFactory',
-        outputs: [{ internalType: 'address', name: '', type: 'address' }],
-        stateMutability: 'view',
-        type: 'function',
-      },
-      {
-        inputs: [],
-        name: 'dexRouter',
+        inputs: [{ internalType: 'uint256', name: 'index', type: 'uint256' }],
+        name: 'getNotDefaultDexTokensSet',
         outputs: [{ internalType: 'address', name: '', type: 'address' }],
         stateMutability: 'view',
         type: 'function',
@@ -1077,8 +1140,36 @@ export default {
       },
       {
         inputs: [{ internalType: 'address', name: '', type: 'address' }],
+        name: 'isAddressDexRouter',
+        outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
+        inputs: [{ internalType: 'address', name: '', type: 'address' }],
         name: 'isTokenDefaultWhitelisted',
         outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
+        inputs: [{ internalType: 'address', name: '', type: 'address' }],
+        name: 'notDefaultDexFactoryToken',
+        outputs: [{ internalType: 'address', name: '', type: 'address' }],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
+        inputs: [{ internalType: 'address', name: '', type: 'address' }],
+        name: 'notDefaultDexRouterToken',
+        outputs: [{ internalType: 'address', name: '', type: 'address' }],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
+        inputs: [],
+        name: 'notDefaultDexTokensSetLen',
+        outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
         stateMutability: 'view',
         type: 'function',
       },
@@ -1087,6 +1178,13 @@ export default {
         name: 'oracle',
         outputs: [{ internalType: 'address', name: '', type: 'address' }],
         stateMutability: 'view',
+        type: 'function',
+      },
+      {
+        inputs: [{ internalType: 'address', name: 'token', type: 'address' }],
+        name: 'removeNotDefaultDexToken',
+        outputs: [],
+        stateMutability: 'nonpayable',
         type: 'function',
       },
       {
@@ -1133,7 +1231,7 @@ export default {
     ],
   },
   Staking: {
-    ADDRESS: '0x62938fcf57D2dA2033992E6a8aa0C5191Af4123B',
+    ADDRESS: '0xD25f9C8BC7045147bDa0Ea16190220f8b4EB2D86',
     ABI: [
       {
         inputs: [
@@ -1141,6 +1239,8 @@ export default {
           { internalType: 'address', name: 'factory', type: 'address' },
           { internalType: 'address', name: 'dexRouter', type: 'address' },
           { internalType: 'address', name: 'dexFactory', type: 'address' },
+          { internalType: 'uint256[4]', name: 'distributionPercentages', type: 'uint256[4]' },
+          { internalType: 'uint256[3]', name: 'timeDurations', type: 'uint256[3]' },
         ],
         stateMutability: 'nonpayable',
         type: 'constructor',
@@ -1168,7 +1268,28 @@ export default {
       },
       {
         inputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+        name: 'POOL_PERCENTAGES',
+        outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
+        inputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
         name: 'TIME_DURATIONS',
+        outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
+        inputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+        name: 'YDR_POOL_PENALTY_PERCENTAGES',
+        outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
+        inputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+        name: 'YDR_POOL_PERCENTAGES',
         outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
         stateMutability: 'view',
         type: 'function',
@@ -1189,6 +1310,13 @@ export default {
         name: 'amountOfDIvidendsToUser',
         outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
         stateMutability: 'view',
+        type: 'function',
+      },
+      {
+        inputs: [{ internalType: 'uint256[4]', name: 'newPerc', type: 'uint256[4]' }],
+        name: 'changePercentages',
+        outputs: [],
+        stateMutability: 'nonpayable',
         type: 'function',
       },
       {
@@ -1369,9 +1497,23 @@ export default {
       },
       {
         inputs: [],
+        name: 'treasuryPercentage',
+        outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
+        inputs: [],
         name: 'treasuryWithdraw',
         outputs: [],
         stateMutability: 'nonpayable',
+        type: 'function',
+      },
+      {
+        inputs: [],
+        name: 'treasuryYdrPenaltyPercentage',
+        outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+        stateMutability: 'view',
         type: 'function',
       },
       {

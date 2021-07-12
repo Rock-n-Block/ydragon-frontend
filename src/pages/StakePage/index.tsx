@@ -12,7 +12,6 @@ const StakePage: React.FC = () => {
     walletConnector.metamaskService
       .getStakingTokensLen()
       .then(async (tokensLength: number) => {
-        console.log('get staking tokens len success');
         const tokensList: Array<any> = [];
         const getAddress = async (index: number) => {
           return walletConnector.metamaskService.getStakingTokenToEnter(index);
@@ -28,16 +27,19 @@ const StakePage: React.FC = () => {
           const newAddress = await getAddress(i);
           // eslint-disable-next-line no-await-in-loop
           const newPair = await getPair(newAddress);
-          console.log(newAddress, newPair);
           if (newAddress) {
             // eslint-disable-next-line no-await-in-loop
             const newTokenFirst = await getTokenInfo(newAddress);
-            tokensList.push(newTokenFirst);
+            if (newTokenFirst.balance !== '0') {
+              tokensList.push(newTokenFirst);
+            }
           }
           if (newPair !== '0x0000000000000000000000000000000000000000') {
             // eslint-disable-next-line no-await-in-loop
             const newTokenSecond = await getTokenInfo(newPair);
-            tokensList.push(newTokenSecond);
+            if (newTokenSecond.balance !== '0') {
+              tokensList.push(newTokenSecond);
+            }
           }
         }
         setStakeTokensList(tokensList);

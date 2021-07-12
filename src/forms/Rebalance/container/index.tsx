@@ -16,9 +16,10 @@ interface IIndexId {
 interface RebalanceFormProps {
   name: string;
   tokens: Array<ITokensDiff>;
+  onStart: () => void;
 }
 
-const RebalanceForm: React.FC<RebalanceFormProps> = observer(({ name, tokens }) => {
+const RebalanceForm: React.FC<RebalanceFormProps> = observer(({ name, tokens, onStart }) => {
   const history = useHistory();
   const { modals } = useMst();
   const { indexId } = useParams<IIndexId>();
@@ -69,6 +70,7 @@ const RebalanceForm: React.FC<RebalanceFormProps> = observer(({ name, tokens }) 
             .launchRebalance(+indexId)
             .then((response) => {
               console.log('launch rebalance success', response);
+              onStart();
             })
             .catch((err: ProviderRpcError) => {
               const { message } = err;
