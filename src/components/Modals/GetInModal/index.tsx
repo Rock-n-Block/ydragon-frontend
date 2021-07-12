@@ -68,6 +68,7 @@ const GetInModal: React.FC = observer(() => {
   const handleSelectChange = (value: any) => {
     console.log(value);
     setFirstCurrency(value);
+    setPayInput('');
   };
   const handleApprove = (): void => {
     walletConnector.metamaskService
