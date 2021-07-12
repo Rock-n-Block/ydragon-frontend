@@ -42,16 +42,22 @@ const CreateIndexForm: React.FC = () => {
           tokenWeights,
         )
         .then((data: TransactionReceipt) => {
-          indexesApi
-            .addDescriptionToIndex(data.transactionHash, values.description)
-            .then(() => {
-              console.log('description added');
-            })
-            .catch((error) => {
-              console.log('description error', error);
-            });
+          if (values.description) {
+            indexesApi
+              .addDescriptionToIndex(data.transactionHash, values.description)
+              .then(() => {
+                modals.info.setMsg('Success', 'Index created with description', 'success');
+              })
+              .catch((error) => {
+                const { response } = error;
+                modals.info.setMsg(
+                  'Index created',
+                  `Description not added, error:\n${response}`,
+                  'info',
+                );
+              });
+          } else modals.info.setMsg('Success', 'Index created', 'success');
 
-          modals.info.setMsg('Success', 'Index created', 'success');
           modals.createIndex.close();
         })
         .catch((error: ProviderRpcError) => {
