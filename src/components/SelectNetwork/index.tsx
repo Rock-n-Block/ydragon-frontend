@@ -5,8 +5,13 @@ import { observer } from 'mobx-react-lite';
 import { useWalletConnectorContext } from '../../services/walletConnect';
 import { useMst } from '../../store/store';
 import arrow from'../../assets/img/icons/icon-arrow-yellow.svg'
+import bncLight from'../../assets/img/icons/icon-binance-light.svg'
+import bncDark from'../../assets/img/icons/icon-binance-dark.svg'
+import plgLight from'../../assets/img/icons/icon-polygon-light.svg'
+import plgDark from'../../assets/img/icons/icon-polygon-dark.svg'
 
 import './SelectNetwork.scss';
+import TokenMini from '../TokenMini';
 
 const { Option } = Select;
 
@@ -55,7 +60,7 @@ const chains: IChains = {
 };
 
 const SelectNetwork: React.FC = observer(() => {
-  const { networks } = useMst();
+  const { networks, theme } = useMst();
   const walletConnector = useWalletConnectorContext();
   const [pickedChain, setPickedChain] = useState<ChainTypes>();
 
@@ -113,8 +118,8 @@ const SelectNetwork: React.FC = observer(() => {
       suffixIcon={<img className='select__arrow' alt='' src={arrow} />}
       dropdownClassName='select-network__dropdown'
     >
-      <Option value="bnbt">BSC</Option>
-      <Option value="tmatic">Polygon</Option>
+      <Option value="bnbt"><TokenMini name='' icon={theme.value === 'dark' ? bncDark : bncLight} width="26" height="26" />BSC</Option>
+      <Option value="tmatic"><TokenMini name='' icon={theme.value === 'dark' ? plgDark : plgLight} width="26" height="26" />Polygon</Option>
     </Select>
   );
 });
