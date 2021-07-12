@@ -47,13 +47,12 @@ const CreateIndexForm: React.FC = () => {
             .then(() => {
               console.log('description added');
             })
-            .catch((error: ProviderRpcError) => {
-              const { message } = error;
-              modals.info.setMsg('Error', message, 'error');
+            .catch((error) => {
+              console.log('description error', error);
             });
 
           modals.info.setMsg('Success', 'Index created', 'success');
-          modals.createIndex.close()
+          modals.createIndex.close();
         })
         .catch((error: ProviderRpcError) => {
           setFieldValue('isLoading', false);
