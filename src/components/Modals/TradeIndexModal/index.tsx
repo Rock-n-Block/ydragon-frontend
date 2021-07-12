@@ -22,6 +22,7 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(({ token, index
   const walletConnector = useWalletConnectorContext();
   const { user, modals } = useMst();
   const [isSell, setIsSell] = useState<boolean>(modals.tradeIndex.method === 'sell');
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [firstCurrency, setFirstCurrency] = useState<TokenMiniNameTypes>(
     isSell ? 'YDR' : defaultTokens[0].name,
   );
@@ -114,6 +115,7 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(({ token, index
     }
   };
   const handleApprove = (): void => {
+    setIsLoading(true);
     walletConnector.metamaskService
       .approve(firstCurrency, undefined, indexAddress)
       .then(() => {
@@ -123,29 +125,38 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(({ token, index
       .catch((err: ProviderRpcError) => {
         const { message } = err;
         modals.info.setMsg('Error', `${message}`, 'error');
-      });
+      })
+      .finally(() => setIsLoading(false));
   };
   const handleBuy = (): void => {
+    setIsLoading(true);
     walletConnector.metamaskService
       .mint(payInput, firstCurrency, indexAddress)
       .then(() => {
+        setPayInput('');
+        getBalance();
         modals.info.setMsg('Success', `You bought ${token}`, 'success');
       })
       .catch((err: ProviderRpcError) => {
         const { message } = err;
         modals.info.setMsg('Error', `${message}`, 'error');
-      });
+      })
+      .finally(() => setIsLoading(false));
   };
   const handleSell = (): void => {
+    setIsLoading(true);
     walletConnector.metamaskService
       .redeem(payInput, secondCurrency, indexAddress)
       .then(() => {
+        setPayInput('');
+        getBalance();
         modals.info.setMsg('Success', `You sold ${token}`, 'success');
       })
       .catch((err: ProviderRpcError) => {
         const { message } = err;
         modals.info.setMsg('Error', `${message}`, 'error');
-      });
+      })
+      .finally(() => setIsLoading(false));
   };
   useEffect(() => {
     setIsSell(modals.tradeIndex.method === 'sell');
@@ -233,17 +244,17 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(({ token, index
         </div>
         <p className="m-trade-ydr__label m-trade-ydr__fee">Service Fee 0.441 BNB</p>
         {isNeedApprove && firstCurrency !== 'BNB' && (
-          <Button className="m-trade-ydr__btn" onClick={handleApprove}>
+          <Button className="m-trade-ydr__btn" onClick={handleApprove} loading={isLoading}>
             Approve
           </Button>
         )}
         {!isSell && (!isNeedApprove || firstCurrency === 'BNB') && (
-          <Button className="m-trade-ydr__btn" onClick={handleBuy}>
+          <Button className="m-trade-ydr__btn" onClick={handleBuy} loading={isLoading}>
             Buy
           </Button>
         )}
         {isSell && !isNeedApprove && (
-          <Button className="m-trade-ydr__btn" onClick={handleSell}>
+          <Button className="m-trade-ydr__btn" onClick={handleSell} loading={isLoading}>
             Sell
           </Button>
         )}
