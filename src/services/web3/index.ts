@@ -432,7 +432,7 @@ export default class MetamaskService {
         .methods.getBuyAmountOut(currencyAddress, MetamaskService.calcTransactionAmount(value, 18))
         .call();
     }
-    return this.getContract('MAIN')
+    return this.getContractByAddress(indexAddress, config.MAIN.ABI)
       .methods.getSellAmountOut(currencyAddress, MetamaskService.calcTransactionAmount(value, 18))
       .call();
   }
