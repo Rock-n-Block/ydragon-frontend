@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import BigNumber from 'bignumber.js/bignumber';
+import nextId from 'react-id-generator';
 
 import logo from '../../../assets/img/icons/logo.svg';
 import { IUserIndex } from '../index';
@@ -96,7 +97,7 @@ const SmallCard: React.FC<IUserIndex> = ({
 
       <div className="index-small-card__percents">
         {tokens.map((token, i) => (
-          <div className={`index-small-card__percents--item ${colorsClassNames[i > 3 ? 3 : i]}`}>
+          <div key={nextId()} className={`index-small-card__percents--item ${colorsClassNames[i > 3 ? 3 : i]}`}>
             <div className="index-small-card__percents--item__title">{token.symbol}</div>
             <div
               className="index-small-card__percents--item__line"

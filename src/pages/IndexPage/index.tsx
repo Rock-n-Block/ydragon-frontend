@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import BigNumber from 'bignumber.js/bignumber';
 import { observer } from 'mobx-react-lite';
 import moment from 'moment';
+import nextId from 'react-id-generator';
 
 import logo from '../../assets/img/icons/logo.svg';
 import { TokenPanel } from '../../components';
@@ -97,6 +98,7 @@ const Index: React.FC = observer(() => {
         {tokens !== undefined
           ? tokens.map((token, i) => (
               <SmallTableCard
+                key={nextId()}
                 index={i}
                 data={[
                   ['Quantity per Set', `${new BigNumber(token.repr_count).toFixed(2)}`],
@@ -114,6 +116,7 @@ const Index: React.FC = observer(() => {
             ))
           : indexData?.tokens.map((token, i) => (
               <SmallTableCard
+                key={nextId()}
                 index={i}
                 data={[
                   [
@@ -133,7 +136,7 @@ const Index: React.FC = observer(() => {
             ))}
       </div>
       {/* <About /> */}
-      <TradeIndexModal token={indexData?.name ?? ''} indexAddress={indexData?.address ?? ''} />
+      <TradeIndexModal token={indexData?.name ?? ''} tokenId={indexData?.id ?? 0} indexAddress={indexData?.address ?? ''} />
       <MintModal />
       <RedeemModal />
     </main>

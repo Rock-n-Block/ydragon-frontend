@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { observer } from 'mobx-react-lite';
+import nextId from 'react-id-generator';
 
 import { indexesApi } from '../../../services/api';
 import { useWalletConnectorContext } from '../../../services/walletConnect';
@@ -131,6 +132,7 @@ const GetInModal: React.FC = observer(() => {
                 icon: token.image,
                 name: token.name,
                 symbol: token.symbol,
+                key: nextId()
               } as TokenMiniProps,
               token.total_quantity,
               `$${token.price}`,
@@ -146,6 +148,7 @@ const GetInModal: React.FC = observer(() => {
                   icon: token.image,
                   name: token.name,
                   symbol: token.symbol,
+                  key: nextId()
                 } as TokenMiniProps,
                 token.user_quantity ?? '0',
               ];

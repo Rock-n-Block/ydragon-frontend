@@ -160,7 +160,7 @@ const Dashboard: React.FC = () => {
                     <div className="index-dashboard__tokens">
                       {index.tokens &&
                         index.tokens.slice(0, 3).map((token, i) => (
-                          <div className="index-dashboard__token">
+                          <div key={nextId()} className="index-dashboard__token">
                             <span
                               className={`index-dashboard__token-color ${colorsClassNames[i]}`}
                             />
@@ -181,6 +181,7 @@ const Dashboard: React.FC = () => {
                           <>
                             {+token.current_weight > 0 && (
                               <div
+                                key={nextId()}
                                 className={`index-dashboard__token-percent ${colorsClassNames[i]}`}
                                 style={{
                                   width: `${new BigNumber(token.current_weight)
@@ -216,7 +217,7 @@ const Dashboard: React.FC = () => {
         </div>
       </div>
       <div className="index-dashboard__small">
-        {indexes && indexes.map((index) => <IndexSmallCard {...index} />)}
+        {indexes && indexes.map((index) => <IndexSmallCard key={nextId()} {...index} />)}
       </div>
     </section>
   );
