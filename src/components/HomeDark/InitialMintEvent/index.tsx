@@ -7,6 +7,7 @@ import { Spinner } from '../../index';
 import { InitialMintEventItem } from '../index';
 
 import './InitialMintEvent.scss';
+import { useMst } from '../../../store/store';
 
 export interface IIme {
   id: number;
@@ -27,6 +28,7 @@ export interface IImeToken {
   user_quantity?: number;
 }
 const InitialMintEvent: React.FC = observer(() => {
+  const { networks } = useMst();
   const [imeList, setImeList] = useState<IIme[]>([] as IIme[]);
   const [loading, setLoading] = useState<boolean>(false);
   const getImeList = useCallback(() => {
@@ -44,8 +46,10 @@ const InitialMintEvent: React.FC = observer(() => {
       .finally(() => setLoading(false));
   }, []);
   useEffect(() => {
-    getImeList();
-  }, [getImeList]);
+    if (networks.currentNetwork) {
+      getImeList();
+    }
+  }, [networks.currentNetwork, getImeList]);
   return (
     <section className="section">
       <h2 className="section__title text-outline">INITIAL minting Event</h2>

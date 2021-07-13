@@ -1,9 +1,11 @@
 import axios, { axiosWithToken } from '../../core/axios';
+import { rootStore } from '../../store/store';
 
 export default {
   getUserIndexes: () => axios.get('indexes/user'),
   getAdminIndexes: () => axiosWithToken.get('indexes/admin'),
-  getImeIndexes: () => axiosWithToken.get('indexes/ime'),
+  getImeIndexes: () =>
+    axiosWithToken.get(`indexes/ime?network=${rootStore.networks.currentNetwork}`),
   getImeById: (id: number, address?: string) =>
     axiosWithToken.get(`indexes/ime/${id}${address ? `?address=${address}` : '/'}`),
   getIndexById: (id: number) => axiosWithToken.get(`indexes/${id}`),

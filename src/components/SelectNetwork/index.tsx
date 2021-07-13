@@ -77,6 +77,7 @@ const SelectNetwork: React.FC = observer(() => {
         console.log(response);
       });
   }, [networks]);
+
   const getCurrentChain = useCallback(() => {
     walletConnector.metamaskService.ethGetCurrentChain().then((currentChainId: string) => {
       Object.keys(chains).forEach((key) => {
@@ -114,8 +115,10 @@ const SelectNetwork: React.FC = observer(() => {
   }, [getNetworks]);
 
   useEffect(() => {
-    getCurrentChain();
-  }, [getCurrentChain]);
+    if (networks.networksList.length) {
+      getCurrentChain();
+    }
+  }, [getCurrentChain, networks.networksList.length]);
 
   useEffect(() => {
     Object.keys(chains).forEach((key) => {

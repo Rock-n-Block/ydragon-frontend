@@ -13,20 +13,30 @@ const Network = types.model({
 export const Networks = types
   .model({
     networkId: types.string,
+    currentNetwork: types.maybeNull(types.string),
     networksList: types.optional(types.array(Network), []),
-  }).actions((self) => {
-  const setNetworkId = (networkId: string) => {
-    self.networkId = networkId;
-  };
+  })
+  .actions((self) => {
+    const setNetworkId = (networkId: string) => {
+      self.networkId = networkId;
+    };
+    const setCurrNetwork = (name: string) => {
+      self.currentNetwork = name;
+    };
+    const getCurrNetwork = () => {
+      return self.networksList.find((network) => network.name === self.currentNetwork);
+    };
     const setNetworks = (networks: any) => {
       self.networksList = networks;
     };
-  const update = (networkData: any) => {
-    applySnapshot(self, networkData);
-  };
-  return {
-    setNetworkId,
-    setNetworks,
-    update,
-  };
-});
+    const update = (networkData: any) => {
+      applySnapshot(self, networkData);
+    };
+    return {
+      setNetworkId,
+      setCurrNetwork,
+      getCurrNetwork,
+      setNetworks,
+      update,
+    };
+  });

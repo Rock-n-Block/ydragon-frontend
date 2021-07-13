@@ -34,6 +34,7 @@ export const Store = RootModel.create({
   },
   networks: {
     networkId: '',
+    networksList: [],
   },
 });
 
