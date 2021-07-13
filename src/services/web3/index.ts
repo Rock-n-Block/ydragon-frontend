@@ -628,7 +628,7 @@ export default class MetamaskService {
 
     return this.sendTransaction({
       from: this.walletAddress,
-      to: config.Factory.ADDRESS,
+      to: rootStore.networks.getCurrNetwork()?.fabric_address,
       data: signature,
     });
   }

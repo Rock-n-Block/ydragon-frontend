@@ -52,7 +52,7 @@ const CreateIndexForm: React.FC = () => {
                 const { response } = error;
                 modals.info.setMsg(
                   'Index created',
-                  `Description not added, error:\n${response}`,
+                  `Description not added, error:\n${response.data}`,
                   'info',
                 );
               });
