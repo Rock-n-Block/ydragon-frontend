@@ -2,8 +2,9 @@ import axios, { axiosWithToken } from '../../core/axios';
 import { rootStore } from '../../store/store';
 
 export default {
-  getUserIndexes: () => axios.get('indexes/user'),
-  getAdminIndexes: () => axiosWithToken.get('indexes/admin'),
+  getUserIndexes: () => axios.get(`indexes/user?network=${rootStore.networks.currentNetwork}`),
+  getAdminIndexes: () =>
+    axiosWithToken.get(`indexes/admin?network=${rootStore.networks.currentNetwork}`),
   getImeIndexes: () =>
     axiosWithToken.get(`indexes/ime?network=${rootStore.networks.currentNetwork}`),
   getImeById: (id: number, address?: string) =>
@@ -11,7 +12,7 @@ export default {
   getIndexById: (id: number) => axiosWithToken.get(`indexes/${id}`),
   getIndexesRebalance: (indexId: number) => axiosWithToken.get(`indexes/${indexId}/rebalance/`),
   addDescriptionToIndex: (tx_hash: string, description: string) =>
-    axiosWithToken.post('indexes/description', {
+    axiosWithToken.post(`indexes/description?network=${rootStore.networks.currentNetwork}`, {
       tx_hash,
       description,
     }),

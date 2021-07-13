@@ -11,6 +11,8 @@ import { Spinner } from '../index';
 import IndexSmallCard from './SmallCard/index';
 
 import './Dashboard.scss';
+import { observer } from 'mobx-react-lite';
+import { useMst } from '../../store/store';
 
 export interface IUserIndex extends IIndex {
   day: number;
@@ -20,6 +22,7 @@ export interface IUserIndex extends IIndex {
 }
 
 const Dashboard: React.FC = () => {
+  const { networks } = useMst();
   const [indexes, setIndexes] = useState<Array<IUserIndex>>();
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -50,8 +53,10 @@ const Dashboard: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    getIndexes();
-  }, [getIndexes]);
+    if (networks.currentNetwork) {
+      getIndexes();
+    }
+  }, [getIndexes, networks.currentNetwork]);
 
   console.log(indexes);
   return (
@@ -210,4 +215,4 @@ const Dashboard: React.FC = () => {
   );
 };
 
-export default Dashboard;
+export default observer(Dashboard);

@@ -3,7 +3,7 @@ import { Select } from 'antd';
 import { observer } from 'mobx-react-lite';
 
 import { useWalletConnectorContext } from '../../services/walletConnect';
-import { useMst } from '../../store/store';
+import { rootStore, useMst } from '../../store/store';
 import arrow from '../../assets/img/icons/icon-arrow-yellow.svg';
 import bncLight from '../../assets/img/icons/icon-binance-light.svg';
 import bncDark from '../../assets/img/icons/icon-binance-dark.svg';
@@ -83,6 +83,12 @@ const SelectNetwork: React.FC = observer(() => {
       Object.keys(chains).forEach((key) => {
         if (chains[key as ChainTypes].chainId === currentChainId) {
           setPickedChain(key as ChainTypes);
+          // TODO: change this on deploy
+          if (currentChainId === '0x61') {
+            rootStore.networks.setCurrNetwork('binance-smart-chain');
+          } else if (currentChainId === '0x13881') {
+            rootStore.networks.setCurrNetwork('polygon');
+          }
         }
       });
     });
