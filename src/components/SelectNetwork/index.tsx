@@ -12,6 +12,7 @@ import plgDark from '../../assets/img/icons/icon-polygon-dark.svg';
 
 import './SelectNetwork.scss';
 import TokenMini from '../TokenMini';
+import { networksApi } from '../../services/api';
 
 const { Option } = Select;
 
@@ -64,6 +65,18 @@ const SelectNetwork: React.FC = observer(() => {
   const walletConnector = useWalletConnectorContext();
   const [pickedChain, setPickedChain] = useState<ChainTypes>();
 
+  const getNetworks = useCallback(() => {
+    networksApi
+      .getNetworks()
+      .then(({ data }) => {
+        console.log(data);
+        networks.setNetworks(data);
+      })
+      .catch((err) => {
+        const { response } = err;
+        console.log(response);
+      });
+  }, [networks]);
   const getCurrentChain = useCallback(() => {
     walletConnector.metamaskService.ethGetCurrentChain().then((currentChainId: string) => {
       Object.keys(chains).forEach((key) => {
@@ -95,6 +108,10 @@ const SelectNetwork: React.FC = observer(() => {
       // handle other "switch" errors
     }
   };
+
+  useEffect(() => {
+    getNetworks();
+  }, [getNetworks]);
 
   useEffect(() => {
     getCurrentChain();
