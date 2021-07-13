@@ -11,13 +11,14 @@ interface IndexChartProps {
   indexId: any;
 }
 
-const IndexChart: React.FC<IndexChartProps> = ({ tokens, indexId }) => {
-  const url = `https://dev-ydragon.rocknblock.io/api/indexes/info/${indexId}`;
-  const refAxiosData: React.MutableRefObject<any> = useRef([]);
-  const refData: React.MutableRefObject<any> = useRef([]);
-  const refMax = useRef(0);
-  const refMin = useRef(0);
-  const refCurrentPrice = useRef('');
+const IndexChart: React.FC<IndexChartProps> = ({ indexId }) => {
+  const [days, setDays] = useState('1');
+  const url = `https://dev-ydragon.rocknblock.io/api/indexes/info/${indexId}${
+    days ? `?days=${days}` : ''
+  }`;
+  const refDataLength = useRef(1);
+  const refPrice = useRef(0.000001);
+  const daysFromUrl = days;
   const [chartData, setChartData] = useState({
     labels: [],
     datasets: [
@@ -33,9 +34,10 @@ const IndexChart: React.FC<IndexChartProps> = ({ tokens, indexId }) => {
       },
     ],
   });
-  const [clickedElement, setClickedElement] = useState('');
+  const [clickedElement, setClickedElement] = useState(
+    chartData.datasets[0].data[refDataLength.current - 1].data,
+  );
   const [diff, setDiff] = useState(['up', 0.0]);
-  const [days, setDays] = useState('1');
 
   const options = {
     layout: {
@@ -66,10 +68,6 @@ const IndexChart: React.FC<IndexChartProps> = ({ tokens, indexId }) => {
           lineWidth: 0.5,
         },
       },
-      yAxis: {
-        suggestedMin: refMin.current,
-        suggestedMax: refMax.current,
-      },
     },
     elements: {
       point: {
@@ -98,63 +96,82 @@ const IndexChart: React.FC<IndexChartProps> = ({ tokens, indexId }) => {
         setDays('90');
         break;
       case 'ALL':
-        setDays('max');
+        setDays('');
         break;
       default:
         break;
     }
   };
 
+  const parseDate = (date: Date) => {
+    if (daysFromUrl === '1') {
+      return `${date.getHours()}:${date.getMinutes()}`;
+    }
+    if (daysFromUrl === 'max') {
+      return `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`;
+    }
+    return `${date.getMonth() + 1}/${date.getDate()} ${date.getHours()}:${date.getMinutes()}`;
+  };
+
   const getElementAtEvent = (element: string | any[]) => {
     if (!element.length) return;
 
     const { index } = element[0];
-    const currentValue = refData.current[index].data;
-    const currentTokens = refAxiosData.current[index].tokens_history;
-    setClickedElement(currentValue);
-    tokens(currentTokens);
+    const chosenPrice = chartData.datasets[0].data[index].data;
+    setClickedElement(chosenPrice);
 
-    const value =
-      ((currentValue - Number(refCurrentPrice.current)) / Number(refCurrentPrice.current)) * 100;
+    const value = ((chosenPrice - refPrice.current) / refPrice.current) * 100;
     const dir = value < 0 ? 'down' : 'up';
     setDiff([dir, value]);
   };
 
-  const axiosData = useCallback(() => {
-    axios.get(url, {params: {days}}).then((res: AxiosResponse) => {
-      const arr: number[] = [];
-      refAxiosData.current = res.data;
-      refAxiosData.current.forEach((item: any) => {
-        arr.push(Number(item.market_cap));
+  const getChartData = (data: any): any => {
+    const datasetsData: { time: string; data: number }[] = [];
+    console.log('getChart', data)
+    if (data)
+      data.forEach((item: any) => {
         const date = new Date(item.time);
-        const parsedDate = `${date.getHours()}:${date.getMinutes()}`;
-        refData.current.push({
-          time: parsedDate,
+        datasetsData.push({
+          time: parseDate(date),
           data: item.market_cap,
         });
       });
-      refMax.current = Math.max(...arr) + 1;
-      refMin.current = Math.min(...arr) - 1;
-      const dataLength = refData.current.length;
-      refCurrentPrice.current = refData.current[dataLength - 1].data;
-      setClickedElement(refCurrentPrice.current);
-      setChartData({
-        labels: [],
-        datasets: [
-          {
-            data: refData.current,
-            fill: false,
-            backgroundColor: 'transparent',
-            borderColor: '#df3f3a',
-            borderWidth: 3,
-            pointBackgroundColor: '#df3f3a',
-            pointBorderColor: '#fff',
-            tension: 0.5,
-          },
-        ],
-      });
+    return {
+      labels: [],
+      datasets: [
+        {
+          data: datasetsData,
+          fill: false,
+          backgroundColor: 'transparent',
+          borderColor: '#df3f3a',
+          borderWidth: 3,
+          pointBackgroundColor: '#df3f3a',
+          pointBorderColor: '#fff',
+          tension: 0.5,
+        },
+      ],
+    };
+  };
+
+  const axiosData = useCallback(() => {
+    axios
+      .get(url)
+      .then((res: AxiosResponse) => {
+        console.log('Request chartData success', res.data);
+        refDataLength.current = res.data.length;
+        const currentPrice = res.data[refDataLength.current - 1].market_cap;
+        setChartData(getChartData(res.data));
+        console.log(refPrice.current, res.data[refDataLength.current - 1])
+        if (refPrice.current <= currentPrice) refPrice.current = currentPrice;
+        setClickedElement(refPrice.current);
+    })
+    
+    .catch((err: any) => {
+      console.log('Request chartData error', err);
     });
-  }, [url, days]);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [url]);
 
   useEffect(() => {
     axiosData();
