@@ -80,7 +80,7 @@ export default class MetamaskService {
         if (!Object.values(this.usedChain).find((chainId) => chainId === currentChain)) {
           subscriber.next(`Please choose one of networks in header select.`);
         } else {
-          rootStore.networks.setId(this.wallet.chainId);
+          rootStore.networks.setNetworkId(this.wallet.chainId);
           subscriber.next('');
         }
       });

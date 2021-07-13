@@ -33,7 +33,7 @@ export const Store = RootModel.create({
     value: localStorage.theme ?? 'dark',
   },
   networks: {
-    id: '',
+    networkId: '',
   },
 });
 

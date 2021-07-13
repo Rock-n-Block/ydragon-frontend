@@ -4,11 +4,11 @@ import { observer } from 'mobx-react-lite';
 
 import { useWalletConnectorContext } from '../../services/walletConnect';
 import { useMst } from '../../store/store';
-import arrow from'../../assets/img/icons/icon-arrow-yellow.svg'
-import bncLight from'../../assets/img/icons/icon-binance-light.svg'
-import bncDark from'../../assets/img/icons/icon-binance-dark.svg'
-import plgLight from'../../assets/img/icons/icon-polygon-light.svg'
-import plgDark from'../../assets/img/icons/icon-polygon-dark.svg'
+import arrow from '../../assets/img/icons/icon-arrow-yellow.svg';
+import bncLight from '../../assets/img/icons/icon-binance-light.svg';
+import bncDark from '../../assets/img/icons/icon-binance-dark.svg';
+import plgLight from '../../assets/img/icons/icon-polygon-light.svg';
+import plgDark from '../../assets/img/icons/icon-polygon-dark.svg';
 
 import './SelectNetwork.scss';
 import TokenMini from '../TokenMini';
@@ -102,11 +102,11 @@ const SelectNetwork: React.FC = observer(() => {
 
   useEffect(() => {
     Object.keys(chains).forEach((key) => {
-      if (chains[key as ChainTypes].chainId === networks.id) {
+      if (chains[key as ChainTypes].chainId === networks.networkId) {
         setPickedChain(key as ChainTypes);
       }
     });
-  }, [networks.id]);
+  }, [networks.networkId]);
 
   return (
     <Select
@@ -114,12 +114,28 @@ const SelectNetwork: React.FC = observer(() => {
       placeholder="Select network"
       onSelect={switchChain}
       style={{ width: 120 }}
-      className='select-network'
-      suffixIcon={<img className='select__arrow' alt='' src={arrow} />}
-      dropdownClassName='select-network__dropdown'
+      className="select-network"
+      suffixIcon={<img className="select__arrow" alt="" src={arrow} />}
+      dropdownClassName="select-network__dropdown"
     >
-      <Option value="bnbt"><TokenMini name='' icon={theme.value === 'dark' ? bncDark : bncLight} width="26" height="26" />BSC</Option>
-      <Option value="tmatic"><TokenMini name='' icon={theme.value === 'dark' ? plgDark : plgLight} width="26" height="26" />Polygon</Option>
+      <Option value="bnbt">
+        <TokenMini
+          name=""
+          icon={theme.value === 'dark' ? bncDark : bncLight}
+          width="26"
+          height="26"
+        />
+        BSC
+      </Option>
+      <Option value="tmatic">
+        <TokenMini
+          name=""
+          icon={theme.value === 'dark' ? plgDark : plgLight}
+          width="26"
+          height="26"
+        />
+        Polygon
+      </Option>
     </Select>
   );
 });
