@@ -20,9 +20,10 @@ const { Option } = Select;
 const { TextArea } = InputAntd;
 
 const Input: React.FC<InputProps> = (props) => {
+  const {className, ...otherProps} = props
   return (
-    <div className="input-border">
-      <InputAntd className="input" {...props} />
+    <div className={`input-border ${className ?? ''}`}>
+      <InputAntd className='input' {...otherProps} />
     </div>
   );
 };
