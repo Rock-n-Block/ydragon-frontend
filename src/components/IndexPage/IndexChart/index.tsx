@@ -35,6 +35,7 @@ const IndexChart: React.FC<IndexChartProps> = ({ tokens, indexId }) => {
   });
   const [clickedElement, setClickedElement] = useState('');
   const [diff, setDiff] = useState(['up', 0.0]);
+  const [days, setDays] = useState('1');
 
   const options = {
     layout: {
@@ -81,6 +82,29 @@ const IndexChart: React.FC<IndexChartProps> = ({ tokens, indexId }) => {
     },
   };
 
+  const toggleHandler = (event: any) => {
+    const btnsList = event.target.parentNode.children;
+    [...btnsList].forEach((item: any) => {
+      item.className = item === event.target ? 'chart-panel-btn active' : 'chart-panel-btn';
+    });
+    switch (event.target.innerHTML) {
+      case '1d':
+        setDays('1');
+        break;
+      case '1m':
+        setDays('30');
+        break;
+      case '3m':
+        setDays('90');
+        break;
+      case 'ALL':
+        setDays('max');
+        break;
+      default:
+        break;
+    }
+  };
+
   const getElementAtEvent = (element: string | any[]) => {
     if (!element.length) return;
 
@@ -97,8 +121,7 @@ const IndexChart: React.FC<IndexChartProps> = ({ tokens, indexId }) => {
   };
 
   const axiosData = useCallback(() => {
-    axios.get(url).then((res: AxiosResponse) => {
-      console.log('refData request success', res.data);
+    axios.get(url, {params: {days}}).then((res: AxiosResponse) => {
       const arr: number[] = [];
       refAxiosData.current = res.data;
       refAxiosData.current.forEach((item: any) => {
@@ -131,7 +154,7 @@ const IndexChart: React.FC<IndexChartProps> = ({ tokens, indexId }) => {
         ],
       });
     });
-  }, [url]);
+  }, [url, days]);
 
   useEffect(() => {
     axiosData();
@@ -141,6 +164,44 @@ const IndexChart: React.FC<IndexChartProps> = ({ tokens, indexId }) => {
     <div className="chart">
       <div className="chart-panel">
         <PriceDifferenceBag price={Number(clickedElement)} diff={diff} />
+        <div className="chart-panel-btns">
+          <div
+            className="chart-panel-btn active"
+            role="button"
+            tabIndex={0}
+            onClick={toggleHandler}
+            onKeyDown={toggleHandler}
+          >
+            1d
+          </div>
+          <div
+            className="chart-panel-btn"
+            role="button"
+            tabIndex={0}
+            onClick={toggleHandler}
+            onKeyDown={toggleHandler}
+          >
+            1m
+          </div>
+          <div
+            className="chart-panel-btn"
+            role="button"
+            tabIndex={0}
+            onClick={toggleHandler}
+            onKeyDown={toggleHandler}
+          >
+            3m
+          </div>
+          <div
+            className="chart-panel-btn"
+            role="button"
+            tabIndex={0}
+            onClick={toggleHandler}
+            onKeyDown={toggleHandler}
+          >
+            ALL
+          </div>
+        </div>
       </div>
       {Object.keys(chartData).length ? (
         <Line
