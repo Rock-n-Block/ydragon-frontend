@@ -22,7 +22,7 @@ const Question: React.FC<QuestionProps> = observer((props: PropsWithChildren<Que
       <div className="question__text--wrapper">
         <div
           className={`question__title ${
-            collapsed ? `color${(DARK === theme.value) ? 'White' : 'Black'}` : 'colorOrange'
+            collapsed ? `color${DARK === theme.value ? 'White' : 'Black'}` : 'colorOrange'
           }`}
           role="button"
           tabIndex={0}
@@ -32,7 +32,7 @@ const Question: React.FC<QuestionProps> = observer((props: PropsWithChildren<Que
           {title}
           <img
             alt="#"
-            src={(DARK === theme.value) ? iconDown : iconDownBlack}
+            src={DARK === theme.value ? iconDown : iconDownBlack}
             className={`question__icon ${collapsed ? '' : 'down'}`}
           />
         </div>

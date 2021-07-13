@@ -30,13 +30,15 @@
     &-amount__all {
       color: rgba($white, 0.4);
     }
-  }  
-  .stake-amount{
-    &__time-wrapper{
+  }
+
+  .stake-amount {
+    &__time-wrapper {
       border: 3px solid rgba($white, 0.1);
     }
-    &__time{
-     background-color: rgba($black, 0.1);
+
+    &__time {
+      background-color: rgba($black, 0.1);
     }
   }
 }
@@ -71,12 +73,14 @@
       color: rgba($black, 0.4);
     }
   }
-  .stake-amount{
-    &__time-wrapper{
+
+  .stake-amount {
+    &__time-wrapper {
       border: 3px solid rgba($black, 0.1);
     }
-    &__time{
-     background-color: rgba($black, 0.1);
+
+    &__time {
+      background-color: rgba($black, 0.1);
     }
   }
 }

@@ -4,6 +4,7 @@
 .dark {
   .options {
     @include shadow-block;
+
     &__option__input-wrapper {
       .ant-input-affix-wrapper {
         .ant-input {
@@ -17,6 +18,7 @@
 .light {
   .options {
     @include light-block;
+
     &__option__input-wrapper {
       .ant-input-affix-wrapper {
         .ant-input {
@@ -51,6 +53,7 @@
           font-weight: 700;
           line-height: 24px;
           text-align: center;
+
           background: transparent;
         }
       }

@@ -1,9 +1,9 @@
 import React, { useCallback, useEffect, useState } from 'react';
+import nextId from 'react-id-generator';
 import { useParams } from 'react-router-dom';
 import BigNumber from 'bignumber.js/bignumber';
 import { observer } from 'mobx-react-lite';
 import moment from 'moment';
-import nextId from 'react-id-generator';
 
 import logo from '../../assets/img/icons/logo.svg';
 import { TokenPanel } from '../../components';
@@ -136,7 +136,11 @@ const Index: React.FC = observer(() => {
             ))}
       </div>
       {/* <About /> */}
-      <TradeIndexModal token={indexData?.name ?? ''} tokenId={indexData?.id ?? 0} indexAddress={indexData?.address ?? ''} />
+      <TradeIndexModal
+        token={indexData?.name ?? ''}
+        tokenId={indexData?.id ?? 0}
+        indexAddress={indexData?.address ?? ''}
+      />
       <MintModal />
       <RedeemModal />
     </main>

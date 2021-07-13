@@ -4,13 +4,13 @@ import BigNumber from 'bignumber.js/bignumber';
 import { observer } from 'mobx-react-lite';
 import moment from 'moment';
 
+import RefreshIcon from '../../assets/img/icons/icon-refresh.svg';
 import { indexesApi } from '../../services/api';
 import { useWalletConnectorContext } from '../../services/walletConnect';
 import { useMst } from '../../store/store';
 import { ProviderRpcError } from '../../types/errors';
 import { Button, Table } from '../index';
 import SmallTableCard from '../SmallTableCard/index';
-import RefreshIcon from '../../assets/img/icons/icon-refresh.svg';
 
 import './StakingStatistics.scss';
 

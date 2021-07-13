@@ -82,7 +82,10 @@ const Questions: React.FC = () => {
       </div>
       <div className="questions__wrapper">
         {faqs.map((faq) => (
-          <Question title={faq.title} key={nextId()}> {faq.text} </Question>
+          <Question title={faq.title} key={nextId()}>
+            {' '}
+            {faq.text}{' '}
+          </Question>
         ))}
       </div>
     </section>

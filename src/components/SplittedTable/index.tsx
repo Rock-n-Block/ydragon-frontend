@@ -38,7 +38,7 @@ const SplittedTable: React.FC<SplittedTableProps> = ({ columns, data }) => {
           >
             {dataItem.map((dataCell) => (
               <div className="table-splitted__cell" key={nextId()}>
-                {(typeof dataCell === 'string') || (typeof dataCell === 'number') ? (
+                {typeof dataCell === 'string' || typeof dataCell === 'number' ? (
                   <>{dataCell}</>
                 ) : (
                   <TokenMini name={dataCell.name} icon={dataCell.icon} symbol={dataCell.symbol} />

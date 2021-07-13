@@ -18,10 +18,10 @@ const TradeYDRModal: React.FC = observer(() => {
   const { user, modals } = useMst();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [firstCurrency, setFirstCurrency] = useState<TokenMiniNameTypes>(
-    (modals.tradeYDR.method === 'sell') ? 'YDR' : defaultTokens[0].name,
+    modals.tradeYDR.method === 'sell' ? 'YDR' : defaultTokens[0].name,
   );
   const [secondCurrency, setSecondCurrency] = useState<TokenMiniNameTypes>(
-    (modals.tradeYDR.method === 'sell') ? defaultTokens[0].name : 'YDR',
+    modals.tradeYDR.method === 'sell' ? defaultTokens[0].name : 'YDR',
   );
   const [payInput, setPayInput] = useState<string>('');
 
@@ -151,8 +151,8 @@ const TradeYDRModal: React.FC = observer(() => {
       .finally(() => setIsLoading(false));
   };
   useEffect(() => {
-    setFirstCurrency((modals.tradeYDR.method === 'sell') ? 'YDR' : defaultTokens[0].name);
-    setSecondCurrency((modals.tradeYDR.method !== 'sell') ? 'YDR' : defaultTokens[0].name);
+    setFirstCurrency(modals.tradeYDR.method === 'sell' ? 'YDR' : defaultTokens[0].name);
+    setSecondCurrency(modals.tradeYDR.method !== 'sell' ? 'YDR' : defaultTokens[0].name);
   }, [modals.tradeYDR.method]);
   useEffect(() => {
     if (user.address) {
@@ -195,7 +195,7 @@ const TradeYDRModal: React.FC = observer(() => {
               {firstCurrency}
             </span>
           </div>
-          {(modals.tradeYDR.method === 'buy') ? (
+          {modals.tradeYDR.method === 'buy' ? (
             <InputWithSelect
               value={payInput}
               tokens={defaultTokens}
@@ -221,7 +221,7 @@ const TradeYDRModal: React.FC = observer(() => {
             <span className="m-trade-ydr__label">Your Receive</span>
           </div>
 
-          {(modals.tradeYDR.method === 'sell') ? (
+          {modals.tradeYDR.method === 'sell' ? (
             <InputWithSelect
               placeholder={viewOnlyInputValue}
               tokens={defaultTokens}
@@ -237,17 +237,17 @@ const TradeYDRModal: React.FC = observer(() => {
             />
           )}
         </div>
-        {isNeedApprove && (firstCurrency !== 'BNB') && (
+        {isNeedApprove && firstCurrency !== 'BNB' && (
           <Button className="m-trade-ydr__btn" onClick={handleApprove}>
             Approve
           </Button>
         )}
-        {(modals.tradeYDR.method === 'buy') && (!isNeedApprove || (firstCurrency === 'BNB')) && (
+        {modals.tradeYDR.method === 'buy' && (!isNeedApprove || firstCurrency === 'BNB') && (
           <Button className="m-trade-ydr__btn" onClick={handleBuy}>
             Buy
           </Button>
         )}
-        {(modals.tradeYDR.method === 'sell') && !isNeedApprove && (
+        {modals.tradeYDR.method === 'sell' && !isNeedApprove && (
           <Button className="m-trade-ydr__btn" onClick={handleSell} loading={isLoading}>
             Sell
           </Button>

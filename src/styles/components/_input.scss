@@ -10,12 +10,14 @@
   .ant-input[disabled] {
     background: $black;
   }
+
   .input-with-select {
     &__select {
       background: rgba($black, 0.05);
+
       .ant-select-selector {
         background: rgba(255, 255, 255, 0.05);
-        border-color: rgba(184, 183, 183, 0.05)  ;
+        border-color: rgba(184, 183, 183, 0.05);
       }
     }
   }
@@ -30,9 +32,11 @@
   .ant-input[disabled] {
     background: $white !important;
   }
+
   .input-with-select {
     &__select {
       background: #eaeaea;
+
       .ant-select-selector {
         background: #eaeaea !important;
         border-color: #eaeaea !important;

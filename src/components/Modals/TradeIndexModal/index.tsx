@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
+import axios, { AxiosResponse } from 'axios';
 import BigNumber from 'bignumber.js/bignumber';
 import { observer } from 'mobx-react-lite';
-import axios, { AxiosResponse } from 'axios';
 
 import YDRLogo from '../../../assets/img/icons/logo.svg';
 import { useWalletConnectorContext } from '../../../services/walletConnect';
@@ -88,9 +88,15 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
             axios.get(url).then((res: AxiosResponse) => {
               console.log('refData request success', res.data);
               if (res.data[res.data.length - 1].total_x >= 0.15) {
-                setFee(`${new BigNumber(data * 0.02).dividedBy(new BigNumber(10).pow(18)).toFixed(5)}`)
+                setFee(
+                  `${new BigNumber(data * 0.02).dividedBy(new BigNumber(10).pow(18)).toFixed(5)}`,
+                );
               } else {
-                setFee(`${new BigNumber(data * (6 - (4 - res.data[3].total_x * 100 - 5))/10).dividedBy(new BigNumber(10).pow(18)).toFixed(5)}`)
+                setFee(
+                  `${new BigNumber((data * (6 - (4 - res.data[3].total_x * 100 - 5))) / 10)
+                    .dividedBy(new BigNumber(10).pow(18))
+                    .toFixed(5)}`,
+                );
               }
             });
             console.log('getSellCourse success', data);

@@ -6,8 +6,8 @@ import { Networks } from './Networks';
 import { Theme } from './Theme';
 import { User } from './User';
 
-export const DARK = 'dark'
-export const LIGHT = 'light'
+export const DARK = 'dark';
+export const LIGHT = 'light';
 
 const RootModel = types.model({
   modals: Modals,

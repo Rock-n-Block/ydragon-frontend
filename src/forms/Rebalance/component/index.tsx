@@ -136,7 +136,7 @@ const Rebalance: React.FC<FormikProps<IRebalance> & IRebalance> = observer(
                         onChange={handleChange}
                         onBlur={handleBlur}
                         type="number"
-                        placeholder='0'
+                        placeholder="0"
                       />
                     </div>
 

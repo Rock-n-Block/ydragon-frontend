@@ -74,7 +74,7 @@ class Connector extends React.Component<any, any> {
       } catch (err) {
         const { response } = err;
         if (response) {
-          if ((response.status === 400) && (response.data.result[0] === 'user is not admin')) {
+          if (response.status === 400 && response.data.result[0] === 'user is not admin') {
             localStorage.yd_isAdmin = false;
             const { address } = await this.state.provider.connect();
             localStorage.yd_address = address;
