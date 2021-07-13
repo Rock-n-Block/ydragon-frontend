@@ -87,7 +87,7 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
           .then((data: any) => {
             axios.get(url).then((res: AxiosResponse) => {
               console.log('refData request success', res.data);
-              if (res.data[3].total_x >= 0.15) {
+              if (res.data[res.data.length - 1].total_x >= 0.15) {
                 setFee(`${new BigNumber(data * 0.02).dividedBy(new BigNumber(10).pow(18)).toFixed(5)}`)
               } else {
                 setFee(`${new BigNumber(data * (6 - (4 - res.data[3].total_x * 100 - 5))/10).dividedBy(new BigNumber(10).pow(18)).toFixed(5)}`)
