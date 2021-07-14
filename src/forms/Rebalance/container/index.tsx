@@ -1,5 +1,5 @@
 import React from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import BigNumber from 'bignumber.js/bignumber';
 import { withFormik } from 'formik';
 import { observer } from 'mobx-react-lite';
@@ -20,7 +20,6 @@ interface RebalanceFormProps {
 }
 
 const RebalanceForm: React.FC<RebalanceFormProps> = observer(({ name, tokens, onStart }) => {
-  const history = useHistory();
   const { modals } = useMst();
   const { indexId } = useParams<IIndexId>();
   const FormWithFormik = withFormik<any, IRebalance>({
@@ -71,14 +70,12 @@ const RebalanceForm: React.FC<RebalanceFormProps> = observer(({ name, tokens, on
             .then((response) => {
               console.log('launch rebalance success', response);
               onStart();
+              modals.rebalance.close();
             })
             .catch((err: any) => {
               const { response } = err;
               modals.info.setMsg('Error', `Launch rebalance error ${response.data}`, 'error');
-              history.push('/admin');
             });
-          modals.info.setMsg('Success', 'Put rebalance success', 'success');
-          modals.rebalance.close();
         })
         .catch((err: ProviderRpcError) => {
           const { message } = err;
