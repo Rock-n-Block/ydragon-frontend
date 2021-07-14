@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Line } from 'react-chartjs-2';
 
 import PriceDifferenceBag from '../PriceDifferenceBag';
-import { indexesApi } from '../../services/api';
+import { coingeckoApi } from '../../services/api';
 
 import './YDRTokenChart.scss';
 
@@ -147,7 +147,7 @@ const YDRTokenChart: React.FC<TokenChartProps> = ({ price }) => {
   };
 
   const axiosData = useCallback(() => {
-    indexesApi.getYDRTokensChart(days)
+    coingeckoApi.getYDRTokensChart(days)
       .then((res) => {
         console.log('Request chartData success', res.data);
         refDataLength.current = res.data.prices.length;
