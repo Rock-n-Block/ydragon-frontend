@@ -11,12 +11,12 @@ import { IToken } from '../../../components/IndexPage/IndexTable';
 import { ISearchToken } from '../../../components/Search';
 import { ITokensDiff } from '../../../pages/Admin';
 import { coinsApi } from '../../../services/api';
+import { EventValue } from 'rc-picker/lib/interface';
 
 export interface ICreateIndex {
   name: string;
   symbol: string;
-  startDate: string;
-  endDate: string;
+  dateRange: [EventValue<any>, EventValue<any>] | null;
   description: string;
   tokens: Array<ITokensDiff>;
   isLoading?: boolean;
@@ -128,16 +128,17 @@ const CreateIndex: React.FC<FormikProps<ICreateIndex> & ICreateIndex> = observer
       if (value) {
         setFieldValue('startDate', moment(value[0]).format('X'));
         setFieldValue('endDate', moment(value[1]).format('X'));
+        setFieldValue('dateRange', [value[0], value[1]]);
       } else {
         setFieldValue('startDate', '');
         setFieldValue('endDate', '');
       }
     };
 
-    const onRangePickerChange = (value: any, dateString: any) => {
+    /*  const onRangePickerChange = (value: any, dateString: any) => {
       console.log('Selected Time: ', value);
       console.log('Formatted Selected Time: ', dateString);
-    };
+    }; */
     return (
       <Form name="form-create-index" className="form-create-index">
         <div className="form-create-index__inputs">
@@ -167,12 +168,12 @@ const CreateIndex: React.FC<FormikProps<ICreateIndex> & ICreateIndex> = observer
           </div>
         </div>
         <RangePicker
+          value={values.dateRange}
           disabledDate={disabledDate}
           showTime={{
             hideDisabledOptions: true,
           }}
           format="YYYY-MM-DD HH:mm"
-          onChange={onRangePickerChange}
           onOk={onOk}
         />
         <TextArea
@@ -259,14 +260,15 @@ const CreateIndex: React.FC<FormikProps<ICreateIndex> & ICreateIndex> = observer
           <Button
             onClick={() => handleSubmit()}
             disabled={
-              values.isLoading ||
               values.tokens.length === 0 ||
               weightsSum !== '100' ||
               values.name === '' ||
               values.symbol === '' ||
-              values.startDate === '' ||
-              values.endDate === ''
+              values.dateRange === null ||
+              values.dateRange[0] === '' ||
+              values.dateRange[1] === ''
             }
+            loading={values.isLoading}
           >
             Create
           </Button>

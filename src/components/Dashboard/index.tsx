@@ -178,10 +178,9 @@ const Dashboard: React.FC = () => {
                     <div className="index-dashboard__composition">
                       {index.tokens &&
                         index.tokens.slice(0, 3).map((token, i) => (
-                          <>
+                          <React.Fragment key={nextId()}>
                             {+token.current_weight > 0 && (
                               <div
-                                key={nextId()}
                                 className={`index-dashboard__token-percent ${colorsClassNames[i]}`}
                                 style={{
                                   width: `${new BigNumber(token.current_weight)
@@ -192,7 +191,7 @@ const Dashboard: React.FC = () => {
                                 {new BigNumber(token.current_weight).multipliedBy(100).toString()}%
                               </div>
                             )}
-                          </>
+                          </React.Fragment>
                         ))}
                       {index.tokens.length > 3 && (
                         <div
