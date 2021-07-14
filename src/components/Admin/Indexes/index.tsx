@@ -71,7 +71,7 @@ const Indexes: React.FC = observer(() => {
           name: { id: curIndex.id, name: curIndex.name },
           cap: `$${curIndex.market_cap}`,
           price: `$${curIndex.price}`,
-          created: moment(new Date(curIndex.created_at)).format('DD.MM.YYYY'),
+          created: moment(new Date(curIndex.created_at)).format('DD.MM.YY'),
         };
       });
       setDataSource(newData);
