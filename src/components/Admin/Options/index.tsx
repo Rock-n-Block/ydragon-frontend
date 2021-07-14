@@ -100,7 +100,7 @@ const Options: React.FC<OptionsProps> = observer(({ address, onManualInputChange
           )}
           <p className="options__option-name">Automatic rebalancing</p>
         </div>
-        <div className="options__option">
+        <div className="options__option options__option-with-input">
           <div className="options__option__input-wrapper">
             <Input
               type="number"

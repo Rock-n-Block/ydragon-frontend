@@ -52,6 +52,16 @@
     align-items: center;
     gap: 30px;
 
+    &-with-input{
+      @include b('mobile'){
+        flex-direction: column;
+      }
+    }
+    @include b('mobile'){
+      text-align: center;
+      justify-content: center;
+      
+    }
     &__input-wrapper {
       position: relative;
 

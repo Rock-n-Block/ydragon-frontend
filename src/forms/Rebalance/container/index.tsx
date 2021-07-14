@@ -67,17 +67,21 @@ const RebalanceForm: React.FC<RebalanceFormProps> = observer(({ name, tokens, on
           console.log('put rebalance success', data);
           indexesApi
             .launchRebalance(+indexId)
-            .then((response) => {
-              console.log('launch rebalance success', response);
+            .then(() => {
+              modals.info.setMsg('Success', 'launch rebalance success', 'success');
               onStart();
               modals.rebalance.close();
             })
             .catch((err: any) => {
               const { response } = err;
               modals.info.setMsg('Error', `Launch rebalance error ${response.data}`, 'error');
+            })
+            .finally(() => {
+              setFieldValue('isLoading', false);
             });
         })
         .catch((err: ProviderRpcError) => {
+          setFieldValue('isLoading', false);
           const { message } = err;
           modals.info.setMsg('Error', `Put rebalance error ${message}`, 'error');
         });
