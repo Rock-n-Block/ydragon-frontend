@@ -2,6 +2,7 @@ import React, { PropsWithChildren, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button as BtnAntd, ButtonProps } from 'antd';
 import classNames from 'classnames';
+
 import { Tooltip } from '../index';
 
 import './Button.scss';
@@ -71,7 +72,13 @@ const Button: React.FC<IButton> = (props: PropsWithChildren<IButton>) => {
         onBlur={onBlurHandler}
         {...otherButtonProps}
       >
-      {tooltip ? <Tooltip title={tooltip} visible={!user && showTooltip}>{children}</Tooltip> : children}
+        {tooltip ? (
+          <Tooltip title={tooltip} visible={!user && showTooltip}>
+            {children}
+          </Tooltip>
+        ) : (
+          children
+        )}
       </BtnAntd>
     </>
   );

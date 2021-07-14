@@ -10,11 +10,23 @@ export interface TokenMiniProps {
   height?: string;
 }
 
-const TokenMini: React.FC<TokenMiniProps> = ({ icon, name, symbol, width="36", height="36" }) => {
+const TokenMini: React.FC<TokenMiniProps> = ({
+  icon,
+  name,
+  symbol,
+  width = '36',
+  height = '36',
+}) => {
   return (
     <div className="token-mini">
       {icon ? (
-        <img src={icon} alt={`${name} logo`} width={width} height={height} className="token-mini__icon" />
+        <img
+          src={icon}
+          alt={`${name} logo`}
+          width={width}
+          height={height}
+          className="token-mini__icon"
+        />
       ) : (
         <></>
       )}

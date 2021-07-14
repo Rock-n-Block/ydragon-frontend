@@ -132,10 +132,11 @@ const Rebalance: React.FC<FormikProps<IRebalance> & IRebalance> = observer(
                       <Input
                         disabled={tokenDiff.to_delete}
                         name={`tokens[${index}].new_weight`}
-                        value={tokenDiff.new_weight}
+                        value={tokenDiff.new_weight !== '0' ? tokenDiff.new_weight : ''}
                         onChange={handleChange}
                         onBlur={handleBlur}
                         type="number"
+                        placeholder="0"
                       />
                     </div>
 

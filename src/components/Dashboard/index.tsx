@@ -59,152 +59,165 @@ const Dashboard: React.FC = () => {
       <h2 className="section__title text-outline">Indexes</h2>
       <div className="index-dashboard__big">
         <div className="index-dashboard">
-          <div className="index-dashboard__row index-dashboard__row--head">
-            <div className="index-dashboard__col">
-              {/* <div className="index-dashboard__sort index-dashboard__sort--up">Name</div> */}
+          {indexes?.length ? (
+            <div className="index-dashboard__row index-dashboard__row--head">
+              <div className="index-dashboard__col">
+                {/* <div className="index-dashboard__sort index-dashboard__sort--up">Name</div> */}
+              </div>
+              <div className="index-dashboard__col">
+                <div className="index-dashboard__sort">Market cap</div>
+              </div>
+              <div className="index-dashboard__col">
+                <div className="index-dashboard__sort">Price</div>
+              </div>
+              <div className="index-dashboard__col">
+                <div className="index-dashboard__sort">1 Day</div>
+              </div>
+              <div className="index-dashboard__col">
+                <div className="index-dashboard__sort">1 month</div>
+              </div>
+              <div className="index-dashboard__col">
+                <div className="index-dashboard__sort">3 month</div>
+              </div>
+              <div className="index-dashboard__col">
+                <div className="index-dashboard__sort">Since Inception</div>
+              </div>
             </div>
-            <div className="index-dashboard__col">
-              <div className="index-dashboard__sort">Market cap</div>
-            </div>
-            <div className="index-dashboard__col">
-              <div className="index-dashboard__sort">Price</div>
-            </div>
-            <div className="index-dashboard__col">
-              <div className="index-dashboard__sort">1 Day</div>
-            </div>
-            <div className="index-dashboard__col">
-              <div className="index-dashboard__sort">1 month</div>
-            </div>
-            <div className="index-dashboard__col">
-              <div className="index-dashboard__sort">3 month</div>
-            </div>
-            <div className="index-dashboard__col">
-              <div className="index-dashboard__sort">Since Inception</div>
-            </div>
-          </div>
+          ) : (
+            <></>
+          )}
 
-          <div className="index-dashboard__content">
-            <Spinner loading={loading} />
-            {indexes?.map((index: IUserIndex) => (
-              <div className="index-dashboard__item" key={nextId()}>
-                <div className="index-dashboard__row">
-                  <Link to={`/index/${index.id}`} className="index-dashboard__col">
-                    <div className="index-dashboard__info">
-                      <img
-                        src={logo}
-                        alt=""
-                        width="31"
-                        height="28"
-                        className="index-dashboard__icon"
-                      />
+          {indexes?.length ? (
+            <div className="index-dashboard__content">
+              <Spinner loading={loading} />
+              {indexes.map((index: IUserIndex) => (
+                <div className="index-dashboard__item" key={nextId()}>
+                  <div className="index-dashboard__row">
+                    <Link to={`/index/${index.id}`} className="index-dashboard__col">
+                      <div className="index-dashboard__info">
+                        <img
+                          src={logo}
+                          alt=""
+                          width="31"
+                          height="28"
+                          className="index-dashboard__icon"
+                        />
 
-                      <div className="index-dashboard__name">{index.name}</div>
-                    </div>
-                  </Link>
-                  <div className="index-dashboard__col">
-                    <div className="index-dashboard__market-cup">${index.market_cap}</div>
-                  </div>
-                  <div className="index-dashboard__col">
-                    <div className="index-dashboard__price">${index.price}</div>
-                  </div>
-                  <div className="index-dashboard__col">
-                    <div
-                      className={`index-dashboard__percent ${
-                        index.day > 0
-                          ? 'index-dashboard__percent--up'
-                          : 'index-dashboard__percent--down'
-                      }`}
-                    >
-                      {new BigNumber(index.day).multipliedBy(100).toFixed(2)}%
-                    </div>
-                  </div>
-                  <div className="index-dashboard__col">
-                    <div
-                      className={`index-dashboard__percent ${
-                        index.week > 0
-                          ? 'index-dashboard__percent--up'
-                          : 'index-dashboard__percent--down'
-                      }`}
-                    >
-                      {new BigNumber(index.week).multipliedBy(100).toFixed(2)}%
-                    </div>
-                  </div>
-                  <div className="index-dashboard__col">
-                    <div
-                      className={`index-dashboard__percent ${
-                        index.month > 0
-                          ? 'index-dashboard__percent--up'
-                          : 'index-dashboard__percent--down'
-                      }`}
-                    >
-                      {new BigNumber(index.month).multipliedBy(100).toFixed(2)}%
-                    </div>
-                  </div>
-                  <div className="index-dashboard__col">
-                    <div
-                      className={`index-dashboard__percent ${
-                        index.total > 0
-                          ? 'index-dashboard__percent--up'
-                          : 'index-dashboard__percent--down'
-                      }`}
-                    >
-                      {new BigNumber(index.total).multipliedBy(100).toFixed(2)}%
-                    </div>
-                  </div>
-
-                  <div className="index-dashboard__tokens">
-                    {index.tokens &&
-                      index.tokens.slice(0, 3).map((token, i) => (
-                        <div className="index-dashboard__token">
-                          <span className={`index-dashboard__token-color ${colorsClassNames[i]}`} />
-                          <span className="index-dashboard__token-name">{token.symbol}</span>
-                        </div>
-                      ))}
-
-                    {index.tokens.length > 3 && (
-                      <div className="index-dashboard__token">
-                        <span className="index-dashboard__token-color" />
-                        <span className="index-dashboard__token-name">Others</span>
+                        <div className="index-dashboard__name">{index.name}</div>
                       </div>
-                    )}
-                  </div>
-                  <div className="index-dashboard__composition">
-                    {index.tokens &&
-                      index.tokens.slice(0, 3).map((token, i) => (
-                        <>
-                          {+token.current_weight > 0 && (
-                            <div
-                              className={`index-dashboard__token-percent ${colorsClassNames[i]}`}
-                              style={{
-                                width: `${new BigNumber(token.current_weight)
-                                  .multipliedBy(100)
-                                  .toString()}%`,
-                              }}
-                            >
-                              {new BigNumber(token.current_weight).multipliedBy(100).toString()}%
-                            </div>
-                          )}
-                        </>
-                      ))}
-                    {index.tokens.length > 3 && (
+                    </Link>
+                    <div className="index-dashboard__col">
+                      <div className="index-dashboard__market-cup">${index.market_cap}</div>
+                    </div>
+                    <div className="index-dashboard__col">
+                      <div className="index-dashboard__price">${index.price}</div>
+                    </div>
+                    <div className="index-dashboard__col">
                       <div
-                        className="index-dashboard__token-percent"
-                        style={{
-                          width: `${calculateOthersWeight(index).multipliedBy(100).toString()}%`,
-                        }}
+                        className={`index-dashboard__percent ${
+                          index.day > 0
+                            ? 'index-dashboard__percent--up'
+                            : 'index-dashboard__percent--down'
+                        }`}
                       >
-                        {calculateOthersWeight(index).multipliedBy(100).toString()}%
+                        {new BigNumber(index.day).multipliedBy(100).toFixed(2)}%
                       </div>
-                    )}
+                    </div>
+                    <div className="index-dashboard__col">
+                      <div
+                        className={`index-dashboard__percent ${
+                          index.week > 0
+                            ? 'index-dashboard__percent--up'
+                            : 'index-dashboard__percent--down'
+                        }`}
+                      >
+                        {new BigNumber(index.week).multipliedBy(100).toFixed(2)}%
+                      </div>
+                    </div>
+                    <div className="index-dashboard__col">
+                      <div
+                        className={`index-dashboard__percent ${
+                          index.month > 0
+                            ? 'index-dashboard__percent--up'
+                            : 'index-dashboard__percent--down'
+                        }`}
+                      >
+                        {new BigNumber(index.month).multipliedBy(100).toFixed(2)}%
+                      </div>
+                    </div>
+                    <div className="index-dashboard__col">
+                      <div
+                        className={`index-dashboard__percent ${
+                          index.total > 0
+                            ? 'index-dashboard__percent--up'
+                            : 'index-dashboard__percent--down'
+                        }`}
+                      >
+                        {new BigNumber(index.total).multipliedBy(100).toFixed(2)}%
+                      </div>
+                    </div>
+
+                    <div className="index-dashboard__tokens">
+                      {index.tokens &&
+                        index.tokens.slice(0, 3).map((token, i) => (
+                          <div key={nextId()} className="index-dashboard__token">
+                            <span
+                              className={`index-dashboard__token-color ${colorsClassNames[i]}`}
+                            />
+                            <span className="index-dashboard__token-name">{token.symbol}</span>
+                          </div>
+                        ))}
+
+                      {index.tokens.length > 3 && (
+                        <div className="index-dashboard__token">
+                          <span className="index-dashboard__token-color" />
+                          <span className="index-dashboard__token-name">Others</span>
+                        </div>
+                      )}
+                    </div>
+                    <div className="index-dashboard__composition">
+                      {index.tokens &&
+                        index.tokens.slice(0, 3).map((token, i) => (
+                          <>
+                            {+token.current_weight > 0 && (
+                              <div
+                                key={nextId()}
+                                className={`index-dashboard__token-percent ${colorsClassNames[i]}`}
+                                style={{
+                                  width: `${new BigNumber(token.current_weight)
+                                    .multipliedBy(100)
+                                    .toString()}%`,
+                                }}
+                              >
+                                {new BigNumber(token.current_weight).multipliedBy(100).toString()}%
+                              </div>
+                            )}
+                          </>
+                        ))}
+                      {index.tokens.length > 3 && (
+                        <div
+                          className="index-dashboard__token-percent"
+                          style={{
+                            width: `${calculateOthersWeight(index).multipliedBy(100).toString()}%`,
+                          }}
+                        >
+                          {calculateOthersWeight(index).multipliedBy(100).toString()}%
+                        </div>
+                      )}
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          ) : (
+            <div className="no-indexes">
+              <p className="no-indexes__text text-gradient">There is no indexes yet</p>
+            </div>
+          )}
         </div>
       </div>
       <div className="index-dashboard__small">
-        {indexes && indexes.map((index) => <IndexSmallCard {...index} />)}
+        {indexes && indexes.map((index) => <IndexSmallCard key={nextId()} {...index} />)}
       </div>
     </section>
   );

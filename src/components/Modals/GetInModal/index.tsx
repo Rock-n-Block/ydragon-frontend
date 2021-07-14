@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
+import nextId from 'react-id-generator';
 import { observer } from 'mobx-react-lite';
 
 import { indexesApi } from '../../../services/api';
@@ -42,7 +43,7 @@ const userColumns: ITableColumn[] = [
 const GetInModal: React.FC = observer(() => {
   const { modals, user } = useMst();
   const walletConnector = useWalletConnectorContext();
- 
+
   const handleClose = (): void => {
     modals.getIn.close();
   };
@@ -68,11 +69,13 @@ const GetInModal: React.FC = observer(() => {
   const handleSelectChange = (value: any) => {
     console.log(value);
     setFirstCurrency(value);
+    setPayInput('');
   };
   const handleApprove = (): void => {
     walletConnector.metamaskService
       .approve(firstCurrency, undefined, modals.getIn.address)
       .then(() => {
+        setPayInput('');
         setIsNeedApprove(false);
         modals.info.setMsg('Success', `Approve of ${firstCurrency} to IME success`, 'success');
       })
@@ -85,6 +88,7 @@ const GetInModal: React.FC = observer(() => {
     walletConnector.metamaskService
       .enterIme(payInput, firstCurrency, modals.getIn.address)
       .then(() => {
+        setPayInput('');
         modals.info.setMsg('Success', 'Success mint', 'success');
       })
       .catch((err: ProviderRpcError) => {
@@ -120,36 +124,38 @@ const GetInModal: React.FC = observer(() => {
     }
   }, [checkAllowance, user.address]);
   useEffect(() => {
-      if (currentIme) {
-        setTotalData(
+    if (currentIme) {
+      setTotalData(
+        currentIme.tokens.map((token) => {
+          return [
+            {
+              icon: token.image,
+              name: token.name,
+              symbol: token.symbol,
+              key: nextId(),
+            } as TokenMiniProps,
+            token.total_quantity,
+            `$${token.price}`,
+            `$${token.total_price}`,
+          ];
+        }),
+      );
+      if (user.address) {
+        setUserData(
           currentIme.tokens.map((token) => {
             return [
               {
                 icon: token.image,
                 name: token.name,
                 symbol: token.symbol,
+                key: nextId(),
               } as TokenMiniProps,
-              token.total_quantity,
-              `$${token.price}`,
-              `$${token.total_price}`,
+              token.user_quantity ?? '0',
             ];
           }),
         );
-        if (user.address) {
-          setUserData(
-            currentIme.tokens.map((token) => {
-              return [
-                {
-                  icon: token.image,
-                  name: token.name,
-                  symbol: token.symbol,
-                } as TokenMiniProps,
-                token.user_quantity ?? '0',
-              ];
-            }),
-          );
-        }
       }
+    }
   }, [user.address, currentIme]);
   return (
     <Modal isVisible={!!modals.getIn.id} handleCancel={handleClose} className="m-get-in">

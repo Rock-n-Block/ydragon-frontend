@@ -6,6 +6,7 @@ import moment from 'moment';
 
 import DangerCircle from '../../../assets/img/icons/icon-danger-circle.svg';
 import { Button, Input, RangePicker, Search, TextArea, TokenMini } from '../../../components';
+// import { InputNumber } from '../../../components/Input';
 import { IToken } from '../../../components/IndexPage/IndexTable';
 import { ISearchToken } from '../../../components/Search';
 import { ITokensDiff } from '../../../pages/Admin';
@@ -24,11 +25,62 @@ export interface ICreateIndex {
 const CreateIndex: React.FC<FormikProps<ICreateIndex> & ICreateIndex> = observer(
   ({ setFieldValue, handleChange, handleBlur, values, handleSubmit }) => {
     const [searchTokens, setSearchTokens] = useState<ISearchToken[]>([] as ISearchToken[]);
+    const [validation, setValidation] = useState<any>({
+      name: true,
+      symbol: true,
+    });
+    const onBlurHandler = (value: string) => {
+      switch (value) {
+        case 'name':
+          if (!values.name) {
+            setValidation((prevState: any) => ({
+              ...prevState,
+              name: false,
+            }));
+          }
+          break;
+        case 'symbol':
+          if (!values.symbol) {
+            setValidation((prevState: any) => ({
+              ...prevState,
+              symbol: false,
+            }));
+          }
+          break;
+        default:
+          break;
+      }
+    };
 
-    /*  const disabledDate = (current: any) => {
+    const onChangeHandler = (e: any, value: string) => {
+      switch (value) {
+        case 'name':
+          setValidation((prevState: any) => ({
+            ...prevState,
+            name: true,
+          }));
+          break;
+        case 'symbol':
+          setValidation((prevState: any) => ({
+            ...prevState,
+            symbol: true,
+          }));
+          break;
+        default:
+          break;
+      }
+      handleChange(e);
+    };
+    const onTokenInputHandler = (e: any) => {
+      if (+e.target.value < 0) {
+        e.target.value = '';
+      }
+      handleChange(e);
+    };
+    const disabledDate = (current: any) => {
       // Can not select days before today and today
       return current && current < moment().startOf('day');
-    }; */
+    };
     const weightsSum = values.tokens
       .map((tokenDiff) => +tokenDiff.new_weight)
       .reduce((prevSum, newItem) => prevSum.plus(newItem), new BigNumber(0))
@@ -95,8 +147,10 @@ const CreateIndex: React.FC<FormikProps<ICreateIndex> & ICreateIndex> = observer
               name="name"
               placeholder="Enter index name"
               value={values.name}
-              onChange={handleChange}
-              onBlur={handleBlur}
+              onChange={(e) => onChangeHandler(e, 'name')}
+              onBlur={() => onBlurHandler('name')}
+              className="form-create-index__input-name"
+              error={!validation.name}
             />
           </div>
           <div className="form-create-index__input">
@@ -105,13 +159,15 @@ const CreateIndex: React.FC<FormikProps<ICreateIndex> & ICreateIndex> = observer
               name="symbol"
               placeholder="BTC"
               value={values.symbol}
-              onChange={handleChange}
-              onBlur={handleBlur}
+              onChange={(e) => onChangeHandler(e, 'symbol')}
+              onBlur={() => onBlurHandler('symbol')}
+              className="form-create-index__input-symbol"
+              error={!validation.symbol}
             />
           </div>
         </div>
         <RangePicker
-          // disabledDate={disabledDate}
+          disabledDate={disabledDate}
           showTime={{
             hideDisabledOptions: true,
           }}
@@ -153,10 +209,12 @@ const CreateIndex: React.FC<FormikProps<ICreateIndex> & ICreateIndex> = observer
                             disabled={tokenDiff.to_delete}
                             name={`tokens[${index}].new_weight`}
                             value={tokenDiff.new_weight === '0' ? '' : tokenDiff.new_weight}
-                            onChange={handleChange}
+                            onChange={(e) => onTokenInputHandler(e)}
                             onBlur={handleBlur}
-                            placeholder='0'
+                            placeholder="0"
                             type="number"
+                            className="token-weights-item__input-token"
+                            error={+tokenDiff.new_weight > 100}
                           />
                         </div>
 
@@ -173,8 +231,10 @@ const CreateIndex: React.FC<FormikProps<ICreateIndex> & ICreateIndex> = observer
                   ))}
                   <div className="token-weights__total">
                     <h3 className="token-weights__total-name">Total weight</h3>
-                    <div className="input-border">
-                      <span className="input">{weightsSum}</span>
+                    <div
+                      className={`input-border weights-sum${+weightsSum > 100 ? '--error' : ''}`}
+                    >
+                      <span className="input">{+weightsSum > 0 ? weightsSum : '0'}</span>
                     </div>
                   </div>
                 </>

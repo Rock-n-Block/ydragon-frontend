@@ -2,17 +2,17 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { Select } from 'antd';
 import { observer } from 'mobx-react-lite';
 
+import arrow from '../../assets/img/icons/icon-arrow-yellow.svg';
+import bncDark from '../../assets/img/icons/icon-binance-dark.svg';
+import bncLight from '../../assets/img/icons/icon-binance-light.svg';
+import plgDark from '../../assets/img/icons/icon-polygon-dark.svg';
+import plgLight from '../../assets/img/icons/icon-polygon-light.svg';
+import { networksApi } from '../../services/api';
 import { useWalletConnectorContext } from '../../services/walletConnect';
 import { useMst } from '../../store/store';
-import arrow from '../../assets/img/icons/icon-arrow-yellow.svg';
-import bncLight from '../../assets/img/icons/icon-binance-light.svg';
-import bncDark from '../../assets/img/icons/icon-binance-dark.svg';
-import plgLight from '../../assets/img/icons/icon-polygon-light.svg';
-import plgDark from '../../assets/img/icons/icon-polygon-dark.svg';
+import TokenMini from '../TokenMini';
 
 import './SelectNetwork.scss';
-import TokenMini from '../TokenMini';
-import { networksApi } from '../../services/api';
 
 const { Option } = Select;
 
