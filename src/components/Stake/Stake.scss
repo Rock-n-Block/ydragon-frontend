@@ -187,6 +187,19 @@
     width: 100%;
     max-width: 500px;
 
+    @include b('mobile'){
+      position: relative;
+      .ant-input-number-input-wrap{
+        position: absolute;
+        top: 20px;
+      }
+      .stake-amount__all{
+        position: absolute;
+        top: 61px;
+        left: calc(50% - 93px/2)
+      }
+    }
+
     .input-border {
       width: 100%;
       height: 100px;

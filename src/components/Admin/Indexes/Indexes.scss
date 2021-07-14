@@ -65,6 +65,16 @@
   .spinner {
     padding-top: 50px;
   }
+
+  .section__title-row{
+    @include b ('mobile'){
+      flex-direction: column;
+      gap: 30px;
+      .index-create-btn{
+        margin: 0 auto;
+      }
+    }
+  }
 }
 
 .indexs__table-big {
