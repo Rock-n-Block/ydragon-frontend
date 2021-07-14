@@ -80,7 +80,7 @@ const Index: React.FC = observer(() => {
           {
             label: 'Inception Date',
             value: moment(indexData?.created_at ?? moment())
-              .format('DD.MM.YYYY')
+              .format('DD.MM.YY')
               .toString(),
           },
         ]}

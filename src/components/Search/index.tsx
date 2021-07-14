@@ -46,15 +46,12 @@ const Search: React.FC<SearchProps> = ({ data, className, onChange, onPick }) =>
           onChange={(e) => handleChange(e)}
           className="search__input"
         />
-        {!newTokenName ? (
-          <Button styledType="outline" colorScheme="green" className="search__btn">
-            <GreenPlus />
-            Add Token
-          </Button>
-        ) : (
+        {newTokenName ? (
           <Button styledType="clear" className="search__btn-clear" onClick={handleClear}>
             <img src={Clear} alt="clear" />
           </Button>
+        ) : (
+          <></>
         )}
       </div>
 

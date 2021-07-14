@@ -116,7 +116,7 @@
   overflow: hidden;
 
   height: 120px;
-  @include b('tablet') {
+  @media (max-width: 1095px) {
     width: 100%;
 
     transition: all 0.4s;
@@ -137,7 +137,8 @@
     display: none;
 
     outline: none;
-    @include b('tablet') {
+    @media (max-width: 1095px) {
+      
       position: relative;
       top: 0;
       left: 0;
@@ -146,6 +147,15 @@
 
       cursor: pointer;
     }
+    // @include b('tablet') {
+    //   position: relative;
+    //   top: 0;
+    //   left: 0;
+
+    //   display: block;
+
+    //   cursor: pointer;
+    // }
   }
 
   &__inner {
@@ -157,7 +167,7 @@
     grid-template-columns: 1fr 410px 1fr;
 
     align-items: center;
-    @include b('tablet') {
+    @media (max-width: 1095px) {
       margin: 0 auto;
 
       display: flex;
@@ -172,7 +182,7 @@
   &__logo {
     display: flex;
     align-items: center;
-    @include b('tablet') {
+    @media (max-width: 1095px) {
       margin: 0 auto;
     }
   }
@@ -209,7 +219,7 @@
 
   &__nav,
   &__sign {
-    @include b('tablet') {
+    @media (max-width: 1095px) {
       display: none;
     }
   }

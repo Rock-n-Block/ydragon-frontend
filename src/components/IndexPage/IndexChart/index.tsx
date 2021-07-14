@@ -13,7 +13,6 @@ interface IndexChartProps {
 
 const IndexChart: React.FC<IndexChartProps> = ({ indexId }) => {
   const [days, setDays] = useState('1');
-  const [dayAllowed, setDayAllowed] = useState<boolean>(false);
   const refDataLength = useRef(1);
   const refPrice = useRef(0.000001);
   const daysFromUrl = days;
@@ -107,15 +106,18 @@ const IndexChart: React.FC<IndexChartProps> = ({ indexId }) => {
     }
   };
 
-  const parseDate = useCallback((date: Date) => {
-    if (daysFromUrl === '1') {
-      return `${date.getHours()}:${date.getMinutes()}`;
-    }
-    if (!dayAllowed && daysFromUrl === 'max') {
-      return `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`;
-    }
-    return `${date.getMonth() + 1}/${date.getDate()} ${date.getHours()}:${date.getMinutes()}`;
-  }, [daysFromUrl, dayAllowed]);
+  const parseDate = useCallback(
+    (date: Date, dayAllowed?: boolean) => {
+      if (daysFromUrl === '1') {
+        return `${date.getHours()}:${date.getMinutes()}`;
+      }
+      if (daysFromUrl === 'max' && !dayAllowed) {
+        return `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`;
+      }
+      return `${date.getMonth() + 1}/${date.getDate()} ${date.getHours()}:${date.getMinutes()}`;
+    },
+    [daysFromUrl],
+  );
 
   const getElementAtEvent = (element: string | any[]) => {
     if (!element.length) return;
@@ -132,13 +134,17 @@ const IndexChart: React.FC<IndexChartProps> = ({ indexId }) => {
   const getChartData = (data: any): any => {
     const datasetsData: { time: string; data: number }[] = [];
     const arr: number[] = [];
+    const dayAllowed =
+      (new Date(data[data.length - 1].time).getTime() - new Date(data[0].time).getTime()) /
+        (3600000 * 24) <
+      1;
     if (data)
       data.forEach((item: any) => {
         const date = new Date(item.time);
         if (!datasetsData.find((element: any) => element.time === parseDate(date))) {
           arr.push(Number(item.market_cap));
           datasetsData.push({
-            time: parseDate(date),
+            time: parseDate(date, dayAllowed),
             data: Number(item.market_cap),
           });
         }
@@ -168,12 +174,6 @@ const IndexChart: React.FC<IndexChartProps> = ({ indexId }) => {
       .getIndexTokensChart(indexId, days)
       .then((res) => {
         console.log('Request chartData success', res.data);
-        const dayAllowedCalc =
-          (new Date(res.data[res.data.length - 1].time).getTime() -
-            new Date(res.data[0].time).getTime()) /
-            (3600000 * 24) <
-          1;
-        setDayAllowed(dayAllowedCalc);
         const currentPrice = res.data[res.data.length - 1].market_cap;
         setChartData(getChartData(res.data));
         if (refPrice.current <= currentPrice) refPrice.current = currentPrice;
