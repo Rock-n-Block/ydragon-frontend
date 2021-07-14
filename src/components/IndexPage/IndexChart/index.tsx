@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Line } from 'react-chartjs-2';
 
 import PriceDifferenceBag from '../../PriceDifferenceBag';
-import { coingeckoApi } from '../../../services/api';
+import { indexesApi } from '../../../services/api';
 
 import './IndexChart.scss';
 
@@ -107,16 +107,15 @@ const IndexChart: React.FC<IndexChartProps> = ({ indexId }) => {
     }
   };
 
-  const parseDate = (date: Date) => {
-    console.log(dayAllowed);
+  const parseDate = useCallback((date: Date) => {
     if (daysFromUrl === '1') {
       return `${date.getHours()}:${date.getMinutes()}`;
     }
-    if ( !dayAllowed && daysFromUrl === 'max') {
+    if (!dayAllowed && daysFromUrl === 'max') {
       return `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`;
     }
     return `${date.getMonth() + 1}/${date.getDate()} ${date.getHours()}:${date.getMinutes()}`;
-  };
+  }, [daysFromUrl, dayAllowed]);
 
   const getElementAtEvent = (element: string | any[]) => {
     if (!element.length) return;
@@ -165,7 +164,7 @@ const IndexChart: React.FC<IndexChartProps> = ({ indexId }) => {
   };
 
   const axiosData = useCallback(() => {
-    coingeckoApi
+    indexesApi
       .getIndexTokensChart(indexId, days)
       .then((res) => {
         console.log('Request chartData success', res.data);
@@ -174,7 +173,6 @@ const IndexChart: React.FC<IndexChartProps> = ({ indexId }) => {
             new Date(res.data[0].time).getTime()) /
             (3600000 * 24) <
           1;
-        console.log(dayAllowedCalc)
         setDayAllowed(dayAllowedCalc);
         const currentPrice = res.data[res.data.length - 1].market_cap;
         setChartData(getChartData(res.data));

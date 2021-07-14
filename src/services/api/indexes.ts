@@ -28,8 +28,6 @@ export default {
     axiosWithToken.delete(`/indexes/${indexId}/rebalance/tokens/${tokenId}/`),
   addTokenBackToIndex: (indexId: number, tokenId: number) =>
     axiosWithToken.put(`/indexes/${indexId}/rebalance/tokens/${tokenId}/`, {}),
-  getYDRTokensChart: (days: string) => axios.get(`https://api.coingecko.com/api/v3/coins/rubic/market_chart?vs_currency=usd&days=${days}`),
-  getIndexTokensChart: (indexId: string,days: string) => axios.get(`https://dev-ydragon.rocknblock.io/api/indexes/info/${indexId}${
-    days !== 'max' ? `?days=${days}` : ''
-  }`),
+  getIndexTokensChart: (indexId: string, days: string) =>
+    axios.get(`/indexes/info/${indexId}${days !== 'max' ? `?days=${days}` : ''}`),
 };
