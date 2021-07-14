@@ -137,6 +137,8 @@ const Rebalance: React.FC<FormikProps<IRebalance> & IRebalance> = observer(
                         onBlur={handleBlur}
                         type="number"
                         placeholder="0"
+                        className="token-weights-item__input-token"
+                        error={+tokenDiff.new_weight > 100}
                       />
                     </div>
 
@@ -168,8 +170,8 @@ const Rebalance: React.FC<FormikProps<IRebalance> & IRebalance> = observer(
               )}
               <div className="token-weights__total">
                 <h3 className="token-weights__total-name">Total weight</h3>
-                <div className="input-border">
-                  <span className="input">{weightsSum}</span>
+                <div className={`input-border weights-sum${+weightsSum > 100 ? '--error' : ''}`}>
+                  <span className="input">{+weightsSum > 0 ? weightsSum : '0'}</span>
                 </div>
               </div>
 

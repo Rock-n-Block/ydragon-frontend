@@ -67,8 +67,8 @@ const RebalanceForm: React.FC<RebalanceFormProps> = observer(({ name, tokens, on
           console.log('put rebalance success', data);
           indexesApi
             .launchRebalance(+indexId)
-            .then((response) => {
-              console.log('launch rebalance success', response);
+            .then(() => {
+              modals.info.setMsg('Success', 'launch rebalance success', 'success');
               onStart();
               modals.rebalance.close();
             })
