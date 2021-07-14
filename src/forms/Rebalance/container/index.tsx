@@ -72,9 +72,9 @@ const RebalanceForm: React.FC<RebalanceFormProps> = observer(({ name, tokens, on
               console.log('launch rebalance success', response);
               onStart();
             })
-            .catch((err: ProviderRpcError) => {
-              const { message } = err;
-              modals.info.setMsg('Error', `Launch rebalance error ${message}`, 'error');
+            .catch((err: any) => {
+              const { response } = err;
+              modals.info.setMsg('Error', `Launch rebalance error ${response.data}`, 'error');
               history.push('/admin');
             });
           modals.info.setMsg('Success', 'Put rebalance success', 'success');

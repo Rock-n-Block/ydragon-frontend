@@ -10,8 +10,6 @@ import { TokenPanel } from '../../components';
 import { IndexChart, IndexTable, RebalanceHistory } from '../../components/IndexPage';
 import { ITableToken, IToken } from '../../components/IndexPage/IndexTable';
 import { TradeIndexModal } from '../../components/Modals';
-import MintModal from '../../components/Modals/MintModal';
-import RedeemModal from '../../components/Modals/RedeemModal';
 import SmallTableCard from '../../components/SmallTableCard/index';
 import { indexesApi } from '../../services/api';
 import { useMst } from '../../store/store';
@@ -141,8 +139,6 @@ const Index: React.FC = observer(() => {
         tokenId={indexData?.id ?? 0}
         indexAddress={indexData?.address ?? ''}
       />
-      <MintModal />
-      <RedeemModal />
     </main>
   );
 });
