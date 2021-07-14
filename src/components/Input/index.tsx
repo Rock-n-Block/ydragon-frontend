@@ -19,10 +19,15 @@ import { ITokenMini } from '../../utils/tokenMini';
 const { Option } = Select;
 const { TextArea } = InputAntd;
 
-const Input: React.FC<InputProps> = (props) => {
-  const { className, ...otherProps } = props;
+interface InputWithProps extends InputProps {
+  error?: boolean,
+  className?: string
+}
+
+const Input: React.FC<InputWithProps> = (props) => {
+  const { className, error, ...otherProps } = props;
   return (
-    <div className={`input-border ${className ?? ''}`}>
+    <div className={`input-border ${className ?? ''}${error ? '--error' : ''}`}>
       <InputAntd className="input" {...otherProps} />
     </div>
   );

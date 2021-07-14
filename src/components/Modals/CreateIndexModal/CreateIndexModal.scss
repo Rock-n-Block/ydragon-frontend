@@ -8,6 +8,11 @@
       border-bottom: 1px solid rgba($white, 0.1);
     }
 
+    .ant-picker,
+    .ant-picker-range {
+      background: $dark-bg;
+    }
+
     .form-create-index {
       .ant-input {
         background: $dark-bg;
@@ -125,23 +130,6 @@
 
         max-width: 135px;
       }
-    }
-  }
-
-  .form-create-index__input {
-    &-name,
-    &-symbol,
-    &-date {
-      &--error {
-        background: $red;
-      }
-    }
-  }
-
-  .weights-sum,
-  .token-weights-item__input-token {
-    &--error {
-      background: $red;
     }
   }
 }

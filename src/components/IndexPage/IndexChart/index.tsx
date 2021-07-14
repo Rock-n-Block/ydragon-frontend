@@ -1,8 +1,9 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Line } from 'react-chartjs-2';
-import axios, { AxiosResponse } from 'axios';
+import { AxiosResponse } from 'axios';
 
 import PriceDifferenceBag from '../../PriceDifferenceBag';
+import { indexesApi } from '../../../services/api';
 
 import './IndexChart.scss';
 
@@ -13,12 +14,12 @@ interface IndexChartProps {
 
 const IndexChart: React.FC<IndexChartProps> = ({ indexId }) => {
   const [days, setDays] = useState('1');
-  const url = `https://dev-ydragon.rocknblock.io/api/indexes/info/${indexId}${
-    days ? `?days=${days}` : ''
-  }`;
+  const [dayAllowed, setDayAllowed] = useState(true);
   const refDataLength = useRef(1);
   const refPrice = useRef(0.000001);
   const daysFromUrl = days;
+  const refMax = useRef(0);
+  const refMin = useRef(0);
   const [chartData, setChartData] = useState({
     labels: [],
     datasets: [
@@ -68,6 +69,10 @@ const IndexChart: React.FC<IndexChartProps> = ({ indexId }) => {
           lineWidth: 0.5,
         },
       },
+      yAxis: {
+        suggestedMin: refMin.current,
+        suggestedMax: refMax.current,
+      },
     },
     elements: {
       point: {
@@ -96,7 +101,7 @@ const IndexChart: React.FC<IndexChartProps> = ({ indexId }) => {
         setDays('90');
         break;
       case 'ALL':
-        setDays('');
+        setDays('max');
         break;
       default:
         break;
@@ -104,12 +109,12 @@ const IndexChart: React.FC<IndexChartProps> = ({ indexId }) => {
   };
 
   const parseDate = (date: Date) => {
-    if (daysFromUrl === '1') {
+    if (daysFromUrl === '1' || dayAllowed) {
       return `${date.getHours()}:${date.getMinutes()}`;
     }
-    if (daysFromUrl === 'max') {
-      return `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`;
-    }
+      if (daysFromUrl === 'max') {
+        return `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`;
+      }
     return `${date.getMonth() + 1}/${date.getDate()} ${date.getHours()}:${date.getMinutes()}`;
   };
 
@@ -127,15 +132,27 @@ const IndexChart: React.FC<IndexChartProps> = ({ indexId }) => {
 
   const getChartData = (data: any): any => {
     const datasetsData: { time: string; data: number }[] = [];
-    console.log('getChart', data)
+    const arr: number[] = [];
+    setDayAllowed(
+      (new Date(data[data.length - 1].time).getTime() - new Date(data[0].time).getTime()) /
+        (3600000 * 24) <
+        1,
+    );
     if (data)
       data.forEach((item: any) => {
         const date = new Date(item.time);
-        datasetsData.push({
-          time: parseDate(date),
-          data: item.market_cap,
-        });
+        if (!datasetsData.find((element: any) => element.time === parseDate(date))) {
+          arr.push(Number(item.market_cap));
+          datasetsData.push({
+            time: parseDate(date),
+            data: Number(item.market_cap),
+          });
+        }
       });
+    refDataLength.current = datasetsData.length;
+    refMax.current = Math.max(...arr) + 1;
+    refMin.current = Math.min(...arr) - 1;
+    console.log(datasetsData);
     return {
       labels: [],
       datasets: [
@@ -154,24 +171,22 @@ const IndexChart: React.FC<IndexChartProps> = ({ indexId }) => {
   };
 
   const axiosData = useCallback(() => {
-    axios
-      .get(url)
+    indexesApi
+      .getIndexTokensChart(indexId, days)
       .then((res: AxiosResponse) => {
         console.log('Request chartData success', res.data);
-        refDataLength.current = res.data.length;
-        const currentPrice = res.data[refDataLength.current - 1].market_cap;
+        // refDataLength.current = res.data.length;
+        const currentPrice = res.data[res.data.length - 1].market_cap;
         setChartData(getChartData(res.data));
-        console.log(refPrice.current, res.data[refDataLength.current - 1])
         if (refPrice.current <= currentPrice) refPrice.current = currentPrice;
         setClickedElement(refPrice.current);
-    })
-    
-    .catch((err: any) => {
-      console.log('Request chartData error', err);
-    });
+      })
+      .catch((err: any) => {
+        console.log('Request chartData error', err);
+      });
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [url]);
+  }, [indexId, days]);
 
   useEffect(() => {
     axiosData();

@@ -28,7 +28,6 @@ const CreateIndex: React.FC<FormikProps<ICreateIndex> & ICreateIndex> = observer
     const [validation, setValidation] = useState<any>({
       name: true,
       symbol: true,
-      date: true,
     });
     const onBlurHandler = (value: string) => {
       switch (value) {
@@ -78,10 +77,10 @@ const CreateIndex: React.FC<FormikProps<ICreateIndex> & ICreateIndex> = observer
       }
       handleChange(e);
     };
-    /*  const disabledDate = (current: any) => {
+    const disabledDate = (current: any) => {
       // Can not select days before today and today
       return current && current < moment().startOf('day');
-    }; */
+    };
     const weightsSum = values.tokens
       .map((tokenDiff) => +tokenDiff.new_weight)
       .reduce((prevSum, newItem) => prevSum.plus(newItem), new BigNumber(0))
@@ -127,19 +126,8 @@ const CreateIndex: React.FC<FormikProps<ICreateIndex> & ICreateIndex> = observer
     // rangepicker
     const onOk = (value: any[] | null) => {
       if (value) {
-        if (moment.now() < +value[0].format('x')) {
-          setValidation((prevState: any) => ({
-            ...prevState,
-            date: true,
-          }));
-          setFieldValue('startDate', moment(value[0]).format('X'));
-          setFieldValue('endDate', moment(value[1]).format('X'));
-        } else {
-          setValidation((prevState: any) => ({
-            ...prevState,
-            date: false,
-          }));
-        }
+        setFieldValue('startDate', moment(value[0]).format('X'));
+        setFieldValue('endDate', moment(value[1]).format('X'));
       } else {
         setFieldValue('startDate', '');
         setFieldValue('endDate', '');
@@ -160,10 +148,9 @@ const CreateIndex: React.FC<FormikProps<ICreateIndex> & ICreateIndex> = observer
               placeholder="Enter index name"
               value={values.name}
               onChange={(e) => onChangeHandler(e, 'name')}
-              // onChange={handleChange}
               onBlur={() => onBlurHandler('name')}
-              className={`form-create-index__input-name${validation.name ? '' : '--error'}`}
-              // onBlur={handleBlur}
+              className="form-create-index__input-name"
+              error={!validation.name}
             />
           </div>
           <div className="form-create-index__input">
@@ -174,19 +161,19 @@ const CreateIndex: React.FC<FormikProps<ICreateIndex> & ICreateIndex> = observer
               value={values.symbol}
               onChange={(e) => onChangeHandler(e, 'symbol')}
               onBlur={() => onBlurHandler('symbol')}
-              className={`form-create-index__input-symbol${validation.symbol ? '' : '--error'}`}
+              className="form-create-index__input-symbol"
+              error={!validation.symbol}
             />
           </div>
         </div>
         <RangePicker
-          // disabledDate={disabledDate}
+          disabledDate={disabledDate}
           showTime={{
             hideDisabledOptions: true,
           }}
           format="YYYY-MM-DD HH:mm"
           onChange={onRangePickerChange}
           onOk={onOk}
-          className={`form-create-index__input-date${validation.date ? '' : '--error'}`}
         />
         <TextArea
           autoSize={{ minRows: 2 }}
@@ -226,9 +213,8 @@ const CreateIndex: React.FC<FormikProps<ICreateIndex> & ICreateIndex> = observer
                             onBlur={handleBlur}
                             placeholder="0"
                             type="number"
-                            className={`token-weights-item__input-token${
-                              +tokenDiff.new_weight > 100 ? '--error' : ''
-                            }`}
+                            className="token-weights-item__input-token"
+                            error={+tokenDiff.new_weight > 100}
                           />
                         </div>
 

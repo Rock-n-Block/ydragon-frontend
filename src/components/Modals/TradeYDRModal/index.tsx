@@ -238,7 +238,7 @@ const TradeYDRModal: React.FC = observer(() => {
           )}
         </div>
         {isNeedApprove && firstCurrency !== 'BNB' && (
-          <Button className="m-trade-ydr__btn" onClick={handleApprove}>
+          <Button className="m-trade-ydr__btn" onClick={handleApprove} loading={isLoading}>
             Approve
           </Button>
         )}

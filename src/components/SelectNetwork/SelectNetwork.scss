@@ -2,11 +2,11 @@
 @import '../../styles/mixins';
 
 .dark {
-  .select-network {
-    .ant-select-selector {
-      color: $white !important;
-      background: #0c1735 !important;
-      border: 2px solid #647091 !important;
+  .select-network,.ant-select:not(.ant-select-customize-input) {
+     .ant-select-selector {
+      color: $white ;
+      background: #0c1735 ;
+      border-color:#647091 ;
     }
   }
 
@@ -22,11 +22,11 @@
 }
 
 .light {
-  .select-network {
-    .ant-select-selector {
-      color: $black !important;
-      background: $white !important;
-      border: 2px solid #D2D3D7 !important;
+  .select-network,.ant-select:not(.ant-select-customize-input) {
+     .ant-select-selector {
+      color: $black ;
+      background: $white ;
+      border-color:#D2D3D7 ;
     }
   }
   .select-network__dropdown {
@@ -37,11 +37,12 @@
   }
 }
 
-.select-network {
+.select-network{
   .ant-select-selector {
     box-sizing: border-box;
-    padding: 0 7px !important;
+    padding: 0 7px ;
     border-radius: 10px !important;
+    border-width: 2px !important;
   }
 }
 

@@ -1,8 +1,8 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Line } from 'react-chartjs-2';
-import axios from 'axios';
 
 import PriceDifferenceBag from '../PriceDifferenceBag';
+import { indexesApi } from '../../services/api';
 
 import './YDRTokenChart.scss';
 
@@ -30,7 +30,6 @@ const YDRTokenChart: React.FC<TokenChartProps> = ({ price }) => {
       },
     ],
   });
-  const url = `https://api.coingecko.com/api/v3/coins/rubic/market_chart?vs_currency=usd&days=${days}`;
   const daysFromUrl = days;
 
   const options = {
@@ -148,8 +147,7 @@ const YDRTokenChart: React.FC<TokenChartProps> = ({ price }) => {
   };
 
   const axiosData = useCallback(() => {
-    axios
-      .get(url)
+    indexesApi.getYDRTokensChart(days)
       .then((res) => {
         console.log('Request chartData success', res.data);
         refDataLength.current = res.data.prices.length;
@@ -163,7 +161,7 @@ const YDRTokenChart: React.FC<TokenChartProps> = ({ price }) => {
         console.log('Request chartData error', err);
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [url]);
+  }, [days]);
 
   useEffect(() => {
     axiosData();

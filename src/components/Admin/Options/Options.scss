@@ -38,6 +38,15 @@
 
   gap: 60px;
 
+  .input-border {
+    padding: 3px;
+
+    width: fit-content;
+
+    height: 53px;
+    border-radius: 60px;
+  }
+
   &__option {
     display: flex;
     align-items: center;
