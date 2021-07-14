@@ -231,7 +231,7 @@ const Rebalance: React.FC<FormikProps<IRebalance> & IRebalance> = observer(
         </div>
 
         <div className="rebalance-modal__btn-row">
-          <Button onClick={() => handleSubmit()}>Start rebalance</Button>
+          <Button onClick={() => handleSubmit()} loading={values.isLoading}>Start rebalance</Button>
         </div>
       </Form>
     );
