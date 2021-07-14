@@ -10,6 +10,7 @@ import { useWalletConnectorContext } from '../../../services/walletConnect';
 import { useMst } from '../../../store/store';
 import { ProviderRpcError } from '../../../types/errors';
 import CreateIndex, { ICreateIndex } from '../component';
+import moment from 'moment';
 
 const CreateIndexForm: React.FC = () => {
   const { modals } = useMst();
@@ -19,14 +20,14 @@ const CreateIndexForm: React.FC = () => {
     mapPropsToValues: () => ({
       name: '',
       symbol: '',
-      startDate: '',
-      endDate: '',
+      dateRange: ['', ''],
       description: '',
       tokens: [] as Array<ITokensDiff>,
       isLoading: false,
     }),
-    handleSubmit: (values, { setFieldValue }) => {
+    handleSubmit: (values, { setFieldValue, resetForm }) => {
       setFieldValue('isLoading', true);
+      console.log(values.dateRange);
       const tokenAddresses: Array<string> = [];
       const tokenWeights: Array<string> = [];
       values.tokens.forEach((token) => {
@@ -37,7 +38,10 @@ const CreateIndexForm: React.FC = () => {
         .createNewIndex(
           values.name,
           values.symbol,
-          [values.startDate, values.endDate],
+          [
+            moment(values.dateRange ? values.dateRange[0] : '').format('X'),
+            moment(values.dateRange ? values.dateRange[1] : '').format('X'),
+          ],
           tokenAddresses,
           tokenWeights,
         )
@@ -46,15 +50,19 @@ const CreateIndexForm: React.FC = () => {
             indexesApi
               .addDescriptionToIndex(data.transactionHash, values.description)
               .then(() => {
+                resetForm({});
                 modals.info.setMsg('Success', 'Index created with description', 'success');
               })
               .catch((error) => {
                 const { response } = error;
                 modals.info.setMsg(
                   'Index created',
-                  `Description not added, error:\n${response}`,
+                  `Description not added, error:\n${response.data}`,
                   'info',
                 );
+              })
+              .finally(() => {
+                setFieldValue('isLoading', false);
               });
           } else modals.info.setMsg('Success', 'Index created', 'success');
 
