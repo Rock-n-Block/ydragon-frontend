@@ -95,7 +95,7 @@ const StakingStatistics: React.FC = observer(() => {
             id: stake.stake_id,
             token: stake.name,
             month: stake.months,
-            endDate: moment(stake.end_date).format('MM.DD.YY'),
+            endDate: moment(stake.end_date).format('DD.MM.YY'),
             staked: new BigNumber(stake.staked).dividedBy(new BigNumber(10).pow(18)).toFixed(5),
             availableRewards: new BigNumber(stake.available_rewards)
               .dividedBy(new BigNumber(10).pow(18))
