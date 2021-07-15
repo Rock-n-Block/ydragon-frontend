@@ -187,7 +187,7 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
         })
         .finally(() => setIsLoading(false));
     };
-    const onPayInputHandler = (e: any) => {
+    const handlePayInput = (e: any) => {
       if (+e.target.value < 0) {
         e.target.value = '';
       } else {
@@ -247,7 +247,7 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
                 value={payInput}
                 tokens={defaultTokens}
                 onSelectChange={handleSelectChange}
-                onChange={onPayInputHandler}
+                onChange={handlePayInput}
                 type="number"
                 placeholder="0.0"
                 onBlur={getBuyCourse}
@@ -255,7 +255,7 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
             ) : (
               <Input
                 value={payInput}
-                onChange={onPayInputHandler}
+                onChange={handlePayInput}
                 type="number"
                 placeholder="0.0"
                 onBlur={getSellCourse}

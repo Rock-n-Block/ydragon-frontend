@@ -150,7 +150,7 @@ const TradeYDRModal: React.FC = observer(() => {
       })
       .finally(() => setIsLoading(false));
   };
-  const onPayInputHandler = (e: any) => {
+  const handlePayInput = (e: any) => {
     if (+e.target.value < 0) {
       e.target.value = '';
     } else {
@@ -207,7 +207,7 @@ const TradeYDRModal: React.FC = observer(() => {
               value={payInput}
               tokens={defaultTokens}
               onSelectChange={handleSelectChange}
-              onChange={onPayInputHandler}
+              onChange={handlePayInput}
               type="number"
               placeholder="0.0"
               onBlur={getBuyCourse}
@@ -215,7 +215,7 @@ const TradeYDRModal: React.FC = observer(() => {
           ) : (
             <InputWithSelect
               value={payInput}
-              onChange={onPayInputHandler}
+              onChange={handlePayInput}
               tokens={platformToken}
               type="number"
               placeholder="0.0"
