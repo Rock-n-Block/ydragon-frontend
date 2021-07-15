@@ -108,11 +108,14 @@ const YDRTokenChart: React.FC<TokenChartProps> = ({ price }) => {
     if (data)
       data.forEach((item: number[]) => {
         const date = new Date(item[0]);
-        datasetsData.push({
-          time: parseDate(date),
-          data: item[1],
-        });
+        if (!datasetsData.find((element: any) => element.time === parseDate(date))) {
+          datasetsData.push({
+            time: parseDate(date),
+            data: item[1],
+          });
+        }
       });
+    refDataLength.current = datasetsData.length;
     return {
       labels: [],
       datasets: [
@@ -147,7 +150,8 @@ const YDRTokenChart: React.FC<TokenChartProps> = ({ price }) => {
   };
 
   const axiosData = useCallback(() => {
-    coingeckoApi.getYDRTokensChart(days)
+    coingeckoApi
+      .getYDRTokensChart(days)
       .then((res) => {
         console.log('Request chartData success', res.data);
         refDataLength.current = res.data.prices.length;

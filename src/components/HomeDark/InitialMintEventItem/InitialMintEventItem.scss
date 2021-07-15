@@ -40,7 +40,7 @@
     flex-direction: column;
   }
   @include b('mobile') {
-    padding: 0;
+    padding: 20px;
   }
 
   &__content {

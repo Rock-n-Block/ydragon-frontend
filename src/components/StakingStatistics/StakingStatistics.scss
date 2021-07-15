@@ -66,6 +66,10 @@
   flex-direction: column;
   align-items: flex-start;
 
+  @include b('tablet') {
+    align-items: center;
+  }
+
   .section__title {
     display: flex;
     align-items: center;
@@ -87,11 +91,10 @@
     margin: 20px 0;
 
     display: flex;
-  }
-
-  &__btn {
-    & + & {
-      margin-left: 20px;
+    gap: 20px;
+    @include b('mobile') {
+      flex-direction: column;
+      width: 100%;
     }
   }
 
