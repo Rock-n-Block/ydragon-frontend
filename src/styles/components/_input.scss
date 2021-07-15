@@ -241,7 +241,8 @@ input[type='number'] {
   }
 
   .weights-sum,
-  .token-weights-item__input-token {
+  .token-weights-item__input-token,
+  .rebalance-option__input-hours {
     &--error {
       background: $red;
     }

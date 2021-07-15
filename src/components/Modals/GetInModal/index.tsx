@@ -75,7 +75,6 @@ const GetInModal: React.FC = observer(() => {
     walletConnector.metamaskService
       .approve(firstCurrency, undefined, modals.getIn.address)
       .then(() => {
-        setPayInput('');
         setIsNeedApprove(false);
         modals.info.setMsg('Success', `Approve of ${firstCurrency} to IME success`, 'success');
       })
