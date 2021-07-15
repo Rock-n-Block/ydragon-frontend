@@ -12,6 +12,28 @@
     &__header {
       background-color: rgba(242, 243, 248, 0.1);
     }
+
+    &--hover {
+      &:hover {
+        .small-card__body {
+          color: $black;
+          background-color: $white;
+        }
+      }
+    }
+    &--selected {
+      .small-card__body {
+        color: $black;
+        background-color: $white;
+      }
+      .small-card__title {
+        color: $black;
+      }
+      .small-card__header {
+        color: $black;
+        background-color: rgba($white, 0.7);
+      }
+    }
   }
 }
 
@@ -25,6 +47,28 @@
 
     &__header {
       background: $gray-bg;
+    }
+
+    &--hover {
+      &:hover {
+        .small-card__body {
+          color: $white;
+          background-color: $table-selected;
+        }
+      }
+    }
+    &--selected {
+      .small-card__body {
+        color: $white;
+        background-color: $table-selected;
+      }
+      .small-card__title {
+        color: $white;
+      }
+      .small-card__header {
+        color: $white;
+        background-color: rgba($table-selected, 0.7);
+      }
     }
   }
 }
@@ -42,6 +86,10 @@
 
   &:last-child {
     border-radius: 16px;
+  }
+
+  &--clickable {
+    cursor: pointer;
   }
 
   &__header {
@@ -83,20 +131,6 @@
     transition: background-color 0.4s ease;
     grid-template-columns: repeat(2, 1fr);
     grid-gap: 18px;
-
-    &--hover {
-      &:hover {
-        background-color: #3a3a66;
-      }
-    }
-
-    &--selected {
-      background-color: #3a3a66;
-    }
-
-    &--clickable {
-      cursor: pointer;
-    }
   }
 
   &__title {

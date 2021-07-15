@@ -32,7 +32,16 @@ const SmallTableCard: React.FC<ISmallTableCardProps> = ({
     }
   };
   return (
-    <section className="small-card" style={{ top: -index * 15 }}>
+    <section
+      tabIndex={0}
+      role="button"
+      onKeyDown={() => {}}
+      className={`small-card ${onSelect ? 'small-card--clickable' : ''} ${
+        hoverFeature ? 'small-card--hover' : ''
+      } ${isSelected && 'small-card--selected'}`}
+      style={{ top: -index * 15 }}
+      onClick={handleSelect}
+    >
       <div className="small-card__header">
         <div className="small-card__header--left">
           <div className="small-card__header--title">{headerTitle}</div>
@@ -42,15 +51,7 @@ const SmallTableCard: React.FC<ISmallTableCardProps> = ({
           {tokenLogo && <img src={tokenLogo} alt="token-logo" />}
         </div>
       </div>
-      <div
-        tabIndex={0}
-        role="button"
-        onKeyDown={() => {}}
-        className={`small-card__body ${onSelect ? 'small-card__body--clickable' : ''} ${
-          hoverFeature ? 'small-card__body--hover' : ''
-        } ${isSelected && 'small-card__body--selected'}`}
-        onClick={handleSelect}
-      >
+      <div className="small-card__body">
         {data.map((cell, i) => (
           <div className="small-card__cell" key={nextId()}>
             <div className="small-card__title">{cell[0]}</div>

@@ -56,7 +56,7 @@
 
       &:hover,
       &--active {
-        background: $dark-bg;
+        background: $table-selected;
 
         .stake-item__amount,
         .token-mini {
@@ -187,16 +187,16 @@
     width: 100%;
     max-width: 500px;
 
-    @include b('mobile'){
+    @include b('mobile') {
       position: relative;
-      .ant-input-number-input-wrap{
+      .ant-input-number-input-wrap {
         position: absolute;
         top: 20px;
       }
-      .stake-amount__all{
+      .stake-amount__all {
         position: absolute;
         top: 61px;
-        left: calc(50% - 93px/2)
+        left: calc(50% - 93px / 2);
       }
     }
 
@@ -243,6 +243,10 @@
     box-sizing: border-box;
 
     border-radius: 40px;
+
+    @include b('mobile') {
+      width: 354px;
+    }
   }
 
   &__time {
