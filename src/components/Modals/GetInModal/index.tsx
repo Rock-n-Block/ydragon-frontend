@@ -110,6 +110,13 @@ const GetInModal: React.FC = observer(() => {
         .finally(() => setLoading(false));
     }
   }, [user.address, modals.getIn.id]);
+  const onPayInputHandler = (e: any) => {
+    if (+e.target.value < 0) {
+      e.target.value = '';
+    } else {
+      setPayInput(e);
+    }
+  };
   useEffect(() => {
     setLoading(true);
     getCurrentIme();
@@ -180,7 +187,7 @@ const GetInModal: React.FC = observer(() => {
             onSelectChange={handleSelectChange}
             value={payInput}
             placeholder="0"
-            onChange={(event) => setPayInput(event.target.value)}
+            onChange={onPayInputHandler}
             type="number"
           />
           <div className="m-get-in__btns">

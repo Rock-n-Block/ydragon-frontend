@@ -150,6 +150,13 @@ const TradeYDRModal: React.FC = observer(() => {
       })
       .finally(() => setIsLoading(false));
   };
+  const onPayInputHandler = (e: any) => {
+    if (+e.target.value < 0) {
+      e.target.value = '';
+    } else {
+      setPayInput(e);
+    }
+  };
   useEffect(() => {
     setFirstCurrency(modals.tradeYDR.method === 'sell' ? 'YDR' : defaultTokens[0].name);
     setSecondCurrency(modals.tradeYDR.method !== 'sell' ? 'YDR' : defaultTokens[0].name);
@@ -200,7 +207,7 @@ const TradeYDRModal: React.FC = observer(() => {
               value={payInput}
               tokens={defaultTokens}
               onSelectChange={handleSelectChange}
-              onChange={(event) => setPayInput(event.target.value)}
+              onChange={onPayInputHandler}
               type="number"
               placeholder="0.0"
               onBlur={getBuyCourse}
@@ -208,7 +215,7 @@ const TradeYDRModal: React.FC = observer(() => {
           ) : (
             <InputWithSelect
               value={payInput}
-              onChange={(event) => setPayInput(event.target.value)}
+              onChange={onPayInputHandler}
               tokens={platformToken}
               type="number"
               placeholder="0.0"

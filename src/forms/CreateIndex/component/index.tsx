@@ -126,27 +126,19 @@ const CreateIndex: React.FC<FormikProps<ICreateIndex> & ICreateIndex> = observer
     // rangepicker
     const onOk = (value: any[] | null) => {
       if (value) {
-        if (moment.now() > +value[0].format('x')) {
-          setFieldValue('startDate', moment(value[0].set(moment().toObject())));
+        if (moment().diff(value[0]) > 0) {
           if (value[1]) {
-            if (moment.now() > +value[1].format('x')) {
-              setFieldValue('endDate', '');
-              setFieldValue('dateRange', [moment(value[0].set(moment().toObject())), '']);
+            if (moment().diff(value[1]) > 0) {
+              setFieldValue('dateRange', [moment().add(3, 'minutes'), '']);
             } else {
-              setFieldValue('endDate', moment(value[1]).format('X'));
-              setFieldValue('dateRange', [moment(value[0].set(moment().toObject())), value[1]]);
+              setFieldValue('dateRange', [moment().add(3, 'minutes'), value[1]]);
             }
-          } else {
-            setFieldValue('endDate', '');
           }
         } else {
-          setFieldValue('startDate', moment(value[0]).format('X'));
-          setFieldValue('endDate', moment(value[1]).format('X'));
           setFieldValue('dateRange', [value[0], value[1]]);
         }
       } else {
-        setFieldValue('startDate', '');
-        setFieldValue('endDate', '');
+        setFieldValue('dateRange', ['', '']);
       }
     };
 

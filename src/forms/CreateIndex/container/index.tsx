@@ -65,11 +65,7 @@ const CreateIndexForm: React.FC = () => {
                 setFieldValue('isLoading', false);
               });
           } else {
-            setFieldValue('description', '')
-            setFieldValue('name', '')
-            setFieldValue('symbol', '')
-            setFieldValue('tokens', [])
-            setFieldValue('dateRange', ['',''])
+            resetForm({});
             modals.info.setMsg('Success', 'Index created', 'success');
           }
 
