@@ -108,6 +108,12 @@ const Rebalance: React.FC<FormikProps<IRebalance> & IRebalance> = observer(
           console.log('add new token error', response);
         });
     };
+    const onOptionInputHandler = (e: any) => {
+      if (+e.target.value < 0) {
+        e.target.value = '';
+      }
+      handleChange(e);
+    };
     return (
       <Form name="form-rebalance" className="form-rebalance">
         <FieldArray
@@ -170,7 +176,7 @@ const Rebalance: React.FC<FormikProps<IRebalance> & IRebalance> = observer(
               )}
               <div className="token-weights__total">
                 <h3 className="token-weights__total-name">Total weight</h3>
-                <div className={`input-border weights-sum${+weightsSum > 100 ? '--error' : ''}`}>
+                <div className={`input-border weights-sum${+weightsSum === 0 || +weightsSum === 100 ? '' : '--error'}`}>
                   <span className="input">{+weightsSum > 0 ? weightsSum : '0'}</span>
                 </div>
               </div>
@@ -195,9 +201,10 @@ const Rebalance: React.FC<FormikProps<IRebalance> & IRebalance> = observer(
                 <Input
                   name="days"
                   value={values.days}
-                  onChange={handleChange}
+                  onChange={onOptionInputHandler}
                   onBlur={handleBlur}
                   type="number"
+                  placeholder="0"
                 />
               </div>
             </div>
@@ -208,9 +215,12 @@ const Rebalance: React.FC<FormikProps<IRebalance> & IRebalance> = observer(
                 <Input
                   name="hours"
                   value={values.hours}
-                  onChange={handleChange}
+                  onChange={onOptionInputHandler}
                   onBlur={handleBlur}
                   type="number"
+                  placeholder="0"
+                  className="rebalance-option__input-hours"
+                  error={values.hours > 23}
                 />
               </div>
             </div>
@@ -221,9 +231,10 @@ const Rebalance: React.FC<FormikProps<IRebalance> & IRebalance> = observer(
                 <Input
                   name="steps"
                   value={values.steps}
-                  onChange={handleChange}
+                  onChange={onOptionInputHandler}
                   onBlur={handleBlur}
                   type="number"
+                  placeholder="0"
                 />
               </div>
             </div>

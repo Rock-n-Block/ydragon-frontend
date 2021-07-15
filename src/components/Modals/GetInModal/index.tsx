@@ -75,7 +75,6 @@ const GetInModal: React.FC = observer(() => {
     walletConnector.metamaskService
       .approve(firstCurrency, undefined, modals.getIn.address)
       .then(() => {
-        setPayInput('');
         setIsNeedApprove(false);
         modals.info.setMsg('Success', `Approve of ${firstCurrency} to IME success`, 'success');
       })
@@ -111,6 +110,13 @@ const GetInModal: React.FC = observer(() => {
         .finally(() => setLoading(false));
     }
   }, [user.address, modals.getIn.id]);
+  const handlePayInput = (e: any) => {
+    if (+e.target.value < 0) {
+      e.target.value = '';
+    } else {
+      setPayInput(e);
+    }
+  };
   useEffect(() => {
     setLoading(true);
     getCurrentIme();
@@ -181,7 +187,7 @@ const GetInModal: React.FC = observer(() => {
             onSelectChange={handleSelectChange}
             value={payInput}
             placeholder="0"
-            onChange={(event) => setPayInput(event.target.value)}
+            onChange={handlePayInput}
             type="number"
           />
           <div className="m-get-in__btns">

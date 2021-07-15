@@ -126,12 +126,20 @@ const CreateIndex: React.FC<FormikProps<ICreateIndex> & ICreateIndex> = observer
     // rangepicker
     const onOk = (value: any[] | null) => {
       if (value) {
-        setFieldValue('startDate', moment(value[0]).format('X'));
-        setFieldValue('endDate', moment(value[1]).format('X'));
-        setFieldValue('dateRange', [value[0], value[1]]);
+        if (moment().diff(value[0]) > 0) {
+          if (value[1]) {
+            if (moment().diff(value[1]) > 0) {
+              // TODO: обсудить количество добавленных минут перед деплоем
+              setFieldValue('dateRange', [moment().add(3, 'minutes'), '']);
+            } else {
+              setFieldValue('dateRange', [moment().add(3, 'minutes'), value[1]]);
+            }
+          }
+        } else {
+          setFieldValue('dateRange', [value[0], value[1]]);
+        }
       } else {
-        setFieldValue('startDate', '');
-        setFieldValue('endDate', '');
+        setFieldValue('dateRange', ['', '']);
       }
     };
 
@@ -173,7 +181,7 @@ const CreateIndex: React.FC<FormikProps<ICreateIndex> & ICreateIndex> = observer
           showTime={{
             hideDisabledOptions: true,
           }}
-          format="YYYY-MM-DD HH:mm"
+          format="DD.MM.YY HH:mm"
           onOk={onOk}
         />
         <TextArea
@@ -233,7 +241,9 @@ const CreateIndex: React.FC<FormikProps<ICreateIndex> & ICreateIndex> = observer
                   <div className="token-weights__total">
                     <h3 className="token-weights__total-name">Total weight</h3>
                     <div
-                      className={`input-border weights-sum${+weightsSum > 100 ? '--error' : ''}`}
+                      className={`input-border weights-sum${
+                        +weightsSum === 0 || +weightsSum === 100 ? '' : '--error'
+                      }`}
                     >
                       <span className="input">{+weightsSum > 0 ? weightsSum : '0'}</span>
                     </div>

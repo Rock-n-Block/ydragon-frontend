@@ -35,7 +35,7 @@ const RebalanceForm: React.FC<RebalanceFormProps> = observer(({ name, tokens, on
           };
         }) || ([] as Array<ITokensDiff>),
       days: 30,
-      hours: 30,
+      hours: 23,
       steps: 30,
       isLoading: false,
     }),
