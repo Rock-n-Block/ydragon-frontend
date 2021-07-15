@@ -131,7 +131,8 @@ const TradeYDRModal: React.FC = observer(() => {
       })
       .catch((err: ProviderRpcError) => {
         const { message } = err;
-        modals.info.setMsg('Error', `${message}`, 'error');
+        console.log(message)
+        modals.info.setMsg('Error', `${message.slice(0, message.indexOf(':'))}`, 'error');
       })
       .finally(() => setIsLoading(false));
   };
@@ -146,7 +147,8 @@ const TradeYDRModal: React.FC = observer(() => {
       })
       .catch((err: ProviderRpcError) => {
         const { message } = err;
-        modals.info.setMsg('Error', `${message}`, 'error');
+        console.log(message)
+        modals.info.setMsg('Error', `${message.slice(0, message.indexOf(':'))}`, 'error');
       })
       .finally(() => setIsLoading(false));
   };
@@ -250,12 +252,12 @@ const TradeYDRModal: React.FC = observer(() => {
           </Button>
         )}
         {modals.tradeYDR.method === 'buy' && (!isNeedApprove || firstCurrency === 'BNB') && (
-          <Button className="m-trade-ydr__btn" onClick={handleBuy}>
+          <Button className="m-trade-ydr__btn" onClick={handleBuy} disabled={!payInput}>
             Buy
           </Button>
         )}
         {modals.tradeYDR.method === 'sell' && !isNeedApprove && (
-          <Button className="m-trade-ydr__btn" onClick={handleSell} loading={isLoading}>
+          <Button className="m-trade-ydr__btn" onClick={handleSell} disabled={!payInput} loading={isLoading}>
             Sell
           </Button>
         )}

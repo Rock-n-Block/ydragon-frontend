@@ -92,7 +92,8 @@ const GetInModal: React.FC = observer(() => {
       })
       .catch((err: ProviderRpcError) => {
         const { message } = err;
-        modals.info.setMsg('Error', `Mint error ${message}`, 'error');
+        console.log(message)
+        modals.info.setMsg('Error', `Mint error ${message.slice(0, message.indexOf(':'))}`, 'error');
       });
   };
   const getCurrentIme = useCallback(() => {
@@ -111,7 +112,6 @@ const GetInModal: React.FC = observer(() => {
     }
   }, [user.address, modals.getIn.id]);
   const handlePayInput = (e: any) => {
-
     if (+e.target.value < 0) {
       e.target.value = '';
     } else {
