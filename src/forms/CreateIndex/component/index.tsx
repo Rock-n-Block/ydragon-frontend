@@ -129,6 +129,7 @@ const CreateIndex: React.FC<FormikProps<ICreateIndex> & ICreateIndex> = observer
         if (moment().diff(value[0]) > 0) {
           if (value[1]) {
             if (moment().diff(value[1]) > 0) {
+              // TODO: обсудить количество добавленных минут перед деплоем
               setFieldValue('dateRange', [moment().add(3, 'minutes'), '']);
             } else {
               setFieldValue('dateRange', [moment().add(3, 'minutes'), value[1]]);
