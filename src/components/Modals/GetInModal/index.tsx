@@ -44,9 +44,6 @@ const GetInModal: React.FC = observer(() => {
   const { modals, user } = useMst();
   const walletConnector = useWalletConnectorContext();
 
-  const handleClose = (): void => {
-    modals.getIn.close();
-  };
   const [currentIme, setCurrentIme] = useState<IIme | undefined>();
   const [totalData, setTotalData] = useState<ITableData[]>([] as ITableData[]);
   const [userData, setUserData] = useState<ITableData[]>([] as ITableData[]);
@@ -54,6 +51,10 @@ const GetInModal: React.FC = observer(() => {
   const [payInput, setPayInput] = useState<string>('');
   const [isNeedApprove, setIsNeedApprove] = useState<boolean>(true);
   const [loading, setLoading] = useState<boolean>(false);
+  const handleClose = (): void => {
+    modals.getIn.close();
+    setPayInput('');
+  };
   const checkAllowance = useCallback(() => {
     walletConnector.metamaskService
       .checkAllowance(firstCurrency, 'MAIN', modals.getIn.address)
@@ -92,7 +93,8 @@ const GetInModal: React.FC = observer(() => {
       })
       .catch((err: ProviderRpcError) => {
         const { message } = err;
-        modals.info.setMsg('Error', `Mint error ${message}`, 'error');
+        console.log(message)
+        modals.info.setMsg('Error', `Mint error ${message.slice(0, message.indexOf(':'))}`, 'error');
       });
   };
   const getCurrentIme = useCallback(() => {
@@ -114,7 +116,7 @@ const GetInModal: React.FC = observer(() => {
     if (+e.target.value < 0) {
       e.target.value = '';
     } else {
-      setPayInput(e);
+      setPayInput(e.target.value);
     }
   };
   useEffect(() => {
