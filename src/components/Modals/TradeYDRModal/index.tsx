@@ -154,7 +154,7 @@ const TradeYDRModal: React.FC = observer(() => {
     if (+e.target.value < 0) {
       e.target.value = '';
     } else {
-      setPayInput(e);
+      setPayInput(e.target.value);
     }
   };
   useEffect(() => {

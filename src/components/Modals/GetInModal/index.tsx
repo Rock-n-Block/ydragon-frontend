@@ -111,10 +111,11 @@ const GetInModal: React.FC = observer(() => {
     }
   }, [user.address, modals.getIn.id]);
   const handlePayInput = (e: any) => {
+
     if (+e.target.value < 0) {
       e.target.value = '';
     } else {
-      setPayInput(e);
+      setPayInput(e.target.value);
     }
   };
   useEffect(() => {
