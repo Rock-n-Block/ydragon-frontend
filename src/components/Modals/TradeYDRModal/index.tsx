@@ -4,7 +4,6 @@ import { observer } from 'mobx-react-lite';
 
 import YDRLogo from '../../../assets/img/icons/logo.svg';
 import { useWalletConnectorContext } from '../../../services/walletConnect';
-import config from '../../../services/web3/config';
 import { useMst } from '../../../store/store';
 import { ProviderRpcError } from '../../../types/errors';
 import { defaultTokens, platformToken, TokenMiniNameTypes } from '../../../utils/tokenMini';
@@ -15,7 +14,7 @@ import './TradeYDRModal.scss';
 
 const TradeYDRModal: React.FC = observer(() => {
   const walletConnector = useWalletConnectorContext();
-  const { user, modals } = useMst();
+  const { user, modals, networkTokens } = useMst();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [firstCurrency, setFirstCurrency] = useState<TokenMiniNameTypes>(
     modals.tradeYDR.method === 'sell' ? 'YDR' : defaultTokens[0].name,
@@ -35,7 +34,7 @@ const TradeYDRModal: React.FC = observer(() => {
   };
   const getBalance = useCallback(() => {
     walletConnector.metamaskService
-      .getBalanceOf(config[firstCurrency].ADDRESS)
+      .getBalanceOf(networkTokens.getTokenAddress(firstCurrency))
       .then((data: any) => {
         console.log(`Balance: ${data} ${firstCurrency}`);
         setBalance(data);
@@ -44,7 +43,7 @@ const TradeYDRModal: React.FC = observer(() => {
         const { message } = err;
         console.log('getBalance error', message);
       });
-  }, [walletConnector.metamaskService, firstCurrency]);
+  }, [networkTokens, walletConnector.metamaskService, firstCurrency]);
 
   const getBuyCourse = useCallback(() => {
     if (payInput) {
@@ -85,6 +84,7 @@ const TradeYDRModal: React.FC = observer(() => {
 
   const checkAllowance = useCallback(() => {
     walletConnector.metamaskService
+      // TODO: change to       .checkAllowanceById(networkTokens.getTokenAddress(firstCurrency), config.MAIN.ABI,networks.getCurrNetwork().router_address)
       .checkAllowance(firstCurrency, 'Router')
       .then((data: boolean) => {
         console.log(`allowance of ${firstCurrency} to ${secondCurrency}: ${data} `);

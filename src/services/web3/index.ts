@@ -180,16 +180,10 @@ export default class MetamaskService {
     return this.web3Provider.eth.getBalance(this.walletAddress);
   }
 
-  getBalanceOf(address: string) {
-    if (address === '0x0000000000000000000000000000000000000000') {
+  async getBalanceOf(address?: string) {
+    if (!address) {
       return this.getBNBBalance();
     }
-    return this.getContractByAddress(address, config.Token.ABI)
-      .methods.balanceOf(this.walletAddress)
-      .call();
-  }
-
-  async getBalanceByAddress(address: string) {
     return this.getContractByAddress(address, config.Token.ABI)
       .methods.balanceOf(this.walletAddress)
       .call();
@@ -411,20 +405,34 @@ export default class MetamaskService {
     });
   }
 
-  getYDRCourse(spenderToken: ContractTypes, value: string, buy: boolean, address?: string) {
-    let otherTokenAddress = address;
+  getYDRCourse(spenderToken: string, value: string, buy: boolean) {
+    let otherTokenAddress;
     let path;
-    if (spenderToken === 'USDT') {
-      otherTokenAddress = config.USDT.ADDRESS;
+    if (spenderToken !== 'BNB' && spenderToken !== 'WBNB') {
+      otherTokenAddress = rootStore.networkTokens.getTokenAddress(spenderToken);
     }
     if (buy) {
       path = otherTokenAddress
-        ? [otherTokenAddress, config.WBNB.ADDRESS, config.YDR.ADDRESS]
-        : [config.WBNB.ADDRESS, config.YDR.ADDRESS];
+        ? [
+            otherTokenAddress,
+            rootStore.networkTokens.getTokenAddress('WBNB'),
+            rootStore.networkTokens.getTokenAddress('YDR'),
+          ]
+        : [
+            rootStore.networkTokens.getTokenAddress('WBNB'),
+            rootStore.networkTokens.getTokenAddress('YDR'),
+          ];
     } else {
       path = otherTokenAddress
-        ? [config.YDR.ADDRESS, config.WBNB.ADDRESS, otherTokenAddress]
-        : [config.YDR.ADDRESS, config.WBNB.ADDRESS];
+        ? [
+            rootStore.networkTokens.getTokenAddress('YDR'),
+            rootStore.networkTokens.getTokenAddress('WBNB'),
+            otherTokenAddress,
+          ]
+        : [
+            rootStore.networkTokens.getTokenAddress('YDR'),
+            rootStore.networkTokens.getTokenAddress('WBNB'),
+          ];
     }
 
     return this.getContract('Router')
@@ -589,7 +597,7 @@ export default class MetamaskService {
   async getTokenInfoByAddress(address: string) {
     const tokenName = await this.getTokenName(address);
     const tokenSymbol = await this.getTokenSymbol(address);
-    const tokenBalance = await this.getBalanceByAddress(address);
+    const tokenBalance = await this.getBalanceOf(address);
     return { address, name: tokenName, symbol: tokenSymbol, balance: tokenBalance };
   }
 

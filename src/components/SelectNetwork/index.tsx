@@ -12,7 +12,7 @@ import plgDark from '../../assets/img/icons/icon-polygon-dark.svg';
 
 import './SelectNetwork.scss';
 import TokenMini from '../TokenMini';
-import { networksApi } from '../../services/api';
+import { networksApi, ratesApi } from '../../services/api';
 
 const { Option } = Select;
 
@@ -61,7 +61,7 @@ const chains: IChains = {
 };
 
 const SelectNetwork: React.FC = observer(() => {
-  const { networks, theme } = useMst();
+  const { networks, networkTokens, theme } = useMst();
   const walletConnector = useWalletConnectorContext();
   const [pickedChain, setPickedChain] = useState<ChainTypes>();
 
@@ -69,7 +69,6 @@ const SelectNetwork: React.FC = observer(() => {
     networksApi
       .getNetworks()
       .then(({ data }) => {
-        console.log(data);
         networks.setNetworks(data);
       })
       .catch((err) => {
@@ -115,6 +114,14 @@ const SelectNetwork: React.FC = observer(() => {
       // handle other "switch" errors
     }
   };
+  const getNetworkTokens = useCallback(() => {
+    ratesApi
+      .getNetworkTokens()
+      .then(({ data }) => {
+        networkTokens.setTokens(data);
+      })
+      .catch();
+  }, [networkTokens]);
 
   useEffect(() => {
     getNetworks();
@@ -133,6 +140,12 @@ const SelectNetwork: React.FC = observer(() => {
       }
     });
   }, [networks.networkId]);
+
+  useEffect(() => {
+    if (networks.currentNetwork) {
+      getNetworkTokens();
+    }
+  }, [getNetworkTokens, networks.currentNetwork]);
 
   return (
     <Select
