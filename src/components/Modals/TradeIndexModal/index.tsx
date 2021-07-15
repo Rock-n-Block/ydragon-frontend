@@ -289,12 +289,12 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
             <></>
           )}
           {isNeedApprove && firstCurrency !== 'BNB' && (
-            <Button className="m-trade-ydr__btn" onClick={handleApprove}>
+            <Button className="m-trade-ydr__btn" onClick={handleApprove} loading={isLoading}>
               Approve
             </Button>
           )}
           {!isSell && (!isNeedApprove || firstCurrency === 'BNB') && (
-            <Button className="m-trade-ydr__btn" onClick={handleBuy} disabled={!payInput}>
+            <Button className="m-trade-ydr__btn" onClick={handleBuy} disabled={!payInput} loading={isLoading}>
               Buy
             </Button>
           )}
