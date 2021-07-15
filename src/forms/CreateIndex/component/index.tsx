@@ -126,9 +126,24 @@ const CreateIndex: React.FC<FormikProps<ICreateIndex> & ICreateIndex> = observer
     // rangepicker
     const onOk = (value: any[] | null) => {
       if (value) {
-        setFieldValue('startDate', moment(value[0]).format('X'));
-        setFieldValue('endDate', moment(value[1]).format('X'));
-        setFieldValue('dateRange', [value[0], value[1]]);
+        if (moment.now() > +value[0].format('x')) {
+          setFieldValue('startDate', moment(value[0].set(moment().toObject())));
+          if (value[1]) {
+            if (moment.now() > +value[1].format('x')) {
+              setFieldValue('endDate', '');
+              setFieldValue('dateRange', [moment(value[0].set(moment().toObject())), '']);
+            } else {
+              setFieldValue('endDate', moment(value[1]).format('X'));
+              setFieldValue('dateRange', [moment(value[0].set(moment().toObject())), value[1]]);
+            }
+          } else {
+            setFieldValue('endDate', '');
+          }
+        } else {
+          setFieldValue('startDate', moment(value[0]).format('X'));
+          setFieldValue('endDate', moment(value[1]).format('X'));
+          setFieldValue('dateRange', [value[0], value[1]]);
+        }
       } else {
         setFieldValue('startDate', '');
         setFieldValue('endDate', '');
@@ -173,7 +188,7 @@ const CreateIndex: React.FC<FormikProps<ICreateIndex> & ICreateIndex> = observer
           showTime={{
             hideDisabledOptions: true,
           }}
-          format="YYYY-MM-DD HH:mm"
+          format="DD.MM.YY HH:mm"
           onOk={onOk}
         />
         <TextArea
@@ -233,7 +248,9 @@ const CreateIndex: React.FC<FormikProps<ICreateIndex> & ICreateIndex> = observer
                   <div className="token-weights__total">
                     <h3 className="token-weights__total-name">Total weight</h3>
                     <div
-                      className={`input-border weights-sum${+weightsSum > 100 ? '--error' : ''}`}
+                      className={`input-border weights-sum${
+                        +weightsSum === 0 || +weightsSum === 100 ? '' : '--error'
+                      }`}
                     >
                       <span className="input">{+weightsSum > 0 ? weightsSum : '0'}</span>
                     </div>
