@@ -1,11 +1,12 @@
-import React, { PropsWithChildren, useState } from 'react';
+import React, { PropsWithChildren } from 'react';
 import { Link } from 'react-router-dom';
 import { Button as BtnAntd, ButtonProps } from 'antd';
 import classNames from 'classnames';
 
-import { Tooltip } from '../index';
 
 import './Button.scss';
+import { observer } from 'mobx-react';
+import { useMst } from '../../store/store';
 
 export interface IStyledType {
   styledType?: 'outline' | 'filled' | 'nav' | 'clear';
@@ -27,9 +28,9 @@ interface IButton extends IStyledType, IColorScheme, IBorderSize, IBackground, B
   className?: string;
   link?: string;
   linkClassName?: string;
-  tooltip?: string;
+  needLogin?: string;
 }
-const Button: React.FC<IButton> = (props: PropsWithChildren<IButton>) => {
+const Button: React.FC<IButton> = observer((props: PropsWithChildren<IButton>) => {
   const {
     styledType = 'filled',
     colorScheme,
@@ -38,25 +39,23 @@ const Button: React.FC<IButton> = (props: PropsWithChildren<IButton>) => {
     linkClassName,
     className,
     children,
-    tooltip,
+    needLogin,
     onClick,
     ...otherButtonProps
   } = props;
 
-  const [showTooltip, setShowTooltip] = useState(false);
+  const {modals} = useMst()
+
   const user = !!localStorage?.yd_address || false;
   let onClickFunction = onClick;
 
   const onVisibleChange = (e: any) => {
     e.preventDefault();
-    setShowTooltip(true);
+    modals.metamask.setErr(`${needLogin}`)
   };
-  if (!user && tooltip) {
+  if (!user && needLogin) {
     onClickFunction = onVisibleChange;
   }
-  const onBlurHandler = () => {
-    setShowTooltip(false);
-  };
 
   const Btn = (
     <>
@@ -69,16 +68,9 @@ const Button: React.FC<IButton> = (props: PropsWithChildren<IButton>) => {
           className,
         )}
         onClick={onClickFunction}
-        onBlur={onBlurHandler}
         {...otherButtonProps}
       >
-        {tooltip ? (
-          <Tooltip title={tooltip} visible={!user && showTooltip}>
-            {children}
-          </Tooltip>
-        ) : (
-          children
-        )}
+          {children}
       </BtnAntd>
     </>
   );
@@ -90,6 +82,6 @@ const Button: React.FC<IButton> = (props: PropsWithChildren<IButton>) => {
     );
   }
   return Btn;
-};
+});
 
 export default Button;
