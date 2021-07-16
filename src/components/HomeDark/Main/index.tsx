@@ -21,7 +21,7 @@ const Main: React.FC = () => {
         <Button linkClassName="home__btn" link="/ydrtoken">
           Buy YDR
         </Button>
-        <Button className="home__btn" styledType="outline" tooltip="Please login">
+        <Button className="home__btn" styledType="outline" needLogin="Please login">
           Whitepaper
         </Button>
       </div>

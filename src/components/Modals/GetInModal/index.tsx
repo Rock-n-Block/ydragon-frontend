@@ -51,6 +51,7 @@ const GetInModal: React.FC = observer(() => {
   const [payInput, setPayInput] = useState<string>('');
   const [isNeedApprove, setIsNeedApprove] = useState<boolean>(true);
   const [loading, setLoading] = useState<boolean>(false);
+  const [loadingBtn, setLoadingBtn] = useState<boolean>(false);
   const handleClose = (): void => {
     modals.getIn.close();
     setPayInput('');
@@ -73,6 +74,7 @@ const GetInModal: React.FC = observer(() => {
     setPayInput('');
   };
   const handleApprove = (): void => {
+    setLoadingBtn(true);
     walletConnector.metamaskService
       .approve(firstCurrency, undefined, modals.getIn.address)
       .then(() => {
@@ -82,9 +84,11 @@ const GetInModal: React.FC = observer(() => {
       .catch((err: ProviderRpcError) => {
         const { message } = err;
         modals.info.setMsg('Error', `Approve error ${message}`, 'error');
-      });
+      })
+      .finally(() => setLoadingBtn(false));
   };
   const handleEnter = (): void => {
+    setLoadingBtn(true);
     walletConnector.metamaskService
       .enterIme(payInput, firstCurrency, modals.getIn.address)
       .then(() => {
@@ -95,7 +99,8 @@ const GetInModal: React.FC = observer(() => {
         const { message } = err;
         console.log(message)
         modals.info.setMsg('Error', `Mint error ${message.slice(0, message.indexOf(':'))}`, 'error');
-      });
+      })
+      .finally(() => setLoadingBtn(false));
   };
   const getCurrentIme = useCallback(() => {
     if (modals.getIn.id) {
@@ -194,12 +199,12 @@ const GetInModal: React.FC = observer(() => {
           />
           <div className="m-get-in__btns">
             {isNeedApprove && firstCurrency !== 'BNB' && (
-              <Button className="m-trade-ydr__btn" onClick={handleApprove} disabled={!user.address}>
+              <Button className="m-trade-ydr__btn" onClick={handleApprove} loading={loadingBtn} disabled={!user.address}>
                 Approve
               </Button>
             )}
             {modals.tradeYDR.method === 'buy' && (!isNeedApprove || firstCurrency === 'BNB') && (
-              <Button className="m-trade-ydr__btn" onClick={handleEnter} disabled={!user.address}>
+              <Button className="m-trade-ydr__btn" onClick={handleEnter} loading={loadingBtn} disabled={!user.address}>
                 Enter
               </Button>
             )}

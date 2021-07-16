@@ -130,13 +130,25 @@ const CreateIndex: React.FC<FormikProps<ICreateIndex> & ICreateIndex> = observer
           if (value[1]) {
             if (moment().diff(value[1]) > 0) {
               // TODO: обсудить количество добавленных минут перед деплоем
-              setFieldValue('dateRange', [moment().add(3, 'minutes'), '']);
+              setFieldValue('dateRange', [moment().add(3, 'minutes'), moment().add(4, 'minutes')]);
             } else {
               setFieldValue('dateRange', [moment().add(3, 'minutes'), value[1]]);
             }
+          } else {
+            setFieldValue('dateRange', [moment().add(3, 'minutes'), '']);
           }
         } else {
-          setFieldValue('dateRange', [value[0], value[1]]);
+          // eslint-disable-next-line
+          if (value[1]) {
+            if (moment().diff(value[1]) > 0) {
+              // TODO: обсудить количество добавленных минут перед деплоем
+              setFieldValue('dateRange', [value[0], moment().add(4, 'minutes')]);
+            } else {
+              setFieldValue('dateRange', [value[0], value[1]]);
+            }
+          } else {
+            setFieldValue('dateRange', [value[0], '']);
+          }
         }
       } else {
         setFieldValue('dateRange', ['', '']);
