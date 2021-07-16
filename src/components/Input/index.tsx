@@ -9,12 +9,12 @@ import {
   Select,
 } from 'antd';
 import { TextAreaProps } from 'antd/lib/input';
+import { observer } from 'mobx-react';
 
 import { ReactComponent as ArrowDownBlack } from '../../assets/img/icons/icon-arrow-down.svg';
 import { ReactComponent as ArrowDownWhite } from '../../assets/img/icons/icon-arrow-white.svg';
-import { ITokenMini } from '../../utils/tokenMini';
-import { observer } from 'mobx-react';
 import { useMst } from '../../store/store';
+import { ITokenMini } from '../../utils/tokenMini';
 
 const { Option } = Select;
 const { TextArea } = InputAntd;
@@ -34,7 +34,7 @@ interface InputWithSelectProps extends InputProps {
 
 export const InputWithSelect: React.FC<InputWithSelectProps> = observer((props) => {
   const { tokens, onSelectChange, ...otherInputProps } = props;
-  const {theme} = useMst()
+  const { theme } = useMst();
 
   let tokenOrSelect;
   if (Array.isArray(tokens)) {
@@ -44,7 +44,7 @@ export const InputWithSelect: React.FC<InputWithSelectProps> = observer((props) 
           className="input-with-select__select"
           onChange={onSelectChange}
           defaultValue={tokens[0].name}
-          suffixIcon={<Icon component={theme.value ==='dark' ? ArrowDownWhite : ArrowDownBlack} />}
+          suffixIcon={<Icon component={theme.value === 'dark' ? ArrowDownWhite : ArrowDownBlack} />}
         >
           {tokens.map((token) => (
             <Option value={token.name} key={nextId()}>

@@ -53,7 +53,7 @@ const CreateIndexForm: React.FC = () => {
             });
 
           modals.info.setMsg('Success', 'Index created', 'success');
-          modals.createIndex.close()
+          modals.createIndex.close();
         })
         .catch((error: ProviderRpcError) => {
           setFieldValue('isLoading', false);

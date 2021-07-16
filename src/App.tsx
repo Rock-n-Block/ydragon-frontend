@@ -68,7 +68,7 @@ export const App: React.FC = observer(() => {
             {/* <Route exact path="/auth">
           <Auth />
         </Route> */}
-           {/* <GuardedRoute exact path="/index/:indexId" component={Index} auth={user} />
+            {/* <GuardedRoute exact path="/index/:indexId" component={Index} auth={user} />
             <Route exact path="/ydrtoken">
               <YdrToken />
             </Route>
@@ -84,7 +84,7 @@ export const App: React.FC = observer(() => {
             </Route>
             <Route component={NoPageFound} />
           </Switch>
-         {/* <MetamaskErrModal />
+          {/* <MetamaskErrModal />
           <InfoModal />
           <GetInModal /> */}
           <Footer />

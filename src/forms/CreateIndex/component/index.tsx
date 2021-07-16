@@ -155,7 +155,7 @@ const CreateIndex: React.FC<FormikProps<ICreateIndex> & ICreateIndex> = observer
                             value={tokenDiff.new_weight === '0' ? '' : tokenDiff.new_weight}
                             onChange={handleChange}
                             onBlur={handleBlur}
-                            placeholder='0'
+                            placeholder="0"
                             type="number"
                           />
                         </div>

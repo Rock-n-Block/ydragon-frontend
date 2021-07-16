@@ -1,7 +1,6 @@
 import React from 'react';
 
 import iconPlay from '../../../assets/img/icons/icon-play.svg';
-
 import { Button } from '../../index';
 
 import './Description.scss';
@@ -42,12 +41,7 @@ const Description: React.FC = () => {
         <Button className="description__btn" link="/ydrtoken" styledType="filled" disabled>
           Buy YDR
         </Button>
-        <Button
-          className="description__btn"
-          styledType="outline"
-          tooltip='Please login'
-          disabled
-        >
+        <Button className="description__btn" styledType="outline" tooltip="Please login" disabled>
           Whitepaper
         </Button>
       </div>

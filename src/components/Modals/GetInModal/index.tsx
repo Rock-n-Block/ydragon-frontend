@@ -120,8 +120,23 @@ const GetInModal: React.FC = observer(() => {
     }
   }, [checkAllowance, user.address]);
   useEffect(() => {
-      if (currentIme) {
-        setTotalData(
+    if (currentIme) {
+      setTotalData(
+        currentIme.tokens.map((token) => {
+          return [
+            {
+              icon: token.image,
+              name: token.name,
+              symbol: token.symbol,
+            } as TokenMiniProps,
+            token.total_quantity,
+            `$${token.price}`,
+            `$${token.total_price}`,
+          ];
+        }),
+      );
+      if (user.address) {
+        setUserData(
           currentIme.tokens.map((token) => {
             return [
               {
@@ -129,27 +144,12 @@ const GetInModal: React.FC = observer(() => {
                 name: token.name,
                 symbol: token.symbol,
               } as TokenMiniProps,
-              token.total_quantity,
-              `$${token.price}`,
-              `$${token.total_price}`,
+              token.user_quantity ?? '0',
             ];
           }),
         );
-        if (user.address) {
-          setUserData(
-            currentIme.tokens.map((token) => {
-              return [
-                {
-                  icon: token.image,
-                  name: token.name,
-                  symbol: token.symbol,
-                } as TokenMiniProps,
-                token.user_quantity ?? '0',
-              ];
-            }),
-          );
-        }
       }
+    }
   }, [user.address, currentIme]);
   return (
     <Modal isVisible={!!modals.getIn.id} handleCancel={handleClose} className="m-get-in">

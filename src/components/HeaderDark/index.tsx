@@ -15,7 +15,7 @@ import tw from '../../assets/img/socials/twitter.svg';
 // import { useWalletConnectorContext } from '../../services/walletConnect';
 import { useMst } from '../../store/store';
 // import EventBanner from '../EventBanner';
-import { Button,/* SelectNetwork, */ Switch } from '../index';
+import { Button, /* SelectNetwork, */ Switch } from '../index';
 
 import './Header.scss';
 
@@ -38,7 +38,7 @@ const Header: React.FC<HeaderProps> = observer(({ collapsed, onCollapsedChange }
     }
   };
 
-/*
+  /*
   const handleLogOut = () => {
     onCollapsedChange(true);
     walletConnector.disconnect();
@@ -93,7 +93,7 @@ const Header: React.FC<HeaderProps> = observer(({ collapsed, onCollapsedChange }
               <div className="menu__sign">
                 <Switch checked={theme.value === 'dark'} onChange={handleChangeTheme} />
                 {/* <SelectNetwork /> */}
-               {/* <ul className="menu-nav">
+                {/* <ul className="menu-nav">
                   {user.address && (
                     <li className="menu-nav__item">
                       <Button
@@ -128,7 +128,7 @@ const Header: React.FC<HeaderProps> = observer(({ collapsed, onCollapsedChange }
                     Home
                   </Link>
                 </li>
-               {/*   <li className="header-nav__item">
+                {/*   <li className="header-nav__item">
                     <Link to="/indexes" className="header-nav__link">
                       Index Products
                     </Link>
@@ -158,7 +158,7 @@ const Header: React.FC<HeaderProps> = observer(({ collapsed, onCollapsedChange }
             <div className="header__sign">
               <Switch checked={theme.value === 'dark'} onChange={handleChangeTheme} />
               {/* <SelectNetwork /> */}
-             {/* <ul className="header-nav">
+              {/* <ul className="header-nav">
                 {user.address && (
                   <li className="header-nav__item">
                     <Button
@@ -272,7 +272,7 @@ const Header: React.FC<HeaderProps> = observer(({ collapsed, onCollapsedChange }
               </div>
             </div>
 
-           {/* <div className="footer__col">
+            {/* <div className="footer__col">
               <div className="footer__links-title">DeFi</div>
 
               <div className="footer__links">
@@ -304,14 +304,14 @@ const Header: React.FC<HeaderProps> = observer(({ collapsed, onCollapsedChange }
                   <img src={tw} alt="logo" width="24" height="20" />
                 </a>
 
-              {/* <a href="/" className="footer__socials-item">
+                {/* <a href="/" className="footer__socials-item">
                 <img src={md} alt="logo" width="24" height="20" />
               </a>
 
               <a href="/" className="footer__socials-item">
                 <img src={dis} alt="logo" width="24" height="20" />
               </a> */}
-            </div>
+              </div>
             )}
           </div>
         </div>

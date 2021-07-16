@@ -30,6 +30,7 @@
 
     &__token-percent {
       --color: $white;
+      border-color: var(--color);
 
       &.yellow {
         --color: #f7931e;
@@ -42,8 +43,6 @@
       &.red {
         --color: #d53038;
       }
-
-      border-color: var(--color);
     }
   }
 }
@@ -77,6 +76,7 @@
 
     &__token-percent {
       --color: $black;
+      border-color: var(--color);
 
       &.yellow {
         --color: #f7931e;
@@ -89,8 +89,6 @@
       &.red {
         --color: #d53038;
       }
-
-      border-color: var(--color);
     }
   }
 }
@@ -322,7 +320,6 @@
     // }
 
     // border-color: var(--color);
-
     & + & {
       margin-left: 10px;
     }

@@ -117,7 +117,7 @@ const InitialMintEventItem: React.FC /* <InitialMintEventItemProps> */ = (/* { i
           to YDR, that have the ability to produce a high yield.
         </p>
 
-       {/* <Button
+        {/* <Button
           onClick={handleGetIn}
           className="initial-mint-event__get-btn"
           tooltip='Please login'
