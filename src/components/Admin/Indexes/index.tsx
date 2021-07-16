@@ -66,19 +66,15 @@ const Indexes: React.FC = observer(() => {
   useEffect(() => {
     if (indexes) {
       const newData = indexes.map((curIndex, index) => {
-        let result
-        if (curIndex.price > 0) {
-          result =   {
-            key: index,
-            name: { id: curIndex.id, name: curIndex.name },
-            cap: `$${curIndex.market_cap}`,
-            price: `$${curIndex.price}`,
-            created: moment(new Date(curIndex.created_at)).format('DD.MM.YY'),
-          };
-        }
-        return result
+        return {
+          key: index,
+          name: { id: curIndex.id, name: curIndex.name },
+          cap: `$${curIndex.market_cap}`,
+          price: `$${curIndex.price}`,
+          created: moment(new Date(curIndex.created_at)).format('DD.MM.YY'),
+        };
       });
-      setDataSource(newData.filter(item => item));
+      setDataSource(newData);
       setLoading(false);
     }
   }, [indexes]);
