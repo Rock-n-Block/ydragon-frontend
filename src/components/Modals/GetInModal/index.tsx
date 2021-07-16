@@ -50,8 +50,8 @@ const GetInModal: React.FC = observer(() => {
   const [firstCurrency, setFirstCurrency] = useState<TokenMiniNameTypes>(defaultTokens[0].name);
   const [payInput, setPayInput] = useState<string>('');
   const [isNeedApprove, setIsNeedApprove] = useState<boolean>(true);
-  const [loading, setLoading] = useState<boolean>(false);
-  const [loadingBtn, setLoadingBtn] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoadingBtn, setIsLoadingBtn] = useState<boolean>(false);
   const handleClose = (): void => {
     modals.getIn.close();
     setPayInput('');
@@ -74,7 +74,7 @@ const GetInModal: React.FC = observer(() => {
     setPayInput('');
   };
   const handleApprove = (): void => {
-    setLoadingBtn(true);
+    setIsLoadingBtn(true);
     walletConnector.metamaskService
       .approve(firstCurrency, undefined, modals.getIn.address)
       .then(() => {
@@ -85,10 +85,10 @@ const GetInModal: React.FC = observer(() => {
         const { message } = err;
         modals.info.setMsg('Error', `Approve error ${message}`, 'error');
       })
-      .finally(() => setLoadingBtn(false));
+      .finally(() => setIsLoadingBtn(false));
   };
   const handleEnter = (): void => {
-    setLoadingBtn(true);
+    setIsLoadingBtn(true);
     walletConnector.metamaskService
       .enterIme(payInput, firstCurrency, modals.getIn.address)
       .then(() => {
@@ -100,7 +100,7 @@ const GetInModal: React.FC = observer(() => {
         console.log(message)
         modals.info.setMsg('Error', `Mint error ${message.slice(0, message.indexOf(':'))}`, 'error');
       })
-      .finally(() => setLoadingBtn(false));
+      .finally(() => setIsLoadingBtn(false));
   };
   const getCurrentIme = useCallback(() => {
     if (modals.getIn.id) {
@@ -114,7 +114,7 @@ const GetInModal: React.FC = observer(() => {
           const { response } = err;
           console.log('getCurrentIme error', response);
         })
-        .finally(() => setLoading(false));
+        .finally(() => setIsLoading(false));
     }
   }, [user.address, modals.getIn.id]);
   const handlePayInput = (e: any) => {
@@ -125,7 +125,7 @@ const GetInModal: React.FC = observer(() => {
     }
   };
   useEffect(() => {
-    setLoading(true);
+    setIsLoading(true);
     getCurrentIme();
   }, [getCurrentIme]);
   useEffect(() => {
@@ -173,8 +173,8 @@ const GetInModal: React.FC = observer(() => {
   return (
     <Modal isVisible={!!modals.getIn.id} handleCancel={handleClose} className="m-get-in">
       <div className="m-get-in__content">
-        {loading ? (
-          <Spinner loading={loading} />
+        {isLoading ? (
+          <Spinner loading={isLoading} />
         ) : (
           <>
             <section className="m-get-in__total">
@@ -199,12 +199,12 @@ const GetInModal: React.FC = observer(() => {
           />
           <div className="m-get-in__btns">
             {isNeedApprove && firstCurrency !== 'BNB' && (
-              <Button className="m-trade-ydr__btn" onClick={handleApprove} loading={loadingBtn} disabled={!user.address}>
+              <Button className="m-trade-ydr__btn" onClick={handleApprove} loading={isLoadingBtn} disabled={!user.address}>
                 Approve
               </Button>
             )}
             {modals.tradeYDR.method === 'buy' && (!isNeedApprove || firstCurrency === 'BNB') && (
-              <Button className="m-trade-ydr__btn" onClick={handleEnter} loading={loadingBtn} disabled={!user.address}>
+              <Button className="m-trade-ydr__btn" onClick={handleEnter} loading={isLoadingBtn} disabled={!user.address}>
                 Enter
               </Button>
             )}
