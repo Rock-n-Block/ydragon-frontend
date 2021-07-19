@@ -55,7 +55,6 @@ const EventBanner: React.FC = observer(() => {
     indexesApi
       .getImeIndexes()
       .then(({ data }) => {
-        console.log('get ime list success', data);
         setImeItem(data[0]);
       })
       .catch((error) => {

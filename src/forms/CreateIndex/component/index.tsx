@@ -90,7 +90,6 @@ const CreateIndex: React.FC<FormikProps<ICreateIndex> & ICreateIndex> = observer
         coinsApi
           .getCoinsList(tokenName)
           .then(({ data }) => {
-            console.log(`tokens with ${tokenName}`, data);
             setSearchTokens(data);
           })
           .catch((error) => {

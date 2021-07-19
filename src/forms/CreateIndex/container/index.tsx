@@ -27,7 +27,6 @@ const CreateIndexForm: React.FC = () => {
     }),
     handleSubmit: (values, { setFieldValue, resetForm }) => {
       setFieldValue('isLoading', true);
-      console.log(values.dateRange);
       const tokenAddresses: Array<string> = [];
       const tokenWeights: Array<string> = [];
       values.tokens.forEach((token) => {

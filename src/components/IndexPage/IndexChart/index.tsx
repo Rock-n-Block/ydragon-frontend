@@ -173,7 +173,6 @@ const IndexChart: React.FC<IndexChartProps> = ({ indexId }) => {
     indexesApi
       .getIndexTokensChart(indexId, days)
       .then((res) => {
-        console.log('Request chartData success', res.data);
         const currentPrice = res.data[res.data.length - 1].market_cap;
         setChartData(getChartData(res.data));
         if (refPrice.current <= currentPrice) refPrice.current = currentPrice;
