@@ -69,7 +69,6 @@ const SelectNetwork: React.FC = observer(() => {
     networksApi
       .getNetworks()
       .then(({ data }) => {
-        console.log(data);
         networks.setNetworks(data);
       })
       .catch((err) => {

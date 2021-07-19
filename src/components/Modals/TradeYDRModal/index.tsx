@@ -37,7 +37,6 @@ const TradeYDRModal: React.FC = observer(() => {
     walletConnector.metamaskService
       .getBalanceOf(config[firstCurrency].ADDRESS)
       .then((data: any) => {
-        console.log(`Balance: ${data} ${firstCurrency}`);
         setBalance(data);
       })
       .catch((err: ProviderRpcError) => {
@@ -51,7 +50,6 @@ const TradeYDRModal: React.FC = observer(() => {
       walletConnector.metamaskService
         .getYDRCourse(firstCurrency, payInput, true)
         .then((data: any) => {
-          console.log(`Course of ${firstCurrency} to YDR `, data[data.length - 1]);
           setViewOnlyInputValue(
             new BigNumber(data[data.length - 1]).dividedBy(new BigNumber(10).pow(18)).toFixed(5),
           );
@@ -69,7 +67,6 @@ const TradeYDRModal: React.FC = observer(() => {
       walletConnector.metamaskService
         .getYDRCourse(secondCurrency, payInput, false)
         .then((data: any) => {
-          console.log(`Course of YDR  to ${secondCurrency} `, data[data.length - 1]);
           setViewOnlyInputValue(
             new BigNumber(data[data.length - 1]).dividedBy(new BigNumber(10).pow(18)).toFixed(5),
           );
@@ -87,14 +84,13 @@ const TradeYDRModal: React.FC = observer(() => {
     walletConnector.metamaskService
       .checkAllowance(firstCurrency, 'Router')
       .then((data: boolean) => {
-        console.log(`allowance of ${firstCurrency} to ${secondCurrency}: ${data} `);
         setIsNeedApprove(!data);
       })
       .catch((err: ProviderRpcError) => {
         const { message } = err;
         console.log('allowance error', message);
       });
-  }, [walletConnector.metamaskService, firstCurrency, secondCurrency]);
+  }, [walletConnector.metamaskService, firstCurrency]);
   const handleSelectChange = (value: any) => {
     setPayInput('');
     if (modals.tradeYDR.method === 'sell') {
@@ -131,7 +127,6 @@ const TradeYDRModal: React.FC = observer(() => {
       })
       .catch((err: ProviderRpcError) => {
         const { message } = err;
-        console.log(message)
         modals.info.setMsg('Error', `${message.slice(0, message.indexOf(':'))}`, 'error');
       })
       .finally(() => setIsLoading(false));
@@ -147,7 +142,6 @@ const TradeYDRModal: React.FC = observer(() => {
       })
       .catch((err: ProviderRpcError) => {
         const { message } = err;
-        console.log(message)
         modals.info.setMsg('Error', `${message.slice(0, message.indexOf(':'))}`, 'error');
       })
       .finally(() => setIsLoading(false));
@@ -252,12 +246,22 @@ const TradeYDRModal: React.FC = observer(() => {
           </Button>
         )}
         {modals.tradeYDR.method === 'buy' && (!isNeedApprove || firstCurrency === 'BNB') && (
-          <Button className="m-trade-ydr__btn" onClick={handleBuy} disabled={!payInput} loading={isLoading}>
+          <Button
+            className="m-trade-ydr__btn"
+            onClick={handleBuy}
+            disabled={!payInput}
+            loading={isLoading}
+          >
             Buy
           </Button>
         )}
         {modals.tradeYDR.method === 'sell' && !isNeedApprove && (
-          <Button className="m-trade-ydr__btn" onClick={handleSell} disabled={!payInput} loading={isLoading}>
+          <Button
+            className="m-trade-ydr__btn"
+            onClick={handleSell}
+            disabled={!payInput}
+            loading={isLoading}
+          >
             Sell
           </Button>
         )}

@@ -60,7 +60,6 @@ const GetInModal: React.FC = observer(() => {
     walletConnector.metamaskService
       .checkAllowance(firstCurrency, 'MAIN', modals.getIn.address)
       .then((data: boolean) => {
-        console.log(`allowance of ${firstCurrency}: ${data} `);
         setIsNeedApprove(!data);
       })
       .catch((err: any) => {
@@ -69,7 +68,6 @@ const GetInModal: React.FC = observer(() => {
       });
   }, [modals.getIn.address, walletConnector.metamaskService, firstCurrency]);
   const handleSelectChange = (value: any) => {
-    console.log(value);
     setFirstCurrency(value);
     setPayInput('');
   };
@@ -97,8 +95,11 @@ const GetInModal: React.FC = observer(() => {
       })
       .catch((err: ProviderRpcError) => {
         const { message } = err;
-        console.log(message)
-        modals.info.setMsg('Error', `Mint error ${message.slice(0, message.indexOf(':'))}`, 'error');
+        modals.info.setMsg(
+          'Error',
+          `Mint error ${message.slice(0, message.indexOf(':'))}`,
+          'error',
+        );
       })
       .finally(() => setIsLoadingBtn(false));
   };
@@ -107,7 +108,6 @@ const GetInModal: React.FC = observer(() => {
       indexesApi
         .getImeById(modals.getIn.id, user.address ? user.address : undefined)
         .then(({ data }) => {
-          console.log('getCurrentIme success', data);
           setCurrentIme(data);
         })
         .catch((err: any) => {
@@ -199,12 +199,22 @@ const GetInModal: React.FC = observer(() => {
           />
           <div className="m-get-in__btns">
             {isNeedApprove && firstCurrency !== 'BNB' && (
-              <Button className="m-trade-ydr__btn" onClick={handleApprove} loading={isLoadingBtn} disabled={!user.address}>
+              <Button
+                className="m-trade-ydr__btn"
+                onClick={handleApprove}
+                loading={isLoadingBtn}
+                disabled={!user.address}
+              >
                 Approve
               </Button>
             )}
             {modals.tradeYDR.method === 'buy' && (!isNeedApprove || firstCurrency === 'BNB') && (
-              <Button className="m-trade-ydr__btn" onClick={handleEnter} loading={isLoadingBtn} disabled={!user.address}>
+              <Button
+                className="m-trade-ydr__btn"
+                onClick={handleEnter}
+                loading={isLoadingBtn}
+                disabled={!user.address}
+              >
                 Enter
               </Button>
             )}

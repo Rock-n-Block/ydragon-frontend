@@ -1,8 +1,8 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Line } from 'react-chartjs-2';
 
-import PriceDifferenceBag from '../../PriceDifferenceBag';
 import { indexesApi } from '../../../services/api';
+import PriceDifferenceBag from '../../PriceDifferenceBag';
 
 import './IndexChart.scss';
 
@@ -179,7 +179,6 @@ const IndexChart: React.FC<IndexChartProps> = ({ indexId }) => {
     indexesApi
       .getIndexTokensChart(indexId, days)
       .then((res) => {
-        console.log('Request chartData success', res.data);
         const currentPrice = res.data[res.data.length - 1].market_cap;
         setChartData(getChartData(res.data));
         if (refPrice.current <= currentPrice) refPrice.current = currentPrice;

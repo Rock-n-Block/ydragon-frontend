@@ -20,8 +20,8 @@ const { Option } = Select;
 const { TextArea } = InputAntd;
 
 interface InputWithProps extends InputProps {
-  error?: boolean,
-  className?: string
+  error?: boolean;
+  className?: string;
 }
 
 const Input: React.FC<InputWithProps> = (props) => {

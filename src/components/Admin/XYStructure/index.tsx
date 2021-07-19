@@ -12,7 +12,6 @@ interface XYStructureProps {
 }
 
 const XYStructure: React.FC<XYStructureProps> = ({ vaults }) => {
-  console.log(vaults);
   const columns: any[] = [
     {
       title: 'Vault',
@@ -51,7 +50,6 @@ const XYStructure: React.FC<XYStructureProps> = ({ vaults }) => {
         },
       ];
       setDataSource(newData);
-      console.log({ newData });
     }
   }, [vaults]);
   return (

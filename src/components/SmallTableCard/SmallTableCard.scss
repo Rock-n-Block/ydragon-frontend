@@ -21,14 +21,17 @@
         }
       }
     }
+
     &--selected {
       .small-card__body {
         color: $black;
         background-color: $white;
       }
+
       .small-card__title {
         color: $black;
       }
+
       .small-card__header {
         color: $black;
         background-color: rgba($white, 0.7);
@@ -57,14 +60,17 @@
         }
       }
     }
+
     &--selected {
       .small-card__body {
         color: $white;
         background-color: $table-selected;
       }
+
       .small-card__title {
         color: $white;
       }
+
       .small-card__header {
         color: $white;
         background-color: rgba($table-selected, 0.7);

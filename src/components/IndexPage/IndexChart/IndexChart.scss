@@ -33,7 +33,7 @@
       font-family: 'Monument Extended', sans-serif;
       font-size: 50px;
       font-weight: normal;
-      
+
       @include b('mobile') {
         font-size: 30px;
       }

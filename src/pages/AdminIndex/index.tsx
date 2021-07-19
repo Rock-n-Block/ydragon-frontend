@@ -58,7 +58,6 @@ const AdminIndex: React.FC = () => {
     indexesApi
       .getIndexesRebalance(+indexId)
       .then(({ data }) => {
-        console.log('get collections success', data);
         setIndex(data);
       })
       .catch((err) => {
@@ -71,7 +70,6 @@ const AdminIndex: React.FC = () => {
     vaultsApi
       .getVaults(+indexId)
       .then(({ data }) => {
-        console.log('get vaults collections success', data);
         const vaults = data.splice(-2, 2);
         setVault(data);
         setVaultMini(vaults);

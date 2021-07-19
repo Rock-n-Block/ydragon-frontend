@@ -1,8 +1,25 @@
 import React from 'react';
 import { observer } from 'mobx-react';
+
+import magnusBlack from '../../../assets/img/icons/partners/magnus-black.png';
+// import aave from '../../../assets/img/icons/partners/aave.svg';
+// import balancer from '../../../assets/img/icons/partners/balancer.svg';
+// import cube from '../../../assets/img/icons/partners/cube.svg';
+// import cubesWhite from '../../../assets/img/icons/partners/cubes-white.svg';
+// import cubesBlack from '../../../assets/img/icons/partners/cubes-black.svg';
+import magnusWhite from '../../../assets/img/icons/partners/magnus-white.png';
+import marshlandBlack from '../../../assets/img/icons/partners/marshland-black.svg';
+// import maker from '../../../assets/img/icons/partners/maker.svg';
+import marshlandWhite from '../../../assets/img/icons/partners/marshland-white.svg';
+// import mmmmWhite from '../../../assets/img/icons/partners/mmmm-white.svg';
+// import mmmmBlack from '../../../assets/img/icons/partners/mmmm-black.svg';
+// import nexusWhite from '../../../assets/img/icons/partners/nexus-white.svg';
+// import nexusBlack from '../../../assets/img/icons/partners/nexus-black.svg';
+import polygon from '../../../assets/img/icons/partners/polygon.svg';
+import squareBlack from '../../../assets/img/icons/partners/square-black.svg';
+import squareWhite from '../../../assets/img/icons/partners/square-white.svg';
 // import nextId from 'react-id-generator';
 // import { Swiper, SwiperSlide } from 'swiper/react';
-
 // import slide1 from '../../../assets/img/partners/logo-1.png';
 // import slide2 from '../../../assets/img/partners/logo-2.png';
 // import slide3 from '../../../assets/img/partners/logo-3.png';
@@ -13,33 +30,14 @@ import { observer } from 'mobx-react';
 // import slide8 from '../../../assets/img/partners/logo-8.png';
 // import slide9 from '../../../assets/img/partners/logo-9.png';
 // import slide10 from '../../../assets/img/partners/logo-10.png';
-
 import { useMst } from '../../../store/store';
 
-// import aave from '../../../assets/img/icons/partners/aave.svg';
-// import balancer from '../../../assets/img/icons/partners/balancer.svg';
-// import cube from '../../../assets/img/icons/partners/cube.svg';
-// import cubesWhite from '../../../assets/img/icons/partners/cubes-white.svg';
-// import cubesBlack from '../../../assets/img/icons/partners/cubes-black.svg';
-import magnusWhite from '../../../assets/img/icons/partners/magnus-white.png';
-import magnusBlack from '../../../assets/img/icons/partners/magnus-black.png';
-// import maker from '../../../assets/img/icons/partners/maker.svg';
-import marshlandWhite from '../../../assets/img/icons/partners/marshland-white.svg';
-import marshlandBlack from '../../../assets/img/icons/partners/marshland-black.svg';
-// import mmmmWhite from '../../../assets/img/icons/partners/mmmm-white.svg';
-// import mmmmBlack from '../../../assets/img/icons/partners/mmmm-black.svg';
-// import nexusWhite from '../../../assets/img/icons/partners/nexus-white.svg';
-// import nexusBlack from '../../../assets/img/icons/partners/nexus-black.svg';
-import polygon from '../../../assets/img/icons/partners/polygon.svg';
-import squareWhite from '../../../assets/img/icons/partners/square-white.svg';
-import squareBlack from '../../../assets/img/icons/partners/square-black.svg';
 // import ssss from '../../../assets/img/icons/partners/ssss.svg';
 // import synth from '../../../assets/img/icons/partners/synth.svg';
 // import walls from '../../../assets/img/icons/partners/walls.svg';
 // import avaLabsWhite from '../../../assets/img/icons/partners/ava-labs-white.png';
 // import avaLabsBlack from '../../../assets/img/icons/partners/ava-labs-black.png';
-
-import 'swiper/swiper.scss';
+// import 'swiper/swiper.scss';
 import './Protocols.scss';
 
 const Protocols: React.FC = observer(() => {
@@ -59,9 +57,8 @@ const Protocols: React.FC = observer(() => {
 
   return (
     <section className="section">
+      <h3 className="section__title text-outline">Our partners</h3>
       <div className="protocols">
-        <h3 className="protocols__title">protocols & PARTNERS</h3>
-
         <div className="protocols__row">
           {/*  <img src={maker} alt="" />
         <img src={aave} alt="" />

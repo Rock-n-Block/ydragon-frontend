@@ -2,10 +2,11 @@ import React, { PropsWithChildren } from 'react';
 import { Link } from 'react-router-dom';
 import { Button as BtnAntd, ButtonProps } from 'antd';
 import classNames from 'classnames';
+import { observer } from 'mobx-react';
+
+import { useMst } from '../../store/store';
 
 import './Button.scss';
-import { observer } from 'mobx-react';
-import { useMst } from '../../store/store';
 
 export interface IStyledType {
   styledType?: 'outline' | 'filled' | 'nav' | 'clear';

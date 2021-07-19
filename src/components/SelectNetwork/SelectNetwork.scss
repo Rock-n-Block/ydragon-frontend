@@ -2,11 +2,12 @@
 @import '../../styles/mixins';
 
 .dark {
-  .select-network,.ant-select:not(.ant-select-customize-input) {
-     .ant-select-selector {
-      color: $white ;
-      background: #0c1735 ;
-      border-color:#647091 ;
+  .select-network,
+  .ant-select:not(.ant-select-customize-input) {
+    .ant-select-selector {
+      color: $white;
+      background: #0c1735;
+      border-color: #647091;
     }
   }
 
@@ -22,13 +23,15 @@
 }
 
 .light {
-  .select-network,.ant-select:not(.ant-select-customize-input) {
-     .ant-select-selector {
-      color: $black ;
-      background: $white ;
-      border-color:#D2D3D7 ;
+  .select-network,
+  .ant-select:not(.ant-select-customize-input) {
+    .ant-select-selector {
+      color: $black;
+      background: $white;
+      border-color: #d2d3d7;
     }
   }
+
   .select-network__dropdown {
     .ant-select-item-option-selected,
     .ant-select-item-option-active {
@@ -37,12 +40,14 @@
   }
 }
 
-.select-network{
+.select-network {
   .ant-select-selector {
-    box-sizing: border-box;
     padding: 0 7px !important;
-    border-radius: 10px !important;
+
+    box-sizing: border-box;
+
     border-width: 2px !important;
+    border-radius: 10px !important;
   }
 }
 
@@ -67,8 +72,9 @@
 .ant-select,
 .select-network {
   .token-mini {
-    width: 26px;
     margin-right: 5px;
+
+    width: 26px;
   }
 
   .ant-select-selector {

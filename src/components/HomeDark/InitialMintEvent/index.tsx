@@ -34,7 +34,6 @@ const InitialMintEvent: React.FC = observer(() => {
     indexesApi
       .getImeIndexes()
       .then(({ data }) => {
-        console.log('get ime list success', data);
         setImeList(data);
       })
       .catch((error) => {

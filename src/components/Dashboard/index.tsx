@@ -39,7 +39,6 @@ const Dashboard: React.FC = () => {
     indexesApi
       .getUserIndexes()
       .then(({ data }) => {
-        console.log('get indexes success', data);
         setIndexes(data);
       })
       .catch((error) => {
@@ -53,7 +52,6 @@ const Dashboard: React.FC = () => {
     getIndexes();
   }, [getIndexes]);
 
-  console.log(indexes);
   return (
     <section className="section section--admin">
       <h2 className="section__title text-outline">Indexes</h2>
@@ -214,9 +212,11 @@ const Dashboard: React.FC = () => {
                 ))}
             </div>
           ) : (
-            !loading && (<div className="no-indexes">
-              <p className="no-indexes__text text-gradient">There is no indexes yet</p>
-            </div>)
+            !loading && (
+              <div className="no-indexes">
+                <p className="no-indexes__text text-gradient">There is no indexes yet</p>
+              </div>
+            )
           )}
         </div>
       </div>

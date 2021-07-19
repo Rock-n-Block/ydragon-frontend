@@ -49,7 +49,6 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
       walletConnector.metamaskService
         .getBalanceOf(isSell ? indexAddress : config[firstCurrency].ADDRESS)
         .then((data: any) => {
-          console.log('getBalance success', data);
           setBalance(data);
         })
         .catch((err: ProviderRpcError) => {
@@ -63,7 +62,6 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
         walletConnector.metamaskService
           .getIndexCourse(config[firstCurrency].ADDRESS, payInput, true, indexAddress)
           .then((data: any) => {
-            console.log('getBuyCourse success', data);
             setViewOnlyInputValue(
               new BigNumber(data).dividedBy(new BigNumber(10).pow(18)).toFixed(5),
             );
@@ -86,7 +84,6 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
           .getIndexCourse(config[secondCurrency].ADDRESS, payInput, false, indexAddress)
           .then((data: any) => {
             axios.get(url).then((res: AxiosResponse) => {
-              console.log('refData request success', res.data);
               if (res.data[res.data.length - 1].total_x >= 0.15) {
                 setFee(
                   `${new BigNumber(data * 0.02).dividedBy(new BigNumber(10).pow(18)).toFixed(5)}`,
@@ -99,7 +96,6 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
                 );
               }
             });
-            console.log('getSellCourse success', data);
             setViewOnlyInputValue(
               new BigNumber(data).dividedBy(new BigNumber(10).pow(18)).toFixed(5),
             );
@@ -123,7 +119,6 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
             indexAddress,
           )
           .then((data: boolean) => {
-            console.log('allowance success', data);
             setIsNeedApprove(!data);
           })
           .catch((err: ProviderRpcError) => {
@@ -168,7 +163,6 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
         })
         .catch((err: ProviderRpcError) => {
           const { message } = err;
-          console.log(message)
           modals.info.setMsg('Error', `${message.slice(0, message.indexOf(':'))}`, 'error');
         })
         .finally(() => setIsLoading(false));
@@ -184,7 +178,6 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
         })
         .catch((err: ProviderRpcError) => {
           const { message } = err;
-          console.log(message)
           modals.info.setMsg('Error', `${message.slice(0, message.indexOf(':'))}`, 'error');
         })
         .finally(() => setIsLoading(false));
@@ -294,12 +287,22 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
             </Button>
           )}
           {!isSell && (!isNeedApprove || firstCurrency === 'BNB') && (
-            <Button className="m-trade-ydr__btn" onClick={handleBuy} disabled={!payInput} loading={isLoading}>
+            <Button
+              className="m-trade-ydr__btn"
+              onClick={handleBuy}
+              disabled={!payInput}
+              loading={isLoading}
+            >
               Buy
             </Button>
           )}
           {isSell && !isNeedApprove && (
-            <Button className="m-trade-ydr__btn" onClick={handleSell} disabled={!payInput} loading={isLoading}>
+            <Button
+              className="m-trade-ydr__btn"
+              onClick={handleSell}
+              disabled={!payInput}
+              loading={isLoading}
+            >
               Sell
             </Button>
           )}

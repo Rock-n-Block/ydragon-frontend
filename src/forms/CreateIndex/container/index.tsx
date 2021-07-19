@@ -2,6 +2,7 @@ import React from 'react';
 import BigNumber from 'bignumber.js/bignumber';
 import { withFormik } from 'formik';
 import { observer } from 'mobx-react-lite';
+import moment from 'moment';
 import { TransactionReceipt } from 'web3-core';
 
 import { ITokensDiff } from '../../../pages/Admin';
@@ -11,7 +12,6 @@ import { useWalletConnectorContext } from '../../../services/walletConnect';
 import { useMst } from '../../../store/store';
 import { ProviderRpcError } from '../../../types/errors';
 import CreateIndex, { ICreateIndex } from '../component';
-import moment from 'moment';
 
 const CreateIndexForm: React.FC = () => {
   const { modals } = useMst();
@@ -29,7 +29,6 @@ const CreateIndexForm: React.FC = () => {
     }),
     handleSubmit: (values, { setFieldValue, resetForm }) => {
       setFieldValue('isLoading', true);
-      console.log(values.dateRange);
       const tokenAddresses: Array<string> = [];
       const tokenWeights: Array<string> = [];
       values.tokens.forEach((token) => {

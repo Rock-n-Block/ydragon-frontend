@@ -94,6 +94,7 @@
     gap: 20px;
     @include b('mobile') {
       flex-direction: column;
+
       width: 100%;
     }
   }
