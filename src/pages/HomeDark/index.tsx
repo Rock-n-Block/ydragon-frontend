@@ -14,8 +14,8 @@ const Home: React.FC = () => {
   return (
     <main className="container">
       <Main />
-      <InitialMintEvent />
       <Protocols />
+      <InitialMintEvent />
       <Machine />
       <Features />
       <Advantages />
