@@ -7,7 +7,6 @@ import { EventValue } from 'rc-picker/lib/interface';
 
 import DangerCircle from '../../../assets/img/icons/icon-danger-circle.svg';
 import { Button, Input, RangePicker, Search, TextArea, TokenMini } from '../../../components';
-// import { InputNumber } from '../../../components/Input';
 import { IToken } from '../../../components/IndexPage/IndexTable';
 import { ISearchToken } from '../../../components/Search';
 import { ITokensDiff } from '../../../pages/Admin';
@@ -20,11 +19,11 @@ export interface ICreateIndex {
   description: string;
   tokens: Array<ITokensDiff>;
   isLoading?: boolean;
+  searchTokens: Array<ISearchToken>
 }
 
 const CreateIndex: React.FC<FormikProps<ICreateIndex> & ICreateIndex> = observer(
   ({ setFieldValue, handleChange, handleBlur, values, handleSubmit }) => {
-    const [searchTokens, setSearchTokens] = useState<ISearchToken[]>([] as ISearchToken[]);
     const [validation, setValidation] = useState<any>({
       name: true,
       symbol: true,
@@ -90,14 +89,15 @@ const CreateIndex: React.FC<FormikProps<ICreateIndex> & ICreateIndex> = observer
         coinsApi
           .getCoinsList(tokenName)
           .then(({ data }) => {
-            setSearchTokens(data);
+            console.log(`tokens with ${tokenName}`, data);
+            setFieldValue('searchTokens', data);
           })
           .catch((error) => {
             const { response } = error;
             console.log('search error', response);
           });
       } else {
-        setSearchTokens([] as ISearchToken[]);
+        setFieldValue('searchTokens', [] as ISearchToken[]);
       }
     };
     const handleRemove = (arrayHelper: FieldArrayRenderProps, index: number) => {
@@ -269,7 +269,7 @@ const CreateIndex: React.FC<FormikProps<ICreateIndex> & ICreateIndex> = observer
 
               <Search
                 className="token-weights__search"
-                data={searchTokens}
+                data={values.searchTokens}
                 onChange={(e) => handleNewTokenNameChange(e)}
                 onPick={(pickedToken: ISearchToken) => handleAddNewToken(arrayHelper, pickedToken)}
               />

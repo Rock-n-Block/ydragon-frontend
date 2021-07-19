@@ -87,7 +87,7 @@ const StakingStatistics: React.FC = observer(() => {
 
   const getStakingStatistic = useCallback(() => {
     indexesApi
-      .getStakingStatistic(localStorage.yd_address)
+      .getStakingStatistic(sessionStorage.getItem('yd_address') ?? '')
       .then(({ data }) => {
         const newData = data['binance-smart-chain'].map((stake: IStakingStat, index: number) => {
           return {

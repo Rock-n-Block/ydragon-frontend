@@ -6,6 +6,7 @@ import moment from 'moment';
 import { TransactionReceipt } from 'web3-core';
 
 import { ITokensDiff } from '../../../pages/Admin';
+import { ISearchToken } from '../../../components/Search';
 import { indexesApi } from '../../../services/api';
 import { useWalletConnectorContext } from '../../../services/walletConnect';
 import { useMst } from '../../../store/store';
@@ -24,6 +25,7 @@ const CreateIndexForm: React.FC = () => {
       description: '',
       tokens: [] as Array<ITokensDiff>,
       isLoading: false,
+      searchTokens: [] as Array<ISearchToken>
     }),
     handleSubmit: (values, { setFieldValue, resetForm }) => {
       setFieldValue('isLoading', true);

@@ -41,12 +41,13 @@ const Button: React.FC<IButton> = observer((props: PropsWithChildren<IButton>) =
     children,
     needLogin,
     onClick,
+    disabled,
     ...otherButtonProps
   } = props;
 
   const { modals } = useMst();
 
-  const user = !!localStorage?.yd_address || false;
+  const user = !!sessionStorage.getItem('yd_address') || false;
   let onClickFunction = onClick;
 
   const onVisibleChange = (e: any) => {
@@ -65,9 +66,10 @@ const Button: React.FC<IButton> = observer((props: PropsWithChildren<IButton>) =
           `btn-${styledType}`,
           `btn-${background}`,
           `btn-${colorScheme}`,
-          className,
+          disabled && styledType === 'outline' ? `disabled ${className}` : className,
         )}
         onClick={onClickFunction}
+        disabled={disabled}
         {...otherButtonProps}
       >
         {children}

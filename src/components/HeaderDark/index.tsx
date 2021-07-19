@@ -26,7 +26,7 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = observer(({ collapsed, onCollapsedChange }) => {
   const [fixed, setFixed] = useState(true);
-  const { user, theme } = useMst();
+  const { theme, user } = useMst();
   const walletConnector = useWalletConnectorContext();
   const history = useHistory();
 
@@ -95,7 +95,7 @@ const Header: React.FC<HeaderProps> = observer(({ collapsed, onCollapsedChange }
                   {user.address && (
                     <li className="menu-nav__item">
                       <Button
-                        className="menu-nav__link"
+                        className="menu-nav__link logout"
                         type="text"
                         styledType="clear"
                         onClick={handleLogOut}
@@ -131,7 +131,7 @@ const Header: React.FC<HeaderProps> = observer(({ collapsed, onCollapsedChange }
                     Index Products
                   </Link>
                 </li>
-                {localStorage.yd_address && (
+                {user.address && (
                   <li className="header-nav__item">
                     <Link to="/staking" className="header-nav__link">
                       Staking
@@ -143,7 +143,7 @@ const Header: React.FC<HeaderProps> = observer(({ collapsed, onCollapsedChange }
                     About
                   </Link>
                 </li>
-                {localStorage.yd_token && (
+                {sessionStorage.getItem('yd_token') && (
                   <li className="header-nav__item">
                     <Link to="/admin" className="header-nav__link">
                       Admin panel
@@ -204,15 +204,17 @@ const Header: React.FC<HeaderProps> = observer(({ collapsed, onCollapsedChange }
                     Index Products
                   </Button>
                 </li>
-                <li className="menu-nav__item">
-                  <Button
-                    styledType="clear"
-                    onClick={() => redirectHandler('/staking')}
-                    className="menu-nav__link"
-                  >
-                    Staking
-                  </Button>
-                </li>
+                {user.address && (
+                  <li className="menu-nav__item">
+                    <Button
+                      styledType="clear"
+                      onClick={() => redirectHandler('/staking')}
+                      className="menu-nav__link"
+                    >
+                      Staking
+                    </Button>
+                  </li>
+                )}
                 <li className="menu-nav__item">
                   <Button
                     styledType="clear"
@@ -222,7 +224,7 @@ const Header: React.FC<HeaderProps> = observer(({ collapsed, onCollapsedChange }
                     About
                   </Button>
                 </li>
-                {localStorage.yd_token && (
+                {sessionStorage.getItem('yd_token') && (
                   <li className="menu-nav__item">
                     <Button
                       styledType="clear"
