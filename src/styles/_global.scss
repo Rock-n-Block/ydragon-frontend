@@ -5,7 +5,10 @@ body {
 
   font-family: 'Rubik', sans-serif;
   font-weight: normal;
-  font-feature-settings: 'liga' off;
+
+  span, div {
+    font-feature-settings: 'liga' off;
+  }
 
   .dark {
     color: white;

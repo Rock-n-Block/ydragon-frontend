@@ -14,6 +14,7 @@ const YDRTokenChart: React.FC<TokenChartProps> = ({ price }) => {
   const refDataLength = useRef(1);
   const refPrice = useRef(0.000001);
   const [days, setDays] = useState('1');
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [diff, setDiff] = useState(['up', 0.0]);
   const [chartData, setChartData] = useState({
     labels: [],
@@ -31,9 +32,8 @@ const YDRTokenChart: React.FC<TokenChartProps> = ({ price }) => {
     ],
   });
   const daysFromUrl = days;
-
   const options = {
-    aspectRatio: 4,
+    aspectRatio: (windowWidth > 768 ? 4 : 2),
     parsing: {
       xAxisKey: 'time',
       yAxisKey: 'data',
@@ -69,6 +69,11 @@ const YDRTokenChart: React.FC<TokenChartProps> = ({ price }) => {
       },
     },
   };
+
+  const getWindowWidth = () => {
+    const { innerWidth: width } = window;
+    return width
+  }
 
   const toggleHandler = (event: any) => {
     const btnsList = event.target.parentNode.children;
@@ -168,6 +173,15 @@ const YDRTokenChart: React.FC<TokenChartProps> = ({ price }) => {
   }, [days]);
 
   useEffect(() => {
+    function handleResize() {
+      setWindowWidth(getWindowWidth());
+    }
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  useEffect(() => {
     axiosData();
   }, [axiosData]);
 
@@ -216,6 +230,7 @@ const YDRTokenChart: React.FC<TokenChartProps> = ({ price }) => {
       </div>
       {Object.keys(chartData).length ? (
         <Line
+        height={500}
           data={chartData}
           options={options}
           type="line"

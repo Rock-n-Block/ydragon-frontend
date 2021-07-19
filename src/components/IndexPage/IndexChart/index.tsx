@@ -14,6 +14,7 @@ interface IndexChartProps {
 const IndexChart: React.FC<IndexChartProps> = ({ indexId }) => {
   const [days, setDays] = useState('1');
   const refDataLength = useRef(1);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const refPrice = useRef(0.000001);
   const daysFromUrl = days;
   const refMax = useRef(0);
@@ -42,7 +43,7 @@ const IndexChart: React.FC<IndexChartProps> = ({ indexId }) => {
     layout: {
       padding: 10,
     },
-    aspectRatio: 4,
+    aspectRatio: (windowWidth > 768 ? 4 : 2),
     parsing: {
       xAxisKey: 'time',
       yAxisKey: 'data',
@@ -82,6 +83,11 @@ const IndexChart: React.FC<IndexChartProps> = ({ indexId }) => {
       },
     },
   };
+  
+  const getWindowWidth = () => {
+    const { innerWidth: width } = window;
+    return width
+  }
 
   const toggleHandler = (event: any) => {
     const btnsList = event.target.parentNode.children;
@@ -185,6 +191,15 @@ const IndexChart: React.FC<IndexChartProps> = ({ indexId }) => {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [indexId, days]);
+
+  useEffect(() => {
+    function handleResize() {
+      setWindowWidth(getWindowWidth());
+    }
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   useEffect(() => {
     axiosData();
