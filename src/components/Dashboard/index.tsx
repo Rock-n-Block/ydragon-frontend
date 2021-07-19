@@ -214,9 +214,11 @@ const Dashboard: React.FC = () => {
                 ))}
             </div>
           ) : (
-            !loading && (<div className="no-indexes">
-              <p className="no-indexes__text text-gradient">There is no indexes yet</p>
-            </div>)
+            !loading && (
+              <div className="no-indexes">
+                <p className="no-indexes__text text-gradient">There is no indexes yet</p>
+              </div>
+            )
           )}
         </div>
       </div>

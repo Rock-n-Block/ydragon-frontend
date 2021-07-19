@@ -3,6 +3,7 @@ import BigNumber from 'bignumber.js/bignumber';
 import { FieldArray, FieldArrayRenderProps, Form, FormikProps } from 'formik';
 import { observer } from 'mobx-react-lite';
 import moment from 'moment';
+import { EventValue } from 'rc-picker/lib/interface';
 
 import DangerCircle from '../../../assets/img/icons/icon-danger-circle.svg';
 import { Button, Input, RangePicker, Search, TextArea, TokenMini } from '../../../components';
@@ -11,7 +12,6 @@ import { IToken } from '../../../components/IndexPage/IndexTable';
 import { ISearchToken } from '../../../components/Search';
 import { ITokensDiff } from '../../../pages/Admin';
 import { coinsApi } from '../../../services/api';
-import { EventValue } from 'rc-picker/lib/interface';
 
 export interface ICreateIndex {
   name: string;

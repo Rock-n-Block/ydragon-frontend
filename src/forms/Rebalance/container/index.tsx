@@ -63,8 +63,7 @@ const RebalanceForm: React.FC<RebalanceFormProps> = observer(({ name, tokens, on
       };
       indexesApi
         .putIndexesRebalance(+indexId, newData)
-        .then(({ data }) => {
-          console.log('put rebalance success', data);
+        .then(() => {
           indexesApi
             .launchRebalance(+indexId)
             .then(() => {

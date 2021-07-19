@@ -189,10 +189,12 @@
 
     @include b('mobile') {
       position: relative;
+
       .ant-input-number-input-wrap {
         position: absolute;
         top: 20px;
       }
+
       .stake-amount__all {
         position: absolute;
         top: 61px;

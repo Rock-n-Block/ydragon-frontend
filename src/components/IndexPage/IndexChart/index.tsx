@@ -1,8 +1,8 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Line } from 'react-chartjs-2';
 
-import PriceDifferenceBag from '../../PriceDifferenceBag';
 import { indexesApi } from '../../../services/api';
+import PriceDifferenceBag from '../../PriceDifferenceBag';
 
 import './IndexChart.scss';
 

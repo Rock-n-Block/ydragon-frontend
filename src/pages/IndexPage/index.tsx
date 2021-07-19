@@ -44,7 +44,6 @@ const Index: React.FC = observer(() => {
     indexesApi
       .getIndexById(+indexId)
       .then(({ data }) => {
-        console.log('get current index success', data);
         setIndexData(data);
       })
       .catch((err: any) => {

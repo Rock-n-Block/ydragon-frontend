@@ -97,8 +97,12 @@ const GetInModal: React.FC = observer(() => {
       })
       .catch((err: ProviderRpcError) => {
         const { message } = err;
-        console.log(message)
-        modals.info.setMsg('Error', `Mint error ${message.slice(0, message.indexOf(':'))}`, 'error');
+        console.log(message);
+        modals.info.setMsg(
+          'Error',
+          `Mint error ${message.slice(0, message.indexOf(':'))}`,
+          'error',
+        );
       })
       .finally(() => setIsLoadingBtn(false));
   };
@@ -199,12 +203,22 @@ const GetInModal: React.FC = observer(() => {
           />
           <div className="m-get-in__btns">
             {isNeedApprove && firstCurrency !== 'BNB' && (
-              <Button className="m-trade-ydr__btn" onClick={handleApprove} loading={isLoadingBtn} disabled={!user.address}>
+              <Button
+                className="m-trade-ydr__btn"
+                onClick={handleApprove}
+                loading={isLoadingBtn}
+                disabled={!user.address}
+              >
                 Approve
               </Button>
             )}
             {modals.tradeYDR.method === 'buy' && (!isNeedApprove || firstCurrency === 'BNB') && (
-              <Button className="m-trade-ydr__btn" onClick={handleEnter} loading={isLoadingBtn} disabled={!user.address}>
+              <Button
+                className="m-trade-ydr__btn"
+                onClick={handleEnter}
+                loading={isLoadingBtn}
+                disabled={!user.address}
+              >
                 Enter
               </Button>
             )}

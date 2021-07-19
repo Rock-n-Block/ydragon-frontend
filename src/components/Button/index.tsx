@@ -2,11 +2,11 @@ import React, { PropsWithChildren } from 'react';
 import { Link } from 'react-router-dom';
 import { Button as BtnAntd, ButtonProps } from 'antd';
 import classNames from 'classnames';
+import { observer } from 'mobx-react';
 
+import { useMst } from '../../store/store';
 
 import './Button.scss';
-import { observer } from 'mobx-react';
-import { useMst } from '../../store/store';
 
 export interface IStyledType {
   styledType?: 'outline' | 'filled' | 'nav' | 'clear';
@@ -44,14 +44,14 @@ const Button: React.FC<IButton> = observer((props: PropsWithChildren<IButton>) =
     ...otherButtonProps
   } = props;
 
-  const {modals} = useMst()
+  const { modals } = useMst();
 
   const user = !!localStorage?.yd_address || false;
   let onClickFunction = onClick;
 
   const onVisibleChange = (e: any) => {
     e.preventDefault();
-    modals.metamask.setErr(`${needLogin}`)
+    modals.metamask.setErr(`${needLogin}`);
   };
   if (!user && needLogin) {
     onClickFunction = onVisibleChange;
@@ -70,7 +70,7 @@ const Button: React.FC<IButton> = observer((props: PropsWithChildren<IButton>) =
         onClick={onClickFunction}
         {...otherButtonProps}
       >
-          {children}
+        {children}
       </BtnAntd>
     </>
   );

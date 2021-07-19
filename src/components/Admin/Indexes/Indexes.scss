@@ -70,6 +70,7 @@
     @include b('mobile') {
       flex-direction: column;
       gap: 30px;
+
       .index-create-btn {
         margin: 0 auto;
       }

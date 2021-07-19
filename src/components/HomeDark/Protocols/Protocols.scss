@@ -15,22 +15,23 @@
 
 .protocols {
   margin-top: 50px;
+
   display: flex;
   flex-direction: column;
   justify-content: center;
+
   &__title {
     @include title-text;
     text-align: center;
   }
 
   &__row {
+    display: flex;
+    justify-content: center;
 
     text-align: center;
-
-    display: flex;
     gap: 43px;
     flex-wrap: wrap;
-    justify-content: center;
   }
 
   .ava-labs-icon {

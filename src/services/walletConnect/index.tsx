@@ -89,7 +89,6 @@ class Connector extends React.Component<any, any> {
           rootStore.modals.metamask.setErr(err.message);
           this.disconnect();
         }
-        console.log(response);
       }
     } else {
       rootStore.modals.metamask.setErr('No Metamask (or other Web3 Provider) installed');

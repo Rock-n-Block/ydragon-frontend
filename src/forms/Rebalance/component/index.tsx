@@ -176,7 +176,11 @@ const Rebalance: React.FC<FormikProps<IRebalance> & IRebalance> = observer(
               )}
               <div className="token-weights__total">
                 <h3 className="token-weights__total-name">Total weight</h3>
-                <div className={`input-border weights-sum${+weightsSum === 0 || +weightsSum === 100 ? '' : '--error'}`}>
+                <div
+                  className={`input-border weights-sum${
+                    +weightsSum === 0 || +weightsSum === 100 ? '' : '--error'
+                  }`}
+                >
                   <span className="input">{+weightsSum > 0 ? weightsSum : '0'}</span>
                 </div>
               </div>
@@ -242,7 +246,9 @@ const Rebalance: React.FC<FormikProps<IRebalance> & IRebalance> = observer(
         </div>
 
         <div className="rebalance-modal__btn-row">
-          <Button onClick={() => handleSubmit()} loading={values.isLoading}>Start rebalance</Button>
+          <Button onClick={() => handleSubmit()} loading={values.isLoading}>
+            Start rebalance
+          </Button>
         </div>
       </Form>
     );
