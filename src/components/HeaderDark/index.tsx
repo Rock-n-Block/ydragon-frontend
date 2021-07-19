@@ -31,7 +31,7 @@ const Header: React.FC<HeaderProps> = observer(({ collapsed, onCollapsedChange }
   const history = useHistory();
 
   const handleChangeTheme = () => {
-    if (LIGHT === sessionStorage.getItem('theme')) {
+    if (LIGHT === localStorage.theme) {
       theme.setTheme(DARK);
     } else {
       theme.setTheme(LIGHT);
@@ -95,7 +95,7 @@ const Header: React.FC<HeaderProps> = observer(({ collapsed, onCollapsedChange }
                   {user.address && (
                     <li className="menu-nav__item">
                       <Button
-                        className="menu-nav__link"
+                        className="menu-nav__link logout"
                         type="text"
                         styledType="clear"
                         onClick={handleLogOut}

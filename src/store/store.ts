@@ -33,7 +33,7 @@ export const Store = RootModel.create({
     token: '',
   },
   theme: {
-    value: sessionStorage.getItem('theme') ?? DARK,
+    value: localStorage.theme ?? DARK,
   },
   networks: {
     id: '',

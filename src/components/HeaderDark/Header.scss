@@ -352,7 +352,10 @@
     gap: 30px;
 
     @include b('mobile') {
-      gap: 10px;
+      flex-direction: column-reverse;
+      position: absolute;
+      top: 40px;
+      right: 0;
     }
   }
 }
@@ -372,6 +375,10 @@
     display: inline-block;
 
     width: 150px;
+  }
+
+  &__link, .logout{
+    height: 42px;
   }
 }
 

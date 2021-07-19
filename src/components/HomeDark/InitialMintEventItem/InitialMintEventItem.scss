@@ -65,6 +65,7 @@
     // color: $white;
     @include b('tablet') {
       margin-top: 30px;
+      text-align: center;
     }
   }
 

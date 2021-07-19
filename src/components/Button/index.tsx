@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { Button as BtnAntd, ButtonProps } from 'antd';
 import classNames from 'classnames';
 
-
 import './Button.scss';
 import { observer } from 'mobx-react';
 import { useMst } from '../../store/store';
@@ -41,17 +40,18 @@ const Button: React.FC<IButton> = observer((props: PropsWithChildren<IButton>) =
     children,
     needLogin,
     onClick,
+    disabled,
     ...otherButtonProps
   } = props;
 
-  const {modals} = useMst()
+  const { modals } = useMst();
 
   const user = !!sessionStorage.getItem('yd_address') || false;
   let onClickFunction = onClick;
 
   const onVisibleChange = (e: any) => {
     e.preventDefault();
-    modals.metamask.setErr(`${needLogin}`)
+    modals.metamask.setErr(`${needLogin}`);
   };
   if (!user && needLogin) {
     onClickFunction = onVisibleChange;
@@ -65,12 +65,13 @@ const Button: React.FC<IButton> = observer((props: PropsWithChildren<IButton>) =
           `btn-${styledType}`,
           `btn-${background}`,
           `btn-${colorScheme}`,
-          className,
+          disabled && styledType === 'outline' ? `disabled ${className}` : className,
         )}
         onClick={onClickFunction}
+        disabled={disabled}
         {...otherButtonProps}
       >
-          {children}
+        {children}
       </BtnAntd>
     </>
   );
