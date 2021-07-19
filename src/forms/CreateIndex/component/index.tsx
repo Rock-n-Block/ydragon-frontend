@@ -78,7 +78,7 @@ const CreateIndex: React.FC<FormikProps<ICreateIndex> & ICreateIndex> = observer
     };
     const disabledDate = (current: any) => {
       // Can not select days before today and today
-      return current && current < moment().startOf('day');
+      return (current && current < moment().startOf('day')) || (current && current > moment().add(1, 'year'));
     };
     const weightsSum = values.tokens
       .map((tokenDiff) => +tokenDiff.new_weight)
@@ -129,7 +129,7 @@ const CreateIndex: React.FC<FormikProps<ICreateIndex> & ICreateIndex> = observer
           if (value[1]) {
             if (moment().diff(value[1]) > 0) {
               // TODO: обсудить количество добавленных минут перед деплоем
-              setFieldValue('dateRange', [moment().add(3, 'minutes'), moment().add(4, 'minutes')]);
+              setFieldValue('dateRange', [moment().add(3, 'minutes'), value[0].add(1, 'minutes')]);
             } else {
               setFieldValue('dateRange', [moment().add(3, 'minutes'), value[1]]);
             }
