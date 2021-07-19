@@ -89,7 +89,7 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
     const getBuyCourse = useCallback(() => {
       if (payInput) {
         walletConnector.metamaskService
-          .getIndexCourse(config[firstCurrency].ADDRESS, payInput, true, indexAddress)
+          .getIndexCourse(config[firstCurrency].ADDRESS, payInput, true, indexAddress, decimals)
           .then((data: any) => {
             setViewOnlyInputValue(
               new BigNumber(data).dividedBy(new BigNumber(10).pow(18)).toFixed(5),
@@ -106,11 +106,11 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
         setViewOnlyInputValue('0.0');
         setFee('');
       }
-    }, [payInput, firstCurrency, walletConnector.metamaskService, indexAddress]);
+    }, [decimals, payInput, firstCurrency, walletConnector.metamaskService, indexAddress]);
     const getSellCourse = useCallback(() => {
       if (payInput) {
         walletConnector.metamaskService
-          .getIndexCourse(config[secondCurrency].ADDRESS, payInput, false, indexAddress)
+          .getIndexCourse(config[secondCurrency].ADDRESS, payInput, false, indexAddress, decimals)
           .then((data: any) => {
             axios.get(url).then((res: AxiosResponse) => {
               if (res.data[res.data.length - 1].total_x >= 0.15) {
@@ -137,7 +137,7 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
         setViewOnlyInputValue('0.0');
         setFee('');
       }
-    }, [payInput, secondCurrency, walletConnector.metamaskService, indexAddress, url]);
+    }, [decimals, payInput, secondCurrency, walletConnector.metamaskService, indexAddress, url]);
 
     const checkAllowance = useCallback(() => {
       if (!isSell) {

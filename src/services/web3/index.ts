@@ -426,14 +426,26 @@ export default class MetamaskService {
       .call();
   }
 
-  getIndexCourse(currencyAddress: string, value: string, buy: boolean, indexAddress: string) {
+  getIndexCourse(
+    currencyAddress: string,
+    value: string,
+    buy: boolean,
+    indexAddress: string,
+    decimals: number,
+  ) {
     if (buy) {
       return this.getContractByAddress(indexAddress, config.MAIN.ABI)
-        .methods.getBuyAmountOut(currencyAddress, MetamaskService.calcTransactionAmount(value, 18))
+        .methods.getBuyAmountOut(
+          currencyAddress,
+          MetamaskService.calcTransactionAmount(value, decimals),
+        )
         .call();
     }
     return this.getContractByAddress(indexAddress, config.MAIN.ABI)
-      .methods.getSellAmountOut(currencyAddress, MetamaskService.calcTransactionAmount(value, 18))
+      .methods.getSellAmountOut(
+        currencyAddress,
+        MetamaskService.calcTransactionAmount(value, decimals),
+      )
       .call();
   }
 
