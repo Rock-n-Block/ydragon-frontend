@@ -28,7 +28,7 @@ const Input: React.FC<InputWithProps> = (props) => {
   const { className, error, ...otherProps } = props;
   return (
     <div className={`input-border ${className ?? ''}${error ? '--error' : ''}`}>
-      <InputAntd onWheel={(e) => e.currentTarget.blur()} onScroll={(e) => e.currentTarget.blur()} className="input" {...otherProps} />
+      <InputAntd onWheel={(e) => e.currentTarget.blur()} className="input" {...otherProps} />
     </div>
   );
 };
@@ -75,7 +75,7 @@ export const InputWithSelect: React.FC<InputWithSelectProps> = observer((props) 
   }
   return (
     <div className="input-with-select input-border">
-      <InputAntd onWheel={(e) => e.currentTarget.blur()} onScroll={(e) => e.currentTarget.blur()} className="input" {...otherInputProps} />
+      <InputAntd onWheel={(e) => e.currentTarget.blur()} className="input" {...otherInputProps} />
       {tokenOrSelect}
     </div>
   );
@@ -83,7 +83,7 @@ export const InputWithSelect: React.FC<InputWithSelectProps> = observer((props) 
 export const InputNumber: React.FC<InputNumberProps> = (props) => {
   return (
     <div className="input-border">
-      <InputNumberAntd onWheel={(e) => e.currentTarget.blur()} onScroll={(e) => e.currentTarget.blur()} className="input" {...props} />
+      <InputNumberAntd onWheel={(e) => e.currentTarget.blur()} className="input" {...props} />
     </div>
   );
 };

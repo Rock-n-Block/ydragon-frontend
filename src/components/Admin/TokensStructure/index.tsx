@@ -4,10 +4,10 @@ import BigNumber from 'bignumber.js/bignumber';
 
 import { IVault } from '../../../pages/AdminIndex';
 import { indexesApi } from '../../../services/api';
-import { Table } from '../../index';
+import { Table, Button } from '../../index';
 import { InputNumber } from '../../Input';
 import SmallTableCard from '../../SmallTableCard/index';
-import { ReactComponent as BluePlus } from '../../../assets/img/icons/icon-plus-blue.svg';
+import bluePlus from '../../../assets/img/icons/icon-plus-blue.svg';
 
 import './TokensStructure.scss';
 
@@ -80,7 +80,10 @@ const TokensStructure: React.FC<TokensStructureProps> = ({ vaults, manualRebalan
     {
       title: (
         <div className="apr-cell">
-          APR, % <BluePlus onClick={handleSubmitChange} />
+          APR, %
+          <Button onClick={handleSubmitChange} className="apr-cell__btn" styledType="clear">
+            <img src={bluePlus} alt="" width="32" height="32" />
+          </Button>
         </div>
       ),
       dataIndex: 'apr',
@@ -162,7 +165,7 @@ const TokensStructure: React.FC<TokensStructureProps> = ({ vaults, manualRebalan
                   ['Must be returned from the farm', data.returnValue],
                   [
                     'APR, %',
-                    <div className='apr-cell-small'>
+                    <div className="apr-cell-small">
                       <InputNumber
                         type="number"
                         value={data.apr.apr === '0.0' ? '' : data.apr.apr}
@@ -171,7 +174,13 @@ const TokensStructure: React.FC<TokensStructureProps> = ({ vaults, manualRebalan
                         min={0}
                         max={100}
                       />
-                      <BluePlus />
+                      <Button
+                        onClick={handleSubmitChange}
+                        className="apr-cell__btn"
+                        styledType="clear"
+                      >
+                        <img src={bluePlus} alt="" width="32" height="32" />
+                      </Button>
                     </div>,
                   ],
                 ]}

@@ -33,6 +33,11 @@
     @include b('tablet') {
       flex-direction: column;
     }
+    @include b('mobile') {
+      align-items: center;
+      gap: 20px;
+      margin-bottom: 20px;
+    }
 
     &-title {
       display: flex;
@@ -47,6 +52,9 @@
 
       @include b('mobile') {
         font-size: 30px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
       }
 
       .diff {
@@ -108,6 +116,10 @@
       color: #fff;
 
       border-radius: 21px;
+
+      @include b('mobile') {
+        padding: 5px 19px;
+      }
     }
 
     .active {
