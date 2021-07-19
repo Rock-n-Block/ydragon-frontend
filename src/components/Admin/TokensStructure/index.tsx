@@ -7,6 +7,7 @@ import { indexesApi } from '../../../services/api';
 import { Table } from '../../index';
 import { InputNumber } from '../../Input';
 import SmallTableCard from '../../SmallTableCard/index';
+import { ReactComponent as BluePlus } from '../../../assets/img/icons/icon-plus-blue.svg';
 
 import './TokensStructure.scss';
 
@@ -77,7 +78,11 @@ const TokensStructure: React.FC<TokensStructureProps> = ({ vaults, manualRebalan
       key: 'returnValue',
     },
     {
-      title: 'APR, %',
+      title: (
+        <div className="apr-cell">
+          APR, % <BluePlus onClick={handleSubmitChange} />
+        </div>
+      ),
       dataIndex: 'apr',
       key: 'apr',
       render: (item: any) => (
@@ -85,7 +90,6 @@ const TokensStructure: React.FC<TokensStructureProps> = ({ vaults, manualRebalan
           type="number"
           value={item.apr === '0.0' ? '' : item.apr}
           onChange={(value) => handleInputChange(value, item.index)}
-          onBlur={handleSubmitChange}
           placeholder="0"
           min={0}
           max={100}
@@ -158,15 +162,17 @@ const TokensStructure: React.FC<TokensStructureProps> = ({ vaults, manualRebalan
                   ['Must be returned from the farm', data.returnValue],
                   [
                     'APR, %',
-                    <InputNumber
-                      type="number"
-                      value={data.apr.apr === '0.0' ? '' : data.apr.apr}
-                      onChange={(value) => handleInputChange(value, data.apr.index)}
-                      onBlur={handleSubmitChange}
-                      placeholder="0"
-                      min={0}
-                      max={100}
-                    />,
+                    <div className='apr-cell-small'>
+                      <InputNumber
+                        type="number"
+                        value={data.apr.apr === '0.0' ? '' : data.apr.apr}
+                        onChange={(value) => handleInputChange(value, data.apr.index)}
+                        placeholder="0"
+                        min={0}
+                        max={100}
+                      />
+                      <BluePlus />
+                    </div>,
                   ],
                 ]}
               />
