@@ -165,7 +165,7 @@ const TradeYDRModal: React.FC = observer(() => {
   const handleSell = (): void => {
     setIsLoading(true);
     walletConnector.metamaskService
-      .sellYDRToken(payInput, secondCurrency, viewOnlyDecimals)
+      .sellYDRToken(payInput, secondCurrency, decimals)
       .then(() => {
         setPayInput('');
         getBalance();
