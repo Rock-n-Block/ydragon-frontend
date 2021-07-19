@@ -20,12 +20,15 @@ const TradeYDRModal: React.FC = observer(() => {
   const [firstCurrency, setFirstCurrency] = useState<TokenMiniNameTypes>(
     modals.tradeYDR.method === 'sell' ? 'YDR' : defaultTokens[0].name,
   );
+  const [decimals, setDecimals] = useState<number>(18);
   const [secondCurrency, setSecondCurrency] = useState<TokenMiniNameTypes>(
     modals.tradeYDR.method === 'sell' ? defaultTokens[0].name : 'YDR',
   );
   const [payInput, setPayInput] = useState<string>('');
 
   const [viewOnlyInputValue, setViewOnlyInputValue] = useState<string>('0.0');
+  const [viewOnlyDecimals, setViewOnlyDecimals] = useState<number>(18);
+
   const [balance, setBalance] = useState<number>(0);
   const [isNeedApprove, setIsNeedApprove] = useState<boolean>(true);
   const handleClose = (): void => {
@@ -33,17 +36,35 @@ const TradeYDRModal: React.FC = observer(() => {
     setPayInput('');
     setViewOnlyInputValue('0.0');
   };
+  const getDecimals = useCallback(
+    async (currency: TokenMiniNameTypes) => {
+      if (currency === 'BNB') {
+        return new Promise((resolve) => resolve(18));
+      }
+      return walletConnector.metamaskService.getDecimals(
+        config[currency].ADDRESS,
+        config.Token.ABI,
+      );
+    },
+    [walletConnector.metamaskService],
+  );
   const getBalance = useCallback(() => {
     walletConnector.metamaskService
       .getBalanceOf(config[firstCurrency].ADDRESS)
       .then((data: any) => {
         setBalance(data);
+        getDecimals(firstCurrency).then((dec: number) => {
+          setDecimals(dec);
+        });
+        getDecimals(secondCurrency).then((dec: number) => {
+          setViewOnlyDecimals(dec);
+        });
       })
       .catch((err: ProviderRpcError) => {
         const { message } = err;
         console.log('getBalance error', message);
       });
-  }, [walletConnector.metamaskService, firstCurrency]);
+  }, [secondCurrency, walletConnector.metamaskService, getDecimals, firstCurrency]);
 
   const getBuyCourse = useCallback(() => {
     if (payInput) {
@@ -51,7 +72,9 @@ const TradeYDRModal: React.FC = observer(() => {
         .getYDRCourse(firstCurrency, payInput, true)
         .then((data: any) => {
           setViewOnlyInputValue(
-            new BigNumber(data[data.length - 1]).dividedBy(new BigNumber(10).pow(18)).toFixed(5),
+            new BigNumber(data[data.length - 1])
+              .dividedBy(new BigNumber(10).pow(viewOnlyDecimals))
+              .toFixed(5),
           );
         })
         .catch((err: ProviderRpcError) => {
@@ -61,14 +84,16 @@ const TradeYDRModal: React.FC = observer(() => {
     } else {
       setViewOnlyInputValue('0.0');
     }
-  }, [payInput, firstCurrency, walletConnector.metamaskService]);
+  }, [viewOnlyDecimals, payInput, firstCurrency, walletConnector.metamaskService]);
   const getSellCourse = useCallback(() => {
     if (payInput) {
       walletConnector.metamaskService
         .getYDRCourse(secondCurrency, payInput, false)
         .then((data: any) => {
           setViewOnlyInputValue(
-            new BigNumber(data[data.length - 1]).dividedBy(new BigNumber(10).pow(18)).toFixed(5),
+            new BigNumber(data[data.length - 1])
+              .dividedBy(new BigNumber(10).pow(viewOnlyDecimals))
+              .toFixed(5),
           );
         })
         .catch((err: ProviderRpcError) => {
@@ -78,7 +103,7 @@ const TradeYDRModal: React.FC = observer(() => {
     } else {
       setViewOnlyInputValue('0.0');
     }
-  }, [payInput, secondCurrency, walletConnector.metamaskService]);
+  }, [viewOnlyDecimals, payInput, secondCurrency, walletConnector.metamaskService]);
 
   const checkAllowance = useCallback(() => {
     walletConnector.metamaskService
@@ -96,9 +121,15 @@ const TradeYDRModal: React.FC = observer(() => {
     if (modals.tradeYDR.method === 'sell') {
       setSecondCurrency(value);
       setViewOnlyInputValue('0.0');
+      getDecimals(value).then((dec: number) => {
+        setViewOnlyDecimals(dec);
+      });
     } else {
       setFirstCurrency(value);
       setViewOnlyInputValue('0.0');
+      getDecimals('YDR').then((dec: number) => {
+        setViewOnlyDecimals(dec);
+      });
     }
   };
   const handleApprove = (): void => {
@@ -119,7 +150,7 @@ const TradeYDRModal: React.FC = observer(() => {
   const handleBuy = (): void => {
     setIsLoading(true);
     walletConnector.metamaskService
-      .buyYDRToken(payInput, firstCurrency)
+      .buyYDRToken(payInput, firstCurrency, decimals)
       .then(() => {
         setPayInput('');
         getBalance();
@@ -134,7 +165,7 @@ const TradeYDRModal: React.FC = observer(() => {
   const handleSell = (): void => {
     setIsLoading(true);
     walletConnector.metamaskService
-      .sellYDRToken(payInput, secondCurrency)
+      .sellYDRToken(payInput, secondCurrency, decimals)
       .then(() => {
         setPayInput('');
         getBalance();
@@ -160,13 +191,9 @@ const TradeYDRModal: React.FC = observer(() => {
   useEffect(() => {
     if (user.address) {
       getBalance();
-    }
-  }, [getBalance, user.address]);
-  useEffect(() => {
-    if (user.address) {
       checkAllowance();
     }
-  }, [checkAllowance, user.address]);
+  }, [checkAllowance, getBalance, user.address]);
   useEffect(() => {
     if (modals.tradeYDR.method === 'buy') {
       getBuyCourse();
@@ -194,7 +221,7 @@ const TradeYDRModal: React.FC = observer(() => {
           <div className="m-trade-ydr__labels">
             <span className="m-trade-ydr__label">You pay</span>
             <span className="m-trade-ydr__label">
-              Balance: {new BigNumber(balance).times(new BigNumber(10).pow(-18)).toFixed(7)}{' '}
+              Balance: {new BigNumber(balance).times(new BigNumber(10).pow(-decimals)).toFixed(7)}{' '}
               {firstCurrency}
             </span>
           </div>

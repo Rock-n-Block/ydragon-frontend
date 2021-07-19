@@ -31,6 +31,7 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
     const [firstCurrency, setFirstCurrency] = useState<TokenMiniNameTypes>(
       isSell ? 'YDR' : defaultTokens[0].name,
     );
+    const [decimals, setDecimals] = useState<number>(18);
     const [secondCurrency, setSecondCurrency] = useState<TokenMiniNameTypes>(
       isSell ? defaultTokens[0].name : 'YDR',
     );
@@ -45,17 +46,45 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
       setViewOnlyInputValue('0.0');
       setFee('');
     };
+    const getDecimals = useCallback(
+      async (currency: TokenMiniNameTypes) => {
+        if (currency === 'BNB') {
+          return new Promise((resolve) => resolve(18));
+        }
+        return walletConnector.metamaskService.getDecimals(
+          config[currency].ADDRESS,
+          config.Token.ABI,
+        );
+      },
+      [walletConnector.metamaskService],
+    );
     const getBalance = useCallback(() => {
       walletConnector.metamaskService
         .getBalanceOf(isSell ? indexAddress : config[firstCurrency].ADDRESS)
         .then((data: any) => {
           setBalance(data);
+          if (isSell) {
+            getDecimals(secondCurrency).then((dec: number) => {
+              setDecimals(dec);
+            });
+          } else {
+            getDecimals(firstCurrency).then((dec: number) => {
+              setDecimals(dec);
+            });
+          }
         })
         .catch((err: ProviderRpcError) => {
           const { message } = err;
           console.log('getBalance error', message);
         });
-    }, [isSell, indexAddress, walletConnector.metamaskService, firstCurrency]);
+    }, [
+      getDecimals,
+      secondCurrency,
+      isSell,
+      indexAddress,
+      walletConnector.metamaskService,
+      firstCurrency,
+    ]);
 
     const getBuyCourse = useCallback(() => {
       if (payInput) {
@@ -134,8 +163,14 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
       setViewOnlyInputValue('0.0');
       if (isSell) {
         setSecondCurrency(value);
+        getDecimals(secondCurrency).then((dec: number) => {
+          setDecimals(dec);
+        });
       } else {
         setFirstCurrency(value);
+        getDecimals(firstCurrency).then((dec: number) => {
+          setDecimals(dec);
+        });
       }
     };
     const handleApprove = (): void => {
@@ -155,7 +190,7 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
     const handleBuy = (): void => {
       setIsLoading(true);
       walletConnector.metamaskService
-        .mint(payInput, firstCurrency, indexAddress)
+        .mint(payInput, firstCurrency, indexAddress, decimals)
         .then(() => {
           setPayInput('');
           getBalance();
@@ -170,7 +205,7 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
     const handleSell = (): void => {
       setIsLoading(true);
       walletConnector.metamaskService
-        .redeem(payInput, secondCurrency, indexAddress)
+        .redeem(payInput, secondCurrency, indexAddress, 18)
         .then(() => {
           setPayInput('');
           getBalance();
@@ -233,7 +268,10 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
             <div className="m-trade-ydr__labels">
               <span className="m-trade-ydr__label">You pay</span>
               <span className="m-trade-ydr__label">
-                Balance: {new BigNumber(balance).times(new BigNumber(10).pow(-18)).toFixed(7)}{' '}
+                Balance:{' '}
+                {new BigNumber(balance)
+                  .times(new BigNumber(10).pow(isSell ? 18 : -decimals))
+                  .toFixed(7)}{' '}
                 {isSell ? '' : firstCurrency}
               </span>
             </div>
