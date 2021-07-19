@@ -146,13 +146,13 @@
 
 .light {
   .btn-outline {
-    color: $black;
-    border: 1px solid $black;
+    color: $red-button;
+    border: 1px solid $red-button;
 
     &:hover,
     &:focus {
-      color: $black;
-      border-color: $black;
+      color: $orange-2;
+      border-color: $orange-2;
     }
 
     &-nav {
