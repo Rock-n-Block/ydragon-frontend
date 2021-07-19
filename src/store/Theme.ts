@@ -7,7 +7,7 @@ export const Theme = types
   .actions((self) => {
     const setTheme = (thm: string) => {
       self.value = thm;
-      localStorage.theme = thm;
+      sessionStorage.setItem('theme', thm);
     };
     const update = (themeData: any) => {
       applySnapshot(self, themeData);

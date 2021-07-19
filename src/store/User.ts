@@ -17,9 +17,9 @@ export const User = types
     };
     const disconnect = () => {
       self.address = '';
-      delete localStorage.yd_token;
-      delete localStorage.yd_metamask;
-      delete localStorage.yd_address;
+      sessionStorage.setItem('yd_token', '');
+      sessionStorage.setItem('yd_metamask', '');
+      sessionStorage.setItem('yd_address', '');
     };
     return {
       setAddress,

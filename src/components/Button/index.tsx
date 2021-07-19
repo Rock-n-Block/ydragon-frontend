@@ -46,7 +46,7 @@ const Button: React.FC<IButton> = observer((props: PropsWithChildren<IButton>) =
 
   const {modals} = useMst()
 
-  const user = !!localStorage?.yd_address || false;
+  const user = !!sessionStorage.getItem('yd_address') || false;
   let onClickFunction = onClick;
 
   const onVisibleChange = (e: any) => {
