@@ -250,7 +250,9 @@ const Header: React.FC<HeaderProps> = observer(({ collapsed, onCollapsedChange }
                 <span className="isDisabled">
                   <a href="/">Terms of Service</a>
                 </span>
-                <a href="/">Contact us</a>
+                <a href="mailto:info@ydragon.io" target="_blank" rel="noopener noreferrer">
+                  Contact us
+                </a>
               </div>
             </div>
 

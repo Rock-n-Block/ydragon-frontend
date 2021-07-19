@@ -64,7 +64,9 @@ const Footer: React.FC = () => {
             <div className="footer__links">
               <Link to="/about-us">About Us</Link>
 
-              <a href="/">Contact us</a>
+              <a href="mailto:info@ydragon.io" target="_blank" rel="noopener noreferrer">
+                Contact us
+              </a>
               {/* <span className="isDisabled">
                 <a href="/">Tutorial</a>
               </span>
