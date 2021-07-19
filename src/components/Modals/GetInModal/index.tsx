@@ -14,6 +14,7 @@ import { TokenMiniProps } from '../../TokenMini';
 import { Modal } from '../index';
 
 import './GetInModal.scss';
+import config from '../../../services/web3/config';
 
 const totalColumns: ITableColumn[] = [
   {
@@ -48,6 +49,7 @@ const GetInModal: React.FC = observer(() => {
   const [totalData, setTotalData] = useState<ITableData[]>([] as ITableData[]);
   const [userData, setUserData] = useState<ITableData[]>([] as ITableData[]);
   const [firstCurrency, setFirstCurrency] = useState<TokenMiniNameTypes>(defaultTokens[0].name);
+  const [decimals, setDecimals] = useState<number>(18);
   const [payInput, setPayInput] = useState<string>('');
   const [isNeedApprove, setIsNeedApprove] = useState<boolean>(true);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -56,6 +58,18 @@ const GetInModal: React.FC = observer(() => {
     modals.getIn.close();
     setPayInput('');
   };
+  const getDecimals = useCallback(
+    async (currency: TokenMiniNameTypes) => {
+      if (currency === 'BNB') {
+        return new Promise((resolve) => resolve(18));
+      }
+      return walletConnector.metamaskService.getDecimals(
+        config[currency].ADDRESS,
+        config.Token.ABI,
+      );
+    },
+    [walletConnector.metamaskService],
+  );
   const checkAllowance = useCallback(() => {
     walletConnector.metamaskService
       .checkAllowance(firstCurrency, 'MAIN', modals.getIn.address)
@@ -70,6 +84,10 @@ const GetInModal: React.FC = observer(() => {
   const handleSelectChange = (value: any) => {
     setFirstCurrency(value);
     setPayInput('');
+
+    getDecimals(value).then((dec: number) => {
+      setDecimals(dec);
+    });
   };
   const handleApprove = (): void => {
     setIsLoadingBtn(true);
@@ -88,7 +106,7 @@ const GetInModal: React.FC = observer(() => {
   const handleEnter = (): void => {
     setIsLoadingBtn(true);
     walletConnector.metamaskService
-      .enterIme(payInput, firstCurrency, modals.getIn.address)
+      .enterIme(payInput, firstCurrency, modals.getIn.address, decimals)
       .then(() => {
         setPayInput('');
         modals.info.setMsg('Success', 'Success mint', 'success');
