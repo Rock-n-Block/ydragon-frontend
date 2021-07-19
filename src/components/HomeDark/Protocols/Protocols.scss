@@ -14,6 +14,7 @@
 }
 
 .protocols {
+  margin-top: 50px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -24,8 +25,6 @@
   }
 
   &__row {
-    margin-top: 50px;
-    margin-bottom: 122px;
 
     display: flex;
     justify-content: center;

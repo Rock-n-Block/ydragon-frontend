@@ -37,7 +37,7 @@ import squareWhite from '../../../assets/img/icons/partners/square-white.svg';
 // import slide10 from '../../../assets/img/partners/logo-10.png';
 import { useMst } from '../../../store/store';
 
-import 'swiper/swiper.scss';
+// import 'swiper/swiper.scss';
 import './Protocols.scss';
 
 const Protocols: React.FC = observer(() => {
@@ -57,9 +57,8 @@ const Protocols: React.FC = observer(() => {
 
   return (
     <section className="section">
+      <h3 className="section__title text-outline">Our partners</h3>
       <div className="protocols">
-        <h3 className="protocols__title">protocols & PARTNERS</h3>
-
         <div className="protocols__row">
           {/* <img src={maker} alt="" />
           <img src={aave} alt="" />
