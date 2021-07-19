@@ -405,8 +405,8 @@ export default class MetamaskService {
     });
   }
 
-  getYDRCourse(spenderToken: ContractTypes, value: string, buy: boolean, address?: string) {
-    let otherTokenAddress = address;
+  getYDRCourse(spenderToken: ContractTypes, value: string, buy: boolean, decimals: number) {
+    let otherTokenAddress /* = address */;
     let path;
     if (spenderToken === 'USDT') {
       otherTokenAddress = config.USDT.ADDRESS;
@@ -422,7 +422,7 @@ export default class MetamaskService {
     }
 
     return this.getContract('Router')
-      .methods.getAmountsOut(MetamaskService.calcTransactionAmount(value, 18), path)
+      .methods.getAmountsOut(MetamaskService.calcTransactionAmount(value, decimals), path)
       .call();
   }
 

@@ -69,7 +69,7 @@ const TradeYDRModal: React.FC = observer(() => {
   const getBuyCourse = useCallback(() => {
     if (payInput) {
       walletConnector.metamaskService
-        .getYDRCourse(firstCurrency, payInput, true)
+        .getYDRCourse(firstCurrency, payInput, true, decimals)
         .then((data: any) => {
           setViewOnlyInputValue(
             new BigNumber(data[data.length - 1])
@@ -84,11 +84,11 @@ const TradeYDRModal: React.FC = observer(() => {
     } else {
       setViewOnlyInputValue('0.0');
     }
-  }, [viewOnlyDecimals, payInput, firstCurrency, walletConnector.metamaskService]);
+  }, [decimals, viewOnlyDecimals, payInput, firstCurrency, walletConnector.metamaskService]);
   const getSellCourse = useCallback(() => {
     if (payInput) {
       walletConnector.metamaskService
-        .getYDRCourse(secondCurrency, payInput, false)
+        .getYDRCourse(secondCurrency, payInput, false, decimals)
         .then((data: any) => {
           setViewOnlyInputValue(
             new BigNumber(data[data.length - 1])
@@ -103,7 +103,7 @@ const TradeYDRModal: React.FC = observer(() => {
     } else {
       setViewOnlyInputValue('0.0');
     }
-  }, [viewOnlyDecimals, payInput, secondCurrency, walletConnector.metamaskService]);
+  }, [decimals, viewOnlyDecimals, payInput, secondCurrency, walletConnector.metamaskService]);
 
   const checkAllowance = useCallback(() => {
     walletConnector.metamaskService
