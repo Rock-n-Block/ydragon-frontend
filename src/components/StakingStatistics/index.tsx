@@ -177,7 +177,7 @@ const StakingStatistics: React.FC = observer(() => {
           onClick={getStakingStatistic}
           className="staking-statistics__refresh"
         >
-          <img src={RefreshIcon} alt="refresh" />
+          <img src={RefreshIcon} alt="refresh" width="36" height="36"/>
         </Button>
       </h2>
 

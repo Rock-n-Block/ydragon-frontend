@@ -23,7 +23,7 @@ const Rebalance: React.FC<RebalanceProps> = observer(({ status, tokens }) => {
       key: 'name',
       render: (item: any) => (
         <div className="table__col-with-logo">
-          <img src={item.image} className="table__col-with-logo__image" alt={`${item.name} logo`} />
+          <img src={item.image} className="table__col-with-logo__image" alt={`${item.name} logo`} width='31' height='31' />
           <span className="table__col-with-logo__text">{item.name}</span>
         </div>
       ),

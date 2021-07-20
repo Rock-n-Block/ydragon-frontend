@@ -29,7 +29,7 @@ const Machine: React.FC = () => {
         </p>
 
         <div className="machine__img">
-          <img src={image} alt="" width="686" height="502" />
+          <img src={image} alt="machine" width="686" height="502" />
         </div>
       </div>
     </section>

@@ -97,7 +97,7 @@ const Dashboard: React.FC = () => {
                         <div className="index-dashboard__info">
                           <img
                             src={logo}
-                            alt=""
+                            alt="ydr-logo"
                             width="31"
                             height="28"
                             className="index-dashboard__icon"

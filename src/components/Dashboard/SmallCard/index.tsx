@@ -26,7 +26,7 @@ const SmallCard: React.FC<IUserIndex> = ({
     <section className="index-small-card">
       <div className="index-small-card__header">
         <div className="index-small-card__header--logo">
-          <img src={logo} alt="ydr-logo" />
+          <img src={logo} alt="ydr-logo" width='31' height='31'/>
         </div>
         <Link to={`/index/${id}`} className="index-small-card__header--name">
           {name}

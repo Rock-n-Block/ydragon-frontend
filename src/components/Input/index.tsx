@@ -56,7 +56,7 @@ export const InputWithSelect: React.FC<InputWithSelectProps> = observer((props) 
             <Option value={token.name} key={nextId()}>
               <h4 className="input-with-select__name">{token.name}</h4>
               <div className="input-with-select__logo">
-                <img src={token.logo} alt={`${token.name} logo`} />
+                <img src={token.logo} alt={`${token.name} logo`} width='18' height='16'/>
               </div>
             </Option>
           ))}
@@ -68,7 +68,7 @@ export const InputWithSelect: React.FC<InputWithSelectProps> = observer((props) 
       <div className="input-with-select__token">
         <h4 className="input-with-select__name">{tokens.name}</h4>
         <div className="input-with-select__logo">
-          <img src={tokens.logo} alt={`${tokens.name} logo`} />
+          <img src={tokens.logo} alt={`${tokens.name} logo`} width='18' height='16' />
         </div>
       </div>
     );
