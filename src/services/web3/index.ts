@@ -405,8 +405,8 @@ export default class MetamaskService {
     });
   }
 
-  getYDRCourse(spenderToken: ContractTypes, value: string, buy: boolean, address?: string) {
-    let otherTokenAddress = address;
+  getYDRCourse(spenderToken: ContractTypes, value: string, buy: boolean, decimals: number) {
+    let otherTokenAddress /* = address */;
     let path;
     if (spenderToken === 'USDT') {
       otherTokenAddress = config.USDT.ADDRESS;
@@ -422,18 +422,30 @@ export default class MetamaskService {
     }
 
     return this.getContract('Router')
-      .methods.getAmountsOut(MetamaskService.calcTransactionAmount(value, 18), path)
+      .methods.getAmountsOut(MetamaskService.calcTransactionAmount(value, decimals), path)
       .call();
   }
 
-  getIndexCourse(currencyAddress: string, value: string, buy: boolean, indexAddress: string) {
+  getIndexCourse(
+    currencyAddress: string,
+    value: string,
+    buy: boolean,
+    indexAddress: string,
+    decimals: number,
+  ) {
     if (buy) {
       return this.getContractByAddress(indexAddress, config.MAIN.ABI)
-        .methods.getBuyAmountOut(currencyAddress, MetamaskService.calcTransactionAmount(value, 18))
+        .methods.getBuyAmountOut(
+          currencyAddress,
+          MetamaskService.calcTransactionAmount(value, decimals),
+        )
         .call();
     }
     return this.getContractByAddress(indexAddress, config.MAIN.ABI)
-      .methods.getSellAmountOut(currencyAddress, MetamaskService.calcTransactionAmount(value, 18))
+      .methods.getSellAmountOut(
+        currencyAddress,
+        MetamaskService.calcTransactionAmount(value, decimals),
+      )
       .call();
   }
 
