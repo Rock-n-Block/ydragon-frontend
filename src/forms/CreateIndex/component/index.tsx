@@ -80,7 +80,7 @@ const CreateIndex: React.FC<FormikProps<ICreateIndex> & ICreateIndex> = observer
     const disabledDate = (current: any) => {
       // Can not select days before today and today
       return (
-        (current && current < moment().add(12, 'hour')) ||
+        (current && current < moment().startOf('day')) ||
         (current && current > moment().add(1, 'year'))
       );
     };
