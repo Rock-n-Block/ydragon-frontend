@@ -70,10 +70,10 @@ const Protocols: React.FC = observer(() => {
         <img src={theme.value === 'dark' ? nexusWhite : nexusBlack} alt="" />
         <img src={balancer} alt="" />
         <img src={theme.value === 'dark' ? mmmmWhite : mmmmBlack} alt="" /> */}
-          <img src={theme.value === 'dark' ? marshlandWhite : marshlandBlack} alt="" width="92" height="78"/>
+          <img src={theme.value === 'dark' ? marshlandWhite : marshlandBlack} alt="marshland" width="92" height="78"/>
           <img src={polygon} alt="" width="98" height="78"/>
-          <img src={theme.value === 'dark' ? squareWhite : squareBlack} alt="" width="95" height="80"/>
-          <img src={theme.value === 'dark' ? magnusWhite : magnusBlack} alt="" width="154" height="78"/>
+          <img src={theme.value === 'dark' ? squareWhite : squareBlack} alt="square" width="95" height="80"/>
+          <img src={theme.value === 'dark' ? magnusWhite : magnusBlack} alt="magnus" width="154" height="78"/>
           {/* <Swiper spaceBetween={60} slidesPerView={8} loop>
             {partners.map((partner) => (
               <SwiperSlide>

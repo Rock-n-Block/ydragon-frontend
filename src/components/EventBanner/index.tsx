@@ -83,11 +83,11 @@ const EventBanner: React.FC = observer(() => {
           className="event-banner__close"
           styledType="clear"
         >
-          <img src={cross} alt="" width="20" height="20" />
+          <img src={cross} alt="cross" width="20" height="20" />
         </Button>
         <div className="event-banner__inner">
           <div className="event-banner__icon">
-            <img src={coinIcon} alt="" width="66" height="75" />
+            <img src={coinIcon} alt="coin" width="66" height="75" />
           </div>
 
           <div className="event-banner-timer">

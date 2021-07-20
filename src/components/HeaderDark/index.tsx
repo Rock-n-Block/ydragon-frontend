@@ -76,14 +76,14 @@ const Header: React.FC<HeaderProps> = observer(({ collapsed, onCollapsedChange }
             >
               {DARK === theme.value ? (
                 <img
-                  alt="#"
+                  alt="burger menu"
                   src={collapsed ? iconMenu : cross}
                   width={collapsed ? '27' : '21'}
                   height={collapsed ? '14' : '21'}
                 />
               ) : (
                 <img
-                  alt="#"
+                  alt="burger menu"
                   src={collapsed ? iconMenuBlack : crossBlack}
                   width={collapsed ? '27' : '21'}
                   height={collapsed ? '14' : '21'}

@@ -17,7 +17,7 @@ const Teams: React.FC = () => {
         <div className="teams__row">
           <div className="team">
             <div className="team__img--wrapper">
-              <img alt="#" className="team__img" src={iconRadien} width="64" height="64" />
+              <img alt="raiden team" className="team__img" src={iconRadien} width="64" height="64" />
             </div>
             <div className="team__info">
               <span className="team__info--title">Raiden - CEO</span>
@@ -32,7 +32,7 @@ const Teams: React.FC = () => {
           </div>
           <div className="team">
             <div className="team__img--wrapper">
-              <img alt="#" className="team__img" src={iconOctal} width="64" height="64" />
+              <img alt="octal team" className="team__img" src={iconOctal} width="64" height="64" />
             </div>
             <div className="team__info">
               <span className="team__info--title">OCTAL - COO</span>
@@ -48,7 +48,7 @@ const Teams: React.FC = () => {
         <div className="teams__row">
           <div className="team">
             <div className="team__img--wrapper">
-              <img alt="#" className="team__img" src={iconLeon} width="64" height="64" />
+              <img alt="leon team" className="team__img" src={iconLeon} width="64" height="64" />
             </div>
             <div className="team__info">
               <span className="team__info--title">Leon - CMO</span>
@@ -63,7 +63,7 @@ const Teams: React.FC = () => {
           </div>
           <div className="team">
             <div className="team__img--wrapper">
-              <img alt="#" className="team__img" src={iconHalfDan} width="64" height="64" />
+              <img alt="halfDan team" className="team__img" src={iconHalfDan} width="64" height="64" />
             </div>
             <div className="team__info">
               <span className="team__info--title">HalfDan - CBDO</span>

@@ -31,7 +31,7 @@ const Question: React.FC<QuestionProps> = observer((props: PropsWithChildren<Que
         >
           {title}
           <img
-            alt="#"
+            alt="arrow down"
             src={DARK === theme.value ? iconDown : iconDownBlack}
             className={`question__icon ${collapsed ? '' : 'down'}`}
             width="24"

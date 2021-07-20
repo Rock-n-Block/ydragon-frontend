@@ -82,7 +82,7 @@ const TokensStructure: React.FC<TokensStructureProps> = ({ vaults, manualRebalan
         <div className="apr-cell">
           APR, %
           <Button onClick={handleSubmitChange} className="apr-cell__btn" styledType="clear">
-            <img src={bluePlus} alt="" width="32" height="32" />
+            <img src={bluePlus} alt="add apr" width="32" height="32" />
           </Button>
         </div>
       ),
@@ -179,7 +179,7 @@ const TokensStructure: React.FC<TokensStructureProps> = ({ vaults, manualRebalan
                         className="apr-cell__btn"
                         styledType="clear"
                       >
-                        <img src={bluePlus} alt="" width="32" height="32" />
+                        <img src={bluePlus} alt="add apr" width="32" height="32" />
                       </Button>
                     </div>,
                   ],
