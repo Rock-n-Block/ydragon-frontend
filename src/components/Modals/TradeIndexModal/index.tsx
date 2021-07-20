@@ -38,6 +38,7 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
     const [payInput, setPayInput] = useState<string>('');
 
     const [viewOnlyInputValue, setViewOnlyInputValue] = useState<string>('0.0');
+    const [viewOnlyDecimals, setViewOnlyDecimals] = useState<number>(18);
     const [balance, setBalance] = useState<number>(0);
     const [isNeedApprove, setIsNeedApprove] = useState<boolean>(true);
     const handleClose = (): void => {
@@ -64,13 +65,15 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
         .then((data: any) => {
           setBalance(data);
           if (isSell) {
+            setDecimals(18);
             getDecimals(secondCurrency).then((dec: number) => {
-              setDecimals(dec);
+              setViewOnlyDecimals(dec);
             });
           } else {
             getDecimals(firstCurrency).then((dec: number) => {
               setDecimals(dec);
             });
+            setViewOnlyDecimals(18);
           }
         })
         .catch((err: ProviderRpcError) => {
@@ -126,7 +129,7 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
               }
             });
             setViewOnlyInputValue(
-              new BigNumber(data).dividedBy(new BigNumber(10).pow(18)).toFixed(5),
+              new BigNumber(data).dividedBy(new BigNumber(10).pow(viewOnlyDecimals)).toFixed(5),
             );
           })
           .catch((err: ProviderRpcError) => {
@@ -137,7 +140,15 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
         setViewOnlyInputValue('0.0');
         setFee('');
       }
-    }, [decimals, payInput, secondCurrency, walletConnector.metamaskService, indexAddress, url]);
+    }, [
+      viewOnlyDecimals,
+      decimals,
+      payInput,
+      secondCurrency,
+      walletConnector.metamaskService,
+      indexAddress,
+      url,
+    ]);
 
     const checkAllowance = useCallback(() => {
       if (!isSell) {
@@ -163,12 +174,12 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
       setViewOnlyInputValue('0.0');
       if (isSell) {
         setSecondCurrency(value);
-        getDecimals(secondCurrency).then((dec: number) => {
-          setDecimals(dec);
+        getDecimals(value).then((dec: number) => {
+          setViewOnlyDecimals(dec);
         });
       } else {
         setFirstCurrency(value);
-        getDecimals(firstCurrency).then((dec: number) => {
+        getDecimals(value).then((dec: number) => {
           setDecimals(dec);
         });
       }
@@ -270,7 +281,7 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
               <span className="m-trade-ydr__label">
                 Balance:{' '}
                 {new BigNumber(balance)
-                  .times(new BigNumber(10).pow(isSell ? 18 : -decimals))
+                  .times(new BigNumber(10).pow(isSell ? -18 : -decimals))
                   .toFixed(7)}{' '}
                 {isSell ? '' : firstCurrency}
               </span>
