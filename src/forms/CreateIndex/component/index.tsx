@@ -282,7 +282,7 @@ const CreateIndex: React.FC<FormikProps<ICreateIndex> & ICreateIndex> = observer
                 </>
               ) : (
                 <div className="token-weights-items__empty">
-                  <img src={DangerCircle} alt="alert" />
+                  <img src={DangerCircle} alt="alert" width='20' height='20'/>
                   <span>Please add tokens to the index</span>
                 </div>
               )}
