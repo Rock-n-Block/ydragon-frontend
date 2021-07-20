@@ -1,6 +1,6 @@
 export default {
   MAIN: {
-    ADDRESS: '0xE587Eae96eeb7693D2e99f758C9a8795F45376E3',
+    ADDRESS: '0xa8BEE6e0Ae59a238003a2a366D3Baa5Eebf77D37',
     ABI: [
       { inputs: [], stateMutability: 'nonpayable', type: 'constructor' },
       {
@@ -87,6 +87,12 @@ export default {
           { indexed: false, internalType: 'uint256[]', name: 'newDistribution', type: 'uint256[]' },
         ],
         name: 'NewDistribution',
+        type: 'event',
+      },
+      {
+        anonymous: false,
+        inputs: [{ indexed: true, internalType: 'bool', name: 'isMintPaused', type: 'bool' }],
+        name: 'PauseStateChanged',
         type: 'event',
       },
       {
@@ -206,6 +212,13 @@ export default {
           { internalType: 'bool', name: 'value', type: 'bool' },
         ],
         name: 'changeIsTokenWhitelisted',
+        outputs: [],
+        stateMutability: 'nonpayable',
+        type: 'function',
+      },
+      {
+        inputs: [],
+        name: 'changePauseState',
         outputs: [],
         stateMutability: 'nonpayable',
         type: 'function',
@@ -378,6 +391,13 @@ export default {
         name: 'mint',
         outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
         stateMutability: 'payable',
+        type: 'function',
+      },
+      {
+        inputs: [],
+        name: 'mintPaused',
+        outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
+        stateMutability: 'view',
         type: 'function',
       },
       {
@@ -924,7 +944,7 @@ export default {
     ],
   },
   Factory: {
-    ADDRESS: '0x8628b49f0846d00977B8051B5bab014C82f58823',
+    ADDRESS: '0x938a797Ce6CB5333903E1994fb19010D3d1985A2',
     ABI: [
       {
         inputs: [
@@ -1231,7 +1251,7 @@ export default {
     ],
   },
   Staking: {
-    ADDRESS: '0xD25f9C8BC7045147bDa0Ea16190220f8b4EB2D86',
+    ADDRESS: '0x62A5073909B68DdcF4a30046f60b220484Eb28e4',
     ABI: [
       {
         inputs: [
@@ -1490,14 +1510,14 @@ export default {
       },
       {
         inputs: [],
-        name: 'treasuryAmount',
+        name: 'treasury',
         outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
         stateMutability: 'view',
         type: 'function',
       },
       {
         inputs: [],
-        name: 'treasuryPercentage',
+        name: 'treasuryAmount',
         outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
         stateMutability: 'view',
         type: 'function',
@@ -1511,7 +1531,7 @@ export default {
       },
       {
         inputs: [],
-        name: 'treasuryYdrPenaltyPercentage',
+        name: 'treasuryYdrPenalty',
         outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
         stateMutability: 'view',
         type: 'function',
@@ -2488,12 +2508,27 @@ export default {
     ],
   },
   YDR: {
-    ADDRESS: '0xD0C2dC24009232591Ff6539DFa11Cd8542356a38',
+    ADDRESS: '0x05Ac77598AB89ec2753B58107B0c145dc93982d3',
     ABI: [
       {
-        inputs: [{ internalType: 'address', name: '_owner', type: 'address' }],
+        inputs: [
+          { internalType: 'uint256', name: 'totalSupply_', type: 'uint256' },
+          { internalType: 'address', name: 'admin_', type: 'address' },
+          { internalType: 'address', name: 'recoveryAdmin_', type: 'address' },
+          { internalType: 'uint256', name: 'timelockPeriod_', type: 'uint256' },
+          { internalType: 'address', name: 'lossless_', type: 'address' },
+        ],
         stateMutability: 'nonpayable',
         type: 'constructor',
+      },
+      {
+        anonymous: false,
+        inputs: [
+          { indexed: true, internalType: 'address', name: 'previousAdmin', type: 'address' },
+          { indexed: true, internalType: 'address', name: 'newAdmin', type: 'address' },
+        ],
+        name: 'AdminChanged',
+        type: 'event',
       },
       {
         anonymous: false,
@@ -2507,11 +2542,25 @@ export default {
       },
       {
         anonymous: false,
+        inputs: [{ indexed: false, internalType: 'uint256', name: 'turnOffDate', type: 'uint256' }],
+        name: 'LosslessTurnOffProposed',
+        type: 'event',
+      },
+      { anonymous: false, inputs: [], name: 'LosslessTurnedOff', type: 'event' },
+      { anonymous: false, inputs: [], name: 'LosslessTurnedOn', type: 'event' },
+      {
+        anonymous: false,
+        inputs: [{ indexed: true, internalType: 'address', name: 'candidate', type: 'address' }],
+        name: 'RecoveryAdminChangeProposed',
+        type: 'event',
+      },
+      {
+        anonymous: false,
         inputs: [
-          { indexed: true, internalType: 'address', name: 'previousOwner', type: 'address' },
-          { indexed: true, internalType: 'address', name: 'newOwner', type: 'address' },
+          { indexed: true, internalType: 'address', name: 'previousAdmin', type: 'address' },
+          { indexed: true, internalType: 'address', name: 'newAdmin', type: 'address' },
         ],
-        name: 'OwnershipTransferred',
+        name: 'RecoveryAdminChanged',
         type: 'event',
       },
       {
@@ -2523,6 +2572,20 @@ export default {
         ],
         name: 'Transfer',
         type: 'event',
+      },
+      {
+        inputs: [{ internalType: 'bytes', name: 'key', type: 'bytes' }],
+        name: 'acceptRecoveryAdminOwnership',
+        outputs: [],
+        stateMutability: 'nonpayable',
+        type: 'function',
+      },
+      {
+        inputs: [],
+        name: 'admin',
+        outputs: [{ internalType: 'address', name: '', type: 'address' }],
+        stateMutability: 'view',
+        type: 'function',
       },
       {
         inputs: [
@@ -2576,6 +2639,27 @@ export default {
         type: 'function',
       },
       {
+        inputs: [],
+        name: 'executeLosslessTurnOff',
+        outputs: [],
+        stateMutability: 'nonpayable',
+        type: 'function',
+      },
+      {
+        inputs: [],
+        name: 'executeLosslessTurnOn',
+        outputs: [],
+        stateMutability: 'nonpayable',
+        type: 'function',
+      },
+      {
+        inputs: [],
+        name: 'getAdmin',
+        outputs: [{ internalType: 'address', name: '', type: 'address' }],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
         inputs: [
           { internalType: 'address', name: 'spender', type: 'address' },
           { internalType: 'uint256', name: 'addedValue', type: 'uint256' },
@@ -2586,13 +2670,24 @@ export default {
         type: 'function',
       },
       {
-        inputs: [
-          { internalType: 'address', name: 'to', type: 'address' },
-          { internalType: 'uint256', name: 'amount', type: 'uint256' },
-        ],
-        name: 'mint',
-        outputs: [],
-        stateMutability: 'nonpayable',
+        inputs: [],
+        name: 'isLosslessOn',
+        outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
+        inputs: [],
+        name: 'isLosslessTurnOffProposed',
+        outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
+        inputs: [],
+        name: 'losslessTurnOffTimestamp',
+        outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+        stateMutability: 'view',
         type: 'function',
       },
       {
@@ -2604,14 +2699,21 @@ export default {
       },
       {
         inputs: [],
-        name: 'owner',
+        name: 'proposeLosslessTurnOff',
+        outputs: [],
+        stateMutability: 'nonpayable',
+        type: 'function',
+      },
+      {
+        inputs: [],
+        name: 'recoveryAdmin',
         outputs: [{ internalType: 'address', name: '', type: 'address' }],
         stateMutability: 'view',
         type: 'function',
       },
       {
-        inputs: [],
-        name: 'renounceOwnership',
+        inputs: [{ internalType: 'address', name: 'newAdmin', type: 'address' }],
+        name: 'setLosslessAdmin',
         outputs: [],
         stateMutability: 'nonpayable',
         type: 'function',
@@ -2620,6 +2722,13 @@ export default {
         inputs: [],
         name: 'symbol',
         outputs: [{ internalType: 'string', name: '', type: 'string' }],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
+        inputs: [],
+        name: 'timelockPeriod',
+        outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
         stateMutability: 'view',
         type: 'function',
       },
@@ -2652,8 +2761,18 @@ export default {
         type: 'function',
       },
       {
-        inputs: [{ internalType: 'address', name: 'newOwner', type: 'address' }],
-        name: 'transferOwnership',
+        inputs: [{ internalType: 'address[]', name: 'from', type: 'address[]' }],
+        name: 'transferOutBlacklistedFunds',
+        outputs: [],
+        stateMutability: 'nonpayable',
+        type: 'function',
+      },
+      {
+        inputs: [
+          { internalType: 'address', name: 'candidate', type: 'address' },
+          { internalType: 'bytes32', name: 'keyHash', type: 'bytes32' },
+        ],
+        name: 'transferRecoveryAdminOwnership',
         outputs: [],
         stateMutability: 'nonpayable',
         type: 'function',
