@@ -8,8 +8,8 @@ import cross from '../../assets/img/icons/icon-cross.svg';
 import iconMenuBlack from '../../assets/img/icons/icon-menu-black.svg';
 import iconMenu from '../../assets/img/icons/icon-menu.svg';
 import logo from '../../assets/img/icons/logo.svg';
-import dis from '../../assets/img/socials/discord.svg';
-import md from '../../assets/img/socials/medium.svg';
+// import dis from '../../assets/img/socials/discord.svg';
+// import md from '../../assets/img/socials/medium.svg';
 import tg from '../../assets/img/socials/telegram.svg';
 import tw from '../../assets/img/socials/twitter.svg';
 import { useWalletConnectorContext } from '../../services/walletConnect';
@@ -314,13 +314,13 @@ const Header: React.FC<HeaderProps> = observer(({ collapsed, onCollapsedChange }
                   <img src={tw} alt="logo" width="24" height="20" />
                 </a>
 
-                <a href="/" className="footer__socials-item">
+                {/* <a href="/" className="footer__socials-item">
                   <img src={md} alt="logo" width="24" height="20" />
                 </a>
 
                 <a href="/" className="footer__socials-item">
                   <img src={dis} alt="logo" width="24" height="20" />
-                </a>
+                </a> */}
               </div>
             )}
           </div>

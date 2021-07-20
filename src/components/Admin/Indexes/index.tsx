@@ -11,6 +11,7 @@ import { Button, Spinner, Table } from '../../index';
 import { IndexCardMobile } from './IndexCardMobile/index';
 
 import './Indexes.scss';
+import { Sorter } from '../../../utils/sorter';
 
 const Indexes: React.FC = observer(() => {
   const { modals } = useMst();
@@ -22,22 +23,26 @@ const Indexes: React.FC = observer(() => {
       dataIndex: 'name',
       key: 'name',
       render: (item: any) => <Link to={`/admin/index/${item.id}`}>{item.name}</Link>,
+      sorter: Sorter.NAME
     },
     {
       title: 'Market cap',
       dataIndex: 'cap',
       key: 'cap',
+      sorter: Sorter.MARKET
     },
     {
       title: 'Price',
       dataIndex: 'price',
       key: 'price',
       render: (item: any) => <span className="text-MER">{item}</span>,
+      sorter: Sorter.PRICE
     },
     {
       title: 'Created',
       dataIndex: 'created',
       key: 'created',
+      sorter: Sorter.DATE
     },
   ];
   const [dataSource, setDataSource] = useState<any[]>([]);
