@@ -18,21 +18,23 @@ export interface ISearchToken {
 interface SearchProps {
   data?: Array<ISearchToken>;
   className?: string;
-  onChange: (searchString: string) => void;
+  onChange: (event: ChangeEvent<HTMLInputElement>) => void;
+  handleClear?: () => void;
   onPick: (item: ISearchToken) => void;
+  newTokenName? : string;
 }
 
-const Search: React.FC<SearchProps> = ({ data, className, onChange, onPick }) => {
+const Search: React.FC<SearchProps> = ({ data, className, onChange, onPick, newTokenName, handleClear }) => {
   const [tokenList, setTokenList] = useState(data);
-  const [newTokenName, setNewTokenName] = useState<string>('');
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setNewTokenName(e.target.value);
-    onChange(e.target.value);
-  };
-  const handleClear = () => {
-    setNewTokenName('');
-    onChange('');
-  };
+  // const [newTokenName, setNewTokenName] = useState<string>('');
+  // const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+  //   setNewTokenName(e.target.value);
+  //   onChange(e.target.value);
+  // };
+  // const handleClear = () => {
+  //   setNewTokenName('');
+  //   onChange('');
+  // };
   useEffect(() => {
     setTokenList(data);
   }, [data]);
@@ -43,7 +45,7 @@ const Search: React.FC<SearchProps> = ({ data, className, onChange, onPick }) =>
           type="text"
           placeholder="Name token"
           value={newTokenName}
-          onChange={(e) => handleChange(e)}
+          onChange={(e) => onChange(e)}
           className="search__input"
         />
         {newTokenName ? (

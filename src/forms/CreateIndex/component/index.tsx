@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import BigNumber from 'bignumber.js/bignumber';
 import { FieldArray, FieldArrayRenderProps, Form, FormikProps } from 'formik';
 import { observer } from 'mobx-react-lite';
@@ -19,7 +19,8 @@ export interface ICreateIndex {
   description: string;
   tokens: Array<ITokensDiff>;
   isLoading?: boolean;
-  searchTokens: Array<ISearchToken>
+  searchTokens: Array<ISearchToken>;
+  searchInput?: string;
 }
 
 const CreateIndex: React.FC<FormikProps<ICreateIndex> & ICreateIndex> = observer(
@@ -78,7 +79,10 @@ const CreateIndex: React.FC<FormikProps<ICreateIndex> & ICreateIndex> = observer
     };
     const disabledDate = (current: any) => {
       // Can not select days before today and today
-      return (current && current < moment().startOf('day')) || (current && current > moment().add(1, 'year'));
+      return (
+        (current && current < moment().add(12, 'hour')) ||
+        (current && current > moment().add(1, 'year'))
+      );
     };
     const weightsSum = values.tokens
       .map((tokenDiff) => +tokenDiff.new_weight)
@@ -99,6 +103,14 @@ const CreateIndex: React.FC<FormikProps<ICreateIndex> & ICreateIndex> = observer
       } else {
         setFieldValue('searchTokens', [] as ISearchToken[]);
       }
+    };
+    const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
+      setFieldValue('searchInput', e.target.value);
+      handleNewTokenNameChange(e.target.value);
+    };
+    const handleClear = () => {
+      setFieldValue('searchInput', '');
+      handleNewTokenNameChange('');
     };
     const handleRemove = (arrayHelper: FieldArrayRenderProps, index: number) => {
       arrayHelper.remove(index);
@@ -125,10 +137,18 @@ const CreateIndex: React.FC<FormikProps<ICreateIndex> & ICreateIndex> = observer
     // rangepicker
     const onOk = (value: any[] | null) => {
       if (value) {
+        // TODO: обсудить количество добавленных минут перед деплоем
+        // TODO: ракомментировать перед деплоем
+
+        // if (value[0].diff(value[1]) === 0){
+        //   setFieldValue('dateRange', [value[0], value[0].add(1, 'minutes')])
+        // }
+        // setFieldValue('dateRange', [value[0], value[1]])
+
+        // TODO: закомментировать перед деплоем
         if (moment().diff(value[0]) > 0) {
           if (value[1]) {
             if (moment().diff(value[1]) > 0) {
-              // TODO: обсудить количество добавленных минут перед деплоем
               setFieldValue('dateRange', [moment().add(3, 'minutes'), value[0].add(1, 'minutes')]);
             } else {
               setFieldValue('dateRange', [moment().add(3, 'minutes'), value[1]]);
@@ -140,7 +160,6 @@ const CreateIndex: React.FC<FormikProps<ICreateIndex> & ICreateIndex> = observer
           // eslint-disable-next-line
           if (value[1]) {
             if (moment().diff(value[1]) > 0) {
-              // TODO: обсудить количество добавленных минут перед деплоем
               setFieldValue('dateRange', [value[0], moment().add(4, 'minutes')]);
             } else {
               setFieldValue('dateRange', [value[0], value[1]]);
@@ -149,6 +168,7 @@ const CreateIndex: React.FC<FormikProps<ICreateIndex> & ICreateIndex> = observer
             setFieldValue('dateRange', [value[0], '']);
           }
         }
+        // до этого места
       } else {
         setFieldValue('dateRange', ['', '']);
       }
@@ -270,7 +290,9 @@ const CreateIndex: React.FC<FormikProps<ICreateIndex> & ICreateIndex> = observer
               <Search
                 className="token-weights__search"
                 data={values.searchTokens}
-                onChange={(e) => handleNewTokenNameChange(e)}
+                onChange={(e) => handleSearchChange(e)}
+                newTokenName={values.searchInput}
+                handleClear={handleClear}
                 onPick={(pickedToken: ISearchToken) => handleAddNewToken(arrayHelper, pickedToken)}
               />
             </div>
