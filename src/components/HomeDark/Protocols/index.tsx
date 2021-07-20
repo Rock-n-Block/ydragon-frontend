@@ -18,8 +18,8 @@ import marshlandWhite from '../../../assets/img/icons/partners/marshland-white.s
 // import nexusBlack from '../../../assets/img/icons/partners/nexus-black.svg';
 // import nexusWhite from '../../../assets/img/icons/partners/nexus-white.svg';
 import polygon from '../../../assets/img/icons/partners/polygon.svg';
-import squareBlack from '../../../assets/img/icons/partners/square-black.svg';
-import squareWhite from '../../../assets/img/icons/partners/square-white.svg';
+// import squareBlack from '../../../assets/img/icons/partners/square-black.svg';
+// import squareWhite from '../../../assets/img/icons/partners/square-white.svg';
 // import ssss from '../../../assets/img/icons/partners/ssss.svg';
 // import synth from '../../../assets/img/icons/partners/synth.svg';
 // import walls from '../../../assets/img/icons/partners/walls.svg';
@@ -72,7 +72,7 @@ const Protocols: React.FC = observer(() => {
           <img src={theme.value === 'dark' ? mmmmWhite : mmmmBlack} alt="" /> */}
           <img src={theme.value === 'dark' ? marshlandWhite : marshlandBlack} alt="" />
           <img src={polygon} alt="" />
-          <img src={theme.value === 'dark' ? squareWhite : squareBlack} alt="" />
+          {/* <img src={theme.value === 'dark' ? squareWhite : squareBlack} alt="" /> */}
           <img src={theme.value === 'dark' ? magnusWhite : magnusBlack} alt="" />
           {/* <Swiper spaceBetween={60} slidesPerView={8} loop>
             {partners.map((partner) => (
