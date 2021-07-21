@@ -269,7 +269,7 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
       >
         <div className="m-trade-ydr__content">
           <div className="m-trade-ydr__logo">
-            <img src={YDRLogo} alt="logo" width='55' height='100%'/>
+            <img src={YDRLogo} alt="logo" width="55" height="100%" />
           </div>
           <h3 className="m-trade-ydr__header">
             I want to {modals.tradeIndex.method}
@@ -330,7 +330,7 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
           ) : (
             <></>
           )}
-          {isNeedApprove && firstCurrency !== 'BNB' && (
+          {isNeedApprove && firstCurrency !== 'BNB' && !isSell && (
             <Button className="m-trade-ydr__btn" onClick={handleApprove} loading={isLoading}>
               Approve
             </Button>

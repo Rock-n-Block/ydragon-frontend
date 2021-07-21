@@ -211,7 +211,7 @@ const TradeYDRModal: React.FC = observer(() => {
     >
       <div className="m-trade-ydr__content">
         <div className="m-trade-ydr__logo">
-          <img src={YDRLogo} alt="logo" width='55' height='100%' />
+          <img src={YDRLogo} alt="logo" width="55" height="100%" />
         </div>
         <h3 className="m-trade-ydr__header">
           I want to {modals.tradeYDR.method}
@@ -267,7 +267,7 @@ const TradeYDRModal: React.FC = observer(() => {
             />
           )}
         </div>
-        {isNeedApprove && firstCurrency !== 'BNB' && (
+        {isNeedApprove && firstCurrency !== 'BNB' && modals.tradeYDR.method === 'buy' && (
           <Button className="m-trade-ydr__btn" onClick={handleApprove} loading={isLoading}>
             Approve
           </Button>
