@@ -46,7 +46,13 @@ const TokensStructure: React.FC<TokensStructureProps> = ({ vaults, manualRebalan
       key: 'name',
       render: (item: any) => (
         <div className="table__col-with-logo">
-          <img src={item.image} className="table__col-with-logo__image" alt={`${item.name} logo`} width='31' height='31' />
+          <img
+            src={item.image}
+            className="table__col-with-logo__image"
+            alt={`${item.name} logo`}
+            width="31"
+            height="31"
+          />
           <span className="table__col-with-logo__text">{item.name}</span>
         </div>
       ),
@@ -112,10 +118,12 @@ const TokensStructure: React.FC<TokensStructureProps> = ({ vaults, manualRebalan
         const x_vault = new BigNumber(vault.x_balance)
           .dividedBy(new BigNumber(10).pow(18))
           .toFixed(5);
-        const y_vault = new BigNumber(vault.y_balance)
+        const farm = new BigNumber(vault.farm_balance)
           .dividedBy(new BigNumber(10).pow(18))
           .toFixed(5);
-        const farm = new BigNumber(vault.farm_balance)
+        const y_vault = new BigNumber(
+          new BigNumber(vault.y_balance).minus(new BigNumber(vault.farm_balance)),
+        )
           .dividedBy(new BigNumber(10).pow(18))
           .toFixed(5);
         const estimated = new BigNumber(x_vault)
