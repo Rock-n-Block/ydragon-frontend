@@ -80,8 +80,9 @@ const Indexes: React.FC = observer(() => {
             const newData = indexes
               .sort((a, b) =>
                 Sorter.DATE(
-                  moment(a.created_at).format('DD.MM.YY'),
-                  moment(b.created_at).format('DD.MM.YY'),
+                  moment(a.created_at).format(),
+                  moment(b.created_at).format(),
+                  asc
                 ),
               )
               .map((curIndex, index) => {

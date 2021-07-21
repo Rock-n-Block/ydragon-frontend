@@ -168,7 +168,7 @@ const CreateIndex: React.FC<FormikProps<ICreateIndex> & ICreateIndex> = observer
           } else {
             setFieldValue('dateRange', [value[0], '']);
           }
-        }
+        }  
         // до этого места
       } else {
         setFieldValue('dateRange', ['', '']);
@@ -215,6 +215,7 @@ const CreateIndex: React.FC<FormikProps<ICreateIndex> & ICreateIndex> = observer
           }}
           format="DD.MM.YY HH:mm"
           onOk={onOk}
+          inputReadOnly
         />
         <TextArea
           autoSize={{ minRows: 2 }}
