@@ -15,7 +15,7 @@ const MetamaskErrModal: React.FC = observer(() => {
   return (
     <Modal isVisible={!!modals.metamask.errMsg} className="m-metamask" handleCancel={handleCancel}>
       <div className="m-metamask__content">
-        <img src={MetamaskImg} alt="" className="m-metamask__img" />
+        <img src={MetamaskImg} alt="metamask" className="m-metamask__img" width='107' height='111' />
         <p className="text-md">{modals.metamask.errMsg}</p>
       </div>
     </Modal>

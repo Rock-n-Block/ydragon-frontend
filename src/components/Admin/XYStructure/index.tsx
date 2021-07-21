@@ -70,7 +70,7 @@ const XYStructure: React.FC<XYStructureProps> = ({ vaults }) => {
               ]}
             />
             <SmallTableCard
-              tokenName="X Vault"
+              tokenName="Y Vault"
               index={1}
               data={[
                 ['', dataSource[1]?.price],

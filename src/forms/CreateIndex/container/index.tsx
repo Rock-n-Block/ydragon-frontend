@@ -25,7 +25,8 @@ const CreateIndexForm: React.FC = () => {
       description: '',
       tokens: [] as Array<ITokensDiff>,
       isLoading: false,
-      searchTokens: [] as Array<ISearchToken>
+      searchTokens: [] as Array<ISearchToken>,
+      searchInput: ''
     }),
     handleSubmit: (values, { setFieldValue, resetForm }) => {
       setFieldValue('isLoading', true);

@@ -36,7 +36,7 @@
 
   @include b('tablet') {
     margin-top: 40px;
-
+    text-align: center;
     flex-direction: column;
   }
   @include b('mobile') {

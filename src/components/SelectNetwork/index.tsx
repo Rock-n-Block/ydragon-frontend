@@ -131,7 +131,7 @@ const SelectNetwork: React.FC = observer(() => {
       onSelect={switchChain}
       style={{ width: 120 }}
       className="select-network"
-      suffixIcon={<img className="select__arrow" alt="" src={arrow} />}
+      suffixIcon={<img className="select__arrow" alt="select arrow" src={arrow} width="10" height="6" />}
       dropdownClassName="select-network__dropdown"
     >
       <Option value="bnbt">

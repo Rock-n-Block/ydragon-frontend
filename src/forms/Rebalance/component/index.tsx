@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import BigNumber from 'bignumber.js/bignumber';
 import { FieldArray, FieldArrayRenderProps, Form, FormikProps } from 'formik';
@@ -29,6 +29,7 @@ const Rebalance: React.FC<FormikProps<IRebalance> & IRebalance> = observer(
     const { modals } = useMst();
     const { indexId } = useParams<IIndexId>();
     const [searchTokens, setSearchTokens] = useState<ISearchToken[]>([] as ISearchToken[]);
+    const [newTokenName, setNewTokenName] = useState<string>('');
     const weightsSum = values.tokens
       .map((tokenDiff) => +tokenDiff.new_weight)
       .reduce((prevSum, newItem) => prevSum.plus(newItem), new BigNumber(0))
@@ -110,6 +111,14 @@ const Rebalance: React.FC<FormikProps<IRebalance> & IRebalance> = observer(
       }
       handleChange(e);
     };
+    const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
+      setNewTokenName(e.target.value);
+      handleNewTokenNameChange(e.target.value);
+    };
+    const handleClear = () => {
+      setNewTokenName('');
+      handleNewTokenNameChange('');
+    };
     return (
       <Form name="form-rebalance" className="form-rebalance">
         <FieldArray
@@ -184,8 +193,14 @@ const Rebalance: React.FC<FormikProps<IRebalance> & IRebalance> = observer(
               <Search
                 className="token-weights__search"
                 data={searchTokens}
-                onChange={(e) => handleNewTokenNameChange(e)}
+                onChange={(e) => handleSearchChange(e)}
+                newTokenName={newTokenName}
+                handleClear={handleClear}
                 onPick={(pickedToken: ISearchToken) => handleAddNewToken(arrayHelper, pickedToken)}
+                // className="token-weights__search"
+                // data={searchTokens}
+                // onChange={(e) => handleNewTokenNameChange(e)}
+                // onPick={(pickedToken: ISearchToken) => handleAddNewToken(arrayHelper, pickedToken)}
               />
             </div>
           )}
