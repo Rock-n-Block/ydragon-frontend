@@ -89,7 +89,7 @@ const AdminIndex: React.FC = () => {
     <main className="container">
       <IndexInfo marketCap={index.market_cap} price={index.price} />
       <Composition status={index.status} tokens={index.tokens_diff} />
-      <Rebalance status={index.status} tokens={index.tokens_diff} />
+      <Rebalance tokens={index.tokens_diff} />
       <Options
         address={index.index?.address}
         onManualInputChange={handleManualRebalanceValueChange}

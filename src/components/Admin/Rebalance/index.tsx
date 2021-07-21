@@ -3,8 +3,7 @@ import BigNumber from 'bignumber.js/bignumber';
 import { observer } from 'mobx-react-lite';
 
 import { IIndexStatus, ITokensDiff } from '../../../pages/Admin';
-import { useMst } from '../../../store/store';
-import { Button, Table } from '../../index';
+import { Table } from '../../index';
 import SmallTableCard from '../../SmallTableCard/index';
 
 import './Rebalance.scss';
@@ -13,9 +12,7 @@ interface RebalanceProps extends IIndexStatus {
   tokens: Array<ITokensDiff>;
 }
 
-const Rebalance: React.FC<RebalanceProps> = observer(({ status, tokens }) => {
-  const { modals } = useMst();
-  const rebalanceInProgress = status === 'PROCESSING';
+const Rebalance: React.FC<RebalanceProps> = observer(({ tokens }) => {
   const columns: any[] = [
     {
       title: 'Token',
@@ -23,7 +20,13 @@ const Rebalance: React.FC<RebalanceProps> = observer(({ status, tokens }) => {
       key: 'name',
       render: (item: any) => (
         <div className="table__col-with-logo">
-          <img src={item.image} className="table__col-with-logo__image" alt={`${item.name} logo`} width='31' height='31' />
+          <img
+            src={item.image}
+            className="table__col-with-logo__image"
+            alt={`${item.name} logo`}
+            width="31"
+            height="31"
+          />
           <span className="table__col-with-logo__text">{item.name}</span>
         </div>
       ),
@@ -51,9 +54,6 @@ const Rebalance: React.FC<RebalanceProps> = observer(({ status, tokens }) => {
     },
   ];
   const [dataSource, setDataSource] = useState<any[]>([]);
-  const handleRebalanceOpen = () => {
-    modals.rebalance.open();
-  };
   useEffect(() => {
     if (tokens) {
       const newData = tokens.map((token, index) => {
@@ -65,7 +65,7 @@ const Rebalance: React.FC<RebalanceProps> = observer(({ status, tokens }) => {
             .toFixed(2),
           price: `$${token.token.price_for_one}`,
           weight: `${new BigNumber(token.token.current_weight).multipliedBy(100).toFixed(2)}%`,
-          priceTotal: token.token.price_total,
+          priceTotal: `$${token.token.price_total}`,
         };
       });
       setDataSource(newData);
@@ -78,13 +78,7 @@ const Rebalance: React.FC<RebalanceProps> = observer(({ status, tokens }) => {
       {tokens && (
         <>
           <div className="rebalance-table__big">
-            <Table dataSource={dataSource} columns={columns} className="rebalance-table">
-              <div className="rebalance-table__btn-row ">
-                <Button onClick={handleRebalanceOpen} disabled={rebalanceInProgress}>
-                  Rebalance index
-                </Button>
-              </div>
-            </Table>
+            <Table dataSource={dataSource} columns={columns} className="rebalance-table" />
           </div>
           <div className="rebalance-table__small">
             {dataSource.map((data, i) => (
@@ -101,11 +95,6 @@ const Rebalance: React.FC<RebalanceProps> = observer(({ status, tokens }) => {
                 index={i}
               />
             ))}
-            <div className="rebalance-table__btn-row ">
-              <Button onClick={handleRebalanceOpen} disabled={rebalanceInProgress}>
-                Rebalance index
-              </Button>
-            </div>
           </div>
         </>
       )}

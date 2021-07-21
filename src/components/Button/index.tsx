@@ -45,18 +45,19 @@ const Button: React.FC<IButton> = observer((props: PropsWithChildren<IButton>) =
     ...otherButtonProps
   } = props;
 
-  const { modals } = useMst();
-
-  const user = !!sessionStorage.getItem('yd_address') || false;
-  let onClickFunction = onClick;
+  const { modals, user } = useMst();
 
   const onVisibleChange = (e: any) => {
     e.preventDefault();
     modals.metamask.setErr(`${needLogin}`);
   };
-  if (!user && needLogin) {
-    onClickFunction = onVisibleChange;
-  }
+  const handleClick = (e: any) => {
+    if (!user.address && needLogin) {
+      onVisibleChange(e);
+    } else if (onClick) {
+      onClick(e);
+    }
+  };
 
   const Btn = (
     <>
@@ -68,7 +69,7 @@ const Button: React.FC<IButton> = observer((props: PropsWithChildren<IButton>) =
           `btn-${colorScheme}`,
           disabled && styledType === 'outline' ? `disabled ${className}` : className,
         )}
-        onClick={onClickFunction}
+        onClick={handleClick}
         disabled={disabled}
         {...otherButtonProps}
       >
