@@ -24,57 +24,6 @@ const Indexes: React.FC = observer(() => {
   const switchSort = useCallback(
     (value: string, asc: boolean) => {
       switch (value) {
-        case 'name': {
-          if (indexes) {
-            const newData = indexes
-              .sort((a, b) => Sorter.DEFAULT(a.name, b.name, asc))
-              .map((curIndex, index) => {
-                return {
-                  key: index,
-                  name: { id: curIndex.id, name: curIndex.name },
-                  cap: `$${curIndex.market_cap}`,
-                  price: `$${curIndex.price}`,
-                  created: moment(new Date(curIndex.created_at)).format('DD.MM.YY'),
-                };
-              });
-            setDataSource(newData);
-          }
-          break;
-        }
-        case 'market_cap': {
-          if (indexes) {
-            const newData = indexes
-              .sort((a, b) => Sorter.DEFAULT(a.market_cap, b.market_cap, asc))
-              .map((curIndex, index) => {
-                return {
-                  key: index,
-                  name: { id: curIndex.id, name: curIndex.name },
-                  cap: `$${curIndex.market_cap}`,
-                  price: `$${curIndex.price}`,
-                  created: moment(new Date(curIndex.created_at)).format('DD.MM.YY'),
-                };
-              });
-            setDataSource(newData);
-          }
-          break;
-        }
-        case 'price': {
-          if (indexes) {
-            const newData = indexes
-              .sort((a, b) => Sorter.DEFAULT(a.price, b.price, asc))
-              .map((curIndex, index) => {
-                return {
-                  key: index,
-                  name: { id: curIndex.id, name: curIndex.name },
-                  cap: `$${curIndex.market_cap}`,
-                  price: `$${curIndex.price}`,
-                  created: moment(new Date(curIndex.created_at)).format('DD.MM.YY'),
-                };
-              });
-            setDataSource(newData);
-          }
-          break;
-        }
         case 'created_at': {
           if (indexes) {
             const newData = indexes
@@ -100,6 +49,20 @@ const Indexes: React.FC = observer(() => {
         }
 
         default:
+          if (indexes) {
+          const newData = indexes
+            .sort((a, b) => Sorter.DEFAULT(a, b, asc, value))
+            .map((curIndex, index) => {
+              return {
+                key: index,
+                name: { id: curIndex.id, name: curIndex.name },
+                cap: `$${curIndex.market_cap}`,
+                price: `$${curIndex.price}`,
+                created: moment(new Date(curIndex.created_at)).format('DD.MM.YY'),
+              };
+            });
+          setDataSource(newData);
+        }
           break;
       }
     },

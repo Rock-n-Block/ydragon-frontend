@@ -54,48 +54,12 @@ const Dashboard: React.FC = () => {
       .finally(() => setLoading(false));
   }, []);
 
-  const switchSort = (value: string, asc: boolean) => {
-    switch (value) {
-      case 'name': {
-        setIndexes(indexes?.sort((a, b) => Sorter.DEFAULT(a.name, b.name, asc)));
-        break;
-      }
-      case 'market_cap': {
-        setIndexes(indexes?.sort((a, b) => Sorter.DEFAULT(a.market_cap, b.market_cap, asc)));
-        break;
-      }
-      case 'price': {
-        setIndexes(indexes?.sort((a, b) => Sorter.DEFAULT(a.price, b.price, asc)));
-        break;
-      }
-      case 'day': {
-        setIndexes(indexes?.sort((a, b) => Sorter.DEFAULT(a.day, b.day, asc)));
-        break;
-      }
-      case 'week': {
-        setIndexes(indexes?.sort((a, b) => Sorter.DEFAULT(a.week, b.week, asc)));
-        break;
-      }
-      case 'month': {
-        setIndexes(indexes?.sort((a, b) => Sorter.DEFAULT(a.month, b.month, asc)));
-        break;
-      }
-      case 'total': {
-        setIndexes(indexes?.sort((a, b) => Sorter.DEFAULT(a.total, b.total, asc)));
-        break;
-      }
-
-      default:
-        break;
-    }
-  }
-
   const sorter = (item: string) => {
     if (sorterValue === item) {
-      switchSort(item, !ascendent)
+      setIndexes(indexes?.sort((a, b) => Sorter.DEFAULT(a, b, !ascendent, item)));
       setAscendent(!ascendent);
     } else {
-      switchSort(item, true)
+      setIndexes(indexes?.sort((a, b) => Sorter.DEFAULT(a, b, true, item)));
       setAscendent(true);
     }
     setSorterValue(item);
@@ -111,7 +75,9 @@ const Dashboard: React.FC = () => {
       <div className="index-dashboard__big">
         <div className="index-dashboard">
           {
-          indexes?.filter((index) => index.price > 0).length ? (
+          indexes?.
+          filter((index) => index.price > 0).
+          length ? (
             <div className="index-dashboard__row index-dashboard__row--head">
               <div className="index-dashboard__col">
                 <div

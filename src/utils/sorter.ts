@@ -11,13 +11,14 @@ const dateSort = (dateA: string, dateB: string, asc = true) => {
 
 /**
  *
- * @param {number|string} a
- * @param {number|string} b
+ * @param {any} a
+ * @param {any} b
  * @param {boolean} asc
+ * @param {string} key
  */
-const defaultSort = (a: number | string, b: number | string, asc = true) => {
-  if (a < b) return asc ? -1 : 1;
-  if (b < a) return asc ? 1 : -1;
+const defaultSort = (a: any, b: any, asc = true, key: string) => {
+  if (a[key] < b[key]) return asc ? -1 : 1;
+  if (b[key] < a[key]) return asc ? 1 : -1;
   return 0;
 };
 
