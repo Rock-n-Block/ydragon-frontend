@@ -12,8 +12,6 @@ import { useWalletConnectorContext } from '../../services/walletConnect';
 import { useMst } from '../../store/store';
 import TokenMini from '../TokenMini';
 
-import './SelectNetwork.scss';
-
 const { Option } = Select;
 
 interface AddEthereumChainParameter {
@@ -125,34 +123,39 @@ const SelectNetwork: React.FC = observer(() => {
   }, [networks.id]);
 
   return (
-    <Select
-      value={pickedChain}
-      placeholder="Select network"
-      onSelect={switchChain}
-      style={{ width: 120 }}
-      className="select-network"
-      suffixIcon={<img className="select__arrow" alt="select arrow" src={arrow} width="10" height="6" />}
-      dropdownClassName="select-network__dropdown"
-    >
-      <Option value="bnbt">
-        <TokenMini
-          name=""
-          icon={theme.value === 'dark' ? bncDark : bncLight}
-          width="26"
-          height="26"
-        />
-        BSC
-      </Option>
-      <Option value="tmatic">
-        <TokenMini
-          name=""
-          icon={theme.value === 'dark' ? plgDark : plgLight}
-          width="26"
-          height="26"
-        />
-        Polygon
-      </Option>
-    </Select>
+    <div className="select-network__container">
+      <Select
+        value={pickedChain}
+        placeholder="Select network"
+        onSelect={switchChain}
+        style={{ width: 140 }}
+        className="select-network"
+        dropdownMatchSelectWidth={false}
+        dropdownStyle={{ position: 'fixed' }}
+        // getPopupContainer={(trigger) => trigger.parentNode}
+        suffixIcon={
+          <img className="select__arrow" alt="select arrow" src={arrow} width="10" height="6" />
+        }
+        dropdownClassName="select-network__dropdown"
+      >
+        <Option value="bnbt">
+          <TokenMini
+            name="Binance"
+            icon={theme.value === 'dark' ? bncDark : bncLight}
+            width="26"
+            height="26"
+          />
+        </Option>
+        <Option value="tmatic">
+          <TokenMini
+            name="Polygon"
+            icon={theme.value === 'dark' ? plgDark : plgLight}
+            width="26"
+            height="26"
+          />
+        </Option>
+      </Select>
+    </div>
   );
 });
 export default SelectNetwork;

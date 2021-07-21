@@ -75,6 +75,12 @@
     margin-right: 5px;
 
     width: 26px;
+    &__name{
+      font-family: TTNorms,sans-serif;
+      font-weight: normal;
+      font-size: 18px;
+      line-height: 21px;
+    }
   }
 
   .ant-select-selector {
@@ -86,4 +92,15 @@
       display: flex;
     }
   }
-}
+}/*
+.select-network{
+  &__container{
+    position: relative;
+    .ant-select-dropdown{
+      &:has(.header){
+        overflow: unset;
+      }
+      top:32px !important;
+    }
+  }
+}*/
