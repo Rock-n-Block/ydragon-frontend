@@ -123,39 +123,37 @@ const SelectNetwork: React.FC = observer(() => {
   }, [networks.id]);
 
   return (
-    <div className="select-network__container">
-      <Select
-        value={pickedChain}
-        placeholder="Select network"
-        onSelect={switchChain}
-        style={{ width: 140 }}
-        className="select-network"
-        dropdownMatchSelectWidth={false}
-        dropdownStyle={{ position: 'fixed' }}
-        // getPopupContainer={(trigger) => trigger.parentNode}
-        suffixIcon={
-          <img className="select__arrow" alt="select arrow" src={arrow} width="10" height="6" />
-        }
-        dropdownClassName="select-network__dropdown"
-      >
-        <Option value="bnbt">
-          <TokenMini
-            name="Binance"
-            icon={theme.value === 'dark' ? bncDark : bncLight}
-            width="26"
-            height="26"
-          />
-        </Option>
-        <Option value="tmatic">
-          <TokenMini
-            name="Polygon"
-            icon={theme.value === 'dark' ? plgDark : plgLight}
-            width="26"
-            height="26"
-          />
-        </Option>
-      </Select>
-    </div>
+    <Select
+      value={pickedChain}
+      placeholder="Select network"
+      onSelect={switchChain}
+      style={{ width: 140 }}
+      className="select-network"
+      dropdownMatchSelectWidth={false}
+      dropdownStyle={{ position: 'fixed' }}
+      // getPopupContainer={(trigger) => trigger.parentNode}
+      suffixIcon={
+        <img className="select__arrow" alt="select arrow" src={arrow} width="10" height="6" />
+      }
+      dropdownClassName="select-network__dropdown"
+    >
+      <Option value="bnbt">
+        <TokenMini
+          name="Binance"
+          icon={theme.value === 'dark' ? bncDark : bncLight}
+          width="26"
+          height="26"
+        />
+      </Option>
+      <Option value="tmatic" disabled>
+        <TokenMini
+          name="Polygon"
+          icon={theme.value === 'dark' ? plgDark : plgLight}
+          width="26"
+          height="26"
+        />
+      </Option>
+    </Select>
   );
 });
 export default SelectNetwork;
