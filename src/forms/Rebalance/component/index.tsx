@@ -11,6 +11,7 @@ import { ITokensDiff } from '../../../pages/Admin';
 import { coinsApi, indexesApi } from '../../../services/api';
 import { useMst } from '../../../store/store';
 import { ProviderRpcError } from '../../../types/errors';
+import DangerCircle from '../../../assets/img/icons/icon-danger-circle.svg';
 
 interface IIndexId {
   indexId: string;
@@ -254,6 +255,14 @@ const Rebalance: React.FC<FormikProps<IRebalance> & IRebalance> = observer(
               </div>
             </div>
           </div>
+        </div>
+
+        <div className="token-weights-items__empty">
+          <img src={DangerCircle} alt="alert" width="20" height="20" />
+          <span>
+            Do not start rebalance if you don&apos;t have enough tokens on yVault, otherwise your
+            index token with a high probability will become forbidden.
+          </span>
         </div>
 
         <div className="rebalance-modal__btn-row">
