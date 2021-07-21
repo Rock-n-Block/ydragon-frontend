@@ -6,7 +6,7 @@ import { IToken } from '../../components/IndexPage/IndexTable';
 import { CreateIndexModal } from '../../components/Modals';
 
 export interface IIndexStatus {
-  status: 'CREATED' | 'PROCESSING' | 'FINISHED ';
+  status?: 'CREATED' | 'PROCESSING' | 'FINISHED ';
 }
 
 export interface ITokensDiff {
