@@ -16,6 +16,105 @@ import { Sorter } from '../../../utils/sorter';
 const Indexes: React.FC = observer(() => {
   const { modals } = useMst();
   const [indexes, setIndexes] = useState<Array<IIndex>>();
+  const [sorterValue, setSorterValue] = useState<string>('');
+  const [ascendent, setAscendent] = useState<boolean>(true);
+  const [dataSource, setDataSource] = useState<any[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const switchSort = useCallback(
+    (value: string, asc: boolean) => {
+      switch (value) {
+        case 'name': {
+          if (indexes) {
+            const newData = indexes
+              .sort((a, b) => Sorter.DEFAULT(a.name, b.name, asc))
+              .map((curIndex, index) => {
+                return {
+                  key: index,
+                  name: { id: curIndex.id, name: curIndex.name },
+                  cap: `$${curIndex.market_cap}`,
+                  price: `$${curIndex.price}`,
+                  created: moment(new Date(curIndex.created_at)).format('DD.MM.YY'),
+                };
+              });
+            setDataSource(newData);
+          }
+          break;
+        }
+        case 'market_cap': {
+          if (indexes) {
+            const newData = indexes
+              .sort((a, b) => Sorter.DEFAULT(a.market_cap, b.market_cap, asc))
+              .map((curIndex, index) => {
+                return {
+                  key: index,
+                  name: { id: curIndex.id, name: curIndex.name },
+                  cap: `$${curIndex.market_cap}`,
+                  price: `$${curIndex.price}`,
+                  created: moment(new Date(curIndex.created_at)).format('DD.MM.YY'),
+                };
+              });
+            setDataSource(newData);
+          }
+          break;
+        }
+        case 'price': {
+          if (indexes) {
+            const newData = indexes
+              .sort((a, b) => Sorter.DEFAULT(a.price, b.price, asc))
+              .map((curIndex, index) => {
+                return {
+                  key: index,
+                  name: { id: curIndex.id, name: curIndex.name },
+                  cap: `$${curIndex.market_cap}`,
+                  price: `$${curIndex.price}`,
+                  created: moment(new Date(curIndex.created_at)).format('DD.MM.YY'),
+                };
+              });
+            setDataSource(newData);
+          }
+          break;
+        }
+        case 'created_at': {
+          if (indexes) {
+            const newData = indexes
+              .sort((a, b) =>
+                Sorter.DATE(
+                  moment(a.created_at).format('DD.MM.YY'),
+                  moment(b.created_at).format('DD.MM.YY'),
+                ),
+              )
+              .map((curIndex, index) => {
+                return {
+                  key: index,
+                  name: { id: curIndex.id, name: curIndex.name },
+                  cap: `$${curIndex.market_cap}`,
+                  price: `$${curIndex.price}`,
+                  created: moment(new Date(curIndex.created_at)).format('DD.MM.YY'),
+                };
+              });
+            setDataSource(newData);
+          }
+          break;
+        }
+
+        default:
+          break;
+      }
+    },
+    [indexes],
+  );
+
+  const sorter = (item: string) => {
+    if (sorterValue === item) {
+      switchSort(item, !ascendent);
+      setAscendent(!ascendent);
+    } else {
+      switchSort(item, true);
+      setAscendent(true);
+    }
+    setSorterValue(item);
+  };
 
   const columns: any[] = [
     {
@@ -23,30 +122,56 @@ const Indexes: React.FC = observer(() => {
       dataIndex: 'name',
       key: 'name',
       render: (item: any) => <Link to={`/admin/index/${item.id}`}>{item.name}</Link>,
-      sorter: Sorter.NAME
+      onHeaderCell: () => {
+        return {
+          className: `indexs-table__sort ${
+            sorterValue === 'name' ? `indexs-table__sort${ascendent ? '--up' : ''}` : ''
+          }`,
+          onClick: () => sorter('name'),
+        };
+      },
     },
     {
       title: 'Market cap',
       dataIndex: 'cap',
       key: 'cap',
-      sorter: Sorter.MARKET
+      onHeaderCell: () => {
+        return {
+          className: `indexs-table__sort ${
+            sorterValue === 'market_cap' ? `indexs-table__sort${ascendent ? '--up' : ''}` : ''
+          }`,
+          onClick: () => sorter('market_cap'),
+        };
+      },
     },
     {
       title: 'Price',
       dataIndex: 'price',
       key: 'price',
       render: (item: any) => <span className="text-MER">{item}</span>,
-      sorter: Sorter.PRICE
+      onHeaderCell: () => {
+        return {
+          className: `indexs-table__sort ${
+            sorterValue === 'price' ? `indexs-table__sort${ascendent ? '--up' : ''}` : ''
+          }`,
+          onClick: () => sorter('price'),
+        };
+      },
     },
     {
       title: 'Created',
       dataIndex: 'created',
       key: 'created',
-      sorter: Sorter.DATE
+      onHeaderCell: () => {
+        return {
+          className: `indexs-table__sort ${
+            sorterValue === 'created_at' ? `indexs-table__sort${ascendent ? '--up' : ''}` : ''
+          }`,
+          onClick: () => sorter('created_at'),
+        };
+      },
     },
   ];
-  const [dataSource, setDataSource] = useState<any[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
 
   const getIndexes = useCallback(() => {
     setLoading(true);

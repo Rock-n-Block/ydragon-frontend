@@ -10,10 +10,11 @@ const dateSort = (dateA: string, dateB: string) => moment(dateA).diff(moment(dat
  *
  * @param {number|string} a
  * @param {number|string} b
+ * @param {boolean} asc
  */
-const defaultSort = (a: number | string, b: number | string) => {
-  if (a < b) return -1;
-  if (b < a) return 1;
+const defaultSort = (a: number | string, b: number | string, asc = true) => {
+  if (a < b) return asc ? -1 : 1;
+  if (b < a) return asc ? 1 : -1;
   return 0;
 };
 
