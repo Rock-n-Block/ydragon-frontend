@@ -272,7 +272,7 @@ const TradeYDRModal: React.FC = observer(() => {
             Approve
           </Button>
         )}
-        {modals.tradeYDR.method === 'buy' && (!isNeedApprove || firstCurrency === 'BNB') && (
+        {modals.tradeYDR.method === 'buy' && firstCurrency === 'BNB' && (
           <Button
             className="m-trade-ydr__btn"
             onClick={handleBuy}
@@ -282,7 +282,7 @@ const TradeYDRModal: React.FC = observer(() => {
             Buy
           </Button>
         )}
-        {modals.tradeYDR.method === 'sell' && !isNeedApprove && (
+        {modals.tradeYDR.method === 'sell' && (
           <Button
             className="m-trade-ydr__btn"
             onClick={handleSell}

@@ -54,6 +54,7 @@ const GetInModal: React.FC = observer(() => {
   const [isNeedApprove, setIsNeedApprove] = useState<boolean>(true);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isLoadingBtn, setIsLoadingBtn] = useState<boolean>(false);
+  // const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const handleClose = (): void => {
     modals.getIn.close();
     setPayInput('');
@@ -109,13 +110,13 @@ const GetInModal: React.FC = observer(() => {
       .enterIme(payInput, firstCurrency, modals.getIn.address, decimals)
       .then(() => {
         setPayInput('');
-        modals.info.setMsg('Success', 'Success mint', 'success');
+        modals.info.setMsg('Success', 'Success enter IME', 'success');
       })
       .catch((err: ProviderRpcError) => {
         const { message } = err;
         modals.info.setMsg(
           'Error',
-          `Mint error ${message.slice(0, message.indexOf(':'))}`,
+          `Enter IME error ${message.slice(0, message.indexOf(':'))}`,
           'error',
         );
       })
@@ -142,6 +143,18 @@ const GetInModal: React.FC = observer(() => {
       setPayInput(e.target.value);
     }
   };
+  // const getWindowWidth = () => {
+  //   const { innerWidth } = window;
+  //   return innerWidth;
+  // };
+  // useEffect(() => {
+  //   function handleResize() {
+  //     setWindowWidth(getWindowWidth());
+  //   }
+
+  //   window.addEventListener('resize', handleResize);
+  //   return () => window.removeEventListener('resize', handleResize);
+  // }, []);
   useEffect(() => {
     setIsLoading(true);
     getCurrentIme();
@@ -189,7 +202,12 @@ const GetInModal: React.FC = observer(() => {
     }
   }, [user.address, currentIme]);
   return (
-    <Modal isVisible={!!modals.getIn.id} handleCancel={handleClose} className="m-get-in">
+    <Modal
+      isVisible={!!modals.getIn.id}
+      // closeIcon={windowWidth < 500}
+      handleCancel={handleClose}
+      className="m-get-in"
+    >
       <div className="m-get-in__content">
         {isLoading ? (
           <Spinner loading={isLoading} />
@@ -225,13 +243,14 @@ const GetInModal: React.FC = observer(() => {
               >
                 Approve
               </Button>
-            )}
+            )}              
+            {console.log(payInput)}
             {modals.tradeYDR.method === 'buy' && (!isNeedApprove || firstCurrency === 'BNB') && (
               <Button
                 className="m-trade-ydr__btn"
                 onClick={handleEnter}
                 loading={isLoadingBtn}
-                disabled={!user.address}
+                disabled={!payInput || !user.address}
               >
                 Enter
               </Button>

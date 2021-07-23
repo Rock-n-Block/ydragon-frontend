@@ -45,6 +45,7 @@
 
   &__content {
     max-width: 305px;
+    word-break: break-all;
     @include b('tablet') {
       display: flex;
       flex-direction: column;
@@ -74,7 +75,6 @@
 
     font-size: 18px;
     line-height: 30px;
-
     // color: $white;
     @include b('tablet') {
       font-size: 16px;
