@@ -243,8 +243,7 @@ const GetInModal: React.FC = observer(() => {
               >
                 Approve
               </Button>
-            )}              
-            {console.log(payInput)}
+            )}
             {modals.tradeYDR.method === 'buy' && (!isNeedApprove || firstCurrency === 'BNB') && (
               <Button
                 className="m-trade-ydr__btn"
