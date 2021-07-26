@@ -25,15 +25,20 @@ const Options: React.FC<OptionsProps> = observer(({ address, onManualInputChange
   const walletConnector = useWalletConnectorContext();
 
   const handleAutoRebalanceChange = (isChecked: boolean) => {
+    setIsAutoRebalanceChecked(isChecked);
     walletConnector.metamaskService
       .changeAutoXYRebalaceAllowance(address, isChecked)
       .then(() => {
-        modals.info.setMsg('Operation success', 'Rebalance started', 'success');
-        setIsAutoRebalanceChecked(isChecked);
+        modals.info.setMsg(
+          'Operation success',
+          `Automatic rebalancing is ${isChecked ? 'enabled' : 'disabled'}`,
+          'success',
+        );
       })
       .catch((error: ProviderRpcError) => {
         const { message } = error;
         modals.info.setMsg('Error', `AutoRebalance error ${message}`, 'error');
+        setIsAutoRebalanceChecked(!isChecked);
       });
   };
   const handleManualRebalanceStart = () => {

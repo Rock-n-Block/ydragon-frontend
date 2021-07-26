@@ -110,7 +110,7 @@ const GetInModal: React.FC = observer(() => {
       .enterIme(payInput, firstCurrency, modals.getIn.address, decimals)
       .then(() => {
         setPayInput('');
-        modals.info.setMsg('Success', 'Success enter IME', 'success');
+        modals.info.setMsg('Success', 'You entered IME', 'success');
       })
       .catch((err: ProviderRpcError) => {
         const { message } = err;

@@ -219,6 +219,7 @@ const CreateIndex: React.FC<FormikProps<ICreateIndex> & ICreateIndex> = observer
         />
         <TextArea
           autoSize={{ minRows: 2 }}
+          maxLength={230}
           placeholder="Please enter description, you can't do it later"
           className="form-create-index__description"
           name="description"
