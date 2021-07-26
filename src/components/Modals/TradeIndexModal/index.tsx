@@ -126,8 +126,12 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
             break;
           case 'sell':
             if (total_x) {
-              const preFee = (+payInput * (6 - (4 - total_x * 100 - 5))) / 10;
-              setFee(preFee * cost > 0.001 ? `${preFee * cost}` : '< 0.001');
+              const preFee = (+payInput * (6 - (4 - total_x - 5))) / 10;
+              setFee(
+                preFee * cost > 0.001
+                  ? (preFee * cost).toFixed(3)
+                  : '< 0.001',
+              );
             }
             break;
           default:
