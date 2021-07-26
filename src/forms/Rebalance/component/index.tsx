@@ -106,7 +106,7 @@ const Rebalance: React.FC<FormikProps<IRebalance> & IRebalance> = observer(
           console.log('add new token error', response);
         });
     };
-    const handleInput = (e: any) => {
+    const handleChangeInput = (e: any) => {
       if (+e.target.value < 0) {
         e.target.value = '';
       }
@@ -145,7 +145,7 @@ const Rebalance: React.FC<FormikProps<IRebalance> & IRebalance> = observer(
                         disabled={tokenDiff.to_delete}
                         name={`tokens[${index}].new_weight`}
                         value={tokenDiff.new_weight !== '0' ? tokenDiff.new_weight : ''}
-                        onChange={handleInput}
+                        onChange={handleChangeInput}
                         onBlur={handleBlur}
                         type="number"
                         placeholder="0"
@@ -217,7 +217,7 @@ const Rebalance: React.FC<FormikProps<IRebalance> & IRebalance> = observer(
                 <Input
                   name="days"
                   value={values.days}
-                  onChange={handleInput}
+                  onChange={handleChangeInput}
                   onBlur={handleBlur}
                   type="number"
                   placeholder="0"
@@ -231,7 +231,7 @@ const Rebalance: React.FC<FormikProps<IRebalance> & IRebalance> = observer(
                 <Input
                   name="hours"
                   value={values.hours}
-                  onChange={handleInput}
+                  onChange={handleChangeInput}
                   onBlur={handleBlur}
                   type="number"
                   placeholder="0"
@@ -247,7 +247,7 @@ const Rebalance: React.FC<FormikProps<IRebalance> & IRebalance> = observer(
                 <Input
                   name="steps"
                   value={values.steps}
-                  onChange={handleInput}
+                  onChange={handleChangeInput}
                   onBlur={handleBlur}
                   type="number"
                   placeholder="0"
