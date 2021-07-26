@@ -1,6 +1,6 @@
 export default {
   MAIN: {
-    ADDRESS: '0xa8BEE6e0Ae59a238003a2a366D3Baa5Eebf77D37',
+    ADDRESS: '0x0da3ff14bfbacbf7c81ce796ba1ec589214bad07',
     ABI: [
       { inputs: [], stateMutability: 'nonpayable', type: 'constructor' },
       {
@@ -382,7 +382,13 @@ export default {
         stateMutability: 'view',
         type: 'function',
       },
-      { inputs: [], name: 'makeIme', outputs: [], stateMutability: 'nonpayable', type: 'function' },
+      {
+        inputs: [{ internalType: 'uint256', name: 'assetAmount', type: 'uint256' }],
+        name: 'makeIme',
+        outputs: [],
+        stateMutability: 'nonpayable',
+        type: 'function',
+      },
       {
         inputs: [
           { internalType: 'address', name: 'tokenToPay', type: 'address' },
@@ -591,7 +597,7 @@ export default {
     ],
   },
   Router: {
-    ADDRESS: '0x2f377deDf6e09907D821ec4fbd51F13826539f43',
+    ADDRESS: '0x8dc9dE4cE55d885ef870286F203a841abAfb3284',
     ABI: [
       {
         inputs: [
@@ -944,7 +950,7 @@ export default {
     ],
   },
   Factory: {
-    ADDRESS: '0x938a797Ce6CB5333903E1994fb19010D3d1985A2',
+    ADDRESS: '0x7bA3288C299266Ad5cc3e856258444A287FD098E',
     ABI: [
       {
         inputs: [
@@ -1251,7 +1257,7 @@ export default {
     ],
   },
   Staking: {
-    ADDRESS: '0x62A5073909B68DdcF4a30046f60b220484Eb28e4',
+    ADDRESS: '0x5f8E008F19bc82b237132d691c3cF39224253922',
     ABI: [
       {
         inputs: [
@@ -1574,7 +1580,7 @@ export default {
     ],
   },
   DexFactory: {
-    ADDRESS: '0xfC7bC32889460A4fE25f18B9997d4B88B8DB048D',
+    ADDRESS: '0x101bfeBE88C5b2881eA1Ca6C92d5F9CAb09b38CB',
     ABI: [
       {
         inputs: [{ internalType: 'address', name: '_feeToSetter', type: 'address' }],
@@ -1861,127 +1867,22 @@ export default {
     ],
   },
   USDT: {
-    ADDRESS: '0x916082868d33a860C297F4c54Ac18771186ed73c',
+    ADDRESS: '0xd3f7767199a7c846630b098b4353f0630d636abf',
     ABI: [
       {
-        constant: true,
-        inputs: [],
-        name: 'name',
-        outputs: [{ name: '', type: 'string' }],
-        payable: false,
-        stateMutability: 'view',
-        type: 'function',
-      },
-      {
-        constant: false,
         inputs: [
-          { name: 'guy', type: 'address' },
-          { name: 'wad', type: 'uint256' },
+          { internalType: 'string', name: '_name', type: 'string' },
+          { internalType: 'string', name: '_symbol', type: 'string' },
         ],
-        name: 'approve',
-        outputs: [{ name: '', type: 'bool' }],
-        payable: false,
         stateMutability: 'nonpayable',
-        type: 'function',
+        type: 'constructor',
       },
-      {
-        constant: true,
-        inputs: [],
-        name: 'totalSupply',
-        outputs: [{ name: '', type: 'uint256' }],
-        payable: false,
-        stateMutability: 'view',
-        type: 'function',
-      },
-      {
-        constant: false,
-        inputs: [
-          { name: 'src', type: 'address' },
-          { name: 'dst', type: 'address' },
-          { name: 'wad', type: 'uint256' },
-        ],
-        name: 'transferFrom',
-        outputs: [{ name: '', type: 'bool' }],
-        payable: false,
-        stateMutability: 'nonpayable',
-        type: 'function',
-      },
-      {
-        constant: false,
-        inputs: [{ name: 'wad', type: 'uint256' }],
-        name: 'withdraw',
-        outputs: [],
-        payable: false,
-        stateMutability: 'nonpayable',
-        type: 'function',
-      },
-      {
-        constant: true,
-        inputs: [],
-        name: 'decimals',
-        outputs: [{ name: '', type: 'uint8' }],
-        payable: false,
-        stateMutability: 'view',
-        type: 'function',
-      },
-      {
-        constant: true,
-        inputs: [{ name: '', type: 'address' }],
-        name: 'balanceOf',
-        outputs: [{ name: '', type: 'uint256' }],
-        payable: false,
-        stateMutability: 'view',
-        type: 'function',
-      },
-      {
-        constant: true,
-        inputs: [],
-        name: 'symbol',
-        outputs: [{ name: '', type: 'string' }],
-        payable: false,
-        stateMutability: 'view',
-        type: 'function',
-      },
-      {
-        constant: false,
-        inputs: [
-          { name: 'dst', type: 'address' },
-          { name: 'wad', type: 'uint256' },
-        ],
-        name: 'transfer',
-        outputs: [{ name: '', type: 'bool' }],
-        payable: false,
-        stateMutability: 'nonpayable',
-        type: 'function',
-      },
-      {
-        constant: false,
-        inputs: [],
-        name: 'deposit',
-        outputs: [],
-        payable: true,
-        stateMutability: 'payable',
-        type: 'function',
-      },
-      {
-        constant: true,
-        inputs: [
-          { name: '', type: 'address' },
-          { name: '', type: 'address' },
-        ],
-        name: 'allowance',
-        outputs: [{ name: '', type: 'uint256' }],
-        payable: false,
-        stateMutability: 'view',
-        type: 'function',
-      },
-      { payable: true, stateMutability: 'payable', type: 'fallback' },
       {
         anonymous: false,
         inputs: [
-          { indexed: true, name: 'src', type: 'address' },
-          { indexed: true, name: 'guy', type: 'address' },
-          { indexed: false, name: 'wad', type: 'uint256' },
+          { indexed: true, internalType: 'address', name: 'owner', type: 'address' },
+          { indexed: true, internalType: 'address', name: 'spender', type: 'address' },
+          { indexed: false, internalType: 'uint256', name: 'value', type: 'uint256' },
         ],
         name: 'Approval',
         type: 'event',
@@ -1989,30 +1890,115 @@ export default {
       {
         anonymous: false,
         inputs: [
-          { indexed: true, name: 'src', type: 'address' },
-          { indexed: true, name: 'dst', type: 'address' },
-          { indexed: false, name: 'wad', type: 'uint256' },
+          { indexed: true, internalType: 'address', name: 'from', type: 'address' },
+          { indexed: true, internalType: 'address', name: 'to', type: 'address' },
+          { indexed: false, internalType: 'uint256', name: 'value', type: 'uint256' },
         ],
         name: 'Transfer',
         type: 'event',
       },
       {
-        anonymous: false,
         inputs: [
-          { indexed: true, name: 'dst', type: 'address' },
-          { indexed: false, name: 'wad', type: 'uint256' },
+          { internalType: 'address', name: 'owner', type: 'address' },
+          { internalType: 'address', name: 'spender', type: 'address' },
         ],
-        name: 'Deposit',
-        type: 'event',
+        name: 'allowance',
+        outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+        stateMutability: 'view',
+        type: 'function',
       },
       {
-        anonymous: false,
         inputs: [
-          { indexed: true, name: 'src', type: 'address' },
-          { indexed: false, name: 'wad', type: 'uint256' },
+          { internalType: 'address', name: 'spender', type: 'address' },
+          { internalType: 'uint256', name: 'amount', type: 'uint256' },
         ],
-        name: 'Withdrawal',
-        type: 'event',
+        name: 'approve',
+        outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
+        stateMutability: 'nonpayable',
+        type: 'function',
+      },
+      {
+        inputs: [{ internalType: 'address', name: 'account', type: 'address' }],
+        name: 'balanceOf',
+        outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
+        inputs: [],
+        name: 'decimals',
+        outputs: [{ internalType: 'uint8', name: '', type: 'uint8' }],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
+        inputs: [
+          { internalType: 'address', name: 'spender', type: 'address' },
+          { internalType: 'uint256', name: 'subtractedValue', type: 'uint256' },
+        ],
+        name: 'decreaseAllowance',
+        outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
+        stateMutability: 'nonpayable',
+        type: 'function',
+      },
+      {
+        inputs: [
+          { internalType: 'address', name: 'spender', type: 'address' },
+          { internalType: 'uint256', name: 'addedValue', type: 'uint256' },
+        ],
+        name: 'increaseAllowance',
+        outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
+        stateMutability: 'nonpayable',
+        type: 'function',
+      },
+      {
+        inputs: [{ internalType: 'uint256', name: 'amount', type: 'uint256' }],
+        name: 'mint',
+        outputs: [],
+        stateMutability: 'nonpayable',
+        type: 'function',
+      },
+      {
+        inputs: [],
+        name: 'name',
+        outputs: [{ internalType: 'string', name: '', type: 'string' }],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
+        inputs: [],
+        name: 'symbol',
+        outputs: [{ internalType: 'string', name: '', type: 'string' }],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
+        inputs: [],
+        name: 'totalSupply',
+        outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
+        inputs: [
+          { internalType: 'address', name: 'recipient', type: 'address' },
+          { internalType: 'uint256', name: 'amount', type: 'uint256' },
+        ],
+        name: 'transfer',
+        outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
+        stateMutability: 'nonpayable',
+        type: 'function',
+      },
+      {
+        inputs: [
+          { internalType: 'address', name: 'sender', type: 'address' },
+          { internalType: 'address', name: 'recipient', type: 'address' },
+          { internalType: 'uint256', name: 'amount', type: 'uint256' },
+        ],
+        name: 'transferFrom',
+        outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
+        stateMutability: 'nonpayable',
+        type: 'function',
       },
     ],
   },
