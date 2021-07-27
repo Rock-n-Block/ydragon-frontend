@@ -31,4 +31,6 @@ export default {
     axiosWithToken.delete(`/indexes/${indexId}/rebalance/tokens/${tokenId}/`),
   addTokenBackToIndex: (indexId: number, tokenId: number) =>
     axiosWithToken.put(`/indexes/${indexId}/rebalance/tokens/${tokenId}/`, {}),
+  getIndexTokensChart: (indexId: string, days: string) =>
+    axios.get(`/indexes/info/${indexId}${days !== 'max' ? `?days=${days}` : ''}`),
 };

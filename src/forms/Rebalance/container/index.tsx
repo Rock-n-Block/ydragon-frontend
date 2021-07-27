@@ -1,5 +1,5 @@
 import React from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import BigNumber from 'bignumber.js/bignumber';
 import { withFormik } from 'formik';
 import { observer } from 'mobx-react-lite';
@@ -20,7 +20,6 @@ interface RebalanceFormProps {
 }
 
 const RebalanceForm: React.FC<RebalanceFormProps> = observer(({ name, tokens, onStart }) => {
-  const history = useHistory();
   const { modals } = useMst();
   const { indexId } = useParams<IIndexId>();
   const FormWithFormik = withFormik<any, IRebalance>({
@@ -36,7 +35,7 @@ const RebalanceForm: React.FC<RebalanceFormProps> = observer(({ name, tokens, on
           };
         }) || ([] as Array<ITokensDiff>),
       days: 30,
-      hours: 30,
+      hours: 23,
       steps: 30,
       isLoading: false,
     }),
@@ -64,22 +63,24 @@ const RebalanceForm: React.FC<RebalanceFormProps> = observer(({ name, tokens, on
       };
       indexesApi
         .putIndexesRebalance(+indexId, newData)
-        .then(({ data }) => {
-          console.log('put rebalance success', data);
+        .then(() => {
           indexesApi
             .launchRebalance(+indexId)
-            .then((response) => {
-              console.log('launch rebalance success', response);
+            .then(() => {
+              modals.info.setMsg('Success', 'launch rebalance success', 'success');
               onStart();
+              modals.rebalance.close();
             })
-            .catch((err: ProviderRpcError) => {
-              const { message } = err;
-              modals.info.setMsg('Error', `Launch rebalance error ${message}`, 'error');
-              history.push('/admin');
+            .catch((err: any) => {
+              const { response } = err;
+              modals.info.setMsg('Error', `Launch rebalance error ${response.data}`, 'error');
+            })
+            .finally(() => {
+              setFieldValue('isLoading', false);
             });
-          modals.info.setMsg('Success', 'Put rebalance success', 'success');
         })
         .catch((err: ProviderRpcError) => {
+          setFieldValue('isLoading', false);
           const { message } = err;
           modals.info.setMsg('Error', `Put rebalance error ${message}`, 'error');
         });

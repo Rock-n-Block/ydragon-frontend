@@ -30,13 +30,15 @@
     &-amount__all {
       color: rgba($white, 0.4);
     }
-  }  
-  .stake-amount{
-    &__time-wrapper{
+  }
+
+  .stake-amount {
+    &__time-wrapper {
       border: 3px solid rgba($white, 0.1);
     }
-    &__time{
-     background-color: rgba($black, 0.1);
+
+    &__time {
+      background-color: rgba($black, 0.1);
     }
   }
 }
@@ -54,7 +56,7 @@
 
       &:hover,
       &--active {
-        background: $dark-bg;
+        background: $table-selected;
 
         .stake-item__amount,
         .token-mini {
@@ -71,12 +73,14 @@
       color: rgba($black, 0.4);
     }
   }
-  .stake-amount{
-    &__time-wrapper{
+
+  .stake-amount {
+    &__time-wrapper {
       border: 3px solid rgba($black, 0.1);
     }
-    &__time{
-     background-color: rgba($black, 0.1);
+
+    &__time {
+      background-color: rgba($black, 0.1);
     }
   }
 }
@@ -123,6 +127,12 @@
   border-radius: 40px;
 
   transition: background-color 0.3s;
+
+  @include b('mobile') {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+  }
 
   & + & {
     margin-top: 15px;
@@ -183,6 +193,21 @@
     width: 100%;
     max-width: 500px;
 
+    @include b('mobile') {
+      position: relative;
+
+      .ant-input-number-input-wrap {
+        position: absolute;
+        top: 20px;
+      }
+
+      .stake-amount__all {
+        position: absolute;
+        top: 61px;
+        left: calc(50% - 93px / 2);
+      }
+    }
+
     .input-border {
       width: 100%;
       height: 100px;
@@ -226,6 +251,10 @@
     box-sizing: border-box;
 
     border-radius: 40px;
+
+    @include b('mobile') {
+      width: 354px;
+    }
   }
 
   &__time {

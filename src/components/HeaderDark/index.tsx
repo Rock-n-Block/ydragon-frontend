@@ -8,12 +8,12 @@ import cross from '../../assets/img/icons/icon-cross.svg';
 import iconMenuBlack from '../../assets/img/icons/icon-menu-black.svg';
 import iconMenu from '../../assets/img/icons/icon-menu.svg';
 import logo from '../../assets/img/icons/logo.svg';
-import dis from '../../assets/img/socials/discord.svg';
-import md from '../../assets/img/socials/medium.svg';
+// import dis from '../../assets/img/socials/discord.svg';
+// import md from '../../assets/img/socials/medium.svg';
 import tg from '../../assets/img/socials/telegram.svg';
 import tw from '../../assets/img/socials/twitter.svg';
 import { useWalletConnectorContext } from '../../services/walletConnect';
-import { useMst } from '../../store/store';
+import { DARK, LIGHT, useMst } from '../../store/store';
 import EventBanner from '../EventBanner';
 import { Button, SelectNetwork, Switch } from '../index';
 
@@ -26,15 +26,15 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = observer(({ collapsed, onCollapsedChange }) => {
   const [fixed, setFixed] = useState(true);
-  const { user, theme } = useMst();
+  const { theme, user } = useMst();
   const walletConnector = useWalletConnectorContext();
   const history = useHistory();
 
   const handleChangeTheme = () => {
-    if (localStorage.theme === 'light') {
-      theme.setTheme('dark');
+    if (LIGHT === localStorage.theme) {
+      theme.setTheme(DARK);
     } else {
-      theme.setTheme('light');
+      theme.setTheme(LIGHT);
     }
   };
 
@@ -74,10 +74,20 @@ const Header: React.FC<HeaderProps> = observer(({ collapsed, onCollapsedChange }
               onClick={() => onCollapsedChange(!collapsed)}
               className="header__menu"
             >
-              {theme.value === 'dark' ? (
-                <img alt="#" src={collapsed ? iconMenu : cross} />
+              {DARK === theme.value ? (
+                <img
+                  alt="burger menu"
+                  src={collapsed ? iconMenu : cross}
+                  width={collapsed ? '27' : '21'}
+                  height={collapsed ? '14' : '21'}
+                />
               ) : (
-                <img alt="#" src={collapsed ? iconMenuBlack : crossBlack} />
+                <img
+                  alt="burger menu"
+                  src={collapsed ? iconMenuBlack : crossBlack}
+                  width={collapsed ? '27' : '21'}
+                  height={collapsed ? '14' : '21'}
+                />
               )}
             </div>
             {collapsed ? (
@@ -89,13 +99,13 @@ const Header: React.FC<HeaderProps> = observer(({ collapsed, onCollapsedChange }
               </div>
             ) : (
               <div className="menu__sign">
-                <Switch checked={theme.value === 'dark'} onChange={handleChangeTheme} />
+                <Switch checked={DARK === theme.value} onChange={handleChangeTheme} />
                 <SelectNetwork />
                 <ul className="menu-nav">
                   {user.address && (
                     <li className="menu-nav__item">
                       <Button
-                        className="menu-nav__link"
+                        className="menu-nav__link logout"
                         type="text"
                         styledType="clear"
                         onClick={handleLogOut}
@@ -126,12 +136,12 @@ const Header: React.FC<HeaderProps> = observer(({ collapsed, onCollapsedChange }
                     Home
                   </Link>
                 </li>
-                  <li className="header-nav__item">
-                    <Link to="/indexes" className="header-nav__link">
-                      Index Products
-                    </Link>
-                  </li>
-                {localStorage.yd_address && (
+                <li className="header-nav__item">
+                  <Link to="/indexes" className="header-nav__link">
+                    Index Products
+                  </Link>
+                </li>
+                {user.address && (
                   <li className="header-nav__item">
                     <Link to="/staking" className="header-nav__link">
                       Staking
@@ -143,7 +153,7 @@ const Header: React.FC<HeaderProps> = observer(({ collapsed, onCollapsedChange }
                     About
                   </Link>
                 </li>
-                {localStorage.yd_token && (
+                {sessionStorage.getItem('yd_token') && (
                   <li className="header-nav__item">
                     <Link to="/admin" className="header-nav__link">
                       Admin panel
@@ -154,7 +164,7 @@ const Header: React.FC<HeaderProps> = observer(({ collapsed, onCollapsedChange }
             </nav>
 
             <div className="header__sign">
-              <Switch checked={theme.value === 'dark'} onChange={handleChangeTheme} />
+              <Switch checked={DARK === theme.value} onChange={handleChangeTheme} />
               <SelectNetwork />
               <ul className="header-nav">
                 {user.address && (
@@ -204,15 +214,17 @@ const Header: React.FC<HeaderProps> = observer(({ collapsed, onCollapsedChange }
                     Index Products
                   </Button>
                 </li>
-                <li className="menu-nav__item">
-                  <Button
-                    styledType="clear"
-                    onClick={() => redirectHandler('/staking')}
-                    className="menu-nav__link"
-                  >
-                    Staking
-                  </Button>
-                </li>
+                {user.address && (
+                  <li className="menu-nav__item">
+                    <Button
+                      styledType="clear"
+                      onClick={() => redirectHandler('/staking')}
+                      className="menu-nav__link"
+                    >
+                      Staking
+                    </Button>
+                  </li>
+                )}
                 <li className="menu-nav__item">
                   <Button
                     styledType="clear"
@@ -222,7 +234,7 @@ const Header: React.FC<HeaderProps> = observer(({ collapsed, onCollapsedChange }
                     About
                   </Button>
                 </li>
-                {localStorage.yd_token && (
+                {sessionStorage.getItem('yd_token') && (
                   <li className="menu-nav__item">
                     <Button
                       styledType="clear"
@@ -250,7 +262,9 @@ const Header: React.FC<HeaderProps> = observer(({ collapsed, onCollapsedChange }
                 <span className="isDisabled">
                   <a href="/">Terms of Service</a>
                 </span>
-                <a href="/">Contact us</a>
+                <a href="mailto:info@ydragon.io" target="_blank" rel="noopener noreferrer">
+                  Contact us
+                </a>
               </div>
             </div>
 
@@ -300,13 +314,13 @@ const Header: React.FC<HeaderProps> = observer(({ collapsed, onCollapsedChange }
                   <img src={tw} alt="logo" width="24" height="20" />
                 </a>
 
-                <a href="/" className="footer__socials-item">
+                {/* <a href="/" className="footer__socials-item">
                   <img src={md} alt="logo" width="24" height="20" />
                 </a>
 
                 <a href="/" className="footer__socials-item">
                   <img src={dis} alt="logo" width="24" height="20" />
-                </a>
+                </a> */}
               </div>
             )}
           </div>

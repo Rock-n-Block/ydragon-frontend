@@ -4,13 +4,13 @@ import BigNumber from 'bignumber.js/bignumber';
 import { observer } from 'mobx-react-lite';
 import moment from 'moment';
 
+import RefreshIcon from '../../assets/img/icons/icon-refresh.svg';
 import { indexesApi } from '../../services/api';
 import { useWalletConnectorContext } from '../../services/walletConnect';
 import { useMst } from '../../store/store';
 import { ProviderRpcError } from '../../types/errors';
 import { Button, Table } from '../index';
 import SmallTableCard from '../SmallTableCard/index';
-import RefreshIcon from '../../assets/img/icons/icon-refresh.svg';
 
 import './StakingStatistics.scss';
 
@@ -87,7 +87,7 @@ const StakingStatistics: React.FC = observer(() => {
 
   const getStakingStatistic = useCallback(() => {
     indexesApi
-      .getStakingStatistic(localStorage.yd_address)
+      .getStakingStatistic(sessionStorage.getItem('yd_address') ?? '')
       .then(({ data }) => {
         const newData = data['binance-smart-chain'].map((stake: IStakingStat, index: number) => {
           return {
@@ -95,7 +95,7 @@ const StakingStatistics: React.FC = observer(() => {
             id: stake.stake_id,
             token: stake.name,
             month: stake.months,
-            endDate: moment(stake.end_date).format('MM.DD.YYYY'),
+            endDate: moment(stake.end_date).format('DD.MM.YY'),
             staked: new BigNumber(stake.staked).dividedBy(new BigNumber(10).pow(18)).toFixed(5),
             availableRewards: new BigNumber(stake.available_rewards)
               .dividedBy(new BigNumber(10).pow(18))
@@ -177,7 +177,7 @@ const StakingStatistics: React.FC = observer(() => {
           onClick={getStakingStatistic}
           className="staking-statistics__refresh"
         >
-          <img src={RefreshIcon} alt="refresh" />
+          <img src={RefreshIcon} alt="refresh" width="36" height="36"/>
         </Button>
       </h2>
 

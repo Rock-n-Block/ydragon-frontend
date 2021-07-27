@@ -8,10 +8,16 @@
       border-bottom: 1px solid rgba($white, 0.1);
     }
 
+    .ant-picker,
+    .ant-picker-range {
+      background: $dark-bg;
+    }
+
     .form-create-index {
       .ant-input {
         background: $dark-bg;
       }
+
       input:-webkit-autofill,
       input:-webkit-autofill:hover,
       input:-webkit-autofill:focus,
@@ -21,15 +27,18 @@
       select:-webkit-autofill,
       select:-webkit-autofill:hover,
       select:-webkit-autofill:focus {
-        -webkit-box-shadow: 0 0 0px 1000px #1a1e3a inset !important;
-        transition: background-color 5000s ease-in-out 0s;
         color: $white !important;
+        -webkit-box-shadow: 0 0 0 1000px #1a1e3a inset !important;
+
+        transition: background-color 5000s ease-in-out 0s;
         -webkit-text-fill-color: $white !important;
       }
+
       input,
       .ant-input,
       .input {
         filter: none;
+
         &::placeholder {
           color: $white;
         }

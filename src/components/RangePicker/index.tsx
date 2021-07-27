@@ -8,8 +8,9 @@ const { RangePicker } = AntdDatePicker;
 const CustomRangePicker: React.FC<RangePickerProps> = (props) => {
   const { className, ...otherRangePickerProps } = props;
   return (
-    <div className="input-border range-picker">
-      <RangePicker className={classNames(className)} {...otherRangePickerProps} />
+    <div className={`input-border range-picker ${classNames(className)}`}>
+      <RangePicker {...otherRangePickerProps} />
+      {/* <RangePicker className={classNames(className)} {...otherRangePickerProps} /> */}
     </div>
   );
 };

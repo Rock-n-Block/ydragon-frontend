@@ -4,6 +4,20 @@
 .rebalance-table {
   margin-top: 60px;
 
+  .ant-table {
+    &-tbody {
+      tr:last-child {
+        td:first-child {
+          border-bottom-left-radius: 16px;
+        }
+
+        td:last-child {
+          border-bottom-right-radius: 16px;
+        }
+      }
+    }
+  }
+
   &__big {
     display: block;
     @include b(tablet) {

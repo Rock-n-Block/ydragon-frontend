@@ -7,6 +7,9 @@ import { Theme } from './Theme';
 import { User } from './User';
 import { NetworkTokens } from './NetworkTokens';
 
+export const DARK = 'dark';
+export const LIGHT = 'light';
+
 const RootModel = types.model({
   modals: Modals,
   user: User,
@@ -32,7 +35,7 @@ export const Store = RootModel.create({
     token: '',
   },
   theme: {
-    value: localStorage.theme ?? 'dark',
+    value: localStorage.theme ?? DARK,
   },
   networks: {
     networkId: '',

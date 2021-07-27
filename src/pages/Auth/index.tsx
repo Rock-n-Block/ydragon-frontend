@@ -16,7 +16,6 @@ const Auth: React.FC = observer(() => {
     walletConnector
       .connect()
       .then(() => {
-        console.log('Connect success');
         history.push('/');
       })
       .catch((err: any) => {

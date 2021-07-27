@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
+import nextId from 'react-id-generator';
 import { observer } from 'mobx-react-lite';
 
 import { indexesApi } from '../../../services/api';
@@ -13,6 +14,7 @@ import { TokenMiniProps } from '../../TokenMini';
 import { Modal } from '../index';
 
 import './GetInModal.scss';
+import config from '../../../services/web3/config';
 
 const totalColumns: ITableColumn[] = [
   {
@@ -42,22 +44,37 @@ const userColumns: ITableColumn[] = [
 const GetInModal: React.FC = observer(() => {
   const { modals, user } = useMst();
   const walletConnector = useWalletConnectorContext();
- 
-  const handleClose = (): void => {
-    modals.getIn.close();
-  };
+
   const [currentIme, setCurrentIme] = useState<IIme | undefined>();
   const [totalData, setTotalData] = useState<ITableData[]>([] as ITableData[]);
   const [userData, setUserData] = useState<ITableData[]>([] as ITableData[]);
   const [firstCurrency, setFirstCurrency] = useState<TokenMiniNameTypes>(defaultTokens[0].name);
+  const [decimals, setDecimals] = useState<number>(18);
   const [payInput, setPayInput] = useState<string>('');
   const [isNeedApprove, setIsNeedApprove] = useState<boolean>(true);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoadingBtn, setIsLoadingBtn] = useState<boolean>(false);
+  // const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const handleClose = (): void => {
+    modals.getIn.close();
+    setPayInput('');
+  };
+  const getDecimals = useCallback(
+    async (currency: TokenMiniNameTypes) => {
+      if (currency === 'BNB') {
+        return new Promise((resolve) => resolve(18));
+      }
+      return walletConnector.metamaskService.getDecimals(
+        config[currency].ADDRESS,
+        config.Token.ABI,
+      );
+    },
+    [walletConnector.metamaskService],
+  );
   const checkAllowance = useCallback(() => {
     walletConnector.metamaskService
       .checkAllowance(firstCurrency, 'MAIN', modals.getIn.address)
       .then((data: boolean) => {
-        console.log(`allowance of ${firstCurrency}: ${data} `);
         setIsNeedApprove(!data);
       })
       .catch((err: any) => {
@@ -66,10 +83,15 @@ const GetInModal: React.FC = observer(() => {
       });
   }, [modals.getIn.address, walletConnector.metamaskService, firstCurrency]);
   const handleSelectChange = (value: any) => {
-    console.log(value);
     setFirstCurrency(value);
+    setPayInput('');
+
+    getDecimals(value).then((dec: number) => {
+      setDecimals(dec);
+    });
   };
   const handleApprove = (): void => {
+    setIsLoadingBtn(true);
     walletConnector.metamaskService
       .approve(firstCurrency, undefined, modals.getIn.address)
       .then(() => {
@@ -79,36 +101,62 @@ const GetInModal: React.FC = observer(() => {
       .catch((err: ProviderRpcError) => {
         const { message } = err;
         modals.info.setMsg('Error', `Approve error ${message}`, 'error');
-      });
+      })
+      .finally(() => setIsLoadingBtn(false));
   };
   const handleEnter = (): void => {
+    setIsLoadingBtn(true);
     walletConnector.metamaskService
-      .enterIme(payInput, firstCurrency, modals.getIn.address)
+      .enterIme(payInput, firstCurrency, modals.getIn.address, decimals)
       .then(() => {
-        modals.info.setMsg('Success', 'Success mint', 'success');
+        setPayInput('');
+        modals.info.setMsg('Success', 'You entered IME', 'success');
       })
       .catch((err: ProviderRpcError) => {
         const { message } = err;
-        modals.info.setMsg('Error', `Mint error ${message}`, 'error');
-      });
+        modals.info.setMsg(
+          'Error',
+          `Enter IME error ${message.slice(0, message.indexOf(':'))}`,
+          'error',
+        );
+      })
+      .finally(() => setIsLoadingBtn(false));
   };
   const getCurrentIme = useCallback(() => {
     if (modals.getIn.id) {
       indexesApi
         .getImeById(modals.getIn.id, user.address ? user.address : undefined)
         .then(({ data }) => {
-          console.log('getCurrentIme success', data);
           setCurrentIme(data);
         })
         .catch((err: any) => {
           const { response } = err;
           console.log('getCurrentIme error', response);
         })
-        .finally(() => setLoading(false));
+        .finally(() => setIsLoading(false));
     }
   }, [user.address, modals.getIn.id]);
+  const handlePayInput = (e: any) => {
+    if (+e.target.value < 0) {
+      e.target.value = '';
+    } else {
+      setPayInput(e.target.value);
+    }
+  };
+  // const getWindowWidth = () => {
+  //   const { innerWidth } = window;
+  //   return innerWidth;
+  // };
+  // useEffect(() => {
+  //   function handleResize() {
+  //     setWindowWidth(getWindowWidth());
+  //   }
+
+  //   window.addEventListener('resize', handleResize);
+  //   return () => window.removeEventListener('resize', handleResize);
+  // }, []);
   useEffect(() => {
-    setLoading(true);
+    setIsLoading(true);
     getCurrentIme();
   }, [getCurrentIme]);
   useEffect(() => {
@@ -120,42 +168,49 @@ const GetInModal: React.FC = observer(() => {
     }
   }, [checkAllowance, user.address]);
   useEffect(() => {
-      if (currentIme) {
-        setTotalData(
+    if (currentIme) {
+      setTotalData(
+        currentIme.tokens.map((token) => {
+          return [
+            {
+              icon: token.image,
+              name: token.name,
+              symbol: token.symbol,
+              key: nextId(),
+            } as TokenMiniProps,
+            token.total_quantity,
+            `$${token.price}`,
+            `$${token.total_price}`,
+          ];
+        }),
+      );
+      if (user.address) {
+        setUserData(
           currentIme.tokens.map((token) => {
             return [
               {
                 icon: token.image,
                 name: token.name,
                 symbol: token.symbol,
+                key: nextId(),
               } as TokenMiniProps,
-              token.total_quantity,
-              `$${token.price}`,
-              `$${token.total_price}`,
+              token.user_quantity ?? '0',
             ];
           }),
         );
-        if (user.address) {
-          setUserData(
-            currentIme.tokens.map((token) => {
-              return [
-                {
-                  icon: token.image,
-                  name: token.name,
-                  symbol: token.symbol,
-                } as TokenMiniProps,
-                token.user_quantity ?? '0',
-              ];
-            }),
-          );
-        }
       }
+    }
   }, [user.address, currentIme]);
   return (
-    <Modal isVisible={!!modals.getIn.id} handleCancel={handleClose} className="m-get-in">
+    <Modal
+      isVisible={!!modals.getIn.id}
+      // closeIcon={windowWidth < 500}
+      handleCancel={handleClose}
+      className="m-get-in"
+    >
       <div className="m-get-in__content">
-        {loading ? (
-          <Spinner loading={loading} />
+        {isLoading ? (
+          <Spinner loading={isLoading} />
         ) : (
           <>
             <section className="m-get-in__total">
@@ -175,17 +230,28 @@ const GetInModal: React.FC = observer(() => {
             onSelectChange={handleSelectChange}
             value={payInput}
             placeholder="0"
-            onChange={(event) => setPayInput(event.target.value)}
+            onChange={handlePayInput}
             type="number"
+            getPopupContainer
           />
           <div className="m-get-in__btns">
             {isNeedApprove && firstCurrency !== 'BNB' && (
-              <Button className="m-trade-ydr__btn" onClick={handleApprove} disabled={!user.address}>
+              <Button
+                className="m-trade-ydr__btn"
+                onClick={handleApprove}
+                loading={isLoadingBtn}
+                disabled={!user.address}
+              >
                 Approve
               </Button>
             )}
             {modals.tradeYDR.method === 'buy' && (!isNeedApprove || firstCurrency === 'BNB') && (
-              <Button className="m-trade-ydr__btn" onClick={handleEnter} disabled={!user.address}>
+              <Button
+                className="m-trade-ydr__btn"
+                onClick={handleEnter}
+                loading={isLoadingBtn}
+                disabled={!payInput || !user.address}
+              >
                 Enter
               </Button>
             )}

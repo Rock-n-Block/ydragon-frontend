@@ -10,13 +10,11 @@
   .ant-input[disabled] {
     background: $black;
   }
-  .input-with-select {
-    &__select {
-      background: rgba($black, 0.05);
-      .ant-select-selector {
-        background: $black !important;
-        border-color: $black !important;
-      }
+
+  .input-with-select__select {
+    .ant-select-selector {
+      background: rgba(255, 255, 255, 0.05) !important;
+      border: none;
     }
   }
 }
@@ -30,14 +28,19 @@
   .ant-input[disabled] {
     background: $white !important;
   }
-  .input-with-select {
-    &__select {
-      background: #eaeaea;
-      .ant-select-selector {
-        background: #eaeaea !important;
-        border-color: #eaeaea !important;
-      }
+
+  .input-with-select__select {
+    .ant-select-selector {
+      background: #eaeaea !important;
+      border-color: #eaeaea !important;
     }
+  }
+}
+
+.dark,
+.light {
+  .input-border {
+    background: linear-gradient(180deg, rgb(39, 68, 146) 0%, rgb(40, 84, 206) 100%);
   }
 }
 
@@ -48,7 +51,6 @@
 
   height: 53px;
 
-  background: linear-gradient(180deg, rgb(39, 68, 146) 0%, rgb(40, 84, 206) 100%);
   border-radius: 60px;
 }
 
@@ -64,6 +66,7 @@
   font-weight: 700;
   line-height: 24px;
   text-align: center;
+  font-feature-settings: 'liga' off;
 
   border: none;
   border-radius: 60px;
@@ -225,4 +228,24 @@ input::-webkit-inner-spin-button {
 /* Firefox */
 input[type='number'] {
   -moz-appearance: textfield;
+}
+
+.m-create-index,
+.form-rebalance {
+  .form-create-index__input {
+    &-name,
+    &-symbol {
+      &--error {
+        background: $red;
+      }
+    }
+  }
+
+  .weights-sum,
+  .token-weights-item__input-token,
+  .rebalance-option__input-hours {
+    &--error {
+      background: $red;
+    }
+  }
 }

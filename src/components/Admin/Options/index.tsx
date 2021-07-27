@@ -25,15 +25,20 @@ const Options: React.FC<OptionsProps> = observer(({ address, onManualInputChange
   const walletConnector = useWalletConnectorContext();
 
   const handleAutoRebalanceChange = (isChecked: boolean) => {
+    setIsAutoRebalanceChecked(isChecked);
     walletConnector.metamaskService
       .changeAutoXYRebalaceAllowance(address, isChecked)
       .then(() => {
-        modals.info.setMsg('Operation success', 'Rebalance started', 'success');
-        setIsAutoRebalanceChecked(isChecked);
+        modals.info.setMsg(
+          'Operation success',
+          `Automatic rebalancing is ${isChecked ? 'enabled' : 'disabled'}`,
+          'success',
+        );
       })
       .catch((error: ProviderRpcError) => {
         const { message } = error;
         modals.info.setMsg('Error', `AutoRebalance error ${message}`, 'error');
+        setIsAutoRebalanceChecked(!isChecked);
       });
   };
   const handleManualRebalanceStart = () => {
@@ -81,7 +86,6 @@ const Options: React.FC<OptionsProps> = observer(({ address, onManualInputChange
       walletConnector.metamaskService
         .checkAutoXYRebalaceAllowance(address)
         .then((data: boolean) => {
-          console.log('AutoXYRebalance rebalance success', data);
           setIsAutoRebalanceChecked(data);
         })
         .catch((error: any) => {
@@ -100,7 +104,7 @@ const Options: React.FC<OptionsProps> = observer(({ address, onManualInputChange
           )}
           <p className="options__option-name">Automatic rebalancing</p>
         </div>
-        <div className="options__option">
+        <div className="options__option options__option-with-input">
           <div className="options__option__input-wrapper">
             <Input
               type="number"

@@ -5,12 +5,10 @@ import { observer } from 'mobx-react-lite';
 import { useWalletConnectorContext } from '../../services/walletConnect';
 import { rootStore, useMst } from '../../store/store';
 import arrow from '../../assets/img/icons/icon-arrow-yellow.svg';
-import bncLight from '../../assets/img/icons/icon-binance-light.svg';
 import bncDark from '../../assets/img/icons/icon-binance-dark.svg';
-import plgLight from '../../assets/img/icons/icon-polygon-light.svg';
+import bncLight from '../../assets/img/icons/icon-binance-light.svg';
 import plgDark from '../../assets/img/icons/icon-polygon-dark.svg';
-
-import './SelectNetwork.scss';
+import plgLight from '../../assets/img/icons/icon-polygon-light.svg';
 import TokenMini from '../TokenMini';
 import { networksApi, ratesApi } from '../../services/api';
 
@@ -152,28 +150,31 @@ const SelectNetwork: React.FC = observer(() => {
       value={pickedChain}
       placeholder="Select network"
       onSelect={switchChain}
-      style={{ width: 120 }}
+      style={{ width: 140 }}
       className="select-network"
-      suffixIcon={<img className="select__arrow" alt="" src={arrow} />}
+      dropdownMatchSelectWidth={false}
+      dropdownStyle={{ position: 'fixed' }}
+      // getPopupContainer={(trigger) => trigger.parentNode}
+      suffixIcon={
+        <img className="select__arrow" alt="select arrow" src={arrow} width="10" height="6" />
+      }
       dropdownClassName="select-network__dropdown"
     >
       <Option value="bnbt">
         <TokenMini
-          name=""
+          name="Binance"
           icon={theme.value === 'dark' ? bncDark : bncLight}
           width="26"
           height="26"
         />
-        BSC
       </Option>
       <Option value="tmatic">
         <TokenMini
-          name=""
+          name="Polygon"
           icon={theme.value === 'dark' ? plgDark : plgLight}
           width="26"
           height="26"
         />
-        Polygon
       </Option>
     </Select>
   );

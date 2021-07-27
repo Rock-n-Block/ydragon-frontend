@@ -27,8 +27,8 @@ export const App: React.FC = observer(() => {
   const { theme } = useMst();
   const [bodyClass, setBodyClass] = useState('');
 
-  const user = !!localStorage?.yd_address || false;
-  const admin = !!localStorage?.yd_token || false;
+  const user = !!sessionStorage.getItem('yd_address') || false;
+  const admin = !!sessionStorage.getItem('yd_token') || false;
 
   const addClass = () => {
     let result;
@@ -68,7 +68,10 @@ export const App: React.FC = observer(() => {
             {/* <Route exact path="/auth">
           <Auth />
         </Route> */}
-            <GuardedRoute exact path="/index/:indexId" component={Index} auth={user} />
+            {/* <GuardedRoute exact path="/index/:indexId" component={Index} auth={user} /> */}
+            <Route exact path="/index/:indexId">
+              <Index />
+            </Route>
             <Route exact path="/ydrtoken">
               <YdrToken />
             </Route>
