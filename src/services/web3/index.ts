@@ -78,6 +78,7 @@ export default class MetamaskService {
       this.wallet.on('chainChanged', () => {
         const currentChain = this.wallet.chainId;
         if (!Object.values(this.usedChain).find((chainId) => chainId === currentChain)) {
+          window.location.reload();
           subscriber.next(`Please choose one of networks in header select.`);
         } else {
           rootStore.networks.setId(this.wallet.chainId);
