@@ -232,6 +232,7 @@ const GetInModal: React.FC = observer(() => {
             placeholder="0"
             onChange={handlePayInput}
             type="number"
+            getPopupContainer
           />
           <div className="m-get-in__btns">
             {isNeedApprove && firstCurrency !== 'BNB' && (
