@@ -26,7 +26,7 @@ const CreateIndexForm: React.FC = () => {
       tokens: [] as Array<ITokensDiff>,
       isLoading: false,
       searchTokens: [] as Array<ISearchToken>,
-      searchInput: ''
+      searchInput: '',
     }),
     handleSubmit: (values, { setFieldValue, resetForm }) => {
       setFieldValue('isLoading', true);
@@ -50,7 +50,7 @@ const CreateIndexForm: React.FC = () => {
         .then((data: TransactionReceipt) => {
           if (values.description) {
             indexesApi
-              .addDescriptionToIndex(data.transactionHash, values.description)
+              .addParamsToIndex(data.transactionHash, values.description)
               .then(() => {
                 resetForm({});
                 modals.info.setMsg('Success', 'Index created with description', 'success');
