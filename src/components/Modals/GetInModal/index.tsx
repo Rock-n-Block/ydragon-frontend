@@ -6,7 +6,7 @@ import { indexesApi } from '../../../services/api';
 import { useWalletConnectorContext } from '../../../services/walletConnect';
 import { useMst } from '../../../store/store';
 import { ProviderRpcError } from '../../../types/errors';
-import { defaultTokens, TokenMiniNameTypes } from '../../../utils/tokenMini';
+import { defaultTokens, ITokenMini, TokenMiniNameTypes } from '../../../utils/tokenMini';
 import { IIme } from '../../HomeDark/InitialMintEvent';
 import { Button, InputWithSelect, Spinner } from '../../index';
 import SplittedTable, { ITableColumn, ITableData } from '../../SplittedTable';
@@ -15,6 +15,8 @@ import { Modal } from '../index';
 
 import './GetInModal.scss';
 import config from '../../../services/web3/config';
+import bncDark from '../../../assets/img/icons/icon-binance-dark.svg';
+import bncLight from '../../../assets/img/icons/icon-binance-light.svg';
 
 const totalColumns: ITableColumn[] = [
   {
@@ -42,13 +44,16 @@ const userColumns: ITableColumn[] = [
 ];
 
 const GetInModal: React.FC = observer(() => {
-  const { modals, user } = useMst();
+  const { modals, user, theme } = useMst();
   const walletConnector = useWalletConnectorContext();
 
   const [currentIme, setCurrentIme] = useState<IIme | undefined>();
+  const [whitelistTokens, setWhitelistTokens] = useState<Array<ITokenMini>>();
   const [totalData, setTotalData] = useState<ITableData[]>([] as ITableData[]);
   const [userData, setUserData] = useState<ITableData[]>([] as ITableData[]);
-  const [firstCurrency, setFirstCurrency] = useState<TokenMiniNameTypes>(defaultTokens[0].name);
+  const [firstCurrency, setFirstCurrency] = useState<TokenMiniNameTypes | string>(
+    defaultTokens[0].name,
+  );
   const [decimals, setDecimals] = useState<number>(18);
   const [payInput, setPayInput] = useState<string>('');
   const [isNeedApprove, setIsNeedApprove] = useState<boolean>(true);
@@ -59,29 +64,41 @@ const GetInModal: React.FC = observer(() => {
     modals.getIn.close();
     setPayInput('');
   };
+  const findToken = useCallback(
+    (currency: string) => {
+      return whitelistTokens?.find((token) => token.name.toLowerCase() === currency.toLowerCase());
+    },
+    [whitelistTokens],
+  );
   const getDecimals = useCallback(
-    async (currency: TokenMiniNameTypes) => {
+    async (currency: TokenMiniNameTypes | string) => {
       if (currency === 'BNB') {
         return new Promise((resolve) => resolve(18));
       }
       return walletConnector.metamaskService.getDecimals(
-        config[currency].ADDRESS,
+        findToken(currency)?.address,
         config.Token.ABI,
       );
     },
-    [walletConnector.metamaskService],
+    [findToken, walletConnector.metamaskService],
   );
   const checkAllowance = useCallback(() => {
-    walletConnector.metamaskService
-      .checkAllowance(firstCurrency, 'MAIN', modals.getIn.address)
-      .then((data: boolean) => {
-        setIsNeedApprove(!data);
-      })
-      .catch((err: any) => {
-        const { response } = err;
-        console.log('allowance error', response);
-      });
-  }, [modals.getIn.address, walletConnector.metamaskService, firstCurrency]);
+    if (firstCurrency !== 'BNB') {
+      walletConnector.metamaskService
+        .checkAllowanceById(
+          findToken(firstCurrency)?.address,
+          config.MAIN.ABI,
+          modals.getIn.address,
+        )
+        .then((data: boolean) => {
+          setIsNeedApprove(!data);
+        })
+        .catch((err: any) => {
+          const { response } = err;
+          console.log('allowance error', response);
+        });
+    }
+  }, [findToken, modals.getIn.address, walletConnector.metamaskService, firstCurrency]);
   const handleSelectChange = (value: any) => {
     setFirstCurrency(value);
     setPayInput('');
@@ -93,7 +110,7 @@ const GetInModal: React.FC = observer(() => {
   const handleApprove = (): void => {
     setIsLoadingBtn(true);
     walletConnector.metamaskService
-      .approve(firstCurrency, undefined, modals.getIn.address)
+      .approveById(findToken(firstCurrency)?.address, modals.getIn.address)
       .then(() => {
         setIsNeedApprove(false);
         modals.info.setMsg('Success', `Approve of ${firstCurrency} to IME success`, 'success');
@@ -107,7 +124,13 @@ const GetInModal: React.FC = observer(() => {
   const handleEnter = (): void => {
     setIsLoadingBtn(true);
     walletConnector.metamaskService
-      .enterIme(payInput, firstCurrency, modals.getIn.address, decimals)
+      .enterIme(
+        payInput,
+        firstCurrency,
+        findToken(firstCurrency)?.address,
+        modals.getIn.address,
+        decimals,
+      )
       .then(() => {
         setPayInput('');
         modals.info.setMsg('Success', 'You entered IME', 'success');
@@ -143,25 +166,10 @@ const GetInModal: React.FC = observer(() => {
       setPayInput(e.target.value);
     }
   };
-  // const getWindowWidth = () => {
-  //   const { innerWidth } = window;
-  //   return innerWidth;
-  // };
-  // useEffect(() => {
-  //   function handleResize() {
-  //     setWindowWidth(getWindowWidth());
-  //   }
-
-  //   window.addEventListener('resize', handleResize);
-  //   return () => window.removeEventListener('resize', handleResize);
-  // }, []);
   useEffect(() => {
     setIsLoading(true);
     getCurrentIme();
   }, [getCurrentIme]);
-  useEffect(() => {
-    setFirstCurrency(defaultTokens[0].name);
-  }, [modals.tradeYDR.method]);
   useEffect(() => {
     if (user.address) {
       checkAllowance();
@@ -169,6 +177,20 @@ const GetInModal: React.FC = observer(() => {
   }, [checkAllowance, user.address]);
   useEffect(() => {
     if (currentIme) {
+      setWhitelistTokens([
+        {
+          name: 'BNB',
+          address: '0x0000000000000000000000000000000000000000',
+          logo: theme.value === 'dark' ? bncDark : bncLight,
+        },
+        ...currentIme.tokens.map((token) => {
+          return {
+            name: token.symbol,
+            address: token.address,
+            logo: token.image,
+          };
+        }),
+      ]);
       setTotalData(
         currentIme.tokens.map((token) => {
           return [
@@ -200,7 +222,7 @@ const GetInModal: React.FC = observer(() => {
         );
       }
     }
-  }, [user.address, currentIme]);
+  }, [theme.value, user.address, currentIme]);
   return (
     <Modal
       isVisible={!!modals.getIn.id}
@@ -226,7 +248,7 @@ const GetInModal: React.FC = observer(() => {
         <section className="m-get-in__you-pay">
           <h2 className="m-get-in__title">You pay</h2>
           <InputWithSelect
-            tokens={defaultTokens}
+            tokens={whitelistTokens ?? defaultTokens}
             onSelectChange={handleSelectChange}
             value={payInput}
             placeholder="0"
@@ -245,7 +267,7 @@ const GetInModal: React.FC = observer(() => {
                 Approve
               </Button>
             )}
-            {modals.tradeYDR.method === 'buy' && (!isNeedApprove || firstCurrency === 'BNB') && (
+            {(!isNeedApprove || firstCurrency === 'BNB') && (
               <Button
                 className="m-trade-ydr__btn"
                 onClick={handleEnter}
