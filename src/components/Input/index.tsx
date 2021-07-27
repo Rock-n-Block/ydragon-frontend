@@ -36,10 +36,11 @@ const Input: React.FC<InputWithProps> = (props) => {
 interface InputWithSelectProps extends InputProps {
   tokens: ITokenMini | Array<ITokenMini>;
   onSelectChange?: (value: string) => void;
+  getPopupContainer?: boolean;
 }
 
 export const InputWithSelect: React.FC<InputWithSelectProps> = observer((props) => {
-  const { tokens, onSelectChange, ...otherInputProps } = props;
+  const { getPopupContainer = false, tokens, onSelectChange, ...otherInputProps } = props;
   const { theme } = useMst();
 
   let tokenOrSelect;
@@ -51,7 +52,7 @@ export const InputWithSelect: React.FC<InputWithSelectProps> = observer((props) 
           onChange={onSelectChange}
           defaultValue={tokens[0].name}
           dropdownMatchSelectWidth={false}
-          getPopupContainer={(trigger) => trigger.parentNode}
+          getPopupContainer={getPopupContainer ? (trigger) => trigger.parentNode : undefined}
           suffixIcon={<Icon component={DARK === theme.value ? ArrowDownWhite : ArrowDownBlack} />}
         >
           {tokens.map((token) => (
