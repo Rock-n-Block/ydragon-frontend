@@ -48,7 +48,7 @@
         .ant-input-textarea-show-count {
           background: $dark-bg;
           &::after {
-            color: $white;
+            color: #bfbfbf;
           }
         }
       }
@@ -132,7 +132,8 @@
           }
         }
         &::after {
-          margin-top: 25px;
+          margin: 25px -15px 0 0;
+          font-size: 15px;
         }
       }
     }
@@ -169,6 +170,13 @@
         margin: 20px auto 0;
 
         max-width: 135px;
+      }
+    }
+    .ant-picker {
+      .ant-picker-input {
+        input {
+          font-weight: 700;
+        }
       }
     }
   }
