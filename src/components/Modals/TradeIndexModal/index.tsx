@@ -385,7 +385,7 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
               disabled={!payInput}
               loading={isLoading}
             >
-              Buy
+              Buy   
             </Button>
           )}
           {isSell && (
