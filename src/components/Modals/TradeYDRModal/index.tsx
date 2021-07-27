@@ -18,11 +18,11 @@ const TradeYDRModal: React.FC = observer(() => {
   const { user, modals } = useMst();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [firstCurrency, setFirstCurrency] = useState<TokenMiniNameTypes>(
-    modals.tradeYDR.method === 'sell' ? 'YDR' : defaultTokens[0].name,
+    modals.tradeYDR.method === 'sell' ? 'YDR' : (defaultTokens[0].name as TokenMiniNameTypes),
   );
   const [decimals, setDecimals] = useState<number>(18);
   const [secondCurrency, setSecondCurrency] = useState<TokenMiniNameTypes>(
-    modals.tradeYDR.method === 'sell' ? defaultTokens[0].name : 'YDR',
+    modals.tradeYDR.method === 'sell' ? (defaultTokens[0].name as TokenMiniNameTypes) : 'YDR',
   );
   const [payInput, setPayInput] = useState<string>('');
 
@@ -184,8 +184,12 @@ const TradeYDRModal: React.FC = observer(() => {
     }
   };
   useEffect(() => {
-    setFirstCurrency(modals.tradeYDR.method === 'sell' ? 'YDR' : defaultTokens[0].name);
-    setSecondCurrency(modals.tradeYDR.method !== 'sell' ? 'YDR' : defaultTokens[0].name);
+    setFirstCurrency(
+      modals.tradeYDR.method === 'sell' ? 'YDR' : (defaultTokens[0].name as TokenMiniNameTypes),
+    );
+    setSecondCurrency(
+      modals.tradeYDR.method !== 'sell' ? 'YDR' : (defaultTokens[0].name as TokenMiniNameTypes),
+    );
   }, [modals.tradeYDR.method]);
   useEffect(() => {
     if (user.address) {

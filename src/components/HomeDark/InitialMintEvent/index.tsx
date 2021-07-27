@@ -21,6 +21,7 @@ export interface IImeToken {
   name: string;
   symbol: string;
   image: string;
+  address: string;
   total_quantity: number;
   price: number;
   total_price: number;
