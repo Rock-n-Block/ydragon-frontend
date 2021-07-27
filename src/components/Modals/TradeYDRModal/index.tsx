@@ -137,7 +137,6 @@ const TradeYDRModal: React.FC = observer(() => {
     walletConnector.metamaskService
       .approve(firstCurrency, 'Router')
       .then(() => {
-        setPayInput('');
         setIsNeedApprove(false);
         modals.info.setMsg('Success', `You approved YDR token`, 'success');
       })
@@ -282,7 +281,7 @@ const TradeYDRModal: React.FC = observer(() => {
             Buy
           </Button>
         )}
-        {modals.tradeYDR.method === 'sell' && !isNeedApprove && (
+        {modals.tradeYDR.method === 'sell' && (
           <Button
             className="m-trade-ydr__btn"
             onClick={handleSell}

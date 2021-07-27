@@ -80,6 +80,7 @@ const CreateIndex: React.FC<FormikProps<ICreateIndex> & ICreateIndex> = observer
     const disabledDate = (current: any) => {
       // Can not select days before today and today
       return (
+        // TODO: поставить ограничение даты на сегодняшний день
         (current && current < moment().startOf('day')) ||
         (current && current > moment().add(1, 'year'))
       );
@@ -167,7 +168,7 @@ const CreateIndex: React.FC<FormikProps<ICreateIndex> & ICreateIndex> = observer
           } else {
             setFieldValue('dateRange', [value[0], '']);
           }
-        }
+        }  
         // до этого места
       } else {
         setFieldValue('dateRange', ['', '']);
@@ -214,9 +215,11 @@ const CreateIndex: React.FC<FormikProps<ICreateIndex> & ICreateIndex> = observer
           }}
           format="DD.MM.YY HH:mm"
           onOk={onOk}
+          inputReadOnly
         />
         <TextArea
           autoSize={{ minRows: 2 }}
+          maxLength={230}
           placeholder="Please enter description, you can't do it later"
           className="form-create-index__description"
           name="description"

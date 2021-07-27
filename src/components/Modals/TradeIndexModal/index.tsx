@@ -89,6 +89,58 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
       firstCurrency,
     ]);
 
+    const getFee = useCallback(
+      async (currency: any, method: string, total_x?: number) => {
+        let cost = 1;
+        if (currency !== 'BNB' && currency !== 'WBNB') {
+          try {
+            const BNBcost = await walletConnector.metamaskService.getIndexCourse(
+              config.BNB.ADDRESS,
+              payInput,
+              true,
+              indexAddress,
+              decimals,
+            );
+            const currencyCost = await walletConnector.metamaskService.getIndexCourse(
+              // eslint-disable-next-line
+              // @ts-ignore
+              config[currency].ADDRESS,
+              payInput,
+              true,
+              indexAddress,
+              decimals,
+            );
+            cost = +new BigNumber(+currencyCost / +BNBcost)
+              .dividedBy(new BigNumber(10).pow(18))
+              .toFixed(5);
+          } catch (e) {
+            console.error(e);
+          }
+        }
+        switch (method) {
+          case 'buy':
+            setFee(+payInput * cost * 0.005 > 0.001 ? `${+payInput * cost * 0.005}` : '< 0.001');
+            break;
+          case 'sell_0.02':
+            setFee(+payInput * cost * 0.02 > 0.001 ? `${+payInput * cost * 0.02}` : '< 0.001');
+            break;
+          case 'sell':
+            if (total_x) {
+              const preFee = (+payInput * (6 - (4 - total_x - 5))) / 10;
+              setFee(
+                preFee * cost > 0.001
+                  ? (preFee * cost).toFixed(3)
+                  : '< 0.001',
+              );
+            }
+            break;
+          default:
+            break;
+        }
+      },
+      [walletConnector.metamaskService, payInput, indexAddress, decimals],
+    );
+
     const getBuyCourse = useCallback(() => {
       if (payInput) {
         walletConnector.metamaskService
@@ -97,9 +149,7 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
             setViewOnlyInputValue(
               new BigNumber(data).dividedBy(new BigNumber(10).pow(18)).toFixed(5),
             );
-            setFee(
-              `${new BigNumber(data * 0.005).dividedBy(new BigNumber(10).pow(18)).toFixed(5)}`,
-            );
+            getFee(firstCurrency, 'buy');
           })
           .catch((err: ProviderRpcError) => {
             const { message } = err;
@@ -109,7 +159,7 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
         setViewOnlyInputValue('0.0');
         setFee('');
       }
-    }, [decimals, payInput, firstCurrency, walletConnector.metamaskService, indexAddress]);
+    }, [decimals, payInput, firstCurrency, walletConnector.metamaskService, indexAddress, getFee]);
     const getSellCourse = useCallback(() => {
       if (payInput) {
         walletConnector.metamaskService
@@ -117,15 +167,9 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
           .then((data: any) => {
             axios.get(url).then((res: AxiosResponse) => {
               if (res.data[res.data.length - 1].total_x >= 0.15) {
-                setFee(
-                  `${new BigNumber(data * 0.02).dividedBy(new BigNumber(10).pow(18)).toFixed(5)}`,
-                );
+                getFee(secondCurrency, 'sell_0.02');
               } else {
-                setFee(
-                  `${new BigNumber((data * (6 - (4 - res.data[3].total_x * 100 - 5))) / 10)
-                    .dividedBy(new BigNumber(10).pow(18))
-                    .toFixed(5)}`,
-                );
+                getFee(secondCurrency, 'sell', res.data[3].total_x);
               }
             });
             setViewOnlyInputValue(
@@ -148,6 +192,7 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
       walletConnector.metamaskService,
       indexAddress,
       url,
+      getFee,
     ]);
 
     const checkAllowance = useCallback(() => {
@@ -172,6 +217,7 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
     const handleSelectChange = (value: any) => {
       setPayInput('');
       setViewOnlyInputValue('0.0');
+      setFee('');
       if (isSell) {
         setSecondCurrency(value);
         getDecimals(value).then((dec: number) => {
@@ -323,10 +369,7 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
             )}
           </div>
           {fee ? (
-            <p className="m-trade-ydr__label m-trade-ydr__fee">
-              Service Fee {fee}{' '}
-              {modals.tradeIndex.method === 'buy' ? firstCurrency : secondCurrency}
-            </p>
+            <p className="m-trade-ydr__label m-trade-ydr__fee">Service Fee {fee} BNB</p>
           ) : (
             <></>
           )}
@@ -345,7 +388,7 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
               Buy
             </Button>
           )}
-          {isSell && !isNeedApprove && (
+          {isSell && (
             <Button
               className="m-trade-ydr__btn"
               onClick={handleSell}

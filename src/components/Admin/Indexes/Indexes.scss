@@ -31,7 +31,33 @@
 
 .indexs-table {
   margin-top: 60px;
+  &__sort {
+    align-items: center;
 
+    cursor: pointer;
+
+    &::after {
+      content: '';
+      position: absolute;
+      margin-left: 5px;
+      top: calc(50% - 3px);
+
+      width: 10px;
+      height: 6px;
+
+      background-image: url(../../../assets/img/icons/icon-arrow-yellow.svg);
+      background-repeat: no-repeat;
+      background-position: center;
+
+      transition: transform 0.3s;
+    }
+
+    &--up {
+      &::after {
+        transform: rotate(180deg);
+      }
+    }
+  }
   /* &__sort {
     display: inline-flex;
     align-items: center;

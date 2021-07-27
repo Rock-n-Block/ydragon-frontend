@@ -14,6 +14,9 @@ import './Dashboard.scss';
 import { Sorter } from '../../utils/sorter';
 
 export interface IUserIndex extends IIndex {
+  name: string;
+  market_cap: number;
+  price: number;
   day: number;
   week: number;
   month: number;
@@ -53,8 +56,10 @@ const Dashboard: React.FC = () => {
 
   const sorter = (item: string) => {
     if (sorterValue === item) {
+      setIndexes(indexes?.sort((a, b) => Sorter.DEFAULT(a, b, !ascendent, item)));
       setAscendent(!ascendent);
     } else {
+      setIndexes(indexes?.sort((a, b) => Sorter.DEFAULT(a, b, true, item)));
       setAscendent(true);
     }
     setSorterValue(item);
@@ -64,28 +69,21 @@ const Dashboard: React.FC = () => {
     getIndexes();
   }, [getIndexes]);
 
-  useEffect(() => {
-    console.log('useEffect');
-    if (sorterValue === 'name') {
-      indexes?.sort((a, b) => Sorter.DEFAULT(a.name, b.name));
-    }
-    if (sorterValue === 'name') {
-      indexes?.sort((a, b) => Sorter.DEFAULT(a.market_cap, b.market_cap));
-    }
-  }, [sorterValue, indexes]);
-
   return (
     <section className="section section--admin">
       <h2 className="section__title text-outline">Indexes</h2>
       <div className="index-dashboard__big">
         <div className="index-dashboard">
-          {indexes?.length ? (
+          {
+          indexes?.
+          filter((index) => index.price > 0).
+          length ? (
             <div className="index-dashboard__row index-dashboard__row--head">
               <div className="index-dashboard__col">
                 <div
                   className={`index-dashboard__sort ${
                     sorterValue === 'name'
-                      ? `index-dashboard__sort${ascendent ? '--up' : '--down'}`
+                      ? `index-dashboard__sort${ascendent ? '--up' : ''}`
                       : ''
                   }`}
                   onClick={() => sorter('name')}
@@ -98,12 +96,14 @@ const Dashboard: React.FC = () => {
               </div>
               <div className="index-dashboard__col">
                 <div
-                  className={`index-dashboard__sort index-dashboard__sort${
-                    sorterValue === 'marketCap' ? '--up' : ''
+                  className={`index-dashboard__sort ${
+                    sorterValue === 'market_cap'
+                      ? `index-dashboard__sort${ascendent ? '--up' : ''}`
+                      : ''
                   }`}
-                  onClick={() => sorter('marketCap')}
+                  onClick={() => sorter('market_cap')}
                   role="button"
-                  onKeyDown={() => sorter('marketCap')}
+                  onKeyDown={() => sorter('market_cap')}
                   tabIndex={0}
                 >
                   Market cap
@@ -111,45 +111,75 @@ const Dashboard: React.FC = () => {
               </div>
               <div className="index-dashboard__col">
                 <div
-                  className={`index-dashboard__sort index-dashboard__sort${
-                    sorterValue === 'price' ? '--up' : ''
+                  className={`index-dashboard__sort ${
+                    sorterValue === 'price'
+                      ? `index-dashboard__sort${ascendent ? '--up' : ''}`
+                      : ''
                   }`}
+                  onClick={() => sorter('price')}
+                  role="button"
+                  onKeyDown={() => sorter('price')}
+                  tabIndex={0}
                 >
                   Price
                 </div>
               </div>
               <div className="index-dashboard__col">
                 <div
-                  className={`index-dashboard__sort index-dashboard__sort${
-                    sorterValue === '1day' ? '--up' : ''
+                  className={`index-dashboard__sort ${
+                    sorterValue === 'day'
+                      ? `index-dashboard__sort${ascendent ? '--up' : ''}`
+                      : ''
                   }`}
+                  onClick={() => sorter('day')}
+                  role="button"
+                  onKeyDown={() => sorter('day')}
+                  tabIndex={0}
                 >
                   1 Day
                 </div>
               </div>
               <div className="index-dashboard__col">
                 <div
-                  className={`index-dashboard__sort index-dashboard__sort${
-                    sorterValue === '1month' ? '--up' : ''
+                  className={`index-dashboard__sort ${
+                    sorterValue === 'week'
+                      ? `index-dashboard__sort${ascendent ? '--up' : ''}`
+                      : ''
                   }`}
+                  onClick={() => sorter('week')}
+                  role="button"
+                  onKeyDown={() => sorter('week')}
+                  tabIndex={0}
+                >
+                  1 week
+                </div>
+              </div>
+              <div className="index-dashboard__col">
+                <div
+                  className={`index-dashboard__sort ${
+                    sorterValue === 'month'
+                      ? `index-dashboard__sort${ascendent ? '--up' : ''}`
+                      : ''
+                  }`}
+                  onClick={() => sorter('month')}
+                  role="button"
+                  onKeyDown={() => sorter('month')}
+                  tabIndex={0}
                 >
                   1 month
                 </div>
               </div>
               <div className="index-dashboard__col">
                 <div
-                  className={`index-dashboard__sort index-dashboard__sort${
-                    sorterValue === '3month' ? '--up' : ''
+                  className={`index-dashboard__sort ${
+                    sorterValue === 'total'
+                      ? `index-dashboard__sort${ascendent ? '--up' : ''}`
+                      : ''
                   }`}
-                >
-                  3 month
-                </div>
-              </div>
-              <div className="index-dashboard__col">
-                <div
-                  className={`index-dashboard__sort index-dashboard__sort${
-                    sorterValue === 'allTime' ? '--up' : ''
-                  }`}
+                  onClick={() => sorter('total')}
+                  role="button"
+                  onKeyDown={() => sorter('total')}
+                  tabIndex={0}
                 >
                   Since Inception
                 </div>
