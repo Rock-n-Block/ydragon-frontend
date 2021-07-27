@@ -33,6 +33,9 @@ class Connector extends React.Component<any, any> {
       }
       this.state.provider.chainChangedObs.subscribe({
         next(err: string) {
+          if (err) {
+            self.disconnect();
+          }
           rootStore.modals.metamask.setErr(err);
         },
       });
@@ -40,6 +43,11 @@ class Connector extends React.Component<any, any> {
       this.state.provider.accountChangedObs.subscribe({
         next() {
           self.disconnect();
+        },
+      });
+      this.state.provider.disconnectObs.subscribe({
+        next(reason: string) {
+          console.log('disconnect', reason);
         },
       });
     }
@@ -61,25 +69,25 @@ class Connector extends React.Component<any, any> {
             signed_msg: signedMsg,
           });
 
-          sessionStorage.setItem('yd_token', login.data.key)
-          sessionStorage.setItem('yd_address', address)
+          sessionStorage.setItem('yd_token', login.data.key);
+          sessionStorage.setItem('yd_address', address);
           rootStore.user.setAddress(address);
-          sessionStorage.setItem('yd_metamask', 'true')
+          sessionStorage.setItem('yd_metamask', 'true');
           // rootStore.user.update({ address });
         } else {
           rootStore.user.setAddress(address);
-          sessionStorage.setItem('yd_metamask', 'true')
+          sessionStorage.setItem('yd_metamask', 'true');
           // rootStore.user.update({ address });
         }
       } catch (err) {
         const { response } = err;
         if (response) {
           if (response.status === 400 && response.data.result[0] === 'user is not admin') {
-            sessionStorage.setItem('yd_isAdmin', 'false')
+            sessionStorage.setItem('yd_isAdmin', 'false');
             const { address } = await this.state.provider.connect();
-            sessionStorage.setItem('yd_address', address)
+            sessionStorage.setItem('yd_address', address);
             rootStore.user.setAddress(address);
-            sessionStorage.setItem('yd_metamask', 'true')
+            sessionStorage.setItem('yd_metamask', 'true');
             rootStore.user.update({ address });
           } else {
             rootStore.modals.metamask.setErr(err.message);

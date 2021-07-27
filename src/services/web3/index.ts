@@ -78,7 +78,6 @@ export default class MetamaskService {
       this.wallet.on('chainChanged', () => {
         const currentChain = this.wallet.chainId;
         if (!Object.values(this.usedChain).find((chainId) => chainId === currentChain)) {
-          window.location.reload();
           subscriber.next(`Please choose one of networks in header select.`);
         } else {
           rootStore.networks.setId(this.wallet.chainId);
@@ -89,13 +88,11 @@ export default class MetamaskService {
 
     this.accountChangedObs = new Observable((subscriber) => {
       this.wallet.on('accountsChanged', () => {
-        window.location.reload();
         subscriber.next();
       });
     });
     this.disconnectObs = new Observable((subscriber) => {
       this.wallet.on('disconnect', (code: number, reason: string) => {
-        console.log('disconnect', code, reason);
         subscriber.next(reason);
       });
     });
