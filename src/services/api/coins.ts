@@ -1,7 +1,6 @@
-import { axiosWithToken } from '../../core/axios';
+import axios from '../../core/axios';
 
 export default {
-  getUserIndexes: () => axiosWithToken.get('indexes/user'),
-  getCoinsList: (name: string) =>
-    axiosWithToken.get(`/coins_list/api/indexes/?search_pattern=${name}`),
+  getUserIndexes: () => axios.get('indexes/user'),
+  getCoinsList: (name: string) => axios.get(`/coins_list/api/indexes/?search_pattern=${name}`),
 };
