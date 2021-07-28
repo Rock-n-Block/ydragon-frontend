@@ -15,7 +15,7 @@ import './TradeYDRModal.scss';
 
 const TradeYDRModal: React.FC = observer(() => {
   const walletConnector = useWalletConnectorContext();
-  const { user, modals, networkTokens } = useMst();
+  const { user, modals, basicTokens } = useMst();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [firstCurrency, setFirstCurrency] = useState<TokenMiniNameTypes>(
     modals.tradeYDR.method === 'sell' ? 'YDR' : (defaultTokens[0].name as TokenMiniNameTypes),
@@ -50,7 +50,7 @@ const TradeYDRModal: React.FC = observer(() => {
   );
   const getBalance = useCallback(() => {
     walletConnector.metamaskService
-      .getBalanceOf(networkTokens.getTokenAddress(firstCurrency))
+      .getBalanceOf(basicTokens.getTokenAddress(firstCurrency))
       .then((data: any) => {
         setBalance(data);
         getDecimals(firstCurrency).then((dec: number) => {
@@ -64,7 +64,7 @@ const TradeYDRModal: React.FC = observer(() => {
         const { message } = err;
         console.log('getBalance error', message);
       });
-  }, [networkTokens, walletConnector.metamaskService, firstCurrency,secondCurrency,getDecimals]);
+  }, [basicTokens, walletConnector.metamaskService, firstCurrency, secondCurrency, getDecimals]);
 
   const getBuyCourse = useCallback(() => {
     if (payInput) {

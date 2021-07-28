@@ -5,7 +5,7 @@ import { Modals } from './Modals';
 import { Networks } from './Networks';
 import { Theme } from './Theme';
 import { User } from './User';
-import { NetworkTokens } from './NetworkTokens';
+import { BasicTokens } from './BasicTokens';
 
 export const DARK = 'dark';
 export const LIGHT = 'light';
@@ -15,7 +15,7 @@ const RootModel = types.model({
   user: User,
   theme: Theme,
   networks: Networks,
-  networkTokens: NetworkTokens,
+  basicTokens: BasicTokens,
 });
 
 export const Store = RootModel.create({
@@ -41,7 +41,7 @@ export const Store = RootModel.create({
     networkId: '',
     networksList: [],
   },
-  networkTokens: {},
+  basicTokens: {},
 });
 
 export const rootStore = Store;

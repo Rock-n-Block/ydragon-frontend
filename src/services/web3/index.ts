@@ -85,7 +85,7 @@ export default class MetamaskService {
           if (this.wallet.chainId === '0x61') {
             rootStore.networks.setCurrNetwork('binance-smart-chain');
           } else if (this.wallet.chainId === '0x13881') {
-            rootStore.networks.setCurrNetwork('polygon');
+            rootStore.networks.setCurrNetwork('polygon-pos');
           }
           subscriber.next('');
         }

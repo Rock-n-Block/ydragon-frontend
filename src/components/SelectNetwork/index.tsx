@@ -10,7 +10,7 @@ import bncLight from '../../assets/img/icons/icon-binance-light.svg';
 import plgDark from '../../assets/img/icons/icon-polygon-dark.svg';
 import plgLight from '../../assets/img/icons/icon-polygon-light.svg';
 import TokenMini from '../TokenMini';
-import { networksApi, ratesApi } from '../../services/api';
+import { basicTokensApi, networksApi } from '../../services/api';
 
 const { Option } = Select;
 
@@ -59,7 +59,7 @@ const chains: IChains = {
 };
 
 const SelectNetwork: React.FC = observer(() => {
-  const { networks, networkTokens, theme } = useMst();
+  const { networks, basicTokens, theme } = useMst();
   const walletConnector = useWalletConnectorContext();
   const [pickedChain, setPickedChain] = useState<ChainTypes>();
 
@@ -84,7 +84,7 @@ const SelectNetwork: React.FC = observer(() => {
           if (currentChainId === '0x61') {
             rootStore.networks.setCurrNetwork('binance-smart-chain');
           } else if (currentChainId === '0x13881') {
-            rootStore.networks.setCurrNetwork('polygon');
+            rootStore.networks.setCurrNetwork('polygon-pos');
           }
         }
       });
@@ -112,14 +112,12 @@ const SelectNetwork: React.FC = observer(() => {
       // handle other "switch" errors
     }
   };
-  const getNetworkTokens = useCallback(() => {
-    ratesApi
-      .getNetworkTokens()
-      .then(({ data }) => {
-        networkTokens.setTokens(data);
-      })
-      .catch();
-  }, [networkTokens]);
+
+  const getBasicTokens = useCallback(() => {
+    basicTokensApi.getBaseTokens().then(({ data }) => {
+      basicTokens.setTokens(data);
+    });
+  }, [basicTokens]);
 
   useEffect(() => {
     getNetworks();
@@ -141,9 +139,9 @@ const SelectNetwork: React.FC = observer(() => {
 
   useEffect(() => {
     if (networks.currentNetwork) {
-      getNetworkTokens();
+      getBasicTokens();
     }
-  }, [getNetworkTokens, networks.currentNetwork]);
+  }, [getBasicTokens, networks.currentNetwork]);
 
   return (
     <Select
