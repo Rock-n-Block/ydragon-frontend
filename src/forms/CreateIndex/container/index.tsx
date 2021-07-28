@@ -50,7 +50,6 @@ const CreateIndexForm: React.FC = () => {
         )
         .then((data: TransactionReceipt) => {
           if (values.description) {
-            if (!values.price) setFieldValue('price', '1')
             indexesApi
               .addParamsToIndex(data.transactionHash, values.description, values.price)
               .then(() => {
