@@ -6,6 +6,8 @@ const Network = types.model({
   fabric_address: types.string,
   oracle_address: types.string,
   staking_address: types.string,
+  router_address: types.string,
+  dex_factory_address: types.string,
   endpoint: types.string,
   needs_middleware: types.boolean,
 });

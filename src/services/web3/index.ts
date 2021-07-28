@@ -35,6 +35,8 @@ export type ContractTypes =
   | 'DexFactory'
   | 'Token';
 
+const nativeTokens = ['bnb', 'wbnb', 'matic', 'wmatic'];
+
 const networks: INetworks = {
   mainnet: '0x1',
 };
@@ -435,23 +437,33 @@ export default class MetamaskService {
     });
   }
 
-  getYDRCourse(spenderToken: ContractTypes, value: string, buy: boolean, decimals: number) {
+  getYDRCourse(
+    spenderTokenSymbol: string,
+    spenderTokenAddress: string,
+    value: string,
+    buy: boolean,
+    decimals: number,
+  ) {
+    const isNative = nativeTokens.includes(spenderTokenSymbol.toLowerCase());
     let otherTokenAddress /* = address */;
     let path;
-    if (spenderToken === 'USDT') {
-      otherTokenAddress = config.USDT.ADDRESS;
+    if (!isNative) {
+      otherTokenAddress = spenderTokenAddress;
     }
     if (buy) {
-      path = otherTokenAddress
-        ? [otherTokenAddress, config.WBNB.ADDRESS, config.YDR.ADDRESS]
-        : [config.WBNB.ADDRESS, config.YDR.ADDRESS];
+      path = isNative
+        ? [config.WBNB.ADDRESS, config.YDR.ADDRESS]
+        : [otherTokenAddress, config.WBNB.ADDRESS, config.YDR.ADDRESS];
     } else {
-      path = otherTokenAddress
-        ? [config.YDR.ADDRESS, config.WBNB.ADDRESS, otherTokenAddress]
-        : [config.YDR.ADDRESS, config.WBNB.ADDRESS];
+      path = isNative
+        ? [config.YDR.ADDRESS, config.WBNB.ADDRESS]
+        : [config.YDR.ADDRESS, config.WBNB.ADDRESS, otherTokenAddress];
     }
 
-    return this.getContract('Router')
+    return this.getContractByAddress(
+      rootStore.networks.getCurrNetwork()?.router_address || '',
+      config.Router.ABI,
+    )
       .methods.getAmountsOut(MetamaskService.calcTransactionAmount(value, decimals), path)
       .call();
   }

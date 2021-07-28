@@ -63,6 +63,22 @@ const SelectNetwork: React.FC = observer(() => {
   const walletConnector = useWalletConnectorContext();
   const [pickedChain, setPickedChain] = useState<ChainTypes>();
 
+  const networkToken = {
+    bnb: {
+      symbol: 'bnb',
+      address: '0x0000000000000000000000000000000000000000',
+      decimals: 18,
+      name: 'Binance Coin',
+      image: theme.value === 'dark' ? bncDark : bncLight,
+    },
+    polygon: {
+      symbol: 'matic',
+      address: '0x0000000000000000000000000000000000000000',
+      decimals: 18,
+      name: 'Polygon (Matic)',
+      image: theme.value === 'dark' ? plgDark : plgLight,
+    },
+  };
   const getNetworks = useCallback(() => {
     networksApi
       .getNetworks()
@@ -115,9 +131,14 @@ const SelectNetwork: React.FC = observer(() => {
 
   const getBasicTokens = useCallback(() => {
     basicTokensApi.getBaseTokens().then(({ data }) => {
-      basicTokens.setTokens(data);
+      basicTokens.setTokens([
+        rootStore.networks.currentNetwork === 'binance-smart-chain'
+          ? networkToken.bnb
+          : networkToken.polygon,
+        ...data,
+      ]);
     });
-  }, [basicTokens]);
+  }, [networkToken.bnb, networkToken.polygon, basicTokens]);
 
   useEffect(() => {
     getNetworks();

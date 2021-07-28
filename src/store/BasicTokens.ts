@@ -20,6 +20,9 @@ export const BasicTokens = types
     const setTokens = (tokens: any) => {
       self.tokensList = tokens;
     };
+    const getToken = (symbol: string) => {
+      return self.tokensList.find((token) => token.symbol.toLowerCase() === symbol.toLowerCase());
+    };
     const getTokenAddress = (symbol: string) => {
       return self.tokensList.find((token) => token.symbol.toLowerCase() === symbol.toLowerCase())
         ?.address;
@@ -29,6 +32,7 @@ export const BasicTokens = types
     };
     return {
       setTokens,
+      getToken,
       getTokenAddress,
       update,
     };

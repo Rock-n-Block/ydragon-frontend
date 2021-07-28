@@ -37,6 +37,7 @@ interface InputWithSelectProps extends InputProps {
   tokens: ITokenMini | Array<ITokenMini>;
   onSelectChange?: (value: string) => void;
   getPopupContainer?: boolean;
+  defaultSelectValue?: string;
 }
 
 export const InputWithSelect: React.FC<InputWithSelectProps> = observer((props) => {
@@ -50,15 +51,15 @@ export const InputWithSelect: React.FC<InputWithSelectProps> = observer((props) 
         <Select
           className="input-with-select__select"
           onChange={onSelectChange}
-          defaultValue={tokens[0].name}
+          defaultValue={tokens[0].symbol}
           getPopupContainer={getPopupContainer ? (trigger) => trigger.parentNode : undefined}
           suffixIcon={<Icon component={DARK === theme.value ? ArrowDownWhite : ArrowDownBlack} />}
         >
           {tokens.map((token) => (
-            <Option value={token.name} key={nextId()}>
-              <h4 className="input-with-select__name">{token.name}</h4>
+            <Option value={token.symbol ?? ''} key={nextId()}>
+              <h4 className="input-with-select__name">{token.symbol}</h4>
               <div className="input-with-select__logo">
-                <img src={token.logo} alt={`${token.name} logo`} width="18" height="18" />
+                <img src={token.image} alt={`${token.name} logo`} width="18" height="18" />
               </div>
             </Option>
           ))}
@@ -68,9 +69,9 @@ export const InputWithSelect: React.FC<InputWithSelectProps> = observer((props) 
   } else {
     tokenOrSelect = (
       <div className="input-with-select__token">
-        <h4 className="input-with-select__name">{tokens.name}</h4>
+        <h4 className="input-with-select__name">{tokens.symbol}</h4>
         <div className="input-with-select__logo">
-          <img src={tokens.logo} alt={`${tokens.name} logo`} width="18" height="18" />
+          <img src={tokens.image} alt={`${tokens.name} logo`} width="18" height="18" />
         </div>
       </div>
     );
