@@ -1,5 +1,5 @@
-import { axiosWithToken } from '../../core/axios';
+import axios from '../../core/axios';
 
 export default {
-  getVaults: (indexId: number) => axiosWithToken.get(`vaults/${indexId}/`),
+  getVaults: (indexId: number) => axios.get(`vaults/${indexId}/`),
 };

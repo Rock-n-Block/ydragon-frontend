@@ -88,13 +88,11 @@ export default class MetamaskService {
 
     this.accountChangedObs = new Observable((subscriber) => {
       this.wallet.on('accountsChanged', () => {
-        window.location.reload();
         subscriber.next();
       });
     });
     this.disconnectObs = new Observable((subscriber) => {
       this.wallet.on('disconnect', (code: number, reason: string) => {
-        console.log('disconnect', code, reason);
         subscriber.next(reason);
       });
     });
@@ -365,6 +363,25 @@ export default class MetamaskService {
     }
   }
 
+  async approveById(toContractAdress: string, address?: string) {
+    try {
+      const approveMethod = MetamaskService.getMethodInterface(config.MAIN.ABI, 'approve');
+
+      const approveSignature = this.encodeFunctionCall(approveMethod, [
+        address,
+        '0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff',
+      ]);
+
+      return this.sendTransaction({
+        from: this.walletAddress,
+        to: toContractAdress,
+        data: approveSignature,
+      });
+    } catch (error) {
+      return error;
+    }
+  }
+
   async approveStake(address: string) {
     try {
       const approveMethod = MetamaskService.getMethodInterface(config.Token.ABI, 'approve');
@@ -384,13 +401,20 @@ export default class MetamaskService {
     }
   }
 
-  enterIme(value: string, spenderToken: ContractTypes, imeAddress: string, decimals: number) {
-    const methodName = spenderToken === 'BNB' ? 'enterImeNative' : 'enterImeToken';
+  enterIme(
+    value: string,
+    spenderTokenName: string,
+    spenderTokenAddress: string,
+    imeAddress: string,
+    decimals: number,
+  ) {
+    const isBnb = spenderTokenName.toLowerCase() === 'bnb';
+    const methodName = isBnb ? 'enterImeNative' : 'enterImeToken';
     const mintMethod = MetamaskService.getMethodInterface(config.MAIN.ABI, methodName);
     let signature;
-    if (spenderToken !== 'BNB') {
+    if (!isBnb) {
       signature = this.encodeFunctionCall(mintMethod, [
-        config[spenderToken].ADDRESS,
+        spenderTokenAddress,
         MetamaskService.calcTransactionAmount(value, decimals),
       ]);
     } else {
@@ -401,7 +425,7 @@ export default class MetamaskService {
       from: this.walletAddress,
       to: imeAddress,
       data: signature,
-      value: spenderToken === 'BNB' ? MetamaskService.calcTransactionAmount(value, decimals) : '',
+      value: isBnb ? MetamaskService.calcTransactionAmount(value, decimals) : '',
     });
   }
 

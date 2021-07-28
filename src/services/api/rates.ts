@@ -1,5 +1,5 @@
-import { axiosWithToken } from '../../core/axios';
+import axios from '../../core/axios';
 
 export default {
-  getRates: () => axiosWithToken.get('rates/'),
+  getRates: () => axios.get('rates/'),
 };
