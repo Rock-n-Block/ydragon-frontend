@@ -5,8 +5,9 @@ import YDRLogo from '../assets/img/icons/logo.svg';
 export type TokenMiniNameTypes = 'YDR' | 'BNB' | 'WBNB' | 'USDT';
 
 export interface ITokenMini {
-  name: TokenMiniNameTypes;
+  name: TokenMiniNameTypes | string;
   logo: string;
+  address?: string;
 }
 export const platformToken: ITokenMini = { name: 'YDR', logo: YDRLogo };
 export const defaultTokens: Array<ITokenMini> = [

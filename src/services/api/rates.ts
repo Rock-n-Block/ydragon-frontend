@@ -1,8 +1,8 @@
-import { axiosWithToken } from '../../core/axios';
+import axios from '../../core/axios';
 import { rootStore } from '../../store/store';
 
 export default {
-  getRates: () => axiosWithToken.get('rates/'),
+  getRates: () => axios.get('rates/'),
   getNetworkTokens: () =>
-    axiosWithToken.get(`rates/fullinfo?network=${rootStore.networks.currentNetwork}`),
+    axios.get(`rates/fullinfo?network=${rootStore.networks.currentNetwork}`),
 };

@@ -226,6 +226,7 @@ const CreateIndex: React.FC<FormikProps<ICreateIndex> & ICreateIndex> = observer
           value={values.description}
           onChange={handleChange}
           onBlur={handleBlur}
+          showCount
         />
         <FieldArray
           name="tokens"

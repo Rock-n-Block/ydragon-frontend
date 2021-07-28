@@ -29,11 +29,11 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [fee, setFee] = useState<string>('');
     const [firstCurrency, setFirstCurrency] = useState<TokenMiniNameTypes>(
-      isSell ? 'YDR' : defaultTokens[0].name,
+      isSell ? 'YDR' : (defaultTokens[0].name as TokenMiniNameTypes),
     );
     const [decimals, setDecimals] = useState<number>(18);
     const [secondCurrency, setSecondCurrency] = useState<TokenMiniNameTypes>(
-      isSell ? defaultTokens[0].name : 'YDR',
+      isSell ? (defaultTokens[0].name as TokenMiniNameTypes) : 'YDR',
     );
     const [payInput, setPayInput] = useState<string>('');
 
@@ -127,11 +127,7 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
           case 'sell':
             if (total_x) {
               const preFee = (+payInput * (6 - (4 - total_x - 5))) / 10;
-              setFee(
-                preFee * cost > 0.001
-                  ? (preFee * cost).toFixed(3)
-                  : '< 0.001',
-              );
+              setFee(preFee * cost > 0.001 ? (preFee * cost).toFixed(3) : '< 0.001');
             }
             break;
           default:
@@ -285,8 +281,8 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
       setIsSell(modals.tradeIndex.method === 'sell');
     }, [modals.tradeIndex.method]);
     useEffect(() => {
-      setFirstCurrency(isSell ? 'YDR' : defaultTokens[0].name);
-      setSecondCurrency(!isSell ? 'YDR' : defaultTokens[0].name);
+      setFirstCurrency(isSell ? 'YDR' : (defaultTokens[0].name as TokenMiniNameTypes));
+      setSecondCurrency(!isSell ? 'YDR' : (defaultTokens[0].name as TokenMiniNameTypes));
     }, [isSell]);
     useEffect(() => {
       if (user.address) {
