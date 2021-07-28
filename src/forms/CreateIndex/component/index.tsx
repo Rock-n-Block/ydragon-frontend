@@ -15,6 +15,7 @@ import { coinsApi } from '../../../services/api';
 export interface ICreateIndex {
   name: string;
   symbol: string;
+  price: string;
   dateRange: [EventValue<any>, EventValue<any>] | null;
   description: string;
   tokens: Array<ITokensDiff>;
@@ -168,7 +169,7 @@ const CreateIndex: React.FC<FormikProps<ICreateIndex> & ICreateIndex> = observer
           } else {
             setFieldValue('dateRange', [value[0], '']);
           }
-        }  
+        }
         // до этого места
       } else {
         setFieldValue('dateRange', ['', '']);
@@ -228,6 +229,23 @@ const CreateIndex: React.FC<FormikProps<ICreateIndex> & ICreateIndex> = observer
           onBlur={handleBlur}
           showCount
         />
+        <div className="form-create-index__input">
+          <p className="form-create-index__input-label">
+            Wished price for one token at the end of the IME
+          </p>
+          <Input
+            type="number"
+            value={values.price}
+            placeholder="$1"
+            onChange={(e) => setFieldValue('price', e.target.value)}
+            onBlur={handleBlur}
+            prefix="$"
+            className="form-create-index__input-price"
+          />
+          <p className="form-create-index__input-info">
+            If the field is empty, the automatic price will be equal to $1
+          </p>
+        </div>
         <FieldArray
           name="tokens"
           render={(arrayHelper) => (
@@ -286,7 +304,7 @@ const CreateIndex: React.FC<FormikProps<ICreateIndex> & ICreateIndex> = observer
                 </>
               ) : (
                 <div className="token-weights-items__empty">
-                  <img src={DangerCircle} alt="alert" width='20' height='20'/>
+                  <img src={DangerCircle} alt="alert" width="20" height="20" />
                   <span>Please add tokens to the index</span>
                 </div>
               )}
