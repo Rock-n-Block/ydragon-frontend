@@ -21,6 +21,7 @@ const CreateIndexForm: React.FC = () => {
     mapPropsToValues: () => ({
       name: '',
       symbol: '',
+      price: '',
       dateRange: ['', ''],
       description: '',
       tokens: [] as Array<ITokensDiff>,
@@ -50,7 +51,7 @@ const CreateIndexForm: React.FC = () => {
         .then((data: TransactionReceipt) => {
           if (values.description) {
             indexesApi
-              .addParamsToIndex(data.transactionHash, values.description)
+              .addParamsToIndex(data.transactionHash, values.description, values.price)
               .then(() => {
                 resetForm({});
                 modals.info.setMsg('Success', 'Index created with description', 'success');
