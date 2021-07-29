@@ -174,12 +174,13 @@
     color: unset;
   }
 }
-
+.ant-select-dropdown{
+  text-transform: uppercase;
+}
 .ant-select-item-option-content {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  text-transform: uppercase;
 }
 
 .ant-input-number {
