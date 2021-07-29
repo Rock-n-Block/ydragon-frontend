@@ -150,15 +150,14 @@ const TradeYDRModal: React.FC = observer(() => {
   }, [basicTokens, networks, walletConnector.metamaskService, firstCurrency]);
   const handleSelectChange = (value: any) => {
     setPayInput('');
+    setViewOnlyInputValue('0.0');
     if (modals.tradeYDR.method === 'sell') {
       setSecondCurrency(value);
-      setViewOnlyInputValue('0.0');
       getDecimals(value).then((dec: number) => {
         setViewOnlyDecimals(dec);
       });
     } else {
       setFirstCurrency(value);
-      setViewOnlyInputValue('0.0');
       getDecimals('YDR').then((dec: number) => {
         setViewOnlyDecimals(dec);
       });
