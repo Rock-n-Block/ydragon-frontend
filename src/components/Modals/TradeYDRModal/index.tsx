@@ -268,7 +268,7 @@ const TradeYDRModal: React.FC = observer(() => {
             <span className="m-trade-ydr__label">You pay</span>
             <span className="m-trade-ydr__label">
               Balance: {new BigNumber(balance).times(new BigNumber(10).pow(-decimals)).toFixed(7)}{' '}
-              {firstCurrency}
+              {firstCurrency.toUpperCase()}
             </span>
           </div>
           {modals.tradeYDR.method === 'buy' ? (
