@@ -43,7 +43,6 @@ const TradeYDRModal: React.FC = observer(() => {
         return new Promise((resolve) => resolve(18));
       }
       return walletConnector.metamaskService.getDecimals(
-        // config[currency].ADDRESS,
         basicTokens.getTokenAddress(currency),
         config.Token.ABI,
       );
@@ -107,7 +106,7 @@ const TradeYDRModal: React.FC = observer(() => {
           secondCurrency,
           basicTokens.getTokenAddress(secondCurrency),
           payInput,
-          true,
+          false,
           decimals,
         )
         .then((data: any) => {
@@ -186,7 +185,7 @@ const TradeYDRModal: React.FC = observer(() => {
   const handleBuy = (): void => {
     setIsLoading(true);
     walletConnector.metamaskService
-      .buyYDRToken(payInput, firstCurrency, decimals)
+      .buyYDRToken(payInput, firstCurrency, basicTokens.getTokenAddress(firstCurrency), decimals)
       .then(() => {
         setPayInput('');
         getBalance();
@@ -201,7 +200,7 @@ const TradeYDRModal: React.FC = observer(() => {
   const handleSell = (): void => {
     setIsLoading(true);
     walletConnector.metamaskService
-      .sellYDRToken(payInput, secondCurrency, decimals)
+      .sellYDRToken(payInput, secondCurrency, basicTokens.getTokenAddress(secondCurrency), decimals)
       .then(() => {
         setPayInput('');
         getBalance();
@@ -312,27 +311,28 @@ const TradeYDRModal: React.FC = observer(() => {
           ) : (
             <InputWithSelect
               placeholder={viewOnlyInputValue}
-              tokens={basicTokens.getToken('YDR') ?? ({} as ITokenMini)}
+              tokens={basicTokens.getToken('ydr') ?? ({} as ITokenMini)}
               onSelectChange={handleSelectChange}
               disabled
             />
           )}
         </div>
-        {isNeedApprove && firstCurrency !== 'BNB' && (
+        {isNeedApprove && firstCurrency !== 'bnb' && firstCurrency !== 'matic' && (
           <Button className="m-trade-ydr__btn" onClick={handleApprove} loading={isLoading}>
             Approve
           </Button>
         )}
-        {modals.tradeYDR.method === 'buy' && (!isNeedApprove || firstCurrency === 'BNB') && (
-          <Button
-            className="m-trade-ydr__btn"
-            onClick={handleBuy}
-            disabled={!payInput}
-            loading={isLoading}
-          >
-            Buy
-          </Button>
-        )}
+        {modals.tradeYDR.method === 'buy' &&
+          (!isNeedApprove || firstCurrency === 'bnb' || firstCurrency === 'matic') && (
+            <Button
+              className="m-trade-ydr__btn"
+              onClick={handleBuy}
+              disabled={!payInput}
+              loading={isLoading}
+            >
+              Buy
+            </Button>
+          )}
         {modals.tradeYDR.method === 'sell' && !isNeedApprove && (
           <Button
             className="m-trade-ydr__btn"
