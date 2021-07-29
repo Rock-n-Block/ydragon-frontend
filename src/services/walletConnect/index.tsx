@@ -35,8 +35,10 @@ class Connector extends React.Component<any, any> {
         next(err: string) {
           if (err) {
             self.disconnect();
+            rootStore.modals.metamask.setErr(err);
+          } else {
+            window.location.reload();
           }
-          rootStore.modals.metamask.setErr(err);
         },
       });
 

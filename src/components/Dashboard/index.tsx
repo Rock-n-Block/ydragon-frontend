@@ -11,6 +11,8 @@ import { Spinner } from '../index';
 import IndexSmallCard from './SmallCard/index';
 
 import './Dashboard.scss';
+import { observer } from 'mobx-react-lite';
+import { useMst } from '../../store/store';
 import { Sorter } from '../../utils/sorter';
 
 export interface IUserIndex extends IIndex {
@@ -24,6 +26,7 @@ export interface IUserIndex extends IIndex {
 }
 
 const Dashboard: React.FC = () => {
+  const { networks } = useMst();
   const [indexes, setIndexes] = useState<Array<IUserIndex>>();
   const [loading, setLoading] = useState<boolean>(false);
   const [sorterValue, setSorterValue] = useState<string>('');
@@ -66,8 +69,10 @@ const Dashboard: React.FC = () => {
   };
 
   useEffect(() => {
-    getIndexes();
-  }, [getIndexes]);
+    if (networks.currentNetwork) {
+      getIndexes();
+    }
+  }, [getIndexes, networks.currentNetwork]);
 
   return (
     <section className="section section--admin">
@@ -331,4 +336,4 @@ const Dashboard: React.FC = () => {
   );
 };
 
-export default Dashboard;
+export default observer(Dashboard);

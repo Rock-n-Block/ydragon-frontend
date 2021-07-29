@@ -7,22 +7,23 @@ import { useWalletConnectorContext } from '../../../services/walletConnect';
 import config from '../../../services/web3/config';
 import { useMst } from '../../../store/store';
 import { ProviderRpcError } from '../../../types/errors';
-import { defaultTokens, platformToken, TokenMiniNameTypes } from '../../../utils/tokenMini';
+import { ITokenMini } from '../../../utils/tokenMini';
 import { Button, InputWithSelect } from '../../index';
 import { Modal } from '../index';
 
 import './TradeYDRModal.scss';
+import { autorun } from 'mobx';
 
 const TradeYDRModal: React.FC = observer(() => {
   const walletConnector = useWalletConnectorContext();
-  const { user, modals } = useMst();
+  const { user, modals, basicTokens, networks } = useMst();
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [firstCurrency, setFirstCurrency] = useState<TokenMiniNameTypes>(
-    modals.tradeYDR.method === 'sell' ? 'YDR' : (defaultTokens[0].name as TokenMiniNameTypes),
+  const [firstCurrency, setFirstCurrency] = useState<string>(
+    modals.tradeYDR.method === 'sell' ? 'YDR' : '',
   );
   const [decimals, setDecimals] = useState<number>(18);
-  const [secondCurrency, setSecondCurrency] = useState<TokenMiniNameTypes>(
-    modals.tradeYDR.method === 'sell' ? (defaultTokens[0].name as TokenMiniNameTypes) : 'YDR',
+  const [secondCurrency, setSecondCurrency] = useState<string>(
+    modals.tradeYDR.method === 'sell' ? '' : 'YDR',
   );
   const [payInput, setPayInput] = useState<string>('');
 
@@ -37,20 +38,20 @@ const TradeYDRModal: React.FC = observer(() => {
     setViewOnlyInputValue('0.0');
   };
   const getDecimals = useCallback(
-    async (currency: TokenMiniNameTypes) => {
-      if (currency === 'BNB') {
+    async (currency: string) => {
+      if (currency.toLowerCase() === 'bnb' || currency.toLowerCase() === 'matic') {
         return new Promise((resolve) => resolve(18));
       }
       return walletConnector.metamaskService.getDecimals(
-        config[currency].ADDRESS,
+        basicTokens.getTokenAddress(currency),
         config.Token.ABI,
       );
     },
-    [walletConnector.metamaskService],
+    [basicTokens, walletConnector.metamaskService],
   );
   const getBalance = useCallback(() => {
     walletConnector.metamaskService
-      .getBalanceOf(config[firstCurrency].ADDRESS)
+      .getBalanceOf(basicTokens.getTokenAddress(firstCurrency))
       .then((data: any) => {
         setBalance(data);
         getDecimals(firstCurrency).then((dec: number) => {
@@ -64,12 +65,18 @@ const TradeYDRModal: React.FC = observer(() => {
         const { message } = err;
         console.log('getBalance error', message);
       });
-  }, [secondCurrency, walletConnector.metamaskService, getDecimals, firstCurrency]);
+  }, [basicTokens, walletConnector.metamaskService, firstCurrency, secondCurrency, getDecimals]);
 
   const getBuyCourse = useCallback(() => {
     if (payInput) {
       walletConnector.metamaskService
-        .getYDRCourse(firstCurrency, payInput, true, decimals)
+        .getYDRCourse(
+          firstCurrency,
+          basicTokens.getTokenAddress(firstCurrency),
+          payInput,
+          true,
+          decimals,
+        )
         .then((data: any) => {
           setViewOnlyInputValue(
             new BigNumber(data[data.length - 1])
@@ -84,11 +91,24 @@ const TradeYDRModal: React.FC = observer(() => {
     } else {
       setViewOnlyInputValue('0.0');
     }
-  }, [decimals, viewOnlyDecimals, payInput, firstCurrency, walletConnector.metamaskService]);
+  }, [
+    basicTokens,
+    decimals,
+    viewOnlyDecimals,
+    payInput,
+    firstCurrency,
+    walletConnector.metamaskService,
+  ]);
   const getSellCourse = useCallback(() => {
     if (payInput) {
       walletConnector.metamaskService
-        .getYDRCourse(secondCurrency, payInput, false, decimals)
+        .getYDRCourse(
+          secondCurrency,
+          basicTokens.getTokenAddress(secondCurrency),
+          payInput,
+          false,
+          decimals,
+        )
         .then((data: any) => {
           setViewOnlyInputValue(
             new BigNumber(data[data.length - 1])
@@ -103,11 +123,23 @@ const TradeYDRModal: React.FC = observer(() => {
     } else {
       setViewOnlyInputValue('0.0');
     }
-  }, [decimals, viewOnlyDecimals, payInput, secondCurrency, walletConnector.metamaskService]);
+  }, [
+    basicTokens,
+    decimals,
+    viewOnlyDecimals,
+    payInput,
+    secondCurrency,
+    walletConnector.metamaskService,
+  ]);
 
   const checkAllowance = useCallback(() => {
     walletConnector.metamaskService
-      .checkAllowance(firstCurrency, 'Router')
+      // .checkAllowance(firstCurrency, 'Router')
+      .checkAllowanceById(
+        basicTokens.getTokenAddress(firstCurrency),
+        config.Token.ABI,
+        networks.getCurrNetwork()?.router_address,
+      )
       .then((data: boolean) => {
         setIsNeedApprove(!data);
       })
@@ -115,7 +147,7 @@ const TradeYDRModal: React.FC = observer(() => {
         const { message } = err;
         console.log('allowance error', message);
       });
-  }, [walletConnector.metamaskService, firstCurrency]);
+  }, [basicTokens, networks, walletConnector.metamaskService, firstCurrency]);
   const handleSelectChange = (value: any) => {
     setPayInput('');
     if (modals.tradeYDR.method === 'sell') {
@@ -135,7 +167,11 @@ const TradeYDRModal: React.FC = observer(() => {
   const handleApprove = (): void => {
     setIsLoading(true);
     walletConnector.metamaskService
-      .approve(firstCurrency, 'Router')
+      // .approve(firstCurrency, 'Router')
+      .approveById(
+        basicTokens.getTokenAddress(firstCurrency),
+        networks.getCurrNetwork()?.router_address,
+      )
       .then(() => {
         setIsNeedApprove(false);
         modals.info.setMsg('Success', `You approved YDR token`, 'success');
@@ -149,7 +185,7 @@ const TradeYDRModal: React.FC = observer(() => {
   const handleBuy = (): void => {
     setIsLoading(true);
     walletConnector.metamaskService
-      .buyYDRToken(payInput, firstCurrency, decimals)
+      .buyYDRToken(payInput, firstCurrency, basicTokens.getTokenAddress(firstCurrency), decimals)
       .then(() => {
         setPayInput('');
         getBalance();
@@ -164,7 +200,7 @@ const TradeYDRModal: React.FC = observer(() => {
   const handleSell = (): void => {
     setIsLoading(true);
     walletConnector.metamaskService
-      .sellYDRToken(payInput, secondCurrency, decimals)
+      .sellYDRToken(payInput, secondCurrency, basicTokens.getTokenAddress(secondCurrency), decimals)
       .then(() => {
         setPayInput('');
         getBalance();
@@ -183,27 +219,34 @@ const TradeYDRModal: React.FC = observer(() => {
       setPayInput(e.target.value);
     }
   };
+  const setInitialCurrencies = useCallback(() => {
+    setFirstCurrency(modals.tradeYDR.method === 'sell' ? 'YDR' : basicTokens.tokensList[0].symbol);
+    setSecondCurrency(modals.tradeYDR.method !== 'sell' ? 'YDR' : basicTokens.tokensList[0].symbol);
+  }, [basicTokens.tokensList, modals.tradeYDR.method]);
   useEffect(() => {
-    setFirstCurrency(
-      modals.tradeYDR.method === 'sell' ? 'YDR' : (defaultTokens[0].name as TokenMiniNameTypes),
-    );
-    setSecondCurrency(
-      modals.tradeYDR.method !== 'sell' ? 'YDR' : (defaultTokens[0].name as TokenMiniNameTypes),
-    );
-  }, [modals.tradeYDR.method]);
+    autorun(() => {
+      if (basicTokens.tokensList.length) {
+        setInitialCurrencies();
+      }
+    });
+  }, [basicTokens.tokensList.length, setInitialCurrencies]);
+
   useEffect(() => {
-    if (user.address) {
+    if (user.address && basicTokens.tokensList.length && firstCurrency) {
       getBalance();
       checkAllowance();
     }
-  }, [checkAllowance, getBalance, user.address]);
+  }, [basicTokens.tokensList, firstCurrency, checkAllowance, getBalance, user.address]);
+
   useEffect(() => {
-    if (modals.tradeYDR.method === 'buy') {
-      getBuyCourse();
-    } else {
-      getSellCourse();
+    if (basicTokens.tokensList.length) {
+      if (modals.tradeYDR.method === 'buy') {
+        getBuyCourse();
+      } else {
+        getSellCourse();
+      }
     }
-  }, [modals.tradeYDR.method, getBuyCourse, getSellCourse, payInput]);
+  }, [basicTokens.tokensList, modals.tradeYDR.method, getBuyCourse, getSellCourse, payInput]);
   return (
     <Modal
       isVisible={modals.tradeYDR.isOpen}
@@ -225,13 +268,15 @@ const TradeYDRModal: React.FC = observer(() => {
             <span className="m-trade-ydr__label">You pay</span>
             <span className="m-trade-ydr__label">
               Balance: {new BigNumber(balance).times(new BigNumber(10).pow(-decimals)).toFixed(7)}{' '}
-              {firstCurrency}
+              {firstCurrency.toUpperCase()}
             </span>
           </div>
           {modals.tradeYDR.method === 'buy' ? (
             <InputWithSelect
               value={payInput}
-              tokens={defaultTokens}
+              tokens={basicTokens.tokensList.filter(
+                (token) => token.symbol.toLowerCase() !== 'ydr',
+              )}
               onSelectChange={handleSelectChange}
               onChange={handlePayInput}
               type="number"
@@ -242,7 +287,7 @@ const TradeYDRModal: React.FC = observer(() => {
             <InputWithSelect
               value={payInput}
               onChange={handlePayInput}
-              tokens={platformToken}
+              tokens={basicTokens.getToken('ydr') ?? ({} as ITokenMini)}
               type="number"
               placeholder="0.0"
               onBlur={getSellCourse}
@@ -257,34 +302,37 @@ const TradeYDRModal: React.FC = observer(() => {
           {modals.tradeYDR.method === 'sell' ? (
             <InputWithSelect
               placeholder={viewOnlyInputValue}
-              tokens={defaultTokens}
+              tokens={basicTokens.tokensList.filter(
+                (token) => token.symbol.toLowerCase() !== 'ydr',
+              )}
               onSelectChange={handleSelectChange}
               disabled
             />
           ) : (
             <InputWithSelect
               placeholder={viewOnlyInputValue}
-              tokens={platformToken}
+              tokens={basicTokens.getToken('ydr') ?? ({} as ITokenMini)}
               onSelectChange={handleSelectChange}
               disabled
             />
           )}
         </div>
-        {isNeedApprove && firstCurrency !== 'BNB' && (
+        {isNeedApprove && firstCurrency !== 'bnb' && firstCurrency !== 'matic' && (
           <Button className="m-trade-ydr__btn" onClick={handleApprove} loading={isLoading}>
             Approve
           </Button>
         )}
-        {modals.tradeYDR.method === 'buy' && (!isNeedApprove || firstCurrency === 'BNB') && (
-          <Button
-            className="m-trade-ydr__btn"
-            onClick={handleBuy}
-            disabled={!payInput}
-            loading={isLoading}
-          >
-            Buy
-          </Button>
-        )}
+        {modals.tradeYDR.method === 'buy' &&
+          (!isNeedApprove || firstCurrency === 'bnb' || firstCurrency === 'matic') && (
+            <Button
+              className="m-trade-ydr__btn"
+              onClick={handleBuy}
+              disabled={!payInput}
+              loading={isLoading}
+            >
+              Buy
+            </Button>
+          )}
         {modals.tradeYDR.method === 'sell' && !isNeedApprove && (
           <Button
             className="m-trade-ydr__btn"
