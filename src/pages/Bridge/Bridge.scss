@@ -1,15 +1,28 @@
 @import '../../styles/variables';
 @import '../../styles/mixins';
 
-.dark {
+.dark,
+.light {
   .bridge {
     @include shadow-block;
     margin: 0 auto;
 
     max-width: 580px;
 
+    @include b(600) {
+      width: 100%;
+
+      background: transparent;
+      border: none;
+      box-shadow: none;
+    }
+
     .form {
       padding: 40px 60px 30px;
+
+      @include b(600) {
+        padding: 20px;
+      }
 
       &__header {
         margin: 32px 0 5px;
@@ -26,7 +39,7 @@
           font-size: 12px;
           line-height: 14px;
 
-          color: rgba($white, 0.5);
+          opacity: 0.5;
         }
 
         &__link {
@@ -77,6 +90,8 @@
         }
 
         &__min-amount {
+          width: 65%;
+
           font-family: 'Monument Extended', sans-serif;
           font-size: 12px;
           font-weight: 400;
@@ -93,10 +108,10 @@
         justify-content: space-between;
         align-items: center;
 
-        width: 460px;
+        width: 100%;
         min-height: 85px;
 
-        border-radius: 60px;
+        border-radius: 45px;
 
         &__value {
           font-family: 'TTNorms', sans-serif;
@@ -111,7 +126,7 @@
           justify-content: space-between;
 
           &__item {
-            margin: 10px 0;
+            margin: 15px 0;
 
             display: flex;
             flex-direction: row;
@@ -132,6 +147,14 @@
               font-weight: 400;
               line-height: 24px;
             }
+
+            .grey {
+              opacity: 0.5;
+
+              &:hover {
+                opacity: 1;
+              }
+            }
           }
         }
       }
@@ -145,18 +168,18 @@
       .gradient-box {
         padding: 3px;
 
-        width: 460px;
+        width: 100%;
         min-height: 85px;
 
         background: linear-gradient(180deg, rgb(39, 68, 146) 0%, rgb(40, 84, 206) 100%);
-        border-radius: 60px;
+        border-radius: 45px;
 
         .box {
           width: 100%;
           height: 100%;
 
           background: #1a1e3a;
-          border-radius: 59px;
+          border-radius: 42px;
         }
       }
 
@@ -229,6 +252,8 @@
           width: 126px;
           height: 53px;
 
+          cursor: pointer;
+
           background: #d53038;
           border-radius: 12px;
 
@@ -237,6 +262,48 @@
             font-size: 16px;
             font-weight: 700;
             line-height: 25px;
+          }
+        }
+      }
+    }
+  }
+}
+
+.light {
+  .bridge {
+    @include light-block;
+
+    @include b(600) {
+      background: transparent;
+      border: none;
+      box-shadow: none;
+    }
+
+    .form {
+      &__footer {
+        &__fee {
+          &__text {
+            color: #fff;
+
+            opacity: 1;
+          }
+        }
+      }
+
+      &__network {
+        background: #f2f3f8;
+      }
+
+      .gradient-box {
+        .box {
+          background: #fff;
+        }
+      }
+
+      &__submit {
+        &__button {
+          &__text {
+            color: #fff;
           }
         }
       }

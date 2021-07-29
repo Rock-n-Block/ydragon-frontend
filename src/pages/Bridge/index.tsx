@@ -70,7 +70,7 @@ const Bridge: React.FC = () => {
                           <div className="box__items__item__logo">
                             <img src={index.img} alt="index logo" />
                           </div>
-                          <div className="box__items__item__title">{index.title}</div>
+                          <div className="box__items__item__title grey">{index.title}</div>
                         </div>
                       );
                     return null;
