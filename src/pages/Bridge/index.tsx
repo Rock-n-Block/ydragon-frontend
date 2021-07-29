@@ -98,6 +98,9 @@ const Bridge: React.FC = () => {
         <div className="gradient-box">
           <div className="box form__input">
             <input type="text" placeholder="Enter amount" />
+            <div className="form__input__send-max">
+              <div className="form__input__send-max__text">SEND MAX</div>
+            </div>
           </div>
         </div>
         <div className="form__footer">
