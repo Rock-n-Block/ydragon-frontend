@@ -14,7 +14,7 @@ import './Indexes.scss';
 import { Sorter } from '../../../utils/sorter';
 
 const Indexes: React.FC = observer(() => {
-  const { modals } = useMst();
+  const { networks, modals } = useMst();
   const [indexes, setIndexes] = useState<Array<IIndex>>();
   const [sorterValue, setSorterValue] = useState<string>('');
   const [ascendent, setAscendent] = useState<boolean>(true);
@@ -154,8 +154,10 @@ const Indexes: React.FC = observer(() => {
     modals.createIndex.open();
   };
   useEffect(() => {
-    getIndexes();
-  }, [getIndexes]);
+    if (networks.currentNetwork) {
+      getIndexes();
+    }
+  }, [getIndexes, networks.currentNetwork]);
   useEffect(() => {
     if (indexes) {
       const newData = indexes.map((curIndex, index) => {

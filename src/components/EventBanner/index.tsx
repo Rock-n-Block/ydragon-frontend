@@ -13,7 +13,7 @@ import { Button } from '../index';
 import './EventBanner.scss';
 
 const EventBanner: React.FC = observer(() => {
-  const { modals } = useMst();
+  const { networks, modals } = useMst();
   const [start, setStart] = useState(moment());
   const [end, setEnd] = useState(moment());
   const [now, setNow] = useState(moment());
@@ -63,8 +63,10 @@ const EventBanner: React.FC = observer(() => {
       });
   }, []);
   useEffect(() => {
-    getImeList();
-  }, [getImeList]);
+    if (networks.currentNetwork) {
+      getImeList();
+    }
+  }, [networks.currentNetwork, getImeList]);
   useEffect(() => {
     if (imeItem) {
       setEnd(

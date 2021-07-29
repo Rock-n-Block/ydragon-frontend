@@ -180,14 +180,16 @@ const GetInModal: React.FC = observer(() => {
       setWhitelistTokens([
         {
           name: 'BNB',
+          symbol: 'Binance coin',
           address: '0x0000000000000000000000000000000000000000',
-          logo: theme.value === 'dark' ? bncDark : bncLight,
+          image: theme.value === 'dark' ? bncDark : bncLight,
         },
         ...currentIme.tokens.map((token) => {
           return {
-            name: token.symbol,
+            name: token.name,
+            symbol: token.symbol,
             address: token.address,
-            logo: token.image,
+            image: token.image,
           };
         }),
       ]);

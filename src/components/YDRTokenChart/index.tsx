@@ -7,7 +7,7 @@ import PriceDifferenceBag from '../PriceDifferenceBag';
 import './YDRTokenChart.scss';
 
 interface TokenChartProps {
-  price: any;
+  price: (value: number) => void;
 }
 
 const YDRTokenChart: React.FC<TokenChartProps> = ({ price }) => {
