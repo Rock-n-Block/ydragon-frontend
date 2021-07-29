@@ -35,7 +35,7 @@ export type ContractTypes =
   | 'DexFactory'
   | 'Token';
 
-const nativeTokens = ['bnb', 'wbnb', 'matic', 'wmatic'];
+export const nativeTokens = ['bnb', 'wbnb', 'matic', 'wmatic'];
 
 const networks: INetworks = {
   mainnet: '0x1',
@@ -209,7 +209,7 @@ export default class MetamaskService {
     return +decimals;
   }
 
-  getWrappedNativeAddress = (): string => {
+  static getWrappedNativeAddress = (): string => {
     const wrappedNativeSymbol =
       rootStore.networks.currentNetwork === 'binance-smart-chain' ? 'wbnb' : 'wmatic';
     const wrappedNativeAddress = rootStore.basicTokens.getTokenAddress(wrappedNativeSymbol);
@@ -330,26 +330,34 @@ export default class MetamaskService {
     });
   }
 
-  mint(value: string, spenderToken: ContractTypes, address: string, decimals: number) {
+  mint(
+    value: string,
+    spenderTokenSymbol: string,
+    spenderTokenAddress: string,
+    indexAddress: string,
+    decimals: number,
+  ) {
+    const isNative =
+      spenderTokenSymbol.toLowerCase() === 'bnb' || spenderTokenSymbol.toLowerCase() === 'matic';
     const mintMethod = MetamaskService.getMethodInterface(config.MAIN.ABI, 'mint');
     const signature = this.encodeFunctionCall(mintMethod, [
-      config[spenderToken].ADDRESS,
+      spenderTokenAddress,
       MetamaskService.calcTransactionAmount(value, decimals),
     ]);
 
     return this.sendTransaction({
       from: this.walletAddress,
-      to: address,
+      to: indexAddress,
       data: signature,
-      value: spenderToken === 'BNB' ? MetamaskService.calcTransactionAmount(value, decimals) : '',
+      value: isNative ? MetamaskService.calcTransactionAmount(value, decimals) : '',
     });
   }
 
-  redeem(value: string, spenderToken: ContractTypes, address: string) {
+  redeem(value: string, spenderTokenAddress: string, address: string) {
     const redeemMethod = MetamaskService.getMethodInterface(config.MAIN.ABI, 'redeem');
     const signature = this.encodeFunctionCall(redeemMethod, [
       MetamaskService.calcTransactionAmount(value, 18),
-      config[spenderToken].ADDRESS,
+      spenderTokenAddress,
     ]);
 
     return this.sendTransaction({
@@ -378,7 +386,7 @@ export default class MetamaskService {
     }
   }
 
-  async approveById(toContractAdress: string, address?: string) {
+  async approveById(toContractAdress: string, address: string) {
     try {
       const approveMethod = MetamaskService.getMethodInterface(config.MAIN.ABI, 'approve');
 
@@ -425,15 +433,15 @@ export default class MetamaskService {
   ) {
     const isBnb = spenderTokenName.toLowerCase() === 'bnb';
     const methodName = isBnb ? 'enterImeNative' : 'enterImeToken';
-    const mintMethod = MetamaskService.getMethodInterface(config.MAIN.ABI, methodName);
+    const enterMethod = MetamaskService.getMethodInterface(config.MAIN.ABI, methodName);
     let signature;
     if (!isBnb) {
-      signature = this.encodeFunctionCall(mintMethod, [
+      signature = this.encodeFunctionCall(enterMethod, [
         spenderTokenAddress,
         MetamaskService.calcTransactionAmount(value, decimals),
       ]);
     } else {
-      signature = this.encodeFunctionCall(mintMethod, []);
+      signature = this.encodeFunctionCall(enterMethod, []);
     }
 
     return this.sendTransaction({
@@ -459,18 +467,18 @@ export default class MetamaskService {
     }
     if (buy) {
       path = isNative
-        ? [this.getWrappedNativeAddress(), rootStore.basicTokens.getTokenAddress('ydr')]
+        ? [MetamaskService.getWrappedNativeAddress(), rootStore.basicTokens.getTokenAddress('ydr')]
         : [
             otherTokenAddress,
-            this.getWrappedNativeAddress(),
+            MetamaskService.getWrappedNativeAddress(),
             rootStore.basicTokens.getTokenAddress('ydr'),
           ];
     } else {
       path = isNative
-        ? [rootStore.basicTokens.getTokenAddress('ydr'), this.getWrappedNativeAddress()]
+        ? [rootStore.basicTokens.getTokenAddress('ydr'), MetamaskService.getWrappedNativeAddress()]
         : [
             rootStore.basicTokens.getTokenAddress('ydr'),
-            this.getWrappedNativeAddress(),
+            MetamaskService.getWrappedNativeAddress(),
             otherTokenAddress,
           ];
     }
@@ -537,17 +545,20 @@ export default class MetamaskService {
         otherTokenAddress
           ? [
               otherTokenAddress,
-              this.getWrappedNativeAddress(),
+              MetamaskService.getWrappedNativeAddress(),
               rootStore.basicTokens.getTokenAddress('ydr'),
             ]
-          : [this.getWrappedNativeAddress(), rootStore.basicTokens.getTokenAddress('ydr')],
+          : [
+              MetamaskService.getWrappedNativeAddress(),
+              rootStore.basicTokens.getTokenAddress('ydr'),
+            ],
         this.walletAddress,
         moment().add(30, 'minutes').format('X'),
       ]);
     } else {
       signature = this.encodeFunctionCall(buyMethod, [
         0,
-        [this.getWrappedNativeAddress(), rootStore.basicTokens.getTokenAddress('ydr')],
+        [MetamaskService.getWrappedNativeAddress(), rootStore.basicTokens.getTokenAddress('ydr')],
         this.walletAddress,
         moment().add(30, 'minutes').format('X'),
       ]);
@@ -591,10 +602,10 @@ export default class MetamaskService {
       otherTokenAddress
         ? [
             rootStore.basicTokens.getTokenAddress('ydr'),
-            this.getWrappedNativeAddress(),
+            MetamaskService.getWrappedNativeAddress(),
             otherTokenAddress,
           ]
-        : [rootStore.basicTokens.getTokenAddress('ydr'), this.getWrappedNativeAddress()],
+        : [rootStore.basicTokens.getTokenAddress('ydr'), MetamaskService.getWrappedNativeAddress()],
       this.walletAddress,
       moment().add(30, 'minutes').format('X'),
     ]);
