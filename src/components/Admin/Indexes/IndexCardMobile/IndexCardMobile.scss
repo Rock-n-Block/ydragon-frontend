@@ -4,6 +4,7 @@
 .dark {
   .index-card-mobile {
     @include shadow-dark-block;
+    border-radius: 0;
     border-bottom: 1px solid rgba($white, 0.2);
 
     &__title {
@@ -19,6 +20,7 @@
 .light {
   .index-card-mobile {
     @include light-block;
+    border-radius: 0;
     border-bottom: 1px solid rgba($black, 0.2);
 
     &__title {

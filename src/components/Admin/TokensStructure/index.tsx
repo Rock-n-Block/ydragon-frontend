@@ -4,9 +4,10 @@ import BigNumber from 'bignumber.js/bignumber';
 
 import { IVault } from '../../../pages/AdminIndex';
 import { indexesApi } from '../../../services/api';
-import { Table } from '../../index';
+import { Table, Button } from '../../index';
 import { InputNumber } from '../../Input';
 import SmallTableCard from '../../SmallTableCard/index';
+import bluePlus from '../../../assets/img/icons/icon-plus-blue.svg';
 
 import './TokensStructure.scss';
 
@@ -45,7 +46,13 @@ const TokensStructure: React.FC<TokensStructureProps> = ({ vaults, manualRebalan
       key: 'name',
       render: (item: any) => (
         <div className="table__col-with-logo">
-          <img src={item.image} className="table__col-with-logo__image" alt={`${item.name} logo`} />
+          <img
+            src={item.image}
+            className="table__col-with-logo__image"
+            alt={`${item.name} logo`}
+            width="31"
+            height="31"
+          />
           <span className="table__col-with-logo__text">{item.name}</span>
         </div>
       ),
@@ -77,7 +84,14 @@ const TokensStructure: React.FC<TokensStructureProps> = ({ vaults, manualRebalan
       key: 'returnValue',
     },
     {
-      title: 'APR, %',
+      title: (
+        <div className="apr-cell">
+          APR, %
+          <Button onClick={handleSubmitChange} className="apr-cell__btn" styledType="clear">
+            <img src={bluePlus} alt="add apr" width="32" height="32" />
+          </Button>
+        </div>
+      ),
       dataIndex: 'apr',
       key: 'apr',
       render: (item: any) => (
@@ -85,7 +99,6 @@ const TokensStructure: React.FC<TokensStructureProps> = ({ vaults, manualRebalan
           type="number"
           value={item.apr === '0.0' ? '' : item.apr}
           onChange={(value) => handleInputChange(value, item.index)}
-          onBlur={handleSubmitChange}
           placeholder="0"
           min={0}
           max={100}
@@ -105,10 +118,12 @@ const TokensStructure: React.FC<TokensStructureProps> = ({ vaults, manualRebalan
         const x_vault = new BigNumber(vault.x_balance)
           .dividedBy(new BigNumber(10).pow(18))
           .toFixed(5);
-        const y_vault = new BigNumber(vault.y_balance)
+        const farm = new BigNumber(vault.farm_balance)
           .dividedBy(new BigNumber(10).pow(18))
           .toFixed(5);
-        const farm = new BigNumber(vault.farm_balance)
+        const y_vault = new BigNumber(
+          new BigNumber(vault.y_balance).minus(new BigNumber(vault.farm_balance)),
+        )
           .dividedBy(new BigNumber(10).pow(18))
           .toFixed(5);
         const estimated = new BigNumber(x_vault)
@@ -158,15 +173,23 @@ const TokensStructure: React.FC<TokensStructureProps> = ({ vaults, manualRebalan
                   ['Must be returned from the farm', data.returnValue],
                   [
                     'APR, %',
-                    <InputNumber
-                      type="number"
-                      value={data.apr.apr === '0.0' ? '' : data.apr.apr}
-                      onChange={(value) => handleInputChange(value, data.apr.index)}
-                      onBlur={handleSubmitChange}
-                      placeholder="0"
-                      min={0}
-                      max={100}
-                    />,
+                    <div className="apr-cell-small">
+                      <InputNumber
+                        type="number"
+                        value={data.apr.apr === '0.0' ? '' : data.apr.apr}
+                        onChange={(value) => handleInputChange(value, data.apr.index)}
+                        placeholder="0"
+                        min={0}
+                        max={100}
+                      />
+                      <Button
+                        onClick={handleSubmitChange}
+                        className="apr-cell__btn"
+                        styledType="clear"
+                      >
+                        <img src={bluePlus} alt="add apr" width="32" height="32" />
+                      </Button>
+                    </div>,
                   ],
                 ]}
               />

@@ -13,16 +13,22 @@ import { observer } from 'mobx-react';
 
 import { ReactComponent as ArrowDownBlack } from '../../assets/img/icons/icon-arrow-down.svg';
 import { ReactComponent as ArrowDownWhite } from '../../assets/img/icons/icon-arrow-white.svg';
-import { useMst } from '../../store/store';
+import { DARK, useMst } from '../../store/store';
 import { ITokenMini } from '../../utils/tokenMini';
 
 const { Option } = Select;
 const { TextArea } = InputAntd;
 
-const Input: React.FC<InputProps> = (props) => {
+interface InputWithProps extends InputProps {
+  error?: boolean;
+  className?: string;
+}
+
+const Input: React.FC<InputWithProps> = (props) => {
+  const { className, error, ...otherProps } = props;
   return (
-    <div className="input-border">
-      <InputAntd className="input" {...props} />
+    <div className={`input-border ${className ?? ''}${error ? '--error' : ''}`}>
+      <InputAntd onWheel={(e) => e.currentTarget.blur()} className="input" {...otherProps} />
     </div>
   );
 };
@@ -30,10 +36,12 @@ const Input: React.FC<InputProps> = (props) => {
 interface InputWithSelectProps extends InputProps {
   tokens: ITokenMini | Array<ITokenMini>;
   onSelectChange?: (value: string) => void;
+  getPopupContainer?: boolean;
+  defaultSelectValue?: string;
 }
 
 export const InputWithSelect: React.FC<InputWithSelectProps> = observer((props) => {
-  const { tokens, onSelectChange, ...otherInputProps } = props;
+  const { getPopupContainer = false, tokens, onSelectChange, ...otherInputProps } = props;
   const { theme } = useMst();
 
   let tokenOrSelect;
@@ -43,14 +51,15 @@ export const InputWithSelect: React.FC<InputWithSelectProps> = observer((props) 
         <Select
           className="input-with-select__select"
           onChange={onSelectChange}
-          defaultValue={tokens[0].name}
-          suffixIcon={<Icon component={theme.value === 'dark' ? ArrowDownWhite : ArrowDownBlack} />}
+          defaultValue={tokens[0].symbol}
+          getPopupContainer={getPopupContainer ? (trigger) => trigger.parentNode : undefined}
+          suffixIcon={<Icon component={DARK === theme.value ? ArrowDownWhite : ArrowDownBlack} />}
         >
           {tokens.map((token) => (
-            <Option value={token.name} key={nextId()}>
-              <h4 className="input-with-select__name">{token.name}</h4>
+            <Option value={token.symbol ?? ''} key={nextId()}>
+              <h4 className="input-with-select__name">{token.symbol}</h4>
               <div className="input-with-select__logo">
-                <img src={token.logo} alt={`${token.name} logo`} />
+                <img src={token.image} alt={`${token.name} logo`} width="18" height="18" />
               </div>
             </Option>
           ))}
@@ -60,16 +69,16 @@ export const InputWithSelect: React.FC<InputWithSelectProps> = observer((props) 
   } else {
     tokenOrSelect = (
       <div className="input-with-select__token">
-        <h4 className="input-with-select__name">{tokens.name}</h4>
+        <h4 className="input-with-select__name">{tokens.symbol}</h4>
         <div className="input-with-select__logo">
-          <img src={tokens.logo} alt={`${tokens.name} logo`} />
+          <img src={tokens.image} alt={`${tokens.name} logo`} width="18" height="18" />
         </div>
       </div>
     );
   }
   return (
     <div className="input-with-select input-border">
-      <InputAntd className="input" {...otherInputProps} />
+      <InputAntd onWheel={(e) => e.currentTarget.blur()} className="input" {...otherInputProps} />
       {tokenOrSelect}
     </div>
   );
@@ -77,7 +86,7 @@ export const InputWithSelect: React.FC<InputWithSelectProps> = observer((props) 
 export const InputNumber: React.FC<InputNumberProps> = (props) => {
   return (
     <div className="input-border">
-      <InputNumberAntd className="input" {...props} />
+      <InputNumberAntd onWheel={(e) => e.currentTarget.blur()} className="input" {...props} />
     </div>
   );
 };

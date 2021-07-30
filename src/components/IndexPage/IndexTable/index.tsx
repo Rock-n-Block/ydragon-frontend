@@ -57,6 +57,8 @@ const IndexTable: React.FC<IndexTableProps> = ({ tokens }) => {
                   src={'image' in token ? token.image : token.token_image}
                   className="index-table__image"
                   alt={`${'name' in token ? token.name : token.token_name} logo`}
+                  width="31"
+                  height="31"
                 />
                 <div className="index-table__token">
                   {'name' in token ? token.name : token.token_name}

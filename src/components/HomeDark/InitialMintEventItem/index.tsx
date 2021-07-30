@@ -120,7 +120,7 @@ const InitialMintEventItem: React.FC /* <InitialMintEventItemProps> */ = (/* { i
         {/* <Button
           onClick={handleGetIn}
           className="initial-mint-event__get-btn"
-          tooltip='Please login'
+          needLogin="Please login"
           disabled={imeEnabled}
         >
           {' '}

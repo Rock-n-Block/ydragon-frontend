@@ -36,6 +36,13 @@
 
     transform: translateX(100%);
 
+    @include b('mobile'){
+      background: transparent;
+      top: 10px;
+      right: 55px;
+        
+    }
+
     &-x {
       width: 18px;
       height: 18px;

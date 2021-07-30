@@ -3,7 +3,7 @@ import { observer } from 'mobx-react-lite';
 
 import iconDownBlack from '../../../../assets/img/icons/icon-arrow-down-black.svg';
 import iconDown from '../../../../assets/img/icons/icon-arrow-down-white.svg';
-import { useMst } from '../../../../store/store';
+import { DARK, useMst } from '../../../../store/store';
 
 import './Question.scss';
 
@@ -22,7 +22,7 @@ const Question: React.FC<QuestionProps> = observer((props: PropsWithChildren<Que
       <div className="question__text--wrapper">
         <div
           className={`question__title ${
-            collapsed ? `color${theme.value === 'dark' ? 'White' : 'Black'}` : 'colorOrange'
+            collapsed ? `color${DARK === theme.value ? 'White' : 'Black'}` : 'colorOrange'
           }`}
           role="button"
           tabIndex={0}
@@ -31,9 +31,11 @@ const Question: React.FC<QuestionProps> = observer((props: PropsWithChildren<Que
         >
           {title}
           <img
-            alt="#"
-            src={theme.value === 'dark' ? iconDown : iconDownBlack}
+            alt="arrow down"
+            src={DARK === theme.value ? iconDown : iconDownBlack}
             className={`question__icon ${collapsed ? '' : 'down'}`}
+            width="24"
+            height="14"
           />
         </div>
         {React.cloneElement(element, { children })}

@@ -58,7 +58,6 @@ const AdminIndex: React.FC = () => {
     indexesApi
       .getIndexesRebalance(+indexId)
       .then(({ data }) => {
-        console.log('get collections success', data);
         setIndex(data);
       })
       .catch((err) => {
@@ -71,7 +70,6 @@ const AdminIndex: React.FC = () => {
     vaultsApi
       .getVaults(+indexId)
       .then(({ data }) => {
-        console.log('get vaults collections success', data);
         const vaults = data.splice(-2, 2);
         setVault(data);
         setVaultMini(vaults);
@@ -91,14 +89,18 @@ const AdminIndex: React.FC = () => {
     <main className="container">
       <IndexInfo marketCap={index.market_cap} price={index.price} />
       <Composition status={index.status} tokens={index.tokens_diff} />
-      <Rebalance status={index.status} tokens={index.tokens_diff} />
+      <Rebalance tokens={index.tokens_diff} />
       <Options
         address={index.index?.address}
         onManualInputChange={handleManualRebalanceValueChange}
       />
       <TokensStructure vaults={vault} manualRebalanceValue={manualRebalanceValue} />
       <XYStructure vaults={vaultMini} />
-      <RebalanceModal name={index.index?.name} tokens={index.tokens_diff} />
+      <RebalanceModal
+        name={index.index?.name}
+        tokens={index.tokens_diff}
+        onStart={getIndexComposition}
+      />
     </main>
   );
 };

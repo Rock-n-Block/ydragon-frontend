@@ -38,10 +38,31 @@
 
   gap: 60px;
 
+  .input-border {
+    padding: 3px;
+
+    width: fit-content;
+
+    height: 53px;
+
+    border-radius: 60px;
+  }
+
   &__option {
     display: flex;
     align-items: center;
     gap: 30px;
+
+    &-with-input {
+      @include b('mobile') {
+        flex-direction: column;
+      }
+    }
+    @include b('mobile') {
+      justify-content: center;
+
+      text-align: center;
+    }
 
     &__input-wrapper {
       position: relative;

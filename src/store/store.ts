@@ -5,12 +5,17 @@ import { Modals } from './Modals';
 import { Networks } from './Networks';
 import { Theme } from './Theme';
 import { User } from './User';
+import { BasicTokens } from './BasicTokens';
+
+export const DARK = 'dark';
+export const LIGHT = 'light';
 
 const RootModel = types.model({
   modals: Modals,
   user: User,
   theme: Theme,
   networks: Networks,
+  basicTokens: BasicTokens,
 });
 
 export const Store = RootModel.create({
@@ -22,19 +27,21 @@ export const Store = RootModel.create({
     mint: { isOpen: false },
     info: { msg: '', title: '', type: 'info' },
     redeem: { isOpen: false },
-    tradeYDR: { isOpen: false, method: 'buy' },
-    tradeIndex: { isOpen: false, method: 'buy' },
+    tradeYDR: { isOpen: false, method: '' },
+    tradeIndex: { isOpen: false, method: '' },
   },
   user: {
     address: '',
     token: '',
   },
   theme: {
-    value: localStorage.theme ?? 'dark',
+    value: localStorage.theme ?? DARK,
   },
   networks: {
-    id: '',
+    networkId: '',
+    networksList: [],
   },
+  basicTokens: {},
 });
 
 export const rootStore = Store;

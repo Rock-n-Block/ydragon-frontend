@@ -13,7 +13,7 @@ import { Button } from '../index';
 import './EventBanner.scss';
 
 const EventBanner: React.FC = observer(() => {
-  const { modals } = useMst();
+  const { networks, modals } = useMst();
   const [start, setStart] = useState(moment());
   const [end, setEnd] = useState(moment());
   const [now, setNow] = useState(moment());
@@ -55,7 +55,6 @@ const EventBanner: React.FC = observer(() => {
     indexesApi
       .getImeIndexes()
       .then(({ data }) => {
-        console.log('get ime list success', data);
         setImeItem(data[0]);
       })
       .catch((error) => {
@@ -64,8 +63,10 @@ const EventBanner: React.FC = observer(() => {
       });
   }, []);
   useEffect(() => {
-    getImeList();
-  }, [getImeList]);
+    if (networks.currentNetwork) {
+      getImeList();
+    }
+  }, [networks.currentNetwork, getImeList]);
   useEffect(() => {
     if (imeItem) {
       setEnd(
@@ -84,11 +85,11 @@ const EventBanner: React.FC = observer(() => {
           className="event-banner__close"
           styledType="clear"
         >
-          <img src={cross} alt="" width="20" height="20" />
+          <img src={cross} alt="cross" width="20" height="20" />
         </Button>
         <div className="event-banner__inner">
           <div className="event-banner__icon">
-            <img src={coinIcon} alt="" width="66" height="75" />
+            <img src={coinIcon} alt="coin" width="66" height="75" />
           </div>
 
           <div className="event-banner-timer">

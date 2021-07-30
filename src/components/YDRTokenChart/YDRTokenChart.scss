@@ -8,6 +8,9 @@
       background: rgba(255, 255, 255, 0.1);
     }
   }
+  .chart-link{
+    color: $white
+  }
 }
 
 .light {
@@ -20,6 +23,9 @@
       background: rgba(0, 0, 0, 0.2);
     }
   }
+  .chart-link{
+    color: $black
+  }
 }
 
 .chart {
@@ -29,6 +35,15 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+
+    @include b('tablet') {
+      flex-direction: column;
+    }
+    @include b('mobile') {
+      align-items: center;
+      gap: 20px;
+      margin-bottom: 20px;
+    }
 
     &-title {
       display: flex;
@@ -40,6 +55,13 @@
       font-weight: normal;
 
       color: #fff;
+
+      @include b('mobile') {
+        font-size: 30px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
 
       .diff {
         margin-left: 20px;
@@ -100,10 +122,24 @@
       color: #fff;
 
       border-radius: 21px;
+
+      @include b('mobile') {
+        padding: 5px 19px;
+      }
     }
 
     .active {
       background: linear-gradient(to right bottom, #b12e2a, #f47c45);
     }
+  }
+  &-link {
+    margin: 15px;
+    float: right;
+    font-family: 'TT Norms', sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 17px;
+    opacity: 0.5;
   }
 }

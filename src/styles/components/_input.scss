@@ -11,14 +11,10 @@
     background: $black;
   }
 
-  .input-with-select {
-    &__select {
-      background: rgba($black, 0.05);
-
-      .ant-select-selector {
-        background: $black !important;
-        border-color: $black !important;
-      }
+  .input-with-select__select {
+    .ant-select-selector {
+      background: rgba(255, 255, 255, 0.05) !important;
+      border: none;
     }
   }
 }
@@ -33,15 +29,21 @@
     background: $white !important;
   }
 
-  .input-with-select {
-    &__select {
-      background: #eaeaea;
-
-      .ant-select-selector {
-        background: #eaeaea !important;
-        border-color: #eaeaea !important;
-      }
+  .input-with-select__select {
+    .ant-select-selector {
+      background: #eaeaea !important;
+      border-color: #eaeaea !important;
     }
+  }
+  .ant-input-affix-wrapper {
+    background: linear-gradient(355.19deg, #fff 0%, #dde1f0 100%);
+  }
+}
+
+.dark,
+.light {
+  .input-border {
+    background: linear-gradient(180deg, rgb(39, 68, 146) 0%, rgb(40, 84, 206) 100%);
   }
 }
 
@@ -52,7 +54,6 @@
 
   height: 53px;
 
-  background: linear-gradient(180deg, rgb(39, 68, 146) 0%, rgb(40, 84, 206) 100%);
   border-radius: 60px;
 }
 
@@ -68,6 +69,7 @@
   font-weight: 700;
   line-height: 24px;
   text-align: center;
+  font-feature-settings: 'liga' off;
 
   border: none;
   border-radius: 60px;
@@ -91,6 +93,7 @@
     position: absolute;
     top: 50%;
     right: 22px;
+    text-transform: uppercase;
 
     display: flex;
     align-items: center;
@@ -123,7 +126,7 @@
 
     img {
       width: 18px;
-      height: 16px;
+      height: 18px;
     }
   }
 
@@ -145,7 +148,7 @@
   &__select {
     width: 100%;
     height: 100%;
-
+    text-transform: uppercase;
     border-radius: 60px;
 
     .ant-select-selector {
@@ -174,7 +177,9 @@
     color: unset;
   }
 }
-
+.ant-select-dropdown{
+  text-transform: uppercase;
+}
 .ant-select-item-option-content {
   display: flex;
   justify-content: space-between;
@@ -229,4 +234,24 @@ input::-webkit-inner-spin-button {
 /* Firefox */
 input[type='number'] {
   -moz-appearance: textfield;
+}
+
+.m-create-index,
+.form-rebalance {
+  .form-create-index__input {
+    &-name,
+    &-symbol {
+      &--error {
+        background: $red;
+      }
+    }
+  }
+
+  .weights-sum,
+  .token-weights-item__input-token,
+  .rebalance-option__input-hours {
+    &--error {
+      background: $red;
+    }
+  }
 }

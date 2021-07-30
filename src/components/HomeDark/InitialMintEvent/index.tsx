@@ -7,6 +7,7 @@ import { observer } from 'mobx-react-lite';
 import { InitialMintEventItem } from '../index';
 
 import './InitialMintEvent.scss';
+// import { useMst } from '../../../store/store';
 
 export interface IIme {
   id: number;
@@ -21,6 +22,7 @@ export interface IImeToken {
   name: string;
   symbol: string;
   image: string;
+  address: string;
   total_quantity: number;
   price: number;
   total_price: number;
@@ -28,7 +30,8 @@ export interface IImeToken {
 }
 
 const InitialMintEvent: React.FC = observer(() => {
-  /* const [imeList, setImeList] = useState<IIme[]>([] as IIme[]);
+ /* const { networks } = useMst();
+  const [imeList, setImeList] = useState<IIme[]>([] as IIme[]);
   const [loading, setLoading] = useState<boolean>(false);
   const getImeList = useCallback(() => {
     setLoading(true);
@@ -45,8 +48,10 @@ const InitialMintEvent: React.FC = observer(() => {
       .finally(() => setLoading(false));
   }, []);
   useEffect(() => {
-    getImeList();
-  }, [getImeList]); */
+    if (networks.currentNetwork) {
+      getImeList();
+    }
+  }, [networks.currentNetwork, getImeList]); */
   return (
     <section className="section">
       <h2 className="section__title text-outline">Index minting Event</h2>

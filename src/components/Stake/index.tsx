@@ -37,7 +37,6 @@ const Stake: React.FC<StakeProps> = ({ tokens, propsLoading }) => {
     setStakeValue(tokensList[activeStakeIndex].available);
   };
   const handleStakeValueChange = (value: any) => {
-    // console.log(e);
     setStakeValue(value || '');
   };
   const handleRadioChange = (e: any) => {
@@ -62,7 +61,6 @@ const Stake: React.FC<StakeProps> = ({ tokens, propsLoading }) => {
       .approveStake(tokens[activeStakeIndex].address)
       .then(() => {
         setIsAllowed(!isAllowed);
-        console.log('Approve token success');
       })
       .catch((error: ProviderRpcError) => {
         const { message } = error;
@@ -76,7 +74,6 @@ const Stake: React.FC<StakeProps> = ({ tokens, propsLoading }) => {
       .checkStakingAllowance(tokens[activeStakeIndex].address)
       .then((result: boolean) => {
         setIsAllowed(result);
-        console.log(`${tokens[activeStakeIndex].name} need approve: ${!result}`);
       })
       .catch((err: any) => {
         const { response } = err;

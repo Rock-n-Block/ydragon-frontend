@@ -2,9 +2,11 @@ import React from 'react';
 import BigNumber from 'bignumber.js/bignumber';
 import { withFormik } from 'formik';
 import { observer } from 'mobx-react-lite';
+import moment from 'moment';
 import { TransactionReceipt } from 'web3-core';
 
 import { ITokensDiff } from '../../../pages/Admin';
+import { ISearchToken } from '../../../components/Search';
 import { indexesApi } from '../../../services/api';
 import { useWalletConnectorContext } from '../../../services/walletConnect';
 import { useMst } from '../../../store/store';
@@ -19,13 +21,15 @@ const CreateIndexForm: React.FC = () => {
     mapPropsToValues: () => ({
       name: '',
       symbol: '',
-      startDate: '',
-      endDate: '',
+      price: '',
+      dateRange: ['', ''],
       description: '',
       tokens: [] as Array<ITokensDiff>,
       isLoading: false,
+      searchTokens: [] as Array<ISearchToken>,
+      searchInput: '',
     }),
-    handleSubmit: (values, { setFieldValue }) => {
+    handleSubmit: (values, { setFieldValue, resetForm }) => {
       setFieldValue('isLoading', true);
       const tokenAddresses: Array<string> = [];
       const tokenWeights: Array<string> = [];
@@ -37,22 +41,37 @@ const CreateIndexForm: React.FC = () => {
         .createNewIndex(
           values.name,
           values.symbol,
-          [values.startDate, values.endDate],
+          [
+            moment(values.dateRange ? values.dateRange[0] : '').format('X'),
+            moment(values.dateRange ? values.dateRange[1] : '').format('X'),
+          ],
           tokenAddresses,
           tokenWeights,
         )
         .then((data: TransactionReceipt) => {
-          indexesApi
-            .addDescriptionToIndex(data.transactionHash, values.description)
-            .then(() => {
-              console.log('description added');
-            })
-            .catch((error: ProviderRpcError) => {
-              const { message } = error;
-              modals.info.setMsg('Error', message, 'error');
-            });
+          if (values.description) {
+            indexesApi
+              .addParamsToIndex(data.transactionHash, values.description, values.price)
+              .then(() => {
+                resetForm({});
+                modals.info.setMsg('Success', 'Index created with description', 'success');
+              })
+              .catch((error) => {
+                const { response } = error;
+                modals.info.setMsg(
+                  'Index created',
+                  `Description not added, error:\n${response.data}`,
+                  'info',
+                );
+              })
+              .finally(() => {
+                setFieldValue('isLoading', false);
+              });
+          } else {
+            resetForm({});
+            modals.info.setMsg('Success', 'Index created', 'success');
+          }
 
-          modals.info.setMsg('Success', 'Index created', 'success');
           modals.createIndex.close();
         })
         .catch((error: ProviderRpcError) => {

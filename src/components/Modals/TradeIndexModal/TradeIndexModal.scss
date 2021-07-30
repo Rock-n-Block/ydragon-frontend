@@ -1,6 +1,32 @@
 @import '../../../styles/variables';
 @import '../../../styles/mixins';
 
+.dark {
+  .m-trade-ydr {
+    &__field {
+      .input-border {
+        .input,
+        .ant-input[disabled] {
+          background: $black;
+        }
+      }
+    }
+  }
+}
+
+.light {
+  .m-trade-ydr {
+    &__field {
+      .input-border {
+        .input,
+        .ant-input[disabled] {
+          background: $white;
+        }
+      }
+    }
+  }
+}
+
 .m-trade-ydr {
   &__content {
     position: relative;
@@ -70,7 +96,6 @@
 
       .ant-input[disabled] {
         color: unset;
-        background: $black;
       }
     }
   }

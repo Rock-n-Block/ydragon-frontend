@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import BigNumber from 'bignumber.js/bignumber';
 import { FieldArray, FieldArrayRenderProps, Form, FormikProps } from 'formik';
 import { observer } from 'mobx-react-lite';
 import moment from 'moment';
+import { EventValue } from 'rc-picker/lib/interface';
 
 import DangerCircle from '../../../assets/img/icons/icon-danger-circle.svg';
 import { Button, Input, RangePicker, Search, TextArea, TokenMini } from '../../../components';
@@ -14,21 +15,77 @@ import { coinsApi } from '../../../services/api';
 export interface ICreateIndex {
   name: string;
   symbol: string;
-  startDate: string;
-  endDate: string;
+  price: string;
+  dateRange: [EventValue<any>, EventValue<any>] | null;
   description: string;
   tokens: Array<ITokensDiff>;
   isLoading?: boolean;
+  searchTokens: Array<ISearchToken>;
+  searchInput?: string;
 }
 
 const CreateIndex: React.FC<FormikProps<ICreateIndex> & ICreateIndex> = observer(
   ({ setFieldValue, handleChange, handleBlur, values, handleSubmit }) => {
-    const [searchTokens, setSearchTokens] = useState<ISearchToken[]>([] as ISearchToken[]);
+    const [validation, setValidation] = useState<any>({
+      name: true,
+      symbol: true,
+    });
+    const onBlurHandler = (value: string) => {
+      switch (value) {
+        case 'name':
+          if (!values.name) {
+            setValidation((prevState: any) => ({
+              ...prevState,
+              name: false,
+            }));
+          }
+          break;
+        case 'symbol':
+          if (!values.symbol) {
+            setValidation((prevState: any) => ({
+              ...prevState,
+              symbol: false,
+            }));
+          }
+          break;
+        default:
+          break;
+      }
+    };
 
-    /*  const disabledDate = (current: any) => {
+    const onChangeHandler = (e: any, value: string) => {
+      switch (value) {
+        case 'name':
+          setValidation((prevState: any) => ({
+            ...prevState,
+            name: true,
+          }));
+          break;
+        case 'symbol':
+          setValidation((prevState: any) => ({
+            ...prevState,
+            symbol: true,
+          }));
+          break;
+        default:
+          break;
+      }
+      handleChange(e);
+    };
+    const onTokenInputHandler = (e: any) => {
+      if (+e.target.value < 0) {
+        e.target.value = '';
+      }
+      handleChange(e);
+    };
+    const disabledDate = (current: any) => {
       // Can not select days before today and today
-      return current && current < moment().startOf('day');
-    }; */
+      return (
+        // TODO: поставить ограничение даты на сегодняшний день
+        (current && current < moment().startOf('day')) ||
+        (current && current > moment().add(1, 'year'))
+      );
+    };
     const weightsSum = values.tokens
       .map((tokenDiff) => +tokenDiff.new_weight)
       .reduce((prevSum, newItem) => prevSum.plus(newItem), new BigNumber(0))
@@ -39,15 +96,23 @@ const CreateIndex: React.FC<FormikProps<ICreateIndex> & ICreateIndex> = observer
           .getCoinsList(tokenName)
           .then(({ data }) => {
             console.log(`tokens with ${tokenName}`, data);
-            setSearchTokens(data);
+            setFieldValue('searchTokens', data);
           })
           .catch((error) => {
             const { response } = error;
             console.log('search error', response);
           });
       } else {
-        setSearchTokens([] as ISearchToken[]);
+        setFieldValue('searchTokens', [] as ISearchToken[]);
       }
+    };
+    const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
+      setFieldValue('searchInput', e.target.value);
+      handleNewTokenNameChange(e.target.value);
+    };
+    const handleClear = () => {
+      setFieldValue('searchInput', '');
+      handleNewTokenNameChange('');
     };
     const handleRemove = (arrayHelper: FieldArrayRenderProps, index: number) => {
       arrayHelper.remove(index);
@@ -74,18 +139,47 @@ const CreateIndex: React.FC<FormikProps<ICreateIndex> & ICreateIndex> = observer
     // rangepicker
     const onOk = (value: any[] | null) => {
       if (value) {
-        setFieldValue('startDate', moment(value[0]).format('X'));
-        setFieldValue('endDate', moment(value[1]).format('X'));
+        // TODO: обсудить количество добавленных минут перед деплоем
+        // TODO: ракомментировать перед деплоем
+
+        // if (value[0].diff(value[1]) === 0){
+        //   setFieldValue('dateRange', [value[0], value[0].add(1, 'minutes')])
+        // }
+        // setFieldValue('dateRange', [value[0], value[1]])
+
+        // TODO: закомментировать перед деплоем
+        if (moment().diff(value[0]) > 0) {
+          if (value[1]) {
+            if (moment().diff(value[1]) > 0) {
+              setFieldValue('dateRange', [moment().add(3, 'minutes'), value[0].add(1, 'minutes')]);
+            } else {
+              setFieldValue('dateRange', [moment().add(3, 'minutes'), value[1]]);
+            }
+          } else {
+            setFieldValue('dateRange', [moment().add(3, 'minutes'), '']);
+          }
+        } else {
+          // eslint-disable-next-line
+          if (value[1]) {
+            if (moment().diff(value[1]) > 0) {
+              setFieldValue('dateRange', [value[0], moment().add(4, 'minutes')]);
+            } else {
+              setFieldValue('dateRange', [value[0], value[1]]);
+            }
+          } else {
+            setFieldValue('dateRange', [value[0], '']);
+          }
+        }
+        // до этого места
       } else {
-        setFieldValue('startDate', '');
-        setFieldValue('endDate', '');
+        setFieldValue('dateRange', ['', '']);
       }
     };
 
-    const onRangePickerChange = (value: any, dateString: any) => {
+    /*  const onRangePickerChange = (value: any, dateString: any) => {
       console.log('Selected Time: ', value);
       console.log('Formatted Selected Time: ', dateString);
-    };
+    }; */
     return (
       <Form name="form-create-index" className="form-create-index">
         <div className="form-create-index__inputs">
@@ -95,8 +189,10 @@ const CreateIndex: React.FC<FormikProps<ICreateIndex> & ICreateIndex> = observer
               name="name"
               placeholder="Enter index name"
               value={values.name}
-              onChange={handleChange}
-              onBlur={handleBlur}
+              onChange={(e) => onChangeHandler(e, 'name')}
+              onBlur={() => onBlurHandler('name')}
+              className="form-create-index__input-name"
+              error={!validation.name}
             />
           </div>
           <div className="form-create-index__input">
@@ -105,29 +201,51 @@ const CreateIndex: React.FC<FormikProps<ICreateIndex> & ICreateIndex> = observer
               name="symbol"
               placeholder="BTC"
               value={values.symbol}
-              onChange={handleChange}
-              onBlur={handleBlur}
+              onChange={(e) => onChangeHandler(e, 'symbol')}
+              onBlur={() => onBlurHandler('symbol')}
+              className="form-create-index__input-symbol"
+              error={!validation.symbol}
             />
           </div>
         </div>
         <RangePicker
-          // disabledDate={disabledDate}
+          value={values.dateRange}
+          disabledDate={disabledDate}
           showTime={{
             hideDisabledOptions: true,
           }}
-          format="YYYY-MM-DD HH:mm"
-          onChange={onRangePickerChange}
+          format="DD.MM.YY HH:mm"
           onOk={onOk}
+          inputReadOnly
         />
         <TextArea
           autoSize={{ minRows: 2 }}
+          maxLength={230}
           placeholder="Please enter description, you can't do it later"
           className="form-create-index__description"
           name="description"
           value={values.description}
           onChange={handleChange}
           onBlur={handleBlur}
+          showCount
         />
+        <div className="form-create-index__input">
+          <p className="form-create-index__input-label">
+            Wished price for one token at the end of the IME
+          </p>
+          <Input
+            type="number"
+            value={values.price}
+            placeholder="1"
+            onChange={(e) => setFieldValue('price', +e.target.value >= 0 ? e.target.value : "")}
+            onBlur={handleBlur}
+            prefix="$"
+            className="form-create-index__input-price"
+          />
+          <p className="form-create-index__input-info">
+            If the field is empty, the automatic price will be equal to $1
+          </p>
+        </div>
         <FieldArray
           name="tokens"
           render={(arrayHelper) => (
@@ -153,10 +271,12 @@ const CreateIndex: React.FC<FormikProps<ICreateIndex> & ICreateIndex> = observer
                             disabled={tokenDiff.to_delete}
                             name={`tokens[${index}].new_weight`}
                             value={tokenDiff.new_weight === '0' ? '' : tokenDiff.new_weight}
-                            onChange={handleChange}
+                            onChange={(e) => onTokenInputHandler(e)}
                             onBlur={handleBlur}
                             placeholder="0"
                             type="number"
+                            className="token-weights-item__input-token"
+                            error={+tokenDiff.new_weight > 100}
                           />
                         </div>
 
@@ -173,22 +293,28 @@ const CreateIndex: React.FC<FormikProps<ICreateIndex> & ICreateIndex> = observer
                   ))}
                   <div className="token-weights__total">
                     <h3 className="token-weights__total-name">Total weight</h3>
-                    <div className="input-border">
-                      <span className="input">{weightsSum}</span>
+                    <div
+                      className={`input-border weights-sum${
+                        +weightsSum === 0 || +weightsSum === 100 ? '' : '--error'
+                      }`}
+                    >
+                      <span className="input">{+weightsSum > 0 ? weightsSum : '0'}</span>
                     </div>
                   </div>
                 </>
               ) : (
                 <div className="token-weights-items__empty">
-                  <img src={DangerCircle} alt="alert" />
+                  <img src={DangerCircle} alt="alert" width="20" height="20" />
                   <span>Please add tokens to the index</span>
                 </div>
               )}
 
               <Search
                 className="token-weights__search"
-                data={searchTokens}
-                onChange={(e) => handleNewTokenNameChange(e)}
+                data={values.searchTokens}
+                onChange={(e) => handleSearchChange(e)}
+                newTokenName={values.searchInput}
+                handleClear={handleClear}
                 onPick={(pickedToken: ISearchToken) => handleAddNewToken(arrayHelper, pickedToken)}
               />
             </div>
@@ -199,14 +325,15 @@ const CreateIndex: React.FC<FormikProps<ICreateIndex> & ICreateIndex> = observer
           <Button
             onClick={() => handleSubmit()}
             disabled={
-              values.isLoading ||
               values.tokens.length === 0 ||
               weightsSum !== '100' ||
               values.name === '' ||
               values.symbol === '' ||
-              values.startDate === '' ||
-              values.endDate === ''
+              values.dateRange === null ||
+              values.dateRange[0] === '' ||
+              values.dateRange[1] === ''
             }
+            loading={values.isLoading}
           >
             Create
           </Button>

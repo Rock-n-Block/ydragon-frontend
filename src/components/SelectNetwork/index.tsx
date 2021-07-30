@@ -2,11 +2,15 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { Select } from 'antd';
 import { observer } from 'mobx-react-lite';
 
-import arrow from '../../assets/img/icons/icon-arrow-yellow.svg';
 import { useWalletConnectorContext } from '../../services/walletConnect';
-import { useMst } from '../../store/store';
-
-import './SelectNetwork.scss';
+import { rootStore, useMst } from '../../store/store';
+import arrow from '../../assets/img/icons/icon-arrow-yellow.svg';
+import bncDark from '../../assets/img/icons/icon-binance-dark.svg';
+import bncLight from '../../assets/img/icons/icon-binance-light.svg';
+import plgDark from '../../assets/img/icons/icon-polygon-dark.svg';
+import plgLight from '../../assets/img/icons/icon-polygon-light.svg';
+import TokenMini from '../TokenMini';
+import { basicTokensApi, networksApi } from '../../services/api';
 
 const { Option } = Select;
 
@@ -55,15 +59,49 @@ const chains: IChains = {
 };
 
 const SelectNetwork: React.FC = observer(() => {
-  const { networks } = useMst();
+  const { networks, basicTokens, theme } = useMst();
   const walletConnector = useWalletConnectorContext();
   const [pickedChain, setPickedChain] = useState<ChainTypes>();
+
+  const networkToken = {
+    bnb: {
+      symbol: 'bnb',
+      address: '0x0000000000000000000000000000000000000000',
+      decimals: 18,
+      name: 'Binance Coin',
+      image: theme.value === 'dark' ? bncDark : bncLight,
+    },
+    polygon: {
+      symbol: 'matic',
+      address: '0x0000000000000000000000000000000000000000',
+      decimals: 18,
+      name: 'Polygon (Matic)',
+      image: theme.value === 'dark' ? plgDark : plgLight,
+    },
+  };
+  const getNetworks = useCallback(() => {
+    networksApi
+      .getNetworks()
+      .then(({ data }) => {
+        networks.setNetworks(data);
+      })
+      .catch((err) => {
+        const { response } = err;
+        console.log(response);
+      });
+  }, [networks]);
 
   const getCurrentChain = useCallback(() => {
     walletConnector.metamaskService.ethGetCurrentChain().then((currentChainId: string) => {
       Object.keys(chains).forEach((key) => {
         if (chains[key as ChainTypes].chainId === currentChainId) {
           setPickedChain(key as ChainTypes);
+          // TODO: change this on deploy
+          if (currentChainId === '0x61') {
+            rootStore.networks.setCurrNetwork('binance-smart-chain');
+          } else if (currentChainId === '0x13881') {
+            rootStore.networks.setCurrNetwork('polygon-pos');
+          }
         }
       });
     });
@@ -91,30 +129,72 @@ const SelectNetwork: React.FC = observer(() => {
     }
   };
 
+  const getBasicTokens = useCallback(() => {
+    basicTokensApi.getBaseTokens().then(({ data }) => {
+      basicTokens.setTokens([
+        rootStore.networks.currentNetwork === 'binance-smart-chain'
+          ? networkToken.bnb
+          : networkToken.polygon,
+        ...data,
+      ]);
+    });
+  }, [networkToken.bnb, networkToken.polygon, basicTokens]);
+
   useEffect(() => {
-    getCurrentChain();
-  }, [getCurrentChain]);
+    getNetworks();
+  }, [getNetworks]);
+
+  useEffect(() => {
+    if (networks.networksList.length) {
+      getCurrentChain();
+    }
+  }, [getCurrentChain, networks.networksList.length]);
 
   useEffect(() => {
     Object.keys(chains).forEach((key) => {
-      if (chains[key as ChainTypes].chainId === networks.id) {
+      if (chains[key as ChainTypes].chainId === networks.networkId) {
         setPickedChain(key as ChainTypes);
       }
     });
-  }, [networks.id]);
+  }, [networks.networkId]);
+
+  useEffect(() => {
+    if (networks.currentNetwork) {
+      getBasicTokens();
+    }
+  }, [getBasicTokens, networks.currentNetwork]);
 
   return (
     <Select
       value={pickedChain}
       placeholder="Select network"
       onSelect={switchChain}
-      style={{ width: 120 }}
+      style={{ width: 140 }}
       className="select-network"
-      suffixIcon={<img className="select__arrow" alt="" src={arrow} />}
+      dropdownMatchSelectWidth={false}
+      dropdownStyle={{ position: 'fixed' }}
+      // getPopupContainer={(trigger) => trigger.parentNode}
+      suffixIcon={
+        <img className="select__arrow" alt="select arrow" src={arrow} width="10" height="6" />
+      }
       dropdownClassName="select-network__dropdown"
     >
-      <Option value="bnbt">BSC</Option>
-      <Option value="tmatic">Polygon</Option>
+      <Option value="bnbt">
+        <TokenMini
+          name="Binance"
+          icon={theme.value === 'dark' ? bncDark : bncLight}
+          width="26"
+          height="26"
+        />
+      </Option>
+      <Option value="tmatic">
+        <TokenMini
+          name="Polygon"
+          icon={theme.value === 'dark' ? plgDark : plgLight}
+          width="26"
+          height="26"
+        />
+      </Option>
     </Select>
   );
 });

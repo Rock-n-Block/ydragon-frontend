@@ -28,18 +28,28 @@ class Connector extends React.Component<any, any> {
   componentDidMount() {
     const self = this;
     if (window.ethereum) {
-      if (localStorage.yd_metamask) {
+      if (sessionStorage.getItem('yd_metamask')) {
         this.connect();
       }
       this.state.provider.chainChangedObs.subscribe({
         next(err: string) {
-          rootStore.modals.metamask.setErr(err);
+          if (err) {
+            self.disconnect();
+            rootStore.modals.metamask.setErr(err);
+          } else {
+            window.location.reload();
+          }
         },
       });
 
       this.state.provider.accountChangedObs.subscribe({
         next() {
           self.disconnect();
+        },
+      });
+      this.state.provider.disconnectObs.subscribe({
+        next(reason: string) {
+          console.log('disconnect', reason);
         },
       });
     }
@@ -50,7 +60,7 @@ class Connector extends React.Component<any, any> {
       try {
         const { address } = await this.state.provider.connect();
 
-        if (!localStorage.yd_address) {
+        if (!sessionStorage.getItem('yd_address')) {
           const metMsg: any = await accountsApi.getMsg();
 
           const signedMsg = await this.state.provider.signMsg(metMsg.data);
@@ -61,25 +71,25 @@ class Connector extends React.Component<any, any> {
             signed_msg: signedMsg,
           });
 
-          localStorage.yd_token = login.data.key;
-          localStorage.yd_address = address;
+          sessionStorage.setItem('yd_token', login.data.key);
+          sessionStorage.setItem('yd_address', address);
           rootStore.user.setAddress(address);
-          localStorage.yd_metamask = true;
+          sessionStorage.setItem('yd_metamask', 'true');
           // rootStore.user.update({ address });
         } else {
           rootStore.user.setAddress(address);
-          localStorage.yd_metamask = true;
+          sessionStorage.setItem('yd_metamask', 'true');
           // rootStore.user.update({ address });
         }
       } catch (err) {
         const { response } = err;
         if (response) {
           if (response.status === 400 && response.data.result[0] === 'user is not admin') {
-            localStorage.yd_isAdmin = false;
+            sessionStorage.setItem('yd_isAdmin', 'false');
             const { address } = await this.state.provider.connect();
-            localStorage.yd_address = address;
+            sessionStorage.setItem('yd_address', address);
             rootStore.user.setAddress(address);
-            localStorage.yd_metamask = true;
+            sessionStorage.setItem('yd_metamask', 'true');
             rootStore.user.update({ address });
           } else {
             rootStore.modals.metamask.setErr(err.message);
@@ -89,7 +99,6 @@ class Connector extends React.Component<any, any> {
           rootStore.modals.metamask.setErr(err.message);
           this.disconnect();
         }
-        console.log(response);
       }
     } else {
       rootStore.modals.metamask.setErr('No Metamask (or other Web3 Provider) installed');

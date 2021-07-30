@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
+import nextId from 'react-id-generator';
 import { useParams } from 'react-router-dom';
 import BigNumber from 'bignumber.js/bignumber';
 import { observer } from 'mobx-react-lite';
@@ -9,8 +10,6 @@ import { TokenPanel } from '../../components';
 import { IndexChart, IndexTable, RebalanceHistory } from '../../components/IndexPage';
 import { ITableToken, IToken } from '../../components/IndexPage/IndexTable';
 import { TradeIndexModal } from '../../components/Modals';
-import MintModal from '../../components/Modals/MintModal';
-import RedeemModal from '../../components/Modals/RedeemModal';
 import SmallTableCard from '../../components/SmallTableCard/index';
 import { indexesApi } from '../../services/api';
 import { useMst } from '../../store/store';
@@ -45,7 +44,6 @@ const Index: React.FC = observer(() => {
     indexesApi
       .getIndexById(+indexId)
       .then(({ data }) => {
-        console.log('get current index success', data);
         setIndexData(data);
       })
       .catch((err: any) => {
@@ -81,7 +79,7 @@ const Index: React.FC = observer(() => {
           {
             label: 'Inception Date',
             value: moment(indexData?.created_at ?? moment())
-              .format('DD.MM.YYYY')
+              .format('DD.MM.YY')
               .toString(),
           },
         ]}
@@ -97,6 +95,7 @@ const Index: React.FC = observer(() => {
         {tokens !== undefined
           ? tokens.map((token, i) => (
               <SmallTableCard
+                key={nextId()}
                 index={i}
                 data={[
                   ['Quantity per Set', `${new BigNumber(token.repr_count).toFixed(2)}`],
@@ -114,6 +113,7 @@ const Index: React.FC = observer(() => {
             ))
           : indexData?.tokens.map((token, i) => (
               <SmallTableCard
+                key={nextId()}
                 index={i}
                 data={[
                   [
@@ -133,9 +133,11 @@ const Index: React.FC = observer(() => {
             ))}
       </div>
       {/* <About /> */}
-      <TradeIndexModal token={indexData?.name ?? ''} indexAddress={indexData?.address ?? ''} />
-      <MintModal />
-      <RedeemModal />
+      <TradeIndexModal
+        token={indexData?.name ?? ''}
+        tokenId={indexData?.id ?? 0}
+        indexAddress={indexData?.address ?? ''}
+      />
     </main>
   );
 });

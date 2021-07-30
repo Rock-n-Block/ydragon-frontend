@@ -1,8 +1,14 @@
 body {
   margin: 0;
 
+  width: 100% !important;
+
   font-family: 'Rubik', sans-serif;
   font-weight: normal;
+
+  span, div {
+    font-feature-settings: 'liga' off;
+  }
 
   .dark {
     color: white;

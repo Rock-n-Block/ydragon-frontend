@@ -4,6 +4,7 @@ import BigNumber from 'bignumber.js/bignumber';
 import { observer } from 'mobx-react-lite';
 import moment from 'moment';
 
+import RefreshIcon from '../../assets/img/icons/icon-refresh.svg';
 import { indexesApi } from '../../services/api';
 import { useWalletConnectorContext } from '../../services/walletConnect';
 import { useMst } from '../../store/store';
@@ -86,7 +87,7 @@ const StakingStatistics: React.FC = observer(() => {
 
   const getStakingStatistic = useCallback(() => {
     indexesApi
-      .getStakingStatistic(localStorage.yd_address)
+      .getStakingStatistic(sessionStorage.getItem('yd_address') ?? '')
       .then(({ data }) => {
         const newData = data['binance-smart-chain'].map((stake: IStakingStat, index: number) => {
           return {
@@ -94,7 +95,7 @@ const StakingStatistics: React.FC = observer(() => {
             id: stake.stake_id,
             token: stake.name,
             month: stake.months,
-            endDate: moment(stake.end_date).format('MM.DD.YYYY'),
+            endDate: moment(stake.end_date).format('DD.MM.YY'),
             staked: new BigNumber(stake.staked).dividedBy(new BigNumber(10).pow(18)).toFixed(5),
             availableRewards: new BigNumber(stake.available_rewards)
               .dividedBy(new BigNumber(10).pow(18))
@@ -121,7 +122,11 @@ const StakingStatistics: React.FC = observer(() => {
     walletConnector.metamaskService
       .harvestStakeItem(dataSource[selectedRowKeys[0]].id)
       .then(() => {
-        modals.info.setMsg('Success', 'Success harvest', 'success');
+        modals.info.setMsg(
+          'Success',
+          'Success harvest, you need to wait before the end of transaction for updated table data',
+          'success',
+        );
         getStakingStatistic();
       })
       .catch((err: ProviderRpcError) => {
@@ -140,7 +145,11 @@ const StakingStatistics: React.FC = observer(() => {
     walletConnector.metamaskService
       .endStake(dataSource[selectedRowKeys[0]].id)
       .then(() => {
-        modals.info.setMsg('Success', 'Success harvest and stake', 'success');
+        modals.info.setMsg(
+          'Success',
+          'Success harvest and stake, you need to wait before the end of transaction for updated table data',
+          'success',
+        );
         getStakingStatistic();
       })
       .catch((err: ProviderRpcError) => {
@@ -161,7 +170,16 @@ const StakingStatistics: React.FC = observer(() => {
 
   return (
     <section className="section section--admin staking-statistics">
-      <h2 className="section__title text-outline">Staking Statistics</h2>
+      <h2 className="section__title text-outline">
+        Staking Statistics
+        <Button
+          styledType="clear"
+          onClick={getStakingStatistic}
+          className="staking-statistics__refresh"
+        >
+          <img src={RefreshIcon} alt="refresh" width="36" height="36"/>
+        </Button>
+      </h2>
 
       <div className="staking-statistics__btn-row">
         <Button className="staking-statistics__btn" styledType="outline" onClick={handleHarvest}>
