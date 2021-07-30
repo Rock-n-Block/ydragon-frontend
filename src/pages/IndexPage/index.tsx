@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import nextId from 'react-id-generator';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import BigNumber from 'bignumber.js/bignumber';
 import { observer } from 'mobx-react-lite';
 import moment from 'moment';
@@ -24,6 +24,7 @@ export interface IIndex {
   id: number;
   name: string;
   address: string;
+  network: string;
   description: string;
   market_cap: string;
   tokens: Array<IToken>;
@@ -33,7 +34,8 @@ export interface IIndex {
 
 const Index: React.FC = observer(() => {
   const { indexId } = useParams<IIndexId>();
-  const { modals } = useMst();
+  const { modals, networks } = useMst();
+  const history = useHistory();
   const [tokens, setTokens] = useState<Array<ITableToken>>();
   const getTokens = (value: React.SetStateAction<any>) => {
     setTokens(value);
@@ -62,6 +64,13 @@ const Index: React.FC = observer(() => {
     getCurrentIndex();
   }, [getCurrentIndex]);
 
+  useEffect(() => {
+    if (indexData) {
+      if (networks.currentNetwork !== indexData.network) {
+        history.push('/indexes');
+      }
+    }
+  }, [history, indexData, networks.currentNetwork]);
   return (
     <main className="container page">
       <div className="page__title-row">
