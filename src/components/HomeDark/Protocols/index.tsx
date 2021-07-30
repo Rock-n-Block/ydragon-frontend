@@ -2,42 +2,14 @@ import React from 'react';
 import { observer } from 'mobx-react';
 
 import magnusBlack from '../../../assets/img/icons/partners/magnus-black.png';
-// import aave from '../../../assets/img/icons/partners/aave.svg';
-// import balancer from '../../../assets/img/icons/partners/balancer.svg';
-// import cube from '../../../assets/img/icons/partners/cube.svg';
-// import cubesWhite from '../../../assets/img/icons/partners/cubes-white.svg';
-// import cubesBlack from '../../../assets/img/icons/partners/cubes-black.svg';
 import magnusWhite from '../../../assets/img/icons/partners/magnus-white.png';
 import marshlandBlack from '../../../assets/img/icons/partners/marshland-black.svg';
-// import maker from '../../../assets/img/icons/partners/maker.svg';
 import marshlandWhite from '../../../assets/img/icons/partners/marshland-white.svg';
-// import mmmmWhite from '../../../assets/img/icons/partners/mmmm-white.svg';
-// import mmmmBlack from '../../../assets/img/icons/partners/mmmm-black.svg';
-// import nexusWhite from '../../../assets/img/icons/partners/nexus-white.svg';
-// import nexusBlack from '../../../assets/img/icons/partners/nexus-black.svg';
 import polygon from '../../../assets/img/icons/partners/polygon.svg';
-// import squareBlack from '../../../assets/img/icons/partners/square-black.svg';
-// import squareWhite from '../../../assets/img/icons/partners/square-white.svg';
-// import nextId from 'react-id-generator';
-// import { Swiper, SwiperSlide } from 'swiper/react';
-// import slide1 from '../../../assets/img/partners/logo-1.png';
-// import slide2 from '../../../assets/img/partners/logo-2.png';
-// import slide3 from '../../../assets/img/partners/logo-3.png';
-// import slide4 from '../../../assets/img/partners/logo-4.png';
-// import slide5 from '../../../assets/img/partners/logo-5.png';
-// import slide6 from '../../../assets/img/partners/logo-6.png';
-// import slide7 from '../../../assets/img/partners/logo-7.png';
-// import slide8 from '../../../assets/img/partners/logo-8.png';
-// import slide9 from '../../../assets/img/partners/logo-9.png';
-// import slide10 from '../../../assets/img/partners/logo-10.png';
+import moonwolf from '../../../assets/img/icons/partners/moonwolf.png';
+
 import { useMst } from '../../../store/store';
 
-// import ssss from '../../../assets/img/icons/partners/ssss.svg';
-// import synth from '../../../assets/img/icons/partners/synth.svg';
-// import walls from '../../../assets/img/icons/partners/walls.svg';
-// import avaLabsWhite from '../../../assets/img/icons/partners/ava-labs-white.png';
-// import avaLabsBlack from '../../../assets/img/icons/partners/ava-labs-black.png';
-// import 'swiper/swiper.scss';
 import './Protocols.scss';
 
 const Protocols: React.FC = observer(() => {
@@ -70,10 +42,21 @@ const Protocols: React.FC = observer(() => {
         <img src={theme.value === 'dark' ? nexusWhite : nexusBlack} alt="" />
         <img src={balancer} alt="" />
         <img src={theme.value === 'dark' ? mmmmWhite : mmmmBlack} alt="" /> */}
-          <img src={theme.value === 'dark' ? marshlandWhite : marshlandBlack} alt="marshland" width="92" height="78"/>
-          <img src={polygon} alt="" width="98" height="78"/>
+          <img
+            src={theme.value === 'dark' ? marshlandWhite : marshlandBlack}
+            alt="marshland"
+            width="92"
+            height="78"
+          />
+          <img src={polygon} alt="" width="98" height="78" />
           {/* <img src={theme.value === 'dark' ? squareWhite : squareBlack} alt="square" width="95" height="80"/> */}
-          <img src={theme.value === 'dark' ? magnusWhite : magnusBlack} alt="magnus" width="154" height="78"/>
+          <img
+            src={theme.value === 'dark' ? magnusWhite : magnusBlack}
+            alt="magnus"
+            width="154"
+            height="78"
+          />
+          <img src={moonwolf} alt="moonwolf" width="91" height="112" />
           {/* <Swiper spaceBetween={60} slidesPerView={8} loop>
             {partners.map((partner) => (
               <SwiperSlide>
