@@ -8,6 +8,9 @@
       background: rgba(255, 255, 255, 0.1);
     }
   }
+  .chart-link{
+    color: $white
+  }
 }
 
 .light {
@@ -19,6 +22,9 @@
     &-btn {
       background: rgba(0, 0, 0, 0.2);
     }
+  }
+  .chart-link{
+    color: $black
   }
 }
 
@@ -125,5 +131,15 @@
     .active {
       background: linear-gradient(to right bottom, #b12e2a, #f47c45);
     }
+  }
+  &-link {
+    margin: 15px;
+    float: right;
+    font-family: 'TT Norms', sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 17px;
+    opacity: 0.5;
   }
 }

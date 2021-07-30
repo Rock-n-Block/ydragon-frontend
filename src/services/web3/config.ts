@@ -1,6 +1,6 @@
 export default {
   MAIN: {
-    ADDRESS: '0x0da3ff14bfbacbf7c81ce796ba1ec589214bad07',
+    ADDRESS: '0xeb9b5d4e631263723b4afda09c1f96e72d43285c',
     ABI: [
       { inputs: [], stateMutability: 'nonpayable', type: 'constructor' },
       {
@@ -597,7 +597,7 @@ export default {
     ],
   },
   Router: {
-    ADDRESS: '0x8dc9dE4cE55d885ef870286F203a841abAfb3284',
+    ADDRESS: '0xCc7aDc94F3D80127849D2b41b6439b7CF1eB4Ae0',
     ABI: [
       {
         inputs: [
@@ -698,16 +698,6 @@ export default {
         ],
         name: 'getAmountsOut',
         outputs: [{ internalType: 'uint256[]', name: 'amounts', type: 'uint256[]' }],
-        stateMutability: 'view',
-        type: 'function',
-      },
-      {
-        inputs: [
-          { internalType: 'address', name: 'token1', type: 'address' },
-          { internalType: 'address', name: 'token2', type: 'address' },
-        ],
-        name: 'pairFor',
-        outputs: [{ internalType: 'address', name: '', type: 'address' }],
         stateMutability: 'view',
         type: 'function',
       },
@@ -950,7 +940,7 @@ export default {
     ],
   },
   Factory: {
-    ADDRESS: '0x7bA3288C299266Ad5cc3e856258444A287FD098E',
+    ADDRESS: '0xB512B86850Eb621A2fC068c5F203d0Ac3669201E',
     ABI: [
       {
         inputs: [
@@ -1257,7 +1247,7 @@ export default {
     ],
   },
   Staking: {
-    ADDRESS: '0x5f8E008F19bc82b237132d691c3cF39224253922',
+    ADDRESS: '0xd2Cbf5A167a907c36c35Aa08F644b5d65f403797',
     ABI: [
       {
         inputs: [
@@ -1580,10 +1570,11 @@ export default {
     ],
   },
   DexFactory: {
-    ADDRESS: '0x101bfeBE88C5b2881eA1Ca6C92d5F9CAb09b38CB',
+    ADDRESS: '0x5Fe5cC0122403f06abE2A75DBba1860Edb762985',
     ABI: [
       {
         inputs: [{ internalType: 'address', name: '_feeToSetter', type: 'address' }],
+        payable: false,
         stateMutability: 'nonpayable',
         type: 'constructor',
       },
@@ -1599,71 +1590,89 @@ export default {
         type: 'event',
       },
       {
+        constant: true,
         inputs: [],
         name: 'INIT_CODE_PAIR_HASH',
         outputs: [{ internalType: 'bytes32', name: '', type: 'bytes32' }],
+        payable: false,
         stateMutability: 'view',
         type: 'function',
       },
       {
+        constant: true,
         inputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
         name: 'allPairs',
         outputs: [{ internalType: 'address', name: '', type: 'address' }],
+        payable: false,
         stateMutability: 'view',
         type: 'function',
       },
       {
+        constant: true,
         inputs: [],
         name: 'allPairsLength',
         outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+        payable: false,
         stateMutability: 'view',
         type: 'function',
       },
       {
+        constant: false,
         inputs: [
           { internalType: 'address', name: 'tokenA', type: 'address' },
           { internalType: 'address', name: 'tokenB', type: 'address' },
         ],
         name: 'createPair',
         outputs: [{ internalType: 'address', name: 'pair', type: 'address' }],
+        payable: false,
         stateMutability: 'nonpayable',
         type: 'function',
       },
       {
+        constant: true,
         inputs: [],
         name: 'feeTo',
         outputs: [{ internalType: 'address', name: '', type: 'address' }],
+        payable: false,
         stateMutability: 'view',
         type: 'function',
       },
       {
+        constant: true,
         inputs: [],
         name: 'feeToSetter',
         outputs: [{ internalType: 'address', name: '', type: 'address' }],
+        payable: false,
         stateMutability: 'view',
         type: 'function',
       },
       {
+        constant: true,
         inputs: [
           { internalType: 'address', name: '', type: 'address' },
           { internalType: 'address', name: '', type: 'address' },
         ],
         name: 'getPair',
         outputs: [{ internalType: 'address', name: '', type: 'address' }],
+        payable: false,
         stateMutability: 'view',
         type: 'function',
       },
       {
+        constant: false,
         inputs: [{ internalType: 'address', name: '_feeTo', type: 'address' }],
         name: 'setFeeTo',
         outputs: [],
+        payable: false,
         stateMutability: 'nonpayable',
         type: 'function',
       },
       {
+        constant: false,
         inputs: [{ internalType: 'address', name: '_feeToSetter', type: 'address' }],
         name: 'setFeeToSetter',
         outputs: [],
+        payable: false,
         stateMutability: 'nonpayable',
         type: 'function',
       },
@@ -1731,22 +1740,14 @@ export default {
   },
   /* Никита это называет WETH иногда */
   WBNB: {
-    ADDRESS: '0x591873d1fff4ae144307f8da8dcfbb52b00bdf20',
+    ADDRESS: '0x0dE8FCAE8421fc79B29adE9ffF97854a424Cad09',
     ABI: [
-      {
-        inputs: [
-          { internalType: 'string', name: '_name', type: 'string' },
-          { internalType: 'string', name: '_symbol', type: 'string' },
-        ],
-        stateMutability: 'nonpayable',
-        type: 'constructor',
-      },
       {
         anonymous: false,
         inputs: [
-          { indexed: true, internalType: 'address', name: 'owner', type: 'address' },
-          { indexed: true, internalType: 'address', name: 'spender', type: 'address' },
-          { indexed: false, internalType: 'uint256', name: 'value', type: 'uint256' },
+          { indexed: true, internalType: 'address', name: 'src', type: 'address' },
+          { indexed: true, internalType: 'address', name: 'guy', type: 'address' },
+          { indexed: false, internalType: 'uint256', name: 'wad', type: 'uint256' },
         ],
         name: 'Approval',
         type: 'event',
@@ -1754,17 +1755,35 @@ export default {
       {
         anonymous: false,
         inputs: [
-          { indexed: true, internalType: 'address', name: 'from', type: 'address' },
-          { indexed: true, internalType: 'address', name: 'to', type: 'address' },
-          { indexed: false, internalType: 'uint256', name: 'value', type: 'uint256' },
+          { indexed: true, internalType: 'address', name: 'dst', type: 'address' },
+          { indexed: false, internalType: 'uint256', name: 'wad', type: 'uint256' },
+        ],
+        name: 'Deposit',
+        type: 'event',
+      },
+      {
+        anonymous: false,
+        inputs: [
+          { indexed: true, internalType: 'address', name: 'src', type: 'address' },
+          { indexed: true, internalType: 'address', name: 'dst', type: 'address' },
+          { indexed: false, internalType: 'uint256', name: 'wad', type: 'uint256' },
         ],
         name: 'Transfer',
         type: 'event',
       },
       {
+        anonymous: false,
         inputs: [
-          { internalType: 'address', name: 'owner', type: 'address' },
-          { internalType: 'address', name: 'spender', type: 'address' },
+          { indexed: true, internalType: 'address', name: 'src', type: 'address' },
+          { indexed: false, internalType: 'uint256', name: 'wad', type: 'uint256' },
+        ],
+        name: 'Withdrawal',
+        type: 'event',
+      },
+      {
+        inputs: [
+          { internalType: 'address', name: '', type: 'address' },
+          { internalType: 'address', name: '', type: 'address' },
         ],
         name: 'allowance',
         outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
@@ -1773,8 +1792,8 @@ export default {
       },
       {
         inputs: [
-          { internalType: 'address', name: 'spender', type: 'address' },
-          { internalType: 'uint256', name: 'amount', type: 'uint256' },
+          { internalType: 'address', name: 'guy', type: 'address' },
+          { internalType: 'uint256', name: 'wad', type: 'uint256' },
         ],
         name: 'approve',
         outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
@@ -1782,7 +1801,7 @@ export default {
         type: 'function',
       },
       {
-        inputs: [{ internalType: 'address', name: 'account', type: 'address' }],
+        inputs: [{ internalType: 'address', name: '', type: 'address' }],
         name: 'balanceOf',
         outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
         stateMutability: 'view',
@@ -1795,33 +1814,7 @@ export default {
         stateMutability: 'view',
         type: 'function',
       },
-      {
-        inputs: [
-          { internalType: 'address', name: 'spender', type: 'address' },
-          { internalType: 'uint256', name: 'subtractedValue', type: 'uint256' },
-        ],
-        name: 'decreaseAllowance',
-        outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
-        stateMutability: 'nonpayable',
-        type: 'function',
-      },
-      {
-        inputs: [
-          { internalType: 'address', name: 'spender', type: 'address' },
-          { internalType: 'uint256', name: 'addedValue', type: 'uint256' },
-        ],
-        name: 'increaseAllowance',
-        outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
-        stateMutability: 'nonpayable',
-        type: 'function',
-      },
-      {
-        inputs: [{ internalType: 'uint256', name: 'amount', type: 'uint256' }],
-        name: 'mint',
-        outputs: [],
-        stateMutability: 'nonpayable',
-        type: 'function',
-      },
+      { inputs: [], name: 'deposit', outputs: [], stateMutability: 'payable', type: 'function' },
       {
         inputs: [],
         name: 'name',
@@ -1845,8 +1838,8 @@ export default {
       },
       {
         inputs: [
-          { internalType: 'address', name: 'recipient', type: 'address' },
-          { internalType: 'uint256', name: 'amount', type: 'uint256' },
+          { internalType: 'address', name: 'dst', type: 'address' },
+          { internalType: 'uint256', name: 'wad', type: 'uint256' },
         ],
         name: 'transfer',
         outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
@@ -1855,15 +1848,23 @@ export default {
       },
       {
         inputs: [
-          { internalType: 'address', name: 'sender', type: 'address' },
-          { internalType: 'address', name: 'recipient', type: 'address' },
-          { internalType: 'uint256', name: 'amount', type: 'uint256' },
+          { internalType: 'address', name: 'src', type: 'address' },
+          { internalType: 'address', name: 'dst', type: 'address' },
+          { internalType: 'uint256', name: 'wad', type: 'uint256' },
         ],
         name: 'transferFrom',
         outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
         stateMutability: 'nonpayable',
         type: 'function',
       },
+      {
+        inputs: [{ internalType: 'uint256', name: 'wad', type: 'uint256' }],
+        name: 'withdraw',
+        outputs: [],
+        stateMutability: 'nonpayable',
+        type: 'function',
+      },
+      { stateMutability: 'payable', type: 'receive' },
     ],
   },
   USDT: {

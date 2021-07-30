@@ -33,7 +33,7 @@ const YDRTokenChart: React.FC<TokenChartProps> = ({ price }) => {
   });
   const daysFromUrl = days;
   const options = {
-    aspectRatio: (windowWidth > 768 ? 4 : 2),
+    aspectRatio: windowWidth > 768 ? 4 : 2,
     parsing: {
       xAxisKey: 'time',
       yAxisKey: 'data',
@@ -72,8 +72,8 @@ const YDRTokenChart: React.FC<TokenChartProps> = ({ price }) => {
 
   const getWindowWidth = () => {
     const { innerWidth: width } = window;
-    return width
-  }
+    return width;
+  };
 
   const toggleHandler = (event: any) => {
     const btnsList = event.target.parentNode.children;
@@ -229,7 +229,7 @@ const YDRTokenChart: React.FC<TokenChartProps> = ({ price }) => {
       </div>
       {Object.keys(chartData).length ? (
         <Line
-        height={500}
+          height={500}
           data={chartData}
           options={options}
           type="line"
@@ -238,6 +238,9 @@ const YDRTokenChart: React.FC<TokenChartProps> = ({ price }) => {
       ) : (
         <></>
       )}
+      <a href="https://www.coingecko.com/" target="_blank" rel="noreferrer" className="chart-link">
+        Source: coingecko.com
+      </a>
     </div>
   );
 };
