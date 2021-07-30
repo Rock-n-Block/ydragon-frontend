@@ -10,7 +10,7 @@ export default {
   getIndexById: (id: number) => axios.get(`indexes/${id}`),
   getIndexesRebalance: (indexId: number) => axios.get(`indexes/${indexId}/rebalance/`),
   addParamsToIndex: (tx_hash: string, description: string, price?: string) =>
-    axios.post(`indexes/description?network=${rootStore.networks.currentNetwork}`, {
+    axios.post(`indexes/index_params/`, {
       tx_hash,
       description,
       price,
