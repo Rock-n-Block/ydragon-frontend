@@ -12,6 +12,7 @@ import {
 import { RebalanceModal } from '../../components/Modals';
 import { indexesApi, vaultsApi } from '../../services/api';
 import { IIndex, IIndexStatus, ITokensDiff } from '../Admin';
+import { observer } from 'mobx-react-lite';
 
 interface IIndexId {
   indexId: string;
@@ -105,4 +106,4 @@ const AdminIndex: React.FC = () => {
   );
 };
 
-export default AdminIndex;
+export default observer(AdminIndex);
