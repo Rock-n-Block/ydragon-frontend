@@ -19,6 +19,11 @@ import { Button, SelectNetwork, Switch } from '../index';
 
 import './Header.scss';
 
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import Whitepaper from '../../assets/pdf/YD WP.pdf';
+import { NavHashLink } from 'react-router-hash-link';
+
 interface HeaderProps {
   collapsed: boolean;
   onCollapsedChange: (value: boolean) => void;
@@ -253,9 +258,9 @@ const Header: React.FC<HeaderProps> = observer(({ collapsed, onCollapsedChange }
               <div className="footer__links-title">Product</div>
 
               <div className="footer__links">
-                <span className="isDisabled">
-                  <a href="/">Whitepaper</a>
-                </span>
+                <a href={Whitepaper} target="_blank" rel="noopener noreferrer">
+                  Whitepaper
+                </a>
                 <span className="isDisabled">
                   <a href="/">Privacy Policy</a>
                 </span>
@@ -276,9 +281,9 @@ const Header: React.FC<HeaderProps> = observer(({ collapsed, onCollapsedChange }
                 <span className="isDisabled">
                   <a href="/">Tutorial</a>
                 </span>
-                <span className="isDisabled">
-                  <a href="/">FAQ</a>
-                </span>
+                <NavHashLink to="/about-us#FAQ" smooth className="text-gray text-bold">
+                  FAQ
+                </NavHashLink>
               </div>
             </div>
 

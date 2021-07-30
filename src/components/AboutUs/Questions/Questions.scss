@@ -2,11 +2,17 @@
 @import '../../../styles/mixins';
 
 .questions {
+
+  margin-top: 0 !important;
+  padding-top: 175px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 
+  @include b('mobile') {
+    padding-top: 0;
+  }
   &__title-wrapper {
     margin-bottom: 84px;
 

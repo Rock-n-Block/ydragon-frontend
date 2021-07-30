@@ -3,6 +3,9 @@ import React from 'react';
 import { Button } from '../../index';
 
 import './Main.scss';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import Whitepaper from '../../../assets/pdf/YD WP.pdf';
 
 const Main: React.FC = () => {
   return (
@@ -21,7 +24,13 @@ const Main: React.FC = () => {
         <Button linkClassName="home__btn" link="/ydrtoken">
           Buy YDR
         </Button>
-        <Button className="home__btn" styledType="outline" needLogin="Please login" disabled>
+        <Button
+          link={Whitepaper}
+          target="_blank"
+          rel="noopener noreferrer"
+          linkClassName="home__btn"
+          styledType="outline"
+        >
           Whitepaper
         </Button>
       </div>
