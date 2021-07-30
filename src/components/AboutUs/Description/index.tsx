@@ -4,6 +4,9 @@ import iconPlay from '../../../assets/img/icons/icon-play.svg';
 import { Button } from '../../index';
 
 import './Description.scss';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import Whitepaper from '../../../assets/pdf/YD WP.pdf';
 
 const Description: React.FC = () => {
   return (
@@ -27,7 +30,13 @@ const Description: React.FC = () => {
         </div>
         <div className="description__video">
           <span className="description__video--text">Coming soon</span>
-          <img alt="play video" src={iconPlay} className="description__video--play" width="64" height="64" />
+          <img
+            alt="play video"
+            src={iconPlay}
+            className="description__video--play"
+            width="64"
+            height="64"
+          />
           {/* <span className="description__video--info">
             For more info on YDragon{' '}
             <a className="description__video--link" href="/about-us">
@@ -38,10 +47,13 @@ const Description: React.FC = () => {
       </div>
 
       <div className="description__btns-row">
-        <Button className="description__btn" link="/ydrtoken" styledType="filled">
+        <Button className="description__btn" link="/ydrtoken" styledType="filled" disabled>
           Buy YDR
         </Button>
         <Button
+          link={Whitepaper}
+          target="_blank"
+          rel="noopener noreferrer"
           className="description__btn"
           styledType="outline"
         >

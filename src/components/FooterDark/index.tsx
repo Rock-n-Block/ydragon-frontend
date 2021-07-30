@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { NavHashLink } from 'react-router-hash-link';
 
 import logo from '../../assets/img/icons/logo.svg';
 // import dis from '../../assets/img/socials/discord.svg';
@@ -8,6 +9,9 @@ import tg from '../../assets/img/socials/telegram.svg';
 import tw from '../../assets/img/socials/twitter.svg';
 
 import './Footer.scss';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import Whitepaper from '../../assets/pdf/YD WP.pdf';
 
 const Footer: React.FC = () => {
   return (
@@ -59,41 +63,40 @@ const Footer: React.FC = () => {
           </div>
 
           <div className="footer__col">
+            <div className="footer__links-title">Product</div>
+
+            <div className="footer__links">
+              <a href={Whitepaper} target="_blank" rel="noopener noreferrer">
+                Whitepaper
+              </a>
+              {/* <span className="isDisabled">
+                <a href="/">Privacy Policy</a>
+              </span>
+              <span className="isDisabled">
+                <a href="/">Terms of Service</a>
+              </span> */}
+              <a href="mailto:info@ydragon.io" target="_blank" rel="noopener noreferrer">
+                Contact us
+              </a>
+            </div>
+          </div>
+          <div className="footer__col">
             <div className="footer__links-title">Engage</div>
 
             <div className="footer__links">
               <Link to="/about-us">About Us</Link>
 
-              <a href="mailto:info@ydragon.io" target="_blank" rel="noopener noreferrer">
-                Contact us
-              </a>
+              <NavHashLink to="/about-us#FAQ" smooth className="text-gray text-bold">
+                FAQ
+              </NavHashLink>
               {/* <span className="isDisabled">
                 <a href="/">Tutorial</a>
               </span>
               <span className="isDisabled">
-                <a href="/">FAQ</a>
               </span> */}
             </div>
           </div>
-          {/*  <div className="footer__col">
-            <div className="footer__links-title">Product</div>
-
-            <div className="footer__links">
-              <span className="isDisabled">
-                <a href="/">Whitepaper</a>
-              </span>
-              <span className="isDisabled">
-                <a href="/">Privacy Policy</a>
-              </span>
-              <span className="isDisabled">
-                <a href="/">Terms of Service</a>
-              </span>
-              <span className="isDisabled">
-                <a href="/">Contact us</a>
-              </span>
-            </div>
-          </div>
-
+          {/*
 
           <div className="footer__col">
             <div className="footer__links-title">DeFi</div>

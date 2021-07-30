@@ -15,9 +15,13 @@ import tw from '../../assets/img/socials/twitter.svg';
 // import { useWalletConnectorContext } from '../../services/walletConnect';
 import { DARK, LIGHT, useMst } from '../../store/store';
 // import EventBanner from '../EventBanner';
-import { Button,/* SelectNetwork, */Switch } from '../index';
+import { Button, /* SelectNetwork, */ Switch } from '../index';
 
 import './Header.scss';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import Whitepaper from '../../assets/pdf/YD WP.pdf';
+import { NavHashLink } from 'react-router-hash-link';
 
 interface HeaderProps {
   collapsed: boolean;
@@ -26,7 +30,7 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = observer(({ collapsed, onCollapsedChange }) => {
   const [fixed, setFixed] = useState(true);
-  const { theme/* , user */ } = useMst();
+  const { theme /* , user */ } = useMst();
   // const walletConnector = useWalletConnectorContext();
   const history = useHistory();
 
@@ -138,7 +142,7 @@ const Header: React.FC<HeaderProps> = observer(({ collapsed, onCollapsedChange }
                     Home
                   </Link>
                 </li>
-              {/*  <li className="header-nav__item">
+                {/*  <li className="header-nav__item">
                   <Link to="/indexes" className="header-nav__link">
                     Index Products
                   </Link>
@@ -155,7 +159,7 @@ const Header: React.FC<HeaderProps> = observer(({ collapsed, onCollapsedChange }
                     About
                   </Link>
                 </li>
-               {/* {sessionStorage.getItem('yd_token') && (
+                {/* {sessionStorage.getItem('yd_token') && (
                   <li className="header-nav__item">
                     <Link to="/admin" className="header-nav__link">
                       Admin panel
@@ -168,7 +172,7 @@ const Header: React.FC<HeaderProps> = observer(({ collapsed, onCollapsedChange }
             <div className="header__sign">
               <Switch checked={DARK === theme.value} onChange={handleChangeTheme} />
               {/* <SelectNetwork /> */}
-             {/* <ul className="header-nav">
+              {/* <ul className="header-nav">
                 {user.address && (
                   <li className="header-nav__item">
                     <Button
@@ -207,7 +211,7 @@ const Header: React.FC<HeaderProps> = observer(({ collapsed, onCollapsedChange }
                     Home
                   </Button>
                 </li>
-               {/* <li className="menu-nav__item">
+                {/* <li className="menu-nav__item">
                   <Button
                     styledType="clear"
                     onClick={() => redirectHandler('/indexes')}
@@ -236,7 +240,7 @@ const Header: React.FC<HeaderProps> = observer(({ collapsed, onCollapsedChange }
                     About
                   </Button>
                 </li>
-               {/* {sessionStorage.getItem('yd_token') && (
+                {/* {sessionStorage.getItem('yd_token') && (
                   <li className="menu-nav__item">
                     <Button
                       styledType="clear"
@@ -255,8 +259,10 @@ const Header: React.FC<HeaderProps> = observer(({ collapsed, onCollapsedChange }
               <div className="footer__links-title">Product</div>
 
               <div className="footer__links">
-               {/* <span className="isDisabled">
-                  <a href="/">Whitepaper</a>
+                <a href={Whitepaper} target="_blank" rel="noopener noreferrer">
+                  Whitepaper
+                </a>
+                {/* <span className="isDisabled">
                 </span>
                 <span className="isDisabled">
                   <a href="/">Privacy Policy</a>
@@ -275,16 +281,17 @@ const Header: React.FC<HeaderProps> = observer(({ collapsed, onCollapsedChange }
 
               <div className="footer__links">
                 <Link to="/about-us">About Us</Link>
-               {/* <span className="isDisabled">
+                {/* <span className="isDisabled">
                   <a href="/">Tutorial</a>
                 </span> */}
-                <span className="isDisabled">
-                  <a href="/">FAQ</a>
-                </span>
+
+                <NavHashLink to="/about-us#FAQ" smooth className="text-gray text-bold">
+                  FAQ
+                </NavHashLink>
               </div>
             </div>
 
-           {/* <div className="footer__col">
+            {/* <div className="footer__col">
               <div className="footer__links-title">DeFi</div>
 
               <div className="footer__links">

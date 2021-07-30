@@ -76,7 +76,7 @@ const Questions: React.FC = () => {
     },
   ];
   return (
-    <section className="section questions">
+    <section className="section questions" id="FAQ">
       <div className="questions__title-wrapper">
         <h1 className="questions__title text-outline">FAQ</h1>
       </div>
