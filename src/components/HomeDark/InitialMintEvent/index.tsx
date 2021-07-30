@@ -3,11 +3,11 @@ import nextId from 'react-id-generator';
 import { observer } from 'mobx-react-lite';
 
 import { indexesApi } from '../../../services/api';
+import { useMst } from '../../../store/store';
 import { Spinner } from '../../index';
 import { InitialMintEventItem } from '../index';
 
 import './InitialMintEvent.scss';
-import { useMst } from '../../../store/store';
 
 export interface IIme {
   id: number;

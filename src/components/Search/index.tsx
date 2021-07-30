@@ -21,10 +21,17 @@ interface SearchProps {
   onChange: (event: ChangeEvent<HTMLInputElement>) => void;
   handleClear?: () => void;
   onPick: (item: ISearchToken) => void;
-  newTokenName? : string;
+  newTokenName?: string;
 }
 
-const Search: React.FC<SearchProps> = ({ data, className, onChange, onPick, newTokenName, handleClear }) => {
+const Search: React.FC<SearchProps> = ({
+  data,
+  className,
+  onChange,
+  onPick,
+  newTokenName,
+  handleClear,
+}) => {
   const [tokenList, setTokenList] = useState(data);
   // const [newTokenName, setNewTokenName] = useState<string>('');
   // const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -50,7 +57,7 @@ const Search: React.FC<SearchProps> = ({ data, className, onChange, onPick, newT
         />
         {newTokenName ? (
           <Button styledType="clear" className="search__btn-clear" onClick={handleClear}>
-            <img src={Clear} alt="clear" width="30" height="30"/>
+            <img src={Clear} alt="clear" width="30" height="30" />
           </Button>
         ) : (
           <></>
@@ -61,7 +68,13 @@ const Search: React.FC<SearchProps> = ({ data, className, onChange, onPick, newT
         {tokenList?.map((item) => (
           <li className="search__item" key={nextId()}>
             <div className="search__item-info">
-              <img src={item.image} alt={`${item.name} icon`} className="search__icon" width="36" height="36"/>
+              <img
+                src={item.image}
+                alt={`${item.name} icon`}
+                className="search__icon"
+                width="36"
+                height="36"
+              />
               <div className="search__name">
                 <p className="search__name-full">{item.name}</p>
                 <p className="search__name-symbol">{item.symbol}</p>

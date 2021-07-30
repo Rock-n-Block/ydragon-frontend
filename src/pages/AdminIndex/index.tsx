@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { observer } from 'mobx-react-lite';
 
 import {
   Composition,
@@ -12,7 +13,6 @@ import {
 import { RebalanceModal } from '../../components/Modals';
 import { indexesApi, vaultsApi } from '../../services/api';
 import { IIndex, IIndexStatus, ITokensDiff } from '../Admin';
-import { observer } from 'mobx-react-lite';
 
 interface IIndexId {
   indexId: string;

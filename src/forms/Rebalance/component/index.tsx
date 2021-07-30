@@ -4,6 +4,7 @@ import BigNumber from 'bignumber.js/bignumber';
 import { FieldArray, FieldArrayRenderProps, Form, FormikProps } from 'formik';
 import { observer } from 'mobx-react-lite';
 
+import DangerCircle from '../../../assets/img/icons/icon-danger-circle.svg';
 import { Button, Input, Search, TokenMini } from '../../../components';
 import { IToken } from '../../../components/IndexPage/IndexTable';
 import { ISearchToken } from '../../../components/Search';
@@ -11,7 +12,6 @@ import { ITokensDiff } from '../../../pages/Admin';
 import { coinsApi, indexesApi } from '../../../services/api';
 import { useMst } from '../../../store/store';
 import { ProviderRpcError } from '../../../types/errors';
-import DangerCircle from '../../../assets/img/icons/icon-danger-circle.svg';
 
 interface IIndexId {
   indexId: string;

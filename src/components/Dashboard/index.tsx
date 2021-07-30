@@ -2,18 +2,18 @@ import React, { useCallback, useEffect, useState } from 'react';
 import nextId from 'react-id-generator';
 import { Link } from 'react-router-dom';
 import BigNumber from 'bignumber.js/bignumber';
+import { observer } from 'mobx-react-lite';
 
 import logo from '../../assets/img/icons/logo.svg';
 import { IIndex } from '../../pages/Admin';
 import { indexesApi } from '../../services/api';
+import { useMst } from '../../store/store';
+import { Sorter } from '../../utils/sorter';
 import { Spinner } from '../index';
 
 import IndexSmallCard from './SmallCard/index';
 
 import './Dashboard.scss';
-import { observer } from 'mobx-react-lite';
-import { useMst } from '../../store/store';
-import { Sorter } from '../../utils/sorter';
 
 export interface IUserIndex extends IIndex {
   name: string;
@@ -79,17 +79,12 @@ const Dashboard: React.FC = () => {
       <h2 className="section__title text-outline">Indexes</h2>
       <div className="index-dashboard__big">
         <div className="index-dashboard">
-          {
-          indexes?.
-          filter((index) => index.price > 0).
-          length ? (
+          {indexes?.filter((index) => index.price > 0).length ? (
             <div className="index-dashboard__row index-dashboard__row--head">
               <div className="index-dashboard__col">
                 <div
                   className={`index-dashboard__sort ${
-                    sorterValue === 'name'
-                      ? `index-dashboard__sort${ascendent ? '--up' : ''}`
-                      : ''
+                    sorterValue === 'name' ? `index-dashboard__sort${ascendent ? '--up' : ''}` : ''
                   }`}
                   onClick={() => sorter('name')}
                   role="button"
@@ -117,9 +112,7 @@ const Dashboard: React.FC = () => {
               <div className="index-dashboard__col">
                 <div
                   className={`index-dashboard__sort ${
-                    sorterValue === 'price'
-                      ? `index-dashboard__sort${ascendent ? '--up' : ''}`
-                      : ''
+                    sorterValue === 'price' ? `index-dashboard__sort${ascendent ? '--up' : ''}` : ''
                   }`}
                   onClick={() => sorter('price')}
                   role="button"
@@ -132,9 +125,7 @@ const Dashboard: React.FC = () => {
               <div className="index-dashboard__col">
                 <div
                   className={`index-dashboard__sort ${
-                    sorterValue === 'day'
-                      ? `index-dashboard__sort${ascendent ? '--up' : ''}`
-                      : ''
+                    sorterValue === 'day' ? `index-dashboard__sort${ascendent ? '--up' : ''}` : ''
                   }`}
                   onClick={() => sorter('day')}
                   role="button"
@@ -147,9 +138,7 @@ const Dashboard: React.FC = () => {
               <div className="index-dashboard__col">
                 <div
                   className={`index-dashboard__sort ${
-                    sorterValue === 'week'
-                      ? `index-dashboard__sort${ascendent ? '--up' : ''}`
-                      : ''
+                    sorterValue === 'week' ? `index-dashboard__sort${ascendent ? '--up' : ''}` : ''
                   }`}
                   onClick={() => sorter('week')}
                   role="button"
@@ -162,9 +151,7 @@ const Dashboard: React.FC = () => {
               <div className="index-dashboard__col">
                 <div
                   className={`index-dashboard__sort ${
-                    sorterValue === 'month'
-                      ? `index-dashboard__sort${ascendent ? '--up' : ''}`
-                      : ''
+                    sorterValue === 'month' ? `index-dashboard__sort${ascendent ? '--up' : ''}` : ''
                   }`}
                   onClick={() => sorter('month')}
                   role="button"
@@ -177,9 +164,7 @@ const Dashboard: React.FC = () => {
               <div className="index-dashboard__col">
                 <div
                   className={`index-dashboard__sort ${
-                    sorterValue === 'total'
-                      ? `index-dashboard__sort${ascendent ? '--up' : ''}`
-                      : ''
+                    sorterValue === 'total' ? `index-dashboard__sort${ascendent ? '--up' : ''}` : ''
                   }`}
                   onClick={() => sorter('total')}
                   role="button"

@@ -6,12 +6,12 @@ import moment from 'moment';
 import { IIndex } from '../../../pages/Admin';
 import { indexesApi } from '../../../services/api';
 import { useMst } from '../../../store/store';
+import { Sorter } from '../../../utils/sorter';
 import { Button, Spinner, Table } from '../../index';
 
 import { IndexCardMobile } from './IndexCardMobile/index';
 
 import './Indexes.scss';
-import { Sorter } from '../../../utils/sorter';
 
 const Indexes: React.FC = observer(() => {
   const { networks, modals } = useMst();
@@ -28,11 +28,7 @@ const Indexes: React.FC = observer(() => {
           if (indexes) {
             const newData = indexes
               .sort((a, b) =>
-                Sorter.DATE(
-                  moment(a.created_at).format(),
-                  moment(b.created_at).format(),
-                  asc
-                ),
+                Sorter.DATE(moment(a.created_at).format(), moment(b.created_at).format(), asc),
               )
               .map((curIndex, index) => {
                 return {
@@ -50,19 +46,19 @@ const Indexes: React.FC = observer(() => {
 
         default:
           if (indexes) {
-          const newData = indexes
-            .sort((a, b) => Sorter.DEFAULT(a, b, asc, value))
-            .map((curIndex, index) => {
-              return {
-                key: index,
-                name: { id: curIndex.id, name: curIndex.name },
-                cap: `$${curIndex.market_cap}`,
-                price: `$${curIndex.price}`,
-                created: moment(new Date(curIndex.created_at)).format('DD.MM.YY'),
-              };
-            });
-          setDataSource(newData);
-        }
+            const newData = indexes
+              .sort((a, b) => Sorter.DEFAULT(a, b, asc, value))
+              .map((curIndex, index) => {
+                return {
+                  key: index,
+                  name: { id: curIndex.id, name: curIndex.name },
+                  cap: `$${curIndex.market_cap}`,
+                  price: `$${curIndex.price}`,
+                  created: moment(new Date(curIndex.created_at)).format('DD.MM.YY'),
+                };
+              });
+            setDataSource(newData);
+          }
           break;
       }
     },

@@ -2,12 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import BigNumber from 'bignumber.js/bignumber';
 
+import bluePlus from '../../../assets/img/icons/icon-plus-blue.svg';
 import { IVault } from '../../../pages/AdminIndex';
 import { indexesApi } from '../../../services/api';
-import { Table, Button } from '../../index';
+import { Button, Table } from '../../index';
 import { InputNumber } from '../../Input';
 import SmallTableCard from '../../SmallTableCard/index';
-import bluePlus from '../../../assets/img/icons/icon-plus-blue.svg';
 
 import './TokensStructure.scss';
 

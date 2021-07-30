@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import BigNumber from 'bignumber.js/bignumber';
+import { autorun } from 'mobx';
 import { observer } from 'mobx-react-lite';
 
 import YDRLogo from '../../../assets/img/icons/logo.svg';
@@ -12,7 +13,6 @@ import { Button, InputWithSelect } from '../../index';
 import { Modal } from '../index';
 
 import './TradeYDRModal.scss';
-import { autorun } from 'mobx';
 
 const TradeYDRModal: React.FC = observer(() => {
   const walletConnector = useWalletConnectorContext();

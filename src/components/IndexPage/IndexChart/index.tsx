@@ -43,7 +43,7 @@ const IndexChart: React.FC<IndexChartProps> = ({ indexId }) => {
     layout: {
       padding: 10,
     },
-    aspectRatio: (windowWidth > 768 ? 4 : 2),
+    aspectRatio: windowWidth > 768 ? 4 : 2,
     parsing: {
       xAxisKey: 'time',
       yAxisKey: 'data',
@@ -83,11 +83,11 @@ const IndexChart: React.FC<IndexChartProps> = ({ indexId }) => {
       },
     },
   };
-  
+
   const getWindowWidth = () => {
     const { innerWidth: width } = window;
-    return width
-  }
+    return width;
+  };
 
   const toggleHandler = (event: any) => {
     const btnsList = event.target.parentNode.children;

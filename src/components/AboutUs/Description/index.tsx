@@ -1,10 +1,10 @@
 import React from 'react';
 
 import iconPlay from '../../../assets/img/icons/icon-play.svg';
-import { Button } from '../../index';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import Whitepaper from '../../../assets/pdf/YD WP.pdf';
+import { Button } from '../../index';
 
 // import { Button } from '../../index';
 import './Description.scss';

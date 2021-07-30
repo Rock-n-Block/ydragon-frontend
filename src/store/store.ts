@@ -1,11 +1,11 @@
 import { createContext, useContext } from 'react';
 import { Instance, onSnapshot, types } from 'mobx-state-tree';
 
+import { BasicTokens } from './BasicTokens';
 import { Modals } from './Modals';
 import { Networks } from './Networks';
 import { Theme } from './Theme';
 import { User } from './User';
-import { BasicTokens } from './BasicTokens';
 
 export const DARK = 'dark';
 export const LIGHT = 'light';

@@ -1,10 +1,12 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import axios, { AxiosResponse } from 'axios';
 import BigNumber from 'bignumber.js/bignumber';
+import { autorun } from 'mobx';
 import { observer } from 'mobx-react-lite';
 
 import YDRLogo from '../../../assets/img/icons/logo.svg';
 import { useWalletConnectorContext } from '../../../services/walletConnect';
+import MetamaskService, { nativeTokens } from '../../../services/web3';
 import config from '../../../services/web3/config';
 import { useMst } from '../../../store/store';
 import { ProviderRpcError } from '../../../types/errors';
@@ -12,8 +14,6 @@ import { Button, Input, InputWithSelect } from '../../index';
 import { Modal } from '../index';
 
 import './TradeIndexModal.scss';
-import MetamaskService, { nativeTokens } from '../../../services/web3';
-import { autorun } from 'mobx';
 
 interface TradeIndexModalProps {
   token: string;

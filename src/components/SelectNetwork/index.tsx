@@ -2,15 +2,15 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { Select } from 'antd';
 import { observer } from 'mobx-react-lite';
 
-import { useWalletConnectorContext } from '../../services/walletConnect';
-import { rootStore, useMst } from '../../store/store';
 import arrow from '../../assets/img/icons/icon-arrow-yellow.svg';
 import bncDark from '../../assets/img/icons/icon-binance-dark.svg';
 import bncLight from '../../assets/img/icons/icon-binance-light.svg';
 import plgDark from '../../assets/img/icons/icon-polygon-dark.svg';
 import plgLight from '../../assets/img/icons/icon-polygon-light.svg';
-import TokenMini from '../TokenMini';
 import { basicTokensApi, networksApi } from '../../services/api';
+import { useWalletConnectorContext } from '../../services/walletConnect';
+import { rootStore, useMst } from '../../store/store';
+import TokenMini from '../TokenMini';
 
 const { Option } = Select;
 

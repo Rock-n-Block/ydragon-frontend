@@ -17,7 +17,12 @@ const Spinner: React.FC<SpinnerProps> = observer((props: PropsWithChildren<Spinn
 
   return loading ? (
     <div className="spinner">
-      <img alt="spinner" src={DARK === theme.value ? spinner : spinnerBlack} width="50" height="50" />
+      <img
+        alt="spinner"
+        src={DARK === theme.value ? spinner : spinnerBlack}
+        width="50"
+        height="50"
+      />
     </div>
   ) : (
     <></>

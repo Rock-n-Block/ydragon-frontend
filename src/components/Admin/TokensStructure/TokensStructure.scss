@@ -6,19 +6,22 @@
 
   .apr-cell__btn {
     position: absolute;
-    right: 10px;
     top: calc(50% - 16px);
+    right: 10px;
+
     &:hover,
     &:focus {
       cursor: pointer;
     }
   }
+
   &-small {
     display: flex;
     align-items: center;
     gap: 20px;
   }
 }
+
 .token-structure-table {
   &__big {
     display: block;

@@ -48,7 +48,7 @@ const SmallTableCard: React.FC<ISmallTableCardProps> = ({
           <div className="small-card__header--subtitle">{tokenName}</div>
         </div>
         <div className="small-card__header--right">
-          {tokenLogo && <img src={tokenLogo} alt="token-logo" width='31' height='31'/>}
+          {tokenLogo && <img src={tokenLogo} alt="token-logo" width="31" height="31" />}
         </div>
       </div>
       <div className="small-card__body">
