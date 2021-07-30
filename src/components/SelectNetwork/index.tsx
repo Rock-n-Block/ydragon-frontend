@@ -54,7 +54,7 @@ const chains: IChains = {
       decimals: 18,
     },
     rpcUrls: ['https://rpc-mumbai.matic.today'],
-    blockExplorerUrls: ['https://matic.network/'],
+    blockExplorerUrls: ['https://mumbai.polygonscan.com/'],
   },
 };
 

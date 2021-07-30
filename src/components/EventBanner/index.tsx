@@ -94,8 +94,11 @@ const EventBanner: React.FC = observer(() => {
 
           <div className="event-banner-timer">
             <p className="event-banner-timer__title">
-              INITIAL minting Event{' '}
-              <span>{start.diff(now, 'seconds') > 0 ? 'Starts in' : 'Ends in'} </span>
+              <span>
+                {start.diff(now, 'seconds') > 0
+                  ? 'DAYS UNTIL Index minting Event AWAKENING'
+                  : 'DAYS BEFORE Index minting Event DISTRIBUTION'}{' '}
+              </span>
             </p>
 
             <div className="event-banner-timer__row">
