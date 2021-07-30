@@ -7,8 +7,8 @@ import marshlandBlack from '../../../assets/img/icons/partners/marshland-black.s
 import marshlandWhite from '../../../assets/img/icons/partners/marshland-white.svg';
 import moonwolf from '../../../assets/img/icons/partners/moonwolf.png';
 import polygon from '../../../assets/img/icons/partners/polygon.svg';
-import squareBlack from '../../../assets/img/icons/partners/square-black.svg';
-import squareWhite from '../../../assets/img/icons/partners/square-white.svg';
+// import squareBlack from '../../../assets/img/icons/partners/square-black.svg';
+// import squareWhite from '../../../assets/img/icons/partners/square-white.svg';
 import { useMst } from '../../../store/store';
 
 import './Protocols.scss';
@@ -28,12 +28,12 @@ const Protocols: React.FC = observer(() => {
             height="78"
           />
           <img src={polygon} alt="" width="98" height="78" />
-          <img
+          {/* <img
             src={theme.value === 'dark' ? squareWhite : squareBlack}
             alt="square"
             width="95"
             height="80"
-          />
+          /> */}
           <img
             src={theme.value === 'dark' ? magnusWhite : magnusBlack}
             alt="magnus"
