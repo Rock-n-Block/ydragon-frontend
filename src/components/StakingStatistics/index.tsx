@@ -28,7 +28,7 @@ interface IStakingStat {
 const StakingStatistics: React.FC = observer(() => {
   const walletConnector = useWalletConnectorContext();
   const [dataSource, setDataSource] = useState<any[]>([]);
-  const { modals } = useMst();
+  const { modals, user, networks } = useMst();
   const columns: any[] = [
     {
       title: 'Token',
@@ -87,36 +87,39 @@ const StakingStatistics: React.FC = observer(() => {
 
   const getStakingStatistic = useCallback(() => {
     indexesApi
-      .getStakingStatistic(sessionStorage.getItem('yd_address') ?? '')
+      .getStakingStatistic(user.address ?? '')
       .then(({ data }) => {
-        const newData = data['binance-smart-chain'].map((stake: IStakingStat, index: number) => {
-          return {
-            key: index,
-            id: stake.stake_id,
-            token: stake.name,
-            month: stake.months,
-            endDate: moment(stake.end_date).format('DD.MM.YY'),
-            staked: new BigNumber(stake.staked).dividedBy(new BigNumber(10).pow(18)).toFixed(5),
-            availableRewards: new BigNumber(stake.available_rewards)
-              .dividedBy(new BigNumber(10).pow(18))
-              .toFixed(5),
-            withdrawnRewards: new BigNumber(stake.withdrawn_rewards)
-              .dividedBy(new BigNumber(10).pow(18))
-              .toFixed(5),
-            estimatedRewards: stake.estimated_rewards
-              ? new BigNumber(stake.estimated_rewards)
-                  .dividedBy(new BigNumber(10).pow(18))
-                  .toFixed(5)
-              : 'In progress...',
-          };
-        });
+        // TODO: mb broken
+        const newData = data[`${networks.currentNetwork}`].map(
+          (stake: IStakingStat, index: number) => {
+            return {
+              key: index,
+              id: stake.stake_id,
+              token: stake.name,
+              month: stake.months,
+              endDate: moment(stake.end_date).format('DD.MM.YY'),
+              staked: new BigNumber(stake.staked).dividedBy(new BigNumber(10).pow(18)).toFixed(5),
+              availableRewards: new BigNumber(stake.available_rewards)
+                .dividedBy(new BigNumber(10).pow(18))
+                .toFixed(5),
+              withdrawnRewards: new BigNumber(stake.withdrawn_rewards)
+                .dividedBy(new BigNumber(10).pow(18))
+                .toFixed(5),
+              estimatedRewards: stake.estimated_rewards
+                ? new BigNumber(stake.estimated_rewards)
+                    .dividedBy(new BigNumber(10).pow(18))
+                    .toFixed(5)
+                : 'In progress...',
+            };
+          },
+        );
         setDataSource(newData);
       })
       .catch((error) => {
         const { response } = error;
         console.log('Error in getting staking stat', response);
       });
-  }, []);
+  }, [user.address, networks.currentNetwork]);
 
   const handleHarvest = useCallback(() => {
     walletConnector.metamaskService
@@ -165,8 +168,10 @@ const StakingStatistics: React.FC = observer(() => {
   ]);
 
   useEffect(() => {
-    getStakingStatistic();
-  }, [getStakingStatistic]);
+    if (user.address) {
+      getStakingStatistic();
+    }
+  }, [user.address, getStakingStatistic]);
 
   return (
     <section className="section section--admin staking-statistics">

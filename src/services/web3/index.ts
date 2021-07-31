@@ -286,19 +286,6 @@ export default class MetamaskService {
     }
   }
 
-  async checkStakingAllowance(tokenAddress: string) {
-    try {
-      const result = await this.getContractByAddress(tokenAddress, config.Token.ABI)
-        .methods.allowance(this.walletAddress, config.Staking.ADDRESS)
-        .call();
-
-      if (result === '0') return false;
-      return true;
-    } catch (error) {
-      return false;
-    }
-  }
-
   checkAutoXYRebalaceAllowance(address: string) {
     return this.getContractByAddress(address, config.MAIN.ABI)
       .methods.isAllowedAutoXYRebalace()
@@ -398,25 +385,6 @@ export default class MetamaskService {
       return this.sendTransaction({
         from: this.walletAddress,
         to: toContractAdress,
-        data: approveSignature,
-      });
-    } catch (error) {
-      return error;
-    }
-  }
-
-  async approveStake(address: string) {
-    try {
-      const approveMethod = MetamaskService.getMethodInterface(config.Token.ABI, 'approve');
-
-      const approveSignature = this.encodeFunctionCall(approveMethod, [
-        config.Staking.ADDRESS,
-        '0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff',
-      ]);
-
-      return this.sendTransaction({
-        from: this.walletAddress,
-        to: address,
         data: approveSignature,
       });
     } catch (error) {
@@ -624,7 +592,7 @@ export default class MetamaskService {
 
     return this.sendTransaction({
       from: this.walletAddress,
-      to: config.Staking.ADDRESS,
+      to: rootStore.networks.getCurrNetwork()?.staking_address,
       data: signature,
     });
   }
@@ -636,21 +604,37 @@ export default class MetamaskService {
 
     return this.sendTransaction({
       from: this.walletAddress,
-      to: config.Staking.ADDRESS,
+      to: rootStore.networks.getCurrNetwork()?.staking_address,
       data: signature,
     });
   }
 
   getStakingTokensLen() {
-    return this.getContract('Staking').methods.tokensToEnterLen().call();
+    return this.getContractByAddress(
+      rootStore.networks.getCurrNetwork()?.staking_address ??
+        '0x0000000000000000000000000000000000000000',
+      config.Staking.ABI,
+    )
+      .methods.tokensToEnterLen()
+      .call();
   }
 
   getStakingTokenToEnter(index: number) {
-    return this.getContract('Staking').methods.tokensToEnter(index).call();
+    return this.getContractByAddress(
+      rootStore.networks.getCurrNetwork()?.staking_address ?? '',
+      config.Staking.ABI,
+    )
+      .methods.tokensToEnter(index)
+      .call();
   }
 
   getStakingPair(address: string) {
-    return this.getContract('DexFactory').methods.getPair(address, config.WBNB.ADDRESS).call();
+    return this.getContractByAddress(
+      rootStore.networks.getCurrNetwork()?.dex_factory_address ?? '',
+      config.DexFactory.ABI,
+    )
+      .methods.getPair(address, config.WBNB.ADDRESS)
+      .call();
   }
 
   getTokenName(address: string) {
@@ -679,7 +663,7 @@ export default class MetamaskService {
 
     return this.sendTransaction({
       from: this.walletAddress,
-      to: config.Staking.ADDRESS,
+      to: rootStore.networks.getCurrNetwork()?.staking_address,
       data: signature,
     });
   }

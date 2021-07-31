@@ -10,6 +10,7 @@ import { InputNumber } from '../Input';
 import StakeItem, { IStakeItem } from '../StakeItem';
 
 import './Stake.scss';
+import config from '../../services/web3/config';
 
 export interface IStakeToken {
   address: string;
@@ -23,13 +24,13 @@ interface StakeProps {
 }
 const Stake: React.FC<StakeProps> = ({ tokens, propsLoading }) => {
   const walletConnector = useWalletConnectorContext();
-  const { modals } = useMst();
+  const { modals, networks } = useMst();
   const [tokensList, setTokensList] = useState<IStakeItem[]>([] as IStakeItem[]);
   const [activeStakeIndex, setActiveStakeIndex] = useState<number>(0);
   const [stakeValue, setStakeValue] = useState<string>('');
   const [intervalIndex, setIntervalIndex] = useState<0 | 1 | 2>(0);
   const [isAllowed, setIsAllowed] = useState(false);
-  const [loading, setLoading] = useState<boolean>(propsLoading);
+  const [loading, setLoading] = useState<boolean>(false);
   const handleStakeItemClick = (index: number) => {
     setActiveStakeIndex(index);
   };
@@ -58,7 +59,7 @@ const Stake: React.FC<StakeProps> = ({ tokens, propsLoading }) => {
   const approveToken = () => {
     setLoading(true);
     walletConnector.metamaskService
-      .approveStake(tokens[activeStakeIndex].address)
+      .approveById(tokens[activeStakeIndex].address, networks.getCurrNetwork()?.staking_address)
       .then(() => {
         setIsAllowed(!isAllowed);
       })
@@ -69,20 +70,21 @@ const Stake: React.FC<StakeProps> = ({ tokens, propsLoading }) => {
       .finally(() => setLoading(false));
   };
   const checkAllowance = useCallback(() => {
-    setLoading(true);
     walletConnector.metamaskService
-      .checkStakingAllowance(tokens[activeStakeIndex].address)
+      .checkAllowanceById(
+        tokens[activeStakeIndex].address,
+        config.Token.ABI,
+        networks.getCurrNetwork()?.staking_address,
+      )
       .then((result: boolean) => {
         setIsAllowed(result);
       })
       .catch((err: any) => {
         const { response } = err;
         console.log('stake allowance error', response);
-      })
-      .finally(() => setLoading(false));
-  }, [walletConnector.metamaskService, tokens, activeStakeIndex]);
+      });
+  }, [networks, walletConnector.metamaskService, tokens, activeStakeIndex]);
   useEffect(() => {
-    setLoading(true);
     setTokensList(
       tokens.map((token) => {
         return {
@@ -100,95 +102,105 @@ const Stake: React.FC<StakeProps> = ({ tokens, propsLoading }) => {
       checkAllowance();
     }
   }, [tokens.length, checkAllowance]);
+
   return (
     <section className="section section--admin">
       <h2 className="section__title text-outline">Stake</h2>
 
       <div className="stake">
-        <div className="stake__title">Available to stake</div>
-
-        <div className="stake__content">
-          <Spinner loading={loading} />
-          {tokensList.map((item, index) => (
-            <StakeItem
-              key={nextId()}
-              item={item}
-              onClick={() => handleStakeItemClick(index)}
-              active={activeStakeIndex === index}
-            />
-          ))}
-        </div>
-
-        <div className="stake-amount">
-          <div className="stake-amount__title text-gradient">Amount to stake</div>
-
-          <div className="stake-amount__input-wrapper">
-            <InputNumber
-              value={stakeValue}
-              type="number"
-              placeholder="0.0"
-              onChange={handleStakeValueChange}
-            />
-            <span
-              className="stake-amount__all"
-              onClick={handleAllClick}
-              role="button"
-              tabIndex={0}
-              onKeyDown={handleAllClick}
-            >
-              All Available
-            </span>
-          </div>
-
-          <div className="stake-amount__time-row">
-            <div className="stake-amount__time-wrapper">
-              {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-              <label className="stake-amount__time">
-                <input
-                  type="radio"
-                  name="amount-time"
-                  className="stake-amount__time-radio"
-                  value={0}
-                  onClick={(e) => handleRadioChange(e)}
-                  defaultChecked
+        <Spinner loading={propsLoading} />
+        {!propsLoading && tokens.length ? (
+          <>
+            <div className="stake__title">Available to stake</div>
+            <div className="stake__content">
+              {tokensList.map((item, index) => (
+                <StakeItem
+                  key={nextId()}
+                  item={item}
+                  onClick={() => handleStakeItemClick(index)}
+                  active={activeStakeIndex === index}
                 />
-                <span className="stake-amount__time-label">1 Month</span>
-              </label>
-
-              {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-              <label className="stake-amount__time">
-                <input
-                  type="radio"
-                  name="amount-time"
-                  className="stake-amount__time-radio"
-                  value={1}
-                  onClick={(e) => handleRadioChange(e)}
-                />
-                <span className="stake-amount__time-label">3 Month</span>
-              </label>
-
-              {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-              <label className="stake-amount__time">
-                <input
-                  type="radio"
-                  name="amount-time"
-                  className="stake-amount__time-radio"
-                  value={2}
-                  onClick={(e) => handleRadioChange(e)}
-                />
-                <span className="stake-amount__time-label">12 Month</span>
-              </label>
+              ))}
             </div>
-          </div>
-        </div>
 
-        <div className="stake__btn-row">
-          {isAllowed ? (
-            <Button onClick={handleStakeStart}>Stake</Button>
-          ) : (
-            <Button onClick={approveToken}>Approve</Button>
-          )}
-        </div>
+            <div className="stake-amount">
+              <div className="stake-amount__title text-gradient">Amount to stake</div>
+
+              <div className="stake-amount__input-wrapper">
+                <InputNumber
+                  value={stakeValue}
+                  type="number"
+                  placeholder="0.0"
+                  onChange={handleStakeValueChange}
+                />
+                <span
+                  className="stake-amount__all"
+                  onClick={handleAllClick}
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={handleAllClick}
+                >
+                  All Available
+                </span>
+              </div>
+
+              <div className="stake-amount__time-row">
+                <div className="stake-amount__time-wrapper">
+                  {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+                  <label className="stake-amount__time">
+                    <input
+                      type="radio"
+                      name="amount-time"
+                      className="stake-amount__time-radio"
+                      value={0}
+                      onClick={(e) => handleRadioChange(e)}
+                      defaultChecked
+                    />
+                    <span className="stake-amount__time-label">1 Month</span>
+                  </label>
+
+                  {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+                  <label className="stake-amount__time">
+                    <input
+                      type="radio"
+                      name="amount-time"
+                      className="stake-amount__time-radio"
+                      value={1}
+                      onClick={(e) => handleRadioChange(e)}
+                    />
+                    <span className="stake-amount__time-label">3 Month</span>
+                  </label>
+
+                  {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+                  <label className="stake-amount__time">
+                    <input
+                      type="radio"
+                      name="amount-time"
+                      className="stake-amount__time-radio"
+                      value={2}
+                      onClick={(e) => handleRadioChange(e)}
+                    />
+                    <span className="stake-amount__time-label">12 Month</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <div className="stake__btn-row">
+              {isAllowed ? (
+                <Button onClick={handleStakeStart} loading={loading}>
+                  Stake
+                </Button>
+              ) : (
+                <Button onClick={approveToken} loading={loading}>
+                  Approve
+                </Button>
+              )}
+            </div>
+          </>
+        ) : (
+          <p className="stake__no-stake text-gradient">You can not stake yet</p>
+        )}
       </div>
     </section>
   );
