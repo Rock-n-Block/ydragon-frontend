@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
+import { useMst } from '../../store/store';
 
 import {
   Composition,
@@ -26,6 +27,7 @@ interface IRebalance extends IIndexStatus {
   attempts_count: number;
   market_cap: number;
   price: number;
+  network: string;
 }
 export interface IVault {
   id: number;
@@ -50,6 +52,8 @@ const AdminIndex: React.FC = () => {
   const [vault, setVault] = useState<IVault[]>([] as IVault[]);
   const [vaultMini, setVaultMini] = useState<IVaultMini[]>([] as IVaultMini[]);
   const [manualRebalanceValue, setManualRebalanceValue] = useState<string>('');
+  const { networks } = useMst();
+  const history = useHistory();
 
   const handleManualRebalanceValueChange = (value: string) => {
     setManualRebalanceValue(value);
@@ -60,12 +64,15 @@ const AdminIndex: React.FC = () => {
       .getIndexesRebalance(+indexId)
       .then(({ data }) => {
         setIndex(data);
+        if (networks.currentNetwork !== data.index.network) {
+          history.push('/admin');
+        }
       })
       .catch((err) => {
         const { response } = err;
         console.log('get index composition collections error', response);
       });
-  }, [indexId]);
+  }, [indexId, history, networks.currentNetwork]);
 
   const getVaults = useCallback(() => {
     vaultsApi
