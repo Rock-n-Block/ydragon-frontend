@@ -25,7 +25,7 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
   ({ token, indexAddress, tokenId }) => {
     const url = `https://dev-ydragon.rocknblock.io/api/vaults/${tokenId}`;
     const walletConnector = useWalletConnectorContext();
-    const { user, modals, basicTokens } = useMst();
+    const { user, modals, basicTokens, networks } = useMst();
     const [isSell, setIsSell] = useState<boolean>(modals.tradeIndex.method === 'sell');
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [fee, setFee] = useState<string>('');
@@ -132,7 +132,7 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
             setFee(+payInput * cost * 0.02 > 0.001 ? `${+payInput * cost * 0.02}` : '< 0.001');
             break;
           case 'sell':
-            if (total_x) {
+            if (total_x !== undefined && total_x >= 0) {
               const preFee = (+payInput * (6 - (4 - total_x - 5))) / 10;
               setFee(preFee * cost > 0.001 ? (preFee * cost).toFixed(3) : '< 0.001');
             }
@@ -192,7 +192,7 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
               if (res.data[res.data.length - 1].total_x >= 0.15) {
                 getFee(secondCurrency, 'sell_0.02');
               } else {
-                getFee(secondCurrency, 'sell', res.data[3].total_x);
+                getFee(secondCurrency, 'sell', res.data[res.data.length - 1].total_x);
               }
             });
             setViewOnlyInputValue(
@@ -410,7 +410,9 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
             )}
           </div>
           {fee ? (
-            <p className="m-trade-ydr__label m-trade-ydr__fee">Service Fee {fee} BNB</p>
+            <p className="m-trade-ydr__label m-trade-ydr__fee">
+              Service Fee {fee} {networks.currentNetwork === 'polygon-pos' ? 'MATIC' : 'BNB'}
+            </p>
           ) : (
             <></>
           )}
