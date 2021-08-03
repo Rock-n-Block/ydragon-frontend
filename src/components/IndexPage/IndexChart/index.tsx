@@ -251,7 +251,7 @@ const IndexChart: React.FC<IndexChartProps> = ({ indexId }) => {
         <Line
           data={chartData}
           options={options}
-          // type="line"
+          type="line"
           getElementAtEvent={getElementAtEvent}
         />
       ) : (

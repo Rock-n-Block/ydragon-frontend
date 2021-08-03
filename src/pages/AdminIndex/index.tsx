@@ -88,11 +88,15 @@ const AdminIndex: React.FC = () => {
       });
   }, [indexId]);
   useEffect(() => {
-    getIndexComposition();
-  }, [getIndexComposition]);
+    if (networks.currentNetwork) {
+      getIndexComposition();
+    }
+  }, [networks.currentNetwork, getIndexComposition]);
   useEffect(() => {
-    getVaults();
-  }, [getVaults]);
+    if (networks.currentNetwork) {
+      getVaults();
+    }
+  }, [networks.currentNetwork, getVaults]);
   return (
     <main className="container">
       <IndexInfo marketCap={index.market_cap} price={index.price} />

@@ -47,11 +47,15 @@ const Index: React.FC = observer(() => {
       .getIndexById(+indexId)
       .then(({ data }) => {
         setIndexData(data);
+        if (networks.currentNetwork !== data.network) {
+          history.push('/indexes');
+          // console.log(history);
+        }
       })
       .catch((err: any) => {
         console.log('get current index error', err);
       });
-  }, [indexId]);
+  }, [history, networks.currentNetwork, indexId]);
 
   const handleBuy = () => {
     modals.tradeIndex.open('buy');
@@ -61,16 +65,11 @@ const Index: React.FC = observer(() => {
   };
 
   useEffect(() => {
-    getCurrentIndex();
-  }, [getCurrentIndex]);
-
-  useEffect(() => {
-    if (indexData) {
-      if (networks.currentNetwork !== indexData.network) {
-        history.push('/indexes');
-      }
+    if (networks.currentNetwork) {
+      getCurrentIndex();
     }
-  }, [history, indexData, networks.currentNetwork]);
+  }, [networks.currentNetwork, getCurrentIndex]);
+
   return (
     <main className="container page">
       <div className="page__title-row">
