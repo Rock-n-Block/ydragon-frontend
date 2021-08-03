@@ -17,11 +17,7 @@ interface INetworks {
   [key: string]: string;
 }
 
-export type TestNetworkTypes = 'bnbt' | 'tmatic';
-
-interface IMetamaskService {
-  isProduction?: boolean;
-}
+export type TestNetworkTypes = 'bnb' | 'matic';
 
 export type ContractTypes =
   | 'BNB'
@@ -38,11 +34,12 @@ export type ContractTypes =
 export const nativeTokens = ['bnb', 'wbnb', 'matic', 'wmatic'];
 
 const networks: INetworks = {
-  mainnet: '0x1',
+  bnb: '0x38',
+  matic: '0x89',
 };
 const testNetworks: INetworks = {
-  bnbt: '0x61',
-  tmatic: '0x13881',
+  bnb: '0x61',
+  matic: '0x13881',
 };
 
 export default class MetamaskService {
@@ -52,7 +49,7 @@ export default class MetamaskService {
 
   // public contract: any;
 
-  private isProduction?: boolean;
+  public isProduction?: boolean;
 
   public walletAddress = '';
 
@@ -66,11 +63,11 @@ export default class MetamaskService {
 
   public usedChain: INetworks;
 
-  constructor({ isProduction = false }: IMetamaskService) {
+  constructor() {
     this.wallet = window.ethereum;
 
     this.web3Provider = new Web3(window.ethereum);
-    this.isProduction = isProduction;
+    this.isProduction = process.env.NODE_ENV === 'production';
     // this.contract = new this.web3Provider.eth.Contract(config.ABI as Array<any>, config.ADDRESS);
 
     this.usedNetwork = this.isProduction ? 'mainnet' : 'testnet';
@@ -84,9 +81,9 @@ export default class MetamaskService {
         } else {
           rootStore.networks.setNetworkId(this.wallet.chainId);
           // TODO: change this on deploy
-          if (this.wallet.chainId === '0x61') {
+          if (this.wallet.chainId === this.usedChain.bnb) {
             rootStore.networks.setCurrNetwork('binance-smart-chain');
-          } else if (this.wallet.chainId === '0x13881') {
+          } else if (this.wallet.chainId === this.usedChain.matic) {
             rootStore.networks.setCurrNetwork('polygon-pos');
           }
           subscriber.next('');
