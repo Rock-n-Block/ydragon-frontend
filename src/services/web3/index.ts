@@ -67,7 +67,7 @@ export default class MetamaskService {
     this.wallet = window.ethereum;
 
     this.web3Provider = new Web3(window.ethereum);
-    this.isProduction = process.env.NODE_ENV === 'production';
+    this.isProduction = process.env.REACT_APP_IS_PROD === 'production';
     // this.contract = new this.web3Provider.eth.Contract(config.ABI as Array<any>, config.ADDRESS);
 
     this.usedNetwork = this.isProduction ? 'mainnet' : 'testnet';
