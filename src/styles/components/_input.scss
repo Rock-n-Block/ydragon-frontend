@@ -246,7 +246,8 @@ input[type='number'] {
 .form-rebalance {
   .form-create-index__input {
     &-name,
-    &-symbol {
+    &-symbol,
+    &-price{
       &--error {
         background: $red;
       }

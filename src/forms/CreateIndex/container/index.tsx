@@ -47,7 +47,7 @@ const CreateIndexForm: React.FC = () => {
           ],
           tokenAddresses,
           tokenWeights,
-          new BigNumber(values.price).multipliedBy(100).toString(10),
+          new BigNumber(values.price).multipliedBy(new BigNumber(10).pow(18)).toString(10),
         )
         .then((data: TransactionReceipt) => {
           if (values.description) {

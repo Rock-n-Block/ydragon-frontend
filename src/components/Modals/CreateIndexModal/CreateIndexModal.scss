@@ -160,19 +160,6 @@
         opacity: 0.5;
       }
 
-      &-info {
-        margin-top: 15px;
-        margin-bottom: 15px;
-
-        font-family: 'TTNorms', sans-serif;
-        font-size: 17px;
-        font-weight: normal;
-        line-height: 20px;
-        text-align: unset;
-        font-feature-settings: 'liga' off;
-
-        color: #bfbfbf;
-      }
 
       &-price {
         .ant-input {
@@ -195,6 +182,10 @@
           text-transform: uppercase;
         }
       }
+    }
+
+    &-items{
+      margin-top: 30px;
     }
 
     &__btn-row {
