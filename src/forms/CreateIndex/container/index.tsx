@@ -47,11 +47,12 @@ const CreateIndexForm: React.FC = () => {
           ],
           tokenAddresses,
           tokenWeights,
+          new BigNumber(values.price).multipliedBy(100).toString(10),
         )
         .then((data: TransactionReceipt) => {
           if (values.description) {
             indexesApi
-              .addParamsToIndex(data.transactionHash, values.description, values.price)
+              .addParamsToIndex(data.transactionHash, values.description /* , values.price */)
               .then(() => {
                 resetForm({});
                 modals.info.setMsg('Success', 'Index created with description', 'success');

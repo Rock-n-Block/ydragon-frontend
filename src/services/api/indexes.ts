@@ -9,11 +9,10 @@ export default {
     axios.get(`indexes/ime/${id}${address ? `?address=${address}` : '/'}`),
   getIndexById: (id: number) => axios.get(`indexes/${id}`),
   getIndexesRebalance: (indexId: number) => axios.get(`indexes/${indexId}/rebalance/`),
-  addParamsToIndex: (tx_hash: string, description: string, price?: string) =>
+  addParamsToIndex: (tx_hash: string, description: string) =>
     axios.post(`indexes/index_params/`, {
       tx_hash,
       description,
-      price,
     }),
   patchIndexesApr: (indexId: number, token_info: any) =>
     axios.patch(`indexes/apr/${indexId}`, {

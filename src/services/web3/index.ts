@@ -19,17 +19,7 @@ interface INetworks {
 
 export type TestNetworkTypes = 'bnb' | 'matic';
 
-export type ContractTypes =
-  | 'BNB'
-  | 'WBNB'
-  | 'MAIN'
-  | 'USDT'
-  | 'YDR'
-  | 'Router'
-  | 'Factory'
-  | 'Staking'
-  | 'DexFactory'
-  | 'Token';
+export type ContractTypes = 'Router' | 'Factory' | 'Staking' | 'DexFactory' | 'Token';
 
 export const nativeTokens = ['bnb', 'wbnb', 'matic', 'wmatic'];
 
@@ -111,13 +101,6 @@ export default class MetamaskService {
     return this.wallet.request({ method: 'eth_chainId' });
   }
 
-  getContract(contractName: ContractTypes) {
-    return new this.web3Provider.eth.Contract(
-      config[contractName].ABI as Array<any>,
-      config[contractName].ADDRESS,
-    );
-  }
-
   getContractByAddress(address: string, abi: Array<any>) {
     return new this.web3Provider.eth.Contract(abi, address);
   }
@@ -196,8 +179,10 @@ export default class MetamaskService {
     return this.web3Provider.eth.abi.encodeFunctionCall(abi, data);
   }
 
-  async totalSupply(contractName: ContractTypes, tokenDecimals: number) {
-    const totalSupply = await this.getContract(contractName).methods.totalSupply().call();
+  async totalSupply(contractAddress: string, tokenDecimals: number) {
+    const totalSupply = await this.getContractByAddress(contractAddress, config.Token.ABI)
+      .methods.totalSupply()
+      .call();
     return +new BigNumber(totalSupply).dividedBy(new BigNumber(10).pow(tokenDecimals)).toString(10);
   }
 
@@ -228,46 +213,6 @@ export default class MetamaskService {
   getEndDate(address: string) {
     // TODO: change this to normal contract later
     return this.getContractByAddress(address, config.MAIN.ABI).methods.imeEndTimestamp().call();
-  }
-
-  async getTokensForIME() {
-    let length = 0;
-    const tokenAddresses: string[] = [];
-    // get tokens count
-    await this.getContract('MAIN')
-      .methods.tokenWhitelistLen()
-      .call()
-      .then((data: number) => {
-        length = data;
-      })
-      .catch((err: any) => {
-        console.log('error in getting tokens length', err);
-      });
-    // get tokens addresses
-    for (let i = 0; i < length; i += 1) {
-      this.getContract('MAIN')
-        .methods.tokenWhitelist(i)
-        .call()
-        .then((data: string) => {
-          tokenAddresses.push(data);
-        })
-        .catch((err: any) => {
-          console.log(`error in getting token ${i} address`, err);
-        });
-    }
-  }
-
-  async checkAllowance(toContract: ContractTypes, spender?: ContractTypes, address?: string) {
-    try {
-      const result = await this.getContract(toContract)
-        .methods.allowance(this.walletAddress, address || config[spender || 'MAIN'].ADDRESS)
-        .call();
-
-      if (result === '0') return false;
-      return true;
-    } catch (error) {
-      return false;
-    }
   }
 
   async checkAllowanceById(toContractAddress: string, abi: Array<any>, spenderAddress: string) {
@@ -349,25 +294,6 @@ export default class MetamaskService {
       to: address,
       data: signature,
     });
-  }
-
-  async approve(toContract: ContractTypes, from?: ContractTypes, address?: string) {
-    try {
-      const approveMethod = MetamaskService.getMethodInterface(config[toContract].ABI, 'approve');
-
-      const approveSignature = this.encodeFunctionCall(approveMethod, [
-        address || config[from || 'MAIN'].ADDRESS,
-        '0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff',
-      ]);
-
-      return this.sendTransaction({
-        from: this.walletAddress,
-        to: config[toContract].ADDRESS,
-        data: approveSignature,
-      });
-    } catch (error) {
-      return error;
-    }
   }
 
   async approveById(toContractAdress: string, address: string) {
@@ -674,6 +600,7 @@ export default class MetamaskService {
     imeTimeParameters: string[],
     tokenAddresses: string[],
     tokenWeights: string[],
+    initialPrice: string,
   ) {
     const method = MetamaskService.getMethodInterface(config.Factory.ABI, 'deployNewAsset');
 
@@ -683,6 +610,7 @@ export default class MetamaskService {
       imeTimeParameters,
       tokenAddresses,
       tokenWeights,
+      initialPrice,
     ]);
 
     return this.sendTransaction({
