@@ -14,7 +14,7 @@ import tg from '../../assets/img/socials/telegram.svg';
 import tw from '../../assets/img/socials/twitter.svg';
 // import { useWalletConnectorContext } from '../../services/walletConnect';
 import { DARK, LIGHT, useMst } from '../../store/store';
-import EventBanner from '../EventBanner';
+// import EventBanner from '../EventBanner';
 import { Button, /* SelectNetwork, */ Switch } from '../index';
 
 import './Header.scss';
@@ -69,7 +69,7 @@ const Header: React.FC<HeaderProps> = observer(({ collapsed, onCollapsedChange }
 
   return (
     <div className={`header__wrapper  ${fixed ? 'fixed' : ''}`}>
-      <EventBanner />
+      {/* <EventBanner /> */}
       <div className={`header ${collapsed ? 'collapse' : 'expand'}`}>
         <div className="container">
           <div className="header__inner">
