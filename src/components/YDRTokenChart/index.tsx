@@ -232,7 +232,7 @@ const YDRTokenChart: React.FC<TokenChartProps> = ({ price }) => {
           height={500}
           data={chartData}
           options={options}
-          type="line"
+          // type="line"
           getElementAtEvent={getElementAtEvent}
         />
       ) : (

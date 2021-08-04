@@ -1,6 +1,6 @@
 import React from 'react';
 
-import image from '../../../assets/img/machine-dark.svg';
+import image from '../../../assets/img/gif/PLATFORM__YDRAGON.gif';
 
 import './Machine.scss';
 
@@ -29,7 +29,7 @@ const Machine: React.FC = () => {
         </p>
 
         <div className="machine__img">
-          <img src={image} alt="machine" width="686" height="502" />
+          <img src={image} alt="machine" width="600" height="426" />
         </div>
       </div>
     </section>
