@@ -1,5 +1,4 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import nextId from 'react-id-generator';
 import { observer } from 'mobx-react-lite';
 
 import bncDark from '../../../assets/img/icons/icon-binance-dark.svg';
@@ -11,59 +10,54 @@ import { useMst } from '../../../store/store';
 import { ProviderRpcError } from '../../../types/errors';
 import { defaultTokens, ITokenMini, TokenMiniNameTypes } from '../../../utils/tokenMini';
 import { IIme } from '../../HomeDark/InitialMintEvent';
-import { Button, InputWithSelect, Spinner } from '../../index';
-import SplittedTable, { ITableColumn, ITableData } from '../../SplittedTable';
-import { TokenMiniProps } from '../../TokenMini';
+import { Button, Input, InputWithSelect } from '../../index';
 import { Modal } from '../index';
 
 import './GetInModal.scss';
-
-const totalColumns: ITableColumn[] = [
-  {
-    name: 'token',
-    unShow: true,
-  },
-  {
-    name: 'Quantity',
-  },
-  {
-    name: 'Token price',
-  },
-  {
-    name: 'Total price',
-  },
-];
-const userColumns: ITableColumn[] = [
-  {
-    name: 'token',
-    unShow: true,
-  },
-  {
-    name: 'Quantity',
-  },
-];
+import YDRLogo from '../../../assets/img/icons/logo.svg';
+import BigNumber from 'bignumber.js/bignumber';
+import plgDark from '../../../assets/img/icons/icon-polygon-dark.svg';
+import plgLight from '../../../assets/img/icons/icon-polygon-light.svg';
 
 const GetInModal: React.FC = observer(() => {
-  const { modals, user, theme } = useMst();
+  const { modals, user, theme, networks } = useMst();
   const walletConnector = useWalletConnectorContext();
 
   const [currentIme, setCurrentIme] = useState<IIme | undefined>();
   const [whitelistTokens, setWhitelistTokens] = useState<Array<ITokenMini>>();
-  const [totalData, setTotalData] = useState<ITableData[]>([] as ITableData[]);
-  const [userData, setUserData] = useState<ITableData[]>([] as ITableData[]);
   const [firstCurrency, setFirstCurrency] = useState<TokenMiniNameTypes | string>(
     defaultTokens[0].name,
   );
   const [decimals, setDecimals] = useState<number>(18);
   const [payInput, setPayInput] = useState<string>('');
+  const [viewOnlyInputValue, setViewOnlyInputValue] = useState<string>('0.0');
+  const [balance, setBalance] = useState<number>(0);
   const [isNeedApprove, setIsNeedApprove] = useState<boolean>(true);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [isLoadingBtn, setIsLoadingBtn] = useState<boolean>(false);
   // const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  const networkToken = {
+    bnb: {
+      symbol: 'bnb',
+      address: '0x0000000000000000000000000000000000000000',
+      decimals: 18,
+      name: 'Binance Coin',
+      image: theme.value === 'dark' ? bncDark : bncLight,
+    },
+    polygon: {
+      symbol: 'matic',
+      address: '0x0000000000000000000000000000000000000000',
+      decimals: 18,
+      name: 'Polygon (Matic)',
+      image: theme.value === 'dark' ? plgDark : plgLight,
+    },
+  };
+
   const handleClose = (): void => {
     modals.getIn.close();
     setPayInput('');
   };
+
   const findToken = useCallback(
     (currency: string) => {
       return whitelistTokens?.find((token) => token.name.toLowerCase() === currency.toLowerCase());
@@ -82,6 +76,20 @@ const GetInModal: React.FC = observer(() => {
     },
     [findToken, walletConnector.metamaskService],
   );
+  const getBalance = useCallback(() => {
+    walletConnector.metamaskService
+      .getBalanceOf(findToken(firstCurrency)?.address)
+      .then((data: any) => {
+        setBalance(data);
+        getDecimals(firstCurrency).then((dec: number) => {
+          setDecimals(dec);
+        });
+      })
+      .catch((err: ProviderRpcError) => {
+        const { message } = err;
+        console.log('getBalance error', message);
+      });
+  }, [findToken, getDecimals, walletConnector.metamaskService, firstCurrency]);
   const checkAllowance = useCallback(() => {
     if (firstCurrency !== 'BNB') {
       walletConnector.metamaskService
@@ -99,6 +107,7 @@ const GetInModal: React.FC = observer(() => {
         });
     }
   }, [findToken, modals.getIn.address, walletConnector.metamaskService, firstCurrency]);
+
   const handleSelectChange = (value: any) => {
     setFirstCurrency(value);
     setPayInput('');
@@ -107,8 +116,9 @@ const GetInModal: React.FC = observer(() => {
       setDecimals(dec);
     });
   };
+
   const handleApprove = (): void => {
-    setIsLoadingBtn(true);
+    setIsLoading(true);
     walletConnector.metamaskService
       .approveById(findToken(firstCurrency)?.address, modals.getIn.address)
       .then(() => {
@@ -119,12 +129,13 @@ const GetInModal: React.FC = observer(() => {
         const { message } = err;
         modals.info.setMsg('Error', `Approve error ${message}`, 'error');
       })
-      .finally(() => setIsLoadingBtn(false));
+      .finally(() => setIsLoading(false));
   };
+
   const handleEnter = (): void => {
-    setIsLoadingBtn(true);
+    setIsLoading(true);
     walletConnector.metamaskService
-      .enterIme(
+      .mint(
         payInput,
         firstCurrency,
         findToken(firstCurrency)?.address,
@@ -133,6 +144,7 @@ const GetInModal: React.FC = observer(() => {
       )
       .then(() => {
         setPayInput('');
+        getBalance();
         modals.info.setMsg('Success', 'You entered IME', 'success');
       })
       .catch((err: ProviderRpcError) => {
@@ -143,8 +155,9 @@ const GetInModal: React.FC = observer(() => {
           'error',
         );
       })
-      .finally(() => setIsLoadingBtn(false));
+      .finally(() => setIsLoading(false));
   };
+
   const getCurrentIme = useCallback(() => {
     if (modals.getIn.id) {
       indexesApi
@@ -159,6 +172,37 @@ const GetInModal: React.FC = observer(() => {
         .finally(() => setIsLoading(false));
     }
   }, [user.address, modals.getIn.id]);
+
+  const getBuyCourse = useCallback(() => {
+    if (payInput) {
+      walletConnector.metamaskService
+        .getIndexCourse(
+          findToken(firstCurrency)?.address,
+          payInput,
+          true,
+          modals.getIn.address,
+          decimals,
+        )
+        .then((data: any) => {
+          setViewOnlyInputValue(
+            new BigNumber(data).dividedBy(new BigNumber(10).pow(18)).toFixed(5),
+          );
+        })
+        .catch((err: ProviderRpcError) => {
+          const { message } = err;
+          console.log('getBuyCourse error', message);
+        });
+    } else {
+      setViewOnlyInputValue('0.0');
+    }
+  }, [
+    findToken,
+    modals.getIn.address,
+    decimals,
+    payInput,
+    firstCurrency,
+    walletConnector.metamaskService,
+  ]);
   const handlePayInput = (e: any) => {
     if (+e.target.value < 0) {
       e.target.value = '';
@@ -166,24 +210,15 @@ const GetInModal: React.FC = observer(() => {
       setPayInput(e.target.value);
     }
   };
+
   useEffect(() => {
-    setIsLoading(true);
     getCurrentIme();
   }, [getCurrentIme]);
-  useEffect(() => {
-    if (user.address) {
-      checkAllowance();
-    }
-  }, [checkAllowance, user.address]);
+
   useEffect(() => {
     if (currentIme) {
       setWhitelistTokens([
-        {
-          name: 'BNB',
-          symbol: 'Binance coin',
-          address: '0x0000000000000000000000000000000000000000',
-          image: theme.value === 'dark' ? bncDark : bncLight,
-        },
+        networks.currentNetwork === 'binance-smart-chain' ? networkToken.bnb : networkToken.polygon,
         ...currentIme.tokens.map((token) => {
           return {
             name: token.name,
@@ -193,94 +228,69 @@ const GetInModal: React.FC = observer(() => {
           };
         }),
       ]);
-      setTotalData(
-        currentIme.tokens.map((token) => {
-          return [
-            {
-              icon: token.image,
-              name: token.name,
-              symbol: token.symbol,
-              key: nextId(),
-            } as TokenMiniProps,
-            token.total_quantity,
-            `$${token.price}`,
-            `$${token.total_price}`,
-          ];
-        }),
-      );
-      if (user.address) {
-        setUserData(
-          currentIme.tokens.map((token) => {
-            return [
-              {
-                icon: token.image,
-                name: token.name,
-                symbol: token.symbol,
-                key: nextId(),
-              } as TokenMiniProps,
-              token.user_quantity ?? '0',
-            ];
-          }),
-        );
-      }
     }
-  }, [theme.value, user.address, currentIme]);
+  }, [
+    networks.currentNetwork,
+    networkToken.bnb,
+    networkToken.polygon,
+    theme.value,
+    user.address,
+    currentIme,
+  ]);
+  useEffect(() => {
+    if (user.address) {
+      checkAllowance();
+    }
+  }, [checkAllowance, user.address]);
   return (
-    <Modal
-      isVisible={!!modals.getIn.id}
-      // closeIcon={windowWidth < 500}
-      handleCancel={handleClose}
-      className="m-get-in"
-    >
+    <Modal isVisible={!!modals.getIn.id} handleCancel={handleClose} className="m-get-in">
       <div className="m-get-in__content">
-        {isLoading ? (
-          <Spinner loading={isLoading} />
-        ) : (
-          <>
-            <section className="m-get-in__total">
-              <h2 className="m-get-in__title">Total for index</h2>
-              <SplittedTable columns={totalColumns} data={totalData} />
-            </section>
-            <section className="m-get-in__user">
-              <h2 className="m-get-in__title">Total for User</h2>
-              <SplittedTable columns={userColumns} data={userData} />
-            </section>
-          </>
-        )}
-        <section className="m-get-in__you-pay">
-          <h2 className="m-get-in__title">You pay</h2>
+        <div className="m-get-in__logo">
+          <img src={YDRLogo} alt="logo" width="55" height="100%" />
+        </div>
+        <h3 className="m-get-in__header">
+          I want to enter to index mint event of
+          <span className="m-trade-ydr__header-label"> {modals.getIn.name}</span>
+        </h3>
+        <div className="m-trade-ydr__field">
+          <div className="m-trade-ydr__labels">
+            <span className="m-trade-ydr__label">You pay</span>
+            <span className="m-trade-ydr__label">
+              Balance: {new BigNumber(balance).dividedBy(new BigNumber(10).pow(18)).toFixed(7)}{' '}
+            </span>
+          </div>
           <InputWithSelect
-            tokens={whitelistTokens ?? defaultTokens}
-            onSelectChange={handleSelectChange}
             value={payInput}
-            placeholder="0"
+            tokens={whitelistTokens ?? []}
+            onSelectChange={handleSelectChange}
             onChange={handlePayInput}
             type="number"
-            getPopupContainer
+            placeholder="0.0"
+            onBlur={getBuyCourse}
           />
-          <div className="m-get-in__btns">
-            {isNeedApprove && firstCurrency !== 'BNB' && (
-              <Button
-                className="m-trade-ydr__btn"
-                onClick={handleApprove}
-                loading={isLoadingBtn}
-                disabled={!user.address}
-              >
-                Approve
-              </Button>
-            )}
-            {(!isNeedApprove || firstCurrency === 'BNB') && (
-              <Button
-                className="m-trade-ydr__btn"
-                onClick={handleEnter}
-                loading={isLoadingBtn}
-                disabled={!payInput || !user.address}
-              >
-                Enter
-              </Button>
-            )}
+        </div>
+        <div className="m-trade-ydr__field">
+          <div className="m-trade-ydr__labels">
+            <span className="m-trade-ydr__label">Your Receive</span>
           </div>
-        </section>
+
+          <Input placeholder={viewOnlyInputValue} disabled />
+        </div>
+        {isNeedApprove && firstCurrency !== 'bnb' && firstCurrency !== 'matic' && (
+          <Button className="m-trade-ydr__btn" onClick={handleApprove} loading={isLoading}>
+            Approve
+          </Button>
+        )}
+        {(!isNeedApprove || firstCurrency === 'bnb' || firstCurrency === 'matic') && (
+          <Button
+            className="m-trade-ydr__btn"
+            onClick={handleEnter}
+            disabled={!payInput}
+            loading={isLoading}
+          >
+            Buy
+          </Button>
+        )}
       </div>
     </Modal>
   );

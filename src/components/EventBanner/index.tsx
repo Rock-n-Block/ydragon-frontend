@@ -23,7 +23,7 @@ const EventBanner: React.FC = observer(() => {
   const [imeHidden, setImeHidden] = useState<boolean>(false);
   const [bannerHidden, setBannerHidden] = useState<boolean>(false);
   const handleGetIn = () => {
-    modals.getIn.open(imeItem.id, imeItem.address);
+    modals.getIn.open(imeItem.id, imeItem.address, imeItem.name);
   };
   useEffect(() => {
     const interval = setInterval(() => {

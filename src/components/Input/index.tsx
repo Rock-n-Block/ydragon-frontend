@@ -51,7 +51,7 @@ export const InputWithSelect: React.FC<InputWithSelectProps> = observer((props) 
         <Select
           className="input-with-select__select"
           onChange={onSelectChange}
-          defaultValue={tokens[0].symbol}
+          defaultValue={tokens[0]?.symbol}
           getPopupContainer={getPopupContainer ? (trigger) => trigger.parentNode : undefined}
           suffixIcon={<Icon component={DARK === theme.value ? ArrowDownWhite : ArrowDownBlack} />}
         >

@@ -9,7 +9,7 @@ import plgDark from '../../assets/img/icons/icon-polygon-dark.svg';
 import plgLight from '../../assets/img/icons/icon-polygon-light.svg';
 import { basicTokensApi, networksApi } from '../../services/api';
 import { useWalletConnectorContext } from '../../services/walletConnect';
-import { rootStore, useMst } from '../../store/store';
+import { useMst } from '../../store/store';
 import TokenMini from '../TokenMini';
 
 const { Option } = Select;
@@ -124,14 +124,14 @@ const SelectNetwork: React.FC = observer(() => {
           setPickedChain(key as ChainTypes);
           // TODO: change this on deploy
           if (currentChainId === chains.bnb.chainId) {
-            rootStore.networks.setCurrNetwork('binance-smart-chain');
+            networks.setCurrNetwork('binance-smart-chain');
           } else if (currentChainId === chains.matic.chainId) {
-            rootStore.networks.setCurrNetwork('polygon-pos');
+            networks.setCurrNetwork('polygon-pos');
           }
         }
       });
     });
-  }, [chains, walletConnector.metamaskService]);
+  }, [networks, chains, walletConnector.metamaskService]);
 
   const switchChain = async (chainName: ChainTypes) => {
     try {
@@ -158,13 +158,11 @@ const SelectNetwork: React.FC = observer(() => {
   const getBasicTokens = useCallback(() => {
     basicTokensApi.getBaseTokens().then(({ data }) => {
       basicTokens.setTokens([
-        rootStore.networks.currentNetwork === 'binance-smart-chain'
-          ? networkToken.bnb
-          : networkToken.polygon,
+        networks.currentNetwork === 'binance-smart-chain' ? networkToken.bnb : networkToken.polygon,
         ...data,
       ]);
     });
-  }, [networkToken.bnb, networkToken.polygon, basicTokens]);
+  }, [networkToken.bnb, networkToken.polygon, basicTokens, networks.currentNetwork]);
 
   useEffect(() => {
     getNetworks();

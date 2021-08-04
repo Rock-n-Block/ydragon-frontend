@@ -20,7 +20,7 @@ const InitialMintEventItem: React.FC<InitialMintEventItemProps> = ({ imeItem }) 
   const [now, setNow] = useState(moment());
   const [imeEnabled, setImeEnabled] = useState<boolean>(false);
   const handleGetIn = () => {
-    modals.getIn.open(imeItem.id, imeItem.address);
+    modals.getIn.open(imeItem.id, imeItem.address, imeItem.name);
   };
   useEffect(() => {
     const interval = setInterval(() => {

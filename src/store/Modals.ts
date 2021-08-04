@@ -28,15 +28,18 @@ const GetInModal = types
   .model({
     id: types.maybeNull(types.number),
     address: types.maybeNull(types.string),
+    name: types.maybeNull(types.string),
   })
   .actions((self) => ({
-    open(id: number, address: string) {
+    open(id: number, address: string, name: string) {
       self.id = id;
       self.address = address;
+      self.name = name;
     },
     close() {
       self.id = null;
       self.address = null;
+      self.name = null;
     },
   }));
 const MintModal = types
