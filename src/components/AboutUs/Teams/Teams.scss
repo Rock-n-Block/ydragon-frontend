@@ -47,22 +47,17 @@
 
   &__items {
     margin-top: 84px;
-
-    @include b('mobile') {
-      margin-top: 30px;
-    }
-  }
-
-  &__row {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-column-gap: 118px;
 
     @include b('mobile') {
+      margin-top: 30px;
       display: flex;
       flex-direction: column;
     }
   }
+
 }
 
 .team {
@@ -85,6 +80,8 @@
 
   &__info--title {
     margin-bottom: 12px;
+    display: flex;
+    align-items: center;
 
     font-family: 'Monument Extended', sans-serif;
     font-size: 24px;
@@ -101,7 +98,20 @@
       line-height: 24px;
     }
   }
-
+  &__info--link {
+    margin-left: 15px;
+    display: flex;
+    align-items: center;
+    img{vertical-align: bottom}
+  }
+  &__info--role{
+    margin-bottom: 20px;
+    font-family: 'Monument Extended', sans-serif;
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 17px;
+    color:rgba(233, 91, 64, 1);
+  }
   &__info--text {
     width: 100%;
     max-width: 424px;

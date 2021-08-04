@@ -3,7 +3,7 @@ import BigNumber from 'bignumber.js/bignumber';
 import { observer } from 'mobx-react-lite';
 import moment from 'moment';
 
-import coinIcon from '../../assets/img/future/icon-2.svg';
+import coinIcon from '../../assets/img/gif/COINS_YDRAGON.gif';
 import cross from '../../assets/img/icons/icon-close.svg';
 import { indexesApi } from '../../services/api';
 import { useMst } from '../../store/store';
@@ -89,7 +89,7 @@ const EventBanner: React.FC = observer(() => {
         </Button>
         <div className="event-banner__inner">
           <div className="event-banner__icon">
-            <img src={coinIcon} alt="coin" width="66" height="75" />
+            <img src={coinIcon} alt="coin" width="75" height="75" />
           </div>
 
           <div className="event-banner-timer">
