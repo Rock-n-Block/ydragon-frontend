@@ -14,6 +14,7 @@ import { Button, Input, InputWithSelect } from '../../index';
 import { Modal } from '../index';
 
 import './TradeIndexModal.scss';
+import { useWhiteList } from '../../../hooks/useWhiteList';
 
 interface TradeIndexModalProps {
   token: string;
@@ -25,9 +26,10 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
   ({ token, indexAddress, tokenId }) => {
     const url = `https://dev-ydragon.rocknblock.io/api/vaults/${tokenId}`;
     const walletConnector = useWalletConnectorContext();
-    const { user, modals, basicTokens, networks } = useMst();
+    const { user, modals, networks } = useMst();
     const [isSell, setIsSell] = useState<boolean>(modals.tradeIndex.method === 'sell');
     const [isLoading, setIsLoading] = useState<boolean>(false);
+    const { whiteList, getTokenAddress } = useWhiteList(tokenId);
     const [fee, setFee] = useState<string>('');
     const [firstCurrency, setFirstCurrency] = useState<string>('');
     const [decimals, setDecimals] = useState<number>(18);
@@ -52,15 +54,15 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
           return new Promise((resolve) => resolve(18));
         }
         return walletConnector.metamaskService.getDecimals(
-          basicTokens.getTokenAddress(currency),
+          getTokenAddress(currency),
           config.Token.ABI,
         );
       },
-      [basicTokens, walletConnector.metamaskService],
+      [getTokenAddress, walletConnector.metamaskService],
     );
     const getBalance = useCallback(() => {
       walletConnector.metamaskService
-        .getBalanceOf(isSell ? indexAddress : basicTokens.getTokenAddress(firstCurrency))
+        .getBalanceOf(isSell ? indexAddress : getTokenAddress(firstCurrency))
         .then((data: any) => {
           setBalance(data);
           if (isSell) {
@@ -80,13 +82,13 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
           console.log('getBalance error', message);
         });
     }, [
-      basicTokens,
-      getDecimals,
-      secondCurrency,
+      walletConnector.metamaskService,
       isSell,
       indexAddress,
-      walletConnector.metamaskService,
+      getTokenAddress,
       firstCurrency,
+      getDecimals,
+      secondCurrency,
     ]);
 
     const getFee = useCallback(
@@ -102,7 +104,7 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
               decimals,
             );
             const currencyCost = await walletConnector.metamaskService.getIndexCourse(
-              basicTokens.getTokenAddress(currency),
+              getTokenAddress(currency),
               payInput,
               true,
               indexAddress,
@@ -113,7 +115,7 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
                 new BigNumber(nativeCost).dividedBy(
                   new BigNumber(10).pow(
                     walletConnector.metamaskService.getDecimals(
-                      basicTokens.getTokenAddress(currency),
+                      getTokenAddress(currency),
                       config.Token.ABI,
                     ),
                   ),
@@ -141,19 +143,13 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
             break;
         }
       },
-      [basicTokens, walletConnector.metamaskService, payInput, indexAddress, decimals],
+      [walletConnector.metamaskService, payInput, indexAddress, decimals, getTokenAddress],
     );
 
     const getBuyCourse = useCallback(() => {
       if (payInput) {
         walletConnector.metamaskService
-          .getIndexCourse(
-            basicTokens.getTokenAddress(firstCurrency),
-            payInput,
-            true,
-            indexAddress,
-            decimals,
-          )
+          .getIndexCourse(getTokenAddress(firstCurrency), payInput, true, indexAddress, decimals)
           .then((data: any) => {
             setViewOnlyInputValue(
               new BigNumber(data).dividedBy(new BigNumber(10).pow(18)).toFixed(5),
@@ -169,24 +165,18 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
         setFee('');
       }
     }, [
-      basicTokens,
-      decimals,
       payInput,
-      firstCurrency,
       walletConnector.metamaskService,
+      getTokenAddress,
+      firstCurrency,
       indexAddress,
+      decimals,
       getFee,
     ]);
     const getSellCourse = useCallback(() => {
       if (payInput) {
         walletConnector.metamaskService
-          .getIndexCourse(
-            basicTokens.getTokenAddress(secondCurrency),
-            payInput,
-            false,
-            indexAddress,
-            decimals,
-          )
+          .getIndexCourse(getTokenAddress(secondCurrency), payInput, false, indexAddress, decimals)
           .then((data: any) => {
             axios.get(url).then((res: AxiosResponse) => {
               if (res.data[res.data.length - 1].total_x >= 0.15) {
@@ -208,25 +198,21 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
         setFee('');
       }
     }, [
-      basicTokens,
-      viewOnlyDecimals,
-      decimals,
       payInput,
-      secondCurrency,
       walletConnector.metamaskService,
+      getTokenAddress,
+      secondCurrency,
       indexAddress,
+      decimals,
       url,
+      viewOnlyDecimals,
       getFee,
     ]);
 
     const checkAllowance = useCallback(() => {
       if (!isSell) {
         walletConnector.metamaskService
-          .checkAllowanceById(
-            basicTokens.getTokenAddress(firstCurrency),
-            config.Token.ABI,
-            indexAddress,
-          )
+          .checkAllowanceById(getTokenAddress(firstCurrency), config.Token.ABI, indexAddress)
           .then((data: boolean) => {
             setIsNeedApprove(!data);
           })
@@ -237,7 +223,7 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
       } else {
         setIsNeedApprove(false);
       }
-    }, [basicTokens, isSell, indexAddress, walletConnector.metamaskService, firstCurrency]);
+    }, [isSell, walletConnector.metamaskService, getTokenAddress, firstCurrency, indexAddress]);
     const handleSelectChange = (value: any) => {
       setPayInput('');
       setViewOnlyInputValue('0.0');
@@ -258,7 +244,7 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
       setIsLoading(true);
       walletConnector.metamaskService
         // .approve(firstCurrency, undefined, indexAddress)
-        .approveById(basicTokens.getTokenAddress(firstCurrency), indexAddress)
+        .approveById(getTokenAddress(firstCurrency), indexAddress)
         .then(() => {
           setIsNeedApprove(false);
           modals.info.setMsg('Success', `You approved ${token}`, 'success');
@@ -272,13 +258,7 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
     const handleBuy = (): void => {
       setIsLoading(true);
       walletConnector.metamaskService
-        .mint(
-          payInput,
-          firstCurrency,
-          basicTokens.getTokenAddress(firstCurrency),
-          indexAddress,
-          decimals,
-        )
+        .mint(payInput, firstCurrency, getTokenAddress(firstCurrency), indexAddress, decimals)
         .then(() => {
           setPayInput('');
           getBalance();
@@ -293,7 +273,7 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
     const handleSell = (): void => {
       setIsLoading(true);
       walletConnector.metamaskService
-        .redeem(payInput, basicTokens.getTokenAddress(secondCurrency), indexAddress, 18)
+        .redeem(payInput, getTokenAddress(secondCurrency), indexAddress, 18)
         .then(() => {
           setPayInput('');
           getBalance();
@@ -317,31 +297,31 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
     }, [modals.tradeIndex.method]);
 
     const setInitialCurrencies = useCallback(() => {
-      setFirstCurrency(isSell ? '' : basicTokens.tokensList[0].symbol);
-      setSecondCurrency(!isSell ? '' : basicTokens.tokensList[0].symbol);
-    }, [basicTokens.tokensList, isSell]);
+      setFirstCurrency(isSell ? '' : whiteList[0].symbol);
+      setSecondCurrency(!isSell ? '' : whiteList[0].symbol);
+    }, [whiteList, isSell]);
     useEffect(() => {
       autorun(() => {
-        if (basicTokens.tokensList.length) {
+        if (whiteList.length) {
           setInitialCurrencies();
         }
       });
-    }, [basicTokens.tokensList.length, setInitialCurrencies]);
+    }, [whiteList.length, setInitialCurrencies]);
     useEffect(() => {
-      if (user.address && basicTokens.tokensList.length && firstCurrency) {
+      if (user.address && whiteList.length && firstCurrency) {
         getBalance();
         checkAllowance();
       }
-    }, [basicTokens, getBalance, firstCurrency, checkAllowance, user.address]);
+    }, [getBalance, firstCurrency, checkAllowance, user.address, whiteList.length]);
     useEffect(() => {
-      if (basicTokens.tokensList.length) {
+      if (whiteList.length) {
         if (modals.tradeIndex.method === 'buy') {
           getBuyCourse();
         } else {
           getSellCourse();
         }
       }
-    }, [basicTokens, modals.tradeIndex.method, getBuyCourse, getSellCourse, payInput]);
+    }, [whiteList.length, modals.tradeIndex.method, getBuyCourse, getSellCourse, payInput]);
     return (
       <Modal
         isVisible={modals.tradeIndex.isOpen}
@@ -372,9 +352,7 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
             {!isSell ? (
               <InputWithSelect
                 value={payInput}
-                tokens={basicTokens.tokensList.filter(
-                  (currToken) => currToken.symbol.toLowerCase() !== 'ydr',
-                )}
+                tokens={whiteList}
                 onSelectChange={handleSelectChange}
                 onChange={handlePayInput}
                 type="number"
@@ -399,9 +377,7 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
             {isSell ? (
               <InputWithSelect
                 placeholder={viewOnlyInputValue}
-                tokens={basicTokens.tokensList.filter(
-                  (currToken) => currToken.symbol.toLowerCase() !== 'ydr',
-                )}
+                tokens={whiteList}
                 onSelectChange={handleSelectChange}
                 disabled
               />
