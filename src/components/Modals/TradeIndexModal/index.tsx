@@ -1,5 +1,4 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import axios, { AxiosResponse } from 'axios';
 import BigNumber from 'bignumber.js/bignumber';
 import { autorun } from 'mobx';
 import { observer } from 'mobx-react-lite';
@@ -15,6 +14,7 @@ import { Modal } from '../index';
 
 import './TradeIndexModal.scss';
 import { useWhiteList } from '../../../hooks/useWhiteList';
+import { vaultsApi } from '../../../services/api';
 
 interface TradeIndexModalProps {
   token: string;
@@ -24,11 +24,11 @@ interface TradeIndexModalProps {
 
 const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
   ({ token, indexAddress, tokenId }) => {
-    const url = `https://dev-ydragon.rocknblock.io/api/vaults/${tokenId}`;
     const walletConnector = useWalletConnectorContext();
     const { user, modals, networks } = useMst();
     const [isSell, setIsSell] = useState<boolean>(modals.tradeIndex.method === 'sell');
     const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [totalX, setTotalX] = useState<number>(0);
     const { whiteList, getTokenAddress } = useWhiteList(tokenId);
     const [fee, setFee] = useState<string>('');
     const [firstCurrency, setFirstCurrency] = useState<string>('');
@@ -178,13 +178,11 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
         walletConnector.metamaskService
           .getIndexCourse(getTokenAddress(secondCurrency), payInput, false, indexAddress, decimals)
           .then((data: any) => {
-            axios.get(url).then((res: AxiosResponse) => {
-              if (res.data[res.data.length - 1].total_x >= 0.15) {
-                getFee(secondCurrency, 'sell_0.02');
-              } else {
-                getFee(secondCurrency, 'sell', res.data[res.data.length - 1].total_x);
-              }
-            });
+            if (totalX >= 0.15) {
+              getFee(secondCurrency, 'sell_0.02');
+            } else {
+              getFee(secondCurrency, 'sell', totalX);
+            }
             setViewOnlyInputValue(
               new BigNumber(data).dividedBy(new BigNumber(10).pow(viewOnlyDecimals)).toFixed(5),
             );
@@ -198,13 +196,13 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
         setFee('');
       }
     }, [
+      totalX,
       payInput,
       walletConnector.metamaskService,
       getTokenAddress,
       secondCurrency,
       indexAddress,
       decimals,
-      url,
       viewOnlyDecimals,
       getFee,
     ]);
@@ -295,7 +293,17 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
     useEffect(() => {
       setIsSell(modals.tradeIndex.method === 'sell');
     }, [modals.tradeIndex.method]);
-
+    useEffect(() => {
+      vaultsApi
+        .getVaults(+tokenId)
+        .then(({ data }) => {
+          setTotalX(data[data.length - 1].total_x);
+        })
+        .catch((err) => {
+          const { response } = err;
+          console.log('get vaults collections error', response);
+        });
+    }, [tokenId]);
     const setInitialCurrencies = useCallback(() => {
       setFirstCurrency(isSell ? '' : whiteList[0].symbol);
       setSecondCurrency(!isSell ? '' : whiteList[0].symbol);
