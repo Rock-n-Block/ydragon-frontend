@@ -8,6 +8,7 @@ export default {
   getImeById: (id: number, address?: string) =>
     axios.get(`indexes/ime/${id}${address ? `?address=${address}` : '/'}`),
   getIndexById: (id: number) => axios.get(`indexes/${id}`),
+  getIndexWhiteList: (id: number) => axios.get(`indexes/${id}/whitelist`),
   getIndexesRebalance: (indexId: number) => axios.get(`indexes/${indexId}/rebalance/`),
   addParamsToIndex: (tx_hash: string, description: string) =>
     axios.post(`indexes/index_params/`, {

@@ -7,7 +7,7 @@ import bncDark from '../../assets/img/icons/icon-binance-dark.svg';
 import bncLight from '../../assets/img/icons/icon-binance-light.svg';
 import plgDark from '../../assets/img/icons/icon-polygon-dark.svg';
 import plgLight from '../../assets/img/icons/icon-polygon-light.svg';
-import { basicTokensApi, networksApi } from '../../services/api';
+import { /* basicTokensApi, */ networksApi } from '../../services/api';
 import { useWalletConnectorContext } from '../../services/walletConnect';
 import { useMst } from '../../store/store';
 import TokenMini from '../TokenMini';
@@ -86,10 +86,11 @@ const SelectNetwork: React.FC = observer(() => {
   const isProduction = process.env.REACT_APP_IS_PROD === 'production';
   const chains = isProduction ? prodChains : devChains;
 
-  const { networks, basicTokens, theme } = useMst();
+  const { networks, /* basicTokens, */ theme } = useMst();
+  // const whiteList = useWhiteList();
   const walletConnector = useWalletConnectorContext();
   const [pickedChain, setPickedChain] = useState<ChainTypes>();
-  const networkToken = {
+  /* const networkToken = {
     bnb: {
       symbol: 'bnb',
       address: '0x0000000000000000000000000000000000000000',
@@ -104,7 +105,7 @@ const SelectNetwork: React.FC = observer(() => {
       name: 'Polygon (Matic)',
       image: theme.value === 'dark' ? plgDark : plgLight,
     },
-  };
+  }; */
   const getNetworks = useCallback(() => {
     networksApi
       .getNetworks()
@@ -155,14 +156,14 @@ const SelectNetwork: React.FC = observer(() => {
     }
   };
 
-  const getBasicTokens = useCallback(() => {
+  /* const getBasicTokens = useCallback(() => {
     basicTokensApi.getBaseTokens().then(({ data }) => {
       basicTokens.setTokens([
         networks.currentNetwork === 'binance-smart-chain' ? networkToken.bnb : networkToken.polygon,
         ...data,
       ]);
     });
-  }, [networkToken.bnb, networkToken.polygon, basicTokens, networks.currentNetwork]);
+  }, [networkToken.bnb, networkToken.polygon, basicTokens, networks.currentNetwork]); */
 
   useEffect(() => {
     getNetworks();
@@ -182,11 +183,11 @@ const SelectNetwork: React.FC = observer(() => {
     });
   }, [chains, networks.networkId]);
 
-  useEffect(() => {
+  /* useEffect(() => {
     if (networks.currentNetwork) {
       getBasicTokens();
     }
-  }, [getBasicTokens, networks.currentNetwork]);
+  }, [getBasicTokens, networks.currentNetwork]); */
 
   return (
     <Select
