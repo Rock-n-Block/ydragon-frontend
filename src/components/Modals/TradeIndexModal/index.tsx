@@ -361,6 +361,7 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
               <InputWithSelect
                 value={payInput}
                 tokens={whiteList}
+                selectValue={firstCurrency}
                 onSelectChange={handleSelectChange}
                 onChange={handlePayInput}
                 type="number"
@@ -386,6 +387,7 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
               <InputWithSelect
                 placeholder={viewOnlyInputValue}
                 tokens={whiteList}
+                selectValue={secondCurrency}
                 onSelectChange={handleSelectChange}
                 disabled
               />
