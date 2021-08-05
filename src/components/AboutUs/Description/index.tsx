@@ -56,6 +56,7 @@ const Description: React.FC = () => {
             muted
             autoPlay
             loop
+            playsInline
             preload="metadata"
           >
             <track default kind="captions" srcLang="en" />
