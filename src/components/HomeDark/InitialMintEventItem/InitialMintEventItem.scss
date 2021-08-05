@@ -44,7 +44,9 @@
   @include b('mobile') {
     padding: 20px;
   }
-
+  &__egg{
+    margin: auto 0;
+  }
   &__content {
     max-width: 305px;
 

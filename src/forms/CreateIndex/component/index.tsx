@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import BigNumber from 'bignumber.js/bignumber';
 import { FieldArray, FieldArrayRenderProps, Form, FormikProps } from 'formik';
 import { observer } from 'mobx-react-lite';
@@ -195,6 +195,9 @@ const CreateIndex: React.FC<FormikProps<ICreateIndex> & ICreateIndex> = observer
       console.log('Selected Time: ', value);
       console.log('Formatted Selected Time: ', dateString);
     }; */
+    useEffect(() => {
+      console.log(values);
+    }, [values]);
     return (
       <Form name="form-create-index" className="form-create-index">
         <div className="form-create-index__inputs">
@@ -340,12 +343,12 @@ const CreateIndex: React.FC<FormikProps<ICreateIndex> & ICreateIndex> = observer
             disabled={
               values.tokens.length === 0 ||
               weightsSum !== '100' ||
-              !!values.name ||
-              !!values.symbol ||
+              values.name === '' ||
+              values.symbol === '' ||
               values.dateRange === null ||
               values.dateRange[0] === '' ||
               values.dateRange[1] === '' ||
-              !!values.price
+              values.price === ''
             }
             loading={values.isLoading}
           >
