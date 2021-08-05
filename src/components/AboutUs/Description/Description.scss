@@ -4,7 +4,7 @@
 .dark {
   .description {
     &__title,
-    &__text {
+    &__text,&__video {
       color: $white;
     }
   }
@@ -13,7 +13,7 @@
 .light {
   .description {
     &__title,
-    &__text {
+    &__text,&__video {
       color: $black;
     }
   }
@@ -115,89 +115,26 @@
   }
 
   &__video {
-    position: relative;
-
-    margin-top: 29px;
-
-    width: 462px;
-    height: 312px;
-
-    @include b('mobile') {
-      width: 390.92px;
-      height: 264px;
-    }
-    background-color: #fff;
-    border-radius: 16px;
-
-    &--text {
-      position: absolute;
-      left: 120px;
-      bottom: 25px;
-
-      height: 29px;
-
-      font-family: 'Monument Extended', sans-serif;
-      font-size: 24px;
-      font-weight: normal;
-      line-height: 29px;
-
-      color: #000;
-
-      /* identical to box height */
-      font-feature-settings: 'liga' off;
-
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    margin-top: 30px;
+    height: fit-content;
+    video{
+      width: 462px;
+      height: 100%;
+      border-radius: 16px;
       @include b('mobile') {
-        left: 103px;
-        bottom: 25px;
-
-        font-size: 21px;
-        line-height: 26px;
-      }
-    }
-
-    &--play {
-      position: absolute;
-      top: 124px;
-      left: 199px;
-
-      @include b('mobile') {
-        top: 104.92px;
-        left: 168.38px;
-
-        width: 54.15px;
-        height: 54.15px;
-      }
-
-      &:hover {
-        cursor: pointer;
+        width: 391px;
       }
     }
 
     &--info {
-      position: relative;
-      top: 343px;
-
-      width: 250px;
-
+      margin-top: 31px;
       font-family: 'Rubik', sans-serif;
       font-size: 16px;
-      font-weight: normal;
-      font-weight: normal;
-      font-style: normal;
       line-height: 30px;
-
-      /* identical to box height, or 187% */
-
-      /* YD/BG Additional */
-      color: #f7f8fd;
-
-      @include b('mobile') {
-        top: 283px;
-      }
-
-      @include b('tablet') {
-        left: calc(50% - 250px / 2);
-      }
+      font-weight: normal;
     }
 
     &--link {
