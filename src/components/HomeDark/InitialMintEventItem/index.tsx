@@ -1,4 +1,5 @@
 import React /* , { useEffect, useState } */ from 'react';
+import EggGif from '../../../assets/img/gif/EGG_YDRAGON.gif';
 
 // import BigNumber from 'bignumber.js/bignumber';
 // import moment from 'moment';
@@ -107,7 +108,9 @@ const InitialMintEventItem: React.FC /* <InitialMintEventItemProps> */ = (/* { i
           </div>
         </div> */}
       </div>
-
+      <div className="initial-mint-event__egg">
+        <img alt="egg" src={EggGif} width={189} height={189} />
+      </div>
       <div className="initial-mint-event__content">
         <h3 className="initial-mint-event__title">{/* {imeItem.name} */}B5 Index</h3>
 
