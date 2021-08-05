@@ -8,23 +8,25 @@ import plgLight from '../assets/img/icons/icon-polygon-light.svg';
 
 export const useWhiteList = (indexId: number) => {
   const { theme, networks } = useMst();
-  const networkToken = {
-    bnb: {
-      symbol: 'bnb',
-      address: '0x0000000000000000000000000000000000000000',
-      decimals: 18,
-      name: 'Binance Coin',
-      image: theme.value === 'dark' ? bncDark : bncLight,
-    },
-    polygon: {
-      symbol: 'matic',
-      address: '0x0000000000000000000000000000000000000000',
-      decimals: 18,
-      name: 'Polygon (Matic)',
-      image: theme.value === 'dark' ? plgDark : plgLight,
-    },
-  };
   const [whiteList, setWhiteList] = useState<any[]>([]);
+  const networkToken = useCallback(() => {
+    return {
+      bnb: {
+        symbol: 'bnb',
+        address: '0x0000000000000000000000000000000000000000',
+        decimals: 18,
+        name: 'Binance Coin',
+        image: theme.value === 'dark' ? bncDark : bncLight,
+      },
+      polygon: {
+        symbol: 'matic',
+        address: '0x0000000000000000000000000000000000000000',
+        decimals: 18,
+        name: 'Polygon (Matic)',
+        image: theme.value === 'dark' ? plgDark : plgLight,
+      },
+    };
+  }, [theme.value]);
 
   const getWhiteList = useCallback(() => {
     indexesApi
@@ -32,8 +34,8 @@ export const useWhiteList = (indexId: number) => {
       .then(({ data }) => {
         const newToken = [
           networks.currentNetwork === 'binance-smart-chain'
-            ? networkToken.bnb
-            : networkToken.polygon,
+            ? networkToken().bnb
+            : networkToken().polygon,
           ...data.tokens,
         ];
         setWhiteList(newToken);
@@ -41,7 +43,7 @@ export const useWhiteList = (indexId: number) => {
       .catch((err) => {
         console.log(`err in getting index ${indexId} whitelist:\n`, err);
       });
-  }, [indexId, networkToken.bnb, networkToken.polygon, networks.currentNetwork]);
+  }, [indexId, networkToken, networks.currentNetwork]);
 
   const getToken = useCallback(
     (symbol: string) => {
