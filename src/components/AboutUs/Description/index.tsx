@@ -50,7 +50,6 @@ const Description: React.FC = () => {
 
         <div className="description__video">
           <video
-            src={MainVideo}
             width={462}
             height={312}
             controls
@@ -60,7 +59,8 @@ const Description: React.FC = () => {
             playsInline
             preload="metadata"
           >
-            <track default kind="captions" srcLang="en" />
+            <source src={MainVideo} type="video/mp4" />
+            {/* <track default kind="captions" srcLang="en" /> */}
           </video>
           {/* <span className="description__video--info">
             For more info on YDragon{' '}
