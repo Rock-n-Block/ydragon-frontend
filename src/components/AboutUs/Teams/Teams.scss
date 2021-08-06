@@ -128,7 +128,20 @@
     font-feature-settings: 'liga' off;
   }
 
-  &__img {
+  &__img--wrapper{
     border-radius: 50%;
+    overflow: hidden;
+    align-self: flex-start;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 64px;
+    width: 64px;
+    min-width: 64px;
+  }
+  &__img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
   }
 }
