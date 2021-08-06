@@ -8,8 +8,6 @@ import markus from '../../../assets/img/about-us/advisors/markus.png';
 import iconLinkedIn from '../../../assets/img/icons/icon-linkedin.svg';
 import iconTwitter from '../../../assets/img/icons/icon-twitter.svg';
 
-import './Advisors.scss';
-
 interface IEmployee {
   name: string;
   role?: string;

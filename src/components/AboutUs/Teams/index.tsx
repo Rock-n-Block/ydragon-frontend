@@ -40,6 +40,7 @@ const Teams: React.FC = () => {
       img: octal,
       description:
         'Developed complex backend systems for one of the largest investment banks in the world, led multi-million dollar software projects to fruition in the electronic payments sector, previously CTO of a sentiment-driven investment platform project, in addition to having participated in doctoral graph theoretical work.',
+      twitter: 'https://twitter.com/O_C_T_A_L',
     },
     {
       name: 'Jay Wheeler',
