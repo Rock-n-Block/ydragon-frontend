@@ -40,6 +40,7 @@ const Teams: React.FC = () => {
       img: octal,
       description:
         'Developed complex backend systems for one of the largest investment banks in the world, led multi-million dollar software projects to fruition in the electronic payments sector, previously CTO of a sentiment-driven investment platform project, in addition to having participated in doctoral graph theoretical work.',
+      twitter: 'https://twitter.com/O_C_T_A_L',
     },
     {
       name: 'Jay Wheeler',
@@ -86,7 +87,7 @@ const Teams: React.FC = () => {
       role: 'Head of People',
       img: stephanie,
       description:
-        "Operations professional who's on a mission to help projects in the DeFi space disrupt the old world order.Harnesses the strengths and talents of teams, recruiting A-Players, optimizing workflows with cutting edge methodologies to make them more effective and employing a servant-style leadership/people-first culture. ",
+        "Operations professional who's on a mission to help projects in the DeFi space disrupt the old world order.Harnesses the strengths and talents of teams, recruiting A-Players, optimizing workflows with cutting edge methodologies to make them more effective and employing a servant-style leadership/people-first culture.",
       linkedIn: 'https://www.linkedin.com/in/stephaniensimon/',
     },
     {
