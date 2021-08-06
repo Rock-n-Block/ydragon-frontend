@@ -87,7 +87,7 @@ const Teams: React.FC = () => {
       role: 'Head of People',
       img: stephanie,
       description:
-        "Operations professional who's on a mission to help projects in the DeFi space disrupt the old world order.Harnesses the strengths and talents of teams, recruiting A-Players, optimizing workflows with cutting edge methodologies to make them more effective and employing a servant-style leadership/people-first culture. ",
+        "Operations professional who's on a mission to help projects in the DeFi space disrupt the old world order.Harnesses the strengths and talents of teams, recruiting A-Players, optimizing workflows with cutting edge methodologies to make them more effective and employing a servant-style leadership/people-first culture.",
       linkedIn: 'https://www.linkedin.com/in/stephaniensimon/',
     },
     {
