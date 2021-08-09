@@ -85,6 +85,10 @@ const Index: React.FC = observer(() => {
       <TokenPanel
         panelContent={[
           {
+            label: 'Market Cap',
+            value: `$${new BigNumber(indexData?.market_cap ?? 0).toFixed(2)}`,
+          },
+          {
             label: 'Inception Date',
             value: moment(indexData?.created_at ?? moment())
               .format('DD.MM.YY')
