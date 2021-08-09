@@ -40,6 +40,7 @@
     flex-direction: column;
 
     text-align: center;
+    align-items: center;
   }
   @include b('mobile') {
     padding: 20px;

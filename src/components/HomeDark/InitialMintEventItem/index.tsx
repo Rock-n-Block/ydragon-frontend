@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
+
 import BigNumber from 'bignumber.js/bignumber';
 import moment from 'moment';
-import EggGif from '../../../assets/img/gif/EGG_YDRAGON.gif';
+import EggAnimation from '../../../assets/img/gif/EGG.json';
+import { Lottie } from '@crello/react-lottie';
 
 import { useMst } from '../../../store/store';
 import { Button } from '../../index';
@@ -106,9 +108,12 @@ const InitialMintEventItem: React.FC<InitialMintEventItemProps> = ({ imeItem }) 
           </div>
         </div>
       </div>
-      <div className="initial-mint-event__egg">
-        <img alt="egg" src={EggGif} width={189} height={189} />
-      </div>
+      <Lottie
+        config={{ animationData: EggAnimation, loop: true, autoplay: true }}
+        className="initial-mint-event__egg"
+        width="189px"
+        height="189px"
+      />
       <div className="initial-mint-event__content">
         <h3 className="initial-mint-event__title">{imeItem.name} </h3>
 

@@ -17,6 +17,7 @@
     "lint-fix:scss": "stylelint \"src/**/*.scss\" --fix"
   },
   "dependencies": {
+    "@crello/react-lottie": "^0.0.11",
     "@types/node": "^12.0.0",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
