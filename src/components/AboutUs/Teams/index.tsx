@@ -9,7 +9,6 @@ import oliver from '../../../assets/img/about-us/team/oliver.png';
 import raiden from '../../../assets/img/about-us/team/raiden.png';
 import sicilia from '../../../assets/img/about-us/team/sicilia.png';
 import stephanie from '../../../assets/img/about-us/team/stephanie.png';
-
 import iconLinkedIn from '../../../assets/img/icons/icon-linkedin.svg';
 import iconTwitter from '../../../assets/img/icons/icon-twitter.svg';
 

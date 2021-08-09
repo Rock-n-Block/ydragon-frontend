@@ -131,6 +131,7 @@
   @include b('mobile') {
     display: flex;
     flex-direction: column;
+
     text-align: center;
   }
 

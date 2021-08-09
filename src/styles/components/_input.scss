@@ -35,6 +35,7 @@
       border-color: #eaeaea !important;
     }
   }
+
   .ant-input-affix-wrapper {
     background: linear-gradient(355.19deg, #fff 0%, #dde1f0 100%);
   }
@@ -93,10 +94,11 @@
     position: absolute;
     top: 50%;
     right: 22px;
-    text-transform: uppercase;
 
     display: flex;
     align-items: center;
+
+    text-transform: uppercase;
 
     user-select: none;
 
@@ -148,7 +150,9 @@
   &__select {
     width: 100%;
     height: 100%;
+
     text-transform: uppercase;
+
     border-radius: 60px;
 
     .ant-select-selector {
@@ -177,9 +181,11 @@
     color: unset;
   }
 }
-.ant-select-dropdown{
+
+.ant-select-dropdown {
   text-transform: uppercase;
 }
+
 .ant-select-item-option-content {
   display: flex;
   justify-content: space-between;

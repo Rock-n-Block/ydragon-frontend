@@ -1,11 +1,11 @@
 import React from 'react';
 
-import { Button } from '../../index';
-
-import './Main.scss';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import Whitepaper from '../../../assets/pdf/YD WP.pdf';
+import { Button } from '../../index';
+
+import './Main.scss';
 
 const Main: React.FC = () => {
   return (

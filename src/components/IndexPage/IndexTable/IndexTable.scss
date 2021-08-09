@@ -149,7 +149,7 @@
       color: $green;
 
       &::before {
-        background-image: url(../../../assets/img/icons/icon-arrow-up-green.svg)
+        background-image: url(../../../assets/img/icons/icon-arrow-up-green.svg);
         // background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 10 10'%3E%3Cpath stroke='%2338DEA2' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M1 4l4-3 4 3M5 3v6'/%3E%3C/svg%3E");
       }
 
@@ -162,7 +162,7 @@
       color: $red;
 
       &::before {
-        background-image: url(../../../assets/img/icons/icon-arrow-down-red.svg)
+        background-image: url(../../../assets/img/icons/icon-arrow-down-red.svg);
         // background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 10 10'%3E%3Cpath stroke='%23DE3F3A' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M9 6L5 9 1 6M5 7V1'/%3E%3C/svg%3E");
       }
 

@@ -354,10 +354,11 @@
     gap: 30px;
 
     @include b('mobile') {
-      flex-direction: column-reverse;
       position: absolute;
       top: 40px;
       right: 0;
+
+      flex-direction: column-reverse;
     }
   }
 }
@@ -379,7 +380,8 @@
     width: 150px;
   }
 
-  &__link, .logout{
+  &__link,
+  .logout {
     height: 42px;
   }
 }

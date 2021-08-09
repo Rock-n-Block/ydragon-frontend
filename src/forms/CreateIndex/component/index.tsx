@@ -237,7 +237,7 @@ const CreateIndex: React.FC<FormikProps<ICreateIndex> & ICreateIndex> = observer
             type="number"
             value={values.price}
             placeholder="1"
-            onChange={(e) => setFieldValue('price', +e.target.value >= 0 ? e.target.value : "")}
+            onChange={(e) => setFieldValue('price', +e.target.value >= 0 ? e.target.value : '')}
             onBlur={handleBlur}
             prefix="$"
             className="form-create-index__input-price"

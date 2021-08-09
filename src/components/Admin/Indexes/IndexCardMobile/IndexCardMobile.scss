@@ -4,8 +4,8 @@
 .dark {
   .index-card-mobile {
     @include shadow-dark-block;
-    border-radius: 0;
     border-bottom: 1px solid rgba($white, 0.2);
+    border-radius: 0;
 
     &__title {
       color: rgba($white, 0.5);
@@ -20,8 +20,8 @@
 .light {
   .index-card-mobile {
     @include light-block;
-    border-radius: 0;
     border-bottom: 1px solid rgba($black, 0.2);
+    border-radius: 0;
 
     &__title {
       color: rgba($black, 0.5);

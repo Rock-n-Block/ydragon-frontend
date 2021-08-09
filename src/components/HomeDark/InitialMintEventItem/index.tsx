@@ -1,4 +1,5 @@
 import React /* , { useEffect, useState } */ from 'react';
+
 import EggGif from '../../../assets/img/gif/EGG_YDRAGON.gif';
 
 // import BigNumber from 'bignumber.js/bignumber';

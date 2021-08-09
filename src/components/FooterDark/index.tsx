@@ -7,11 +7,11 @@ import logo from '../../assets/img/icons/logo.svg';
 // import md from '../../assets/img/socials/medium.svg';
 import tg from '../../assets/img/socials/telegram.svg';
 import tw from '../../assets/img/socials/twitter.svg';
-
-import './Footer.scss';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import Whitepaper from '../../assets/pdf/YD WP.pdf';
+
+import './Footer.scss';
 
 const Footer: React.FC = () => {
   return (

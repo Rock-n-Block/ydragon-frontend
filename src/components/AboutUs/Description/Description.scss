@@ -4,7 +4,8 @@
 .dark {
   .description {
     &__title,
-    &__text,&__video {
+    &__text,
+    &__video {
       color: $white;
     }
   }
@@ -13,7 +14,8 @@
 .light {
   .description {
     &__title,
-    &__text,&__video {
+    &__text,
+    &__video {
       color: $black;
     }
   }
@@ -115,14 +117,18 @@
   }
 
   &__video {
+    margin-top: 30px;
+
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    margin-top: 30px;
+
     height: fit-content;
-    video{
+
+    video {
       width: 462px;
       height: 100%;
+
       border-radius: 16px;
       @include b('mobile') {
         width: 391px;
@@ -131,10 +137,11 @@
 
     &--info {
       margin-top: 31px;
+
       font-family: 'Rubik', sans-serif;
       font-size: 16px;
-      line-height: 30px;
       font-weight: normal;
+      line-height: 30px;
     }
 
     &--link {

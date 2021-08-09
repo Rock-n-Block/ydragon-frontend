@@ -30,7 +30,7 @@ export interface IImeToken {
 }
 
 const InitialMintEvent: React.FC = observer(() => {
- /* const { networks } = useMst();
+  /* const { networks } = useMst();
   const [imeList, setImeList] = useState<IIme[]>([] as IIme[]);
   const [loading, setLoading] = useState<boolean>(false);
   const getImeList = useCallback(() => {

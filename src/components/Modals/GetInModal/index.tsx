@@ -2,8 +2,11 @@ import React, { useCallback, useEffect, useState } from 'react';
 import nextId from 'react-id-generator';
 import { observer } from 'mobx-react-lite';
 
+import bncDark from '../../../assets/img/icons/icon-binance-dark.svg';
+import bncLight from '../../../assets/img/icons/icon-binance-light.svg';
 import { indexesApi } from '../../../services/api';
 import { useWalletConnectorContext } from '../../../services/walletConnect';
+import config from '../../../services/web3/config';
 import { useMst } from '../../../store/store';
 import { ProviderRpcError } from '../../../types/errors';
 import { defaultTokens, ITokenMini, TokenMiniNameTypes } from '../../../utils/tokenMini';
@@ -14,9 +17,6 @@ import { TokenMiniProps } from '../../TokenMini';
 import { Modal } from '../index';
 
 import './GetInModal.scss';
-import config from '../../../services/web3/config';
-import bncDark from '../../../assets/img/icons/icon-binance-dark.svg';
-import bncLight from '../../../assets/img/icons/icon-binance-light.svg';
 
 const totalColumns: ITableColumn[] = [
   {

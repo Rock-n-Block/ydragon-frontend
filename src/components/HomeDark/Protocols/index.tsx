@@ -5,9 +5,8 @@ import magnusBlack from '../../../assets/img/icons/partners/magnus-black.png';
 import magnusWhite from '../../../assets/img/icons/partners/magnus-white.png';
 import marshlandBlack from '../../../assets/img/icons/partners/marshland-black.svg';
 import marshlandWhite from '../../../assets/img/icons/partners/marshland-white.svg';
-import polygon from '../../../assets/img/icons/partners/polygon.svg';
 import moonwolf from '../../../assets/img/icons/partners/moonwolf.png';
-
+import polygon from '../../../assets/img/icons/partners/polygon.svg';
 import { useMst } from '../../../store/store';
 
 import './Protocols.scss';
