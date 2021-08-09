@@ -6,7 +6,7 @@ import { useMst } from '../../store/store';
 import { autorun } from 'mobx';
 
 const StakePage: React.FC = () => {
-  const { networks } = useMst();
+  const { networks, basicTokens } = useMst();
   const walletConnector = useWalletConnectorContext();
   const [stakeTokensList, setStakeTokensList] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
@@ -55,11 +55,11 @@ const StakePage: React.FC = () => {
   }, [walletConnector.metamaskService]);
   useEffect(() => {
     autorun(() => {
-      if (networks.currentNetwork) {
+      if (networks.currentNetwork && basicTokens.tokensList.length) {
         getStakingTokens();
       }
     });
-  }, [networks.currentNetwork, getStakingTokens]);
+  }, [networks.currentNetwork, basicTokens.tokensList, getStakingTokens]);
 
   return (
     <main className="container">

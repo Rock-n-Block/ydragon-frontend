@@ -556,10 +556,7 @@ export default class MetamaskService {
       rootStore.networks.getCurrNetwork()?.dex_factory_address ?? '',
       config.DexFactory.ABI,
     )
-      .methods.getPair(
-        address,
-        rootStore.basicTokens.getTokenAddress(MetamaskService.getWrappedNativeAddress()),
-      )
+      .methods.getPair(address, MetamaskService.getWrappedNativeAddress())
       .call();
   }
 

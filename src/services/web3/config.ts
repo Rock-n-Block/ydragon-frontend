@@ -1,6 +1,5 @@
 export default {
   MAIN: {
-    ADDRESS: '',
     ABI: [
       { inputs: [], stateMutability: 'nonpayable', type: 'constructor' },
       {
@@ -514,7 +513,6 @@ export default {
     ],
   },
   Router: {
-    ADDRESS: '',
     ABI: [
       {
         inputs: [
@@ -857,7 +855,6 @@ export default {
     ],
   },
   Factory: {
-    ADDRESS: '',
     ABI: [
       {
         inputs: [
@@ -1165,7 +1162,6 @@ export default {
     ],
   },
   Staking: {
-    ADDRESS: '',
     ABI: [
       {
         inputs: [
@@ -1488,7 +1484,6 @@ export default {
     ],
   },
   DexFactory: {
-    ADDRESS: '',
     ABI: [
       {
         inputs: [{ internalType: 'address', name: '_feeToSetter', type: 'address' }],
@@ -1597,7 +1592,6 @@ export default {
     ],
   },
   Token: {
-    ADDRESS: '',
     ABI: [
       {
         inputs: [
