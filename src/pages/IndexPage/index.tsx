@@ -15,6 +15,7 @@ import { indexesApi } from '../../services/api';
 import { useMst } from '../../store/store';
 
 import './Index.scss';
+import { useWalletConnectorContext } from '../../services/walletConnect';
 
 interface IIndexId {
   indexId: string;
@@ -34,13 +35,15 @@ export interface IIndex {
 
 const Index: React.FC = observer(() => {
   const { indexId } = useParams<IIndexId>();
+  const walletConnector = useWalletConnectorContext();
   const { modals, networks } = useMst();
   const history = useHistory();
   const [tokens, setTokens] = useState<Array<ITableToken>>();
+  const [balance, setBalance] = useState<string>('0');
+  const [indexData, setIndexData] = useState<IIndex | undefined>();
   const getTokens = (value: React.SetStateAction<any>) => {
     setTokens(value);
   };
-  const [indexData, setIndexData] = useState<IIndex | undefined>();
 
   const getCurrentIndex = useCallback(() => {
     indexesApi
@@ -57,6 +60,15 @@ const Index: React.FC = observer(() => {
       });
   }, [history, networks.currentNetwork, indexId]);
 
+  const getUserBalance = useCallback(
+    (indexAddress: string) => {
+      walletConnector.metamaskService.getBalanceByAddress(indexAddress).then((data: string) => {
+        setBalance(new BigNumber(data).dividedBy(new BigNumber(10).pow(18)).toFixed(7));
+      });
+    },
+    [walletConnector.metamaskService],
+  );
+
   const handleBuy = () => {
     modals.tradeIndex.open('buy');
   };
@@ -64,6 +76,11 @@ const Index: React.FC = observer(() => {
     modals.tradeIndex.open('sell');
   };
 
+  useEffect(() => {
+    if (indexData) {
+      getUserBalance(indexData.address);
+    }
+  }, [getUserBalance, indexData]);
   useEffect(() => {
     if (networks.currentNetwork) {
       getCurrentIndex();
@@ -94,6 +111,10 @@ const Index: React.FC = observer(() => {
               .format('DD.MM.YY')
               .toString(),
           },
+          {
+            label: 'Your balance',
+            value: balance,
+          },
         ]}
         handleBuy={handleBuy}
         handleSell={handleSell}
@@ -112,7 +133,10 @@ const Index: React.FC = observer(() => {
                 data={[
                   ['Quantity per Set', `${new BigNumber(token.repr_count).toFixed(2)}`],
                   ['Token Price', `$${token.rate}`],
-                  ['Current Weight', `${Number(token.weight).toFixed(2)}%`],
+                  [
+                    'Current Weight',
+                    `${new BigNumber(token.weight).multipliedBy(100).toFixed(2)}%`,
+                  ],
                   [
                     'Total Price per Set',
                     `$${new BigNumber(token.total_price).multipliedBy(100).toFixed(0)}`,
@@ -135,7 +159,10 @@ const Index: React.FC = observer(() => {
                       .toFixed(2)}`,
                   ],
                   ['Token Price', `$${token.price_for_one}`],
-                  ['Current Weight', `${Number(token.current_weight).toFixed(2)}%`],
+                  [
+                    'Current Weight',
+                    `${new BigNumber(token.current_weight).multipliedBy(100).toFixed(2)}%`,
+                  ],
                   ['Total Price per Set', `$${token.price_total}`],
                 ]}
                 headerTitle="Token"

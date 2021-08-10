@@ -380,7 +380,7 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
           </div>
           <div className="m-trade-ydr__field">
             <div className="m-trade-ydr__labels">
-              <span className="m-trade-ydr__label">Your Receive</span>
+              <span className="m-trade-ydr__label">You Receive</span>
             </div>
 
             {isSell ? (
