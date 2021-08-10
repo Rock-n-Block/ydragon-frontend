@@ -23,7 +23,13 @@ body {
 img {
   vertical-align: top;
 }
-
+a {
+  transition: color 0s;
+  transition: background-color 0.3s;
+  &:hover{
+    color: unset;
+  }
+}
 h1,
 h2,
 h3,

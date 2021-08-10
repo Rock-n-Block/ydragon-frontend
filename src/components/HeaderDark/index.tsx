@@ -309,17 +309,19 @@ const Header: React.FC<HeaderProps> = observer(({ collapsed, onCollapsedChange }
                   href="https://t.me/ydrmain/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="footer__socials-item"
+                  className="footer__socials-item footer__socials-tg"
                 >
                   <img src={tg} alt="logo" width="24" height="20" />
+                  <span>Channel</span>
                 </a>
                 <a
                   href="https://t.me/ydragonchat"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="footer__socials-item"
+                  className="footer__socials-item footer__socials-tg"
                 >
                   <img src={tg} alt="logo" width="24" height="20" />
+                  <span>Chat</span>
                 </a>
 
                 <a

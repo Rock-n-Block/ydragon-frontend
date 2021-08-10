@@ -36,17 +36,19 @@ const Footer: React.FC = () => {
                 href="https://t.me/ydrmain/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="footer__socials-item"
+                className="footer__socials-item footer__socials-tg"
               >
                 <img src={tg} alt="logo" width="16" height="16" />
+                <span>Channel</span>
               </a>
               <a
                 href="https://t.me/ydragonchat"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="footer__socials-item"
+                className="footer__socials-item footer__socials-tg"
               >
                 <img src={tg} alt="logo" width="16" height="16" />
+                <span>Chat</span>
               </a>
 
               <a
