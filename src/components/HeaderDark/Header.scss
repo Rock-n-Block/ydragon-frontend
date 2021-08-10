@@ -273,7 +273,7 @@
 
     &__socials {
       position: fixed;
-      left: calc(50% - 111px / 2);
+      left: calc(50% - 332px/2);
       bottom: 30px;
 
       &-item {
@@ -281,9 +281,10 @@
         height: 48px;
       }
 
-      &-tg{
+      &-tg {
         width: fit-content;
-        img{
+
+        img {
           margin-right: 5px;
         }
       }
