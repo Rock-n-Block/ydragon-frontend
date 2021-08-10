@@ -16,8 +16,9 @@ const Main: React.FC = () => {
       </div>
 
       <p className="home__descr">
-        YDragon is a cross-chain index ecosystem with yield bearing collateral, providing a true{' '}
-        <br /> interoperable cross-asset experience. Made by investors, for investors.
+        YDragon is a crypto index platform with cross-chain capabilities and yield-generation
+        opportunities. This combination of market-leading features allows us to offer you a
+        seamless, cross-chain, multi-asset experience. Made by investors, for investors.
       </p>
 
       <div className="home__btns-row">
