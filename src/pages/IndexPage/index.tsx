@@ -12,10 +12,10 @@ import { ITableToken, IToken } from '../../components/IndexPage/IndexTable';
 import { TradeIndexModal } from '../../components/Modals';
 import SmallTableCard from '../../components/SmallTableCard/index';
 import { indexesApi } from '../../services/api';
+import { useWalletConnectorContext } from '../../services/walletConnect';
 import { useMst } from '../../store/store';
 
 import './Index.scss';
-import { useWalletConnectorContext } from '../../services/walletConnect';
 
 interface IIndexId {
   indexId: string;

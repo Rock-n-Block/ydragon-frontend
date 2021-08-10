@@ -1,9 +1,9 @@
 import React, { useCallback, useEffect, useState } from 'react';
+import { autorun } from 'mobx';
 
 import { Stake, StakingStatistics } from '../../components';
 import { useWalletConnectorContext } from '../../services/walletConnect';
 import { useMst } from '../../store/store';
-import { autorun } from 'mobx';
 
 const StakePage: React.FC = () => {
   const { networks, basicTokens } = useMst();

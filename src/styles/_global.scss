@@ -27,7 +27,8 @@ img {
 a {
   transition: color 0s;
   transition: background-color 0.3s;
-  &:hover{
+
+  &:hover {
     color: unset;
   }
 }

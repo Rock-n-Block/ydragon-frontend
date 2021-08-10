@@ -1,6 +1,10 @@
 import React, { useCallback, useEffect, useState } from 'react';
+import BigNumber from 'bignumber.js/bignumber';
+import { autorun } from 'mobx';
 import { observer } from 'mobx-react-lite';
 
+import YDRLogo from '../../../assets/img/icons/logo.svg';
+import { useWhiteList } from '../../../hooks/useWhiteList';
 import { useWalletConnectorContext } from '../../../services/walletConnect';
 import config from '../../../services/web3/config';
 import { useMst } from '../../../store/store';
@@ -9,10 +13,6 @@ import { Button, Input, InputWithSelect } from '../../index';
 import { Modal } from '../index';
 
 import './GetInModal.scss';
-import YDRLogo from '../../../assets/img/icons/logo.svg';
-import BigNumber from 'bignumber.js/bignumber';
-import { useWhiteList } from '../../../hooks/useWhiteList';
-import { autorun } from 'mobx';
 
 const GetInModal: React.FC = observer(() => {
   const { modals, user } = useMst();

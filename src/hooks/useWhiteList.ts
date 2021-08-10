@@ -1,10 +1,11 @@
-import { indexesApi } from '../services/api';
-import { useMst } from '../store/store';
 import { useCallback, useEffect, useState } from 'react';
+
 import bncDark from '../assets/img/icons/icon-binance-dark.svg';
 import bncLight from '../assets/img/icons/icon-binance-light.svg';
 import plgDark from '../assets/img/icons/icon-polygon-dark.svg';
 import plgLight from '../assets/img/icons/icon-polygon-light.svg';
+import { indexesApi } from '../services/api';
+import { useMst } from '../store/store';
 
 export const useWhiteList = (indexId: number) => {
   const { theme, networks } = useMst();

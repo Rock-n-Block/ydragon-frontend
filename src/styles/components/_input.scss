@@ -247,7 +247,7 @@ input[type='number'] {
   .form-create-index__input {
     &-name,
     &-symbol,
-    &-price{
+    &-price {
       &--error {
         background: $red;
       }

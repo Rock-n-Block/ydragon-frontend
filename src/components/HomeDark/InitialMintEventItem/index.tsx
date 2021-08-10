@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
-
+import { Lottie } from '@crello/react-lottie';
 import BigNumber from 'bignumber.js/bignumber';
 import moment from 'moment';
-import EggAnimation from '../../../assets/img/gif/EGG.json';
-import { Lottie } from '@crello/react-lottie';
 
+import EggAnimation from '../../../assets/img/gif/EGG.json';
 import { useMst } from '../../../store/store';
 import { Button } from '../../index';
 import { IIme } from '../InitialMintEvent';

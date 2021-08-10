@@ -4,6 +4,8 @@ import { autorun } from 'mobx';
 import { observer } from 'mobx-react-lite';
 
 import YDRLogo from '../../../assets/img/icons/logo.svg';
+import { useWhiteList } from '../../../hooks/useWhiteList';
+import { vaultsApi } from '../../../services/api';
 import { useWalletConnectorContext } from '../../../services/walletConnect';
 import MetamaskService, { nativeTokens } from '../../../services/web3';
 import config from '../../../services/web3/config';
@@ -13,8 +15,6 @@ import { Button, Input, InputWithSelect } from '../../index';
 import { Modal } from '../index';
 
 import './TradeIndexModal.scss';
-import { useWhiteList } from '../../../hooks/useWhiteList';
-import { vaultsApi } from '../../../services/api';
 
 interface TradeIndexModalProps {
   token: string;

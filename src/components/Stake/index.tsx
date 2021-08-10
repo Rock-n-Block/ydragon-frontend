@@ -3,6 +3,7 @@ import nextId from 'react-id-generator';
 import BigNumber from 'bignumber.js/bignumber';
 
 import { useWalletConnectorContext } from '../../services/walletConnect';
+import config from '../../services/web3/config';
 import { useMst } from '../../store/store';
 import { ProviderRpcError } from '../../types/errors';
 import { Button, Spinner } from '../index';
@@ -10,7 +11,6 @@ import { InputNumber } from '../Input';
 import StakeItem, { IStakeItem } from '../StakeItem';
 
 import './Stake.scss';
-import config from '../../services/web3/config';
 
 export interface IStakeToken {
   address: string;

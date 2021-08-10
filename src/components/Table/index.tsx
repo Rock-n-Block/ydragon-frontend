@@ -14,7 +14,7 @@ const StyleInjector = (children: any) => {
 
 const Table: React.FC<TableProps<any>> = (props: PropsWithChildren<TableProps<any>>) => {
   const { children, className, ...otherTableProps } = props;
-  
+
   return (
     <div className={`table ${className || ''} ${children ? 'table-bottom-unbordered' : ''}`}>
       <TableAntd rowClassName="table-row" pagination={false} {...otherTableProps} />
