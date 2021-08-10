@@ -12,13 +12,13 @@ const Machine: React.FC = () => {
 
       <div className="machine">
         <p className="machine__descr">
-          YDragon is an ecosystem that offers investors the opportunity to own a diversified
-          portfolio of the best performing cryptocurrencies with only one token. Holders of YDragon
-          indexes can generate high yield, passive income on collateralised assets through our
-          staking platform.
+          YDragon is a platform offering you a range of opportunities to own a diverse selection of
+          the best performing and most promising cryptocurrencies with a single token. Within this
+          selection there will be one ever-present token; YDR.
           <br /> <br />
-          Within our ecosystem we have created YDR, our governance token that enables holders to
-          vote on the future composition of all platform indexes.
+          YDR is central to our vision and will become central to yours, due to its utility and
+          governance characteristics. As an investor, you will always hold YDR, which means you will
+          hold the power to influence future decisions on YDragon indexes and their assets.
           {/* For more information on YDR,
           please read here{' '}
            <span className="isDisabled ">
