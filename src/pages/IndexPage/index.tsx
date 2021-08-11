@@ -140,6 +140,10 @@ const Index: React.FC = observer(() => {
                     `${new BigNumber(token.weight).multipliedBy(100).toFixed(2)}%`,
                   ],
                   [
+                    'Percent Change',
+                    `${new BigNumber('diff' in token ? token.diff : 0).toFixed(2)}%`,
+                  ],
+                  [
                     'Total Price per Set',
                     `$${new BigNumber(token.total_price).multipliedBy(100).toFixed(0)}`,
                   ],

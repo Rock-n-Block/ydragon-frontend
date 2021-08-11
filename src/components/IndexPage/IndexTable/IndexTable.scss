@@ -40,7 +40,7 @@
 
     display: grid;
     align-items: center;
-    grid-template-columns: 360px repeat(4, 1fr);
+    grid-template-columns: repeat(6, 1fr);
     grid-column-gap: 20px;
 
     & + & {
@@ -59,7 +59,10 @@
       line-height: 14px;
     }
   }
-
+  &__col{
+    display: flex;
+    justify-content: flex-start;
+  }
   &__content {
     padding: 0 20px;
   }
@@ -97,79 +100,36 @@
     font-weight: normal;
     line-height: 22px;
   }
-
-  &__percent-change {
-    position: relative;
-
-    padding: 10px 12px;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    width: fit-content;
+  &__diff {
 
     font-family: 'TTNorms', sans-serif;
     font-size: 15px;
-    font-weight: 700;
     line-height: 18px;
+    font-weight: 700;
+    width: 112px;
 
-    border-radius: 40px;
+    &-down {
+      padding: 10px 12px;
 
-    &::before {
-      content: '';
+      display: flex;
+      align-items: center;
 
-      margin-right: 5px;
-
-      width: 10px;
-      height: 12px;
-
-      background-repeat: no-repeat;
-      background-position: center;
-    }
-
-    &::after {
-      content: '';
-
-      position: absolute;
-      top: 0;
-      right: 0;
-      left: 0;
-      bottom: 0;
-
-      padding: 1px;
-
-      border-radius: 40px;
-      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-      -webkit-mask-composite: destination-out;
-      mask-composite: exclude;
-    }
-
-    &--up {
-      color: $green;
-
-      &::before {
-        background-image: url(../../../assets/img/icons/icon-arrow-up-green.svg);
-        // background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 10 10'%3E%3Cpath stroke='%2338DEA2' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M1 4l4-3 4 3M5 3v6'/%3E%3C/svg%3E");
-      }
-
-      &::after {
-        background: linear-gradient(180deg, #00dd8d 0%, #28eda6 100%);
-      }
-    }
-
-    &--down {
       color: $red;
+      border: 2px solid $red;
+      border-radius: 20px;
+      gap: 5px;
+    }
 
-      &::before {
-        background-image: url(../../../assets/img/icons/icon-arrow-down-red.svg);
-        // background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 10 10'%3E%3Cpath stroke='%23DE3F3A' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M9 6L5 9 1 6M5 7V1'/%3E%3C/svg%3E");
-      }
+    &-up {
+      padding: 10px 12px;
 
-      &::after {
-        background: linear-gradient(0deg, #de3f3a, #de3f3a),
-          linear-gradient(180deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 100%);
-      }
+      display: flex;
+      align-items: center;
+
+      color: $green;
+      border: 2px solid $green;
+      border-radius: 20px;
+      gap: 5px;
     }
   }
 }

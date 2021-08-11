@@ -2,6 +2,8 @@ import React from 'react';
 import BigNumber from 'bignumber.js/bignumber';
 
 import './IndexTable.scss';
+import arrowUp from '../../../assets/img/chart/arrow-up.svg';
+import arrowDown from '../../../assets/img/chart/arrow-down.svg';
 
 export interface IToken {
   address: string;
@@ -40,7 +42,7 @@ const IndexTable: React.FC<IndexTableProps> = ({ tokens }) => {
         </div>
         <div className="index-table__col">Token Price</div>
         <div className="index-table__col">Current Weight</div>
-        {/* <div className="index-table__col">Percent Change</div> */}
+        <div className="index-table__col">Percent Change</div>
         <div className="index-table__col">
           Total Price <br /> per Set
         </div>
@@ -83,6 +85,22 @@ const IndexTable: React.FC<IndexTableProps> = ({ tokens }) => {
                     .multipliedBy(100)
                     .toFixed(2)}
                   %
+                </div>
+              </div>
+              <div className="index-table__col">
+                <div className="index-table__diff">
+                  <div
+                    className={`index-table__diff-${
+                      'diff' in token && +token?.diff < 0 ? 'down' : 'up'
+                    }`}
+                  >
+                    {'diff' in token && +token?.diff < 0 ? (
+                      <img src={arrowDown} alt="arrow down" width="10" height="10" />
+                    ) : (
+                      <img src={arrowUp} alt="arrow up" width="10" height="10" />
+                    )}
+                    {new BigNumber('diff' in token ? token.diff : 0).toFixed(2)} %
+                  </div>
                 </div>
               </div>
               <div className="index-table__col">
