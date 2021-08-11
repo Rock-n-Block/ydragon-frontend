@@ -8,7 +8,7 @@ import moment from 'moment';
 import logo from '../../assets/img/icons/logo.svg';
 import { TokenPanel } from '../../components';
 import { IndexChart, IndexTable, RebalanceHistory } from '../../components/IndexPage';
-import { ITableToken, IToken } from '../../components/IndexPage/IndexTable';
+import { IHistoricalToken, IToken } from '../../components/IndexPage/IndexTable';
 import { TradeIndexModal } from '../../components/Modals';
 import SmallTableCard from '../../components/SmallTableCard/index';
 import { indexesApi } from '../../services/api';
@@ -16,6 +16,7 @@ import { useWalletConnectorContext } from '../../services/walletConnect';
 import { useMst } from '../../store/store';
 
 import './Index.scss';
+import { IFetchedData } from '../../components/IndexPage/IndexChart';
 
 interface IIndexId {
   indexId: string;
@@ -36,13 +37,14 @@ export interface IIndex {
 const Index: React.FC = observer(() => {
   const { indexId } = useParams<IIndexId>();
   const walletConnector = useWalletConnectorContext();
-  const { modals, networks } = useMst();
+  const { modals, networks, user } = useMst();
   const history = useHistory();
-  const [tokens, setTokens] = useState<Array<ITableToken>>();
+  const [tokens, setTokens] = useState<Array<IHistoricalToken>>();
   const [balance, setBalance] = useState<string>('0');
   const [indexData, setIndexData] = useState<IIndex | undefined>();
-  const getTokens = (value: React.SetStateAction<any>) => {
-    setTokens(value);
+
+  const setTableTokens = (value: IFetchedData) => {
+    setTokens(value.tokens_history);
   };
 
   const getCurrentIndex = useCallback(() => {
@@ -62,7 +64,7 @@ const Index: React.FC = observer(() => {
 
   const getUserBalance = useCallback(
     (indexAddress: string) => {
-      walletConnector.metamaskService.getBalanceByAddress(indexAddress).then((data: string) => {
+      walletConnector.metamaskService.getBalanceOf(indexAddress).then((data: string) => {
         setBalance(new BigNumber(data).dividedBy(new BigNumber(10).pow(18)).toFixed(7));
       });
     },
@@ -77,10 +79,10 @@ const Index: React.FC = observer(() => {
   };
 
   useEffect(() => {
-    if (indexData) {
+    if (indexData && user.address) {
       getUserBalance(indexData.address);
     }
-  }, [getUserBalance, indexData]);
+  }, [user.address, getUserBalance, indexData]);
   useEffect(() => {
     if (networks.currentNetwork) {
       getCurrentIndex();
@@ -120,7 +122,7 @@ const Index: React.FC = observer(() => {
         handleSell={handleSell}
       />
       <RebalanceHistory lastRebalance={indexData?.rebalance_date} />
-      <IndexChart tokens={getTokens} indexId={indexId} />
+      <IndexChart onClick={setTableTokens} indexId={indexId} />
       <div className="index-table__big">
         <IndexTable tokens={tokens || indexData?.tokens} />
       </div>

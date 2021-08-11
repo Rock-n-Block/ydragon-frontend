@@ -17,17 +17,18 @@ export interface IToken {
   unit_weight: number;
 }
 
-export interface ITableToken {
+export interface IHistoricalToken {
+  diff: string;
   rate: string;
   repr_count: string;
-  total_price: number;
-  weight: string;
-  token_name: string;
   token_image: string;
+  token_name: string;
+  total_price: string;
+  weight: string;
 }
 
 interface IndexTableProps {
-  tokens: Array<IToken> | Array<ITableToken> | undefined;
+  tokens: Array<IToken> | Array<IHistoricalToken> | undefined;
 }
 const IndexTable: React.FC<IndexTableProps> = ({ tokens }) => {
   return (
