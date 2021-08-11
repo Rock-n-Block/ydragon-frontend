@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import nextId from 'react-id-generator';
-import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import BigNumber from 'bignumber.js/bignumber';
 import { observer } from 'mobx-react-lite';
 
@@ -27,6 +27,7 @@ export interface IUserIndex extends IIndex {
 
 const Dashboard: React.FC = () => {
   const { networks } = useMst();
+  const history = useHistory();
   const [indexes, setIndexes] = useState<Array<IUserIndex>>();
   const [loading, setLoading] = useState<boolean>(false);
   const [sorterValue, setSorterValue] = useState<string>('');
@@ -66,6 +67,10 @@ const Dashboard: React.FC = () => {
       setAscendent(true);
     }
     setSorterValue(item);
+  };
+
+  const handleRowClick = (indexId: number) => {
+    history.push(`/index/${indexId}`);
   };
 
   useEffect(() => {
@@ -183,9 +188,17 @@ const Dashboard: React.FC = () => {
           {indexes?.length ? (
             <div className="index-dashboard__content">
               {indexes.map((index: IUserIndex) => (
-                <div className="index-dashboard__item" key={nextId()}>
+                <div
+                  role="button"
+                  onClick={() => handleRowClick(index.id)}
+                  onKeyDown={() => handleRowClick(index.id)}
+                  className="index-dashboard__item"
+                  key={nextId()}
+                  tabIndex={0}
+                >
+                  {/* to={`/index/${index.id}`} */}
                   <div className="index-dashboard__row">
-                    <Link to={`/index/${index.id}`} className="index-dashboard__col">
+                    <div className="index-dashboard__col">
                       <div className="index-dashboard__info">
                         <img
                           src={logo}
@@ -197,7 +210,7 @@ const Dashboard: React.FC = () => {
 
                         <div className="index-dashboard__name">{index.name}</div>
                       </div>
-                    </Link>
+                    </div>
                     <div className="index-dashboard__col">
                       <div className="index-dashboard__market-cup">${index.market_cap}</div>
                     </div>

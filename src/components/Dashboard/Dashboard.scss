@@ -5,10 +5,10 @@
   .index-dashboard {
     &__item {
       @include shadow-block;
-    }
-
-    &__name {
       color: $white;
+      &:hover {
+        background: $table-selected;
+      }
     }
 
     &__token-color {
@@ -55,10 +55,11 @@
   .index-dashboard {
     &__item {
       @include light-block;
-    }
-
-    &__name {
       color: $black;
+      &:hover {
+        background: $table-selected;
+        color: white;
+      }
     }
 
     &__token-color {
@@ -176,8 +177,9 @@
   }
 
   &__item {
+    cursor: pointer;
     padding: 20px 30px;
-
+    transition: background 0.3s;
     & + & {
       margin-top: 16px;
     }
@@ -197,8 +199,6 @@
     font-size: 14px;
     font-weight: normal;
     line-height: 17px;
-
-    color: white;
   }
 
   &__market-cup {
