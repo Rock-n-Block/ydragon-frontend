@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 import moment from 'moment';
 
@@ -15,11 +15,27 @@ import './Indexes.scss';
 
 const Indexes: React.FC = observer(() => {
   const { networks, modals } = useMst();
+  const history = useHistory();
   const [indexes, setIndexes] = useState<Array<IIndex>>();
   const [sorterValue, setSorterValue] = useState<string>('');
   const [ascendent, setAscendent] = useState<boolean>(true);
   const [dataSource, setDataSource] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
+
+  // const [selectedRowKeys, setSelectedRowKeys] = useState<any[]>([0]);
+  const selectRow = (record: any) => {
+    // setSelectedRowKeys([record.key]);
+    if (indexes) {
+      history.push(`/admin/index/${indexes[record.key].id}`);
+    }
+  };
+  // const onSelectedRowKeysChange = (selectedRow: any) => {
+  //   setSelectedRowKeys(selectedRow);
+  // };
+  // const rowSelection = {
+  //   selectedRowKeys,
+  //   onChange: onSelectedRowKeysChange,
+  // };
 
   const switchSort = useCallback(
     (value: string, asc: boolean) => {
@@ -81,7 +97,7 @@ const Indexes: React.FC = observer(() => {
       title: 'Name',
       dataIndex: 'name',
       key: 'name',
-      render: (item: any) => <Link to={`/admin/index/${item.id}`}>{item.name}</Link>,
+      render: (item: any) => <span>{item.name}</span>,
       onHeaderCell: () => {
         return {
           className: `indexs-table__sort ${
@@ -183,7 +199,16 @@ const Indexes: React.FC = observer(() => {
       {indexes && (
         <>
           <div className="indexs__table-big">
-            <Table dataSource={dataSource} columns={columns} className="rebalance-table" />
+            <Table
+              onRow={(record) => ({
+                onClick: () => {
+                  selectRow(record);
+                },
+              })}
+              dataSource={dataSource}
+              columns={columns}
+              className="rebalance-table"
+            />
           </div>
           <div className="indexs__table-small">
             {dataSource.map((data) => (
