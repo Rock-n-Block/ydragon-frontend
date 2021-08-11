@@ -7,7 +7,7 @@ import YDRLogo from '../../../assets/img/icons/logo.svg';
 import { useWhiteList } from '../../../hooks/useWhiteList';
 import { vaultsApi } from '../../../services/api';
 import { useWalletConnectorContext } from '../../../services/walletConnect';
-import MetamaskService, { nativeTokens } from '../../../services/web3';
+// import MetamaskService, { nativeTokens } from '../../../services/web3';
 import config from '../../../services/web3/config';
 import { useMst } from '../../../store/store';
 import { ProviderRpcError } from '../../../types/errors';
@@ -25,7 +25,7 @@ interface TradeIndexModalProps {
 const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
   ({ token, indexAddress, tokenId }) => {
     const walletConnector = useWalletConnectorContext();
-    const { user, modals, networks } = useMst();
+    const { user, modals } = useMst();
     const [isSell, setIsSell] = useState<boolean>(modals.tradeIndex.method === 'sell');
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [totalX, setTotalX] = useState<number>(0);
@@ -91,60 +91,58 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
       secondCurrency,
     ]);
 
-    const getFee = useCallback(
-      async (currency: any, method: string, total_x?: number) => {
-        let cost = 1;
-        if (!nativeTokens.includes(currency.toLowerCase())) {
-          try {
-            const nativeCost = await walletConnector.metamaskService.getIndexCourse(
-              MetamaskService.getWrappedNativeAddress(),
-              payInput,
-              true,
-              indexAddress,
-              decimals,
-            );
-            const currencyCost = await walletConnector.metamaskService.getIndexCourse(
-              getTokenAddress(currency),
-              payInput,
-              true,
-              indexAddress,
-              decimals,
-            );
-            cost = +new BigNumber(new BigNumber(+currencyCost).dividedBy(new BigNumber(10).pow(18)))
-              .dividedBy(
-                new BigNumber(nativeCost).dividedBy(
-                  new BigNumber(10).pow(
-                    walletConnector.metamaskService.getDecimals(
-                      getTokenAddress(currency),
-                      config.Token.ABI,
-                    ),
-                  ),
-                ),
-              )
-              .toFixed(5);
-          } catch (e) {
-            console.error(e);
+    const getFee = useCallback(async (currency: any, method: string, total_x?: number) => {
+      // let cost = 1;
+      // if (!nativeTokens.includes(currency.toLowerCase())) {
+      //   try {
+      //     const nativeCost = await walletConnector.metamaskService.getIndexCourse(
+      //       MetamaskService.getWrappedNativeAddress(),
+      //       payInput,
+      //       true,
+      //       indexAddress,
+      //       decimals,
+      //     );
+      //     const currencyCost = await walletConnector.metamaskService.getIndexCourse(
+      //       getTokenAddress(currency),
+      //       payInput,
+      //       true,
+      //       indexAddress,
+      //       decimals,
+      //     );
+      //     cost = +new BigNumber(new BigNumber(+currencyCost).dividedBy(new BigNumber(10).pow(18)))
+      //       .dividedBy(
+      //         new BigNumber(nativeCost).dividedBy(
+      //           new BigNumber(10).pow(
+      //             walletConnector.metamaskService.getDecimals(
+      //               getTokenAddress(currency),
+      //               config.Token.ABI,
+      //             ),
+      //           ),
+      //         ),
+      //       )
+      //       .toFixed(5);
+      //   } catch (e) {
+      //     console.error(e);
+      //   }
+      // }
+      switch (method) {
+        case 'buy':
+          setFee('0.5%');
+          break;
+        // case 'sell_0.02':
+        //   setFee(+payInput * cost * 0.02 > 0.001 ? `${+payInput * cost * 0.02}` : '< 0.001');
+        //   break;
+        case 'sell':
+          if (total_x !== undefined && total_x >= 15) {
+            setFee('2%');
+          } else if (total_x !== undefined) {
+            setFee(`${(6 - 4 * (total_x - 5)) / 10}%`);
           }
-        }
-        switch (method) {
-          case 'buy':
-            setFee(+payInput * cost * 0.005 > 0.001 ? `${+payInput * cost * 0.005}` : '< 0.001');
-            break;
-          case 'sell_0.02':
-            setFee(+payInput * cost * 0.02 > 0.001 ? `${+payInput * cost * 0.02}` : '< 0.001');
-            break;
-          case 'sell':
-            if (total_x !== undefined && total_x >= 0) {
-              const preFee = (+payInput * (6 - (4 - total_x - 5))) / 10;
-              setFee(preFee * cost > 0.001 ? (preFee * cost).toFixed(3) : '< 0.001');
-            }
-            break;
-          default:
-            break;
-        }
-      },
-      [walletConnector.metamaskService, payInput, indexAddress, decimals, getTokenAddress],
-    );
+          break;
+        default:
+          break;
+      }
+    }, []);
 
     const getBuyCourse = useCallback(() => {
       if (payInput) {
@@ -178,11 +176,7 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
         walletConnector.metamaskService
           .getIndexCourse(getTokenAddress(secondCurrency), payInput, false, indexAddress, decimals)
           .then((data: any) => {
-            if (totalX >= 0.15) {
-              getFee(secondCurrency, 'sell_0.02');
-            } else {
-              getFee(secondCurrency, 'sell', totalX);
-            }
+            getFee(secondCurrency, 'sell', totalX);
             setViewOnlyInputValue(
               new BigNumber(data).dividedBy(new BigNumber(10).pow(viewOnlyDecimals)).toFixed(5),
             );
@@ -395,13 +389,7 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
               <Input placeholder={viewOnlyInputValue} disabled />
             )}
           </div>
-          {fee ? (
-            <p className="m-trade-ydr__label m-trade-ydr__fee">
-              Service Fee {fee} {networks.currentNetwork === 'polygon-pos' ? 'MATIC' : 'BNB'}
-            </p>
-          ) : (
-            <></>
-          )}
+          {fee ? <p className="m-trade-ydr__label m-trade-ydr__fee">Service Fee {fee}</p> : <></>}
           {isNeedApprove && firstCurrency !== 'bnb' && firstCurrency !== 'matic' && (
             <Button className="m-trade-ydr__btn" onClick={handleApprove} loading={isLoading}>
               Approve
