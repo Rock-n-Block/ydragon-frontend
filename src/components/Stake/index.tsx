@@ -21,8 +21,9 @@ export interface IStakeToken {
 interface StakeProps {
   tokens: IStakeToken[];
   propsLoading: boolean;
+  onStakeClick: () => void;
 }
-const Stake: React.FC<StakeProps> = ({ tokens, propsLoading }) => {
+const Stake: React.FC<StakeProps> = ({ tokens, propsLoading, onStakeClick }) => {
   const walletConnector = useWalletConnectorContext();
   const { modals, networks } = useMst();
   const [tokensList, setTokensList] = useState<IStakeItem[]>([] as IStakeItem[]);
@@ -48,6 +49,7 @@ const Stake: React.FC<StakeProps> = ({ tokens, propsLoading }) => {
     walletConnector.metamaskService
       .startStake(tokens[activeStakeIndex].address, stakeValue, intervalIndex)
       .then(() => {
+        onStakeClick();
         modals.info.setMsg('Success', 'Staking has been started', 'success');
       })
       .catch((error: ProviderRpcError) => {

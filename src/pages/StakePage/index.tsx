@@ -63,7 +63,7 @@ const StakePage: React.FC = () => {
 
   return (
     <main className="container">
-      <Stake tokens={stakeTokensList} propsLoading={loading} />
+      <Stake tokens={stakeTokensList} propsLoading={loading} onStakeClick={getStakingTokens} />
       <StakingStatistics />
     </main>
   );
