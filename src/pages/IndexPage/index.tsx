@@ -120,6 +120,7 @@ const Index: React.FC = observer(() => {
         ]}
         handleBuy={handleBuy}
         handleSell={handleSell}
+        needLogin
       />
       <RebalanceHistory lastRebalance={indexData?.rebalance_date} />
       <IndexChart onClick={setTableTokens} indexId={indexId} />
