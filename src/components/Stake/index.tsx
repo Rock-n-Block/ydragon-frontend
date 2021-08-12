@@ -94,7 +94,9 @@ const Stake: React.FC<StakeProps> = ({ tokens, propsLoading, onStakeClick }) => 
             symbol: token.symbol,
             name: token.name,
           },
-          available: new BigNumber(token.balance).dividedBy(new BigNumber(10).pow(18)).toFixed(6),
+          available: new BigNumber(token.balance)
+            .dividedBy(new BigNumber(10).pow(18))
+            .toFixed(6, 1),
         };
       }),
     );
