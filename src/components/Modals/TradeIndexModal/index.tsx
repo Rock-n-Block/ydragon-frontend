@@ -91,58 +91,15 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
       secondCurrency,
     ]);
 
-    const getFee = useCallback(async (currency: any, method: string, total_x?: number) => {
-      // let cost = 1;
-      // if (!nativeTokens.includes(currency.toLowerCase())) {
-      //   try {
-      //     const nativeCost = await walletConnector.metamaskService.getIndexCourse(
-      //       MetamaskService.getWrappedNativeAddress(),
-      //       payInput,
-      //       true,
-      //       indexAddress,
-      //       decimals,
-      //     );
-      //     const currencyCost = await walletConnector.metamaskService.getIndexCourse(
-      //       getTokenAddress(currency),
-      //       payInput,
-      //       true,
-      //       indexAddress,
-      //       decimals,
-      //     );
-      //     cost = +new BigNumber(new BigNumber(+currencyCost).dividedBy(new BigNumber(10).pow(18)))
-      //       .dividedBy(
-      //         new BigNumber(nativeCost).dividedBy(
-      //           new BigNumber(10).pow(
-      //             walletConnector.metamaskService.getDecimals(
-      //               getTokenAddress(currency),
-      //               config.Token.ABI,
-      //             ),
-      //           ),
-      //         ),
-      //       )
-      //       .toFixed(5);
-      //   } catch (e) {
-      //     console.error(e);
-      //   }
-      // }
-      switch (method) {
-        case 'buy':
-          setFee('0.5%');
-          break;
-        // case 'sell_0.02':
-        //   setFee(+payInput * cost * 0.02 > 0.001 ? `${+payInput * cost * 0.02}` : '< 0.001');
-        //   break;
-        case 'sell':
-          if (total_x !== undefined && total_x >= 15) {
-            setFee('2%');
-          } else if (total_x !== undefined) {
-            setFee(`${(6 - 4 * (total_x - 5)) / 10}%`);
-          }
-          break;
-        default:
-          break;
-      }
-    }, []);
+    const getFee = useCallback(() => {
+      if (isSell) {
+        if (totalX >= 0.15) {
+          setFee('2%');
+        } else if (totalX !== undefined) {
+          setFee(`${(6 - 4 * (totalX - 5)) / 10}%`);
+        }
+      } else setFee('0.5%');
+    }, [totalX, isSell]);
 
     const getBuyCourse = useCallback(() => {
       if (payInput) {
@@ -152,7 +109,6 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
             setViewOnlyInputValue(
               new BigNumber(data).dividedBy(new BigNumber(10).pow(18)).toFixed(5),
             );
-            getFee(firstCurrency, 'buy');
           })
           .catch((err: ProviderRpcError) => {
             const { message } = err;
@@ -169,14 +125,12 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
       firstCurrency,
       indexAddress,
       decimals,
-      getFee,
     ]);
     const getSellCourse = useCallback(() => {
       if (payInput) {
         walletConnector.metamaskService
           .getIndexCourse(getTokenAddress(secondCurrency), payInput, false, indexAddress, decimals)
           .then((data: any) => {
-            getFee(secondCurrency, 'sell', totalX);
             setViewOnlyInputValue(
               new BigNumber(data).dividedBy(new BigNumber(10).pow(viewOnlyDecimals)).toFixed(5),
             );
@@ -190,7 +144,6 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
         setFee('');
       }
     }, [
-      totalX,
       payInput,
       walletConnector.metamaskService,
       getTokenAddress,
@@ -198,7 +151,6 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
       indexAddress,
       decimals,
       viewOnlyDecimals,
-      getFee,
     ]);
 
     const checkAllowance = useCallback(() => {
@@ -322,8 +274,9 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
         } else {
           getSellCourse();
         }
+        getFee();
       }
-    }, [whiteList.length, modals.tradeIndex.method, getBuyCourse, getSellCourse, payInput]);
+    }, [getFee, whiteList.length, modals.tradeIndex.method, getBuyCourse, getSellCourse, payInput]);
     return (
       <Modal
         isVisible={modals.tradeIndex.isOpen}
@@ -390,7 +343,7 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
             )}
           </div>
           {fee ? <p className="m-trade-ydr__label m-trade-ydr__fee">Service Fee {fee}</p> : <></>}
-          {isNeedApprove && firstCurrency !== 'bnb' && firstCurrency !== 'matic' && (
+          {isNeedApprove && firstCurrency !== 'bnb' && firstCurrency !== 'matic' && !isSell && (
             <Button className="m-trade-ydr__btn" onClick={handleApprove} loading={isLoading}>
               Approve
             </Button>
