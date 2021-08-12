@@ -133,6 +133,7 @@ const StakingStatistics: React.FC = observer(() => {
   };
 
   const handleHarvest = useCallback(() => {
+    modals.harvest.close();
     walletConnector.metamaskService
       .harvestStakeItem(dataSource[selectedRowKeys[0]].id)
       .then(() => {
@@ -148,14 +149,16 @@ const StakingStatistics: React.FC = observer(() => {
         modals.info.setMsg('Error', `Harvest error ${message}`, 'error');
       });
   }, [
+    modals.harvest,
+    modals.info,
+    walletConnector.metamaskService,
     dataSource,
     selectedRowKeys,
-    walletConnector.metamaskService,
-    modals.info,
     getStakingStatistic,
   ]);
 
   const handleStakeEnd = useCallback(() => {
+    modals.harvest.close();
     walletConnector.metamaskService
       .endStake(dataSource[selectedRowKeys[0]].id)
       .then(() => {
@@ -171,10 +174,11 @@ const StakingStatistics: React.FC = observer(() => {
         modals.info.setMsg('Error', `Harvest and stake error ${message}`, 'error');
       });
   }, [
+    modals.harvest,
+    modals.info,
+    walletConnector.metamaskService,
     dataSource,
     selectedRowKeys,
-    walletConnector.metamaskService,
-    modals.info,
     getStakingStatistic,
   ]);
 
