@@ -284,7 +284,7 @@ const Dashboard: React.FC = () => {
                       {index.tokens &&
                         index.tokens.slice(0, 3).map((token, i) => (
                           <React.Fragment key={nextId()}>
-                            {+token.current_weight > 0 && (
+                            {token.current_weight > 0 && (
                               <div
                                 className={`index-dashboard__token-percent ${colorsClassNames[i]}`}
                                 style={{
@@ -298,16 +298,19 @@ const Dashboard: React.FC = () => {
                             )}
                           </React.Fragment>
                         ))}
-                      {index.tokens.length > 3 && (
-                        <div
-                          className="index-dashboard__token-percent"
-                          style={{
-                            width: `${calculateOthersWeight(index).multipliedBy(100).toString()}%`,
-                          }}
-                        >
-                          {calculateOthersWeight(index).multipliedBy(100).toString()}%
-                        </div>
-                      )}
+                      {index.tokens.length > 3 &&
+                        calculateOthersWeight(index).multipliedBy(100).toString() !== '0' && (
+                          <div
+                            className="index-dashboard__token-percent"
+                            style={{
+                              width: `${calculateOthersWeight(index)
+                                .multipliedBy(100)
+                                .toString()}%`,
+                            }}
+                          >
+                            {calculateOthersWeight(index).multipliedBy(100).toString()}%
+                          </div>
+                        )}
                     </div>
                   </div>
                 </div>

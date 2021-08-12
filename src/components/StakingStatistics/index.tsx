@@ -13,6 +13,7 @@ import { Button, Table } from '../index';
 import SmallTableCard from '../SmallTableCard/index';
 
 import './StakingStatistics.scss';
+import { HarvestModal } from '../Modals';
 
 interface IStakingStat {
   months: number;
@@ -28,6 +29,7 @@ interface IStakingStat {
 const StakingStatistics: React.FC = observer(() => {
   const walletConnector = useWalletConnectorContext();
   const [dataSource, setDataSource] = useState<any[]>([]);
+  const [isUnstake, setIsUnstake] = useState<boolean>(false);
   const { modals, user, networks } = useMst();
   const columns: any[] = [
     {
@@ -106,9 +108,9 @@ const StakingStatistics: React.FC = observer(() => {
                 .dividedBy(new BigNumber(10).pow(18))
                 .toFixed(5),
               estimatedRewards: stake.estimated_rewards
-                ? new BigNumber(stake.estimated_rewards)
+                ? `$${new BigNumber(stake.estimated_rewards)
                     .dividedBy(new BigNumber(10).pow(18))
-                    .toFixed(5)
+                    .toFixed(5)}`
                 : 'In progress...',
             };
           },
@@ -120,6 +122,15 @@ const StakingStatistics: React.FC = observer(() => {
         console.log('Error in getting staking stat', response);
       });
   }, [user.address, networks.currentNetwork]);
+
+  const handleHarvestClick = () => {
+    setIsUnstake(false);
+    if (dataSource[selectedRowKeys[0]]) modals.harvest.open();
+  };
+  const handleStakeEndClick = () => {
+    setIsUnstake(true);
+    if (dataSource[selectedRowKeys[0]]) modals.harvest.open();
+  };
 
   const handleHarvest = useCallback(() => {
     walletConnector.metamaskService
@@ -187,10 +198,18 @@ const StakingStatistics: React.FC = observer(() => {
       </h2>
 
       <div className="staking-statistics__btn-row">
-        <Button className="staking-statistics__btn" styledType="outline" onClick={handleHarvest}>
+        <Button
+          className="staking-statistics__btn"
+          styledType="outline"
+          onClick={handleHarvestClick}
+        >
           Harvest
         </Button>
-        <Button className="staking-statistics__btn" styledType="outline" onClick={handleStakeEnd}>
+        <Button
+          className="staking-statistics__btn"
+          styledType="outline"
+          onClick={handleStakeEndClick}
+        >
           Harvest and unstake
         </Button>
       </div>
@@ -210,7 +229,7 @@ const StakingStatistics: React.FC = observer(() => {
               ['Already staked', data.staked],
               ['Rewards available to withdrawn', data.availableRewards],
               ['Already withdrawn rewards', data.withdrawnRewards],
-              ['Estimated rewards', data.estimatedRewards],
+              ['Estimated rewards', `$${data.estimatedRewards}`],
             ]}
             index={index}
             hoverFeature
@@ -234,6 +253,7 @@ const StakingStatistics: React.FC = observer(() => {
         columns={columns}
         className="staking-statistics-table__big"
       />
+      <HarvestModal isUnstake={isUnstake} onOk={isUnstake ? handleStakeEnd : handleHarvest} />
     </section>
   );
 });

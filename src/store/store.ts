@@ -29,6 +29,7 @@ export const Store = RootModel.create({
     redeem: { isOpen: false },
     tradeYDR: { isOpen: false, method: '' },
     tradeIndex: { isOpen: false, method: '' },
+    harvest: { isOpen: false },
   },
   user: {
     address: '',

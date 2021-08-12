@@ -124,6 +124,18 @@ const MetamaskModal = types
       self.errMsg = '';
     },
   }));
+const HarvestModal = types
+  .model({
+    isOpen: types.boolean,
+  })
+  .actions((self) => ({
+    open() {
+      self.isOpen = true;
+    },
+    close() {
+      self.isOpen = false;
+    },
+  }));
 
 export const Modals = types
   .model({
@@ -136,6 +148,7 @@ export const Modals = types
     tradeYDR: TradeYDRModal,
     tradeIndex: TradeIndexModal,
     metamask: MetamaskModal,
+    harvest: HarvestModal,
   })
   .actions((self) => ({
     closeAll() {
