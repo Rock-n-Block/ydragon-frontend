@@ -2,14 +2,26 @@
 @import '../../../styles/mixins';
 
 .dark {
-  .protocols__title {
-    color: $white;
+  .protocols {
+    &__title {
+      color: $white;
+    }
+   /* &__item{
+    @include shadow-block;
+      background: linear-gradient(238.88deg, #000316 31.18%, #050C25 99.47%);
+    } */
   }
 }
 
 .light {
-  .protocols__title {
-    color: $black;
+  .protocols {
+    &__title {
+      color: $black;
+    }
+   /* &__item{
+      @include shadow-block;
+      background: linear-gradient(238.88deg, #ECEFF9 31.18%, #CBD5F7 99.47%);
+    } */
   }
 }
 
@@ -28,12 +40,15 @@
   &__row {
     display: flex;
     justify-content: center;
+    align-items: center;
 
     text-align: center;
     gap: 43px;
     flex-wrap: wrap;
   }
-
+/* &__item{
+  padding: 38px 84px;
+} */
   .ava-labs-icon {
     margin-top: 54px;
     align-self: center;
