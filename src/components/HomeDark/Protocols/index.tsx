@@ -16,8 +16,8 @@ import hyperconnectL from '../../../assets/img/icons/partners/hyperconnect-light
 import hyperconnectD from '../../../assets/img/icons/partners/hyperconnect-dark.svg';
 import qiDaoL from '../../../assets/img/icons/partners/qi-dao-light.png';
 import qiDaoD from '../../../assets/img/icons/partners/qi-dao-dark.png';
-import unimexL from '../../../assets/img/icons/partners/unimex-light.svg';
-import unimexD from '../../../assets/img/icons/partners/unimex-dark.svg';
+// import unimexL from '../../../assets/img/icons/partners/unimex-light.svg';
+// import unimexD from '../../../assets/img/icons/partners/unimex-dark.svg';
 import trustSwapL from '../../../assets/img/icons/partners/trust-swap-light.svg';
 import trustSwapD from '../../../assets/img/icons/partners/trust-swap-dark.svg';
 import { useMst } from '../../../store/store';
@@ -30,21 +30,40 @@ const Protocols: React.FC = observer(() => {
   const partners = useCallback(() => {
     const isLight = theme.value !== 'dark';
     return [
-      <img src={isLight ? moonwolfL : moonwolfD} alt="moonwolf" width="275" height="72" />,
-      <img src={isLight ? marshlandL : marshlandD} alt="marshland" width="92" height="78" />,
-      <img src={isLight ? lossLessL : lossLessD} alt="lossLess" width="291" height="64" />,
-      <img src={isLight ? magnusL : magnusD} alt="magnus capital" width="154" height="78" />,
-      <img src={isLight ? polygonL : polygonD} alt="polygon" width="280" height="62" />,
-      <img src={bscPad} alt="bscPad" width="152" height="64" />,
-      <img
-        src={isLight ? hyperconnectL : hyperconnectD}
-        alt="icon hyperconnect p-rep"
-        width="290"
-        height="64"
-      />,
-      <img src={isLight ? qiDaoL : qiDaoD} alt="Qi Dao" width="160" height="72" />,
-      <img src={isLight ? unimexL : unimexD} alt="unimex" width="240" height="64" />,
-      <img src={isLight ? trustSwapL : trustSwapD} alt="trustSwap" width="312" height="52" />,
+      <a href="https://moonwolf.io/" target="_blank" className="protocols__link" rel="noreferrer">
+        <img src={isLight ? moonwolfL : moonwolfD} alt="moonwolf" width="275" height="72" />
+      </a>,
+      <a href="https://www.marshlandcapital.com/" target="_blank" className="protocols__link" rel="noreferrer">
+        <img src={isLight ? marshlandL : marshlandD} alt="marshland" width="92" height="78" />
+      </a>,
+      <a href="https://lossless.cash/" target="_blank" className="protocols__link" rel="noreferrer">
+        <img src={isLight ? lossLessL : lossLessD} alt="lossLess" width="291" height="64" />
+      </a>,
+      <a href="https://magnusdigitalassets.com/" target="_blank" className="protocols__link" rel="noreferrer">
+        <img src={isLight ? magnusL : magnusD} alt="magnus capital" width="154" height="78" />
+      </a>,
+      <a href="https://polygon.technology/" target="_blank" className="protocols__link" rel="noreferrer">
+        <img src={isLight ? polygonL : polygonD} alt="polygon" width="280" height="62" />
+      </a>,
+      <a href="https://bscpad.com/" target="_blank" className="protocols__link" rel="noreferrer">
+        <img src={bscPad} alt="bscPad" width="152" height="64" />
+      </a>,
+      <a href="https://www.iconhyperconnect.com/" target="_blank" className="protocols__link" rel="noreferrer">
+        <img
+          src={isLight ? hyperconnectL : hyperconnectD}
+          alt="icon hyperconnect p-rep"
+          width="290"
+          height="64"
+        />
+      </a>,
+      <a href="https://www.mai.finance/" target="_blank" className="protocols__link" rel="noreferrer">
+        <img src={isLight ? qiDaoL : qiDaoD} alt="Qi Dao" width="160" height="72" />
+      </a>,
+      <a href="https://www.trustswap.org/" target="_blank" className="protocols__link" rel="noreferrer">
+        <img src={isLight ? trustSwapL : trustSwapD} alt="trustSwap" width="312" height="52" />
+      </a>,
+
+      // <img src={isLight ? unimexL : unimexD} alt="unimex" width="240" height="64" />,
     ];
   }, [theme.value]);
   // const partners = [
