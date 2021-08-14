@@ -224,17 +224,15 @@
           width: 126px;
           height: 53px;
 
+          font-family: 'Rubik', sans-serif;
+          font-size: 16px;
+          font-weight: 700;
+          line-height: 25px;
+
           cursor: pointer;
 
           background: #d53038;
           border-radius: 12px;
-
-          &__text {
-            font-family: 'Rubik', sans-serif;
-            font-size: 16px;
-            font-weight: 700;
-            line-height: 25px;
-          }
         }
       }
     }
@@ -274,9 +272,7 @@
 
       &__submit {
         &__button {
-          &__text {
-            color: #fff;
-          }
+          color: #fff;
         }
       }
     }

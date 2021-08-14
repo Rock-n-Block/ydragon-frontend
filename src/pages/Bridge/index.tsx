@@ -1,10 +1,14 @@
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
+import { observer } from 'mobx-react-lite';
 
 import bscLogo from '../../assets/img/icons/blockchains/bsc.svg';
 import ethLogo from '../../assets/img/icons/blockchains/eth.svg';
 import link from '../../assets/img/icons/icon-link.svg';
 import indexLogo from '../../assets/img/icons/logo-index.svg';
+import { Button } from '../../components';
 import Dropdown from '../../components/Bridge/Dropdown';
+import { useWalletConnectorContext } from '../../services/walletConnect';
+import { useMst } from '../../store/store';
 
 import './Bridge.scss';
 
@@ -27,21 +31,38 @@ const indexes = [
   },
 ];
 
+const isProduction = process.env.REACT_APP_IS_PROD === 'production';
+
 const blockchains = [
   {
     img: ethLogo,
     title: 'Ethereum',
+    chainId: isProduction ? '0x1' : '0x3',
   },
   {
     img: bscLogo,
     title: 'Binance Smart Chain',
+    chainId: isProduction ? '0x38' : '0x61',
   },
 ];
 
-const Bridge: React.FC = () => {
+const Bridge: React.FC = observer(() => {
+  const walletConnector = useWalletConnectorContext();
+  const { user } = useMst();
+
+  const [currentBlockchainId, setCurrentBlockchainId] = useState<string | undefined>(undefined);
   const [fromBlockchainIndex, setFromBlockchainIndex] = useState(0);
   const [toBlockchainIndex, setToBlockchainIndex] = useState(1);
   const [activeTokenIndex, setActiveTokenIndex] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const getCurrentChain = useCallback(() => {
+    setIsLoading(true);
+    walletConnector.metamaskService.ethGetCurrentChain().then((chainId: string) => {
+      setCurrentBlockchainId(chainId);
+      setIsLoading(false);
+    });
+  }, [walletConnector.metamaskService]);
 
   const setBlockchainIndex = (type: 'from' | 'to', index: number): void => {
     if (
@@ -60,6 +81,18 @@ const Bridge: React.FC = () => {
       setFromBlockchainIndex(oppositeIndex);
     }
   };
+
+  const handleSwap = (): void => {
+    console.log('handle swap');
+  };
+
+  useEffect(() => {
+    if (user.address) {
+      getCurrentChain();
+    } else {
+      setIsLoading(false);
+    }
+  }, [user.address, getCurrentChain]);
 
   return (
     <div className="bridge">
@@ -140,12 +173,24 @@ const Bridge: React.FC = () => {
 
         <div className="form__submit">
           <div className="form__submit__button">
-            <div className="form__submit__button__text">SWAP</div>
+            <Button
+              className="token-panel__btn"
+              onClick={handleSwap}
+              needLogin="Please login"
+              loading={isLoading}
+              wrongBlockchain={
+                currentBlockchainId !== blockchains[fromBlockchainIndex].chainId
+                  ? `Please select ${blockchains[fromBlockchainIndex].title} blockchain in your wallet`
+                  : null
+              }
+            >
+              SWAP
+            </Button>
           </div>
         </div>
       </form>
     </div>
   );
-};
+});
 
 export default Bridge;

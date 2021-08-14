@@ -80,7 +80,9 @@ export const App: React.FC = observer(() => {
             <GuardedRoute exact path="/admin" component={Indexes} auth={admin} />
             <GuardedRoute exact path="/admin/index/:indexId" component={AdminIndex} auth={admin} />
             <GuardedRoute exact path="/staking" component={StakePage} auth={user} />
-            <GuardedRoute exact path="/bridge" component={Bridge} auth={user} />
+            <Route exact path="/bridge">
+              <Bridge />
+            </Route>
             <Route exact path="/indexes">
               <IndexDashboard />
             </Route>
