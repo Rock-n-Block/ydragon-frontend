@@ -50,10 +50,11 @@ const blockchains = [
 ];
 
 const tokenDecimals = 18;
+const tokenSymbol = 'YDRagon';
 
 const Bridge: React.FC = observer(() => {
   const walletConnector = useWalletConnectorContext();
-  const { user } = useMst();
+  const { user, modals } = useMst();
 
   const [currentBlockchainId, setCurrentBlockchainId] = useState<string | undefined>(undefined);
   const [fromBlockchainIndex, setFromBlockchainIndex] = useState(0);
@@ -83,7 +84,7 @@ const Bridge: React.FC = observer(() => {
     walletConnector.metamaskService
       .approveById(tokenAddress, contractAddress)
       .then(() => {
-        console.log('approved!');
+        modals.info.setMsg('Success', `${tokenSymbol} is approved`, 'success');
       })
       .catch((err: any) => {
         console.debug(err);
@@ -101,7 +102,11 @@ const Bridge: React.FC = observer(() => {
     walletConnector.metamaskService
       .swapTokensToOtherBlockchain(contractAddress, toBlockchain, amount, user.address)
       .then(() => {
-        console.log('swapped!');
+        modals.info.setMsg(
+          'Success',
+          `Cross-chain swap of ${inputAmount} ${tokenSymbol} has started`,
+          'success',
+        );
         setIsApproved(true);
       })
       .catch((err: any) => {
@@ -116,7 +121,9 @@ const Bridge: React.FC = observer(() => {
     return walletConnector.metamaskService.ethGetCurrentChain().then((chainId: string) => {
       setCurrentBlockchainId(chainId);
       const blockchainIndex = blockchains.findIndex((blockchain) => blockchain.chainId === chainId);
-      setBlockchainIndex('from', blockchainIndex);
+      if (blockchainIndex !== -1) {
+        setBlockchainIndex('from', blockchainIndex);
+      }
     });
   }, [setBlockchainIndex, walletConnector.metamaskService]);
 
@@ -162,15 +169,18 @@ const Bridge: React.FC = observer(() => {
 
   useEffect(() => {
     setIsLoading(true);
-    console.log('useEffect');
 
     async function checkSettings() {
       setFee(undefined);
       setMinAmount(undefined);
 
-      await checkAllowance();
-      await getFee();
-      await getMinAmount();
+      try {
+        await checkAllowance();
+        await getFee();
+        await getMinAmount();
+      } catch (err) {
+        console.debug(err);
+      }
 
       setIsLoading(false);
     }
@@ -184,7 +194,7 @@ const Bridge: React.FC = observer(() => {
       if (!inputAmount) {
         setOutputAmount('0');
       } else {
-        setOutputAmount(new BigNumber(inputAmount).minus(fee).toFixed());
+        setOutputAmount(BigNumber.max(new BigNumber(inputAmount).minus(fee), 0).toFixed());
       }
       setIsLoading(false);
     }
@@ -244,8 +254,12 @@ const Bridge: React.FC = observer(() => {
           <div className="gradient-box">
             <div className="box form__item__input">
               <input
-                type="text"
+                type="number"
                 placeholder="Enter amount"
+                value={inputAmount}
+                onKeyPress={(e) => {
+                  if (e.code === 'Minus') e.preventDefault();
+                }}
                 onChange={(e) => setInputAmount(e.target.value)}
               />
               <div className="form__item__input__send-max">
@@ -295,6 +309,7 @@ const Bridge: React.FC = observer(() => {
             onClick={isApproved ? handleSwap : handleApprove}
             needLogin="Please login"
             loading={isLoading}
+            disabled={isApproved && !inputAmount}
             wrongBlockchain={
               currentBlockchainId !== blockchains[fromBlockchainIndex].chainId
                 ? `Please select ${blockchains[fromBlockchainIndex].title} blockchain in your wallet`
