@@ -3,10 +3,9 @@ import BigNumber from 'bignumber.js/bignumber';
 import { withFormik } from 'formik';
 import { observer } from 'mobx-react-lite';
 import moment from 'moment';
-import { TransactionReceipt } from 'web3-core';
 
-import { ITokensDiff } from '../../../pages/Admin';
 import { ISearchToken } from '../../../components/Search';
+import { ITokensDiff } from '../../../pages/Admin';
 import { indexesApi } from '../../../services/api';
 import { useWalletConnectorContext } from '../../../services/walletConnect';
 import { useMst } from '../../../store/store';
@@ -47,31 +46,26 @@ const CreateIndexForm: React.FC = () => {
           ],
           tokenAddresses,
           tokenWeights,
+          new BigNumber(values.price).multipliedBy(new BigNumber(10).pow(18)).toString(10),
         )
-        .then((data: TransactionReceipt) => {
+        .on('transactionHash', (hash: string) => {
           if (values.description) {
             indexesApi
-              .addParamsToIndex(data.transactionHash, values.description, values.price)
-              .then(() => {
-                resetForm({});
-                modals.info.setMsg('Success', 'Index created with description', 'success');
-              })
+              .addParamsToIndex(hash, values.description /* , values.price */)
               .catch((error) => {
                 const { response } = error;
-                modals.info.setMsg(
-                  'Index created',
-                  `Description not added, error:\n${response.data}`,
-                  'info',
-                );
+                console.log('description not added', response);
               })
               .finally(() => {
+                resetForm({});
                 setFieldValue('isLoading', false);
               });
           } else {
             resetForm({});
-            modals.info.setMsg('Success', 'Index created', 'success');
           }
-
+        })
+        .then(() => {
+          modals.info.setMsg('Success', 'Index created', 'success');
           modals.createIndex.close();
         })
         .catch((error: ProviderRpcError) => {

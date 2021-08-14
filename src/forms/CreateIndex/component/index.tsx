@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import BigNumber from 'bignumber.js/bignumber';
 import { FieldArray, FieldArrayRenderProps, Form, FormikProps } from 'formik';
 import { observer } from 'mobx-react-lite';
@@ -29,6 +29,7 @@ const CreateIndex: React.FC<FormikProps<ICreateIndex> & ICreateIndex> = observer
     const [validation, setValidation] = useState<any>({
       name: true,
       symbol: true,
+      price: true,
     });
     const onBlurHandler = (value: string) => {
       switch (value) {
@@ -45,6 +46,14 @@ const CreateIndex: React.FC<FormikProps<ICreateIndex> & ICreateIndex> = observer
             setValidation((prevState: any) => ({
               ...prevState,
               symbol: false,
+            }));
+          }
+          break;
+        case 'price':
+          if (!values.price) {
+            setValidation((prevState: any) => ({
+              ...prevState,
+              price: false,
             }));
           }
           break;
@@ -65,6 +74,12 @@ const CreateIndex: React.FC<FormikProps<ICreateIndex> & ICreateIndex> = observer
           setValidation((prevState: any) => ({
             ...prevState,
             symbol: true,
+          }));
+          break;
+        case 'price':
+          setValidation((prevState: any) => ({
+            ...prevState,
+            price: true,
           }));
           break;
         default:
@@ -180,6 +195,9 @@ const CreateIndex: React.FC<FormikProps<ICreateIndex> & ICreateIndex> = observer
       console.log('Selected Time: ', value);
       console.log('Formatted Selected Time: ', dateString);
     }; */
+    useEffect(() => {
+      console.log(values);
+    }, [values]);
     return (
       <Form name="form-create-index" className="form-create-index">
         <div className="form-create-index__inputs">
@@ -230,21 +248,19 @@ const CreateIndex: React.FC<FormikProps<ICreateIndex> & ICreateIndex> = observer
           showCount
         />
         <div className="form-create-index__input">
-          <p className="form-create-index__input-label">
-            Wished price for one token at the end of the IME
-          </p>
+          <p className="form-create-index__input-label">Initial index price</p>
           <Input
             type="number"
             value={values.price}
+            name="price"
             placeholder="1"
-            onChange={(e) => setFieldValue('price', +e.target.value >= 0 ? e.target.value : "")}
-            onBlur={handleBlur}
+            // onChange={(e) => setFieldValue('price', +e.target.value >= 0 ? e.target.value : '')}
             prefix="$"
             className="form-create-index__input-price"
+            onChange={(e) => onChangeHandler(e, 'price')}
+            onBlur={() => onBlurHandler('price')}
+            error={!validation.price}
           />
-          <p className="form-create-index__input-info">
-            If the field is empty, the automatic price will be equal to $1
-          </p>
         </div>
         <FieldArray
           name="tokens"
@@ -331,7 +347,8 @@ const CreateIndex: React.FC<FormikProps<ICreateIndex> & ICreateIndex> = observer
               values.symbol === '' ||
               values.dateRange === null ||
               values.dateRange[0] === '' ||
-              values.dateRange[1] === ''
+              values.dateRange[1] === '' ||
+              values.price === ''
             }
             loading={values.isLoading}
           >

@@ -3,6 +3,7 @@ import nextId from 'react-id-generator';
 import { observer } from 'mobx-react-lite';
 
 import { indexesApi } from '../../../services/api';
+import { useMst } from '../../../store/store';
 import { Spinner } from '../../index';
 import { InitialMintEventItem } from '../index';
 
@@ -28,6 +29,7 @@ export interface IImeToken {
   user_quantity?: number;
 }
 const InitialMintEvent: React.FC = observer(() => {
+  const { networks } = useMst();
   const [imeList, setImeList] = useState<IIme[]>([] as IIme[]);
   const [loading, setLoading] = useState<boolean>(false);
   const getImeList = useCallback(() => {
@@ -44,8 +46,10 @@ const InitialMintEvent: React.FC = observer(() => {
       .finally(() => setLoading(false));
   }, []);
   useEffect(() => {
-    getImeList();
-  }, [getImeList]);
+    if (networks.currentNetwork) {
+      getImeList();
+    }
+  }, [networks.currentNetwork, getImeList]);
   return (
     <section className="section">
       <h2 className="section__title text-outline">INITIAL minting Event</h2>

@@ -58,6 +58,8 @@
 }
 
 .select-network__dropdown {
+  text-transform: none;
+
   border-radius: 10px;
 
   .ant-select-item-option-content {
@@ -75,10 +77,11 @@
     margin-right: 5px;
 
     width: 26px;
-    &__name{
-      font-family: TTNorms,sans-serif;
-      font-weight: normal;
+
+    &__name {
+      font-family: TTNorms, sans-serif;
       font-size: 18px;
+      font-weight: normal;
       line-height: 21px;
     }
   }
@@ -92,7 +95,7 @@
       display: flex;
     }
   }
-}/*
+} /*
 .select-network{
   &__container{
     position: relative;
@@ -103,4 +106,4 @@
       top:32px !important;
     }
   }
-}*/
+} */

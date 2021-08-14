@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Description, Questions, Teams, Title } from '../../components/AboutUs';
+import { Advisors, Description, Questions, Teams, Title } from '../../components/AboutUs';
 
 const AboutUs: React.FC = () => {
   return (
@@ -8,6 +8,7 @@ const AboutUs: React.FC = () => {
       <Title />
       <Description />
       <Teams />
+      <Advisors />
       <Questions />
     </main>
   );

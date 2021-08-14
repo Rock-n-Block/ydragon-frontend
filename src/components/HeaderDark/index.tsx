@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
 import { Link } from 'react-router-dom';
+import { NavHashLink } from 'react-router-hash-link';
 import { observer } from 'mobx-react-lite';
 
 import crossBlack from '../../assets/img/icons/icon-cross-black.svg';
@@ -9,9 +10,12 @@ import iconMenuBlack from '../../assets/img/icons/icon-menu-black.svg';
 import iconMenu from '../../assets/img/icons/icon-menu.svg';
 import logo from '../../assets/img/icons/logo.svg';
 // import dis from '../../assets/img/socials/discord.svg';
-// import md from '../../assets/img/socials/medium.svg';
+import md from '../../assets/img/socials/medium.svg';
 import tg from '../../assets/img/socials/telegram.svg';
 import tw from '../../assets/img/socials/twitter.svg';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import Whitepaper from '../../assets/pdf/YD WP.pdf';
 import { useWalletConnectorContext } from '../../services/walletConnect';
 import { DARK, LIGHT, useMst } from '../../store/store';
 import EventBanner from '../EventBanner';
@@ -269,9 +273,9 @@ const Header: React.FC<HeaderProps> = observer(({ collapsed, onCollapsedChange }
               <div className="footer__links-title">Product</div>
 
               <div className="footer__links">
-                <span className="isDisabled">
-                  <a href="/">Whitepaper</a>
-                </span>
+                <a href={Whitepaper} target="_blank" rel="noopener noreferrer">
+                  Whitepaper
+                </a>
                 <span className="isDisabled">
                   <a href="/">Privacy Policy</a>
                 </span>
@@ -292,9 +296,9 @@ const Header: React.FC<HeaderProps> = observer(({ collapsed, onCollapsedChange }
                 <span className="isDisabled">
                   <a href="/">Tutorial</a>
                 </span>
-                <span className="isDisabled">
-                  <a href="/">FAQ</a>
-                </span>
+                <NavHashLink to="/about-us#FAQ" smooth className="text-gray text-bold">
+                  FAQ
+                </NavHashLink>
               </div>
             </div>
 
@@ -316,9 +320,19 @@ const Header: React.FC<HeaderProps> = observer(({ collapsed, onCollapsedChange }
                   href="https://t.me/ydrmain/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="footer__socials-item"
+                  className="footer__socials-item footer__socials-tg"
                 >
                   <img src={tg} alt="logo" width="24" height="20" />
+                  <span>Channel</span>
+                </a>
+                <a
+                  href="https://t.me/ydragonchat"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="footer__socials-item footer__socials-tg"
+                >
+                  <img src={tg} alt="logo" width="24" height="20" />
+                  <span>Chat</span>
                 </a>
 
                 <a
@@ -330,11 +344,16 @@ const Header: React.FC<HeaderProps> = observer(({ collapsed, onCollapsedChange }
                   <img src={tw} alt="logo" width="24" height="20" />
                 </a>
 
-                {/* <a href="/" className="footer__socials-item">
+                <a
+                  href="https://medium.com/ydragon-io"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="footer__socials-item"
+                >
                   <img src={md} alt="logo" width="24" height="20" />
                 </a>
 
-                <a href="/" className="footer__socials-item">
+                {/* <a href="/" className="footer__socials-item">
                   <img src={dis} alt="logo" width="24" height="20" />
                 </a> */}
               </div>

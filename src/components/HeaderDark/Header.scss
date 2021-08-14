@@ -115,7 +115,7 @@
 
   overflow: hidden;
 
-  height: 120px;
+  height: 119px;
   @media (max-width: 1170px) {
     width: 100%;
 
@@ -273,12 +273,20 @@
 
     &__socials {
       position: fixed;
-      left: calc(50% - 111px / 2);
+      left: calc(50% - 332px/2);
       bottom: 30px;
 
       &-item {
         width: 48px;
         height: 48px;
+      }
+
+      &-tg {
+        width: fit-content;
+
+        img {
+          margin-right: 5px;
+        }
       }
     }
   }
@@ -354,10 +362,11 @@
     gap: 30px;
 
     @include b('mobile') {
-      flex-direction: column-reverse;
       position: absolute;
       top: 40px;
       right: 0;
+
+      flex-direction: column-reverse;
     }
   }
 }
@@ -379,7 +388,8 @@
     width: 150px;
   }
 
-  &__link, .logout{
+  &__link,
+  .logout {
     height: 42px;
   }
 }

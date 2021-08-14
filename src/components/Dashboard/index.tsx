@@ -1,17 +1,19 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import nextId from 'react-id-generator';
-import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import BigNumber from 'bignumber.js/bignumber';
+import { observer } from 'mobx-react-lite';
 
 import logo from '../../assets/img/icons/logo.svg';
 import { IIndex } from '../../pages/Admin';
 import { indexesApi } from '../../services/api';
+import { useMst } from '../../store/store';
+import { Sorter } from '../../utils/sorter';
 import { Spinner } from '../index';
 
 import IndexSmallCard from './SmallCard/index';
 
 import './Dashboard.scss';
-import { Sorter } from '../../utils/sorter';
 
 export interface IUserIndex extends IIndex {
   name: string;
@@ -24,6 +26,8 @@ export interface IUserIndex extends IIndex {
 }
 
 const Dashboard: React.FC = () => {
+  const { networks } = useMst();
+  const history = useHistory();
   const [indexes, setIndexes] = useState<Array<IUserIndex>>();
   const [loading, setLoading] = useState<boolean>(false);
   const [sorterValue, setSorterValue] = useState<string>('');
@@ -65,26 +69,27 @@ const Dashboard: React.FC = () => {
     setSorterValue(item);
   };
 
+  const handleRowClick = (indexId: number) => {
+    history.push(`/index/${indexId}`);
+  };
+
   useEffect(() => {
-    getIndexes();
-  }, [getIndexes]);
+    if (networks.currentNetwork) {
+      getIndexes();
+    }
+  }, [getIndexes, networks.currentNetwork]);
 
   return (
     <section className="section section--admin">
       <h2 className="section__title text-outline">Indexes</h2>
       <div className="index-dashboard__big">
         <div className="index-dashboard">
-          {
-          indexes?.
-          filter((index) => index.price > 0).
-          length ? (
+          {indexes?.length ? (
             <div className="index-dashboard__row index-dashboard__row--head">
               <div className="index-dashboard__col">
                 <div
                   className={`index-dashboard__sort ${
-                    sorterValue === 'name'
-                      ? `index-dashboard__sort${ascendent ? '--up' : ''}`
-                      : ''
+                    sorterValue === 'name' ? `index-dashboard__sort${ascendent ? '--up' : ''}` : ''
                   }`}
                   onClick={() => sorter('name')}
                   role="button"
@@ -112,9 +117,7 @@ const Dashboard: React.FC = () => {
               <div className="index-dashboard__col">
                 <div
                   className={`index-dashboard__sort ${
-                    sorterValue === 'price'
-                      ? `index-dashboard__sort${ascendent ? '--up' : ''}`
-                      : ''
+                    sorterValue === 'price' ? `index-dashboard__sort${ascendent ? '--up' : ''}` : ''
                   }`}
                   onClick={() => sorter('price')}
                   role="button"
@@ -127,9 +130,7 @@ const Dashboard: React.FC = () => {
               <div className="index-dashboard__col">
                 <div
                   className={`index-dashboard__sort ${
-                    sorterValue === 'day'
-                      ? `index-dashboard__sort${ascendent ? '--up' : ''}`
-                      : ''
+                    sorterValue === 'day' ? `index-dashboard__sort${ascendent ? '--up' : ''}` : ''
                   }`}
                   onClick={() => sorter('day')}
                   role="button"
@@ -142,9 +143,7 @@ const Dashboard: React.FC = () => {
               <div className="index-dashboard__col">
                 <div
                   className={`index-dashboard__sort ${
-                    sorterValue === 'week'
-                      ? `index-dashboard__sort${ascendent ? '--up' : ''}`
-                      : ''
+                    sorterValue === 'week' ? `index-dashboard__sort${ascendent ? '--up' : ''}` : ''
                   }`}
                   onClick={() => sorter('week')}
                   role="button"
@@ -157,9 +156,7 @@ const Dashboard: React.FC = () => {
               <div className="index-dashboard__col">
                 <div
                   className={`index-dashboard__sort ${
-                    sorterValue === 'month'
-                      ? `index-dashboard__sort${ascendent ? '--up' : ''}`
-                      : ''
+                    sorterValue === 'month' ? `index-dashboard__sort${ascendent ? '--up' : ''}` : ''
                   }`}
                   onClick={() => sorter('month')}
                   role="button"
@@ -172,9 +169,7 @@ const Dashboard: React.FC = () => {
               <div className="index-dashboard__col">
                 <div
                   className={`index-dashboard__sort ${
-                    sorterValue === 'total'
-                      ? `index-dashboard__sort${ascendent ? '--up' : ''}`
-                      : ''
+                    sorterValue === 'total' ? `index-dashboard__sort${ascendent ? '--up' : ''}` : ''
                   }`}
                   onClick={() => sorter('total')}
                   role="button"
@@ -192,113 +187,119 @@ const Dashboard: React.FC = () => {
           <Spinner loading={loading} />
           {indexes?.length ? (
             <div className="index-dashboard__content">
-              {indexes
-                .filter((index) => index.price > 0)
-                .map((index: IUserIndex) => (
-                  <div className="index-dashboard__item" key={nextId()}>
-                    <div className="index-dashboard__row">
-                      <Link to={`/index/${index.id}`} className="index-dashboard__col">
-                        <div className="index-dashboard__info">
-                          <img
-                            src={logo}
-                            alt="ydr-logo"
-                            width="31"
-                            height="28"
-                            className="index-dashboard__icon"
-                          />
+              {indexes.map((index: IUserIndex) => (
+                <div
+                  role="button"
+                  onClick={() => handleRowClick(index.id)}
+                  onKeyDown={() => handleRowClick(index.id)}
+                  className="index-dashboard__item"
+                  key={nextId()}
+                  tabIndex={0}
+                >
+                  {/* to={`/index/${index.id}`} */}
+                  <div className="index-dashboard__row">
+                    <div className="index-dashboard__col">
+                      <div className="index-dashboard__info">
+                        <img
+                          src={logo}
+                          alt="ydr-logo"
+                          width="31"
+                          height="28"
+                          className="index-dashboard__icon"
+                        />
 
-                          <div className="index-dashboard__name">{index.name}</div>
-                        </div>
-                      </Link>
-                      <div className="index-dashboard__col">
-                        <div className="index-dashboard__market-cup">${index.market_cap}</div>
+                        <div className="index-dashboard__name">{index.name}</div>
                       </div>
-                      <div className="index-dashboard__col">
-                        <div className="index-dashboard__price">${index.price}</div>
+                    </div>
+                    <div className="index-dashboard__col">
+                      <div className="index-dashboard__market-cup">${index.market_cap}</div>
+                    </div>
+                    <div className="index-dashboard__col">
+                      <div className="index-dashboard__price">${index.price}</div>
+                    </div>
+                    <div className="index-dashboard__col">
+                      <div
+                        className={`index-dashboard__percent ${
+                          index.day > 0
+                            ? 'index-dashboard__percent--up'
+                            : 'index-dashboard__percent--down'
+                        }`}
+                      >
+                        {new BigNumber(index.day).multipliedBy(100).toFixed(2)}%
                       </div>
-                      <div className="index-dashboard__col">
-                        <div
-                          className={`index-dashboard__percent ${
-                            index.day > 0
-                              ? 'index-dashboard__percent--up'
-                              : 'index-dashboard__percent--down'
-                          }`}
-                        >
-                          {new BigNumber(index.day).multipliedBy(100).toFixed(2)}%
-                        </div>
+                    </div>
+                    <div className="index-dashboard__col">
+                      <div
+                        className={`index-dashboard__percent ${
+                          index.week > 0
+                            ? 'index-dashboard__percent--up'
+                            : 'index-dashboard__percent--down'
+                        }`}
+                      >
+                        {new BigNumber(index.week).multipliedBy(100).toFixed(2)}%
                       </div>
-                      <div className="index-dashboard__col">
-                        <div
-                          className={`index-dashboard__percent ${
-                            index.week > 0
-                              ? 'index-dashboard__percent--up'
-                              : 'index-dashboard__percent--down'
-                          }`}
-                        >
-                          {new BigNumber(index.week).multipliedBy(100).toFixed(2)}%
-                        </div>
+                    </div>
+                    <div className="index-dashboard__col">
+                      <div
+                        className={`index-dashboard__percent ${
+                          index.month > 0
+                            ? 'index-dashboard__percent--up'
+                            : 'index-dashboard__percent--down'
+                        }`}
+                      >
+                        {new BigNumber(index.month).multipliedBy(100).toFixed(2)}%
                       </div>
-                      <div className="index-dashboard__col">
-                        <div
-                          className={`index-dashboard__percent ${
-                            index.month > 0
-                              ? 'index-dashboard__percent--up'
-                              : 'index-dashboard__percent--down'
-                          }`}
-                        >
-                          {new BigNumber(index.month).multipliedBy(100).toFixed(2)}%
-                        </div>
+                    </div>
+                    <div className="index-dashboard__col">
+                      <div
+                        className={`index-dashboard__percent ${
+                          index.total > 0
+                            ? 'index-dashboard__percent--up'
+                            : 'index-dashboard__percent--down'
+                        }`}
+                      >
+                        {new BigNumber(index.total).multipliedBy(100).toFixed(2)}%
                       </div>
-                      <div className="index-dashboard__col">
-                        <div
-                          className={`index-dashboard__percent ${
-                            index.total > 0
-                              ? 'index-dashboard__percent--up'
-                              : 'index-dashboard__percent--down'
-                          }`}
-                        >
-                          {new BigNumber(index.total).multipliedBy(100).toFixed(2)}%
-                        </div>
-                      </div>
+                    </div>
 
-                      <div className="index-dashboard__tokens">
-                        {index.tokens &&
-                          index.tokens.slice(0, 3).map((token, i) => (
-                            <div key={nextId()} className="index-dashboard__token">
-                              <span
-                                className={`index-dashboard__token-color ${colorsClassNames[i]}`}
-                              />
-                              <span className="index-dashboard__token-name">{token.symbol}</span>
-                            </div>
-                          ))}
-
-                        {index.tokens.length > 3 && (
-                          <div className="index-dashboard__token">
-                            <span className="index-dashboard__token-color" />
-                            <span className="index-dashboard__token-name">Others</span>
+                    <div className="index-dashboard__tokens">
+                      {index.tokens &&
+                        index.tokens.slice(0, 3).map((token, i) => (
+                          <div key={nextId()} className="index-dashboard__token">
+                            <span
+                              className={`index-dashboard__token-color ${colorsClassNames[i]}`}
+                            />
+                            <span className="index-dashboard__token-name">{token.symbol}</span>
                           </div>
-                        )}
-                      </div>
-                      <div className="index-dashboard__composition">
-                        {index.tokens &&
-                          index.tokens.slice(0, 3).map((token, i) => (
-                            <React.Fragment key={nextId()}>
-                              {+token.current_weight > 0 && (
-                                <div
-                                  className={`index-dashboard__token-percent ${colorsClassNames[i]}`}
-                                  style={{
-                                    width: `${new BigNumber(token.current_weight)
-                                      .multipliedBy(100)
-                                      .toString()}%`,
-                                  }}
-                                >
-                                  {new BigNumber(token.current_weight).multipliedBy(100).toString()}
-                                  %
-                                </div>
-                              )}
-                            </React.Fragment>
-                          ))}
-                        {index.tokens.length > 3 && (
+                        ))}
+
+                      {index.tokens.length > 3 && (
+                        <div className="index-dashboard__token">
+                          <span className="index-dashboard__token-color" />
+                          <span className="index-dashboard__token-name">Others</span>
+                        </div>
+                      )}
+                    </div>
+                    <div className="index-dashboard__composition">
+                      {index.tokens &&
+                        index.tokens.slice(0, 3).map((token, i) => (
+                          <React.Fragment key={nextId()}>
+                            {token.current_weight > 0 && (
+                              <div
+                                className={`index-dashboard__token-percent ${colorsClassNames[i]}`}
+                                style={{
+                                  width: `${new BigNumber(token.current_weight)
+                                    .multipliedBy(100)
+                                    .toString()}%`,
+                                }}
+                              >
+                                {new BigNumber(token.current_weight).multipliedBy(100).toString()}%
+                              </div>
+                            )}
+                          </React.Fragment>
+                        ))}
+                      {index.tokens.length > 3 &&
+                        calculateOthersWeight(index).multipliedBy(100).toString() !== '0' && (
                           <div
                             className="index-dashboard__token-percent"
                             style={{
@@ -310,10 +311,10 @@ const Dashboard: React.FC = () => {
                             {calculateOthersWeight(index).multipliedBy(100).toString()}%
                           </div>
                         )}
-                      </div>
                     </div>
                   </div>
-                ))}
+                </div>
+              ))}
             </div>
           ) : (
             !loading && (
@@ -331,4 +332,4 @@ const Dashboard: React.FC = () => {
   );
 };
 
-export default Dashboard;
+export default observer(Dashboard);

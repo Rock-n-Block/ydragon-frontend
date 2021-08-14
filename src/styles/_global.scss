@@ -6,7 +6,8 @@ body {
   font-family: 'Rubik', sans-serif;
   font-weight: normal;
 
-  span, div {
+  span,
+  div {
     font-feature-settings: 'liga' off;
   }
 
@@ -21,6 +22,15 @@ body {
 
 img {
   vertical-align: top;
+}
+
+a {
+  transition: color 0s;
+  transition: background-color 0.3s;
+
+  &:hover {
+    color: unset;
+  }
 }
 
 h1,

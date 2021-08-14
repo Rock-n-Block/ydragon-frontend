@@ -4,9 +4,11 @@
 .dark {
   .index-card-mobile {
     @include shadow-dark-block;
-    border-radius: 0;
     border-bottom: 1px solid rgba($white, 0.2);
-
+    border-radius: 0;
+    &:hover{
+      background:$table-selected;
+    }
     &__title {
       color: rgba($white, 0.5);
     }
@@ -20,21 +22,28 @@
 .light {
   .index-card-mobile {
     @include light-block;
-    border-radius: 0;
     border-bottom: 1px solid rgba($black, 0.2);
+    border-radius: 0;
 
     &__title {
       color: rgba($black, 0.5);
     }
+    &:hover{
+      color: $white;
+      background:$table-selected;
 
-    &__value {
-      color: $black;
+      & .index-card-mobile__title {
+        color: rgba($white, 0.5);
+      }
     }
   }
 }
 
 .index-card-mobile {
   padding: 20px 12px;
+
+  transition: background 0.3s;
+  cursor: pointer;
 
   font-family: 'Monument Extended', sans-serif;
   font-weight: normal;

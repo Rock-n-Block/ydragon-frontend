@@ -1,48 +1,81 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { observer } from 'mobx-react';
-
-import magnusBlack from '../../../assets/img/icons/partners/magnus-black.png';
-// import aave from '../../../assets/img/icons/partners/aave.svg';
-// import balancer from '../../../assets/img/icons/partners/balancer.svg';
-// import cube from '../../../assets/img/icons/partners/cube.svg';
-// import cubesWhite from '../../../assets/img/icons/partners/cubes-white.svg';
-// import cubesBlack from '../../../assets/img/icons/partners/cubes-black.svg';
-import magnusWhite from '../../../assets/img/icons/partners/magnus-white.png';
-import marshlandBlack from '../../../assets/img/icons/partners/marshland-black.svg';
-// import maker from '../../../assets/img/icons/partners/maker.svg';
-import marshlandWhite from '../../../assets/img/icons/partners/marshland-white.svg';
-// import mmmmWhite from '../../../assets/img/icons/partners/mmmm-white.svg';
-// import mmmmBlack from '../../../assets/img/icons/partners/mmmm-black.svg';
-// import nexusWhite from '../../../assets/img/icons/partners/nexus-white.svg';
-// import nexusBlack from '../../../assets/img/icons/partners/nexus-black.svg';
-import polygon from '../../../assets/img/icons/partners/polygon.svg';
-import squareBlack from '../../../assets/img/icons/partners/square-black.svg';
-import squareWhite from '../../../assets/img/icons/partners/square-white.svg';
-// import nextId from 'react-id-generator';
-// import { Swiper, SwiperSlide } from 'swiper/react';
-// import slide1 from '../../../assets/img/partners/logo-1.png';
-// import slide2 from '../../../assets/img/partners/logo-2.png';
-// import slide3 from '../../../assets/img/partners/logo-3.png';
-// import slide4 from '../../../assets/img/partners/logo-4.png';
-// import slide5 from '../../../assets/img/partners/logo-5.png';
-// import slide6 from '../../../assets/img/partners/logo-6.png';
-// import slide7 from '../../../assets/img/partners/logo-7.png';
-// import slide8 from '../../../assets/img/partners/logo-8.png';
-// import slide9 from '../../../assets/img/partners/logo-9.png';
-// import slide10 from '../../../assets/img/partners/logo-10.png';
+import moonwolfL from '../../../assets/img/icons/partners/moonwolf-light.png';
+import moonwolfD from '../../../assets/img/icons/partners/moonwolf-dark.png';
+import marshlandL from '../../../assets/img/icons/partners/marshland-light.png';
+import marshlandD from '../../../assets/img/icons/partners/marshland-dark.png';
+import lossLessL from '../../../assets/img/icons/partners/lossless-light.svg';
+import lossLessD from '../../../assets/img/icons/partners/lossless-dark.svg';
+import magnusL from '../../../assets/img/icons/partners/magnus-light.png';
+import magnusD from '../../../assets/img/icons/partners/magnus-dark.png';
+import polygonL from '../../../assets/img/icons/partners/polygon-light.svg';
+import polygonD from '../../../assets/img/icons/partners/polygon-dark.svg';
+import bscPad from '../../../assets/img/icons/partners/bsc-pad.svg';
+import hyperconnectL from '../../../assets/img/icons/partners/hyperconnect-light.svg';
+import hyperconnectD from '../../../assets/img/icons/partners/hyperconnect-dark.svg';
+import qiDaoL from '../../../assets/img/icons/partners/qi-dao-light.png';
+import qiDaoD from '../../../assets/img/icons/partners/qi-dao-dark.png';
+// import unimexL from '../../../assets/img/icons/partners/unimex-light.svg';
+// import unimexD from '../../../assets/img/icons/partners/unimex-dark.svg';
+import trustSwapL from '../../../assets/img/icons/partners/trust-swap-light.svg';
+import trustSwapD from '../../../assets/img/icons/partners/trust-swap-dark.svg';
 import { useMst } from '../../../store/store';
 
-// import ssss from '../../../assets/img/icons/partners/ssss.svg';
-// import synth from '../../../assets/img/icons/partners/synth.svg';
-// import walls from '../../../assets/img/icons/partners/walls.svg';
-// import avaLabsWhite from '../../../assets/img/icons/partners/ava-labs-white.png';
-// import avaLabsBlack from '../../../assets/img/icons/partners/ava-labs-black.png';
-// import 'swiper/swiper.scss';
 import './Protocols.scss';
+import nextId from 'react-id-generator';
 
 const Protocols: React.FC = observer(() => {
   const { theme } = useMst();
+  const partners = useCallback(() => {
+    const isLight = theme.value !== 'dark';
+    return [
+      <a href="https://moonwolf.io/" target="_blank" className="protocols__link" rel="noreferrer">
+        <img src={isLight ? moonwolfL : moonwolfD} alt="moonwolf" width="275" height="72" />
+      </a>,
+      <a href="https://www.marshlandcapital.com/" target="_blank" className="protocols__link" rel="noreferrer">
+        <img src={isLight ? marshlandL : marshlandD} alt="marshland" width="92" height="78" />
+      </a>,
+      <a href="https://lossless.cash/" target="_blank" className="protocols__link" rel="noreferrer">
+        <img src={isLight ? lossLessL : lossLessD} alt="lossLess" width="291" height="64" />
+      </a>,
+      <a href="https://magnusdigitalassets.com/" target="_blank" className="protocols__link" rel="noreferrer">
+        <img src={isLight ? magnusL : magnusD} alt="magnus capital" width="154" height="78" />
+      </a>,
+      <a href="https://polygon.technology/" target="_blank" className="protocols__link" rel="noreferrer">
+        <img src={isLight ? polygonL : polygonD} alt="polygon" width="280" height="62" />
+      </a>,
+      <a href="https://bscpad.com/" target="_blank" className="protocols__link" rel="noreferrer">
+        <img src={bscPad} alt="bscPad" width="152" height="64" />
+      </a>,
+      <a href="https://www.iconhyperconnect.com/" target="_blank" className="protocols__link" rel="noreferrer">
+        <img
+          src={isLight ? hyperconnectL : hyperconnectD}
+          alt="icon hyperconnect p-rep"
+          width="290"
+          height="64"
+        />
+      </a>,
+      <a href="https://www.mai.finance/" target="_blank" className="protocols__link" rel="noreferrer">
+        <img src={isLight ? qiDaoL : qiDaoD} alt="Qi Dao" width="160" height="72" />
+      </a>,
+      <a href="https://www.trustswap.org/" target="_blank" className="protocols__link" rel="noreferrer">
+        <img src={isLight ? trustSwapL : trustSwapD} alt="trustSwap" width="312" height="52" />
+      </a>,
+
+      // <img src={isLight ? unimexL : unimexD} alt="unimex" width="240" height="64" />,
+    ];
+  }, [theme.value]);
   // const partners = [
+
+    
+          
+            
+    
+
+          
+    
+    
+  
   //   slide1,
   //   slide2,
   //   slide3,
@@ -54,37 +87,32 @@ const Protocols: React.FC = observer(() => {
   //   slide9,
   //   slide10,
   // ];
-
   return (
     <section className="section">
       <h3 className="section__title text-outline">Our partners</h3>
       <div className="protocols">
         <div className="protocols__row">
-          {/*  <img src={maker} alt="" />
-        <img src={aave} alt="" />
-        <img src={ssss} alt="" />
-        <img src={synth} alt="" />
-        <img src={walls} alt="" />
-        <img src={cube} alt="" />
-        <img src={theme.value === 'dark' ? cubesWhite : cubesBlack} alt="" />
-        <img src={theme.value === 'dark' ? nexusWhite : nexusBlack} alt="" />
-        <img src={balancer} alt="" />
-        <img src={theme.value === 'dark' ? mmmmWhite : mmmmBlack} alt="" /> */}
-          <img src={theme.value === 'dark' ? marshlandWhite : marshlandBlack} alt="marshland" width="92" height="78"/>
-          <img src={polygon} alt="" width="98" height="78"/>
-          <img src={theme.value === 'dark' ? squareWhite : squareBlack} alt="square" width="95" height="80"/>
-          <img src={theme.value === 'dark' ? magnusWhite : magnusBlack} alt="magnus" width="154" height="78"/>
-          {/* <Swiper spaceBetween={60} slidesPerView={8} loop>
-            {partners.map((partner) => (
-              <SwiperSlide>
-                <img src={partner} key={nextId()} alt="" />
-              </SwiperSlide>
-            ))}
-          </Swiper> */}
+          {partners().map((partner) => (
+            <div key={nextId()} className="protocols__item">
+              {partner}
+            </div>
+          ))}
+          {/* <img
+            src={theme.value === 'dark' ? marshlandWhite : marshlandBlack}
+            alt="marshland"
+            width="92"
+            height="78"
+          />
+          <img src={polygon} alt="" width="98" height="78" />
+          <img
+            src={theme.value === 'dark' ? magnusWhite : magnusBlack}
+            alt="magnus"
+            width="154"
+            height="78"
+          />
+          <img src={moonwolf} alt="moonwolf" width="91" height="112" /> */}
         </div>
-
         {/*  <h3 className="protocols__title">Advisors</h3>
-
         <img
           className="ava-labs-icon"
           src={theme.value === 'dark' ? avaLabsWhite : avaLabsBlack}
@@ -94,5 +122,4 @@ const Protocols: React.FC = observer(() => {
     </section>
   );
 });
-
 export default Protocols;

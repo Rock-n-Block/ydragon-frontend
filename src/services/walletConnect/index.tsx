@@ -18,7 +18,7 @@ class Connector extends React.Component<any, any> {
     super(props);
 
     this.state = {
-      provider: new MetamaskService({}),
+      provider: new MetamaskService(),
     };
 
     this.connect = this.connect.bind(this);
@@ -35,8 +35,10 @@ class Connector extends React.Component<any, any> {
         next(err: string) {
           if (err) {
             self.disconnect();
+            rootStore.modals.metamask.setErr(err);
+          } else {
+            window.location.reload();
           }
-          rootStore.modals.metamask.setErr(err);
         },
       });
 

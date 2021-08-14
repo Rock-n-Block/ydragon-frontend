@@ -98,6 +98,8 @@
     display: flex;
     align-items: center;
 
+    text-transform: uppercase;
+
     user-select: none;
 
     transform: translate(0, -50%);
@@ -149,6 +151,8 @@
     width: 100%;
     height: 100%;
 
+    text-transform: uppercase;
+
     border-radius: 60px;
 
     .ant-select-selector {
@@ -176,6 +180,10 @@
   .ant-input[disabled] {
     color: unset;
   }
+}
+
+.ant-select-dropdown {
+  text-transform: uppercase;
 }
 
 .ant-select-item-option-content {
@@ -238,7 +246,8 @@ input[type='number'] {
 .form-rebalance {
   .form-create-index__input {
     &-name,
-    &-symbol {
+    &-symbol,
+    &-price {
       &--error {
         background: $red;
       }

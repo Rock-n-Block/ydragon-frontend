@@ -1,18 +1,19 @@
 import axios from '../../core/axios';
+import { rootStore } from '../../store/store';
 
 export default {
-  getUserIndexes: () => axios.get('indexes/user'),
-  getAdminIndexes: () => axios.get('indexes/admin'),
-  getImeIndexes: () => axios.get('indexes/ime'),
+  getUserIndexes: () => axios.get(`indexes/user?network=${rootStore.networks.currentNetwork}`),
+  getAdminIndexes: () => axios.get(`indexes/admin?network=${rootStore.networks.currentNetwork}`),
+  getImeIndexes: () => axios.get(`indexes/ime?network=${rootStore.networks.currentNetwork}`),
   getImeById: (id: number, address?: string) =>
     axios.get(`indexes/ime/${id}${address ? `?address=${address}` : '/'}`),
   getIndexById: (id: number) => axios.get(`indexes/${id}`),
+  getIndexWhiteList: (id: number) => axios.get(`indexes/${id}/whitelist`),
   getIndexesRebalance: (indexId: number) => axios.get(`indexes/${indexId}/rebalance/`),
-  addParamsToIndex: (tx_hash: string, description: string, price?: string) =>
-    axios.post('indexes/index_params', {
+  addParamsToIndex: (tx_hash: string, description: string) =>
+    axios.post(`indexes/index_params/`, {
       tx_hash,
       description,
-      price,
     }),
   patchIndexesApr: (indexId: number, token_info: any) =>
     axios.patch(`indexes/apr/${indexId}`, {

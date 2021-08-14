@@ -36,11 +36,11 @@
 
     transform: translateX(100%);
 
-    @include b('mobile'){
-      background: transparent;
+    @include b('mobile') {
       top: 10px;
       right: 55px;
-        
+
+      background: transparent;
     }
 
     &-x {

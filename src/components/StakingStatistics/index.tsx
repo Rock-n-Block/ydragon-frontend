@@ -13,6 +13,7 @@ import { Button, Table } from '../index';
 import SmallTableCard from '../SmallTableCard/index';
 
 import './StakingStatistics.scss';
+import { HarvestModal } from '../Modals';
 
 interface IStakingStat {
   months: number;
@@ -28,7 +29,8 @@ interface IStakingStat {
 const StakingStatistics: React.FC = observer(() => {
   const walletConnector = useWalletConnectorContext();
   const [dataSource, setDataSource] = useState<any[]>([]);
-  const { modals } = useMst();
+  const [isUnstake, setIsUnstake] = useState<boolean>(false);
+  const { modals, user, networks } = useMst();
   const columns: any[] = [
     {
       title: 'Token',
@@ -87,38 +89,51 @@ const StakingStatistics: React.FC = observer(() => {
 
   const getStakingStatistic = useCallback(() => {
     indexesApi
-      .getStakingStatistic(sessionStorage.getItem('yd_address') ?? '')
+      .getStakingStatistic(user.address ?? '')
       .then(({ data }) => {
-        const newData = data['binance-smart-chain'].map((stake: IStakingStat, index: number) => {
-          return {
-            key: index,
-            id: stake.stake_id,
-            token: stake.name,
-            month: stake.months,
-            endDate: moment(stake.end_date).format('DD.MM.YY'),
-            staked: new BigNumber(stake.staked).dividedBy(new BigNumber(10).pow(18)).toFixed(5),
-            availableRewards: new BigNumber(stake.available_rewards)
-              .dividedBy(new BigNumber(10).pow(18))
-              .toFixed(5),
-            withdrawnRewards: new BigNumber(stake.withdrawn_rewards)
-              .dividedBy(new BigNumber(10).pow(18))
-              .toFixed(5),
-            estimatedRewards: stake.estimated_rewards
-              ? new BigNumber(stake.estimated_rewards)
-                  .dividedBy(new BigNumber(10).pow(18))
-                  .toFixed(5)
-              : 'In progress...',
-          };
-        });
+        // TODO: mb broken
+        const newData = data[`${networks.currentNetwork}`].map(
+          (stake: IStakingStat, index: number) => {
+            return {
+              key: index,
+              id: stake.stake_id,
+              token: stake.name,
+              month: stake.months,
+              endDate: moment(stake.end_date).format('DD.MM.YY'),
+              staked: new BigNumber(stake.staked).dividedBy(new BigNumber(10).pow(18)).toFixed(5),
+              availableRewards: new BigNumber(stake.available_rewards)
+                .dividedBy(new BigNumber(10).pow(18))
+                .toFixed(5),
+              withdrawnRewards: new BigNumber(stake.withdrawn_rewards)
+                .dividedBy(new BigNumber(10).pow(18))
+                .toFixed(5),
+              estimatedRewards: stake.estimated_rewards
+                ? `$${new BigNumber(stake.estimated_rewards)
+                    .dividedBy(new BigNumber(10).pow(18))
+                    .toFixed(5)}`
+                : 'In progress...',
+            };
+          },
+        );
         setDataSource(newData);
       })
       .catch((error) => {
         const { response } = error;
         console.log('Error in getting staking stat', response);
       });
-  }, []);
+  }, [user.address, networks.currentNetwork]);
+
+  const handleHarvestClick = () => {
+    setIsUnstake(false);
+    if (dataSource[selectedRowKeys[0]]) modals.harvest.open();
+  };
+  const handleStakeEndClick = () => {
+    setIsUnstake(true);
+    if (dataSource[selectedRowKeys[0]]) modals.harvest.open();
+  };
 
   const handleHarvest = useCallback(() => {
+    modals.harvest.close();
     walletConnector.metamaskService
       .harvestStakeItem(dataSource[selectedRowKeys[0]].id)
       .then(() => {
@@ -134,14 +149,16 @@ const StakingStatistics: React.FC = observer(() => {
         modals.info.setMsg('Error', `Harvest error ${message}`, 'error');
       });
   }, [
+    modals.harvest,
+    modals.info,
+    walletConnector.metamaskService,
     dataSource,
     selectedRowKeys,
-    walletConnector.metamaskService,
-    modals.info,
     getStakingStatistic,
   ]);
 
   const handleStakeEnd = useCallback(() => {
+    modals.harvest.close();
     walletConnector.metamaskService
       .endStake(dataSource[selectedRowKeys[0]].id)
       .then(() => {
@@ -157,16 +174,19 @@ const StakingStatistics: React.FC = observer(() => {
         modals.info.setMsg('Error', `Harvest and stake error ${message}`, 'error');
       });
   }, [
+    modals.harvest,
+    modals.info,
+    walletConnector.metamaskService,
     dataSource,
     selectedRowKeys,
-    walletConnector.metamaskService,
-    modals.info,
     getStakingStatistic,
   ]);
 
   useEffect(() => {
-    getStakingStatistic();
-  }, [getStakingStatistic]);
+    if (user.address) {
+      getStakingStatistic();
+    }
+  }, [user.address, getStakingStatistic]);
 
   return (
     <section className="section section--admin staking-statistics">
@@ -177,15 +197,23 @@ const StakingStatistics: React.FC = observer(() => {
           onClick={getStakingStatistic}
           className="staking-statistics__refresh"
         >
-          <img src={RefreshIcon} alt="refresh" width="36" height="36"/>
+          <img src={RefreshIcon} alt="refresh" width="36" height="36" />
         </Button>
       </h2>
 
       <div className="staking-statistics__btn-row">
-        <Button className="staking-statistics__btn" styledType="outline" onClick={handleHarvest}>
+        <Button
+          className="staking-statistics__btn"
+          styledType="outline"
+          onClick={handleHarvestClick}
+        >
           Harvest
         </Button>
-        <Button className="staking-statistics__btn" styledType="outline" onClick={handleStakeEnd}>
+        <Button
+          className="staking-statistics__btn"
+          styledType="outline"
+          onClick={handleStakeEndClick}
+        >
           Harvest and unstake
         </Button>
       </div>
@@ -205,7 +233,7 @@ const StakingStatistics: React.FC = observer(() => {
               ['Already staked', data.staked],
               ['Rewards available to withdrawn', data.availableRewards],
               ['Already withdrawn rewards', data.withdrawnRewards],
-              ['Estimated rewards', data.estimatedRewards],
+              ['Estimated rewards', `$${data.estimatedRewards}`],
             ]}
             index={index}
             hoverFeature
@@ -229,6 +257,7 @@ const StakingStatistics: React.FC = observer(() => {
         columns={columns}
         className="staking-statistics-table__big"
       />
+      <HarvestModal isUnstake={isUnstake} onOk={isUnstake ? handleStakeEnd : handleHarvest} />
     </section>
   );
 });

@@ -27,6 +27,8 @@ export interface IBorderSize {
 interface IButton extends IStyledType, IColorScheme, IBorderSize, IBackground, ButtonProps {
   className?: string;
   link?: string;
+  target?: string;
+  rel?: string;
   linkClassName?: string;
   needLogin?: string;
 }
@@ -42,6 +44,8 @@ const Button: React.FC<IButton> = observer((props: PropsWithChildren<IButton>) =
     needLogin,
     onClick,
     disabled,
+    target,
+    rel,
     ...otherButtonProps
   } = props;
 
@@ -78,10 +82,14 @@ const Button: React.FC<IButton> = observer((props: PropsWithChildren<IButton>) =
     </>
   );
   if (link) {
-    return (
+    return !target ? (
       <Link className={classNames('btn-link', linkClassName)} to={link}>
         {Btn}
       </Link>
+    ) : (
+      <a className={classNames('btn-link', linkClassName)} href={link} target={target} rel={rel}>
+        {Btn}
+      </a>
     );
   }
   return Btn;

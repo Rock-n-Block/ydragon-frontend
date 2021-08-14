@@ -20,6 +20,12 @@
   flex-direction: column;
   justify-content: center;
 
+  &__link {
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
   &__title {
     @include title-text;
     text-align: center;

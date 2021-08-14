@@ -7,7 +7,7 @@ import bncDark from '../../assets/img/icons/icon-binance-dark.svg';
 import bncLight from '../../assets/img/icons/icon-binance-light.svg';
 import plgDark from '../../assets/img/icons/icon-polygon-dark.svg';
 import plgLight from '../../assets/img/icons/icon-polygon-light.svg';
-import { networksApi } from '../../services/api';
+import { basicTokensApi, networksApi } from '../../services/api';
 import { useWalletConnectorContext } from '../../services/walletConnect';
 import { useMst } from '../../store/store';
 import TokenMini from '../TokenMini';
@@ -27,14 +27,14 @@ interface AddEthereumChainParameter {
   iconUrls?: string[]; // Currently ignored.
 }
 
-type ChainTypes = 'bnbt' | 'tmatic';
+type ChainTypes = 'bnb' | 'matic';
 
 type IChains = {
   [key in ChainTypes]: AddEthereumChainParameter;
 };
 
-const chains: IChains = {
-  bnbt: {
+const devChains: IChains = {
+  bnb: {
     chainId: '0x61',
     chainName: 'Binance Smart Chain Testnet',
     nativeCurrency: {
@@ -45,7 +45,7 @@ const chains: IChains = {
     rpcUrls: ['https://data-seed-prebsc-1-s1.binance.org:8545'],
     blockExplorerUrls: ['https://testnet.bscscan.com'],
   },
-  tmatic: {
+  matic: {
     chainId: '0x13881',
     chainName: 'Matic Testnet Mumbai',
     nativeCurrency: {
@@ -54,15 +54,57 @@ const chains: IChains = {
       decimals: 18,
     },
     rpcUrls: ['https://rpc-mumbai.matic.today'],
-    blockExplorerUrls: ['https://matic.network/'],
+    blockExplorerUrls: ['https://mumbai.polygonscan.com/'],
+  },
+};
+const prodChains: IChains = {
+  bnb: {
+    chainId: '0x38',
+    chainName: 'Binance Smart Chain Mainnet',
+    nativeCurrency: {
+      name: 'BNB',
+      symbol: 'BNB',
+      decimals: 18,
+    },
+    rpcUrls: ['https://bsc-dataseed1.binance.org'],
+    blockExplorerUrls: ['https://bscscan.com'],
+  },
+  matic: {
+    chainId: '0x89',
+    chainName: 'Matic(Polygon) Mainnet',
+    nativeCurrency: {
+      name: 'MATIC',
+      symbol: 'MATIC',
+      decimals: 18,
+    },
+    rpcUrls: ['https://rpc-mainnet.matic.network'],
+    blockExplorerUrls: ['https://polygonscan.com'],
   },
 };
 
 const SelectNetwork: React.FC = observer(() => {
-  const { networks, theme } = useMst();
+  const isProduction = process.env.REACT_APP_IS_PROD === 'production';
+  const chains = isProduction ? prodChains : devChains;
+
+  const { networks, basicTokens, theme } = useMst();
   const walletConnector = useWalletConnectorContext();
   const [pickedChain, setPickedChain] = useState<ChainTypes>();
-
+  const networkToken = {
+    bnb: {
+      symbol: 'bnb',
+      address: '0x0000000000000000000000000000000000000000',
+      decimals: 18,
+      name: 'Binance Coin',
+      image: theme.value === 'dark' ? bncDark : bncLight,
+    },
+    polygon: {
+      symbol: 'matic',
+      address: '0x0000000000000000000000000000000000000000',
+      decimals: 18,
+      name: 'Polygon (Matic)',
+      image: theme.value === 'dark' ? plgDark : plgLight,
+    },
+  };
   const getNetworks = useCallback(() => {
     networksApi
       .getNetworks()
@@ -74,15 +116,22 @@ const SelectNetwork: React.FC = observer(() => {
         console.log(response);
       });
   }, [networks]);
+
   const getCurrentChain = useCallback(() => {
     walletConnector.metamaskService.ethGetCurrentChain().then((currentChainId: string) => {
       Object.keys(chains).forEach((key) => {
         if (chains[key as ChainTypes].chainId === currentChainId) {
           setPickedChain(key as ChainTypes);
+          // TODO: change this on deploy
+          if (currentChainId === chains.bnb.chainId) {
+            networks.setCurrNetwork('binance-smart-chain');
+          } else if (currentChainId === chains.matic.chainId) {
+            networks.setCurrNetwork('polygon-pos');
+          }
         }
       });
     });
-  }, [walletConnector.metamaskService]);
+  }, [networks, chains, walletConnector.metamaskService]);
 
   const switchChain = async (chainName: ChainTypes) => {
     try {
@@ -106,21 +155,38 @@ const SelectNetwork: React.FC = observer(() => {
     }
   };
 
+  const getBasicTokens = useCallback(() => {
+    basicTokensApi.getBaseTokens().then(({ data }) => {
+      basicTokens.setTokens([
+        networks.currentNetwork === 'binance-smart-chain' ? networkToken.bnb : networkToken.polygon,
+        ...data,
+      ]);
+    });
+  }, [networkToken.bnb, networkToken.polygon, basicTokens, networks.currentNetwork]);
+
   useEffect(() => {
     getNetworks();
   }, [getNetworks]);
 
   useEffect(() => {
-    getCurrentChain();
-  }, [getCurrentChain]);
+    if (networks.networksList.length) {
+      getCurrentChain();
+    }
+  }, [getCurrentChain, networks.networksList.length]);
 
   useEffect(() => {
     Object.keys(chains).forEach((key) => {
-      if (chains[key as ChainTypes].chainId === networks.id) {
+      if (chains[key as ChainTypes].chainId === networks.networkId) {
         setPickedChain(key as ChainTypes);
       }
     });
-  }, [networks.id]);
+  }, [chains, networks.networkId]);
+
+  useEffect(() => {
+    if (networks.currentNetwork) {
+      getBasicTokens();
+    }
+  }, [getBasicTokens, networks.currentNetwork]);
 
   return (
     <Select
@@ -137,7 +203,7 @@ const SelectNetwork: React.FC = observer(() => {
       }
       dropdownClassName="select-network__dropdown"
     >
-      <Option value="bnbt">
+      <Option value="bnb">
         <TokenMini
           name="Binance"
           icon={theme.value === 'dark' ? bncDark : bncLight}
@@ -145,7 +211,7 @@ const SelectNetwork: React.FC = observer(() => {
           height="26"
         />
       </Option>
-      <Option value="tmatic" disabled>
+      <Option value="matic">
         <TokenMini
           name="Polygon"
           icon={theme.value === 'dark' ? plgDark : plgLight}

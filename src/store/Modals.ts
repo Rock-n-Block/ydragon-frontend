@@ -28,15 +28,18 @@ const GetInModal = types
   .model({
     id: types.maybeNull(types.number),
     address: types.maybeNull(types.string),
+    name: types.maybeNull(types.string),
   })
   .actions((self) => ({
-    open(id: number, address: string) {
+    open(id: number, address: string, name: string) {
       self.id = id;
       self.address = address;
+      self.name = name;
     },
     close() {
       self.id = null;
       self.address = null;
+      self.name = null;
     },
   }));
 const MintModal = types
@@ -121,6 +124,18 @@ const MetamaskModal = types
       self.errMsg = '';
     },
   }));
+const HarvestModal = types
+  .model({
+    isOpen: types.boolean,
+  })
+  .actions((self) => ({
+    open() {
+      self.isOpen = true;
+    },
+    close() {
+      self.isOpen = false;
+    },
+  }));
 
 export const Modals = types
   .model({
@@ -133,6 +148,7 @@ export const Modals = types
     tradeYDR: TradeYDRModal,
     tradeIndex: TradeIndexModal,
     metamask: MetamaskModal,
+    harvest: HarvestModal,
   })
   .actions((self) => ({
     closeAll() {

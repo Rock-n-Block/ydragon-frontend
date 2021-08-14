@@ -5,13 +5,24 @@ import { indexesApi } from '../../../services/api';
 import PriceDifferenceBag from '../../PriceDifferenceBag';
 
 import './IndexChart.scss';
+import { AxiosResponse } from 'axios';
+import { IHistoricalToken } from '../IndexTable';
 
 interface IndexChartProps {
-  tokens: any;
+  onClick: (value: IFetchedData) => void;
   indexId: any;
 }
+export interface IFetchedData {
+  diff: string;
+  index: number;
+  market_cap: string;
+  rate: string;
+  time: Date | string;
+  tokens_history: IHistoricalToken[];
+  total_supply: string;
+}
 
-const IndexChart: React.FC<IndexChartProps> = ({ indexId }) => {
+const IndexChart: React.FC<IndexChartProps> = ({ onClick, indexId }) => {
   const [days, setDays] = useState('1');
   const refDataLength = useRef(1);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
@@ -34,6 +45,7 @@ const IndexChart: React.FC<IndexChartProps> = ({ indexId }) => {
       },
     ],
   });
+  const [fetchedData, setFetchedData] = useState<Array<IFetchedData>>([]);
   const [clickedElement, setClickedElement] = useState(
     chartData.datasets[0].data[refDataLength.current - 1].data,
   );
@@ -43,7 +55,7 @@ const IndexChart: React.FC<IndexChartProps> = ({ indexId }) => {
     layout: {
       padding: 10,
     },
-    aspectRatio: (windowWidth > 768 ? 4 : 2),
+    aspectRatio: windowWidth > 768 ? 4 : 2,
     parsing: {
       xAxisKey: 'time',
       yAxisKey: 'data',
@@ -83,11 +95,11 @@ const IndexChart: React.FC<IndexChartProps> = ({ indexId }) => {
       },
     },
   };
-  
+
   const getWindowWidth = () => {
     const { innerWidth: width } = window;
-    return width
-  }
+    return width;
+  };
 
   const toggleHandler = (event: any) => {
     const btnsList = event.target.parentNode.children;
@@ -130,10 +142,11 @@ const IndexChart: React.FC<IndexChartProps> = ({ indexId }) => {
 
     const { index } = element[0];
     const chosenPrice = chartData.datasets[0].data[index].data;
+    const fetchedItem = fetchedData[index];
     setClickedElement(chosenPrice);
-
-    const value = ((chosenPrice - refPrice.current) / refPrice.current) * 100;
-    const dir = value < 0 ? 'down' : 'up';
+    onClick(fetchedItem);
+    const value = fetchedItem.diff;
+    const dir = +value < 0 ? 'down' : 'up';
     setDiff([dir, value]);
   };
 
@@ -147,13 +160,12 @@ const IndexChart: React.FC<IndexChartProps> = ({ indexId }) => {
     if (data)
       data.forEach((item: any) => {
         const date = new Date(item.time);
-        if (!datasetsData.find((element: any) => element.time === parseDate(date))) {
-          arr.push(Number(item.market_cap));
-          datasetsData.push({
-            time: parseDate(date, dayAllowed),
-            data: Number(item.market_cap),
-          });
-        }
+        // if (!datasetsData.find((element: any) => element.time === parseDate(date))) {}
+        arr.push(Number(item.rate));
+        datasetsData.push({
+          time: parseDate(date, dayAllowed),
+          data: Number(item.rate),
+        });
       });
     refDataLength.current = datasetsData.length;
     refMax.current = Math.max(...arr) + 1;
@@ -178,10 +190,11 @@ const IndexChart: React.FC<IndexChartProps> = ({ indexId }) => {
   const axiosData = useCallback(() => {
     indexesApi
       .getIndexTokensChart(indexId, days)
-      .then((res) => {
-        const currentPrice = res.data[res.data.length - 1].market_cap;
+      .then((res: AxiosResponse<IFetchedData[]>) => {
+        const currentPrice = res.data[res.data.length - 1].rate;
+        setFetchedData(res.data);
         setChartData(getChartData(res.data));
-        if (refPrice.current <= currentPrice) refPrice.current = currentPrice;
+        if (refPrice.current <= +currentPrice) refPrice.current = +currentPrice;
         setClickedElement(refPrice.current);
       })
       .catch((err: any) => {
@@ -251,7 +264,7 @@ const IndexChart: React.FC<IndexChartProps> = ({ indexId }) => {
         <Line
           data={chartData}
           options={options}
-          type="line"
+          // type="line"
           getElementAtEvent={getElementAtEvent}
         />
       ) : (

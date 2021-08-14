@@ -122,11 +122,12 @@
     @include b('tablet') {
       max-width: 350px;
     }
+
     .button-text {
       font-family: 'Rubik';
-      font-style: normal;
-      font-weight: bold;
       font-size: 16px;
+      font-weight: bold;
+      font-style: normal;
       line-height: 25px;
 
       text-align: center;

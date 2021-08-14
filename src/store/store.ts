@@ -1,6 +1,7 @@
 import { createContext, useContext } from 'react';
 import { Instance, onSnapshot, types } from 'mobx-state-tree';
 
+import { BasicTokens } from './BasicTokens';
 import { Modals } from './Modals';
 import { Networks } from './Networks';
 import { Theme } from './Theme';
@@ -14,6 +15,7 @@ const RootModel = types.model({
   user: User,
   theme: Theme,
   networks: Networks,
+  basicTokens: BasicTokens,
 });
 
 export const Store = RootModel.create({
@@ -25,8 +27,9 @@ export const Store = RootModel.create({
     mint: { isOpen: false },
     info: { msg: '', title: '', type: 'info' },
     redeem: { isOpen: false },
-    tradeYDR: { isOpen: false, method: 'buy' },
-    tradeIndex: { isOpen: false, method: 'buy' },
+    tradeYDR: { isOpen: false, method: '' },
+    tradeIndex: { isOpen: false, method: '' },
+    harvest: { isOpen: false },
   },
   user: {
     address: '',
@@ -36,8 +39,10 @@ export const Store = RootModel.create({
     value: localStorage.theme ?? DARK,
   },
   networks: {
-    id: '',
+    networkId: '',
+    networksList: [],
   },
+  basicTokens: {},
 });
 
 export const rootStore = Store;

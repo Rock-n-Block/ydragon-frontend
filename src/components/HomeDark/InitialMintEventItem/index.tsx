@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
+import { Lottie } from '@crello/react-lottie';
 import BigNumber from 'bignumber.js/bignumber';
 import moment from 'moment';
 
+import EggAnimation from '../../../assets/img/gif/EGG.json';
 import { useMst } from '../../../store/store';
 import { Button } from '../../index';
 import { IIme } from '../InitialMintEvent';
@@ -20,7 +22,7 @@ const InitialMintEventItem: React.FC<InitialMintEventItemProps> = ({ imeItem }) 
   const [now, setNow] = useState(moment());
   const [imeEnabled, setImeEnabled] = useState<boolean>(false);
   const handleGetIn = () => {
-    modals.getIn.open(imeItem.id, imeItem.address);
+    modals.getIn.open(imeItem.id, imeItem.address, imeItem.name);
   };
   useEffect(() => {
     const interval = setInterval(() => {
@@ -105,7 +107,12 @@ const InitialMintEventItem: React.FC<InitialMintEventItemProps> = ({ imeItem }) 
           </div>
         </div>
       </div>
-
+      <Lottie
+        config={{ animationData: EggAnimation, loop: true, autoplay: true }}
+        className="initial-mint-event__egg"
+        width="189px"
+        height="189px"
+      />
       <div className="initial-mint-event__content">
         <h3 className="initial-mint-event__title">{imeItem.name} </h3>
 

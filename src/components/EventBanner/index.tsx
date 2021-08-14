@@ -3,7 +3,7 @@ import BigNumber from 'bignumber.js/bignumber';
 import { observer } from 'mobx-react-lite';
 import moment from 'moment';
 
-import coinIcon from '../../assets/img/future/icon-2.svg';
+import coinIcon from '../../assets/img/gif/COINS_YDRAGON.gif';
 import cross from '../../assets/img/icons/icon-close.svg';
 import { indexesApi } from '../../services/api';
 import { useMst } from '../../store/store';
@@ -13,7 +13,7 @@ import { Button } from '../index';
 import './EventBanner.scss';
 
 const EventBanner: React.FC = observer(() => {
-  const { modals } = useMst();
+  const { networks, modals } = useMst();
   const [start, setStart] = useState(moment());
   const [end, setEnd] = useState(moment());
   const [now, setNow] = useState(moment());
@@ -23,7 +23,7 @@ const EventBanner: React.FC = observer(() => {
   const [imeHidden, setImeHidden] = useState<boolean>(false);
   const [bannerHidden, setBannerHidden] = useState<boolean>(false);
   const handleGetIn = () => {
-    modals.getIn.open(imeItem.id, imeItem.address);
+    modals.getIn.open(imeItem.id, imeItem.address, imeItem.name);
   };
   useEffect(() => {
     const interval = setInterval(() => {
@@ -63,8 +63,10 @@ const EventBanner: React.FC = observer(() => {
       });
   }, []);
   useEffect(() => {
-    getImeList();
-  }, [getImeList]);
+    if (networks.currentNetwork) {
+      getImeList();
+    }
+  }, [networks.currentNetwork, getImeList]);
   useEffect(() => {
     if (imeItem) {
       setEnd(
@@ -87,13 +89,16 @@ const EventBanner: React.FC = observer(() => {
         </Button>
         <div className="event-banner__inner">
           <div className="event-banner__icon">
-            <img src={coinIcon} alt="coin" width="66" height="75" />
+            <img src={coinIcon} alt="coin" width="75" height="75" />
           </div>
 
           <div className="event-banner-timer">
             <p className="event-banner-timer__title">
-              INITIAL minting Event{' '}
-              <span>{start.diff(now, 'seconds') > 0 ? 'Starts in' : 'Ends in'} </span>
+              <span>
+                {start.diff(now, 'seconds') > 0
+                  ? 'DAYS UNTIL Index minting Event AWAKENING'
+                  : 'DAYS BEFORE Index minting Event DISTRIBUTION'}{' '}
+              </span>
             </p>
 
             <div className="event-banner-timer__row">
