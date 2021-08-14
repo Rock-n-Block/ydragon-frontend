@@ -34,7 +34,9 @@ const Dropdown: React.FC<DropdownProps> = ({ items, activeIndex, setActiveIndex 
                 </div>
                 <div className="box__items__item__title">{items[activeIndex].title}</div>
               </div>
-              <img className="arrow" src={arrowDown} alt="arrow down orange" />
+              {items.length > 1 ? (
+                <img className="arrow" src={arrowDown} alt="arrow down orange" />
+              ) : null}
             </div>
 
             {isSelectOpen
