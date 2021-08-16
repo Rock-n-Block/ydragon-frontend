@@ -31,7 +31,9 @@ interface IButton extends IStyledType, IColorScheme, IBorderSize, IBackground, B
   rel?: string;
   linkClassName?: string;
   needLogin?: string;
+  wrongBlockchain?: string | null;
 }
+
 const Button: React.FC<IButton> = observer((props: PropsWithChildren<IButton>) => {
   const {
     styledType = 'filled',
@@ -42,6 +44,7 @@ const Button: React.FC<IButton> = observer((props: PropsWithChildren<IButton>) =
     className,
     children,
     needLogin,
+    wrongBlockchain,
     onClick,
     disabled,
     target,
@@ -51,13 +54,16 @@ const Button: React.FC<IButton> = observer((props: PropsWithChildren<IButton>) =
 
   const { modals, user } = useMst();
 
-  const onVisibleChange = (e: any) => {
+  const onVisibleChange = (e: any, message: string) => {
     e.preventDefault();
-    modals.metamask.setErr(`${needLogin}`);
+    modals.metamask.setErr(`${message}`);
   };
+
   const handleClick = (e: any) => {
     if (!user.address && needLogin) {
-      onVisibleChange(e);
+      onVisibleChange(e, needLogin);
+    } else if (wrongBlockchain) {
+      onVisibleChange(e, wrongBlockchain);
     } else if (onClick) {
       onClick(e);
     }
