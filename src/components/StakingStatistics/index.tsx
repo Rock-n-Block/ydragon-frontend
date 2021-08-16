@@ -91,7 +91,7 @@ const StakingStatistics: React.FC = observer(() => {
     indexesApi
       .getStakingStatistic(user.address ?? '')
       .then(({ data }) => {
-        // TODO: mb broken
+        const nativeCurrency = networks.currentNetwork === 'binance-smart-chain' ? 'bnb' : 'matic';
         const newData = data[`${networks.currentNetwork}`].map(
           (stake: IStakingStat, index: number) => {
             return {
@@ -101,12 +101,12 @@ const StakingStatistics: React.FC = observer(() => {
               month: stake.months,
               endDate: moment(stake.end_date).format('DD.MM.YY'),
               staked: new BigNumber(stake.staked).dividedBy(new BigNumber(10).pow(18)).toFixed(5),
-              availableRewards: new BigNumber(stake.available_rewards)
+              availableRewards: `${new BigNumber(stake.available_rewards)
                 .dividedBy(new BigNumber(10).pow(18))
-                .toFixed(5),
-              withdrawnRewards: new BigNumber(stake.withdrawn_rewards)
+                .toFixed(5)} ${nativeCurrency.toUpperCase()}`,
+              withdrawnRewards: `${new BigNumber(stake.withdrawn_rewards)
                 .dividedBy(new BigNumber(10).pow(18))
-                .toFixed(5),
+                .toFixed(5)} ${nativeCurrency.toUpperCase()}`,
               estimatedRewards: stake.estimated_rewards
                 ? `$${new BigNumber(stake.estimated_rewards)
                     .dividedBy(new BigNumber(10).pow(18))
