@@ -17,7 +17,7 @@ interface INetworks {
   [key: string]: string;
 }
 
-export type TestNetworkTypes = 'bnb' | 'matic';
+export type TestNetworkTypes = 'bnb' | 'matic' | 'eth';
 
 export type ContractTypes = 'Router' | 'Factory' | 'Staking' | 'DexFactory' | 'Token';
 
@@ -26,10 +26,12 @@ export const nativeTokens = ['bnb', 'wbnb', 'matic', 'wmatic'];
 const networks: INetworks = {
   bnb: '0x38',
   matic: '0x89',
+  eth: '0x1',
 };
 const testNetworks: INetworks = {
   bnb: '0x61',
   matic: '0x13881',
+  eth: '0x3',
 };
 
 export default class MetamaskService {
@@ -296,7 +298,7 @@ export default class MetamaskService {
     });
   }
 
-  async approveById(toContractAdress: string, address: string) {
+  async approveById(toContractAddress: string, address: string) {
     try {
       const approveMethod = MetamaskService.getMethodInterface(config.MAIN.ABI, 'approve');
 
@@ -307,7 +309,7 @@ export default class MetamaskService {
 
       return this.sendTransaction({
         from: this.walletAddress,
-        to: toContractAdress,
+        to: toContractAddress,
         data: approveSignature,
       });
     } catch (error) {
@@ -622,5 +624,37 @@ export default class MetamaskService {
       ...transactionConfig,
       from: this.walletAddress,
     });
+  }
+
+  getGasPrice(): Promise<string> {
+    return this.web3Provider.eth.getGasPrice();
+  }
+
+  checkBridgeAllowance(contractAddress: string, tokenAddress: string): Promise<boolean> {
+    return this.checkAllowanceById(tokenAddress, config.Token.ABI, contractAddress);
+  }
+
+  getBridgeFee(contractAddress: string, toBlockchain: number): Promise<string> {
+    const contract = this.getContractByAddress(contractAddress, config.Bridge.ABI);
+    return contract.methods.feeAmountOfBlockchain(toBlockchain).call();
+  }
+
+  getBridgeMinAmount(contractAddress: string): Promise<string> {
+    const contract = this.getContractByAddress(contractAddress, config.Bridge.ABI);
+    return contract.methods.minTokenAmount().call();
+  }
+
+  swapTokensToOtherBlockchain(
+    contractAddress: string,
+    toBlockchain: number,
+    amountAbsolute: string,
+    toAddress: string,
+  ): Promise<void> {
+    const contract = this.getContractByAddress(contractAddress, config.Bridge.ABI);
+    return contract.methods
+      .transferToOtherBlockchain(toBlockchain, amountAbsolute, toAddress)
+      .send({
+        from: this.walletAddress,
+      });
   }
 }
