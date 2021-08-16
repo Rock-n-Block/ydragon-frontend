@@ -83,9 +83,9 @@ const Bridge: React.FC = observer(() => {
     eth: undefined,
     bsc: undefined,
   });
-  const [maxGasPrice] = useState<BlockchainInfo<BigNumber>>({
-    eth: new BigNumber(150000000000).dividedBy(10 ** 18),
-    bsc: new BigNumber(150000000000).dividedBy(10 ** 18),
+  const [maxGasPrice, setMaxGasPrice] = useState<BlockchainInfo<BigNumber | undefined>>({
+    eth: undefined,
+    bsc: undefined,
   });
 
   const setBlockchainIndex = useCallback((type: 'from' | 'to', index: number): void => {
@@ -121,8 +121,8 @@ const Bridge: React.FC = observer(() => {
     const fromBlockchainKey = blockchains[fromBlockchainIndex].key;
     const currentGasPrice = new BigNumber(
       await walletConnector.metamaskService.getGasPrice(),
-    ).dividedBy(10 ** 18);
-    if (currentGasPrice.gt(maxGasPrice[fromBlockchainKey])) {
+    ).dividedBy(10 ** 9);
+    if (currentGasPrice.gt(maxGasPrice[fromBlockchainKey] as BigNumber)) {
       modals.info.setMsg('Error', `Current gas price is too high`, 'error');
       setIsLoading(false);
       return;
@@ -204,6 +204,15 @@ const Bridge: React.FC = observer(() => {
     });
   }, []);
 
+  const getGasPrices = useCallback(async () => {
+    const ethGasPriceInfo = (await bridgeApi.getEthGasPrice()).data.price_limit;
+    const bscGasPriceInfo = (await bridgeApi.getBscGasPrice()).data.price_limit;
+    setMaxGasPrice({
+      eth: new BigNumber(ethGasPriceInfo),
+      bsc: new BigNumber(bscGasPriceInfo),
+    });
+  }, []);
+
   useEffect(() => {
     if (user.address) {
       getCurrentChainId();
@@ -217,17 +226,19 @@ const Bridge: React.FC = observer(() => {
 
     async function setParameters() {
       await getFeeAndMinAmount();
+      await getGasPrices();
 
       setIsLoading(false);
     }
 
     setParameters();
-  }, [getFeeAndMinAmount]);
+  }, [getFeeAndMinAmount, getGasPrices]);
 
   useEffect(() => {
     setIsLoading(true);
 
     async function checkSettings() {
+      setBalance(new BigNumber(0));
       try {
         await getBalance();
         await checkAllowance();
