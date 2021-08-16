@@ -3,7 +3,7 @@ import { Route, Switch, useRouteMatch } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 
 import { Indexes } from './components/Admin';
-import { GetInModal, InfoModal, MetamaskErrModal } from './components/Modals';
+import { ConnectWalletModal, GetInModal, InfoModal, MetamaskErrModal } from './components/Modals';
 import AdminIndex from './pages/AdminIndex';
 import { useMst } from './store/store';
 import { Footer, GuardedRoute, Header } from './components';
@@ -94,6 +94,7 @@ export const App: React.FC = observer(() => {
           <MetamaskErrModal />
           <InfoModal />
           <GetInModal />
+          <ConnectWalletModal />
           <Footer />
         </div>
       </div>

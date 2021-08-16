@@ -30,7 +30,7 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = observer(({ collapsed, onCollapsedChange }) => {
   const [fixed, setFixed] = useState(true);
-  const { theme, user } = useMst();
+  const { theme, user, modals } = useMst();
   const walletConnector = useWalletConnectorContext();
   const history = useHistory();
 
@@ -49,7 +49,7 @@ const Header: React.FC<HeaderProps> = observer(({ collapsed, onCollapsedChange }
 
   const connectWallet = (): void => {
     onCollapsedChange(true);
-    walletConnector.connect();
+    modals.connectWallet.open();
   };
 
   const redirectHandler = (path: string) => {

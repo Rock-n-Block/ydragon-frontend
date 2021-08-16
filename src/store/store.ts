@@ -30,6 +30,7 @@ export const Store = RootModel.create({
     tradeYDR: { isOpen: false, method: '' },
     tradeIndex: { isOpen: false, method: '' },
     harvest: { isOpen: false },
+    connectWallet: { isOpen: false },
   },
   user: {
     address: '',
