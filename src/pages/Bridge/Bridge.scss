@@ -140,6 +140,8 @@
           }
 
           &__send-max {
+            padding: 0;
+
             display: flex;
             justify-content: center;
             align-items: center;
@@ -149,19 +151,15 @@
 
             cursor: pointer;
 
+            background: transparent;
             border: 1px solid rgba(255, 255, 255, 0.5);
             border-radius: 16px;
 
             &__text {
-              padding: 0;
-
               font-family: 'TTNorms', sans-serif;
               font-size: 14px;
               font-weight: 700;
               line-height: 17px;
-
-              background: transparent;
-              border: none;
 
               opacity: 0.5;
             }
@@ -249,29 +247,38 @@
     }
 
     .form {
-      &__footer {
-        &__fee {
-          &__text {
-            color: #fff;
+      &__item {
+        &__footer {
+          &__fee {
+            &__text {
+              color: #fff;
 
-            opacity: 1;
+              opacity: 1;
+            }
           }
         }
-      }
 
-      .gradient-box {
-        .box {
-          background: #fff;
+        .gradient-box {
+          .box {
+            background: #fff;
+          }
         }
-      }
 
-      &__send-max {
-        border: 1px solid rgba(0, 0, 0, 0.5);
-      }
+        &__input {
+          &__send-max {
+            border: 1px solid rgb(0, 3, 22);
+            opacity: 0.4;
 
-      &__submit {
-        &__button {
-          color: #fff;
+            &__text {
+              color: rgb(0, 3, 22);
+            }
+          }
+        }
+
+        &__submit {
+          &__button {
+            color: #fff;
+          }
         }
       }
     }

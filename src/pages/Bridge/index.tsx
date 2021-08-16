@@ -8,6 +8,7 @@ import link from '../../assets/img/icons/icon-link.svg';
 import indexLogo from '../../assets/img/icons/logo-index.svg';
 import { Button } from '../../components';
 import Dropdown from '../../components/Bridge/Dropdown';
+import { bridgeApi } from '../../services/api';
 import { useWalletConnectorContext } from '../../services/walletConnect';
 import { useMst } from '../../store/store';
 
@@ -22,8 +23,11 @@ const indexes = [
 
 const isProduction = process.env.REACT_APP_IS_PROD === 'production';
 
+type ChainType = 'eth' | 'bsc';
+
 const blockchains = [
   {
+    key: 'eth' as ChainType,
     img: ethLogo,
     title: 'Ethereum',
     shortTitle: 'Ethereum',
@@ -36,6 +40,7 @@ const blockchains = [
     }etherscan.io/address/0x741728B806E82df82E9510c5c87a37f0a1F6A4B1`,
   },
   {
+    key: 'bsc' as ChainType,
     img: bscLogo,
     title: 'Binance Smart Chain',
     shortTitle: 'BSC',
@@ -52,6 +57,10 @@ const blockchains = [
 const tokenDecimals = 18;
 const tokenSymbol = 'YDRagon';
 
+type BlockchainInfo<T> = {
+  [chain in ChainType]: T;
+};
+
 const Bridge: React.FC = observer(() => {
   const walletConnector = useWalletConnectorContext();
   const { user, modals } = useMst();
@@ -62,11 +71,22 @@ const Bridge: React.FC = observer(() => {
   const [activeTokenIndex, setActiveTokenIndex] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [isApproved, setIsApproved] = useState(false);
-  const [fee, setFee] = useState<BigNumber | undefined>(undefined);
-  const [minAmount, setMinAmount] = useState<BigNumber | undefined>(undefined);
+
   const [outputAmount, setOutputAmount] = useState<string>('0');
   const [inputAmount, setInputAmount] = useState<string>('');
   const [balance, setBalance] = useState<BigNumber>(new BigNumber(0));
+  const [fee, setFee] = useState<BlockchainInfo<BigNumber | undefined>>({
+    eth: undefined,
+    bsc: undefined,
+  });
+  const [minAmount, setMinAmount] = useState<BlockchainInfo<BigNumber | undefined>>({
+    eth: undefined,
+    bsc: undefined,
+  });
+  const [maxGasPrice] = useState<BlockchainInfo<BigNumber>>({
+    eth: new BigNumber(150000000000).dividedBy(10 ** 18),
+    bsc: new BigNumber(150000000000).dividedBy(10 ** 18),
+  });
 
   const setBlockchainIndex = useCallback((type: 'from' | 'to', index: number): void => {
     const oppositeIndex = index === 0 ? 1 : 0;
@@ -95,8 +115,19 @@ const Bridge: React.FC = observer(() => {
       });
   };
 
-  const handleSwap = (): void => {
+  const handleSwap = async (): Promise<void> => {
     setIsLoading(true);
+
+    const fromBlockchainKey = blockchains[fromBlockchainIndex].key;
+    const currentGasPrice = new BigNumber(
+      await walletConnector.metamaskService.getGasPrice(),
+    ).dividedBy(10 ** 18);
+    if (currentGasPrice.gt(maxGasPrice[fromBlockchainKey])) {
+      modals.info.setMsg('Error', `Current gas price is too high`, 'error');
+      setIsLoading(false);
+      return;
+    }
+
     const { contractAddress } = blockchains[fromBlockchainIndex];
     const toBlockchain = blockchains[toBlockchainIndex].contractId;
     const amount = new BigNumber(inputAmount).multipliedBy(10 ** tokenDecimals).toFixed(0);
@@ -108,7 +139,6 @@ const Bridge: React.FC = observer(() => {
           `Cross-chain swap of ${inputAmount} ${tokenSymbol} has started`,
           'success',
         );
-        setIsApproved(true);
       })
       .catch((err: any) => {
         console.debug(err);
@@ -155,23 +185,24 @@ const Bridge: React.FC = observer(() => {
     }
   }, [fromBlockchainIndex, user.address, walletConnector.metamaskService]);
 
-  const getFee = useCallback(async () => {
-    const { contractAddress } = blockchains[fromBlockchainIndex];
-    const toBlockchain = blockchains[toBlockchainIndex].contractId;
-    const feeAbsolute = await walletConnector.metamaskService.getBridgeFee(
-      contractAddress,
-      toBlockchain,
-    );
-    setFee(new BigNumber(feeAbsolute).dividedBy(10 ** tokenDecimals));
-  }, [fromBlockchainIndex, toBlockchainIndex, walletConnector.metamaskService]);
+  const getFeeAndMinAmount = useCallback(async () => {
+    await bridgeApi.getInfo().then((info: any) => {
+      const { data } = info;
+      const ethData = data.find((networkInfo: any) => networkInfo.network === 'Ethereum');
+      const bscData = data.find(
+        (networkInfo: any) => networkInfo.network === 'Binance-Smart-Chain',
+      );
 
-  const getMinAmount = useCallback(async () => {
-    const { contractAddress } = blockchains[fromBlockchainIndex];
-    const minAmountAbsolute = await walletConnector.metamaskService.getBridgeMinAmount(
-      contractAddress,
-    );
-    setMinAmount(new BigNumber(minAmountAbsolute).dividedBy(10 ** tokenDecimals));
-  }, [fromBlockchainIndex, walletConnector.metamaskService]);
+      setFee({
+        eth: new BigNumber(ethData.fee),
+        bsc: new BigNumber(bscData.fee),
+      });
+      setMinAmount({
+        eth: new BigNumber(ethData.min_amount),
+        bsc: new BigNumber(bscData.min_amount),
+      });
+    });
+  }, []);
 
   useEffect(() => {
     if (user.address) {
@@ -184,36 +215,45 @@ const Bridge: React.FC = observer(() => {
   useEffect(() => {
     setIsLoading(true);
 
-    async function checkSettings() {
-      setFee(undefined);
-      setMinAmount(undefined);
+    async function setParameters() {
+      await getFeeAndMinAmount();
 
+      setIsLoading(false);
+    }
+
+    setParameters();
+  }, [getFeeAndMinAmount]);
+
+  useEffect(() => {
+    setIsLoading(true);
+
+    async function checkSettings() {
       try {
         await getBalance();
         await checkAllowance();
-        await getFee();
-        await getMinAmount();
       } catch (err) {
         console.debug(err);
       }
-
       setIsLoading(false);
     }
 
     checkSettings();
-  }, [checkAllowance, getBalance, getFee, getMinAmount]);
+  }, [checkAllowance, getBalance]);
 
   useEffect(() => {
-    if (fee) {
+    const blockchainFee = fee[blockchains[fromBlockchainIndex].key];
+    if (blockchainFee) {
       setIsLoading(true);
       if (!inputAmount) {
         setOutputAmount('0');
       } else {
-        setOutputAmount(BigNumber.max(new BigNumber(inputAmount).minus(fee), 0).toFixed());
+        setOutputAmount(
+          BigNumber.max(new BigNumber(inputAmount).minus(blockchainFee), 0).toFixed(),
+        );
       }
       setIsLoading(false);
     }
-  }, [inputAmount, fee]);
+  }, [inputAmount, fee, fromBlockchainIndex]);
 
   return (
     <div className="bridge">
@@ -277,25 +317,25 @@ const Bridge: React.FC = observer(() => {
                 }}
                 onChange={(e) => setInputAmount(e.target.value)}
               />
-              <div className="form__item__input__send-max">
-                {balance.gt(0) ? (
-                  <button
-                    type="button"
-                    className="form__item__input__send-max__text"
-                    onClick={() => setInputAmount(balance.toFixed())}
-                  >
-                    SEND MAX
-                  </button>
-                ) : null}
-              </div>
+              {balance.gt(0) ? (
+                <button
+                  type="button"
+                  className="form__item__input__send-max"
+                  onClick={() => setInputAmount(balance.toFixed())}
+                >
+                  <span className="form__item__input__send-max__text">SEND MAX</span>
+                </button>
+              ) : null}
             </div>
           </div>
           <div className="form__item__footer">
             <div className="form__item__footer__fee">
-              <div className="form__item__footer__fee__text">Fee: {fee?.toFixed()}</div>
+              <div className="form__item__footer__fee__text">
+                Fee: {fee[blockchains[fromBlockchainIndex].key]?.toFixed()}
+              </div>
             </div>
             <div className="form__item__footer__min-amount">
-              Minimum amount: {minAmount?.toFixed()} KYP
+              Minimum amount: {minAmount[blockchains[fromBlockchainIndex].key]?.toFixed()} KYP
             </div>
           </div>
         </div>
@@ -337,7 +377,10 @@ const Bridge: React.FC = observer(() => {
             disabled={
               !!user.address &&
               isApproved &&
-              (!inputAmount || new BigNumber(inputAmount).lt(minAmount as BigNumber))
+              (!inputAmount ||
+                new BigNumber(inputAmount).lt(
+                  minAmount[blockchains[fromBlockchainIndex].key] as BigNumber,
+                ))
             }
             wrongBlockchain={
               currentBlockchainId !== blockchains[fromBlockchainIndex].chainId

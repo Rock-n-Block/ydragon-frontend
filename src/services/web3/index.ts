@@ -626,6 +626,10 @@ export default class MetamaskService {
     });
   }
 
+  getGasPrice(): Promise<string> {
+    return this.web3Provider.eth.getGasPrice();
+  }
+
   checkBridgeAllowance(contractAddress: string, tokenAddress: string): Promise<boolean> {
     return this.checkAllowanceById(tokenAddress, config.Token.ABI, contractAddress);
   }
