@@ -153,10 +153,15 @@
             border-radius: 16px;
 
             &__text {
+              padding: 0;
+
               font-family: 'TTNorms', sans-serif;
               font-size: 14px;
               font-weight: 700;
               line-height: 17px;
+
+              background: transparent;
+              border: none;
 
               opacity: 0.5;
             }

@@ -66,6 +66,7 @@ const Bridge: React.FC = observer(() => {
   const [minAmount, setMinAmount] = useState<BigNumber | undefined>(undefined);
   const [outputAmount, setOutputAmount] = useState<string>('0');
   const [inputAmount, setInputAmount] = useState<string>('');
+  const [balance, setBalance] = useState<BigNumber>(new BigNumber(0));
 
   const setBlockchainIndex = useCallback((type: 'from' | 'to', index: number): void => {
     const oppositeIndex = index === 0 ? 1 : 0;
@@ -127,6 +128,19 @@ const Bridge: React.FC = observer(() => {
     });
   }, [setBlockchainIndex, walletConnector.metamaskService]);
 
+  const getBalance = useCallback(async () => {
+    if (user.address) {
+      const { tokenAddress } = blockchains[fromBlockchainIndex];
+      await walletConnector.metamaskService
+        .getBalanceOf(tokenAddress)
+        .then((tokenBalance: string) => {
+          setBalance(new BigNumber(tokenBalance).dividedBy(10 ** tokenDecimals));
+        });
+    } else {
+      setBalance(new BigNumber(0));
+    }
+  }, [fromBlockchainIndex, user.address, walletConnector.metamaskService]);
+
   const checkAllowance = useCallback(async () => {
     setIsLoading(true);
     const { contractAddress, tokenAddress } = blockchains[fromBlockchainIndex];
@@ -137,7 +151,7 @@ const Bridge: React.FC = observer(() => {
       );
       setIsApproved(isAllowed);
     } else {
-      setIsApproved(false);
+      setIsApproved(true);
     }
   }, [fromBlockchainIndex, user.address, walletConnector.metamaskService]);
 
@@ -175,6 +189,7 @@ const Bridge: React.FC = observer(() => {
       setMinAmount(undefined);
 
       try {
+        await getBalance();
         await checkAllowance();
         await getFee();
         await getMinAmount();
@@ -186,7 +201,7 @@ const Bridge: React.FC = observer(() => {
     }
 
     checkSettings();
-  }, [checkAllowance, getFee, getMinAmount]);
+  }, [checkAllowance, getBalance, getFee, getMinAmount]);
 
   useEffect(() => {
     if (fee) {
@@ -263,7 +278,15 @@ const Bridge: React.FC = observer(() => {
                 onChange={(e) => setInputAmount(e.target.value)}
               />
               <div className="form__item__input__send-max">
-                <div className="form__item__input__send-max__text">SEND MAX</div>
+                {balance.gt(0) ? (
+                  <button
+                    type="button"
+                    className="form__item__input__send-max__text"
+                    onClick={() => setInputAmount(balance.toFixed())}
+                  >
+                    SEND MAX
+                  </button>
+                ) : null}
               </div>
             </div>
           </div>
@@ -295,13 +318,15 @@ const Bridge: React.FC = observer(() => {
           <div className="gradient-box">
             <div className="box">
               <div className="box__value">
-                {user.address ? outputAmount : 'Please, connect wallet'}
+                {user.address ? outputAmount : 'Please connect wallet'}
               </div>
             </div>
           </div>
         </div>
 
-        <div className="form__note">Note: Transfer from Ethereum Network with Metamask wallet</div>
+        <div className="form__note">
+          Note: Transfer from {blockchains[fromBlockchainIndex].title} Network with Metamask wallet
+        </div>
 
         <div className="form__submit">
           <Button
@@ -309,7 +334,11 @@ const Bridge: React.FC = observer(() => {
             onClick={isApproved ? handleSwap : handleApprove}
             needLogin="Please login"
             loading={isLoading}
-            disabled={isApproved && !inputAmount}
+            disabled={
+              !!user.address &&
+              isApproved &&
+              (!inputAmount || new BigNumber(inputAmount).lt(minAmount as BigNumber))
+            }
             wrongBlockchain={
               currentBlockchainId !== blockchains[fromBlockchainIndex].chainId
                 ? `Please select ${blockchains[fromBlockchainIndex].title} blockchain in your wallet`
