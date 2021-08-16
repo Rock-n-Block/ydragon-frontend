@@ -29,22 +29,33 @@ export const useWhiteList = (indexId: number) => {
     };
   }, [theme.value]);
 
+  const findWrappedToken = useCallback(
+    (tokens: any[]) => {
+      const wrappedNativeSymbol =
+        networks.currentNetwork === 'binance-smart-chain' ? 'wbnb' : 'wmatic';
+      return tokens.find((token: any) => token.symbol.toLowerCase() === wrappedNativeSymbol);
+    },
+    [networks.currentNetwork],
+  );
   const getWhiteList = useCallback(() => {
     indexesApi
       .getIndexWhiteList(indexId)
       .then(({ data }) => {
-        const newToken = [
-          networks.currentNetwork === 'binance-smart-chain'
-            ? networkToken().bnb
-            : networkToken().polygon,
-          ...data.tokens,
-        ];
+        const isWrappedToken = !!findWrappedToken(data.tokens);
+        const newToken = isWrappedToken
+          ? [
+              networks.currentNetwork === 'binance-smart-chain'
+                ? networkToken().bnb
+                : networkToken().polygon,
+              ...data.tokens,
+            ]
+          : [...data.tokens];
         setWhiteList(newToken);
       })
       .catch((err) => {
         console.log(`err in getting index ${indexId} whitelist:\n`, err);
       });
-  }, [indexId, networkToken, networks.currentNetwork]);
+  }, [findWrappedToken, indexId, networkToken, networks.currentNetwork]);
 
   const getToken = useCallback(
     (symbol: string) => {
