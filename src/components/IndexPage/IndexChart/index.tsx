@@ -7,6 +7,7 @@ import PriceDifferenceBag from '../../PriceDifferenceBag';
 import './IndexChart.scss';
 import { AxiosResponse } from 'axios';
 import { IHistoricalToken } from '../IndexTable';
+import moment from 'moment';
 
 interface IndexChartProps {
   onClick: (value: IFetchedData) => void;
@@ -126,13 +127,11 @@ const IndexChart: React.FC<IndexChartProps> = ({ onClick, indexId }) => {
 
   const parseDate = useCallback(
     (date: Date, dayAllowed?: boolean) => {
-      if (daysFromUrl === '1') {
-        return `${date.getHours()}:${date.getMinutes()}`;
-      }
       if (daysFromUrl === 'max' && !dayAllowed) {
-        return `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`;
+        return moment(date).format('DD MMM YYYY');
       }
-      return `${date.getMonth() + 1}/${date.getDate()} ${date.getHours()}:${date.getMinutes()}`;
+      // return `${date.getMonth() + 1}/${date.getDate()} ${date.getHours()}:${date.getMinutes()}`;
+      return moment(date).format('DD MMM, h A');
     },
     [daysFromUrl],
   );
