@@ -32,6 +32,7 @@ export interface IHistoricalToken {
 interface IndexTableProps {
   tokens: Array<IToken> | Array<IHistoricalToken> | undefined;
 }
+
 const IndexTable: React.FC<IndexTableProps> = ({ tokens }) => {
   return (
     <div className="index-table">
@@ -81,10 +82,9 @@ const IndexTable: React.FC<IndexTableProps> = ({ tokens }) => {
               </div>
               <div className="index-table__col">
                 <div className="index-table__price">
-                  {new BigNumber('current_weight' in token ? token.current_weight : token.weight)
+                  {`${new BigNumber('current_weight' in token ? token.current_weight : token.weight)
                     .multipliedBy(100)
-                    .toFixed(2)}
-                  %
+                    .toFixed(2)}%`}
                 </div>
               </div>
               <div className="index-table__col">
