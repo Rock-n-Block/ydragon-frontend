@@ -18,7 +18,7 @@ import tw from '../../assets/img/socials/twitter.svg';
 import Whitepaper from '../../assets/pdf/YD WP.pdf';
 import { useWalletConnectorContext } from '../../services/walletConnect';
 import { DARK, LIGHT, useMst } from '../../store/store';
-import EventBanner from '../EventBanner';
+// import EventBanner from '../EventBanner';
 import { Button, SelectNetwork, Switch } from '../index';
 
 import './Header.scss';
@@ -67,7 +67,7 @@ const Header: React.FC<HeaderProps> = observer(({ collapsed, onCollapsedChange }
 
   return (
     <div className={`header__wrapper  ${fixed ? 'fixed' : ''}`}>
-      <EventBanner />
+      {/* <EventBanner /> */}
       <div className={`header ${collapsed ? 'collapse' : 'expand'}`}>
         <div className="container">
           <div className="header__inner">
@@ -133,7 +133,7 @@ const Header: React.FC<HeaderProps> = observer(({ collapsed, onCollapsedChange }
               </div>
             )}
 
-            <nav className="header__nav">
+            {/* <nav className="header__nav">
               <ul className="header-nav">
                 <li className="header-nav__item">
                   <Link to="/" className="header-nav__link">
@@ -170,7 +170,7 @@ const Header: React.FC<HeaderProps> = observer(({ collapsed, onCollapsedChange }
                   </li>
                 )}
               </ul>
-            </nav>
+            </nav> */}
 
             <div className="header__sign">
               <Switch checked={DARK === theme.value} onChange={handleChangeTheme} />
@@ -202,7 +202,7 @@ const Header: React.FC<HeaderProps> = observer(({ collapsed, onCollapsedChange }
               </ul>
             </div>
           </div>
-          <nav className="menu">
+          {/* <nav className="menu">
             <nav className="menu__nav">
               <ul className="menu-nav">
                 <li className="menu-nav__item">
@@ -267,7 +267,7 @@ const Header: React.FC<HeaderProps> = observer(({ collapsed, onCollapsedChange }
                 )}
               </ul>
             </nav>
-          </nav>
+          </nav> */}
           <div className="footer__wrapper">
             <div className="footer__col">
               <div className="footer__links-title">Product</div>
@@ -302,7 +302,7 @@ const Header: React.FC<HeaderProps> = observer(({ collapsed, onCollapsedChange }
               </div>
             </div>
 
-            <div className="footer__col">
+            {/* <div className="footer__col">
               <div className="footer__links-title">DeFi</div>
 
               <div className="footer__links">
@@ -313,7 +313,7 @@ const Header: React.FC<HeaderProps> = observer(({ collapsed, onCollapsedChange }
                   <a href="/">Become Partner</a>
                 </span>
               </div>
-            </div>
+            </div> */}
             {!collapsed && (
               <div className="footer__socials">
                 <a
