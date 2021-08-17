@@ -66,7 +66,7 @@ const devChains: IChains = {
       symbol: 'tETH',
       decimals: 18,
     },
-    rpcUrls: ['https://ropsten.infura.io/v3/20a58948a748481580e7a27422bac480'],
+    rpcUrls: ['https://ropsten.infura.io/v3/886cb294bf2a440e9f78a654a6941ff3'],
     blockExplorerUrls: ['https://ropsten.etherscan.io/'],
   },
 };
@@ -101,7 +101,7 @@ const prodChains: IChains = {
       symbol: 'ETH',
       decimals: 18,
     },
-    rpcUrls: ['https://mainnet.infura.io/v3/20a58948a748481580e7a27422bac480'],
+    rpcUrls: ['https://mainnet.infura.io/v3/886cb294bf2a440e9f78a654a6941ff3'],
     blockExplorerUrls: ['https://etherscan.io/'],
   },
 };
@@ -110,7 +110,7 @@ const SelectNetwork: React.FC = observer(() => {
   const isProduction = process.env.REACT_APP_IS_PROD === 'production';
   const chains = isProduction ? prodChains : devChains;
 
-  const { networks, basicTokens, theme } = useMst();
+  const { networks, basicTokens, theme, user } = useMst();
   const walletConnector = useWalletConnectorContext();
   const [pickedChain, setPickedChain] = useState<ChainTypes>();
   const networkToken = {
@@ -202,10 +202,10 @@ const SelectNetwork: React.FC = observer(() => {
   }, [getNetworks]);
 
   useEffect(() => {
-    if (networks.networksList.length) {
+    if (networks.networksList.length && user.address) {
       getCurrentChain();
     }
-  }, [getCurrentChain, networks.networksList.length]);
+  }, [getCurrentChain, networks.networksList.length, user.address]);
 
   useEffect(() => {
     Object.keys(chains).forEach((key) => {
