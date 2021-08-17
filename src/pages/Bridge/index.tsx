@@ -99,13 +99,28 @@ const Bridge: React.FC = observer(() => {
     }
   }, []);
 
+  const checkAllowance = useCallback(async () => {
+    setIsLoading(true);
+    const { contractAddress, tokenAddress } = blockchains[fromBlockchainIndex];
+    if (user.address) {
+      const isAllowed = await walletConnector.walletService.checkBridgeAllowance(
+        contractAddress,
+        tokenAddress,
+      );
+      setIsApproved(isAllowed);
+    } else {
+      setIsApproved(true);
+    }
+  }, [fromBlockchainIndex, user.address, walletConnector.walletService]);
+
   const handleApprove = (): void => {
     setIsLoading(true);
     const { contractAddress, tokenAddress } = blockchains[fromBlockchainIndex];
     walletConnector.walletService
       .approveById(tokenAddress, contractAddress)
-      .then(() => {
+      .then(async () => {
         modals.info.setMsg('Success', `${tokenSymbol} is approved`, 'success');
+        await checkAllowance();
       })
       .catch((err: any) => {
         console.debug(err);
@@ -171,20 +186,6 @@ const Bridge: React.FC = observer(() => {
         });
     } else {
       setBalance(new BigNumber(0));
-    }
-  }, [fromBlockchainIndex, user.address, walletConnector.walletService]);
-
-  const checkAllowance = useCallback(async () => {
-    setIsLoading(true);
-    const { contractAddress, tokenAddress } = blockchains[fromBlockchainIndex];
-    if (user.address) {
-      const isAllowed = await walletConnector.walletService.checkBridgeAllowance(
-        contractAddress,
-        tokenAddress,
-      );
-      setIsApproved(isAllowed);
-    } else {
-      setIsApproved(true);
     }
   }, [fromBlockchainIndex, user.address, walletConnector.walletService]);
 

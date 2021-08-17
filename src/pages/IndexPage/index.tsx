@@ -29,6 +29,7 @@ export interface IIndex {
   network: string;
   description: string;
   market_cap: string;
+  total_supply: string;
   tokens: Array<IToken>;
   created_at: Date | string;
   rebalance_date?: Date | string;
@@ -106,6 +107,10 @@ const Index: React.FC = observer(() => {
           {
             label: 'Market Cap',
             value: `$${new BigNumber(indexData?.market_cap ?? 0).toFixed(2)}`,
+          },
+          {
+            label: 'Total Supply',
+            value: `${new BigNumber(indexData?.total_supply ?? 0).toFixed(2)}`,
           },
           {
             label: 'Inception Date',

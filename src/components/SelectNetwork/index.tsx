@@ -28,7 +28,8 @@ interface AddEthereumChainParameter {
   iconUrls?: string[]; // Currently ignored.
 }
 
-type ChainTypes = 'bnb' | 'matic' | 'eth';
+// type ChainTypes = 'bnb' | 'matic' | 'eth';
+type ChainTypes = 'bnb' | 'eth';
 
 type IChains = {
   [key in ChainTypes]: AddEthereumChainParameter;
@@ -46,7 +47,7 @@ const devChains: IChains = {
     rpcUrls: ['https://data-seed-prebsc-1-s1.binance.org:8545'],
     blockExplorerUrls: ['https://testnet.bscscan.com'],
   },
-  matic: {
+  /*  matic: {
     chainId: '0x13881',
     chainName: 'Matic Testnet Mumbai',
     nativeCurrency: {
@@ -56,7 +57,7 @@ const devChains: IChains = {
     },
     rpcUrls: ['https://rpc-mumbai.matic.today'],
     blockExplorerUrls: ['https://mumbai.polygonscan.com/'],
-  },
+  }, */
   eth: {
     chainId: '0x3',
     chainName: 'Ropsten',
@@ -81,17 +82,17 @@ const prodChains: IChains = {
     rpcUrls: ['https://bsc-dataseed1.binance.org'],
     blockExplorerUrls: ['https://bscscan.com'],
   },
-  matic: {
-    chainId: '0x89',
-    chainName: 'Matic(Polygon) Mainnet',
-    nativeCurrency: {
-      name: 'MATIC',
-      symbol: 'MATIC',
-      decimals: 18,
-    },
-    rpcUrls: ['https://rpc-mainnet.matic.network'],
-    blockExplorerUrls: ['https://polygonscan.com'],
-  },
+  /*  matic: {
+      chainId: '0x89',
+      chainName: 'Matic(Polygon) Mainnet',
+      nativeCurrency: {
+        name: 'MATIC',
+        symbol: 'MATIC',
+        decimals: 18,
+      },
+      rpcUrls: ['https://rpc-mainnet.matic.network'],
+      blockExplorerUrls: ['https://polygonscan.com'],
+    }, */
   eth: {
     chainId: '0x1',
     chainName: 'Ethereum',
@@ -109,7 +110,7 @@ const SelectNetwork: React.FC = observer(() => {
   const isProduction = process.env.REACT_APP_IS_PROD === 'production';
   const chains = isProduction ? prodChains : devChains;
 
-  const { networks, basicTokens, theme, user } = useMst();
+  const { networks, basicTokens, theme } = useMst();
   const walletConnector = useWalletConnectorContext();
   const [pickedChain, setPickedChain] = useState<ChainTypes>();
   const networkToken = {
@@ -148,8 +149,8 @@ const SelectNetwork: React.FC = observer(() => {
           // TODO: change this on deploy
           if (currentChainId === chains.bnb.chainId) {
             networks.setCurrNetwork('binance-smart-chain');
-          } else if (currentChainId === chains.matic.chainId) {
-            networks.setCurrNetwork('polygon-pos');
+            // } else if (currentChainId === chains.matic.chainId) {
+            //   networks.setCurrNetwork('polygon-pos');
           } else if (currentChainId === chains.eth.chainId) {
             networks.setCurrNetwork('ethereum');
           }
@@ -201,10 +202,10 @@ const SelectNetwork: React.FC = observer(() => {
   }, [getNetworks]);
 
   useEffect(() => {
-    if (networks.networksList.length && user.address) {
+    if (networks.networksList.length) {
       getCurrentChain();
     }
-  }, [getCurrentChain, networks.networksList.length, user.address]);
+  }, [getCurrentChain, networks.networksList.length]);
 
   useEffect(() => {
     Object.keys(chains).forEach((key) => {
@@ -246,14 +247,14 @@ const SelectNetwork: React.FC = observer(() => {
           height="26"
         />
       </Option>
-      <Option value="matic">
+      {/* <Option value="matic">
         <TokenMini
           name="Polygon"
           icon={theme.value === 'dark' ? plgDark : plgLight}
           width="26"
           height="26"
         />
-      </Option>
+      </Option> */}
     </Select>
   );
 });

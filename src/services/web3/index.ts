@@ -663,6 +663,7 @@ export default class WalletService {
     return this.web3Provider.eth.sendTransaction({
       ...transactionConfig,
       from: this.walletAddress,
+      type: '0x2',
     });
   }
 
