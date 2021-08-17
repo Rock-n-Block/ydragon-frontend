@@ -234,17 +234,15 @@ const Header: React.FC<HeaderProps> = observer(({ collapsed, onCollapsedChange }
                     </Button>
                   </li>
                 )}
-                {user.address && (
-                  <li className="menu-nav__item">
-                    <Button
-                      styledType="clear"
-                      onClick={() => redirectHandler('/bridge')}
-                      className="menu-nav__link"
-                    >
-                      Bridge
-                    </Button>
-                  </li>
-                )}
+                <li className="menu-nav__item">
+                  <Button
+                    styledType="clear"
+                    onClick={() => redirectHandler('/bridge')}
+                    className="menu-nav__link"
+                  >
+                    Bridge
+                  </Button>
+                </li>
                 <li className="menu-nav__item">
                   <Button
                     styledType="clear"
