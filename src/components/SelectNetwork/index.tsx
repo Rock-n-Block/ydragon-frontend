@@ -110,7 +110,7 @@ const SelectNetwork: React.FC = observer(() => {
   const isProduction = process.env.REACT_APP_IS_PROD === 'production';
   const chains = isProduction ? prodChains : devChains;
 
-  const { networks, basicTokens, theme, user } = useMst();
+  const { networks, basicTokens, theme } = useMst();
   const walletConnector = useWalletConnectorContext();
   const [pickedChain, setPickedChain] = useState<ChainTypes>();
   const networkToken = {
@@ -202,10 +202,10 @@ const SelectNetwork: React.FC = observer(() => {
   }, [getNetworks]);
 
   useEffect(() => {
-    if (networks.networksList.length && user.address) {
+    if (networks.networksList.length) {
       getCurrentChain();
     }
-  }, [getCurrentChain, networks.networksList.length, user.address]);
+  }, [getCurrentChain, networks.networksList.length]);
 
   useEffect(() => {
     Object.keys(chains).forEach((key) => {
