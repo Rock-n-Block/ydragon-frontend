@@ -50,6 +50,7 @@ const Stake: React.FC<StakeProps> = ({ tokens, propsLoading, onStakeClick }) => 
       .startStake(tokens[activeStakeIndex].address, stakeValue, intervalIndex)
       .then(() => {
         onStakeClick();
+        setActiveStakeIndex(0);
         modals.info.setMsg('Success', 'Staking has been started', 'success');
       })
       .catch((error: ProviderRpcError) => {
