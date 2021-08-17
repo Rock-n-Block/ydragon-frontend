@@ -8,11 +8,10 @@ import './HarvestModal.scss';
 import { Button } from '../../index';
 
 interface HarvestModalProps {
-  isUnstake: boolean;
   onOk: () => void;
 }
 
-const HarvestModal: React.FC<HarvestModalProps> = ({ isUnstake, onOk }) => {
+const HarvestModal: React.FC<HarvestModalProps> = ({ onOk }) => {
   const { modals } = useMst();
 
   const handleClose = (): void => {
@@ -27,7 +26,7 @@ const HarvestModal: React.FC<HarvestModalProps> = ({ isUnstake, onOk }) => {
       width={560}
     >
       <div className="m-harvest__content">
-        <div className="m-harvest__title">{isUnstake ? 'Harvest and unstake' : 'Harvest'} </div>
+        <div className="m-harvest__title">Harvest and unstake</div>
         <div className="m-harvest__body">
           If you unstake before the lockup period ends, you will incur a 25% penalty on your
           original stake. Are you sure you want to unstake now?

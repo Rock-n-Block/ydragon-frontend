@@ -29,7 +29,7 @@ interface IStakingStat {
 const StakingStatistics: React.FC = observer(() => {
   const walletConnector = useWalletConnectorContext();
   const [dataSource, setDataSource] = useState<any[]>([]);
-  const [isUnstake, setIsUnstake] = useState<boolean>(false);
+  const [unformatedData, setUnformatedData] = useState<any[]>([]);
   const { modals, user, networks } = useMst();
   const columns: any[] = [
     {
@@ -99,7 +99,7 @@ const StakingStatistics: React.FC = observer(() => {
               id: stake.stake_id,
               token: stake.name,
               month: stake.months,
-              endDate: moment(stake.end_date).format('DD.MM.YY'),
+              endDate: moment(stake.end_date).format('DD.MM.YY/HH:MM'),
               staked: new BigNumber(stake.staked).dividedBy(new BigNumber(10).pow(18)).toFixed(5),
               availableRewards: `${new BigNumber(stake.available_rewards)
                 .dividedBy(new BigNumber(10).pow(18))
@@ -116,21 +116,13 @@ const StakingStatistics: React.FC = observer(() => {
           },
         );
         setDataSource(newData);
+        setUnformatedData(data[`${networks.currentNetwork}`]);
       })
       .catch((error) => {
         const { response } = error;
         console.log('Error in getting staking stat', response);
       });
   }, [user.address, networks.currentNetwork]);
-
-  const handleHarvestClick = () => {
-    setIsUnstake(false);
-    if (dataSource[selectedRowKeys[0]]) modals.harvest.open();
-  };
-  const handleStakeEndClick = () => {
-    setIsUnstake(true);
-    if (dataSource[selectedRowKeys[0]]) modals.harvest.open();
-  };
 
   const handleHarvest = useCallback(() => {
     modals.harvest.close();
@@ -156,7 +148,6 @@ const StakingStatistics: React.FC = observer(() => {
     selectedRowKeys,
     getStakingStatistic,
   ]);
-
   const handleStakeEnd = useCallback(() => {
     modals.harvest.close();
     walletConnector.metamaskService
@@ -181,6 +172,21 @@ const StakingStatistics: React.FC = observer(() => {
     selectedRowKeys,
     getStakingStatistic,
   ]);
+  const handleHarvestClick = () => {
+    if (dataSource[selectedRowKeys[0]]) {
+      handleHarvest();
+    }
+  };
+  const handleStakeEndClick = () => {
+    if (dataSource[selectedRowKeys[0]]) {
+      const endDate = +moment(unformatedData[selectedRowKeys[0]].end_date).format('X');
+      const now = +moment().format('X');
+      if (endDate >= now) modals.harvest.open();
+      else {
+        handleStakeEnd();
+      }
+    }
+  };
 
   useEffect(() => {
     if (user.address) {
@@ -257,7 +263,7 @@ const StakingStatistics: React.FC = observer(() => {
         columns={columns}
         className="staking-statistics-table__big"
       />
-      <HarvestModal isUnstake={isUnstake} onOk={isUnstake ? handleStakeEnd : handleHarvest} />
+      <HarvestModal onOk={handleStakeEnd} />
     </section>
   );
 });
