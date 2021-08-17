@@ -127,6 +127,11 @@ const IndexChart: React.FC<IndexChartProps> = ({ onClick, indexId }) => {
 
   const parseDate = useCallback(
     (date: Date, dayAllowed?: boolean) => {
+      if (daysFromUrl === '1') {
+        // return moment(date).format('D/HH:MM');
+        return moment(date).format('Do MMM, HH:mm');
+        // return `${date.getHours()}:${date.getMinutes()}`;
+      }
       if (daysFromUrl === 'max' && !dayAllowed) {
         return moment(date).format('DD MMM YYYY');
       }

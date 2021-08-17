@@ -27,9 +27,9 @@ const YdrToken: React.FC = observer(() => {
     window.open(
       `https://${
         networks.currentNetwork === 'binance-smart-chain'
-          ? 'exchange.pancakeswap.finance'
+          ? 'exchange.pancakeswap.finance/#/swap?outputCurrency=0x8f9a69d0a6e4c6263fe278d66b84ac975c1f74de'
           : 'quickswap.exchange'
-      }/#/swap?inputCurrency=123`,
+      }`,
       '_blank',
     );
   };
@@ -38,9 +38,9 @@ const YdrToken: React.FC = observer(() => {
     window.open(
       `https://${
         networks.currentNetwork === 'binance-smart-chain'
-          ? 'exchange.pancakeswap.finance'
+          ? 'exchange.pancakeswap.finance/#/swap?inputCurrency=0x8f9a69d0a6e4c6263fe278d66b84ac975c1f74de'
           : 'quickswap.exchange'
-      }/#/swap?outputCurrency=123`,
+      }`,
       '_blank',
     );
   };
