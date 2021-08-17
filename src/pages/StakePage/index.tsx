@@ -12,18 +12,18 @@ const StakePage: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const getStakingTokens = useCallback(() => {
     setLoading(true);
-    walletConnector.metamaskService
+    walletConnector.walletService
       .getStakingTokensLen()
       .then(async (tokensLength: number) => {
         // let tokensList: Array<any> = [];
         const getAddress = async (index: number) => {
-          return walletConnector.metamaskService.getStakingTokenToEnter(index);
+          return walletConnector.walletService.getStakingTokenToEnter(index);
         };
         const getPair = async (address: string) => {
-          return walletConnector.metamaskService.getStakingPair(address);
+          return walletConnector.walletService.getStakingPair(address);
         };
         const getTokenInfo = async (address: string) => {
-          return walletConnector.metamaskService.getTokenInfoByAddress(address);
+          return walletConnector.walletService.getTokenInfoByAddress(address);
         };
         for (let i = 0, tokensList: Array<any> = []; i < tokensLength; i += 1) {
           // eslint-disable-next-line no-await-in-loop
@@ -52,7 +52,7 @@ const StakePage: React.FC = () => {
         console.log('get staking tokens len error', err);
       })
       .finally(() => setLoading(false));
-  }, [walletConnector.metamaskService]);
+  }, [walletConnector.walletService]);
   useEffect(() => {
     autorun(() => {
       if (networks.currentNetwork && basicTokens.tokensList.length) {

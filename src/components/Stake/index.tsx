@@ -46,7 +46,7 @@ const Stake: React.FC<StakeProps> = ({ tokens, propsLoading, onStakeClick }) => 
   };
   const handleStakeStart = () => {
     setLoading(true);
-    walletConnector.metamaskService
+    walletConnector.walletService
       .startStake(tokens[activeStakeIndex].address, stakeValue, intervalIndex)
       .then(() => {
         onStakeClick();
@@ -60,7 +60,7 @@ const Stake: React.FC<StakeProps> = ({ tokens, propsLoading, onStakeClick }) => 
   };
   const approveToken = () => {
     setLoading(true);
-    walletConnector.metamaskService
+    walletConnector.walletService
       .approveById(tokens[activeStakeIndex].address, networks.getCurrNetwork()?.staking_address)
       .then(() => {
         setIsAllowed(!isAllowed);
@@ -72,7 +72,7 @@ const Stake: React.FC<StakeProps> = ({ tokens, propsLoading, onStakeClick }) => 
       .finally(() => setLoading(false));
   };
   const checkAllowance = useCallback(() => {
-    walletConnector.metamaskService
+    walletConnector.walletService
       .checkAllowanceById(
         tokens[activeStakeIndex].address,
         config.Token.ABI,
@@ -85,7 +85,7 @@ const Stake: React.FC<StakeProps> = ({ tokens, propsLoading, onStakeClick }) => 
         const { response } = err;
         console.log('stake allowance error', response);
       });
-  }, [networks, walletConnector.metamaskService, tokens, activeStakeIndex]);
+  }, [networks, walletConnector.walletService, tokens, activeStakeIndex]);
   useEffect(() => {
     setTokensList(
       tokens.map((token) => {
