@@ -96,7 +96,7 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
         if (totalX >= 0.15) {
           setFee('2%');
         } else if (totalX !== undefined) {
-          setFee(`${(6 - 4 * (totalX - 5)) / 10}%`);
+          setFee(`${6 - (4 * (totalX * 100 - 5)) / 10}%`);
         }
       } else setFee('0.5%');
     }, [totalX, isSell]);
