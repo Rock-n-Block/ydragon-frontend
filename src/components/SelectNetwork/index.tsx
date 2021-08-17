@@ -2,7 +2,8 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { Select } from 'antd';
 import { observer } from 'mobx-react-lite';
 
-import eth from '../../assets/img/icons/blockchains/eth.svg';
+// import eth from '../../assets/img/icons/blockchains/eth.svg';
+
 import arrow from '../../assets/img/icons/icon-arrow-yellow.svg';
 import bncDark from '../../assets/img/icons/icon-binance-dark.svg';
 import bncLight from '../../assets/img/icons/icon-binance-light.svg';
@@ -28,7 +29,7 @@ interface AddEthereumChainParameter {
   iconUrls?: string[]; // Currently ignored.
 }
 
-type ChainTypes = 'bnb' | 'matic' | 'eth';
+type ChainTypes = 'bnb' | 'matic' /* | 'eth' */;
 
 type IChains = {
   [key in ChainTypes]: AddEthereumChainParameter;
@@ -57,17 +58,17 @@ const devChains: IChains = {
     rpcUrls: ['https://rpc-mumbai.matic.today'],
     blockExplorerUrls: ['https://mumbai.polygonscan.com/'],
   },
-  eth: {
-    chainId: '0x3',
-    chainName: 'Ropsten',
-    nativeCurrency: {
-      name: 'tETH',
-      symbol: 'tETH',
-      decimals: 18,
-    },
-    rpcUrls: ['https://ropsten.infura.io/v3/20a58948a748481580e7a27422bac480'],
-    blockExplorerUrls: ['https://ropsten.etherscan.io/'],
-  },
+  /* eth: {
+     chainId: '0x3',
+     chainName: 'Ropsten',
+     nativeCurrency: {
+       name: 'tETH',
+       symbol: 'tETH',
+       decimals: 18,
+     },
+     rpcUrls: ['https://ropsten.infura.io/v3/20a58948a748481580e7a27422bac480'],
+     blockExplorerUrls: ['https://ropsten.etherscan.io/'],
+   }, */
 };
 const prodChains: IChains = {
   bnb: {
@@ -92,24 +93,24 @@ const prodChains: IChains = {
     rpcUrls: ['https://rpc-mainnet.matic.network'],
     blockExplorerUrls: ['https://polygonscan.com'],
   },
-  eth: {
-    chainId: '0x1',
-    chainName: 'Ethereum',
-    nativeCurrency: {
-      name: 'ETH',
-      symbol: 'ETH',
-      decimals: 18,
-    },
-    rpcUrls: ['https://mainnet.infura.io/v3/20a58948a748481580e7a27422bac480'],
-    blockExplorerUrls: ['https://etherscan.io/'],
-  },
+  /* eth: {
+     chainId: '0x1',
+     chainName: 'Ethereum',
+     nativeCurrency: {
+       name: 'ETH',
+       symbol: 'ETH',
+       decimals: 18,
+     },
+     rpcUrls: ['https://mainnet.infura.io/v3/20a58948a748481580e7a27422bac480'],
+     blockExplorerUrls: ['https://etherscan.io/'],
+   }, */
 };
 
 const SelectNetwork: React.FC = observer(() => {
   const isProduction = process.env.REACT_APP_IS_PROD === 'production';
   const chains = isProduction ? prodChains : devChains;
 
-  const { networks, basicTokens, theme, user } = useMst();
+  const { networks, basicTokens, theme } = useMst();
   const walletConnector = useWalletConnectorContext();
   const [pickedChain, setPickedChain] = useState<ChainTypes>();
   const networkToken = {
@@ -150,8 +151,8 @@ const SelectNetwork: React.FC = observer(() => {
             networks.setCurrNetwork('binance-smart-chain');
           } else if (currentChainId === chains.matic.chainId) {
             networks.setCurrNetwork('polygon-pos');
-          } else if (currentChainId === chains.eth.chainId) {
-            networks.setCurrNetwork('ethereum');
+            // } else if (currentChainId === chains.eth.chainId) {
+            //   networks.setCurrNetwork('ethereum');
           }
         }
       });
@@ -201,10 +202,10 @@ const SelectNetwork: React.FC = observer(() => {
   }, [getNetworks]);
 
   useEffect(() => {
-    if (networks.networksList.length && user.address) {
+    if (networks.networksList.length) {
       getCurrentChain();
     }
-  }, [getCurrentChain, networks.networksList.length, user.address]);
+  }, [getCurrentChain, networks.networksList.length]);
 
   useEffect(() => {
     Object.keys(chains).forEach((key) => {
@@ -235,9 +236,9 @@ const SelectNetwork: React.FC = observer(() => {
       }
       dropdownClassName="select-network__dropdown"
     >
-      <Option value="eth">
+      {/* <Option value="eth">
         <TokenMini name="Ethereum" icon={eth} width="26" height="26" />
-      </Option>
+      </Option> */}
       <Option value="bnb">
         <TokenMini
           name="Binance"

@@ -10,7 +10,7 @@ import { Footer, GuardedRoute, Header } from './components';
 import {
   AboutUs,
   Admin,
-  Bridge,
+  // Bridge,
   Home,
   Index,
   IndexDashboard,
@@ -80,9 +80,9 @@ export const App: React.FC = observer(() => {
             <GuardedRoute exact path="/admin" component={Indexes} auth={admin} />
             <GuardedRoute exact path="/admin/index/:indexId" component={AdminIndex} auth={admin} />
             <GuardedRoute exact path="/staking" component={StakePage} auth={user} />
-            <Route exact path="/bridge">
+            {/* <Route exact path="/bridge">
               <Bridge />
-            </Route>
+            </Route> */}
             <Route exact path="/indexes">
               <IndexDashboard />
             </Route>

@@ -3,7 +3,7 @@ import BigNumber from 'bignumber.js/bignumber';
 import { observer } from 'mobx-react-lite';
 
 import bscLogo from '../../assets/img/icons/blockchains/bsc.svg';
-import ethLogo from '../../assets/img/icons/blockchains/eth.svg';
+// import ethLogo from '../../assets/img/icons/blockchains/eth.svg';
 import link from '../../assets/img/icons/icon-link.svg';
 import indexLogo from '../../assets/img/icons/logo-index.svg';
 import { Button } from '../../components';
@@ -26,7 +26,7 @@ const isProduction = process.env.REACT_APP_IS_PROD === 'production';
 type ChainType = 'eth' | 'bsc';
 
 const blockchains = [
-  {
+  /*  {
     key: 'eth' as ChainType,
     img: ethLogo,
     title: 'Ethereum',
@@ -38,7 +38,7 @@ const blockchains = [
     link: `https://${
       isProduction ? '' : 'ropsten.'
     }etherscan.io/address/0x741728B806E82df82E9510c5c87a37f0a1F6A4B1`,
-  },
+  }, */
   {
     key: 'bsc' as ChainType,
     img: bscLogo,
