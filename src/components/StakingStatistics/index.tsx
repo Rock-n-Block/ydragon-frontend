@@ -10,10 +10,10 @@ import { useWalletConnectorContext } from '../../services/walletConnect';
 import { useMst } from '../../store/store';
 import { ProviderRpcError } from '../../types/errors';
 import { Button, Table } from '../index';
+import { HarvestModal } from '../Modals';
 import SmallTableCard from '../SmallTableCard/index';
 
 import './StakingStatistics.scss';
-import { HarvestModal } from '../Modals';
 
 interface IStakingStat {
   months: number;
@@ -134,7 +134,7 @@ const StakingStatistics: React.FC = observer(() => {
 
   const handleHarvest = useCallback(() => {
     modals.harvest.close();
-    walletConnector.metamaskService
+    walletConnector.walletService
       .harvestStakeItem(dataSource[selectedRowKeys[0]].id)
       .then(() => {
         modals.info.setMsg(
@@ -151,7 +151,7 @@ const StakingStatistics: React.FC = observer(() => {
   }, [
     modals.harvest,
     modals.info,
-    walletConnector.metamaskService,
+    walletConnector.walletService,
     dataSource,
     selectedRowKeys,
     getStakingStatistic,
@@ -159,7 +159,7 @@ const StakingStatistics: React.FC = observer(() => {
 
   const handleStakeEnd = useCallback(() => {
     modals.harvest.close();
-    walletConnector.metamaskService
+    walletConnector.walletService
       .endStake(dataSource[selectedRowKeys[0]].id)
       .then(() => {
         modals.info.setMsg(
@@ -176,7 +176,7 @@ const StakingStatistics: React.FC = observer(() => {
   }, [
     modals.harvest,
     modals.info,
-    walletConnector.metamaskService,
+    walletConnector.walletService,
     dataSource,
     selectedRowKeys,
     getStakingStatistic,

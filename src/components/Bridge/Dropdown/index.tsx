@@ -21,7 +21,9 @@ const Dropdown: React.FC<DropdownProps> = ({ items, activeIndex, setActiveIndex 
       <div
         role="button"
         tabIndex={0}
-        className={`gradient-box__switch ${isSelectOpen ? 'open' : 'close'}`}
+        className={`gradient-box__switch ${isSelectOpen ? 'open' : 'close'} ${
+          items.length > 1 ? 'pointer' : ''
+        }`}
         onClick={() => setIsSelectOpen(!isSelectOpen)}
         onKeyPress={() => console.log('keypress')}
       >

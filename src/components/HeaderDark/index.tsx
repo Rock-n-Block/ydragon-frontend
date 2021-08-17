@@ -30,7 +30,7 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = observer(({ collapsed, onCollapsedChange }) => {
   const [fixed, setFixed] = useState(true);
-  const { theme, user } = useMst();
+  const { theme, user, modals } = useMst();
   const walletConnector = useWalletConnectorContext();
   const history = useHistory();
 
@@ -49,7 +49,7 @@ const Header: React.FC<HeaderProps> = observer(({ collapsed, onCollapsedChange }
 
   const connectWallet = (): void => {
     onCollapsedChange(true);
-    walletConnector.connect();
+    modals.connectWallet.open();
   };
 
   const redirectHandler = (path: string) => {
@@ -234,17 +234,15 @@ const Header: React.FC<HeaderProps> = observer(({ collapsed, onCollapsedChange }
                     </Button>
                   </li>
                 )}
-                {user.address && (
-                  <li className="menu-nav__item">
-                    <Button
-                      styledType="clear"
-                      onClick={() => redirectHandler('/bridge')}
-                      className="menu-nav__link"
-                    >
-                      Bridge
-                    </Button>
-                  </li>
-                )}
+                <li className="menu-nav__item">
+                  <Button
+                    styledType="clear"
+                    onClick={() => redirectHandler('/bridge')}
+                    className="menu-nav__link"
+                  >
+                    Bridge
+                  </Button>
+                </li>
                 <li className="menu-nav__item">
                   <Button
                     styledType="clear"

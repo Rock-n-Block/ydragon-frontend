@@ -37,15 +37,12 @@ const GetInModal: React.FC = observer(() => {
       if (currency === 'bnb') {
         return new Promise((resolve) => resolve(18));
       }
-      return walletConnector.metamaskService.getDecimals(
-        getTokenAddress(currency),
-        config.Token.ABI,
-      );
+      return walletConnector.walletService.getDecimals(getTokenAddress(currency), config.Token.ABI);
     },
-    [getTokenAddress, walletConnector.metamaskService],
+    [getTokenAddress, walletConnector.walletService],
   );
   const getBalance = useCallback(() => {
-    walletConnector.metamaskService
+    walletConnector.walletService
       .getBalanceOf(getTokenAddress(firstCurrency))
       .then((data: any) => {
         setBalance(data);
@@ -57,10 +54,10 @@ const GetInModal: React.FC = observer(() => {
         const { message } = err;
         console.log('getBalance error', message);
       });
-  }, [getTokenAddress, getDecimals, walletConnector.metamaskService, firstCurrency]);
+  }, [getTokenAddress, getDecimals, walletConnector.walletService, firstCurrency]);
   const checkAllowance = useCallback(() => {
     if (firstCurrency !== 'bnb') {
-      walletConnector.metamaskService
+      walletConnector.walletService
         .checkAllowanceById(getTokenAddress(firstCurrency), config.MAIN.ABI, modals.getIn.address)
         .then((data: boolean) => {
           setIsNeedApprove(!data);
@@ -70,7 +67,7 @@ const GetInModal: React.FC = observer(() => {
           console.log('allowance error', response);
         });
     }
-  }, [getTokenAddress, modals.getIn.address, walletConnector.metamaskService, firstCurrency]);
+  }, [getTokenAddress, modals.getIn.address, walletConnector.walletService, firstCurrency]);
 
   const handleSelectChange = (value: any) => {
     setFirstCurrency(value);
@@ -83,7 +80,7 @@ const GetInModal: React.FC = observer(() => {
 
   const handleApprove = (): void => {
     setIsLoading(true);
-    walletConnector.metamaskService
+    walletConnector.walletService
       .approveById(getTokenAddress(firstCurrency), modals.getIn.address)
       .then(() => {
         setIsNeedApprove(false);
@@ -98,7 +95,7 @@ const GetInModal: React.FC = observer(() => {
 
   const handleEnter = (): void => {
     setIsLoading(true);
-    walletConnector.metamaskService
+    walletConnector.walletService
       .mint(payInput, firstCurrency, getTokenAddress(firstCurrency), modals.getIn.address, decimals)
       .then(() => {
         setPayInput('');
@@ -118,7 +115,7 @@ const GetInModal: React.FC = observer(() => {
 
   const getBuyCourse = useCallback(() => {
     if (payInput) {
-      walletConnector.metamaskService
+      walletConnector.walletService
         .getIndexCourse(
           getTokenAddress(firstCurrency),
           payInput,
@@ -144,7 +141,7 @@ const GetInModal: React.FC = observer(() => {
     decimals,
     payInput,
     firstCurrency,
-    walletConnector.metamaskService,
+    walletConnector.walletService,
   ]);
   const handlePayInput = (e: any) => {
     if (+e.target.value < 0) {

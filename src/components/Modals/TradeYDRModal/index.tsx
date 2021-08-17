@@ -42,15 +42,15 @@ const TradeYDRModal: React.FC = observer(() => {
       if (currency.toLowerCase() === 'bnb' || currency.toLowerCase() === 'matic') {
         return new Promise((resolve) => resolve(18));
       }
-      return walletConnector.metamaskService.getDecimals(
+      return walletConnector.walletService.getDecimals(
         basicTokens.getTokenAddress(currency),
         config.Token.ABI,
       );
     },
-    [basicTokens, walletConnector.metamaskService],
+    [basicTokens, walletConnector.walletService],
   );
   const getBalance = useCallback(() => {
-    walletConnector.metamaskService
+    walletConnector.walletService
       .getBalanceOf(basicTokens.getTokenAddress(firstCurrency))
       .then((data: any) => {
         setBalance(data);
@@ -65,11 +65,11 @@ const TradeYDRModal: React.FC = observer(() => {
         const { message } = err;
         console.log('getBalance error', message);
       });
-  }, [basicTokens, walletConnector.metamaskService, firstCurrency, secondCurrency, getDecimals]);
+  }, [basicTokens, walletConnector.walletService, firstCurrency, secondCurrency, getDecimals]);
 
   const getBuyCourse = useCallback(() => {
     if (payInput) {
-      walletConnector.metamaskService
+      walletConnector.walletService
         .getYDRCourse(
           firstCurrency,
           basicTokens.getTokenAddress(firstCurrency),
@@ -97,11 +97,11 @@ const TradeYDRModal: React.FC = observer(() => {
     viewOnlyDecimals,
     payInput,
     firstCurrency,
-    walletConnector.metamaskService,
+    walletConnector.walletService,
   ]);
   const getSellCourse = useCallback(() => {
     if (payInput) {
-      walletConnector.metamaskService
+      walletConnector.walletService
         .getYDRCourse(
           secondCurrency,
           basicTokens.getTokenAddress(secondCurrency),
@@ -129,11 +129,11 @@ const TradeYDRModal: React.FC = observer(() => {
     viewOnlyDecimals,
     payInput,
     secondCurrency,
-    walletConnector.metamaskService,
+    walletConnector.walletService,
   ]);
 
   const checkAllowance = useCallback(() => {
-    walletConnector.metamaskService
+    walletConnector.walletService
       // .checkAllowance(firstCurrency, 'Router')
       .checkAllowanceById(
         basicTokens.getTokenAddress(firstCurrency),
@@ -147,7 +147,7 @@ const TradeYDRModal: React.FC = observer(() => {
         const { message } = err;
         console.log('allowance error', message);
       });
-  }, [basicTokens, networks, walletConnector.metamaskService, firstCurrency]);
+  }, [basicTokens, networks, walletConnector.walletService, firstCurrency]);
   const handleSelectChange = (value: any) => {
     setPayInput('');
     setViewOnlyInputValue('0.0');
@@ -165,7 +165,7 @@ const TradeYDRModal: React.FC = observer(() => {
   };
   const handleApprove = (): void => {
     setIsLoading(true);
-    walletConnector.metamaskService
+    walletConnector.walletService
       // .approve(firstCurrency, 'Router')
       .approveById(
         basicTokens.getTokenAddress(firstCurrency),
@@ -183,7 +183,7 @@ const TradeYDRModal: React.FC = observer(() => {
   };
   const handleBuy = (): void => {
     setIsLoading(true);
-    walletConnector.metamaskService
+    walletConnector.walletService
       .buyYDRToken(payInput, firstCurrency, basicTokens.getTokenAddress(firstCurrency), decimals)
       .then(() => {
         setPayInput('');
@@ -198,7 +198,7 @@ const TradeYDRModal: React.FC = observer(() => {
   };
   const handleSell = (): void => {
     setIsLoading(true);
-    walletConnector.metamaskService
+    walletConnector.walletService
       .sellYDRToken(payInput, secondCurrency, basicTokens.getTokenAddress(secondCurrency), decimals)
       .then(() => {
         setPayInput('');

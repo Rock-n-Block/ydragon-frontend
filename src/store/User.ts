@@ -18,7 +18,7 @@ export const User = types
     const disconnect = () => {
       self.address = '';
       sessionStorage.setItem('yd_token', '');
-      sessionStorage.setItem('yd_metamask', '');
+      sessionStorage.setItem('yd_wallet', '');
       sessionStorage.setItem('yd_address', '');
     };
     return {

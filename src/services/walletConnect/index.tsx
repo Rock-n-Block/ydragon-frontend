@@ -4,21 +4,25 @@ import { observer } from 'mobx-react';
 
 import { rootStore } from '../../store/store';
 import { accountsApi } from '../api';
-import MetamaskService from '../web3';
+import WalletService, { WALLET_TYPE } from '../web3';
 // import { userApi } from '../api';
 
 const walletConnectorContext = createContext<any>({
-  metamaskService: {},
+  walletService: {},
   connect: (): void => {},
 });
 
 @observer
 class Connector extends React.Component<any, any> {
+  private static isWalletType(walletType: string): walletType is WALLET_TYPE {
+    return (Object.values(WALLET_TYPE) as any[]).includes(walletType);
+  }
+
   constructor(props: any) {
     super(props);
 
     this.state = {
-      provider: new MetamaskService(),
+      provider: new WalletService(),
     };
 
     this.connect = this.connect.bind(this);
@@ -27,43 +31,43 @@ class Connector extends React.Component<any, any> {
 
   componentDidMount() {
     const self = this;
-    if (window.ethereum) {
-      if (sessionStorage.getItem('yd_metamask')) {
-        this.connect();
-      }
-      this.state.provider.chainChangedObs.subscribe({
-        next(err: string) {
-          if (err) {
-            self.disconnect();
-            rootStore.modals.metamask.setErr(err);
-          } else {
-            window.location.reload();
-          }
-        },
-      });
-
-      this.state.provider.accountChangedObs.subscribe({
-        next() {
-          self.disconnect();
-        },
-      });
-      this.state.provider.disconnectObs.subscribe({
-        next(reason: string) {
-          console.log('disconnect', reason);
-        },
-      });
+    const walletType = sessionStorage.getItem('yd_wallet');
+    if (walletType && Connector.isWalletType(walletType)) {
+      this.connect(walletType);
     }
+    this.state.provider.chainChangedObs.subscribe({
+      next(err: string) {
+        if (err) {
+          self.disconnect();
+          rootStore.modals.metamask.setErr(err);
+        } else {
+          window.location.reload();
+        }
+      },
+    });
+
+    this.state.provider.accountChangedObs.subscribe({
+      next() {
+        self.disconnect();
+      },
+    });
+    this.state.provider.disconnectObs.subscribe({
+      next(reason: string) {
+        console.log('disconnect', reason);
+      },
+    });
   }
 
-  connect = async () => {
-    if (window.ethereum) {
-      try {
-        const { address } = await this.state.provider.connect();
+  connect = async (walletType: WALLET_TYPE) => {
+    try {
+      const { address } = await this.state.provider.connect(walletType);
 
+      try {
         if (!sessionStorage.getItem('yd_address')) {
           const metMsg: any = await accountsApi.getMsg();
 
           const signedMsg = await this.state.provider.signMsg(metMsg.data);
+          console.log(signedMsg);
 
           const login: any = await accountsApi.login({
             address,
@@ -74,34 +78,32 @@ class Connector extends React.Component<any, any> {
           sessionStorage.setItem('yd_token', login.data.key);
           sessionStorage.setItem('yd_address', address);
           rootStore.user.setAddress(address);
-          sessionStorage.setItem('yd_metamask', 'true');
+          sessionStorage.setItem('yd_wallet', walletType);
           // rootStore.user.update({ address });
         } else {
           rootStore.user.setAddress(address);
-          sessionStorage.setItem('yd_metamask', 'true');
+          sessionStorage.setItem('yd_wallet', walletType);
           // rootStore.user.update({ address });
         }
       } catch (err) {
         const { response } = err;
-        if (response) {
-          if (response.status === 400 && response.data.result[0] === 'user is not admin') {
-            sessionStorage.setItem('yd_isAdmin', 'false');
-            const { address } = await this.state.provider.connect();
-            sessionStorage.setItem('yd_address', address);
-            rootStore.user.setAddress(address);
-            sessionStorage.setItem('yd_metamask', 'true');
-            rootStore.user.update({ address });
-          } else {
-            rootStore.modals.metamask.setErr(err.message);
-            this.disconnect();
-          }
+        if (
+          response &&
+          response.status === 400 &&
+          response.data.result[0] === 'user is not admin'
+        ) {
+          sessionStorage.setItem('yd_isAdmin', 'false');
+          sessionStorage.setItem('yd_address', address);
+          rootStore.user.setAddress(address);
+          sessionStorage.setItem('yd_wallet', walletType);
+          rootStore.user.update({ address });
         } else {
-          rootStore.modals.metamask.setErr(err.message);
-          this.disconnect();
+          throw err;
         }
       }
-    } else {
-      rootStore.modals.metamask.setErr('No Metamask (or other Web3 Provider) installed');
+    } catch (err) {
+      rootStore.modals.metamask.setErr(err.message);
+      this.disconnect();
     }
   };
 
@@ -113,7 +115,7 @@ class Connector extends React.Component<any, any> {
     return (
       <walletConnectorContext.Provider
         value={{
-          metamaskService: this.state.provider,
+          walletService: this.state.provider,
           connect: this.connect,
           disconnect: this.disconnect,
         }}

@@ -36,7 +36,7 @@ const CreateIndexForm: React.FC = () => {
         tokenAddresses.push(token.token.address);
         tokenWeights.push(new BigNumber(token.new_weight).multipliedBy(100).toString(10));
       });
-      walletConnector.metamaskService
+      walletConnector.walletService
         .createNewIndex(
           values.name,
           values.symbol,

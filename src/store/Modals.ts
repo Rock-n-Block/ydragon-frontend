@@ -136,6 +136,18 @@ const HarvestModal = types
       self.isOpen = false;
     },
   }));
+const ConnectWalletModal = types
+  .model({
+    isOpen: types.boolean,
+  })
+  .actions((self) => ({
+    open() {
+      self.isOpen = true;
+    },
+    close() {
+      self.isOpen = false;
+    },
+  }));
 
 export const Modals = types
   .model({
@@ -149,6 +161,7 @@ export const Modals = types
     tradeIndex: TradeIndexModal,
     metamask: MetamaskModal,
     harvest: HarvestModal,
+    connectWallet: ConnectWalletModal,
   })
   .actions((self) => ({
     closeAll() {

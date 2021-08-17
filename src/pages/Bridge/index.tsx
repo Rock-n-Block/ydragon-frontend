@@ -103,7 +103,7 @@ const Bridge: React.FC = observer(() => {
     setIsLoading(true);
     const { contractAddress, tokenAddress } = blockchains[fromBlockchainIndex];
     if (user.address) {
-      const isAllowed = await walletConnector.metamaskService.checkBridgeAllowance(
+      const isAllowed = await walletConnector.walletService.checkBridgeAllowance(
         contractAddress,
         tokenAddress,
       );
@@ -111,11 +111,12 @@ const Bridge: React.FC = observer(() => {
     } else {
       setIsApproved(true);
     }
-  }, [fromBlockchainIndex, user.address, walletConnector.metamaskService]);
+  }, [fromBlockchainIndex, user.address, walletConnector.walletService]);
+
   const handleApprove = (): void => {
     setIsLoading(true);
     const { contractAddress, tokenAddress } = blockchains[fromBlockchainIndex];
-    walletConnector.metamaskService
+    walletConnector.walletService
       .approveById(tokenAddress, contractAddress)
       .then(async () => {
         modals.info.setMsg('Success', `${tokenSymbol} is approved`, 'success');
@@ -123,6 +124,9 @@ const Bridge: React.FC = observer(() => {
       })
       .catch((err: any) => {
         console.debug(err);
+        if (err.message.includes('insufficient funds for transfer')) {
+          modals.info.setMsg('Error', `Insufficient native coins for transfer`, 'error');
+        }
       })
       .finally(() => {
         setIsLoading(false);
@@ -134,7 +138,7 @@ const Bridge: React.FC = observer(() => {
 
     const fromBlockchainKey = blockchains[fromBlockchainIndex].key;
     const currentGasPrice = new BigNumber(
-      await walletConnector.metamaskService.getGasPrice(),
+      await walletConnector.walletService.getGasPrice(),
     ).dividedBy(10 ** 9);
     if (currentGasPrice.gt(maxGasPrice[fromBlockchainKey] as BigNumber)) {
       modals.info.setMsg('Error', `Current gas price is too high`, 'error');
@@ -145,7 +149,7 @@ const Bridge: React.FC = observer(() => {
     const { contractAddress } = blockchains[fromBlockchainIndex];
     const toBlockchain = blockchains[toBlockchainIndex].contractId;
     const amount = new BigNumber(inputAmount).multipliedBy(10 ** tokenDecimals).toFixed(0);
-    walletConnector.metamaskService
+    walletConnector.walletService
       .swapTokensToOtherBlockchain(contractAddress, toBlockchain, amount, user.address)
       .then(() => {
         modals.info.setMsg(
@@ -163,19 +167,19 @@ const Bridge: React.FC = observer(() => {
   };
 
   const getCurrentChainId = useCallback(() => {
-    return walletConnector.metamaskService.ethGetCurrentChain().then((chainId: string) => {
+    return walletConnector.walletService.requestCurrentChain().then((chainId: string) => {
       setCurrentBlockchainId(chainId);
       const blockchainIndex = blockchains.findIndex((blockchain) => blockchain.chainId === chainId);
       if (blockchainIndex !== -1) {
         setBlockchainIndex('from', blockchainIndex);
       }
     });
-  }, [setBlockchainIndex, walletConnector.metamaskService]);
+  }, [setBlockchainIndex, walletConnector.walletService]);
 
   const getBalance = useCallback(async () => {
     if (user.address) {
       const { tokenAddress } = blockchains[fromBlockchainIndex];
-      await walletConnector.metamaskService
+      await walletConnector.walletService
         .getBalanceOf(tokenAddress)
         .then((tokenBalance: string) => {
           setBalance(new BigNumber(tokenBalance).dividedBy(10 ** tokenDecimals));
@@ -183,7 +187,7 @@ const Bridge: React.FC = observer(() => {
     } else {
       setBalance(new BigNumber(0));
     }
-  }, [fromBlockchainIndex, user.address, walletConnector.metamaskService]);
+  }, [fromBlockchainIndex, user.address, walletConnector.walletService]);
 
   const getFeeAndMinAmount = useCallback(async () => {
     await bridgeApi.getInfo().then((info: any) => {
