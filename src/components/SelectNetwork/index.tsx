@@ -66,7 +66,7 @@ const devChains: IChains = {
       symbol: 'tETH',
       decimals: 18,
     },
-    rpcUrls: ['https://ropsten.infura.io/v3/20a58948a748481580e7a27422bac480'],
+    rpcUrls: ['https://ropsten.infura.io/v3/886cb294bf2a440e9f78a654a6941ff3'],
     blockExplorerUrls: ['https://ropsten.etherscan.io/'],
   },
 };
@@ -101,7 +101,7 @@ const prodChains: IChains = {
       symbol: 'ETH',
       decimals: 18,
     },
-    rpcUrls: ['https://mainnet.infura.io/v3/20a58948a748481580e7a27422bac480'],
+    rpcUrls: ['https://mainnet.infura.io/v3/886cb294bf2a440e9f78a654a6941ff3'],
     blockExplorerUrls: ['https://etherscan.io/'],
   },
 };
