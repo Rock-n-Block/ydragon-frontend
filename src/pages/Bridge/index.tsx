@@ -32,9 +32,13 @@ const blockchains = [
     title: 'Ethereum',
     shortTitle: 'Ethereum',
     chainId: isProduction ? '0x1' : '0x3',
-    contractAddress: '0x3a14E30cd01a1F77e9D558A96b14724480D13b66',
+    contractAddress: isProduction
+      ? '0x67AC0F6872251b5e99c52a1208D992e7184EEF26'
+      : '0x3a14E30cd01a1F77e9D558A96b14724480D13b66',
     contractId: 2,
-    tokenAddress: '0x741728B806E82df82E9510c5c87a37f0a1F6A4B1',
+    tokenAddress: isProduction
+      ? '0x3757232B55E60da4A8793183aC030CfCE4c3865d'
+      : '0x741728B806E82df82E9510c5c87a37f0a1F6A4B1',
     link: `https://${
       isProduction ? '' : 'ropsten.'
     }etherscan.io/address/0x741728B806E82df82E9510c5c87a37f0a1F6A4B1`,
@@ -45,9 +49,13 @@ const blockchains = [
     title: 'Binance Smart Chain',
     shortTitle: 'BSC',
     chainId: isProduction ? '0x38' : '0x61',
-    contractAddress: '0x84046c5a51A081720B11dCc0C3df64839EFF39cd',
+    contractAddress: isProduction
+      ? '0x3757232B55E60da4A8793183aC030CfCE4c3865d'
+      : '0x84046c5a51A081720B11dCc0C3df64839EFF39cd',
     contractId: 1,
-    tokenAddress: '0x05Ac77598AB89ec2753B58107B0c145dc93982d3',
+    tokenAddress: isProduction
+      ? 'https://bscscan.com/address/0x3757232b55e60da4a8793183ac030cfce4c3865d'
+      : '0x05Ac77598AB89ec2753B58107B0c145dc93982d3',
     link: `https://${
       isProduction ? '' : 'testnet.'
     }bscscan.com/address/0x05Ac77598AB89ec2753B58107B0c145dc93982d3`,

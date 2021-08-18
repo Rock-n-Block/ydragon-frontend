@@ -98,6 +98,8 @@ export default class WalletService {
           rootStore.networks.setCurrNetwork('binance-smart-chain');
         } else if (currentChain === this.usedChain.matic) {
           rootStore.networks.setCurrNetwork('polygon-pos');
+        } else if (currentChain === this.usedChain.matic) {
+          rootStore.networks.setCurrNetwork('ethereum');
         }
         this.chainChangedObs.next('');
       }
@@ -130,7 +132,6 @@ export default class WalletService {
 
   private connectWalletconnect(): void {
     this.walletType = WALLET_TYPE.WALLETCONNECT;
-    console.log('new');
     this.wallet = new WalletConnect({
       infuraId: 'e15330fb7e954a868e15297dd74dea37',
       rpc: {
