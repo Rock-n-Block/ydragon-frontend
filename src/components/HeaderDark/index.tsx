@@ -152,11 +152,11 @@ const Header: React.FC<HeaderProps> = observer(({ collapsed, onCollapsedChange }
                     </Link>
                   </li>
                 )}
-                {/* <li className="header-nav__item">
+                <li className="header-nav__item">
                   <Link to="/bridge" className="header-nav__link">
                     Bridge
                   </Link>
-                </li> */}
+                </li>
                 <li className="header-nav__item">
                   <Link to="/about-us" className="header-nav__link">
                     About
@@ -234,17 +234,18 @@ const Header: React.FC<HeaderProps> = observer(({ collapsed, onCollapsedChange }
                     </Button>
                   </li>
                 )}
-                {/* {user.address && (
-                  <li className="menu-nav__item">
-                    <Button
-                      styledType="clear"
-                      onClick={() => redirectHandler('/bridge')}
-                      className="menu-nav__link"
-                    >
-                      Bridge
-                    </Button>
-                  </li>
-                )} */}
+                <li className="menu-nav__item">
+                  <Button
+                    styledType="clear"
+                    // onClick={() => redirectHandler('/bridge')}
+                    link="https://ydragon-bridge.herokuapp.com/"
+                    target="_blank"
+                    rel="noopener norefferer"
+                    className="menu-nav__link"
+                  >
+                    Bridge
+                  </Button>
+                </li>
                 <li className="menu-nav__item">
                   <Button
                     styledType="clear"

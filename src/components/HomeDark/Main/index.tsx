@@ -36,10 +36,10 @@ const Main: React.FC = () => {
         </Button>
       </div>
 
-      <div className="home__currently-price">
+      {/* <div className="home__currently-price">
         &quot;The YDragon project has currently <span>XXXX$</span> diversified among indexes&quot;.
         (TVL)
-      </div>
+      </div> */}
     </section>
   );
 };

@@ -116,7 +116,7 @@
   overflow: hidden;
 
   height: 119px;
-  @media (max-width: 1170px) {
+  @media (max-width: 1240px) {
     width: 100%;
 
     transition: all 0.4s;
@@ -139,7 +139,7 @@
     display: none;
 
     outline: none;
-    @media (max-width: 1170px) {
+    @media (max-width: 1240px) {
       position: relative;
       top: 0;
       left: 0;
@@ -155,11 +155,10 @@
 
     padding: 40px 0;
 
-    display: grid;
-    grid-template-columns: 1fr 410px 1fr;
-
+    display: flex;
+    justify-content: space-between;
     align-items: center;
-    @media (max-width: 1170px) {
+    @media (max-width: 1240px) {
       margin: 0 auto;
 
       display: flex;
@@ -174,7 +173,7 @@
   &__logo {
     display: flex;
     align-items: center;
-    @media (max-width: 1170px) {
+    @media (max-width: 1240px) {
       margin: 0 auto;
     }
   }
@@ -211,7 +210,7 @@
 
   &__nav,
   &__sign {
-    @media (max-width: 1170px) {
+    @media (max-width: 1240px) {
       display: none;
     }
   }
@@ -273,7 +272,7 @@
 
     &__socials {
       position: fixed;
-      left: calc(50% - 332px/2);
+      left: calc(50% - 332px / 2);
       bottom: 30px;
 
       &-item {
