@@ -130,13 +130,14 @@ export default class WalletService {
 
   private connectWalletconnect(): void {
     this.walletType = WALLET_TYPE.WALLETCONNECT;
+    console.log('new');
     this.wallet = new WalletConnect({
       infuraId: 'e15330fb7e954a868e15297dd74dea37',
       rpc: {
         1: 'https://mainnet.infura.io/v3/e15330fb7e954a868e15297dd74dea37',
         3: 'https://ropsten.infura.io/v3/e15330fb7e954a868e15297dd74dea37',
         56: 'https://bsc-dataseed.binance.org/',
-        97: 'https://data-seed-prebsc-1-s1.binance.org:8545/',
+        97: 'https://data-seed-prebsc-2-s1.binance.org:8545/',
       },
       qrcode: true,
     });
