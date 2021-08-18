@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { NavHashLink } from 'react-router-hash-link';
+import PoweredBy from './PoweredBy';
 
 import logo from '../../assets/img/icons/logo.svg';
 // import dis from '../../assets/img/socials/discord.svg';
@@ -125,6 +126,7 @@ const Footer: React.FC = () => {
             </div>
           </div> */}
         </div>
+        <PoweredBy />
       </div>
     </footer>
   );

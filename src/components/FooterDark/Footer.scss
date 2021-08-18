@@ -45,6 +45,11 @@
   margin-top: 240px;
   padding: 60px 0;
 
+  .container {
+    display: flex;
+    flex-direction: column;
+  }
+
   @include b('tablet') {
     margin-top: 140px;
 
