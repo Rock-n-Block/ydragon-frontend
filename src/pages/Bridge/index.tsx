@@ -5,7 +5,7 @@ import { observer } from 'mobx-react-lite';
 import bscLogo from '../../assets/img/icons/blockchains/bsc.svg';
 import ethLogo from '../../assets/img/icons/blockchains/eth.svg';
 import link from '../../assets/img/icons/icon-link.svg';
-import indexLogo from '../../assets/img/icons/logo-index.svg';
+// import indexLogo from '../../assets/img/icons/logo-index.svg';
 import { Button } from '../../components';
 import Dropdown from '../../components/Bridge/Dropdown';
 import { bridgeApi } from '../../services/api';
@@ -14,12 +14,12 @@ import { useMst } from '../../store/store';
 
 import './Bridge.scss';
 
-const indexes = [
+/* const indexes = [
   {
     img: indexLogo,
-    title: 'YDRagon',
+    title: 'YDragon',
   },
-];
+]; */
 
 const isProduction = process.env.REACT_APP_IS_PROD === 'production';
 
@@ -76,7 +76,7 @@ const Bridge: React.FC = observer(() => {
   const [currentBlockchainId, setCurrentBlockchainId] = useState<string | undefined>(undefined);
   const [fromBlockchainIndex, setFromBlockchainIndex] = useState(0);
   const [toBlockchainIndex, setToBlockchainIndex] = useState(1);
-  const [activeTokenIndex, setActiveTokenIndex] = useState(0);
+  // const [activeTokenIndex, setActiveTokenIndex] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [isApproved, setIsApproved] = useState(false);
 
@@ -286,7 +286,7 @@ const Bridge: React.FC = observer(() => {
   return (
     <div className="bridge">
       <form className="form">
-        <div className="form__item">
+        {/*  <div className="form__item">
           <div className="form__item__header">
             <div className="form__item__header__title">Choose Token</div>
           </div>
@@ -295,7 +295,7 @@ const Bridge: React.FC = observer(() => {
             activeIndex={activeTokenIndex}
             setActiveIndex={setActiveTokenIndex}
           />
-        </div>
+        </div> */}
 
         <div className="form__item">
           <div className="form__item__header">
@@ -329,7 +329,7 @@ const Bridge: React.FC = observer(() => {
               rel="noreferrer"
             >
               <div className="form__item__header__link__text">
-                {blockchains[fromBlockchainIndex].shortTitle} KYP
+                {blockchains[fromBlockchainIndex].shortTitle} YDR
               </div>
               <img src={link} alt="etherscan link" />
             </a>
@@ -359,11 +359,11 @@ const Bridge: React.FC = observer(() => {
           <div className="form__item__footer">
             <div className="form__item__footer__fee">
               <div className="form__item__footer__fee__text">
-                Fee: {fee[blockchains[fromBlockchainIndex].key]?.toFixed()}
+                {`Fee: ${fee[blockchains[fromBlockchainIndex].key]?.toFixed()} YDR`}
               </div>
             </div>
             <div className="form__item__footer__min-amount">
-              Minimum amount: {minAmount[blockchains[fromBlockchainIndex].key]?.toFixed()} KYP
+              Minimum amount: {minAmount[blockchains[fromBlockchainIndex].key]?.toFixed()} YDR
             </div>
           </div>
         </div>
@@ -378,7 +378,7 @@ const Bridge: React.FC = observer(() => {
               rel="noreferrer"
             >
               <div className="form__item__header__link__text">
-                {blockchains[toBlockchainIndex].shortTitle} KYP
+                {blockchains[toBlockchainIndex].shortTitle} YDR
               </div>
               <img src={link} alt="etherscan link" />
             </a>
