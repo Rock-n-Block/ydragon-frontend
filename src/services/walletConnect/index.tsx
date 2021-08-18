@@ -67,7 +67,6 @@ class Connector extends React.Component<any, any> {
           const metMsg: any = await accountsApi.getMsg();
 
           const signedMsg = await this.state.provider.signMsg(metMsg.data);
-          console.log(signedMsg);
 
           const login: any = await accountsApi.login({
             address,
@@ -109,6 +108,7 @@ class Connector extends React.Component<any, any> {
 
   disconnect = () => {
     rootStore.user.disconnect();
+    this.state.provider.disconnect();
   };
 
   render() {

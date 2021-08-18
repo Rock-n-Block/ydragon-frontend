@@ -99,10 +99,16 @@ const Bridge: React.FC = observer(() => {
     }
   }, []);
 
+  const checkChainSettings = useCallback(() => {
+    return walletConnector.walletService
+      .requestCurrentChain()
+      .then((chainId: string) => chainId === blockchains[fromBlockchainIndex].chainId);
+  }, [fromBlockchainIndex, walletConnector.walletService]);
+
   const checkAllowance = useCallback(async () => {
     setIsLoading(true);
     const { contractAddress, tokenAddress } = blockchains[fromBlockchainIndex];
-    if (user.address) {
+    if (user.address && (await checkChainSettings())) {
       const isAllowed = await walletConnector.walletService.checkBridgeAllowance(
         contractAddress,
         tokenAddress,
@@ -111,13 +117,13 @@ const Bridge: React.FC = observer(() => {
     } else {
       setIsApproved(true);
     }
-  }, [fromBlockchainIndex, user.address, walletConnector.walletService]);
+  }, [checkChainSettings, fromBlockchainIndex, user.address, walletConnector.walletService]);
 
   const handleApprove = (): void => {
     setIsLoading(true);
     const { contractAddress, tokenAddress } = blockchains[fromBlockchainIndex];
     walletConnector.walletService
-      .approveById(tokenAddress, contractAddress)
+      .approveBridgeToken(tokenAddress, contractAddress)
       .then(async () => {
         modals.info.setMsg('Success', `${tokenSymbol} is approved`, 'success');
         await checkAllowance();
@@ -126,6 +132,8 @@ const Bridge: React.FC = observer(() => {
         console.debug(err);
         if (err.message.includes('insufficient funds for transfer')) {
           modals.info.setMsg('Error', `Insufficient native coins for transfer`, 'error');
+        } else {
+          modals.info.setMsg('Unknown error', `Please make sure you have enough balance`, 'error');
         }
       })
       .finally(() => {
@@ -177,7 +185,7 @@ const Bridge: React.FC = observer(() => {
   }, [setBlockchainIndex, walletConnector.walletService]);
 
   const getBalance = useCallback(async () => {
-    if (user.address) {
+    if (user.address && (await checkChainSettings())) {
       const { tokenAddress } = blockchains[fromBlockchainIndex];
       await walletConnector.walletService
         .getBalanceOf(tokenAddress)
@@ -187,7 +195,7 @@ const Bridge: React.FC = observer(() => {
     } else {
       setBalance(new BigNumber(0));
     }
-  }, [fromBlockchainIndex, user.address, walletConnector.walletService]);
+  }, [checkChainSettings, fromBlockchainIndex, user.address, walletConnector.walletService]);
 
   const getFeeAndMinAmount = useCallback(async () => {
     await bridgeApi.getInfo().then((info: any) => {
@@ -229,8 +237,7 @@ const Bridge: React.FC = observer(() => {
     setIsLoading(true);
 
     async function setParameters() {
-      await getFeeAndMinAmount();
-      await getGasPrices();
+      await Promise.all([getFeeAndMinAmount(), getGasPrices()]);
 
       setIsLoading(false);
     }
@@ -240,12 +247,10 @@ const Bridge: React.FC = observer(() => {
 
   useEffect(() => {
     setIsLoading(true);
-
     async function checkSettings() {
       setBalance(new BigNumber(0));
       try {
-        await getBalance();
-        await checkAllowance();
+        await Promise.all([getBalance(), checkAllowance()]);
       } catch (err) {
         console.debug(err);
       }
