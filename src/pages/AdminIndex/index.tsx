@@ -32,6 +32,7 @@ interface IRebalance extends IIndexStatus {
 export interface IVault {
   id: number;
   apr: null | string;
+  decimals: number;
   token_name: string;
   token_image: string;
   x_balance: string;

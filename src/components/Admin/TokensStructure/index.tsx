@@ -116,15 +116,15 @@ const TokensStructure: React.FC<TokensStructureProps> = ({ vaults, manualRebalan
     if (vaults) {
       const newData = vaults.map((vault, index) => {
         const x_vault = new BigNumber(vault.x_balance)
-          .dividedBy(new BigNumber(10).pow(18))
+          .dividedBy(new BigNumber(10).pow(vault.decimals))
           .toFixed(5);
         const farm = new BigNumber(vault.farm_balance)
-          .dividedBy(new BigNumber(10).pow(18))
+          .dividedBy(new BigNumber(10).pow(vault.decimals))
           .toFixed(5);
         const y_vault = new BigNumber(
           new BigNumber(vault.y_balance).minus(new BigNumber(vault.farm_balance)),
         )
-          .dividedBy(new BigNumber(10).pow(18))
+          .dividedBy(new BigNumber(10).pow(vault.decimals))
           .toFixed(5);
         const estimated = new BigNumber(x_vault)
           .plus(y_vault)
