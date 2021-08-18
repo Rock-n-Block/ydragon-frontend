@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { useHistory } from 'react-router';
-import { Link } from 'react-router-dom';
-import { NavHashLink } from 'react-router-hash-link';
+// import { useHistory } from 'react-router';
+// import { Link } from 'react-router-dom';
+// import { NavHashLink } from 'react-router-hash-link';
 import { observer } from 'mobx-react-lite';
 
 import crossBlack from '../../assets/img/icons/icon-cross-black.svg';
@@ -15,7 +15,7 @@ import tg from '../../assets/img/socials/telegram.svg';
 import tw from '../../assets/img/socials/twitter.svg';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-import Whitepaper from '../../assets/pdf/YD WP.pdf';
+// import Whitepaper from '../../assets/pdf/YD WP.pdf';
 import { useWalletConnectorContext } from '../../services/walletConnect';
 import { DARK, LIGHT, useMst } from '../../store/store';
 // import EventBanner from '../EventBanner';
@@ -32,7 +32,7 @@ const Header: React.FC<HeaderProps> = observer(({ collapsed, onCollapsedChange }
   const [fixed, setFixed] = useState(true);
   const { theme, user, modals } = useMst();
   const walletConnector = useWalletConnectorContext();
-  const history = useHistory();
+  // const history = useHistory();
 
   const handleChangeTheme = () => {
     if (LIGHT === localStorage.theme) {
@@ -52,10 +52,10 @@ const Header: React.FC<HeaderProps> = observer(({ collapsed, onCollapsedChange }
     modals.connectWallet.open();
   };
 
-  const redirectHandler = (path: string) => {
+  /* const redirectHandler = (path: string) => {
     onCollapsedChange(true);
     history.push(path);
-  };
+  }; */
 
   useEffect(() => {
     if (!collapsed) {
@@ -96,7 +96,12 @@ const Header: React.FC<HeaderProps> = observer(({ collapsed, onCollapsedChange }
             </div>
             {collapsed ? (
               <div className="header__logo">
-                <Button styledType="clear" onClick={() => redirectHandler('/')}>
+                <Button
+                  styledType="clear"
+                  href="https://ydragon.io/"
+                  target="_blank"
+                  rel="noreferrer noopenner"
+                >
                   <img src={logo} alt="logo" width="40" height="36" />
                 </Button>
                 <div className="header__logo-text">YDRAGON</div>
@@ -267,7 +272,7 @@ const Header: React.FC<HeaderProps> = observer(({ collapsed, onCollapsedChange }
             </nav>
           </nav> */}
           <div className="footer__wrapper">
-            <div className="footer__col">
+            {/* <div className="footer__col">
               <div className="footer__links-title">Product</div>
 
               <div className="footer__links">
@@ -298,7 +303,7 @@ const Header: React.FC<HeaderProps> = observer(({ collapsed, onCollapsedChange }
                   FAQ
                 </NavHashLink>
               </div>
-            </div>
+            </div> */}
 
             {/* <div className="footer__col">
               <div className="footer__links-title">DeFi</div>
