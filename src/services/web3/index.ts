@@ -1,4 +1,4 @@
-import WalletConnectProvider from '@walletconnect/web3-provider';
+import WalletConnect from '@walletconnect/web3-provider';
 import BigNumber from 'bignumber.js/bignumber';
 import moment from 'moment';
 import { Subject } from 'rxjs';
@@ -79,11 +79,12 @@ export default class WalletService {
   }
 
   protected subscribeOnChanges(): void {
-    let isFirstTime = true;
+    let isFirstTimeChainChanged = true;
+    let isFirstTimeAccountChanged = true;
 
     this.wallet.on('chainChanged', () => {
-      if (this.walletType === WALLET_TYPE.WALLETCONNECT && isFirstTime) {
-        isFirstTime = false;
+      if (this.walletType === WALLET_TYPE.WALLETCONNECT && isFirstTimeChainChanged) {
+        isFirstTimeChainChanged = false;
         return;
       }
 
@@ -103,6 +104,11 @@ export default class WalletService {
     });
 
     this.wallet.on('accountsChanged', () => {
+      if (this.walletType === WALLET_TYPE.WALLETCONNECT && isFirstTimeAccountChanged) {
+        isFirstTimeAccountChanged = false;
+        return;
+      }
+
       this.accountChangedObs.next();
     });
 
@@ -118,13 +124,13 @@ export default class WalletService {
 
     this.walletType = WALLET_TYPE.METAMASK;
     this.wallet = window.ethereum;
-    this.web3Provider = new Web3(this.wallet);
+    this.web3Provider.setProvider(this.wallet);
     this.subscribeOnChanges();
   }
 
   private connectWalletconnect(): void {
     this.walletType = WALLET_TYPE.WALLETCONNECT;
-    this.wallet = new WalletConnectProvider({
+    this.wallet = new WalletConnect({
       infuraId: 'e15330fb7e954a868e15297dd74dea37',
       rpc: {
         1: 'https://mainnet.infura.io/v3/e15330fb7e954a868e15297dd74dea37',
@@ -132,9 +138,9 @@ export default class WalletService {
         56: 'https://bsc-dataseed.binance.org/',
         97: 'https://data-seed-prebsc-1-s1.binance.org:8545/',
       },
-      bridge: 'https://bridge.walletconnect.org',
+      qrcode: true,
     });
-    this.web3Provider = new Web3(this.wallet);
+    this.web3Provider.setProvider(this.wallet);
     this.subscribeOnChanges();
   }
 
@@ -168,6 +174,12 @@ export default class WalletService {
       };
     }
     throw new Error(`Please choose one of networks in header select.`);
+  }
+
+  public async disconnect(): Promise<void> {
+    if (this.walletType === WALLET_TYPE.WALLETCONNECT) {
+      await this.wallet.close();
+    }
   }
 
   private async requestAccounts(): Promise<string[]> {
@@ -673,6 +685,16 @@ export default class WalletService {
 
   checkBridgeAllowance(contractAddress: string, tokenAddress: string): Promise<boolean> {
     return this.checkAllowanceById(tokenAddress, config.Token.ABI, contractAddress);
+  }
+
+  approveBridgeToken(tokenAddress: string, contractAddress: string): Promise<void> {
+    const allowance = new BigNumber(2).pow(256).minus(1).toFixed(0);
+    console.log(this.walletAddress);
+    return this.getContractByAddress(tokenAddress, config.Token.ABI)
+      .methods.approve(contractAddress, allowance)
+      .send({
+        from: this.walletAddress,
+      });
   }
 
   getBridgeFee(contractAddress: string, toBlockchain: number): Promise<string> {
