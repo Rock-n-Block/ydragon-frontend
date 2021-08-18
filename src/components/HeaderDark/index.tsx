@@ -163,7 +163,7 @@ const Header: React.FC<HeaderProps> = observer(({ collapsed, onCollapsedChange }
                   <Button
                     styledType="clear"
                     // onClick={() => redirectHandler('/bridge')}
-                    link="https://ydragon-bridge.herokuapp.com/"
+                    link="https://bridge.ydragon.io/"
                     target="_blank"
                     rel="noopener norefferer"
                     className="header-nav__link"
@@ -256,7 +256,7 @@ const Header: React.FC<HeaderProps> = observer(({ collapsed, onCollapsedChange }
                   <Button
                     styledType="clear"
                     // onClick={() => redirectHandler('/bridge')}
-                    link="https://ydragon-bridge.herokuapp.com/"
+                    link="https://bridge.ydragon.io/"
                     target="_blank"
                     rel="noopener norefferer"
                     className="menu-nav__link"
