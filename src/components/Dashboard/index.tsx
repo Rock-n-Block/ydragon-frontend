@@ -82,6 +82,7 @@ const Dashboard: React.FC = () => {
   return (
     <section className="section section--admin">
       <h2 className="section__title text-outline">Indexes</h2>
+      <Spinner loading={loading} />
       <div className="index-dashboard__big">
         <div className="index-dashboard">
           {indexes?.length ? (
@@ -184,7 +185,6 @@ const Dashboard: React.FC = () => {
             <></>
           )}
 
-          <Spinner loading={loading} />
           {indexes?.length ? (
             <div className="index-dashboard__content">
               {indexes.map((index: IUserIndex) => (
