@@ -159,6 +159,18 @@ const Header: React.FC<HeaderProps> = observer(({ collapsed, onCollapsedChange }
                     About
                   </Link>
                 </li>
+                <li className="header-nav__item">
+                  <Button
+                    styledType="clear"
+                    // onClick={() => redirectHandler('/bridge')}
+                    link="https://ydragon-bridge.herokuapp.com/"
+                    target="_blank"
+                    rel="noopener norefferer"
+                    className="header-nav__link"
+                  >
+                    Bridge
+                  </Button>
+                </li>
                 {/* {sessionStorage.getItem('yd_token') && (
                   <li className="header-nav__item">
                     <Link to="/admin" className="header-nav__link">
@@ -238,6 +250,18 @@ const Header: React.FC<HeaderProps> = observer(({ collapsed, onCollapsedChange }
                     className="menu-nav__link"
                   >
                     About
+                  </Button>
+                </li>
+                <li className="menu-nav__item">
+                  <Button
+                    styledType="clear"
+                    // onClick={() => redirectHandler('/bridge')}
+                    link="https://ydragon-bridge.herokuapp.com/"
+                    target="_blank"
+                    rel="noopener norefferer"
+                    className="menu-nav__link"
+                  >
+                    Bridge
                   </Button>
                 </li>
                 {/* {sessionStorage.getItem('yd_token') && (
