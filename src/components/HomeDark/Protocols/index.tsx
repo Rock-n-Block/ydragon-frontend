@@ -104,7 +104,6 @@ const Protocols: React.FC = observer(() => {
       <div className="protocols">
         <div className="protocols__row">
           <Swiper
-            initialSlide={5}
             slidesPerView={1}
             freeMode
             loop
