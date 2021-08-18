@@ -1,6 +1,6 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { NavHashLink } from 'react-router-hash-link';
+// import { Link } from 'react-router-dom';
+// import { NavHashLink } from 'react-router-hash-link';
 
 import logo from '../../assets/img/icons/logo.svg';
 // import dis from '../../assets/img/socials/discord.svg';
@@ -9,9 +9,10 @@ import tg from '../../assets/img/socials/telegram.svg';
 import tw from '../../assets/img/socials/twitter.svg';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-import Whitepaper from '../../assets/pdf/YD WP.pdf';
+// import Whitepaper from '../../assets/pdf/YD WP.pdf';
 
 import './Footer.scss';
+import { Button } from '../index';
 
 const Footer: React.FC = () => {
   return (
@@ -20,9 +21,14 @@ const Footer: React.FC = () => {
         <div className="footer__content">
           <div className="footer__col">
             <div className="footer__logo">
-              <Link to="/">
+              <Button
+                styledType="clear"
+                href="https://ydragon.io/"
+                target="_blank"
+                rel="noreferrer noopenner"
+              >
                 <img src={logo} alt="logo" width="40" height="36" />
-              </Link>
+              </Button>
               <div className="footer__logo-text">YDRAGON</div>
             </div>
 
@@ -76,19 +82,19 @@ const Footer: React.FC = () => {
             <div className="footer__copyright">© 2021 YDRAGON</div>
           </div>
 
-          <div className="footer__col">
+          {/*  <div className="footer__col">
             <div className="footer__links-title">Product</div>
 
             <div className="footer__links">
               <a href={Whitepaper} target="_blank" rel="noopener noreferrer">
                 Whitepaper
               </a>
-              {/* <span className="isDisabled">
+               <span className="isDisabled">
                 <a href="/">Privacy Policy</a>
               </span>
               <span className="isDisabled">
                 <a href="/">Terms of Service</a>
-              </span> */}
+              </span>
               <a href="mailto:info@ydragon.io" target="_blank" rel="noopener noreferrer">
                 Contact us
               </a>
@@ -103,13 +109,13 @@ const Footer: React.FC = () => {
               <NavHashLink to="/about-us#FAQ" smooth className="text-gray text-bold">
                 FAQ
               </NavHashLink>
-              {/* <span className="isDisabled">
+               <span className="isDisabled">
                 <a href="/">Tutorial</a>
               </span>
               <span className="isDisabled">
-              </span> */}
+              </span>
             </div>
-          </div>
+          </div> */}
           {/*
 
           <div className="footer__col">
