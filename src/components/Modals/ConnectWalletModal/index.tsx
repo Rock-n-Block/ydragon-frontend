@@ -47,9 +47,11 @@ const ConnectWalletModal: React.FC = observer(() => {
           <div className="wallets-container__wallet__img-container">
             <img src={metamaskLogo} alt="Metamask" className="wallets-container__wallet__logo" />
           </div>
-          <div className="wallets-container__wallet__title">Metamask</div>
-          <div className="wallets-container__wallet__description">
-            Connect to your MetaMask Wallet
+          <div className="wallets-container__wallet__text">
+            <div className="wallets-container__wallet__title">Metamask</div>
+            <div className="wallets-container__wallet__description">
+              Connect to your MetaMask Wallet
+            </div>
           </div>
         </button>
 
@@ -65,11 +67,13 @@ const ConnectWalletModal: React.FC = observer(() => {
               className="wallets-container__wallet__logo"
             />
           </div>
-          <div className="wallets-container__wallet__title">Wallet Connect</div>
-          <div className="wallets-container__wallet__description">
-            {!walletconnectClicked
-              ? 'Connect to your Wallet Connect Wallet'
-              : 'Sign message in your wallet (it may take a while to appear)'}
+          <div className="wallets-container__wallet__text">
+            <div className="wallets-container__wallet__title">Wallet Connect</div>
+            <div className="wallets-container__wallet__description">
+              {!walletconnectClicked
+                ? 'Connect to your Wallet Connect Wallet'
+                : 'Sign message in your wallet (it may take a while to appear)'}
+            </div>
           </div>
         </button>
       </div>

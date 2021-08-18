@@ -12,6 +12,8 @@
       .background-image-container {
         position: absolute;
 
+        width: 100%;
+
         background: linear-gradient(111.35deg, #b12e2a 21.78%, #f47c45 102.7%);
         border-radius: 32px;
         box-shadow: -8px 0 36px #000;
@@ -37,6 +39,10 @@
         display: flex;
         grid-gap: 10px;
 
+        @include b(600) {
+          flex-direction: column;
+        }
+
         &__wallet {
           padding: 44px 40px 50px;
 
@@ -45,6 +51,7 @@
           align-items: center;
 
           width: 270px;
+          min-width: 100px;
 
           cursor: pointer;
 
@@ -63,6 +70,14 @@
             transform: scale(1.03);
           }
 
+          @include b(600) {
+            padding: 30px 25px;
+
+            flex-direction: row;
+
+            width: initial;
+          }
+
           &__img-container {
             margin-bottom: 37px;
 
@@ -70,9 +85,27 @@
 
             height: 111px;
 
+            @include b(600) {
+              margin-right: 28px;
+
+              float: left;
+
+              min-width: 77px;
+              max-width: 89px;
+              height: 92px;
+            }
+
             img {
               margin: auto;
+
+              width: 100%;
+              height: 100%;
             }
+          }
+
+          &__text {
+            display: flex;
+            flex-direction: column;
           }
 
           &__title {
