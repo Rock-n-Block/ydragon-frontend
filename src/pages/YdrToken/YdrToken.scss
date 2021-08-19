@@ -1,0 +1,86 @@
+@import '../../styles/variables';
+@import '../../styles/mixins';
+
+.dark {
+  .token-panel-ydr {
+    .token-panel__btns-group {
+      background: rgba($white, 0.1);
+    }
+  }
+}
+
+.light {
+  .token-panel-ydr {
+    .token-panel__btns-group {
+      background: rgba($black, 0.1);
+    }
+  }
+}
+
+.token-panel-ydr {
+  flex-direction: row;
+  @include b('tablet') {
+    justify-content: center;
+    .token-panel-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .token-panel__btns {
+      flex-wrap: wrap;
+    }
+  }
+
+  .token-panel__btns-group {
+    display: flex;
+    align-items: center;
+    padding: 11px 13px;
+    border-radius: 40px;
+    @include b('tablet') {
+      flex-direction: column;
+      .token-panel__info {
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+      }
+      .token-panel__btns {
+        flex-wrap: wrap;
+      }
+    }
+
+    .btn {
+      padding: 10px 30px;
+    }
+
+  }
+
+  .token-panel__info {
+    display: flex;
+    align-items: center;
+  }
+
+  .token-panel__logo {
+    margin-right: 13px;
+    width: 36px;
+    height: 36px;
+    padding: 8px;
+    border-radius: 50%;
+  }
+
+  .logo-pancake {
+    background: #2996A4;
+  }
+
+  .logo-uniswap {
+    background: #BE246E;
+  }
+
+  .token-panel__subtitle {
+    margin-right: 17px;
+    font-family: 'TT Norms', sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 19px;
+  }
+}

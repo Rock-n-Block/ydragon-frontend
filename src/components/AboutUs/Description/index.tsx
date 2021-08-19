@@ -71,7 +71,7 @@ const Description: React.FC = () => {
       </div>
 
       <div className="description__btns-row">
-        <Button className="description__btn" link="/ydrtoken" styledType="filled" disabled>
+        <Button className="description__btn" link="/ydrtoken" styledType="filled">
           Buy YDR
         </Button>
         <Button

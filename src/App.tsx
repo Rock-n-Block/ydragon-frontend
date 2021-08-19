@@ -15,7 +15,7 @@ import {
   // IndexDashboard,
   NoPageFound,
   // StakePage,
-  // YdrToken,
+  YdrToken,
 } from './pages';
 
 import './styles/index.scss';
@@ -65,14 +65,14 @@ export const App: React.FC = observer(() => {
             <Route exact path="/">
               <Home />
             </Route>
+            <Route exact path="/ydrtoken">
+              <YdrToken />
+            </Route>
             {/* <Route exact path="/auth">
           <Auth />
         </Route> */}
             {/* <Route exact path="/index/:indexId">
               <Index />
-            </Route>
-            <Route exact path="/ydrtoken">
-              <YdrToken />
             </Route>
             <GuardedRoute exact path="/admin" component={Admin} auth={admin} />
             <GuardedRoute exact path="/admin" component={Indexes} auth={admin} />
