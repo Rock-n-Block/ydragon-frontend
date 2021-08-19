@@ -20,7 +20,11 @@
 .token-panel-ydr {
   flex-direction: row;
   @include b('tablet') {
-    justify-content: center;
+    //justify-content: center;
+    align-items: center;
+    .token-panel__content{
+      align-self: unset;
+    }
     .token-panel-item {
       display: flex;
       flex-direction: column;
@@ -30,8 +34,18 @@
       flex-wrap: wrap;
     }
   }
-
+  @include b('mobile'){
+    flex-direction: column;
+    flex-wrap: wrap;
+    .token-panel__btns {
+      flex-wrap: wrap;
+      &-group{
+        margin: 0 auto;
+      }
+    }
+  }
   .token-panel__btns-group {
+    margin-left: auto;
     display: flex;
     align-items: center;
     padding: 11px 13px;
