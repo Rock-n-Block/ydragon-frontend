@@ -2,45 +2,45 @@ import React, { useState } from 'react';
 import { observer } from 'mobx-react-lite';
 
 import logo from '../../assets/img/icons/logo.svg';
-import { TokenPanel, YDRTokenChart } from '../../components';
+import pancakeIcon from '../../assets/img/icons/icon-pancake.svg';
+import uniswapIcon from '../../assets/img/icons/icon-uniswap.svg';
+import { Button, YDRTokenChart } from '../../components';
 // import { TradeYDRModal } from '../../components/Modals';
-import { useMst } from '../../store/store';
+// import { useMst } from '../../store/store';
+import nextId from 'react-id-generator';
 // import { useWalletConnectorContext } from '../../services/walletConnect';
+import './YDRToken.scss';
 
 const YdrToken: React.FC = observer(() => {
   const [price, setPrice] = useState(1);
-  const { networks } = useMst();
+  // const { networks } = useMst();
   //  const walletConnector = useWalletConnectorContext();
-  const panelInfo = [
+  /* const panelInfo = [
     {
       label: 'Price',
       value: `$${price.toFixed(6)}`,
     },
-  ];
+  ]; */
 
   const updatePrice = (value: number) => {
     setPrice(value);
   };
   // TODO: change input\outputCurrency=123
-  const handleBuy = () => {
+  const handleBuy = (isPancake: boolean) => {
     // modals.tradeYDR.open('buy');
     window.open(
-      `https://${
-        networks.currentNetwork === 'binance-smart-chain'
-          ? 'exchange.pancakeswap.finance/#/swap?outputCurrency=0x8f9a69d0a6e4c6263fe278d66b84ac975c1f74de'
-          : 'quickswap.exchange'
-      }`,
+      isPancake
+        ? 'https://pancakeswap.finance/swap?outputCurrency=0x3757232b55e60da4a8793183ac030cfce4c3865d'
+        : 'https://app.uniswap.org/#/swap?outputCurrency=0x3757232b55e60da4a8793183ac030cfce4c3865d',
       '_blank',
     );
   };
-  const handleSell = () => {
+  const handleSell = (isPancake: boolean) => {
     // modals.tradeYDR.open('sell');
     window.open(
-      `https://${
-        networks.currentNetwork === 'binance-smart-chain'
-          ? 'exchange.pancakeswap.finance/#/swap?inputCurrency=0x8f9a69d0a6e4c6263fe278d66b84ac975c1f74de'
-          : 'quickswap.exchange'
-      }`,
+      isPancake
+        ? 'https://pancakeswap.finance/swap?inputCurrency=0x3757232b55e60da4a8793183ac030cfce4c3865d'
+        : 'https://app.uniswap.org/#/swap?inputCurrency=0x3757232b55e60da4a8793183ac030cfce4c3865d',
       '_blank',
     );
   };
@@ -57,7 +57,58 @@ const YdrToken: React.FC = observer(() => {
         </div>
       </div>
 
-      <TokenPanel panelContent={panelInfo} handleBuy={handleBuy} handleSell={handleSell} />
+      <div className="token-panel token-panel-ydr">
+        <div className="token-panel__content">
+          <div className="token-panel-item" key={nextId()}>
+            <div className="token-panel-item__value">{`$${price.toFixed(6)}`}</div>
+            <div className="token-panel-item__label">Price</div>
+          </div>
+        </div>
+
+        <div className="token-panel__btns">
+          <div className="token-panel__btns-group">
+            <div className="token-panel__info">
+              <div className="token-panel__logo  logo-pancake">
+                <img src={pancakeIcon} alt="pancake" />
+              </div>
+              <div className="token-panel__subtitle">PancakeSwap</div>
+            </div>
+            <div className="token-panel__btns">
+              <Button className="token-panel__btn" onClick={() => handleBuy(true)}>
+                Buy
+              </Button>
+              <Button
+                className="token-panel__btn"
+                onClick={() => handleSell(true)}
+                styledType="outline"
+              >
+                Sell
+              </Button>
+            </div>
+          </div>
+          <div className="token-panel__btns-group">
+            <div className="token-panel__info">
+              <div className="token-panel__logo  logo-uniswap">
+                <img src={uniswapIcon} alt="uniswap" />
+              </div>
+              <div className="token-panel__subtitle">UniSwap</div>
+            </div>
+            <div className="token-panel__btns">
+              <Button className="token-panel__btn" onClick={() => handleBuy(false)}>
+                Buy
+              </Button>
+              <Button
+                className="token-panel__btn"
+                onClick={() => handleSell(false)}
+                styledType="outline"
+              >
+                Sell
+              </Button>
+            </div>
+          </div>
+        </div>
+      </div>
+      {/* <TokenPanel panelContent={panelInfo} handleBuy={handleBuy} handleSell={handleSell} /> */}
       {/* <TradeYDRModal /> */}
       <YDRTokenChart price={updatePrice} />
     </main>
