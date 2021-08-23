@@ -9,15 +9,19 @@ import md from '../../assets/img/socials/medium.svg';
 import tg from '../../assets/img/socials/telegram.svg';
 import tw from '../../assets/img/socials/twitter.svg';
 import coingecko from '../../assets/img/socials/coingecko.svg';
-import coinmarketcap from '../../assets/img/socials/coinmarketcap.svg';
+import coinmarketcapD from '../../assets/img/socials/coinmarketcap.svg';
+import coinmarketcapL from '../../assets/img/socials/coinmarketcap-light.svg';
 import nomics from '../../assets/img/socials/nomics.png';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import Whitepaper from '../../assets/pdf/YD WP.pdf';
 
 import './Footer.scss';
+import { DARK, useMst } from '../../store/store';
+import { observer } from 'mobx-react-lite';
 
-const Footer: React.FC = () => {
+const Footer: React.FC = observer(() => {
+  const { theme } = useMst();
   return (
     <footer className="footer">
       <div className="container">
@@ -81,7 +85,12 @@ const Footer: React.FC = () => {
                   rel="noopener noreferrer"
                   className="footer__socials-item"
                 >
-                  <img src={coinmarketcap} alt="coinmarketcap" width="16" height="16" />
+                  <img
+                    src={theme.value === DARK ? coinmarketcapD : coinmarketcapL}
+                    alt="coinmarketcap"
+                    width="16"
+                    height="16"
+                  />
                 </a>
                 <a
                   href="https://www.coingecko.com/en/coins/ydragon"
@@ -144,10 +153,8 @@ const Footer: React.FC = () => {
             </div>
           </div>
           {/*
-
           <div className="footer__col">
             <div className="footer__links-title">DeFi</div>
-
             <div className="footer__links">
               <span className="isDisabled">
                 <a href="/">Index Products</a>
@@ -162,6 +169,6 @@ const Footer: React.FC = () => {
       </div>
     </footer>
   );
-};
+});
 
 export default Footer;
