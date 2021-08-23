@@ -276,6 +276,9 @@
       left: calc(50% - 332px/2);
       bottom: 30px;
 
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
       &-item {
         width: 48px;
         height: 48px;
