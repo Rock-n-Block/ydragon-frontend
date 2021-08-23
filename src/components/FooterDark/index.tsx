@@ -8,6 +8,9 @@ import logo from '../../assets/img/icons/logo.svg';
 import md from '../../assets/img/socials/medium.svg';
 import tg from '../../assets/img/socials/telegram.svg';
 import tw from '../../assets/img/socials/twitter.svg';
+import coingecko from '../../assets/img/socials/coingecko.svg';
+import coinmarketcap from '../../assets/img/socials/coinmarketcap.svg';
+import nomics from '../../assets/img/socials/nomics.png';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import Whitepaper from '../../assets/pdf/YD WP.pdf';
@@ -33,41 +36,70 @@ const Footer: React.FC = () => {
             </div>
 
             <div className="footer__socials">
-              <a
-                href="https://t.me/ydrmain/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="footer__socials-item footer__socials-tg"
-              >
-                <img src={tg} alt="logo" width="16" height="16" />
-                <span>Channel</span>
-              </a>
+              <div className="footer__socials-group">
+                <a
+                  href="https://t.me/ydrmain/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="footer__socials-item footer__socials-tg"
+                >
+                  <img src={tg} alt="telegram channel" width="16" height="16" />
+                  <span>Channel</span>
+                </a>
 
-              <a
-                href="https://t.me/ydragonchat"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="footer__socials-item footer__socials-tg"
-              >
-                <img src={tg} alt="logo" width="16" height="16" />
-                <span>Chat</span>
-              </a>
-              <a
-                href="https://twitter.com/ydragons_"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="footer__socials-item"
-              >
-                <img src={tw} alt="logo" width="16" height="16" />
-              </a>
-              <a
-                href="https://medium.com/ydragon-io"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="footer__socials-item"
-              >
-                <img src={md} alt="logo" width="16" height="16" />
-              </a>
+                <a
+                  href="https://t.me/ydragonchat"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="footer__socials-item footer__socials-tg"
+                >
+                  <img src={tg} alt="telegram chat" width="16" height="16" />
+                  <span>Chat</span>
+                </a>
+                <a
+                  href="https://twitter.com/ydragons_"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="footer__socials-item"
+                >
+                  <img src={tw} alt="twitter" width="16" height="16" />
+                </a>
+                <a
+                  href="https://medium.com/ydragon-io"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="footer__socials-item"
+                >
+                  <img src={md} alt="medium" width="16" height="16" />
+                </a>
+              </div>
+              <div className="footer__socials-divider" />
+              <div className="footer__socials-group">
+                <a
+                  href="https://coinmarketcap.com/currencies/ydragon/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="footer__socials-item"
+                >
+                  <img src={coinmarketcap} alt="coinmarketcap" width="16" height="16" />
+                </a>
+                <a
+                  href="https://www.coingecko.com/en/coins/ydragon"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="footer__socials-item"
+                >
+                  <img src={coingecko} alt="coingecko" width="16" height="16" />
+                </a>
+                <a
+                  href="https://nomics.com/assets/ydr-ydragon"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="footer__socials-item"
+                >
+                  <img src={nomics} alt="nomics" width="16" height="16" />
+                </a>
+              </div>
               {/*
               <a href="/" className="footer__socials-item">
                 <img src={dis} alt="logo" width="16" height="16" />
