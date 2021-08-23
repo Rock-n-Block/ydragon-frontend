@@ -247,7 +247,7 @@ const SelectNetwork: React.FC = observer(() => {
           height="26"
         />
       </Option>
-      <Option value="matic">
+      <Option value="matic" disabled>
         <TokenMini
           name="Polygon"
           icon={theme.value === 'dark' ? plgDark : plgLight}

@@ -73,7 +73,6 @@ const CreateIndexForm: React.FC = () => {
           const { message } = error;
           modals.info.setMsg('Error', message, 'error');
         });
-      // TODO: create request to contract
     },
     displayName: 'CreateIndex',
   })(CreateIndex);

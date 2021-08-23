@@ -29,7 +29,7 @@ const Composition: React.FC<CompositionProps> = observer(({ status, tokens }) =>
 
         <div className="composition__content">
           {tokens?.map((tokenDiff) => (
-            <TokenItem // TODO: change abbr and icon
+            <TokenItem
               key={nextId()}
               icon={tokenDiff.token.image}
               name={tokenDiff.token.name}

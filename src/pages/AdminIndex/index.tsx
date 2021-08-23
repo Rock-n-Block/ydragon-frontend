@@ -60,7 +60,6 @@ const AdminIndex: React.FC = () => {
     setManualRebalanceValue(value);
   };
   const getIndexComposition = useCallback(() => {
-    // TODO: change indexId dynamically
     indexesApi
       .getIndexesRebalance(+indexId)
       .then(({ data }) => {

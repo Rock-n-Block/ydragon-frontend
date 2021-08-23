@@ -25,7 +25,6 @@ const YdrToken: React.FC = observer(() => {
   const updatePrice = (value: number) => {
     setPrice(value);
   };
-  // TODO: change input\outputCurrency=123
   const handleBuy = (isPancake: boolean) => {
     // modals.tradeYDR.open('buy');
     window.open(

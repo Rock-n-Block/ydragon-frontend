@@ -17,7 +17,7 @@ interface INetworks {
   [key: string]: string;
 }
 
-export type TestNetworkTypes = 'bnb' | 'matic' /* | 'eth' */;
+export type TestNetworkTypes = 'bnb' /*  | 'matic'| 'eth' */;
 
 export type ContractTypes = 'Router' | 'Factory' | 'Staking' | 'DexFactory' | 'Token';
 
@@ -25,12 +25,12 @@ export const nativeTokens = ['bnb', 'wbnb', 'matic', 'wmatic'];
 
 const networks: INetworks = {
   bnb: '0x38',
-  matic: '0x89',
+  // matic: '0x89',
   // eth: '0x1',
 };
 const testNetworks: INetworks = {
   bnb: '0x61',
-  matic: '0x13881',
+  // matic: '0x13881',
   // eth: '0x3',
 };
 
@@ -75,8 +75,8 @@ export default class MetamaskService {
           // TODO: change this on deploy
           if (this.wallet.chainId === this.usedChain.bnb) {
             rootStore.networks.setCurrNetwork('binance-smart-chain');
-          } else if (this.wallet.chainId === this.usedChain.matic) {
-            rootStore.networks.setCurrNetwork('polygon-pos');
+            // } else if (this.wallet.chainId === this.usedChain.matic) {
+            //   rootStore.networks.setCurrNetwork('polygon-pos');
           }
           subscriber.next('');
         }
