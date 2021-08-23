@@ -101,9 +101,24 @@
     margin-top: 25px;
 
     display: flex;
+    align-items: center;
+    @include b('mobile') {
+      flex-direction: column;
+      //justify-content: center;
+      .footer__socials-divider {
+        display: none;
+
+        & + .footer__socials-group {
+          margin-top: 20px;
+        }
+      }
+    }
   }
 
   &__socials {
+    &-group {
+      display: flex;
+    }
     &-item {
       display: flex;
       justify-content: center;
@@ -135,6 +150,13 @@
       }
     }
 
+    &-divider {
+      margin: 0 15px;
+      width: 1px;
+      height: 12px;
+      background: #4F5665;
+
+    }
     &-tg {
       padding: 6px 9px;
 
