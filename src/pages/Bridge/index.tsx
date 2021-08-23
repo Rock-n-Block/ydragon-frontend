@@ -255,6 +255,7 @@ const Bridge: React.FC = observer(() => {
 
   useEffect(() => {
     setIsLoading(true);
+
     async function checkSettings() {
       setBalance(new BigNumber(0));
       try {
@@ -269,7 +270,7 @@ const Bridge: React.FC = observer(() => {
   }, [checkAllowance, getBalance]);
 
   useEffect(() => {
-    const blockchainFee = fee[blockchains[fromBlockchainIndex].key];
+    const blockchainFee = fee[blockchains[toBlockchainIndex].key];
     if (blockchainFee) {
       setIsLoading(true);
       if (!inputAmount) {
@@ -281,7 +282,7 @@ const Bridge: React.FC = observer(() => {
       }
       setIsLoading(false);
     }
-  }, [inputAmount, fee, fromBlockchainIndex]);
+  }, [inputAmount, fee, toBlockchainIndex]);
 
   return (
     <div className="bridge">
@@ -359,7 +360,7 @@ const Bridge: React.FC = observer(() => {
           <div className="form__item__footer">
             <div className="form__item__footer__fee">
               <div className="form__item__footer__fee__text">
-                {`Fee: ${fee[blockchains[fromBlockchainIndex].key]?.toFixed()} YDR`}
+                {`Fee: ${fee[blockchains[toBlockchainIndex].key]?.toFixed()} YDR`}
               </div>
             </div>
             <div className="form__item__footer__min-amount">
