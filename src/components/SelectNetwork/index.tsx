@@ -202,7 +202,7 @@ const SelectNetwork: React.FC = observer(() => {
   }, [getNetworks]);
 
   useEffect(() => {
-    if (networks.networksList.length) {
+    if (window.ethereum && networks.networksList.length) {
       getCurrentChain();
     }
   }, [getCurrentChain, networks.networksList.length]);

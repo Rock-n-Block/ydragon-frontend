@@ -157,9 +157,14 @@ const Header: React.FC<HeaderProps> = observer(({ collapsed, onCollapsedChange }
                   </li>
                 )}
                 <li className="header-nav__item">
-                  <Link to="/bridge" className="header-nav__link">
+                  <a
+                    href="https://bridge.ydragon.io/"
+                    rel="noreferrer nooppener"
+                    target="_blank"
+                    className="header-nav__link"
+                  >
                     Bridge
-                  </Link>
+                  </a>
                 </li>
                 <li className="header-nav__item">
                   <Link to="/about-us" className="header-nav__link">
