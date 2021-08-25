@@ -1,6 +1,11 @@
 import React from 'react';
 
-import iconPlay from '../../../assets/img/icons/icon-play.svg';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import Whitepaper from '../../../assets/pdf/YD WP.pdf';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import MainVideo from '../../../assets/video/YDragon_Main_FHD.mp4';
 import { Button } from '../../index';
 
 // import { Button } from '../../index';
@@ -26,9 +31,37 @@ const Description: React.FC = () => {
             future success of YDragon
           </span>
         </div>
-        <div className="description__video">
+        {/* <div className="description__video">
           <span className="description__video--text">Coming soon</span>
-          <img alt="#" src={iconPlay} className="description__video--play" />
+          <img
+            alt="play video"
+            src={iconPlay}
+            className="description__video--play"
+            width="64"
+            height="64"
+          />
+           <span className="description__video--info">
+            For more info on YDragon{' '}
+            <a className="description__video--link" href="/about-us">
+              go here
+            </a>
+          </span>
+        </div> */}
+
+        <div className="description__video">
+          <video
+            width={462}
+            height={312}
+            controls
+            muted
+            autoPlay
+            loop
+            playsInline
+            preload="metadata"
+          >
+            <source src={MainVideo} type="video/mp4" />
+            {/* <track default kind="captions" srcLang="en" /> */}
+          </video>
           {/* <span className="description__video--info">
             For more info on YDragon{' '}
             <a className="description__video--link" href="/about-us">
@@ -42,7 +75,13 @@ const Description: React.FC = () => {
         <Button className="description__btn" link="/ydrtoken" styledType="filled" disabled>
           Buy YDR
         </Button>
-        <Button className="description__btn" styledType="outline" disabled>
+        <Button
+          link={Whitepaper}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="description__btn"
+          styledType="outline"
+        >
           Whitepaper
         </Button>
       </div>

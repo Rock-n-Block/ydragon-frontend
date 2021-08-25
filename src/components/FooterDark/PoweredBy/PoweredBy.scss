@@ -1,0 +1,36 @@
+@import '../../../styles/variables';
+
+.powered {
+  margin-left: auto;
+
+  &:hover {
+    .powered-by {
+      background: $gradient;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      opacity: 1;
+
+      &::selection {
+        -webkit-text-fill-color: $white;
+      }
+
+      ::selection {
+        -webkit-text-fill-color: $white;
+      }
+    }
+  }
+
+  &-by {
+    margin-bottom: 7px;
+    font-family: 'Rubik', sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 14px;
+    text-transform: uppercase;
+
+    color: #fff;
+
+    opacity: 0.6;
+  }
+}

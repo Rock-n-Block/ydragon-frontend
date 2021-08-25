@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 import './IndexCardMobile.scss';
 
@@ -15,13 +15,23 @@ interface IIndexCardProps {
 }
 
 export const IndexCardMobile: React.FC<IIndexCardProps> = ({ name, cap, price, created }) => {
+  const history = useHistory();
+
+  const handleRowClick = () => {
+    history.push(`/admin/index/${name.id}`);
+  };
+
   return (
-    <section className="index-card-mobile">
+    <section
+      role="button"
+      onClick={handleRowClick}
+      onKeyDown={handleRowClick}
+      tabIndex={0}
+      className="index-card-mobile"
+    >
       <div className="index-card-mobile__name">
         <h3 className="index-card-mobile__title">Name</h3>
-        <Link to={`/admin/index/${name.id}`} className="index-card-mobile__value">
-          {name.name}
-        </Link>
+        <span className="index-card-mobile__value">{name.name}</span>
       </div>
       <div className="index-card-mobile__info">
         <div className="index-card-mobile__cap">

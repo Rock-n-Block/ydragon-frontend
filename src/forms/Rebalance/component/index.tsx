@@ -1,14 +1,17 @@
-import React, { useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import BigNumber from 'bignumber.js/bignumber';
 import { FieldArray, FieldArrayRenderProps, Form, FormikProps } from 'formik';
 import { observer } from 'mobx-react-lite';
 
+import DangerCircle from '../../../assets/img/icons/icon-danger-circle.svg';
 import { Button, Input, Search, TokenMini } from '../../../components';
 import { IToken } from '../../../components/IndexPage/IndexTable';
 import { ISearchToken } from '../../../components/Search';
 import { ITokensDiff } from '../../../pages/Admin';
 import { coinsApi, indexesApi } from '../../../services/api';
+import { useMst } from '../../../store/store';
+import { ProviderRpcError } from '../../../types/errors';
 
 interface IIndexId {
   indexId: string;
@@ -24,8 +27,10 @@ export interface IRebalance {
 
 const Rebalance: React.FC<FormikProps<IRebalance> & IRebalance> = observer(
   ({ setFieldValue, handleChange, handleBlur, values, handleSubmit }) => {
+    const { modals } = useMst();
     const { indexId } = useParams<IIndexId>();
     const [searchTokens, setSearchTokens] = useState<ISearchToken[]>([] as ISearchToken[]);
+    const [newTokenName, setNewTokenName] = useState<string>('');
     const weightsSum = values.tokens
       .map((tokenDiff) => +tokenDiff.new_weight)
       .reduce((prevSum, newItem) => prevSum.plus(newItem), new BigNumber(0))
@@ -35,7 +40,6 @@ const Rebalance: React.FC<FormikProps<IRebalance> & IRebalance> = observer(
         coinsApi
           .getCoinsList(tokenName)
           .then(({ data }) => {
-            console.log(`tokens with ${tokenName}`, data);
             setSearchTokens(data);
           })
           .catch((error) => {
@@ -50,16 +54,16 @@ const Rebalance: React.FC<FormikProps<IRebalance> & IRebalance> = observer(
       indexesApi
         .removeTokenFromIndex(+indexId, values.tokens[index].id)
         .then(() => {
-          if (values.tokens[index].pending === false) {
+          if (!values.tokens[index].pending) {
             setFieldValue(`tokens[${index}].to_delete`, !values.tokens[index].to_delete);
             setFieldValue(`tokens[${index}].new_weight`, 0);
           } else {
             arrayHelper.remove(index);
           }
         })
-        .catch((error) => {
-          const { response } = error;
-          console.log('search error', response);
+        .catch((error: ProviderRpcError) => {
+          const { message } = error;
+          modals.info.setMsg('Error', `Remove token error ${message}`, 'error');
         });
     };
     const handleAddBack = (arrayHelper: FieldArrayRenderProps, index: number) => {
@@ -72,9 +76,9 @@ const Rebalance: React.FC<FormikProps<IRebalance> & IRebalance> = observer(
             new BigNumber(data.new_weight).multipliedBy(100),
           );
         })
-        .catch((error) => {
-          const { response } = error;
-          console.log('search error', response);
+        .catch((error: ProviderRpcError) => {
+          const { message } = error;
+          modals.info.setMsg('Error', `Add token back error ${message}`, 'error');
         });
     };
     const handleAddNewToken = (arrayHelper: FieldArrayRenderProps, pickedItem: ISearchToken) => {
@@ -102,6 +106,20 @@ const Rebalance: React.FC<FormikProps<IRebalance> & IRebalance> = observer(
           console.log('add new token error', response);
         });
     };
+    const handleChangeInput = (e: any) => {
+      if (+e.target.value < 0) {
+        e.target.value = '';
+      }
+      handleChange(e);
+    };
+    const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
+      setNewTokenName(e.target.value);
+      handleNewTokenNameChange(e.target.value);
+    };
+    const handleClear = () => {
+      setNewTokenName('');
+      handleNewTokenNameChange('');
+    };
     return (
       <Form name="form-rebalance" className="form-rebalance">
         <FieldArray
@@ -126,10 +144,13 @@ const Rebalance: React.FC<FormikProps<IRebalance> & IRebalance> = observer(
                       <Input
                         disabled={tokenDiff.to_delete}
                         name={`tokens[${index}].new_weight`}
-                        value={tokenDiff.new_weight}
-                        onChange={handleChange}
+                        value={tokenDiff.new_weight !== '0' ? tokenDiff.new_weight : ''}
+                        onChange={handleChangeInput}
                         onBlur={handleBlur}
                         type="number"
+                        placeholder="0"
+                        className="token-weights-item__input-token"
+                        error={+tokenDiff.new_weight > 100}
                       />
                     </div>
 
@@ -161,16 +182,26 @@ const Rebalance: React.FC<FormikProps<IRebalance> & IRebalance> = observer(
               )}
               <div className="token-weights__total">
                 <h3 className="token-weights__total-name">Total weight</h3>
-                <div className="input-border">
-                  <span className="input">{weightsSum}</span>
+                <div
+                  className={`input-border weights-sum${
+                    +weightsSum === 0 || +weightsSum === 100 ? '' : '--error'
+                  }`}
+                >
+                  <span className="input">{+weightsSum > 0 ? weightsSum : '0'}</span>
                 </div>
               </div>
 
               <Search
                 className="token-weights__search"
                 data={searchTokens}
-                onChange={(e) => handleNewTokenNameChange(e)}
+                onChange={(e) => handleSearchChange(e)}
+                newTokenName={newTokenName}
+                handleClear={handleClear}
                 onPick={(pickedToken: ISearchToken) => handleAddNewToken(arrayHelper, pickedToken)}
+                // className="token-weights__search"
+                // data={searchTokens}
+                // onChange={(e) => handleNewTokenNameChange(e)}
+                // onPick={(pickedToken: ISearchToken) => handleAddNewToken(arrayHelper, pickedToken)}
               />
             </div>
           )}
@@ -186,9 +217,10 @@ const Rebalance: React.FC<FormikProps<IRebalance> & IRebalance> = observer(
                 <Input
                   name="days"
                   value={values.days}
-                  onChange={handleChange}
+                  onChange={handleChangeInput}
                   onBlur={handleBlur}
                   type="number"
+                  placeholder="0"
                 />
               </div>
             </div>
@@ -199,9 +231,12 @@ const Rebalance: React.FC<FormikProps<IRebalance> & IRebalance> = observer(
                 <Input
                   name="hours"
                   value={values.hours}
-                  onChange={handleChange}
+                  onChange={handleChangeInput}
                   onBlur={handleBlur}
                   type="number"
+                  placeholder="0"
+                  className="rebalance-option__input-hours"
+                  error={values.hours > 23}
                 />
               </div>
             </div>
@@ -212,17 +247,28 @@ const Rebalance: React.FC<FormikProps<IRebalance> & IRebalance> = observer(
                 <Input
                   name="steps"
                   value={values.steps}
-                  onChange={handleChange}
+                  onChange={handleChangeInput}
                   onBlur={handleBlur}
                   type="number"
+                  placeholder="0"
                 />
               </div>
             </div>
           </div>
         </div>
 
+        <div className="token-weights-items__empty">
+          <img src={DangerCircle} alt="alert" width="20" height="20" />
+          <span>
+            Do not start rebalance if you don&apos;t have enough tokens on yVault, otherwise your
+            index token with a high probability will become forbidden.
+          </span>
+        </div>
+
         <div className="rebalance-modal__btn-row">
-          <Button onClick={() => handleSubmit()}>Start rebalance</Button>
+          <Button onClick={() => handleSubmit()} loading={values.isLoading}>
+            Start rebalance
+          </Button>
         </div>
       </Form>
     );

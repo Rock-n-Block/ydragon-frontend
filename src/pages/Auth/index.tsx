@@ -13,9 +13,14 @@ const Auth: React.FC = observer(() => {
   const walletConnector = useWalletConnectorContext();
 
   const connectWallet = (): void => {
-    walletConnector.connect().then(() => {
-      history.push('/');
-    });
+    walletConnector
+      .connect()
+      .then(() => {
+        history.push('/');
+      })
+      .catch((err: any) => {
+        console.log('Connect error', err);
+      });
   };
   return (
     <main className="container">

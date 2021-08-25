@@ -1,4 +1,5 @@
 import React from 'react';
+import nextId from 'react-id-generator';
 
 import Question from './Question';
 
@@ -75,13 +76,16 @@ const Questions: React.FC = () => {
     },
   ];
   return (
-    <section className="section questions">
+    <section className="section questions" id="FAQ">
       <div className="questions__title-wrapper">
         <h1 className="questions__title text-outline">FAQ</h1>
       </div>
       <div className="questions__wrapper">
         {faqs.map((faq) => (
-          <Question title={faq.title}> {faq.text} </Question>
+          <Question title={faq.title} key={nextId()}>
+            {' '}
+            {faq.text}{' '}
+          </Question>
         ))}
       </div>
     </section>

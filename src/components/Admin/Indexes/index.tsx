@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 import moment from 'moment';
 
@@ -14,39 +14,140 @@ import { IndexCardMobile } from './IndexCardMobile/index';
 import './Indexes.scss';
 
 const Indexes: React.FC = observer(() => {
-  const { modals } = useMst();
+  const { networks, modals } = useMst();
+  const history = useHistory();
   const [indexes, setIndexes] = useState<Array<IIndex>>();
+  const [sorterValue, setSorterValue] = useState<string>('');
+  const [ascendent, setAscendent] = useState<boolean>(true);
+  const [dataSource, setDataSource] = useState<any[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+
+  // const [selectedRowKeys, setSelectedRowKeys] = useState<any[]>([0]);
+  const selectRow = (record: any) => {
+    // setSelectedRowKeys([record.key]);
+    if (indexes) {
+      history.push(`/admin/index/${indexes[record.key].id}`);
+    }
+  };
+  // const onSelectedRowKeysChange = (selectedRow: any) => {
+  //   setSelectedRowKeys(selectedRow);
+  // };
+  // const rowSelection = {
+  //   selectedRowKeys,
+  //   onChange: onSelectedRowKeysChange,
+  // };
+
+  const switchSort = useCallback(
+    (value: string, asc: boolean) => {
+      switch (value) {
+        case 'created_at': {
+          if (indexes) {
+            const newData = indexes
+              .sort((a, b) =>
+                Sorter.DATE(moment(a.created_at).format(), moment(b.created_at).format(), asc),
+              )
+              .map((curIndex, index) => {
+                return {
+                  key: index,
+                  name: { id: curIndex.id, name: curIndex.name },
+                  cap: `$${curIndex.market_cap}`,
+                  price: `$${curIndex.price}`,
+                  created: moment(new Date(curIndex.created_at)).format('DD.MM.YY'),
+                };
+              });
+            setDataSource(newData);
+          }
+          break;
+        }
+
+        default:
+          if (indexes) {
+            const newData = indexes
+              .sort((a, b) => Sorter.DEFAULT(a, b, asc, value))
+              .map((curIndex, index) => {
+                return {
+                  key: index,
+                  name: { id: curIndex.id, name: curIndex.name },
+                  cap: `$${curIndex.market_cap}`,
+                  price: `$${curIndex.price}`,
+                  created: moment(new Date(curIndex.created_at)).format('DD.MM.YY'),
+                };
+              });
+            setDataSource(newData);
+          }
+          break;
+      }
+    },
+    [indexes],
+  );
+
+  const sorter = (item: string) => {
+    if (sorterValue === item) {
+      switchSort(item, !ascendent);
+      setAscendent(!ascendent);
+    } else {
+      switchSort(item, true);
+      setAscendent(true);
+    }
+    setSorterValue(item);
+  };
 
   const columns: any[] = [
     {
       title: 'Name',
       dataIndex: 'name',
       key: 'name',
-      render: (item: any) => <Link to={`/admin/index/${item.id}`}>{item.name}</Link>,
-      sorter: Sorter.DEFAULT,
+      render: (item: any) => <span>{item.name}</span>,
+      onHeaderCell: () => {
+        return {
+          className: `indexs-table__sort ${
+            sorterValue === 'name' ? `indexs-table__sort${ascendent ? '--up' : ''}` : ''
+          }`,
+          onClick: () => sorter('name'),
+        };
+      },
     },
     {
       title: 'Market cap',
       dataIndex: 'cap',
       key: 'cap',
-      sorter: Sorter.DEFAULT,
+      onHeaderCell: () => {
+        return {
+          className: `indexs-table__sort ${
+            sorterValue === 'market_cap' ? `indexs-table__sort${ascendent ? '--up' : ''}` : ''
+          }`,
+          onClick: () => sorter('market_cap'),
+        };
+      },
     },
     {
       title: 'Price',
       dataIndex: 'price',
       key: 'price',
       render: (item: any) => <span className="text-MER">{item}</span>,
-      sorter: Sorter.DEFAULT,
+      onHeaderCell: () => {
+        return {
+          className: `indexs-table__sort ${
+            sorterValue === 'price' ? `indexs-table__sort${ascendent ? '--up' : ''}` : ''
+          }`,
+          onClick: () => sorter('price'),
+        };
+      },
     },
     {
       title: 'Created',
       dataIndex: 'created',
       key: 'created',
-      sorter: Sorter.DEFAULT,
+      onHeaderCell: () => {
+        return {
+          className: `indexs-table__sort ${
+            sorterValue === 'created_at' ? `indexs-table__sort${ascendent ? '--up' : ''}` : ''
+          }`,
+          onClick: () => sorter('created_at'),
+        };
+      },
     },
   ];
-  const [dataSource, setDataSource] = useState<any[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
 
   const getIndexes = useCallback(() => {
     setLoading(true);
@@ -65,8 +166,10 @@ const Indexes: React.FC = observer(() => {
     modals.createIndex.open();
   };
   useEffect(() => {
-    getIndexes();
-  }, [getIndexes]);
+    if (networks.currentNetwork) {
+      getIndexes();
+    }
+  }, [getIndexes, networks.currentNetwork]);
   useEffect(() => {
     if (indexes) {
       const newData = indexes.map((curIndex, index) => {
@@ -75,7 +178,7 @@ const Indexes: React.FC = observer(() => {
           name: { id: curIndex.id, name: curIndex.name },
           cap: `$${curIndex.market_cap}`,
           price: `$${curIndex.price}`,
-          created: moment(new Date(curIndex.created_at)).format('DD.MM.YYYY'),
+          created: moment(new Date(curIndex.created_at)).format('DD.MM.YY'),
         };
       });
       setDataSource(newData);
@@ -96,7 +199,16 @@ const Indexes: React.FC = observer(() => {
       {indexes && (
         <>
           <div className="indexs__table-big">
-            <Table dataSource={dataSource} columns={columns} className="rebalance-table" />
+            <Table
+              onRow={(record) => ({
+                onClick: () => {
+                  selectRow(record);
+                },
+              })}
+              dataSource={dataSource}
+              columns={columns}
+              className="rebalance-table"
+            />
           </div>
           <div className="indexs__table-small">
             {dataSource.map((data) => (

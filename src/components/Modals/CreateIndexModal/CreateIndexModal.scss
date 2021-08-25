@@ -7,6 +7,54 @@
       border-top: 1px solid rgba($white, 0.1);
       border-bottom: 1px solid rgba($white, 0.1);
     }
+
+    .ant-picker,
+    .ant-picker-range {
+      background: $dark-bg;
+    }
+
+    .form-create-index {
+      .ant-input {
+        color: $white;
+        background: $dark-bg;
+      }
+
+      input:-webkit-autofill,
+      input:-webkit-autofill:hover,
+      input:-webkit-autofill:focus,
+      textarea:-webkit-autofill,
+      textarea:-webkit-autofill:hover,
+      textarea:-webkit-autofill:focus,
+      select:-webkit-autofill,
+      select:-webkit-autofill:hover,
+      select:-webkit-autofill:focus {
+        color: $white !important;
+        -webkit-box-shadow: 0 0 0 1000px #1a1e3a inset !important;
+
+        transition: background-color 5000s ease-in-out 0s;
+        -webkit-text-fill-color: $white !important;
+      }
+
+      input,
+      .ant-input,
+      .input {
+        filter: none;
+
+        &::placeholder {
+          color: $white;
+        }
+      }
+
+      &__description {
+        .ant-input-textarea-show-count {
+          background: $dark-bg;
+
+          &::after {
+            color: #bfbfbf;
+          }
+        }
+      }
+    }
   }
 }
 
@@ -28,6 +76,12 @@
         &::placeholder {
           color: $black;
         }
+      }
+    }
+
+    .form-create-index__description {
+      .ant-input-textarea-show-count {
+        background: linear-gradient(355.19deg, #fff 0%, #dde1f0 100%);
       }
     }
   }
@@ -57,7 +111,41 @@
     }
 
     &__description {
+      position: relative;
+
       margin: 33px 0;
+
+      .ant-input-textarea-show-count {
+        textarea {
+          padding: 0;
+
+          font-family: 'TTNorms', sans-serif;
+          font-size: 17px;
+          font-weight: normal;
+          line-height: 20px;
+          text-align: unset;
+
+          background: transparent !important;
+          border: none;
+          border-radius: 10px;
+          font-feature-settings: 'liga' off;
+        }
+
+        .ant-input {
+          &:focus,
+          &:active {
+            border: none;
+            outline: none;
+            box-shadow: none;
+          }
+        }
+
+        &::after {
+          margin: 25px -15px 0 0;
+
+          font-size: 15px;
+        }
+      }
     }
 
     &__input {
@@ -70,6 +158,14 @@
         line-height: 14px;
 
         opacity: 0.5;
+      }
+
+      &-price {
+        .ant-input {
+          font-size: 20px;
+          font-weight: bold;
+          line-height: 24px;
+        }
       }
 
       .input-border {
@@ -87,11 +183,23 @@
       }
     }
 
+    &-items {
+      margin-top: 30px;
+    }
+
     &__btn-row {
       .btn {
         margin: 20px auto 0;
 
         max-width: 135px;
+      }
+    }
+
+    .ant-picker {
+      .ant-picker-input {
+        input {
+          font-weight: 700;
+        }
       }
     }
   }

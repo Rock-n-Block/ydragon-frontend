@@ -2,6 +2,8 @@ import React from 'react';
 import BigNumber from 'bignumber.js/bignumber';
 
 import './IndexTable.scss';
+import arrowUp from '../../../assets/img/chart/arrow-up.svg';
+import arrowDown from '../../../assets/img/chart/arrow-down.svg';
 
 export interface IToken {
   address: string;
@@ -17,18 +19,20 @@ export interface IToken {
   unit_weight: number;
 }
 
-export interface ITableToken {
+export interface IHistoricalToken {
+  diff: string;
   rate: string;
   repr_count: string;
-  total_price: number;
-  weight: string;
-  token_name: string;
   token_image: string;
+  token_name: string;
+  total_price: string;
+  weight: string;
 }
 
 interface IndexTableProps {
-  tokens: Array<IToken> | Array<ITableToken> | undefined;
+  tokens: Array<IToken> | Array<IHistoricalToken> | undefined;
 }
+
 const IndexTable: React.FC<IndexTableProps> = ({ tokens }) => {
   return (
     <div className="index-table">
@@ -39,7 +43,7 @@ const IndexTable: React.FC<IndexTableProps> = ({ tokens }) => {
         </div>
         <div className="index-table__col">Token Price</div>
         <div className="index-table__col">Current Weight</div>
-        {/* <div className="index-table__col">Percent Change</div> */}
+        <div className="index-table__col">Percent Change</div>
         <div className="index-table__col">
           Total Price <br /> per Set
         </div>
@@ -57,6 +61,8 @@ const IndexTable: React.FC<IndexTableProps> = ({ tokens }) => {
                   src={'image' in token ? token.image : token.token_image}
                   className="index-table__image"
                   alt={`${'name' in token ? token.name : token.token_name} logo`}
+                  width="31"
+                  height="31"
                 />
                 <div className="index-table__token">
                   {'name' in token ? token.name : token.token_name}
@@ -76,10 +82,25 @@ const IndexTable: React.FC<IndexTableProps> = ({ tokens }) => {
               </div>
               <div className="index-table__col">
                 <div className="index-table__price">
-                  {new BigNumber('current_weight' in token ? token.current_weight : token.weight)
+                  {`${new BigNumber('current_weight' in token ? token.current_weight : token.weight)
                     .multipliedBy(100)
-                    .toFixed(2)}
-                  %
+                    .toFixed(2)}%`}
+                </div>
+              </div>
+              <div className="index-table__col">
+                <div className="index-table__diff">
+                  <div
+                    className={`index-table__diff-${
+                      'diff' in token && +token?.diff < 0 ? 'down' : 'up'
+                    }`}
+                  >
+                    {'diff' in token && +token?.diff < 0 ? (
+                      <img src={arrowDown} alt="arrow down" width="10" height="10" />
+                    ) : (
+                      <img src={arrowUp} alt="arrow up" width="10" height="10" />
+                    )}
+                    {new BigNumber('diff' in token ? token.diff : 0).toFixed(2)} %
+                  </div>
                 </div>
               </div>
               <div className="index-table__col">

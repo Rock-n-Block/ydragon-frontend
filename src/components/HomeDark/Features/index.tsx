@@ -16,7 +16,7 @@ const Features: React.FC = () => {
       <div className="features">
         <div className="features-item">
           <div className="features-item__icon">
-            <img src={icon1} alt="" width="64" height="64" />
+            <img src={icon1} alt="feature" width="64" height="64" />
           </div>
           <div className="features-item__content">
             <div className="features-item__title">Cross-Chain</div>
@@ -29,7 +29,7 @@ const Features: React.FC = () => {
 
         <div className="features-item">
           <div className="features-item__icon">
-            <img src={icon2} alt="" width="64" height="64" />
+            <img src={icon2} alt="feature" width="64" height="64" />
           </div>
           <div className="features-item__content">
             <div className="features-item__title">Yield Generation</div>
@@ -44,7 +44,7 @@ const Features: React.FC = () => {
 
         <div className="features-item">
           <div className="features-item__icon">
-            <img src={icon3} alt="" width="64" height="64" />
+            <img src={icon3} alt="feature" width="64" height="64" />
           </div>
           <div className="features-item__content">
             <div className="features-item__title">Risk Diversification</div>
@@ -59,7 +59,7 @@ const Features: React.FC = () => {
 
         <div className="features-item">
           <div className="features-item__icon">
-            <img src={icon4} alt="" width="64" height="64" />
+            <img src={icon4} alt="feature" width="64" height="64" />
           </div>
           <div className="features-item__content">
             <div className="features-item__title">Utility & Governance</div>

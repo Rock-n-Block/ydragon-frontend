@@ -12,7 +12,6 @@ interface XYStructureProps {
 }
 
 const XYStructure: React.FC<XYStructureProps> = ({ vaults }) => {
-  console.log(vaults);
   const columns: any[] = [
     {
       title: 'Vault',
@@ -51,7 +50,6 @@ const XYStructure: React.FC<XYStructureProps> = ({ vaults }) => {
         },
       ];
       setDataSource(newData);
-      console.log({ newData });
     }
   }, [vaults]);
   return (
@@ -72,7 +70,7 @@ const XYStructure: React.FC<XYStructureProps> = ({ vaults }) => {
               ]}
             />
             <SmallTableCard
-              tokenName="X Vault"
+              tokenName="Y Vault"
               index={1}
               data={[
                 ['', dataSource[1]?.price],

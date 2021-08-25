@@ -1,5 +1,6 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import nextId from 'react-id-generator';
+import { useHistory } from 'react-router-dom';
 import BigNumber from 'bignumber.js/bignumber';
 
 import logo from '../../../assets/img/icons/logo.svg';
@@ -21,15 +22,25 @@ const SmallCard: React.FC<IUserIndex> = ({
   total,
   tokens,
 }) => {
+  const history = useHistory();
+  const handleClick = () => {
+    history.push(`/index/${id}`);
+  };
+  console.log(handleClick);
   return (
-    <section className="index-small-card">
+    <div
+      role="button"
+      onClick={() => handleClick()}
+      onKeyDown={() => handleClick()}
+      key={nextId()}
+      tabIndex={0}
+      className="index-small-card"
+    >
       <div className="index-small-card__header">
         <div className="index-small-card__header--logo">
-          <img src={logo} alt="ydr-logo" />
+          <img src={logo} alt="ydr-logo" width="31" height="31" />
         </div>
-        <Link to={`/index/${id}`} className="index-small-card__header--name">
-          {name}
-        </Link>
+        <span className="index-small-card__header--name">{name}</span>
       </div>
 
       <div className="index-small-card__info">
@@ -96,7 +107,10 @@ const SmallCard: React.FC<IUserIndex> = ({
 
       <div className="index-small-card__percents">
         {tokens.map((token, i) => (
-          <div className={`index-small-card__percents--item ${colorsClassNames[i > 3 ? 3 : i]}`}>
+          <div
+            key={nextId()}
+            className={`index-small-card__percents--item ${colorsClassNames[i > 3 ? 3 : i]}`}
+          >
             <div className="index-small-card__percents--item__title">{token.symbol}</div>
             <div
               className="index-small-card__percents--item__line"
@@ -112,7 +126,7 @@ const SmallCard: React.FC<IUserIndex> = ({
           </div>
         ))}
       </div>
-    </section>
+    </div>
   );
 };
 

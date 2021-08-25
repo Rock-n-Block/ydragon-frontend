@@ -1,9 +1,10 @@
-import React /* , { useCallback, useEffect, useState } */ from 'react';
-// import nextId from 'react-id-generator';
+import React, { useCallback, useEffect, useState } from 'react';
+import nextId from 'react-id-generator';
 import { observer } from 'mobx-react-lite';
 
-// import { indexesApi } from '../../../services/api';
-// import { Spinner } from '../../index';
+import { indexesApi } from '../../../services/api';
+import { useMst } from '../../../store/store';
+import { Spinner } from '../../index';
 import { InitialMintEventItem } from '../index';
 
 import './InitialMintEvent.scss';
@@ -21,14 +22,15 @@ export interface IImeToken {
   name: string;
   symbol: string;
   image: string;
+  address: string;
   total_quantity: number;
   price: number;
   total_price: number;
   user_quantity?: number;
 }
-
 const InitialMintEvent: React.FC = observer(() => {
-  /* const [imeList, setImeList] = useState<IIme[]>([] as IIme[]);
+  const { networks } = useMst();
+  const [imeList, setImeList] = useState<IIme[]>([] as IIme[]);
   const [loading, setLoading] = useState<boolean>(false);
   const getImeList = useCallback(() => {
     setLoading(true);
@@ -44,21 +46,22 @@ const InitialMintEvent: React.FC = observer(() => {
       .finally(() => setLoading(false));
   }, []);
   useEffect(() => {
-    getImeList();
-  }, [getImeList]); */
+    if (networks.currentNetwork) {
+      getImeList();
+    }
+  }, [networks.currentNetwork, getImeList]);
   return (
     <section className="section">
-      <h2 className="section__title text-outline">Index minting Event</h2>
+      <h2 className="section__title text-outline">INITIAL minting Event</h2>
       <p className="section__sub-title">FUNDED YDR ALLOCATION FOR INDEX STAKERS</p>
-      {/*  <Spinner loading={loading} />
+      <Spinner loading={loading} />
       {imeList.length
         ? imeList.map((imeItem) => <InitialMintEventItem key={nextId()} imeItem={imeItem} />)
         : !loading && (
             <div className="no-ime">
               <p className="no-ime__text text-gradient">There is no IME yet</p>
             </div>
-          )} */}
-      <InitialMintEventItem /> {/* key={nextId()}imeItem={imeItem} */}
+          )}
     </section>
   );
 });

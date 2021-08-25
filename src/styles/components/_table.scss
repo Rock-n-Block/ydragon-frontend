@@ -3,13 +3,13 @@
 
 .dark {
   .ant-table-tbody > tr.ant-table-placeholder:hover > td {
-    background: rgba($white, 0.5);
+    background: $table-selected;
   }
 
   .table {
     &:hover {
       & > td {
-        background: #14265a !important;
+        background: $table-selected !important;
       }
     }
 
@@ -26,12 +26,8 @@
         & > td {
           cursor: pointer;
 
-          color: #14265a !important;
-          background: $white !important;
+          background: $table-selected !important;
 
-          a {
-            color: #14265a !important;
-          }
         }
       }
     }
@@ -47,6 +43,12 @@
         &-description {
           color: white;
         }
+      }
+
+      & > tr.ant-table-row-selected > td {
+        color: $black;
+        background: $white;
+        border-color: rgba($white, 0.03);
       }
     }
   }
@@ -73,10 +75,6 @@
     &-row {
       .ant-table-cell {
         color: $black;
-
-        a {
-          color: $black;
-        }
       }
 
       &:hover {
@@ -85,10 +83,6 @@
 
           color: $white !important;
           background: #14265a !important;
-
-          a {
-            color: $white !important;
-          }
         }
       }
     }
@@ -102,6 +96,12 @@
 
       &-description {
         color: $white;
+      }
+
+      & > tr.ant-table-row-selected > td {
+        color: $white;
+        background: #14265a;
+        border-color: rgba(0, 0, 0, 0.03);
       }
     }
   }
@@ -220,6 +220,7 @@
       //   color: rgba($black, 0.5);
       // }
       & > tr.ant-table-row-selected > td {
+        color: $white;
         background: #14265a;
         border-color: rgba(0, 0, 0, 0.03);
       }

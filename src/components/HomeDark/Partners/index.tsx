@@ -39,7 +39,7 @@ const Partners: React.FC = () => {
           <Swiper spaceBetween={60} slidesPerView={8} loop>
             {partners.map((partner) => (
               <SwiperSlide>
-                <img src={partner} key={nextId()} alt="" />
+                <img src={partner} key={nextId()} alt="partner" />
               </SwiperSlide>
             ))}
           </Swiper>

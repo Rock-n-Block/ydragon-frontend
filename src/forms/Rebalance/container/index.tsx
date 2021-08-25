@@ -1,11 +1,13 @@
 import React from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import BigNumber from 'bignumber.js/bignumber';
 import { withFormik } from 'formik';
 import { observer } from 'mobx-react-lite';
 
 import { ITokensDiff } from '../../../pages/Admin';
 import { indexesApi } from '../../../services/api';
+import { useMst } from '../../../store/store';
+import { ProviderRpcError } from '../../../types/errors';
 import Rebalance, { IRebalance } from '../component';
 
 interface IIndexId {
@@ -14,10 +16,11 @@ interface IIndexId {
 interface RebalanceFormProps {
   name: string;
   tokens: Array<ITokensDiff>;
+  onStart: () => void;
 }
 
-const RebalanceForm: React.FC<RebalanceFormProps> = ({ name, tokens }) => {
-  const history = useHistory();
+const RebalanceForm: React.FC<RebalanceFormProps> = observer(({ name, tokens, onStart }) => {
+  const { modals } = useMst();
   const { indexId } = useParams<IIndexId>();
   const FormWithFormik = withFormik<any, IRebalance>({
     enableReinitialize: true,
@@ -32,7 +35,7 @@ const RebalanceForm: React.FC<RebalanceFormProps> = ({ name, tokens }) => {
           };
         }) || ([] as Array<ITokensDiff>),
       days: 30,
-      hours: 30,
+      hours: 23,
       steps: 30,
       isLoading: false,
     }),
@@ -60,27 +63,31 @@ const RebalanceForm: React.FC<RebalanceFormProps> = ({ name, tokens }) => {
       };
       indexesApi
         .putIndexesRebalance(+indexId, newData)
-        .then(({ data }) => {
-          console.log('put rebalance success', data);
+        .then(() => {
           indexesApi
             .launchRebalance(+indexId)
-            .then((response) => {
-              console.log('launch rebalance success', response);
+            .then(() => {
+              modals.info.setMsg('Success', 'launch rebalance success', 'success');
+              onStart();
+              modals.rebalance.close();
             })
-            .catch((err) => {
+            .catch((err: any) => {
               const { response } = err;
-              console.log('launch rebalance error', response);
-              history.push('/admin');
+              modals.info.setMsg('Error', `Launch rebalance error ${response.data}`, 'error');
+            })
+            .finally(() => {
+              setFieldValue('isLoading', false);
             });
         })
-        .catch((err) => {
-          const { response } = err;
-          console.log('put rebalance error', response);
+        .catch((err: ProviderRpcError) => {
+          setFieldValue('isLoading', false);
+          const { message } = err;
+          modals.info.setMsg('Error', `Put rebalance error ${message}`, 'error');
         });
     },
     displayName: 'Rebalance',
   })(Rebalance);
   return <FormWithFormik />;
-};
+});
 
-export default observer(RebalanceForm);
+export default RebalanceForm;

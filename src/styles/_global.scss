@@ -1,8 +1,15 @@
 body {
   margin: 0;
 
+  width: 100% !important;
+
   font-family: 'Rubik', sans-serif;
   font-weight: normal;
+
+  span,
+  div {
+    font-feature-settings: 'liga' off;
+  }
 
   .dark {
     color: white;
@@ -15,6 +22,15 @@ body {
 
 img {
   vertical-align: top;
+}
+
+a {
+  transition: color 0s;
+  transition: background-color 0.3s;
+
+  &:hover {
+    color: unset;
+  }
 }
 
 h1,
@@ -62,6 +78,30 @@ p {
   .page__title-icon--index {
     @include shadow-block;
   }
+
+  .ant-select-dropdown {
+    color: $white;
+    background-color: $black;
+    border: $black;
+
+    .ant-select-item-option {
+      color: $white;
+    }
+
+    .ant-select-item-option-selected,
+    .ant-select-item-option-active {
+      background-color: #3a3a66;
+    }
+  }
+
+  .ant-tooltip-inner {
+    color: $black !important;
+    background-color: $white !important;
+  }
+
+  .ant-tooltip-arrow-content {
+    background-color: $white !important;
+  }
 }
 
 .light {
@@ -91,10 +131,33 @@ p {
         background-image: url('../assets/img/home-bg.png');
       }
     }
+
+    .ant-tooltip-inner {
+      color: $black !important;
+      background-color: $gray-bg !important;
+    }
+
+    .ant-tooltip-arrow-content {
+      background-color: $gray-bg !important;
+    }
   }
 
   .page__title-icon--index {
     @include shadow-light-block;
+  }
+
+  .ant-select-dropdown {
+    color: $black;
+    background-color: $white;
+  }
+
+  .ant-tooltip-inner {
+    color: $white !important;
+    background-color: $black !important;
+  }
+
+  .ant-tooltip-arrow-content {
+    background-color: $black !important;
   }
 }
 
@@ -129,6 +192,12 @@ p {
   }
 }
 
+.expandWrapper {
+  display: none;
+
+  height: 0%;
+}
+
 main {
   flex: 1 1 auto;
 }
@@ -147,12 +216,12 @@ main {
   position: relative;
 
   & + & {
-    margin-top: 220px;
+    margin-top: 175px;
   }
 
   &--admin {
     & + & {
-      margin-top: 80px;
+      margin-top: 65px;
     }
   }
 
@@ -275,4 +344,8 @@ main {
   text-decoration: none;
 
   pointer-events: none;
+}
+
+.ant-tooltip {
+  z-index: 10 !important;
 }

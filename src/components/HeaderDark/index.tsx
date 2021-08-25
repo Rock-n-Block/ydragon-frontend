@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
 import { Link } from 'react-router-dom';
+import { NavHashLink } from 'react-router-hash-link';
 import { observer } from 'mobx-react-lite';
 
 import crossBlack from '../../assets/img/icons/icon-cross-black.svg';
@@ -9,43 +10,54 @@ import iconMenuBlack from '../../assets/img/icons/icon-menu-black.svg';
 import iconMenu from '../../assets/img/icons/icon-menu.svg';
 import logo from '../../assets/img/icons/logo.svg';
 // import dis from '../../assets/img/socials/discord.svg';
-// import md from '../../assets/img/socials/medium.svg';
+import md from '../../assets/img/socials/medium.svg';
 import tg from '../../assets/img/socials/telegram.svg';
 import tw from '../../assets/img/socials/twitter.svg';
-// import { useWalletConnectorContext } from '../../services/walletConnect';
-import { useMst } from '../../store/store';
-// import EventBanner from '../EventBanner';
-import { Button, Switch } from '../index';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import Whitepaper from '../../assets/pdf/YD WP.pdf';
+import { useWalletConnectorContext } from '../../services/walletConnect';
+import { DARK, LIGHT, useMst } from '../../store/store';
+import EventBanner from '../EventBanner';
+import { Button, SelectNetwork, Switch } from '../index';
 
 import './Header.scss';
+import coinmarketcapD from '../../assets/img/socials/coinmarketcap.svg';
+import coinmarketcapL from '../../assets/img/socials/coinmarketcap-light.svg';
+import coingecko from '../../assets/img/socials/coingecko.svg';
+import nomics from '../../assets/img/socials/nomics.png';
 
-const Header: React.FC = observer(() => {
-  const [collapsed, setCollapsed] = useState(true);
+interface HeaderProps {
+  collapsed: boolean;
+  onCollapsedChange: (value: boolean) => void;
+}
+
+const Header: React.FC<HeaderProps> = observer(({ collapsed, onCollapsedChange }) => {
   const [fixed, setFixed] = useState(true);
-  const { /* user, */ theme } = useMst();
-  // const walletConnector = useWalletConnectorContext();
+  const { theme, user } = useMst();
+  const walletConnector = useWalletConnectorContext();
   const history = useHistory();
 
   const handleChangeTheme = () => {
-    if (localStorage.theme === 'light') {
-      theme.setTheme('dark');
+    if (LIGHT === localStorage.theme) {
+      theme.setTheme(DARK);
     } else {
-      theme.setTheme('light');
+      theme.setTheme(LIGHT);
     }
   };
 
-  /*  const handleLogOut = () => {
-    setCollapsed(true);
+  const handleLogOut = () => {
+    onCollapsedChange(true);
     walletConnector.disconnect();
   };
 
   const connectWallet = (): void => {
-    setCollapsed(true);
+    onCollapsedChange(true);
     walletConnector.connect();
-  }; */
+  };
 
   const redirectHandler = (path: string) => {
-    setCollapsed(true);
+    onCollapsedChange(true);
     history.push(path);
   };
 
@@ -59,21 +71,31 @@ const Header: React.FC = observer(() => {
 
   return (
     <div className={`header__wrapper  ${fixed ? 'fixed' : ''}`}>
-      {/* <EventBanner /> */}
+      <EventBanner />
       <div className={`header ${collapsed ? 'collapse' : 'expand'}`}>
         <div className="container">
           <div className="header__inner">
             <div
               role="button"
               tabIndex={0}
-              onKeyDown={() => setCollapsed(!collapsed)}
-              onClick={() => setCollapsed(!collapsed)}
+              onKeyDown={() => onCollapsedChange(!collapsed)}
+              onClick={() => onCollapsedChange(!collapsed)}
               className="header__menu"
             >
-              {theme.value === 'dark' ? (
-                <img alt="#" src={collapsed ? iconMenu : cross} />
+              {DARK === theme.value ? (
+                <img
+                  alt="burger menu"
+                  src={collapsed ? iconMenu : cross}
+                  width={collapsed ? '27' : '21'}
+                  height={collapsed ? '14' : '21'}
+                />
               ) : (
-                <img alt="#" src={collapsed ? iconMenuBlack : crossBlack} />
+                <img
+                  alt="burger menu"
+                  src={collapsed ? iconMenuBlack : crossBlack}
+                  width={collapsed ? '27' : '21'}
+                  height={collapsed ? '14' : '21'}
+                />
               )}
             </div>
             {collapsed ? (
@@ -85,12 +107,13 @@ const Header: React.FC = observer(() => {
               </div>
             ) : (
               <div className="menu__sign">
-                <Switch checked={theme.value === 'dark'} onChange={handleChangeTheme} />
-                {/* <ul className="menu-nav">
+                <Switch checked={DARK === theme.value} onChange={handleChangeTheme} />
+                <SelectNetwork />
+                <ul className="menu-nav">
                   {user.address && (
                     <li className="menu-nav__item">
                       <Button
-                        className="menu-nav__link"
+                        className="menu-nav__link logout"
                         type="text"
                         styledType="clear"
                         onClick={handleLogOut}
@@ -110,7 +133,7 @@ const Header: React.FC = observer(() => {
                       </Button>
                     </li>
                   )}
-                </ul> */}
+                </ul>
               </div>
             )}
 
@@ -121,38 +144,47 @@ const Header: React.FC = observer(() => {
                     Home
                   </Link>
                 </li>
-                {/* {localStorage.yd_address && (
-                  <li className="header-nav__item">
-                    <Link to="/indexes" className="header-nav__link">
-                      Index Products
-                    </Link>
-                  </li>
-                )}
-                {localStorage.yd_address && (
+                <li className="header-nav__item">
+                  <Link to="/indexes" className="header-nav__link">
+                    Index Products
+                  </Link>
+                </li>
+                {user.address && (
                   <li className="header-nav__item">
                     <Link to="/staking" className="header-nav__link">
                       Staking
                     </Link>
                   </li>
-                )} */}
+                )}
+                <li className="header-nav__item">
+                  <a
+                    href="https://bridge.ydragon.io/"
+                    rel="noreferrer nooppener"
+                    target="_blank"
+                    className="header-nav__link"
+                  >
+                    Bridge
+                  </a>
+                </li>
                 <li className="header-nav__item">
                   <Link to="/about-us" className="header-nav__link">
                     About
                   </Link>
                 </li>
-                {/*  {localStorage.yd_token && (
+                {sessionStorage.getItem('yd_token') && (
                   <li className="header-nav__item">
                     <Link to="/admin" className="header-nav__link">
                       Admin panel
                     </Link>
                   </li>
-                )} */}
+                )}
               </ul>
             </nav>
 
             <div className="header__sign">
-              <Switch checked={theme.value === 'dark'} onChange={handleChangeTheme} />
-              {/* <ul className="header-nav">
+              <Switch checked={DARK === theme.value} onChange={handleChangeTheme} />
+              <SelectNetwork />
+              <ul className="header-nav">
                 {user.address && (
                   <li className="header-nav__item">
                     <Button
@@ -176,7 +208,7 @@ const Header: React.FC = observer(() => {
                     </Button>
                   </li>
                 )}
-              </ul> */}
+              </ul>
             </div>
           </div>
           <nav className="menu">
@@ -191,7 +223,7 @@ const Header: React.FC = observer(() => {
                     Home
                   </Button>
                 </li>
-                {/* <li className="menu-nav__item">
+                <li className="menu-nav__item">
                   <Button
                     styledType="clear"
                     onClick={() => redirectHandler('/indexes')}
@@ -200,15 +232,29 @@ const Header: React.FC = observer(() => {
                     Index Products
                   </Button>
                 </li>
+                {user.address && (
+                  <li className="menu-nav__item">
+                    <Button
+                      styledType="clear"
+                      onClick={() => redirectHandler('/staking')}
+                      className="menu-nav__link"
+                    >
+                      Staking
+                    </Button>
+                  </li>
+                )}
                 <li className="menu-nav__item">
                   <Button
                     styledType="clear"
-                    onClick={() => redirectHandler('/staking')}
+                    // onClick={() => redirectHandler('/bridge')}
+                    link="https://ydragon-bridge.herokuapp.com/"
+                    target="_blank"
+                    rel="noopener norefferer"
                     className="menu-nav__link"
                   >
-                    Staking
+                    Bridge
                   </Button>
-                </li> */}
+                </li>
                 <li className="menu-nav__item">
                   <Button
                     styledType="clear"
@@ -218,7 +264,7 @@ const Header: React.FC = observer(() => {
                     About
                   </Button>
                 </li>
-                {/*  {localStorage.yd_token && (
+                {sessionStorage.getItem('yd_token') && (
                   <li className="menu-nav__item">
                     <Button
                       styledType="clear"
@@ -228,7 +274,7 @@ const Header: React.FC = observer(() => {
                       Admin panel
                     </Button>
                   </li>
-                )} */}
+                )}
               </ul>
             </nav>
           </nav>
@@ -237,15 +283,15 @@ const Header: React.FC = observer(() => {
               <div className="footer__links-title">Product</div>
 
               <div className="footer__links">
-                {/* <span className="isDisabled">
-                  <a href="/">Whitepaper</a>
-                </span>
+                <a href={Whitepaper} target="_blank" rel="noopener noreferrer">
+                  Whitepaper
+                </a>
                 <span className="isDisabled">
                   <a href="/">Privacy Policy</a>
                 </span>
                 <span className="isDisabled">
                   <a href="/">Terms of Service</a>
-                </span> */}
+                </span>
                 <a href="mailto:info@ydragon.io" target="_blank" rel="noopener noreferrer">
                   Contact us
                 </a>
@@ -257,16 +303,16 @@ const Header: React.FC = observer(() => {
 
               <div className="footer__links">
                 <Link to="/about-us">About Us</Link>
-                {/* <span className="isDisabled">
+                <span className="isDisabled">
                   <a href="/">Tutorial</a>
                 </span>
-                <span className="isDisabled">
-                  <a href="/">FAQ</a>
-                </span> */}
+                <NavHashLink to="/about-us#FAQ" smooth className="text-gray text-bold">
+                  FAQ
+                </NavHashLink>
               </div>
             </div>
 
-            {/* <div className="footer__col">
+            <div className="footer__col">
               <div className="footer__links-title">DeFi</div>
 
               <div className="footer__links">
@@ -277,57 +323,85 @@ const Header: React.FC = observer(() => {
                   <a href="/">Become Partner</a>
                 </span>
               </div>
-            </div> */}
-            <div className="footer__socials">
-              <a
-                href="https://t.me/ydrmain/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="footer__socials-item"
-              >
-                <img src={tg} alt="logo" width="24" height="20" />
-              </a>
-
-              <a
-                href="https://twitter.com/ydragons_"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="footer__socials-item"
-              >
-                <img src={tw} alt="logo" width="24" height="20" />
-              </a>
-
-              {/* <a href="/" className="footer__socials-item">
-                <img src={md} alt="logo" width="24" height="20" />
-              </a>
-
-              <a href="/" className="footer__socials-item">
-                <img src={dis} alt="logo" width="24" height="20" />
-              </a> */}
             </div>
+            {!collapsed && (
+              <div className="footer__socials">
+                <div className="footer__socials-group">
+                  <a
+                    href="https://t.me/ydrmain/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="footer__socials-item footer__socials-tg"
+                  >
+                    <img src={tg} alt="telegram channel" width="16" height="16" />
+                    <span>Channel</span>
+                  </a>
+
+                  <a
+                    href="https://t.me/ydragonchat"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="footer__socials-item footer__socials-tg"
+                  >
+                    <img src={tg} alt="telegram chat" width="16" height="16" />
+                    <span>Chat</span>
+                  </a>
+                  <a
+                    href="https://twitter.com/ydragons_"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="footer__socials-item"
+                  >
+                    <img src={tw} alt="twitter" width="16" height="16" />
+                  </a>
+                  <a
+                    href="https://medium.com/ydragon-io"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="footer__socials-item"
+                  >
+                    <img src={md} alt="medium" width="16" height="16" />
+                  </a>
+                </div>
+                <div className="footer__socials-group">
+                  <a
+                    href="https://coinmarketcap.com/currencies/ydragon/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="footer__socials-item"
+                  >
+                    <img
+                      src={theme.value === DARK ? coinmarketcapD : coinmarketcapL}
+                      alt="coinmarketcap"
+                      width="16"
+                      height="16"
+                    />
+                  </a>
+                  <a
+                    href="https://www.coingecko.com/en/coins/ydragon"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="footer__socials-item"
+                  >
+                    <img src={coingecko} alt="coingecko" width="16" height="16" />
+                  </a>
+                  <a
+                    href="https://nomics.com/assets/ydr-ydragon"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="footer__socials-item"
+                  >
+                    <img src={nomics} alt="nomics" width="16" height="16" />
+                  </a>
+                </div>
+
+                {/* <a href="/" className="footer__socials-item">
+                  <img src={dis} alt="logo" width="24" height="20" />
+                </a> */}
+              </div>
+            )}
           </div>
         </div>
-        <footer className="footer">
-          <div className="container">
-            <div className="footer__content">
-              <div className="footer__col">
-                <div className="footer__logo">
-                  <Button styledType="clear" onClick={() => redirectHandler('/')}>
-                    <img src={logo} alt="logo" width="40" height="36" />
-                  </Button>
-                  <div className="footer__logo-text">YDRAGON</div>
-                </div>
-
-                <div className="footer__descr">
-                  YDragon is a cross-chain index ecosystem with yield bearing collateral, providing
-                  a true interoperable cross-asset experience.
-                </div>
-              </div>
-
-              <div className="footer__copyright">© 2021 YDRAGON</div>
-            </div>
-          </div>
-        </footer>
       </div>
     </div>
   );

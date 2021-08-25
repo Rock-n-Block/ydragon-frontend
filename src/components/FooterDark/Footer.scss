@@ -19,7 +19,7 @@
     }
 
     &__socials-item {
-      background-color: #0b1532;
+      background-color: #1a1a1a;
     }
   }
 }
@@ -44,6 +44,11 @@
 .footer {
   margin-top: 240px;
   padding: 60px 0;
+
+  .container {
+    display: flex;
+    flex-direction: column;
+  }
 
   @include b('tablet') {
     margin-top: 140px;
@@ -101,21 +106,96 @@
     margin-top: 25px;
 
     display: flex;
+    align-items: center;
+    @include b('mobile') {
+      flex-direction: column;
+      //justify-content: center;
+      .footer__socials-divider {
+        display: none;
+
+        & + .footer__socials-group {
+          margin-top: 20px;
+        }
+      }
+    }
   }
 
-  &__socials-item {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  &__socials {
+    &-group {
+      display: flex;
+    }
 
-    width: 32px;
-    height: 32px;
+    &-item {
+      display: flex;
+      justify-content: center;
+      align-items: center;
 
-    border-radius: 50%;
-    box-shadow: 0 13px 18px rgba(17, 19, 35, 0.08);
+      width: 32px;
+      height: 32px;
 
-    & + & {
-      margin-left: 15px;
+      border-radius: 50%;
+      box-shadow: 0 13px 18px rgba(17, 19, 35, 0.08);
+
+      & + & {
+        margin-left: 15px;
+      }
+
+      &:hover,
+      &:active {
+        background: $gradient;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+
+        &::selection {
+          -webkit-text-fill-color: $white;
+        }
+
+        ::selection {
+          -webkit-text-fill-color: $white;
+        }
+      }
+    }
+
+    &-tg {
+      padding: 6px 9px;
+
+      width: fit-content;
+
+      font-family: Rubik;
+      font-size: 16px;
+      font-weight: normal;
+      font-style: normal;
+      line-height: 19px;
+
+      color: #848484;
+      border-radius: 100px;
+
+      img {
+        margin-right: 5px;
+      }
+
+      &:hover,
+      &:active {
+        background: $gradient;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+
+        &::selection {
+          -webkit-text-fill-color: $white;
+        }
+
+        ::selection {
+          -webkit-text-fill-color: $white;
+        }
+      }
+    }
+
+    &-divider {
+      margin: 0 15px;
+      width: 1px;
+      height: 12px;
+      background: #4F5665;
+
     }
   }
 

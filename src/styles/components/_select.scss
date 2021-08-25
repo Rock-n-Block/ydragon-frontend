@@ -1,0 +1,112 @@
+@import '../../styles/_variables.scss';
+@import '../../styles/mixins';
+
+.dark {
+  .select-network,
+  .ant-select:not(.ant-select-customize-input) {
+    .ant-select-selector {
+      color: $white;
+      background: #0c1735;
+      border-color: #647091;
+    }
+  }
+  .ant-select-item-option-disabled{
+    opacity: 0.5;
+  }
+
+  .select-network__dropdown,
+  .ant-select-dropdown {
+    background: #181c33;
+
+    .ant-select-item-option-selected,
+    .ant-select-item-option-active {
+      background: rgba(255, 255, 255, 0.05) !important;
+    }
+  }
+}
+
+.light {
+  .select-network,
+  .ant-select:not(.ant-select-customize-input) {
+    .ant-select-selector {
+      color: $black;
+      background: $white;
+      border-color: #d2d3d7;
+    }
+  }
+
+  .select-network__dropdown {
+    .ant-select-item-option-selected,
+    .ant-select-item-option-active {
+      background: $main-bg;
+    }
+  }
+}
+
+.select-network {
+  .ant-select-selector {
+    padding: 0 7px !important;
+
+    box-sizing: border-box;
+
+    border-width: 2px !important;
+    border-radius: 10px !important;
+  }
+}
+
+.select__arrow {
+  position: absolute;
+  top: calc(50% - 3px);
+  left: 0;
+}
+
+.select-network__dropdown {
+  text-transform: none;
+
+  border-radius: 10px;
+
+  .ant-select-item-option-content {
+    justify-content: start;
+  }
+
+  .ant-select-item-option-selected {
+    border-radius: 10px;
+  }
+}
+
+.ant-select,
+.select-network {
+  .token-mini {
+    margin-right: 5px;
+
+    width: 26px;
+
+    &__name {
+      font-family: TTNorms, sans-serif;
+      font-size: 18px;
+      font-weight: normal;
+      line-height: 21px;
+    }
+  }
+
+  .ant-select-selector {
+    .ant-select-single,
+    .ant-select-show-arrow,
+    .ant-select-selection-item,
+    .ant-select-single.ant-select-show-arrow,
+    .ant-select-selection-placeholder {
+      display: flex;
+    }
+  }
+} /*
+.select-network{
+  &__container{
+    position: relative;
+    .ant-select-dropdown{
+      &:has(.header){
+        overflow: unset;
+      }
+      top:32px !important;
+    }
+  }
+} */

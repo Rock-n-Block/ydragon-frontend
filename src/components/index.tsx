@@ -20,3 +20,6 @@ export { default as Switch } from './Switch';
 export { default as Stake } from './Stake';
 export { default as StakeItem } from './StakeItem';
 export { default as StakingStatistics } from './StakingStatistics';
+export { default as PriceDifferenceBag } from './PriceDifferenceBag';
+export { default as SelectNetwork } from './SelectNetwork';
+// export { default as Tooltip } from './Tooltip';

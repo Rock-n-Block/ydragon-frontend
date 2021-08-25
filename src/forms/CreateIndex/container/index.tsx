@@ -2,12 +2,14 @@ import React from 'react';
 import BigNumber from 'bignumber.js/bignumber';
 import { withFormik } from 'formik';
 import { observer } from 'mobx-react-lite';
-import { TransactionReceipt } from 'web3-core';
+import moment from 'moment';
 
+import { ISearchToken } from '../../../components/Search';
 import { ITokensDiff } from '../../../pages/Admin';
 import { indexesApi } from '../../../services/api';
 import { useWalletConnectorContext } from '../../../services/walletConnect';
 import { useMst } from '../../../store/store';
+import { ProviderRpcError } from '../../../types/errors';
 import CreateIndex, { ICreateIndex } from '../component';
 
 const CreateIndexForm: React.FC = () => {
@@ -18,13 +20,15 @@ const CreateIndexForm: React.FC = () => {
     mapPropsToValues: () => ({
       name: '',
       symbol: '',
-      startDate: '',
-      endDate: '',
+      price: '',
+      dateRange: ['', ''],
       description: '',
       tokens: [] as Array<ITokensDiff>,
       isLoading: false,
+      searchTokens: [] as Array<ISearchToken>,
+      searchInput: '',
     }),
-    handleSubmit: (values, { setFieldValue }) => {
+    handleSubmit: (values, { setFieldValue, resetForm }) => {
       setFieldValue('isLoading', true);
       const tokenAddresses: Array<string> = [];
       const tokenWeights: Array<string> = [];
@@ -36,28 +40,39 @@ const CreateIndexForm: React.FC = () => {
         .createNewIndex(
           values.name,
           values.symbol,
-          [values.startDate, values.endDate],
+          [
+            moment(values.dateRange ? values.dateRange[0] : '').format('X'),
+            moment(values.dateRange ? values.dateRange[1] : '').format('X'),
+          ],
           tokenAddresses,
           tokenWeights,
+          new BigNumber(values.price).multipliedBy(new BigNumber(10).pow(18)).toString(10),
         )
-        .then((data: TransactionReceipt) => {
-          indexesApi
-            .addDescriptionToIndex(data.transactionHash, values.description)
-            .then(() => {
-              console.log('description added');
-            })
-            .catch((error: any) => {
-              const { response } = error;
-              modals.info.setMsg('Error', response, 'error');
-            });
-
-          modals.info.setMsg('Success', 'Index created', 'success');
+        .on('transactionHash', (hash: string) => {
+          if (values.description) {
+            indexesApi
+              .addParamsToIndex(hash, values.description /* , values.price */)
+              .catch((error) => {
+                const { response } = error;
+                console.log('description not added', response);
+              })
+              .finally(() => {
+                resetForm({});
+                setFieldValue('isLoading', false);
+              });
+          } else {
+            resetForm({});
+          }
         })
-        .catch((error: any) => {
-          const { response } = error;
-          modals.info.setMsg('Error', response, 'error');
+        .then(() => {
+          modals.info.setMsg('Success', 'Index created', 'success');
+          modals.createIndex.close();
+        })
+        .catch((error: ProviderRpcError) => {
+          setFieldValue('isLoading', false);
+          const { message } = error;
+          modals.info.setMsg('Error', message, 'error');
         });
-      // TODO: create request to contract
     },
     displayName: 'CreateIndex',
   })(CreateIndex);

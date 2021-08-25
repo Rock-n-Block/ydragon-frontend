@@ -6,6 +6,7 @@ import {
   InitialMintEvent,
   Machine,
   Main,
+  Protocols,
   // Partners,
 } from '../../components/HomeDark';
 
@@ -13,6 +14,7 @@ const Home: React.FC = () => {
   return (
     <main className="container">
       <Main />
+      <Protocols />
       <InitialMintEvent />
       <Machine />
       <Features />

@@ -38,13 +38,22 @@
     margin-top: 40px;
 
     flex-direction: column;
+    align-items: center;
+
+    text-align: center;
   }
   @include b('mobile') {
     padding: 20px;
   }
 
+  &__egg {
+    margin: auto 0;
+  }
+
   &__content {
     max-width: 305px;
+
+    word-break: break-all;
     @include b('tablet') {
       display: flex;
       flex-direction: column;
@@ -65,6 +74,8 @@
     // color: $white;
     @include b('tablet') {
       margin-top: 30px;
+
+      text-align: center;
     }
   }
 
@@ -73,7 +84,6 @@
 
     font-size: 18px;
     line-height: 30px;
-
     // color: $white;
     @include b('tablet') {
       font-size: 16px;

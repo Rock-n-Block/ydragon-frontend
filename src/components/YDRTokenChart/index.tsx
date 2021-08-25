@@ -1,21 +1,20 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Line } from 'react-chartjs-2';
-import axios from 'axios';
-import BigNumber from 'bignumber.js/bignumber';
 
-import arrowDown from '../../assets/img/chart/arrow-down.svg';
-import arrowUp from '../../assets/img/chart/arrow-up.svg';
+import { coingeckoApi } from '../../services/api';
+import PriceDifferenceBag from '../PriceDifferenceBag';
 
 import './YDRTokenChart.scss';
 
 interface TokenChartProps {
-  price: any;
+  price: (value: number) => void;
 }
 
 const YDRTokenChart: React.FC<TokenChartProps> = ({ price }) => {
   const refDataLength = useRef(1);
   const refPrice = useRef(0.000001);
   const [days, setDays] = useState('1');
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [diff, setDiff] = useState(['up', 0.0]);
   const [chartData, setChartData] = useState({
     labels: [],
@@ -32,11 +31,9 @@ const YDRTokenChart: React.FC<TokenChartProps> = ({ price }) => {
       },
     ],
   });
-  const url = `https://api.coingecko.com/api/v3/coins/rubic/market_chart?vs_currency=usd&days=${days}`;
   const daysFromUrl = days;
-
   const options = {
-    aspectRatio: 4,
+    aspectRatio: windowWidth > 768 ? 4 : 2,
     parsing: {
       xAxisKey: 'time',
       yAxisKey: 'data',
@@ -71,6 +68,11 @@ const YDRTokenChart: React.FC<TokenChartProps> = ({ price }) => {
         hitRadius: 400,
       },
     },
+  };
+
+  const getWindowWidth = () => {
+    const { innerWidth: width } = window;
+    return width;
   };
 
   const toggleHandler = (event: any) => {
@@ -111,11 +113,14 @@ const YDRTokenChart: React.FC<TokenChartProps> = ({ price }) => {
     if (data)
       data.forEach((item: number[]) => {
         const date = new Date(item[0]);
-        datasetsData.push({
-          time: parseDate(date),
-          data: item[1],
-        });
+        if (!datasetsData.find((element: any) => element.time === parseDate(date))) {
+          datasetsData.push({
+            time: parseDate(date),
+            data: item[1],
+          });
+        }
       });
+    refDataLength.current = datasetsData.length;
     return {
       labels: [],
       datasets: [
@@ -150,16 +155,30 @@ const YDRTokenChart: React.FC<TokenChartProps> = ({ price }) => {
   };
 
   const axiosData = useCallback(() => {
-    axios.get(url).then((res) => {
-      refDataLength.current = res.data.prices.length;
-      const currentPrice = res.data.prices[refDataLength.current - 1][1];
-      setChartData(getChartData(res.data.prices));
-      if (refPrice.current <= currentPrice) refPrice.current = currentPrice;
-      setClickedElement(refPrice.current);
-      price(refPrice.current);
-    });
+    coingeckoApi
+      .getYDRTokensChart(days)
+      .then((res) => {
+        refDataLength.current = res.data.prices.length;
+        const currentPrice = res.data.prices[refDataLength.current - 1][1];
+        setChartData(getChartData(res.data.prices));
+        if (refPrice.current <= currentPrice) refPrice.current = currentPrice;
+        setClickedElement(refPrice.current);
+        price(refPrice.current);
+      })
+      .catch((err: any) => {
+        console.log('Request chartData error', err);
+      });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [url]);
+  }, [days]);
+
+  useEffect(() => {
+    function handleResize() {
+      setWindowWidth(getWindowWidth());
+    }
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   useEffect(() => {
     axiosData();
@@ -168,16 +187,7 @@ const YDRTokenChart: React.FC<TokenChartProps> = ({ price }) => {
   return (
     <div className="chart">
       <div className="chart-panel">
-        <div className="chart-panel-title">
-          ${new BigNumber(clickedElement).toFixed(6)}
-          <div className="diff">
-            <div className={`diff-${diff[0]}`}>
-              {diff[0] === 'up' && diff[1] !== '0.0' ? <img src={arrowUp} alt="arrow up" /> : null}
-              {diff[0] === 'down' ? <img src={arrowDown} alt="arrow down" /> : null}
-              {new BigNumber(diff[1]).toFixed(2)}%
-            </div>
-          </div>
-        </div>
+        <PriceDifferenceBag price={clickedElement} diff={diff} />
         <div className="chart-panel-btns">
           <div
             className="chart-panel-btn active"
@@ -219,14 +229,18 @@ const YDRTokenChart: React.FC<TokenChartProps> = ({ price }) => {
       </div>
       {Object.keys(chartData).length ? (
         <Line
+          height={500}
           data={chartData}
           options={options}
-          type="line"
+          // type="line"
           getElementAtEvent={getElementAtEvent}
         />
       ) : (
         <></>
       )}
+      <a href="https://www.coingecko.com/" target="_blank" rel="noreferrer" className="chart-link">
+        Source: coingecko.com
+      </a>
     </div>
   );
 };
