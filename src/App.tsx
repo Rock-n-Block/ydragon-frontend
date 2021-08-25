@@ -6,19 +6,26 @@ import { observer } from 'mobx-react-lite';
 // import { GetInModal, InfoModal, MetamaskErrModal } from './components/Modals';
 // import AdminIndex from './pages/AdminIndex';
 import { useMst } from './store/store';
-import { Footer, /* GuardedRoute, */ Header } from './components';
+import { Footer, GuardedRoute, /* GuardedRoute, */ Header } from './components';
 import {
   AboutUs,
   Admin,
+  AdminIndex,
   Home,
+  Index,
+  IndexDashboard,
   // Index,
   // IndexDashboard,
   NoPageFound,
+  StakePage,
+  YdrToken,
   // StakePage,
   // YdrToken,
 } from './pages';
 
 import './styles/index.scss';
+import { Indexes } from './components/Admin';
+import { GetInModal, InfoModal, MetamaskErrModal } from './components/Modals';
 
 export const App: React.FC = observer(() => {
   const [collapsed, setCollapsed] = useState<boolean>(true);
