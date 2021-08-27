@@ -8,7 +8,7 @@ import bncDark from '../../assets/img/icons/icon-binance-dark.svg';
 import bncLight from '../../assets/img/icons/icon-binance-light.svg';
 // import plgDark from '../../assets/img/icons/icon-polygon-dark.svg';
 // import plgLight from '../../assets/img/icons/icon-polygon-light.svg';
-import { /* basicTokensApi, */ networksApi } from '../../services/api';
+// import { /* basicTokensApi, */ networksApi } from '../../services/api';
 import { useWalletConnectorContext } from '../../services/walletConnect';
 import { useMst } from '../../store/store';
 import TokenMini from '../TokenMini';
@@ -129,7 +129,7 @@ const SelectNetwork: React.FC = observer(() => {
       image: theme.value === 'dark' ? plgDark : plgLight,
     },
   }; */
-  const getNetworks = useCallback(() => {
+  /* const getNetworks = useCallback(() => {
     networksApi
       .getNetworks()
       .then(({ data }) => {
@@ -139,7 +139,7 @@ const SelectNetwork: React.FC = observer(() => {
         const { response } = err;
         console.log(response);
       });
-  }, [networks]);
+  }, [networks]); */
 
   const getCurrentChain = useCallback(() => {
     walletConnector.walletService.requestCurrentChain().then((currentChainId: string) => {
@@ -197,9 +197,9 @@ const SelectNetwork: React.FC = observer(() => {
       });
   }, [networkToken.bnb, networkToken.polygon, basicTokens, networks.currentNetwork]); */
 
-  useEffect(() => {
+  /* useEffect(() => {
     getNetworks();
-  }, [getNetworks]);
+  }, [getNetworks]); */
 
   useEffect(() => {
     if (networks.networksList.length && user.address) {
