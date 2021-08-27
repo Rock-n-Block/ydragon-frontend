@@ -10,7 +10,7 @@ interface IndexInfoProps {
 const IndexInfo: React.FC<IndexInfoProps> = ({ marketCap, price }) => {
   const panelInfo = [
     {
-      label: 'Index price',
+      label: 'Market cap',
       value: `${marketCap}$`,
     },
     {
