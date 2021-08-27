@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { NavHashLink } from 'react-router-hash-link';
-// import PoweredBy from './PoweredBy';
+// import { NavHashLink } from 'react-router-hash-link';
+import PoweredBy from './PoweredBy';
 
 import logo from '../../assets/img/icons/logo.svg';
 // import dis from '../../assets/img/socials/discord.svg';
@@ -14,7 +14,7 @@ import coinmarketcapL from '../../assets/img/socials/coinmarketcap-light.svg';
 import nomics from '../../assets/img/socials/nomics.png';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-import Whitepaper from '../../assets/pdf/YD WP.pdf';
+// import Whitepaper from '../../assets/pdf/YD WP.pdf';
 
 import './Footer.scss';
 import { DARK, useMst } from '../../store/store';
@@ -118,19 +118,19 @@ const Footer: React.FC = observer(() => {
             <div className="footer__copyright">© 2021 YDRAGON</div>
           </div>
 
-          <div className="footer__col">
+          {/* <div className="footer__col">
             <div className="footer__links-title">Product</div>
 
             <div className="footer__links">
               <a href={Whitepaper} target="_blank" rel="noopener noreferrer">
                 Whitepaper
               </a>
-              {/* <span className="isDisabled">
+              <span className="isDisabled">
                 <a href="/">Privacy Policy</a>
               </span>
               <span className="isDisabled">
                 <a href="/">Terms of Service</a>
-              </span> */}
+              </span>
               <a href="mailto:info@ydragon.io" target="_blank" rel="noopener noreferrer">
                 Contact us
               </a>
@@ -145,14 +145,13 @@ const Footer: React.FC = observer(() => {
               <NavHashLink to="/about-us#FAQ" smooth className="text-gray text-bold">
                 FAQ
               </NavHashLink>
-              {/* <span className="isDisabled">
+              <span className="isDisabled">
                 <a href="/">Tutorial</a>
               </span>
-              <span className="isDisabled">
-              </span> */}
+              <span className="isDisabled"></span>
             </div>
           </div>
-          {/*
+
           <div className="footer__col">
             <div className="footer__links-title">DeFi</div>
             <div className="footer__links">
@@ -165,7 +164,7 @@ const Footer: React.FC = observer(() => {
             </div>
           </div> */}
         </div>
-        {/* <PoweredBy /> */}
+        <PoweredBy />
       </div>
     </footer>
   );

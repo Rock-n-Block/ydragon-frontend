@@ -45,6 +45,11 @@
   margin-top: 240px;
   padding: 60px 0;
 
+  .container {
+    display: flex;
+    flex-direction: column;
+  }
+
   @include b('tablet') {
     margin-top: 140px;
 
@@ -119,6 +124,7 @@
     &-group {
       display: flex;
     }
+
     &-item {
       display: flex;
       justify-content: center;
@@ -150,13 +156,6 @@
       }
     }
 
-    &-divider {
-      margin: 0 15px;
-      width: 1px;
-      height: 12px;
-      background: #4F5665;
-
-    }
     &-tg {
       padding: 6px 9px;
 
@@ -189,6 +188,14 @@
           -webkit-text-fill-color: $white;
         }
       }
+    }
+
+    &-divider {
+      margin: 0 15px;
+      width: 1px;
+      height: 12px;
+      background: #4F5665;
+
     }
   }
 
