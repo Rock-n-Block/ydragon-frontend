@@ -5,7 +5,7 @@ import React from 'react';
 import Whitepaper from '../../../assets/pdf/YD WP.pdf';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-import MainVideo from '../../../assets/video/YDragon_Main_FHD.mp4';
+import MainVideo from '../../../assets/video/YDragon.mp4';
 import { Button } from '../../index';
 
 // import { Button } from '../../index';
