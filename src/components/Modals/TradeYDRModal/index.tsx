@@ -260,7 +260,7 @@ const TradeYDRModal: React.FC = observer(() => {
         </div>
         <h3 className="m-trade-ydr__header">
           I want to {modals.tradeYDR.method}
-          <span className="m-trade-ydr__header-label"> ydr token</span>
+          <span className="m-trade-ydr__header-label"> ydr tokens</span>
         </h3>
         <div className="m-trade-ydr__field">
           <div className="m-trade-ydr__labels">

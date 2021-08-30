@@ -20,19 +20,24 @@ const EventBanner: React.FC = observer(() => {
   // const mockStart = moment('20211207', 'YYYYDDMM');
   const [imeItem, setImeItem] = useState<IIme>({} as IIme);
   const [imeEnabled, setImeEnabled] = useState<boolean>(false);
-  const [imeHidden, setImeHidden] = useState<boolean>(false);
-  const [bannerHidden, setBannerHidden] = useState<boolean>(false);
+  const [imeHidden, setImeHidden] = useState<boolean>(true);
+  const [bannerHidden, setBannerHidden] = useState<boolean>(true);
   const handleGetIn = () => {
     modals.getIn.open(imeItem.id, imeItem.address, imeItem.name);
   };
   useEffect(() => {
-    const interval = setInterval(() => {
-      setNow(moment());
-    }, 1000);
+    let interval: any;
+    if (!imeHidden) {
+      interval = setInterval(() => {
+        setNow(moment());
+      }, 1000);
+    }
     return () => {
-      clearInterval(interval);
+      if (interval) {
+        clearInterval(interval);
+      }
     };
-  }, [start, end, now]);
+  }, [start, end, now, imeHidden]);
   useEffect(() => {
     const endDiff = end.diff(now, 'seconds');
     const startDiff = start.diff(now, 'seconds');
@@ -77,6 +82,7 @@ const EventBanner: React.FC = observer(() => {
       );
     }
   }, [imeItem]);
+
   return !imeHidden ? (
     <div className={bannerHidden ? 'hidden' : 'event-banner'}>
       <div className="container">
@@ -103,42 +109,58 @@ const EventBanner: React.FC = observer(() => {
 
             <div className="event-banner-timer__row">
               <span className="event-banner-timer__time">
-                <span className="text-gradient">
-                  {start.diff(now, 'seconds') <= 0
-                    ? end.diff(now, 'days')
-                    : start.diff(now, 'days')}
-                  {/* {mockStart.diff(now, 'days') < 0 ? 0 : mockStart.diff(now, 'days')} */}
-                </span>
+                {start.diff(now, 'seconds') || start.diff(now, 'seconds') === 0 ? (
+                  <span className="text-gradient">
+                    {start.diff(now, 'seconds') <= 0
+                      ? end.diff(now, 'days')
+                      : start.diff(now, 'days')}
+                    {/* {mockStart.diff(now, 'days') < 0 ? 0 : mockStart.diff(now, 'days')} */}
+                  </span>
+                ) : (
+                  ''
+                )}
                 <span className="event-banner-timer__time-unit">Day</span>
               </span>
               <span className="event-banner-timer__colon text-gradient">:</span>
               <span className="event-banner-timer__time">
-                <span className="text-gradient">
-                  {start.diff(now, 'seconds') <= 0
-                    ? end.diff(now, 'hours') % 24
-                    : start.diff(now, 'hours') % 24}
-                  {/* {mockStart.diff(now, 'hours') < 0 ? 0 : mockStart.diff(now, 'hours') % 24} */}
-                </span>
+                {start.diff(now, 'seconds') || start.diff(now, 'seconds') === 0 ? (
+                  <span className="text-gradient">
+                    {start.diff(now, 'seconds') <= 0
+                      ? end.diff(now, 'hours') % 24
+                      : start.diff(now, 'hours') % 24}
+                    {/* {mockStart.diff(now, 'hours') < 0 ? 0 : mockStart.diff(now, 'hours') % 24} */}
+                  </span>
+                ) : (
+                  ''
+                )}
                 <span className="event-banner-timer__unit-item">Hours</span>
               </span>
               <span className="event-banner-timer__colon text-gradient">:</span>
               <span className="event-banner-timer__time">
-                <span className="text-gradient">
-                  {start.diff(now, 'seconds') <= 0
-                    ? end.diff(now, 'minutes') % 60
-                    : start.diff(now, 'minutes') % 60}
-                  {/* {mockStart.diff(now, 'minutes') < 0 ? 0 : mockStart.diff(now, 'minutes') % 60} */}
-                </span>
+                {start.diff(now, 'seconds') || start.diff(now, 'seconds') === 0 ? (
+                  <span className="text-gradient">
+                    {start.diff(now, 'seconds') <= 0
+                      ? end.diff(now, 'minutes') % 60
+                      : start.diff(now, 'minutes') % 60}
+                    {/* {mockStart.diff(now, 'minutes') < 0 ? 0 : mockStart.diff(now, 'minutes') % 60} */}
+                  </span>
+                ) : (
+                  ''
+                )}
                 <span className="event-banner-timer__unit-item">Min</span>
               </span>
               <span className="event-banner-timer__colon text-gradient">:</span>
               <span className="event-banner-timer__time">
-                <span className="text-gradient">
-                  {start.diff(now, 'seconds') <= 0
-                    ? end.diff(now, 'seconds') % 60
-                    : start.diff(now, 'seconds') % 60}
-                  {/* {mockStart.diff(now, 'seconds') < 0 ? 0 : mockStart.diff(now, 'seconds') % 60} */}
-                </span>
+                {start.diff(now, 'seconds') || start.diff(now, 'seconds') === 0 ? (
+                  <span className="text-gradient">
+                    {start.diff(now, 'seconds') <= 0
+                      ? end.diff(now, 'seconds') % 60
+                      : start.diff(now, 'seconds') % 60}
+                    {/* {mockStart.diff(now, 'seconds') < 0 ? 0 : mockStart.diff(now, 'seconds') % 60} */}
+                  </span>
+                ) : (
+                  ''
+                )}
                 <span className="event-banner-timer__unit-item">Sec</span>
               </span>
             </div>

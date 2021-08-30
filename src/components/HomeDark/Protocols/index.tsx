@@ -108,10 +108,10 @@ const Protocols: React.FC = observer(() => {
             freeMode
             loop
             autoplay={{
-              delay: 300,
+              delay: 0,
               disableOnInteraction: false,
             }}
-            speed={3000}
+            speed={10000}
             breakpoints={{
               1200: {
                 slidesPerView: 3,
@@ -140,11 +140,11 @@ const Protocols: React.FC = observer(() => {
             freeMode
             loop
             autoplay={{
-              delay: 300,
+              delay: 0,
               reverseDirection: true,
               disableOnInteraction: false,
             }}
-            speed={3000}
+            speed={10000}
             breakpoints={{
               1200: {
                 slidesPerView: 3,
