@@ -117,7 +117,7 @@ const IndexChart: React.FC<IndexChartProps> = ({ onClick, indexId }) => {
       case '3m':
         setDays('90');
         break;
-      case 'ALL':
+      case 'MAX':
         setDays('max');
         break;
       default:
@@ -129,7 +129,7 @@ const IndexChart: React.FC<IndexChartProps> = ({ onClick, indexId }) => {
     (date: Date, dayAllowed?: boolean) => {
       if (daysFromUrl === '1') {
         // return moment(date).format('D/HH:MM');
-        return moment(date).format('Do MMM, HH:mm');
+        return moment(date).format('HH:mm');
         // return `${date.getHours()}:${date.getMinutes()}`;
       }
       if (daysFromUrl === 'max' && !dayAllowed) {
@@ -157,6 +157,7 @@ const IndexChart: React.FC<IndexChartProps> = ({ onClick, indexId }) => {
   const getChartData = (data: any): any => {
     const datasetsData: { time: string; data: number }[] = [];
     const arr: number[] = [];
+    console.log();
     const dayAllowed =
       (new Date(data[data.length - 1].time).getTime() - new Date(data[0].time).getTime()) /
         (3600000 * 24) <
@@ -224,7 +225,7 @@ const IndexChart: React.FC<IndexChartProps> = ({ onClick, indexId }) => {
   return (
     <div className="chart">
       <div className="chart-panel">
-        <PriceDifferenceBag price={Number(clickedElement)} diff={diff} />
+        <PriceDifferenceBag price={Number(clickedElement)} diff={diff} decimals={2} />
         <div className="chart-panel-btns">
           <div
             className="chart-panel-btn active"
@@ -260,7 +261,7 @@ const IndexChart: React.FC<IndexChartProps> = ({ onClick, indexId }) => {
             onClick={toggleHandler}
             onKeyDown={toggleHandler}
           >
-            ALL
+            MAX
           </div>
         </div>
       </div>
