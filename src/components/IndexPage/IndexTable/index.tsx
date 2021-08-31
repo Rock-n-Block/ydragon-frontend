@@ -39,7 +39,7 @@ const IndexTable: React.FC<IndexTableProps> = ({ tokens }) => {
       <div className="index-table__row index-table__row--head">
         <div className="index-table__col">Token</div>
         <div className="index-table__col">
-          Quantity <br /> per Set
+          Quantity <br /> in Index
         </div>
         <div className="index-table__col">Token Price</div>
         <div className="index-table__col">Current Weight</div>

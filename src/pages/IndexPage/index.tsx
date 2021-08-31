@@ -139,7 +139,7 @@ const Index: React.FC = observer(() => {
                 key={nextId()}
                 index={i}
                 data={[
-                  ['Quantity per Set', `${new BigNumber(token.repr_count).toFixed(2)}`],
+                  ['Quantity in Index', `${new BigNumber(token.repr_count).toFixed(2)}`],
                   ['Token Price', `$${token.rate}`],
                   [
                     'Current Weight',
@@ -165,7 +165,7 @@ const Index: React.FC = observer(() => {
                 index={i}
                 data={[
                   [
-                    'Quantity per Set',
+                    'Quantity in Index',
                     `${new BigNumber(token.count)
                       .multipliedBy(new BigNumber(10).pow(-token.decimal))
                       .toFixed(2)}`,
