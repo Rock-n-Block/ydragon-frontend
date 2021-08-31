@@ -56,7 +56,7 @@ const IndexChart: React.FC<IndexChartProps> = ({ onClick, indexId }) => {
     layout: {
       padding: 10,
     },
-    aspectRatio: windowWidth > 768 ? 4 : 2,
+    aspectRatio: windowWidth > 768 ? 1.6 : 2,
     parsing: {
       xAxisKey: 'time',
       yAxisKey: 'data',
@@ -269,6 +269,7 @@ const IndexChart: React.FC<IndexChartProps> = ({ onClick, indexId }) => {
         <Line
           data={chartData}
           options={options}
+          height={600}
           // type="line"
           getElementAtEvent={getElementAtEvent}
         />

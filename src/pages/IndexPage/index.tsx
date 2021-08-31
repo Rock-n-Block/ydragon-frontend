@@ -66,7 +66,9 @@ const Index: React.FC = observer(() => {
   const getUserBalance = useCallback(
     (indexAddress: string) => {
       walletConnector.metamaskService.getBalanceOf(indexAddress).then((data: string) => {
-        setBalance(new BigNumber(data).dividedBy(new BigNumber(10).pow(18)).toFixed(7));
+        setBalance(
+          new BigNumber(data).dividedBy(new BigNumber(10).pow(18)).toFixed(+data === 0 ? 2 : 7),
+        );
       });
     },
     [walletConnector.metamaskService],
@@ -127,7 +129,6 @@ const Index: React.FC = observer(() => {
         handleSell={handleSell}
         needLogin
       />
-      <RebalanceHistory lastRebalance={indexData?.rebalance_date} />
       <IndexChart onClick={setTableTokens} indexId={indexId} />
       <div className="index-table__big">
         <IndexTable tokens={tokens || indexData?.tokens} />
@@ -183,6 +184,7 @@ const Index: React.FC = observer(() => {
               />
             ))}
       </div>
+      <RebalanceHistory lastRebalance={indexData?.rebalance_date} />
       {/* <About /> */}
       <TradeIndexModal
         token={indexData?.name ?? ''}
