@@ -296,13 +296,30 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
           <div className="m-trade-ydr__field">
             <div className="m-trade-ydr__labels">
               <span className="m-trade-ydr__label">You pay</span>
-              <span className="m-trade-ydr__label">
-                Balance:{' '}
-                {new BigNumber(balance)
-                  .times(new BigNumber(10).pow(isSell ? -18 : -decimals))
-                  .toFixed(7)}{' '}
-                {isSell ? '' : firstCurrency.toUpperCase()}
-              </span>
+              <div className="m-trade-ydr__labels-box">
+                <span className="m-trade-ydr__label">
+                  Balance:{' '}
+                  {new BigNumber(balance)
+                    .times(new BigNumber(10).pow(isSell ? -18 : -decimals))
+                    .toFixed(7)}{' '}
+                  {isSell ? '' : firstCurrency.toUpperCase()}
+                </span>
+                <span
+                  className="m-trade-ydr__label m-trade-ydr__label-max"
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={() => {}}
+                  onClick={() =>
+                    setPayInput(
+                      new BigNumber(balance)
+                        .times(new BigNumber(10).pow(isSell ? -18 : -decimals))
+                        .toFixed(7),
+                    )
+                  }
+                >
+                  MAX
+                </span>
+              </div>
             </div>
             {!isSell ? (
               <InputWithSelect

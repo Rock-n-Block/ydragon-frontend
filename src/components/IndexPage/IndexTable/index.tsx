@@ -17,10 +17,11 @@ export interface IToken {
   price_total: number;
   symbol: string;
   unit_weight: number;
+  percent_change: number;
 }
 
 export interface IHistoricalToken {
-  diff: string;
+  percent_change: number;
   rate: string;
   repr_count: string;
   token_image: string;
@@ -30,7 +31,7 @@ export interface IHistoricalToken {
 }
 
 interface IndexTableProps {
-  tokens: Array<IToken> | Array<IHistoricalToken> | undefined;
+  tokens: Array<IHistoricalToken> | Array<IToken> | undefined;
 }
 
 const IndexTable: React.FC<IndexTableProps> = ({ tokens }) => {
@@ -51,7 +52,7 @@ const IndexTable: React.FC<IndexTableProps> = ({ tokens }) => {
 
       <div className="index-table__content">
         {tokens ? (
-          tokens.map((token) => (
+          tokens.map((token: IToken | IHistoricalToken) => (
             <div
               className="index-table__row"
               key={`token-${'id' in token ? token.id : token.token_name}`}
@@ -91,15 +92,18 @@ const IndexTable: React.FC<IndexTableProps> = ({ tokens }) => {
                 <div className="index-table__diff">
                   <div
                     className={`index-table__diff-${
-                      'diff' in token && +token?.diff < 0 ? 'down' : 'up'
+                      'percent_change' in token && +token?.percent_change < 0 ? 'down' : 'up'
                     }`}
                   >
-                    {'diff' in token && +token?.diff < 0 ? (
+                    {'percent_change' in token && +token?.percent_change < 0 ? (
                       <img src={arrowDown} alt="arrow down" width="10" height="10" />
                     ) : (
                       <img src={arrowUp} alt="arrow up" width="10" height="10" />
                     )}
-                    {new BigNumber('diff' in token ? token.diff : 0).toFixed(2)} %
+                    {new BigNumber(
+                      'percent_change' in token && token.percent_change ? token.percent_change : 0,
+                    ).toFixed(2)}{' '}
+                    %
                   </div>
                 </div>
               </div>

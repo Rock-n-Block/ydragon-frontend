@@ -66,7 +66,6 @@ const IndexChart: React.FC<IndexChartProps> = React.memo(({ onClick, indexId }) 
       },
     ],
   });
-  console.log('chartData', chartData);
   const [fetchedData, setFetchedData] = useState<Array<IFetchedData>>([]);
   const [clickedElement, setClickedElement] = useState(
     chartData.datasets[0].data[refDataLength.current - 1].data,

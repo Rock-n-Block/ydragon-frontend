@@ -149,7 +149,9 @@ const Index: React.FC = observer(() => {
                   ],
                   [
                     'Percent Change',
-                    `${new BigNumber('diff' in token ? token.diff : 0).toFixed(2)}%`,
+                    `${new BigNumber('percent_change' in token ? token.percent_change : 0).toFixed(
+                      2,
+                    )}%`,
                   ],
                   [
                     'Total Price per Set',
