@@ -33,6 +33,7 @@ export interface IIndex {
   tokens: Array<IToken>;
   created_at: Date | string;
   rebalance_date?: Date | string;
+  price: number;
 }
 
 const Index: React.FC = observer(() => {
@@ -107,7 +108,7 @@ const Index: React.FC = observer(() => {
       <TokenPanel
         panelContent={[
           {
-            label: 'Market Cap',
+            label: 'Market Cap (TVL)',
             value: `$${new BigNumber(indexData?.market_cap ?? 0).toFixed(2)}`,
           },
           {

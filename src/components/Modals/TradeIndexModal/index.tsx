@@ -96,7 +96,7 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
         if (totalX >= 0.15) {
           setFee('2%');
         } else if (totalX !== undefined) {
-          setFee(`${6 - (4 * (totalX * 100 - 5)) / 10}%`);
+          setFee(`${(6 - (4 * (totalX * 100 - 5)) / 10).toFixed(2)}%`);
         }
       } else setFee('0.5%');
     }, [totalX, isSell]);
@@ -342,11 +342,7 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
               <Input placeholder={viewOnlyInputValue} disabled />
             )}
           </div>
-          {fee ? (
-            <p className="m-trade-ydr__label m-trade-ydr__fee">Service Fee {(+fee).toFixed(2)}</p>
-          ) : (
-            <></>
-          )}
+          {fee ? <p className="m-trade-ydr__label m-trade-ydr__fee">Service Fee {fee}</p> : <></>}
           {isNeedApprove && firstCurrency !== 'bnb' && firstCurrency !== 'matic' && !isSell && (
             <Button className="m-trade-ydr__btn" onClick={handleApprove} loading={isLoading}>
               Approve
