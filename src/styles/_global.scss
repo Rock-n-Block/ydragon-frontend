@@ -202,6 +202,10 @@ main {
   flex: 1 1 auto;
 }
 
+.content {
+  overflow: hidden;
+}
+
 .container {
   margin: 0 auto;
   padding: 0 20px;

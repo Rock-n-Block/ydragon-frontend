@@ -25,9 +25,9 @@ const Advantages: React.FC = () => {
           </div>
 
           <div className="advantages__item">
-            <div className="advantages__item-title">Extensive portfolio management</div>
+            <div className="advantages__item-title">Complex portfolio management</div>
             <div className="advantages__item-descr">
-              Users need to move across chains to buy assets, making it difficult to monitor
+              Users need to move across chains to buy assets, making it difficult to monitor your
               portfolio
             </div>
           </div>

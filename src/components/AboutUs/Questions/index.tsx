@@ -60,7 +60,7 @@ const Questions: React.FC = () => {
       ),
     },
     {
-      title: 'What is an Initial Minting Event?',
+      title: 'What is an Index Minting Offering?',
       text: (
         <>
           A minting event is simply a period during which a user can purchase shares in an index

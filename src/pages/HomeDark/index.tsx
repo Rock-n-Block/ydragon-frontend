@@ -14,11 +14,11 @@ const Home: React.FC = () => {
   return (
     <main className="container">
       <Main />
-      <Protocols />
       <InitialMintEvent />
       <Machine />
       <Features />
       <Advantages />
+      <Protocols />
       {/* <Partners /> */}
     </main>
   );

@@ -88,7 +88,7 @@ const GetInModal: React.FC = observer(() => {
       .approveById(getTokenAddress(firstCurrency), modals.getIn.address)
       .then(() => {
         setIsNeedApprove(false);
-        modals.info.setMsg('Success', `Approve of ${firstCurrency} to IME success`, 'success');
+        modals.info.setMsg('Success', `Approve of ${firstCurrency} to IMO success`, 'success');
       })
       .catch((err: ProviderRpcError) => {
         const { message } = err;
@@ -104,13 +104,13 @@ const GetInModal: React.FC = observer(() => {
       .then(() => {
         setPayInput('');
         getBalance();
-        modals.info.setMsg('Success', 'You entered IME', 'success');
+        modals.info.setMsg('Success', 'You entered IMO', 'success');
       })
       .catch((err: ProviderRpcError) => {
         const { message } = err;
         modals.info.setMsg(
           'Error',
-          `Enter IME error ${message.slice(0, message.indexOf(':'))}`,
+          `Enter IMO error ${message.slice(0, message.indexOf(':'))}`,
           'error',
         );
       })
@@ -185,8 +185,8 @@ const GetInModal: React.FC = observer(() => {
           <img src={YDRLogo} alt="logo" width="55" height="100%" />
         </div>
         <h3 className="m-trade-ydr__header">
-          I want to enter to index mint event of{' '}
-          <span className="m-trade-ydr__header-label"> {modals.getIn.name}</span>
+          I want to buy <span className="m-trade-ydr__header-label"> {modals.getIn.name}</span>{' '}
+          tokens
         </h3>
         <div className="m-trade-ydr__field">
           <div className="m-trade-ydr__labels">

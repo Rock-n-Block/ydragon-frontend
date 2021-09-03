@@ -1,24 +1,27 @@
 import React from 'react';
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-import Whitepaper from '../../../assets/pdf/YD WP.pdf';
 import { Button } from '../../index';
 
 import './Main.scss';
 
+import HomeImg from '../../../assets/img/start.svg';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import Whitepaper from '../../../assets/pdf/YD WP.pdf';
+
 const Main: React.FC = () => {
   return (
     <section className="section home">
+      <img src={HomeImg} alt="" className="home__img" />
       <div className="home__title-wrapper">
-        <h1 className="home__title text-outline">YDRAGON</h1>
-        <span className="home__sub-title">DeFi made simple</span>
+        <span className="home__title text-gradient">DEFI</span>
+        <span className="home__title text-outline">MADE</span>
+        <span className="home__title text-outline">SIMPLE</span>
       </div>
 
       <p className="home__descr">
-        YDragon is a crypto index platform with cross-chain capabilities and yield-generation
-        opportunities. This combination of market-leading features allows us to offer you a
-        seamless, cross-chain, multi-asset experience. Made by investors, for investors.
+        A cross-chain platform that delivers multiple sources of income. Carefully crafted by
+        YDragon.
       </p>
 
       <div className="home__btns-row">
@@ -36,10 +39,10 @@ const Main: React.FC = () => {
         </Button>
       </div>
 
-      {/* <div className="home__currently-price">
+      <div className="home__currently-price">
         &quot;The YDragon project has currently <span>XXXX$</span> diversified among indexes&quot;.
         (TVL)
-      </div> */}
+      </div>
     </section>
   );
 };

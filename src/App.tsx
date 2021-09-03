@@ -67,7 +67,7 @@ export const App: React.FC = observer(() => {
     <div className={theme.value}>
       <div className={addClass()}>
         <Header collapsed={collapsed} onCollapsedChange={onCollapsedChange} />
-        <div className={`${collapsed ? '' : 'expandWrapper'}`}>
+        <div className={`${collapsed ? '' : 'expandWrapper'} content`}>
           <Switch>
             <Route exact path="/">
               <Home />

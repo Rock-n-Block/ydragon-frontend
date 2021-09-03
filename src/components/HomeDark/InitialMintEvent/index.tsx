@@ -52,14 +52,14 @@ const InitialMintEvent: React.FC = observer(() => {
   }, [networks.currentNetwork, getImeList]);
   return (
     <section className="section">
-      <h2 className="section__title text-outline">INITIAL minting Event</h2>
-      <p className="section__sub-title">FUNDED YDR ALLOCATION FOR INDEX STAKERS</p>
+      <h2 className="section__title text-outline">INDEXPAD</h2>
+      <p className="section__sub-title">Index minting offering for upcoming indexes</p>
       <Spinner loading={loading} />
       {imeList.length
         ? imeList.map((imeItem) => <InitialMintEventItem key={nextId()} imeItem={imeItem} />)
         : !loading && (
             <div className="no-ime">
-              <p className="no-ime__text text-gradient">There is no IME yet</p>
+              <p className="no-ime__text text-gradient">There is no IMO yet</p>
             </div>
           )}
     </section>
