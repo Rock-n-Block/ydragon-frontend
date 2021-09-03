@@ -12,6 +12,7 @@ import slide7 from '../../../assets/img/partners/logo-7.png';
 import slide8 from '../../../assets/img/partners/logo-8.png';
 import slide9 from '../../../assets/img/partners/logo-9.png';
 import slide10 from '../../../assets/img/partners/logo-10.png';
+import slide11 from '../../../assets/img/partners/logo-11.png';
 
 import 'swiper/swiper.scss';
 import './Partners.scss';
@@ -28,6 +29,7 @@ const Partners: React.FC = () => {
     slide8,
     slide9,
     slide10,
+    slide11,
   ];
 
   return (

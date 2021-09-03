@@ -19,15 +19,32 @@
 
 .token-panel-ydr {
   flex-direction: row;
+  justify-content: space-between;
   @include b('tablet') {
     justify-content: center;
-    .token-panel-item{
+    .token-panel-item {
       display: flex;
       flex-direction: column;
       align-items: center;
     }
     .token-panel__btns {
       flex-wrap: wrap;
+      flex-direction: row;
+    }
+  }
+  .token-panel__content {
+    width: fit-content;
+  }
+  .token-panel__btns {
+    width: fit-content;
+    flex-direction: row;
+  }
+  &__btns {
+    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: 401px 401px;
+    @include b('tablet') {
+      grid-template-columns: 1fr;
     }
   }
 
@@ -35,6 +52,7 @@
     display: flex;
     align-items: center;
     padding: 11px 13px;
+    justify-content: space-between;
     border-radius: 40px;
     @include b('tablet') {
       flex-direction: column;
@@ -51,10 +69,9 @@
     .btn {
       padding: 10px 30px;
     }
-
   }
 
-  .token-panel__info{
+  .token-panel__info {
     display: flex;
     align-items: center;
   }
@@ -65,14 +82,25 @@
     height: 36px;
     padding: 8px;
     border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    img {
+      max-height: 100%;
+    }
   }
 
   .logo-pancake {
-    background: #2996A4;
+    background: #2996a4;
   }
 
   .logo-uniswap {
-    background: #BE246E;
+    background: #be246e;
+  }
+  .logo-apeswap {
+    padding: 0;
+    width: 36px;
+    height: 36px;
   }
 
   .token-panel__subtitle {

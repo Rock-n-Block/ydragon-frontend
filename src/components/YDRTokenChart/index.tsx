@@ -10,6 +10,23 @@ interface TokenChartProps {
   price: (value: number) => void;
 }
 
+interface IMemoLine {
+  data: any;
+  options: any;
+  getElementAtEvent: (element: string | any[]) => void;
+}
+
+const MemoLine: React.FC<IMemoLine> = React.memo(
+  ({ data, options, getElementAtEvent }) => {
+    return (
+      <Line data={data} options={options} height={500} getElementAtEvent={getElementAtEvent} />
+    );
+  },
+  (prev, next) => {
+    return prev.data.datasets[0].data[0].time === next.data.datasets[0].data[0].time;
+  },
+);
+
 const YDRTokenChart: React.FC<TokenChartProps> = ({ price }) => {
   const refDataLength = useRef(1);
   const refPrice = useRef(0.000001);
@@ -228,8 +245,7 @@ const YDRTokenChart: React.FC<TokenChartProps> = ({ price }) => {
         </div>
       </div>
       {Object.keys(chartData).length ? (
-        <Line
-          height={500}
+        <MemoLine
           data={chartData}
           options={options}
           // type="line"
