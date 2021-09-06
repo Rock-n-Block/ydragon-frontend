@@ -107,6 +107,7 @@ const Protocols: React.FC = observer(() => {
             slidesPerView={1}
             freeMode
             loop
+            allowTouchMove={false}
             autoplay={{
               delay: 0,
               disableOnInteraction: false,
@@ -139,6 +140,7 @@ const Protocols: React.FC = observer(() => {
             slidesPerView={1}
             freeMode
             loop
+            allowTouchMove={false}
             autoplay={{
               delay: 0,
               reverseDirection: true,

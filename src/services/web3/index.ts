@@ -577,6 +577,20 @@ export default class MetamaskService {
     return { address, name: tokenName, symbol: tokenSymbol, balance: tokenBalance };
   }
 
+  async getToken0FromPair(address: string) {
+    const contract = this.getContractByAddress(address, config.PAIR.ABI);
+
+    const token0 = await contract.methods.token0().call();
+    const token1 = await contract.methods.token1().call();
+    const det0 = await this.getTokenInfoByAddress(token0);
+    const det1 = await this.getTokenInfoByAddress(token1);
+
+    if (det0.name === 'Wrapped BNB') {
+      return det1;
+    }
+    return det0;
+  }
+
   startStake(tokenAddress: string, amount: string, timeIntervalIndex: number) {
     const method = MetamaskService.getMethodInterface(config.Staking.ABI, 'stakeStart');
 

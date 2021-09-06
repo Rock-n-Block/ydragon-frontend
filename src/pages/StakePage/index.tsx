@@ -40,8 +40,16 @@ const StakePage: React.FC = () => {
           if (newPair !== '0x0000000000000000000000000000000000000000') {
             // eslint-disable-next-line no-await-in-loop
             const newTokenSecond = await getTokenInfo(newPair);
+            // eslint-disable-next-line no-await-in-loop
+            const token0 = await walletConnector.metamaskService.getToken0FromPair(newPair);
             if (newTokenSecond.balance !== '0') {
-              tokensList = [...tokensList, newTokenSecond];
+              tokensList = [
+                ...tokensList,
+                {
+                  ...newTokenSecond,
+                  name: `${token0.name}_LP`,
+                },
+              ];
             }
           }
           setStakeTokensList(tokensList);
