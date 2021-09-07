@@ -46,7 +46,11 @@ const Options: React.FC<OptionsProps> = observer(({ address, onManualInputChange
       walletConnector.metamaskService
         .startXyRebalance(address, +new BigNumber(inputValue).multipliedBy(100).toString(10))
         .then(() => {
-          modals.info.setMsg('Operation success', 'Rebalance started', 'success');
+          modals.info.setMsg(
+            'Operation success',
+            `Now xVault percentage is ${inputValue}%`,
+            'success',
+          );
         })
         .catch((error: ProviderRpcError) => {
           const { message } = error;

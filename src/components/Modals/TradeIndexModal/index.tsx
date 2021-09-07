@@ -291,7 +291,7 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
           </div>
           <h3 className="m-trade-ydr__header">
             I want to {modals.tradeIndex.method}
-            <span className="m-trade-ydr__header-label"> {token} tokens</span>
+            <span className="m-trade-ydr__header-label"> {token}</span> tokens
           </h3>
           <div className="m-trade-ydr__field">
             <div className="m-trade-ydr__labels">

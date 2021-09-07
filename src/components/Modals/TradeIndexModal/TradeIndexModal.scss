@@ -77,6 +77,9 @@
     span {
       color: $orange-l;
     }
+    &-label {
+      max-width: 100%;
+    }
   }
 
   &__field {
