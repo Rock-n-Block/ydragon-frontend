@@ -3,7 +3,6 @@ import { withRouter } from 'react-router-dom';
 import { observer } from 'mobx-react';
 
 import { rootStore } from '../../store/store';
-import { accountsApi } from '../api';
 import WalletService, { WALLET_TYPE } from '../web3';
 // import { userApi } from '../api';
 
@@ -64,17 +63,6 @@ class Connector extends React.Component<any, any> {
 
       try {
         if (!sessionStorage.getItem('yd_address')) {
-          const metMsg: any = await accountsApi.getMsg();
-
-          const signedMsg = await this.state.provider.signMsg(metMsg.data);
-
-          const login: any = await accountsApi.login({
-            address,
-            msg: metMsg.data,
-            signed_msg: signedMsg,
-          });
-
-          sessionStorage.setItem('yd_token', login.data.key);
           sessionStorage.setItem('yd_address', address);
           rootStore.user.setAddress(address);
           sessionStorage.setItem('yd_wallet', walletType);
