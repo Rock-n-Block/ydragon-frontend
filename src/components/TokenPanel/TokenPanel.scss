@@ -29,6 +29,9 @@
   justify-content: space-between;
   align-items: center;
   gap: 20px;
+  @include b('mobile') {
+    flex-direction: column;
+  }
 
   &__content {
     display: flex;
@@ -36,6 +39,10 @@
     justify-content: center;
     gap: 20px;
     width: 100%;
+    @include b('mobile') {
+      align-items: center;
+      flex-direction: column;
+    }
   }
 
   &__btns {
@@ -46,6 +53,7 @@
       justify-content: center;
 
       width: 100%;
+      align-items: center;
 
       .token-panel__btn {
         max-width: 155px;
@@ -55,8 +63,14 @@
 }
 
 .token-panel-item {
+  @include b('mobile') {
+    text-align: center;
+  }
   & + & {
     margin-left: 60px;
+    @include b('mobile') {
+      margin-left: 0;
+    }
   }
 
   &__value {
