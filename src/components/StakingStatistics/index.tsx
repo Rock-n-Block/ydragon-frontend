@@ -239,7 +239,7 @@ const StakingStatistics: React.FC = observer(() => {
               ['Already staked', data.staked],
               ['Rewards available to withdrawn', data.availableRewards],
               ['Already withdrawn rewards', data.withdrawnRewards],
-              ['Estimated rewards', `$${data.estimatedRewards}`],
+              ['Estimated total rewards', `$${data.estimatedRewards}`],
             ]}
             index={index}
             hoverFeature

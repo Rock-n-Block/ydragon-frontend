@@ -13,6 +13,7 @@ import moment from 'moment';
 interface IndexChartProps {
   onClick: (value: IFetchedData) => void;
   indexId: any;
+  diff: number;
 }
 export interface IFetchedData {
   diff: string;
@@ -43,7 +44,7 @@ const MemoLine: React.FC<IMemoLine> = React.memo(
   },
 );
 
-const IndexChart: React.FC<IndexChartProps> = React.memo(({ onClick, indexId }) => {
+const IndexChart: React.FC<IndexChartProps> = React.memo(({ onClick, indexId, diff }) => {
   const [days, setDays] = useState('1');
   const [activeBtn, setActiveBtn] = useState<string>(btns[0]);
   const refDataLength = useRef(1);
@@ -70,8 +71,6 @@ const IndexChart: React.FC<IndexChartProps> = React.memo(({ onClick, indexId }) 
   const [clickedElement, setClickedElement] = useState(
     chartData.datasets[0].data[refDataLength.current - 1].data,
   );
-  const [diff, setDiff] = useState(['up', 0.0]);
-
   const options = {
     layout: {
       padding: 10,
@@ -167,9 +166,6 @@ const IndexChart: React.FC<IndexChartProps> = React.memo(({ onClick, indexId }) 
       const fetchedItem = fetchedData[index];
       setClickedElement(chosenPrice);
       onClick(fetchedItem);
-      const value = fetchedItem.diff;
-      const dir = +value < 0 ? 'down' : 'up';
-      setDiff([dir, value]);
     },
     [chartData.datasets, fetchedData, onClick],
   );
@@ -245,7 +241,11 @@ const IndexChart: React.FC<IndexChartProps> = React.memo(({ onClick, indexId }) 
   return (
     <div className="chart">
       <div className="chart-panel">
-        <PriceDifferenceBag price={Number(clickedElement)} diff={diff} decimals={2} />
+        <PriceDifferenceBag
+          price={Number(clickedElement)}
+          diff={[diff >= 0 ? 'up' : 'down', diff]}
+          decimals={2}
+        />
         <div className="chart-panel-btns">
           {btns.map((btn) => (
             <div

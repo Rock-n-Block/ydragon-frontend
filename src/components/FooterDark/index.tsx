@@ -140,7 +140,7 @@ const Footer: React.FC = observer(() => {
             <div className="footer__links-title">Engage</div>
 
             <div className="footer__links">
-              <Link to="/about-us">About Us</Link>
+              <NavHashLink to="/about-us#top">About Us</NavHashLink>
 
               <NavHashLink to="/about-us#FAQ" smooth className="text-gray text-bold">
                 FAQ

@@ -113,6 +113,7 @@ const SelectNetwork: React.FC = observer(() => {
   const { networks, basicTokens, theme } = useMst();
   const walletConnector = useWalletConnectorContext();
   const [pickedChain, setPickedChain] = useState<ChainTypes>();
+  const prevNetRef = React.useRef(networks.currentNetwork);
   const networkToken = {
     bnb: {
       symbol: 'bnb',
@@ -216,8 +217,10 @@ const SelectNetwork: React.FC = observer(() => {
   }, [chains, networks.networkId]);
 
   useEffect(() => {
-    if (networks.currentNetwork) {
+    if (networks.currentNetwork && prevNetRef.current !== networks.currentNetwork) {
       getBasicTokens();
+      // TODO: переписать компонент без использования theme (при смене темы идет перерендер и вызывается получение токенов)
+      prevNetRef.current = networks.currentNetwork;
     }
   }, [getBasicTokens, networks.currentNetwork]);
 

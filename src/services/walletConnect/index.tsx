@@ -28,7 +28,7 @@ class Connector extends React.Component<any, any> {
   componentDidMount() {
     const self = this;
     if (window.ethereum) {
-      if (sessionStorage.getItem('yd_metamask')) {
+      if (localStorage.getItem('yd_metamask')) {
         this.connect();
       }
       this.state.provider.chainChangedObs.subscribe({
@@ -60,7 +60,7 @@ class Connector extends React.Component<any, any> {
       try {
         const { address } = await this.state.provider.connect();
 
-        if (!sessionStorage.getItem('yd_address')) {
+        if (!localStorage.getItem('yd_address')) {
           const metMsg: any = await accountsApi.getMsg();
 
           const signedMsg = await this.state.provider.signMsg(metMsg.data);
@@ -71,25 +71,25 @@ class Connector extends React.Component<any, any> {
             signed_msg: signedMsg,
           });
 
-          sessionStorage.setItem('yd_token', login.data.key);
-          sessionStorage.setItem('yd_address', address);
+          localStorage.setItem('yd_token', login.data.key);
+          localStorage.setItem('yd_address', address);
           rootStore.user.setAddress(address);
-          sessionStorage.setItem('yd_metamask', 'true');
+          localStorage.setItem('yd_metamask', 'true');
           // rootStore.user.update({ address });
         } else {
           rootStore.user.setAddress(address);
-          sessionStorage.setItem('yd_metamask', 'true');
+          localStorage.setItem('yd_metamask', 'true');
           // rootStore.user.update({ address });
         }
       } catch (err) {
         const { response } = err;
         if (response) {
           if (response.status === 400 && response.data.result[0] === 'user is not admin') {
-            sessionStorage.setItem('yd_isAdmin', 'false');
+            localStorage.setItem('yd_isAdmin', 'false');
             const { address } = await this.state.provider.connect();
-            sessionStorage.setItem('yd_address', address);
+            localStorage.setItem('yd_address', address);
             rootStore.user.setAddress(address);
-            sessionStorage.setItem('yd_metamask', 'true');
+            localStorage.setItem('yd_metamask', 'true');
             rootStore.user.update({ address });
           } else {
             rootStore.modals.metamask.setErr(err.message);

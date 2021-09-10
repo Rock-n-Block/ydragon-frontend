@@ -27,7 +27,7 @@ const YdrToken: React.FC = observer(() => {
     setPrice(value);
   };
   const handleBuy = (company: string) => {
-    // modals.tradeYDR.open('buy');
+    // modals.tradeYDR.open('buy');x
     switch (company) {
       case 'PancakeSwap':
         window.open(
@@ -48,14 +48,26 @@ const YdrToken: React.FC = observer(() => {
         break;
     }
   };
-  const handleSell = (isPancake: boolean) => {
-    // modals.tradeYDR.open('sell');
-    window.open(
-      isPancake
-        ? 'https://pancakeswap.finance/swap?inputCurrency=0x3757232b55e60da4a8793183ac030cfce4c3865d'
-        : 'https://app.uniswap.org/#/swap?inputCurrency=0x3757232b55e60da4a8793183ac030cfce4c3865d',
-      '_blank',
-    );
+  const handleSell = (company: string) => {
+    switch (company) {
+      case 'PancakeSwap':
+        window.open(
+          'https://pancakeswap.finance/swap?inputCurrency=0x3757232b55e60da4a8793183ac030cfce4c3865d',
+        );
+        break;
+      case 'UniSwap':
+        window.open(
+          'https://app.uniswap.org/#/swap?inputCurrency=0x3757232b55e60da4a8793183ac030cfce4c3865d',
+        );
+        break;
+      case 'ApeSwap':
+        window.open(
+          'https://app.apeswap.finance/swap?inputCurrency=0x3757232b55e60da4a8793183ac030cfce4c3865d',
+        );
+        break;
+      default:
+        break;
+    }
   };
 
   return (
@@ -92,7 +104,7 @@ const YdrToken: React.FC = observer(() => {
               </Button>
               <Button
                 className="token-panel__btn"
-                onClick={() => handleSell(true)}
+                onClick={() => handleSell('PancakeSwap')}
                 styledType="outline"
               >
                 Sell
@@ -112,7 +124,7 @@ const YdrToken: React.FC = observer(() => {
               </Button>
               <Button
                 className="token-panel__btn"
-                onClick={() => handleSell(false)}
+                onClick={() => handleSell('UniSwap')}
                 styledType="outline"
               >
                 Sell
@@ -130,13 +142,20 @@ const YdrToken: React.FC = observer(() => {
               <Button className="token-panel__btn" onClick={() => handleBuy('ApeSwap')}>
                 Buy
               </Button>
+              <Button
+                className="token-panel__btn"
+                onClick={() => handleSell('ApeSwap')}
+                styledType="outline"
+              >
+                Sell
+              </Button>
             </div>
           </div>
         </div>
       </div>
       {/* <TokenPanel panelContent={panelInfo} handleBuy={handleBuy} handleSell={handleSell} /> */}
       {/* <TradeYDRModal /> */}
-      <YDRTokenChart price={updatePrice} />
+      <YDRTokenChart price={updatePrice} className="ydragon-chart" />
     </main>
   );
 });

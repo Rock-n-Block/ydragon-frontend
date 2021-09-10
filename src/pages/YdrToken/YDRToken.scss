@@ -17,6 +17,13 @@
   }
 }
 
+.ydragon-chart {
+  margin-bottom: -100px;
+  @include b('mobile') {
+    margin-bottom: -50px;
+  }
+}
+
 .token-panel-ydr {
   flex-direction: row;
   justify-content: space-between;

@@ -193,7 +193,11 @@ const Stake: React.FC<StakeProps> = ({ tokens, propsLoading, onStakeClick }) => 
 
             <div className="stake__btn-row">
               {isAllowed ? (
-                <Button onClick={handleStakeStart} loading={loading}>
+                <Button
+                  onClick={handleStakeStart}
+                  loading={loading}
+                  disabled={!tokensList[activeStakeIndex].available || !stakeValue}
+                >
                   Stake
                 </Button>
               ) : (
@@ -204,7 +208,9 @@ const Stake: React.FC<StakeProps> = ({ tokens, propsLoading, onStakeClick }) => 
             </div>
           </>
         ) : (
-          <p className="stake__no-stake text-gradient">You can not stake yet</p>
+          <p className="stake__no-stake text-gradient">
+            We are loading your token balances. Please wait.
+          </p>
         )}
       </div>
     </section>

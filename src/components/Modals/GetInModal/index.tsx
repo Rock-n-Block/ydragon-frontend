@@ -148,7 +148,7 @@ const GetInModal: React.FC = observer(() => {
     walletConnector.metamaskService,
   ]);
   const handlePayInput = (e: any) => {
-    if (+e.target.value < 0) {
+    if (+e.target.value <= 0) {
       e.target.value = '';
     } else {
       setPayInput(e.target.value);
@@ -225,7 +225,7 @@ const GetInModal: React.FC = observer(() => {
           <Button
             className="m-trade-ydr__btn"
             onClick={handleEnter}
-            disabled={!payInput}
+            disabled={!payInput || !balance}
             loading={isLoading}
           >
             Buy

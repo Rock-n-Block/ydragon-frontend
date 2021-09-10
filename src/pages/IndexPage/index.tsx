@@ -34,6 +34,7 @@ export interface IIndex {
   created_at: Date | string;
   rebalance_date?: Date | string;
   price: number;
+  daily_change: number;
 }
 
 const Index: React.FC = observer(() => {
@@ -74,6 +75,13 @@ const Index: React.FC = observer(() => {
     },
     [walletConnector.metamaskService],
   );
+
+  const updateData = () => {
+    if (indexData && user.address) {
+      getUserBalance(indexData.address);
+      getCurrentIndex();
+    }
+  };
 
   const handleBuy = () => {
     modals.tradeIndex.open('buy');
@@ -130,7 +138,7 @@ const Index: React.FC = observer(() => {
         handleSell={handleSell}
         needLogin
       />
-      <IndexChart onClick={setTableTokens} indexId={indexId} />
+      <IndexChart onClick={setTableTokens} indexId={indexId} diff={indexData?.daily_change || 0} />
       <div className="index-table__big">
         <IndexTable tokens={tokens || indexData?.tokens} />
       </div>
@@ -193,6 +201,7 @@ const Index: React.FC = observer(() => {
         token={indexData?.name ?? ''}
         tokenId={indexData?.id ?? 0}
         indexAddress={indexData?.address ?? ''}
+        updateData={updateData}
       />
     </main>
   );
