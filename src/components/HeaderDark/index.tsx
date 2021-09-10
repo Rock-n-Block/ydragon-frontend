@@ -171,7 +171,7 @@ const Header: React.FC<HeaderProps> = observer(({ collapsed, onCollapsedChange }
                     About
                   </Link>
                 </li>
-                {sessionStorage.getItem('yd_token') && (
+                {localStorage.getItem('yd_token') && (
                   <li className="header-nav__item">
                     <Link to="/admin" className="header-nav__link">
                       Admin panel
@@ -264,7 +264,7 @@ const Header: React.FC<HeaderProps> = observer(({ collapsed, onCollapsedChange }
                     About
                   </Button>
                 </li>
-                {sessionStorage.getItem('yd_token') && (
+                {localStorage.getItem('yd_token') && (
                   <li className="menu-nav__item">
                     <Button
                       styledType="clear"

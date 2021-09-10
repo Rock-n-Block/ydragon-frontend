@@ -34,8 +34,8 @@ export const App: React.FC = observer(() => {
   const { theme } = useMst();
   const [bodyClass, setBodyClass] = useState('');
 
-  const user = !!sessionStorage.getItem('yd_address') || false;
-  const admin = !!sessionStorage.getItem('yd_token') || false;
+  const user = !!localStorage.getItem('yd_address') || false;
+  const admin = !!localStorage.getItem('yd_token') || false;
 
   const addClass = () => {
     let result;

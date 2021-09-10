@@ -30,6 +30,7 @@ const StakingStatistics: React.FC = observer(() => {
   const walletConnector = useWalletConnectorContext();
   const [dataSource, setDataSource] = useState<any[]>([]);
   const [unformatedData, setUnformatedData] = useState<any[]>([]);
+  const [isOpenHarvestModal, setOpenHarvestModal] = useState<boolean>(false);
   const { modals, user, networks } = useMst();
   const columns: any[] = [
     {
@@ -69,7 +70,7 @@ const StakingStatistics: React.FC = observer(() => {
       key: 'withdrawnRewards',
     },
     {
-      title: 'Estimated rewards',
+      title: 'Estimated total rewards',
       dataIndex: 'estimatedRewards',
       key: 'estimatedRewards',
     },
@@ -125,7 +126,7 @@ const StakingStatistics: React.FC = observer(() => {
   }, [user.address, networks.currentNetwork]);
 
   const handleHarvest = useCallback(() => {
-    modals.harvest.close();
+    setOpenHarvestModal(false);
     walletConnector.metamaskService
       .harvestStakeItem(dataSource[selectedRowKeys[0]].id)
       .then(() => {
@@ -141,7 +142,6 @@ const StakingStatistics: React.FC = observer(() => {
         modals.info.setMsg('Error', `Harvest error ${message}`, 'error');
       });
   }, [
-    modals.harvest,
     modals.info,
     walletConnector.metamaskService,
     dataSource,
@@ -149,7 +149,7 @@ const StakingStatistics: React.FC = observer(() => {
     getStakingStatistic,
   ]);
   const handleStakeEnd = useCallback(() => {
-    modals.harvest.close();
+    setOpenHarvestModal(false);
     walletConnector.metamaskService
       .endStake(dataSource[selectedRowKeys[0]].id)
       .then(() => {
@@ -165,7 +165,6 @@ const StakingStatistics: React.FC = observer(() => {
         modals.info.setMsg('Error', `Harvest and stake error ${message}`, 'error');
       });
   }, [
-    modals.harvest,
     modals.info,
     walletConnector.metamaskService,
     dataSource,
@@ -181,7 +180,7 @@ const StakingStatistics: React.FC = observer(() => {
     if (dataSource[selectedRowKeys[0]]) {
       const endDate = +moment(unformatedData[selectedRowKeys[0]].end_date).format('X');
       const now = +moment().format('X');
-      if (endDate >= now) modals.harvest.open();
+      if (endDate >= now) setOpenHarvestModal(true);
       else {
         handleStakeEnd();
       }
@@ -263,7 +262,11 @@ const StakingStatistics: React.FC = observer(() => {
         columns={columns}
         className="staking-statistics-table__big"
       />
-      <HarvestModal onOk={handleStakeEnd} />
+      <HarvestModal
+        onOk={handleStakeEnd}
+        isOpen={isOpenHarvestModal}
+        handleClose={() => setOpenHarvestModal(false)}
+      />
     </section>
   );
 });

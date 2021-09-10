@@ -7,6 +7,7 @@ import config from '../../services/web3/config';
 import { useMst } from '../../store/store';
 import { ProviderRpcError } from '../../types/errors';
 import { Button, Spinner } from '../index';
+import { HarvestModal } from '../Modals';
 import { InputNumber } from '../Input';
 import StakeItem, { IStakeItem } from '../StakeItem';
 
@@ -32,6 +33,7 @@ const Stake: React.FC<StakeProps> = ({ tokens, propsLoading, onStakeClick }) => 
   const [intervalIndex, setIntervalIndex] = useState<0 | 1 | 2>(0);
   const [isAllowed, setIsAllowed] = useState(false);
   const [loading, setLoading] = useState<boolean>(false);
+  const [isOpenHarvestModal, setOpenHarvestModal] = useState<boolean>(false);
   const handleStakeItemClick = (index: number) => {
     setActiveStakeIndex(index);
   };
@@ -44,7 +46,12 @@ const Stake: React.FC<StakeProps> = ({ tokens, propsLoading, onStakeClick }) => 
   const handleRadioChange = (e: any) => {
     setIntervalIndex(e.target.value);
   };
+
+  const handleOpenHarvestModal = () => {
+    setOpenHarvestModal(true);
+  };
   const handleStakeStart = () => {
+    setOpenHarvestModal(false);
     setLoading(true);
     walletConnector.metamaskService
       .startStake(tokens[activeStakeIndex].address, stakeValue, intervalIndex)
@@ -194,7 +201,7 @@ const Stake: React.FC<StakeProps> = ({ tokens, propsLoading, onStakeClick }) => 
             <div className="stake__btn-row">
               {isAllowed ? (
                 <Button
-                  onClick={handleStakeStart}
+                  onClick={handleOpenHarvestModal}
                   loading={loading}
                   disabled={!tokensList[activeStakeIndex].available || !stakeValue}
                 >
@@ -213,6 +220,12 @@ const Stake: React.FC<StakeProps> = ({ tokens, propsLoading, onStakeClick }) => 
           </p>
         )}
       </div>
+      <HarvestModal
+        isOpen={isOpenHarvestModal}
+        handleClose={() => setOpenHarvestModal(false)}
+        text="If you unstake before the lockup period ends, you will incur a 25% penalty on your original stake. Are you sure you want to stake now?"
+        onOk={handleStakeStart}
+      />
     </section>
   );
 };
