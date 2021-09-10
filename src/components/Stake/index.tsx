@@ -222,6 +222,7 @@ const Stake: React.FC<StakeProps> = ({ tokens, propsLoading, onStakeClick }) => 
       </div>
       <HarvestModal
         isOpen={isOpenHarvestModal}
+        btnsStyles={[undefined, 'outline']}
         handleClose={() => setOpenHarvestModal(false)}
         text="If you unstake before the lockup period ends, you will incur a 25% penalty on your original stake. Are you sure you want to stake now?"
         onOk={handleStakeStart}

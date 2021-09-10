@@ -263,6 +263,7 @@ const StakingStatistics: React.FC = observer(() => {
         className="staking-statistics-table__big"
       />
       <HarvestModal
+        btnsStyles={['outline', undefined]}
         onOk={handleStakeEnd}
         isOpen={isOpenHarvestModal}
         handleClose={() => setOpenHarvestModal(false)}
