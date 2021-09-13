@@ -1,6 +1,6 @@
 import WalletConnect from '@walletconnect/web3-provider';
 import BigNumber from 'bignumber.js/bignumber';
-import moment from 'moment';
+// import moment from 'moment';
 import { Subject } from 'rxjs';
 import Web3 from 'web3';
 
@@ -268,14 +268,14 @@ export default class WalletService {
     return this.web3Provider.eth.personal.sign(msg, this.walletAddress, '');
   }
 
-  getStartDate(address: string) {
+  /* getStartDate(address: string) {
     return this.getContractByAddress(address, config.MAIN.ABI).methods.imeStartTimestamp().call();
   }
 
   getEndDate(address: string) {
     // TODO: change this to normal contract later
     return this.getContractByAddress(address, config.MAIN.ABI).methods.imeEndTimestamp().call();
-  }
+  } */
 
   async checkAllowanceById(toContractAddress: string, abi: Array<any>, spenderAddress: string) {
     try {
@@ -290,7 +290,7 @@ export default class WalletService {
     }
   }
 
-  checkAutoXYRebalaceAllowance(address: string) {
+  /* checkAutoXYRebalaceAllowance(address: string) {
     return this.getContractByAddress(address, config.MAIN.ABI)
       .methods.isAllowedAutoXYRebalace()
       .call();
@@ -316,9 +316,9 @@ export default class WalletService {
       to: address,
       data: signature,
     });
-  }
+  } */
 
-  mint(
+  /* mint(
     value: string,
     spenderTokenSymbol: string,
     spenderTokenAddress: string,
@@ -353,7 +353,7 @@ export default class WalletService {
       to: address,
       data: signature,
     });
-  }
+  } */
 
   async approveById(toContractAddress: string, address: string) {
     try {
@@ -374,7 +374,7 @@ export default class WalletService {
     }
   }
 
-  enterIme(
+  /* enterIme(
     value: string,
     spenderTokenName: string,
     spenderTokenAddress: string,
@@ -410,7 +410,7 @@ export default class WalletService {
     decimals: number,
   ) {
     const isNative = nativeTokens.includes(spenderTokenSymbol.toLowerCase());
-    let otherTokenAddress /* = address */;
+    let otherTokenAddress /!* = address *!/;
     let path;
     if (!isNative) {
       otherTokenAddress = spenderTokenAddress;
@@ -473,7 +473,7 @@ export default class WalletService {
     let methodName: 'swapExactETHForTokens' | 'swapExactTokensForTokens';
     const isNative =
       spenderTokenSymbol.toLowerCase() === 'bnb' || spenderTokenSymbol.toLowerCase() === 'matic';
-    let otherTokenAddress /* = address */;
+    let otherTokenAddress /!* = address *!/;
 
     if (isNative) {
       methodName = 'swapExactETHForTokens';
@@ -529,7 +529,7 @@ export default class WalletService {
 
     const isNative =
       spenderTokenSymbol.toLowerCase() === 'bnb' || spenderTokenSymbol.toLowerCase() === 'matic';
-    let otherTokenAddress /* = address */;
+    let otherTokenAddress /!* = address *!/;
 
     if (isNative) {
       methodName = 'swapExactTokensForETH';
@@ -562,9 +562,9 @@ export default class WalletService {
       to: rootStore.networks.getCurrNetwork()?.router_address,
       data: signature,
     });
-  }
+  } */
 
-  harvestStakeItem(id: string | number) {
+  /*  harvestStakeItem(id: string | number) {
     const method = WalletService.getMethodInterface(config.Staking.ABI, 'claimDividends');
 
     const signature = this.encodeFunctionCall(method, [id, '0']);
@@ -574,9 +574,9 @@ export default class WalletService {
       to: rootStore.networks.getCurrNetwork()?.staking_address,
       data: signature,
     });
-  }
+  } */
 
-  endStake(id: string | number) {
+  /* endStake(id: string | number) {
     const method = WalletService.getMethodInterface(config.Staking.ABI, 'stakeEnd');
 
     const signature = this.encodeFunctionCall(method, [id]);
@@ -586,9 +586,9 @@ export default class WalletService {
       to: rootStore.networks.getCurrNetwork()?.staking_address,
       data: signature,
     });
-  }
+  } */
 
-  getStakingTokensLen() {
+  /* getStakingTokensLen() {
     return this.getContractByAddress(
       rootStore.networks.getCurrNetwork()?.staking_address ??
         '0x0000000000000000000000000000000000000000',
@@ -596,35 +596,35 @@ export default class WalletService {
     )
       .methods.tokensToEnterLen()
       .call();
-  }
+  } */
 
-  getStakingTokenToEnter(index: number) {
+  /* getStakingTokenToEnter(index: number) {
     return this.getContractByAddress(
       rootStore.networks.getCurrNetwork()?.staking_address ?? '',
       config.Staking.ABI,
     )
       .methods.tokensToEnter(index)
       .call();
-  }
+  } */
 
-  getStakingPair(address: string) {
+  /* getStakingPair(address: string) {
     return this.getContractByAddress(
       rootStore.networks.getCurrNetwork()?.dex_factory_address ?? '',
       config.DexFactory.ABI,
     )
       .methods.getPair(address, WalletService.getWrappedNativeAddress())
       .call();
-  }
+  } */
 
-  getTokenName(address: string) {
+  /* getTokenName(address: string) {
     return this.getContractByAddress(address, config.Token.ABI).methods.name().call();
-  }
+  } */
 
-  getTokenSymbol(address: string) {
+  /* getTokenSymbol(address: string) {
     return this.getContractByAddress(address, config.Token.ABI).methods.symbol().call();
-  }
+  } */
 
-  async getTokenInfoByAddress(address: string) {
+  /* async getTokenInfoByAddress(address: string) {
     const tokenName = await this.getTokenName(address);
     const tokenSymbol = await this.getTokenSymbol(address);
     const tokenBalance = await this.getBalanceByAddress(address);
@@ -645,9 +645,9 @@ export default class WalletService {
       to: rootStore.networks.getCurrNetwork()?.staking_address,
       data: signature,
     });
-  }
+  } */
 
-  createNewIndex(
+  /* createNewIndex(
     name: string,
     symbol: string,
     imeTimeParameters: string[],
@@ -671,7 +671,7 @@ export default class WalletService {
       to: rootStore.networks.getCurrNetwork()?.fabric_address,
       data: signature,
     });
-  }
+  } */
 
   sendTransaction(transactionConfig: any) {
     return this.web3Provider.eth.sendTransaction({

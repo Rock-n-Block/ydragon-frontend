@@ -51,7 +51,7 @@ const Auth: React.FC = observer(() => {
               tabIndex={0}
             >
               <div className="auth-method__icon">
-                <img src={walletconnect} alt="logo" width="138" height="85" />
+                <img src={walletconnect } alt="logo" width="138" height="85" />
               </div>
               <div className="auth-method__title">Wallet Connect</div>
               <div className="auth-method__descr">Connect to your Wallet Connect Wallet</div>

@@ -5,7 +5,6 @@ import { observer } from 'mobx-react-lite';
 import bscLogo from '../../assets/img/icons/blockchains/bsc.svg';
 import ethLogo from '../../assets/img/icons/blockchains/eth.svg';
 import link from '../../assets/img/icons/icon-link.svg';
-// import indexLogo from '../../assets/img/icons/logo-index.svg';
 import { Button } from '../../components';
 import Dropdown from '../../components/Bridge/Dropdown';
 import { bridgeApi } from '../../services/api';

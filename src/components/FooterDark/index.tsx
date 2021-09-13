@@ -12,9 +12,6 @@ import coingecko from '../../assets/img/socials/coingecko.svg';
 import coinmarketcapD from '../../assets/img/socials/coinmarketcap.svg';
 import coinmarketcapL from '../../assets/img/socials/coinmarketcap-light.svg';
 import nomics from '../../assets/img/socials/nomics.png';
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-// import Whitepaper from '../../assets/pdf/YD WP.pdf';
 
 import './Footer.scss';
 import { DARK, useMst } from '../../store/store';

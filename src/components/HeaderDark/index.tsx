@@ -1,7 +1,4 @@
 import React, { useEffect, useState } from 'react';
-// import { useHistory } from 'react-router';
-// import { Link } from 'react-router-dom';
-// import { NavHashLink } from 'react-router-hash-link';
 import { observer } from 'mobx-react-lite';
 
 import crossBlack from '../../assets/img/icons/icon-cross-black.svg';
@@ -9,16 +6,11 @@ import cross from '../../assets/img/icons/icon-cross.svg';
 import iconMenuBlack from '../../assets/img/icons/icon-menu-black.svg';
 import iconMenu from '../../assets/img/icons/icon-menu.svg';
 import logo from '../../assets/img/icons/logo.svg';
-// import dis from '../../assets/img/socials/discord.svg';
 import md from '../../assets/img/socials/medium.svg';
 import tg from '../../assets/img/socials/telegram.svg';
 import tw from '../../assets/img/socials/twitter.svg';
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-// import Whitepaper from '../../assets/pdf/YD WP.pdf';
 import { useWalletConnectorContext } from '../../services/walletConnect';
 import { DARK, LIGHT, useMst } from '../../store/store';
-// import EventBanner from '../EventBanner';
 import { Button, SelectNetwork, Switch } from '../index';
 
 import './Header.scss';

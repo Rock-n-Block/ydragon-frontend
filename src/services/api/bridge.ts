@@ -1,6 +1,6 @@
 import axios from '../../core/axios';
 
-const baseUrl = 'https://bridge.ydragon.io/api/v1/';
+const baseUrl = process.env.REACT_APP_API_URL;
 
 export default {
   getInfo: () => axios.get(`${baseUrl}networks`),

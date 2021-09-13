@@ -79,6 +79,14 @@
               background: linear-gradient(180deg, #5381ff 0%, #1944b9 100%);
               -webkit-background-clip: text;
               -webkit-text-fill-color: transparent;
+
+              &::selection {
+                -webkit-text-fill-color: $white;
+              }
+
+              ::selection {
+                -webkit-text-fill-color: $white;
+              }
             }
           }
         }

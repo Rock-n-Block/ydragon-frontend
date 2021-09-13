@@ -181,26 +181,6 @@ const SelectNetwork: React.FC = observer(() => {
     }
   };
 
-  /* const getBasicTokens = useCallback(() => {
-    basicTokensApi
-      .getBaseTokens()
-      .then(({ data }) => {
-        basicTokens.setTokens([
-          networks.currentNetwork === 'binance-smart-chain'
-            ? networkToken.bnb
-            : networkToken.polygon,
-          ...data,
-        ]);
-      })
-      .catch((err) => {
-        console.debug(err);
-      });
-  }, [networkToken.bnb, networkToken.polygon, basicTokens, networks.currentNetwork]); */
-
-  /* useEffect(() => {
-    getNetworks();
-  }, [getNetworks]); */
-
   useEffect(() => {
     if (networks.networksList.length && user.address) {
       getCurrentChain();

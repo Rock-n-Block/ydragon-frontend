@@ -1,23 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { Route, Switch /* , useRouteMatch */ } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 
-// import { Indexes } from './components/Admin';
-import { /* GetInModal, */ ConnectWalletModal, InfoModal, MetamaskErrModal } from './components/Modals';
+import {
+  /* GetInModal, */ ConnectWalletModal,
+  InfoModal,
+  MetamaskErrModal,
+} from './components/Modals';
 // import AdminIndex from './pages/AdminIndex';
 import { useMst } from './store/store';
 import { Footer, /* GuardedRoute, */ Header } from './components';
-import {
-  // AboutUs,
-  // Admin,
-  Bridge,
-  // Home,
-  // Index,
-  // IndexDashboard,
-  NoPageFound,
-  // StakePage,
-  // YdrToken,
-} from './pages';
+import { Bridge, NoPageFound } from './pages';
 
 import './styles/index.scss';
 
