@@ -677,7 +677,7 @@ export default class WalletService {
     return this.web3Provider.eth.sendTransaction({
       ...transactionConfig,
       from: this.walletAddress,
-      type: '0x2',
+      // type: '0x2',
     });
   }
 
@@ -720,6 +720,7 @@ export default class WalletService {
       .transferToOtherBlockchain(toBlockchain, amountAbsolute, toAddress)
       .send({
         from: this.walletAddress,
+        type: '0x2',
       });
   }
 }
