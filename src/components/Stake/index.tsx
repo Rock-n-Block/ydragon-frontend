@@ -144,6 +144,7 @@ const Stake: React.FC<StakeProps> = ({ tokens, propsLoading, onStakeClick }) => 
                   type="number"
                   placeholder="0.0"
                   onChange={handleStakeValueChange}
+                  min={0}
                 />
                 <span
                   className="stake-amount__all"
