@@ -12,12 +12,11 @@ import Whitepaper from '../../../assets/pdf/YD WP.pdf';
 const Main: React.FC = () => {
   return (
     <section className="section home">
-      <img src={HomeImg} alt="" className="home__img" />
       <div className="home__title-wrapper">
         <span className="home__title text-gradient">DEFI</span>
-        <span className="home__title text-outline">MADE</span>
-        <span className="home__title text-outline">SIMPLE</span>
+        <span className="home__title text-outline">MADE SIMPLE</span>
       </div>
+      <img src={HomeImg} alt="" className="home__img" />
 
       <p className="home__descr">
         A cross-chain platform that delivers multiple sources of income. Carefully crafted by
@@ -39,10 +38,10 @@ const Main: React.FC = () => {
         </Button>
       </div>
 
-      <div className="home__currently-price">
+      {/* <div className="home__currently-price">
         &quot;The YDragon project has currently <span>XXXX$</span> diversified among indexes&quot;.
         (TVL)
-      </div>
+      </div> */}
     </section>
   );
 };
