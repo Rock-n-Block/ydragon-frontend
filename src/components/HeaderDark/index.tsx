@@ -16,9 +16,9 @@ import tw from '../../assets/img/socials/twitter.svg';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import Whitepaper from '../../assets/pdf/YD WP.pdf';
-import { useWalletConnectorContext } from '../../services/walletConnect';
+// import { useWalletConnectorContext } from '../../services/walletConnect';
 import { DARK, LIGHT, useMst } from '../../store/store';
-import EventBanner from '../EventBanner';
+// import EventBanner from '../EventBanner';
 import { Button, SelectNetwork, Switch } from '../index';
 
 import './Header.scss';
@@ -34,8 +34,8 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = observer(({ collapsed, onCollapsedChange }) => {
   const [fixed, setFixed] = useState(true);
-  const { theme, user } = useMst();
-  const walletConnector = useWalletConnectorContext();
+  const { theme } = useMst();
+  // const walletConnector = useWalletConnectorContext();
   const history = useHistory();
 
   const handleChangeTheme = () => {
@@ -46,7 +46,7 @@ const Header: React.FC<HeaderProps> = observer(({ collapsed, onCollapsedChange }
     }
   };
 
-  const handleLogOut = () => {
+  /* const handleLogOut = () => {
     onCollapsedChange(true);
     walletConnector.disconnect();
   };
@@ -54,7 +54,7 @@ const Header: React.FC<HeaderProps> = observer(({ collapsed, onCollapsedChange }
   const connectWallet = (): void => {
     onCollapsedChange(true);
     walletConnector.connect();
-  };
+  }; */
 
   const redirectHandler = (path: string) => {
     onCollapsedChange(true);
@@ -71,7 +71,7 @@ const Header: React.FC<HeaderProps> = observer(({ collapsed, onCollapsedChange }
 
   return (
     <div className={`header__wrapper  ${fixed ? 'fixed' : ''}`}>
-      <EventBanner />
+      {/* <EventBanner /> */}
       <div className={`header ${collapsed ? 'collapse' : 'expand'}`}>
         <div className="container">
           <div className="header__inner">
@@ -109,7 +109,7 @@ const Header: React.FC<HeaderProps> = observer(({ collapsed, onCollapsedChange }
               <div className="menu__sign">
                 <Switch checked={DARK === theme.value} onChange={handleChangeTheme} />
                 <SelectNetwork />
-                <ul className="menu-nav">
+                {/* <ul className="menu-nav">
                   {user.address && (
                     <li className="menu-nav__item">
                       <Button
@@ -133,7 +133,7 @@ const Header: React.FC<HeaderProps> = observer(({ collapsed, onCollapsedChange }
                       </Button>
                     </li>
                   )}
-                </ul>
+                </ul> */}
               </div>
             )}
 
@@ -144,18 +144,23 @@ const Header: React.FC<HeaderProps> = observer(({ collapsed, onCollapsedChange }
                     Home
                   </Link>
                 </li>
-                <li className="header-nav__item">
+                {/* <li className="header-nav__item">
                   <Link to="/indexes" className="header-nav__link">
                     Index Products
                   </Link>
-                </li>
-                {user.address && (
-                  <li className="header-nav__item">
-                    <Link to="/staking" className="header-nav__link">
+                </li> */}
+                {/* {user.address && (
+                  <li className='header-nav__item'>
+                    <Link to='/staking' className='header-nav__link'>
                       Staking
                     </Link>
                   </li>
-                )}
+                )} */}
+                <li className="header-nav__item">
+                  <Link to="/about-us" className="header-nav__link">
+                    About
+                  </Link>
+                </li>
                 <li className="header-nav__item">
                   <a
                     href="https://bridge.ydragon.io/"
@@ -166,24 +171,19 @@ const Header: React.FC<HeaderProps> = observer(({ collapsed, onCollapsedChange }
                     Bridge
                   </a>
                 </li>
-                <li className="header-nav__item">
-                  <Link to="/about-us" className="header-nav__link">
-                    About
-                  </Link>
-                </li>
-                {localStorage.getItem('yd_token') && (
+                {/* {localStorage.getItem('yd_token') && (
                   <li className="header-nav__item">
                     <Link to="/admin" className="header-nav__link">
                       Admin panel
                     </Link>
                   </li>
-                )}
+                )} */}
               </ul>
             </nav>
 
             <div className="header__sign">
               <Switch checked={DARK === theme.value} onChange={handleChangeTheme} />
-              <SelectNetwork />
+              {/* <SelectNetwork />
               <ul className="header-nav">
                 {user.address && (
                   <li className="header-nav__item">
@@ -208,7 +208,7 @@ const Header: React.FC<HeaderProps> = observer(({ collapsed, onCollapsedChange }
                     </Button>
                   </li>
                 )}
-              </ul>
+              </ul> */}
             </div>
           </div>
           <nav className="menu">
@@ -223,7 +223,7 @@ const Header: React.FC<HeaderProps> = observer(({ collapsed, onCollapsedChange }
                     Home
                   </Button>
                 </li>
-                <li className="menu-nav__item">
+                {/* <li className="menu-nav__item">
                   <Button
                     styledType="clear"
                     onClick={() => redirectHandler('/indexes')}
@@ -231,8 +231,8 @@ const Header: React.FC<HeaderProps> = observer(({ collapsed, onCollapsedChange }
                   >
                     Index Products
                   </Button>
-                </li>
-                {user.address && (
+                </li> */}
+                {/* {user.address && (
                   <li className="menu-nav__item">
                     <Button
                       styledType="clear"
@@ -242,7 +242,16 @@ const Header: React.FC<HeaderProps> = observer(({ collapsed, onCollapsedChange }
                       Staking
                     </Button>
                   </li>
-                )}
+                )} */}
+                <li className="menu-nav__item">
+                  <Button
+                    styledType="clear"
+                    onClick={() => redirectHandler('/about-us')}
+                    className="menu-nav__link"
+                  >
+                    About
+                  </Button>
+                </li>
                 <li className="menu-nav__item">
                   <Button
                     styledType="clear"
@@ -255,16 +264,7 @@ const Header: React.FC<HeaderProps> = observer(({ collapsed, onCollapsedChange }
                     Bridge
                   </Button>
                 </li>
-                <li className="menu-nav__item">
-                  <Button
-                    styledType="clear"
-                    onClick={() => redirectHandler('/about-us')}
-                    className="menu-nav__link"
-                  >
-                    About
-                  </Button>
-                </li>
-                {localStorage.getItem('yd_token') && (
+                {/* {localStorage.getItem('yd_token') && (
                   <li className="menu-nav__item">
                     <Button
                       styledType="clear"
@@ -274,7 +274,7 @@ const Header: React.FC<HeaderProps> = observer(({ collapsed, onCollapsedChange }
                       Admin panel
                     </Button>
                   </li>
-                )}
+                )} */}
               </ul>
             </nav>
           </nav>

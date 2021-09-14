@@ -115,8 +115,8 @@
 
   overflow: hidden;
 
-  height: 119px;
-  @media (max-width: 1240px) {
+  height: 120px;
+  @media (max-width: 650px) {
     width: 100%;
 
     transition: all 0.4s;
@@ -139,7 +139,7 @@
     display: none;
 
     outline: none;
-    @media (max-width: 1240px) {
+    @media (max-width: 650px) {
       position: relative;
       top: 0;
       left: 0;
@@ -155,10 +155,11 @@
 
     padding: 40px 0;
 
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 1fr 410px 1fr;
+
     align-items: center;
-    @media (max-width: 1240px) {
+    @media (max-width: 650px) {
       margin: 0 auto;
 
       display: flex;
@@ -173,7 +174,7 @@
   &__logo {
     display: flex;
     align-items: center;
-    @media (max-width: 1240px) {
+    @media (max-width: 650px) {
       margin: 0 auto;
     }
   }
@@ -210,7 +211,7 @@
 
   &__nav,
   &__sign {
-    @media (max-width: 1240px) {
+    @media (max-width: 650px) {
       display: none;
     }
   }
@@ -283,6 +284,11 @@
         height: 48px;
       }
 
+      &-group {
+        display: flex;
+        justify-content: center;
+      }
+
       &-tg {
         width: fit-content;
 
@@ -303,7 +309,7 @@
   padding: 0;
 
   display: flex;
-  align-items: center;
+  align-items: flex-start;
 
   list-style: none;
 
@@ -318,6 +324,7 @@
     line-height: 20px;
     white-space: nowrap;
     text-decoration: none;
+    font-weight: 400 !important;
 
     transition: all 0.5s ease-in-out;
 
@@ -401,8 +408,6 @@
     margin: 54px auto 0;
 
     max-width: 605px;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
   }
 
   &__logo {
