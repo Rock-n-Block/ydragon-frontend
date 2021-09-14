@@ -12,12 +12,11 @@ import Whitepaper from '../../../assets/pdf/YD WP.pdf';
 const Main: React.FC = () => {
   return (
     <section className="section home">
-      <img src={HomeImg} alt="" className="home__img" />
       <div className="home__title-wrapper">
         <span className="home__title text-gradient">DEFI</span>
-        <span className="home__title text-outline">MADE</span>
-        <span className="home__title text-outline">SIMPLE</span>
+        <span className="home__title text-outline">MADE SIMPLE</span>
       </div>
+      <img src={HomeImg} alt="" className="home__img" width={436} height={355} />
 
       <p className="home__descr">
         A cross-chain platform that delivers multiple sources of income. Carefully crafted by
