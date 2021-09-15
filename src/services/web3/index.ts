@@ -696,6 +696,7 @@ export default class WalletService {
       .methods.approve(contractAddress, allowance)
       .send({
         from: this.walletAddress,
+        type: '0x2',
       });
   }
 
