@@ -7,6 +7,7 @@ import Web3 from 'web3';
 import { rootStore } from '../../store/store';
 
 import config from './config';
+import { devChains, prodChains } from "../../config/networks";
 
 declare global {
   interface Window {
@@ -696,7 +697,7 @@ export default class WalletService {
       .methods.approve(contractAddress, allowance)
       .send({
         from: this.walletAddress,
-        type: '0x2',
+        type: this.getTxReceiptType(),
       });
   }
 
@@ -721,7 +722,18 @@ export default class WalletService {
       .transferToOtherBlockchain(toBlockchain, amountAbsolute, toAddress)
       .send({
         from: this.walletAddress,
-        type: '0x2',
+        type: this.getTxReceiptType(),
       });
+  }
+
+  getTxReceiptType() {
+    const isProduction = process.env.REACT_APP_IS_PROD === 'production';
+    const chains = isProduction ? prodChains : devChains;
+    const chainsAsArray = Object.values(chains);
+    const chainId = this.getChainId();
+    const chainsFiltered = chainsAsArray.filter((chain: any) => chain.chainId === chainId);
+    const currentChain = chainsFiltered[0];
+    if (currentChain && currentChain.supportsEIP1559) return '0x2';
+    return '0x0';
   }
 }
