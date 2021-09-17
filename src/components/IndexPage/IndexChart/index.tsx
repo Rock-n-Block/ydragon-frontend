@@ -101,8 +101,7 @@ const IndexChart: React.FC<IndexChartProps> = React.memo(({ onClick, indexId, di
         },
       },
       yAxis: {
-        suggestedMin: refMin.current,
-        suggestedMax: refMax.current,
+        offset: true,
       },
     },
     elements: {
