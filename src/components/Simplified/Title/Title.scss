@@ -1,0 +1,142 @@
+@import '../../../styles/_variables.scss';
+@import '../../../styles/mixins';
+
+.dark {
+  .simplified {
+    &__sub-title {
+      color: $white;
+    }
+  }
+}
+
+.light {
+  .simplified {
+    &__sub-title {
+      color: $black;
+    }
+  }
+}
+
+.simplified {
+  margin-top: 220px;
+
+  @include b('mobile') {
+    margin-top: 45.77px;
+  }
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  &__img {
+    position: absolute;
+    width: 40%;
+    bottom: 50px;
+
+    @include b('tablet') {
+      width: 30%;
+    }
+
+    @include b('mobile') {
+      display: none;
+    }
+  }
+  
+  &__title-wrapper {
+    position: relative;
+
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__title {
+    font-size: 144px;
+    line-height: 173px;
+
+    @include b('tablet') {
+      font-size: 100px;
+      line-height: 125px;
+    }
+
+    @include b('mobile') {
+      font-size: 52px;
+      line-height: 62px;
+    }
+  }
+  
+  &__sub-title {
+    position: absolute;
+
+    font-family: 'Monument Extended', sans-serif;
+    font-size: 44px;
+    font-weight: bold;
+    line-height: 70px;
+    text-transform: uppercase;
+    letter-spacing: 0.25em;
+
+    @include b('tablet') {
+      font-size: 33px;
+      line-height: 50px;
+    }
+
+    @include b('mobile') {
+      font-size: 22px;
+      line-height: 26px;
+    }
+  }
+
+  &__main-message-wrapper {
+    position: relative;
+    display: inline-flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100%;
+    
+    @include b('mobile') {
+      margin-top: 30px;
+    }
+  }
+
+  &__main-message {
+    position: relative;
+    
+    width: 482px;
+    height: 104px;
+    border-radius: 0px 32px 32px 32px;
+    background-color: $red;
+    padding: 20px 40px;
+
+    @include b('tablet') {
+      width: 400px;
+      height: 88px;
+      padding: 10px 40px;
+    }
+
+    @include b('mobile') {
+      width: 350px;
+      height: 77px;
+      padding: 10px 40px;
+    }
+  }
+
+  &__main-message-text {
+    font-family: 'Rubik';
+    font-style: normal;
+    font-weight: normal;
+    font-size: 20px;
+    line-height: 32px;
+    letter-spacing: 0.04em;
+
+    @include b('tablet') {
+      font-size: 18px;
+      line-height: 25px;
+    }
+
+    @include b('mobile') {
+      font-size: 16px;
+      line-height: 19px;
+    }
+  }
+}

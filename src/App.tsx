@@ -21,6 +21,7 @@ import {
   YdrToken,
   // StakePage,
   // YdrToken,
+  Simplified,
 } from './pages';
 
 import './styles/index.scss';
@@ -31,6 +32,7 @@ export const App: React.FC = observer(() => {
   const [collapsed, setCollapsed] = useState<boolean>(true);
   const main = useRouteMatch();
   const about = useRouteMatch('/about-us');
+  const simplified = useRouteMatch('/simplified');
   const { theme } = useMst();
   const [bodyClass, setBodyClass] = useState('');
 
@@ -43,6 +45,8 @@ export const App: React.FC = observer(() => {
       result = `page-wrapper page-wrapper--home`;
     } else if (about) {
       result = `page-wrapper page-wrapper--about`;
+    } else if (simplified) {
+      result = `page-wrapper page-wrapper--simplified`;
     } else result = `page-wrapper`;
     return result;
   };
@@ -95,7 +99,11 @@ export const App: React.FC = observer(() => {
             <Route exact path="/about-us">
               <AboutUs />
             </Route>
+            <Route exact path="/simplified">
+              <Simplified />
+            </Route>
             <Route component={NoPageFound} />
+            
           </Switch>
           <MetamaskErrModal />
           <InfoModal />
