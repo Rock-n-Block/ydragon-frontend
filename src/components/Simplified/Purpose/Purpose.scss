@@ -1,0 +1,124 @@
+@import '../../../styles/_variables.scss';
+@import '../../../styles/mixins';
+
+.dark {
+  .about {
+    &__title {
+      color: $white;
+    }
+    &__subtitle {
+      color: $white;
+    }
+  }
+}
+
+.light {
+  .about {
+    &__title {
+      color: $black;
+    }
+    &__subtitle {
+      color: $black;
+    }
+  }
+}
+
+.purpose {
+  margin-top: 300px;
+  @include b('mobile') {
+    margin-top: 100px;
+  }
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  &__purpose-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+  
+    @include b('mobile') {
+      flex-direction: column;
+    }
+  }
+
+  &__item {
+    width: 50%;
+    height: 640px;
+    padding: 40px;
+    @include b('mobile') {
+      width: 100%;
+      padding: 0px;
+    }
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__title-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 16px 24px;
+    position: static;
+    width: 530px;
+    height: 72px;
+    left: 0px;
+    top: 0px;
+
+    @include b('tablet') {
+      width: 420px;
+    }
+    @include b('mobile') {
+      width: 350px;
+    }
+    border-radius: 16px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.1) 100%);
+
+  }
+
+  &__title {
+    font-family: 'Monument Extended';
+    font-style: normal;
+    font-weight: normal;
+    font-size: 24px;
+    padding-right: 20px;
+    line-height: 32px;
+    @include b('mobile') {
+      font-size: 18px;
+    }
+  }
+
+  &__img-wrapper {
+    display: flex;
+    height: 300px;
+    justify-content: center;
+    align-items: center;
+    margin-top: 40px;
+    padding: 10px;
+  }
+
+  &__img {
+    width: 100%;
+  }
+
+  &__text {
+    margin-top: 50px;
+    font-family: 'Rubik';
+    font-style: normal;
+    font-weight: normal;
+    font-size: 22px;
+    line-height: 36px;
+    opacity: 0.9;
+
+    @include b('mobile') {
+      font-size: 16px;
+    }
+  }
+}
