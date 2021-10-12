@@ -2,7 +2,7 @@ import React from 'react';
 
 import './Simplified.scss';
 
-import { Title, About, Purpose, Basket } from '../../components/Simplified';
+import { Title, About, Purpose, Basket, Diversify } from '../../components/Simplified';
 
 
 const Simplified: React.FC = () => {
@@ -12,6 +12,7 @@ const Simplified: React.FC = () => {
       <About />
       <Purpose />
       <Basket />
+      <Diversify />
     </main>
   );
 };

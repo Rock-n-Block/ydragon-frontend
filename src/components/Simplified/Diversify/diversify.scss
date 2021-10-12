@@ -1,0 +1,122 @@
+@import '../../../styles/_variables.scss';
+@import '../../../styles/mixins';
+
+.dark {
+  .about {
+    &__title {
+      color: $white;
+    }
+    &__subtitle {
+      color: $white;
+    }
+  }
+}
+
+.light {
+  .about {
+    &__title {
+      color: $black;
+    }
+    &__subtitle {
+      color: $black;
+    }
+  }
+}
+
+.diversify {
+
+
+  &__container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-top: 60px;
+    @include b('mobile') {
+      margin-top: 40px;
+      flex-direction: column;
+    }
+  }
+
+  &__item {
+    display: flex;
+    width: 530px;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 40px;
+
+    @include b('mobile') {
+      width: 350px;
+    }
+  }
+
+  &__title-wrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 16px 24px;
+    border-radius: 16px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.1) 100%);
+  }
+
+  &__title {
+    font-family: 'Monument Extended';
+    font-style: normal;
+    font-weight: normal;
+    font-size: 24px;
+    line-height: 32px; 
+    
+    @include b('mobile') {
+      font-size: 18px;
+    }
+  }
+
+  &__subtitle {
+    margin-top: 40px;
+    font-family: 'Rubik';
+    font-style: normal;
+    font-weight: normal;
+    font-size: 22px;
+    line-height: 32px;
+    text-align: center;
+
+    @include b('mobile') {
+      font-size: 16px;
+      line-height: 24px;
+    }
+  }
+
+  &__weats-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-top: 40px;
+  }
+
+  &__weat-wrapper {
+    width: 80px;
+    height: 80px;
+
+    @include b('mobile') {
+      width: 57px;
+      height: 57px;
+    }
+    margin-left: 16px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    border-radius: 16px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.1) 100%);
+  }
+
+  &__img {
+    @include b('mobile') {
+      width: 18px;
+    }
+  }
+}
