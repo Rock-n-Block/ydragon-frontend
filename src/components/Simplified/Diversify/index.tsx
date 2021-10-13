@@ -1,16 +1,13 @@
 import React from 'react';
 
 import './diversify.scss';
+import { DARK, useMst } from '../../../store/store';
 
 import WheatImg from '../../../assets/img/simplified/diversify/wheatY.svg';
 import WheatBImg from '../../../assets/img/simplified/diversify/wheatB.svg';
 import WheatRImg from '../../../assets/img/simplified/diversify/wheatR.svg';
 import WheatPImg from '../../../assets/img/simplified/diversify/wheatP.svg';
 import WheatGImg from '../../../assets/img/simplified/diversify/wheatG.svg';
-
-
-
-
 
 interface IDiversify {
   name: string;
@@ -20,6 +17,7 @@ interface IDiversify {
 }
 
 const Diversify: React.FC = () => {
+  const { theme } = useMst();
   const diversifys: Array<IDiversify> = [
     {
       name: 'John',
@@ -43,14 +41,14 @@ const Diversify: React.FC = () => {
         {
           diversifys.map((d: IDiversify) => 
             <div className="diversify__item">
-              <div className="diversify__title-wrapper">
+              <div className={`diversify__title-wrapper-${ DARK === theme.value ? 'Black' : 'White'}`}>
                 <span className="diversify__title">{d.emoji} {d.name}</span>
               </div>
               <span className="diversify__subtitle">{d.description}</span>
               <div className="diversify__weats-wrapper">
                 {
                   d.wheats.map(w => 
-                    <div className="diversify__weat-wrapper">
+                    <div className={`diversify__weat-wrapper-${ DARK === theme.value ? 'Black' : 'White'}`}>
                       <img className="diversify__img" src={w} alt=" " />
                     </div>
                   )

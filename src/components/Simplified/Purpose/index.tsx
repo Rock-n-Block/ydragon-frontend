@@ -6,6 +6,7 @@ import ReduceIcon from '../../../assets/img/simplified/purpose/reduce.svg';
 import IncreaseIcon from '../../../assets/img/simplified/purpose/increase.svg';
 import RiskImg from '../../../assets/img/simplified/purpose/Risks.svg';
 import IncomeImg from '../../../assets/img/simplified/purpose/income.svg';
+import { DARK, useMst } from '../../../store/store';
 
 interface IPurpose {
   title: string;
@@ -15,7 +16,7 @@ interface IPurpose {
 }
 
 const Purpose: React.FC = () => {
-
+  const { theme } = useMst();
   const purposes: Array<IPurpose> = [
     { 
       title: 'Reduce risks',
@@ -37,7 +38,7 @@ const Purpose: React.FC = () => {
       <div className="purpose__purpose-wrapper">
         {purposes.map((purpose: IPurpose) =>
           <div className="purpose__item">
-            <div className="purpose__title-wrapper">
+            <div className={`purpose__title-wrapper-${DARK === theme.value ? 'Black' : 'White'}`}>
               <span className="purpose__title">{purpose.title}</span>
               <img  alt='' src={purpose.icon} />
             </div>
