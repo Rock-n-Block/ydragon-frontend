@@ -13,17 +13,14 @@
 }
 
 .light {
-  .section{
-  &.purpose {
+  .purpose {
     &__title {
       color: $black;
     }
     &__subtitle {
       color: $black;
     }
-  
   }
-}
 }
 
 .purpose {
