@@ -1,0 +1,125 @@
+@import '../../../styles/_variables.scss';
+@import '../../../styles/mixins';
+
+.dark {
+  .governance {
+    &__title {
+      color: $white;
+    }
+    &__subtitle {
+      color: $white;
+    }
+  }
+}
+
+.light {
+  .governance{
+    &__title {
+      color: $black;
+    }
+    &__subtitle {
+      color: $black;
+    }
+  }
+}
+
+
+.governance {
+
+  &__wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    margin-top: 80px;
+    @include b('mobile') {
+      flex-direction: column;
+      margin-top: 24px;
+    }
+  }
+
+  &__slider-wrapper {
+    flex: 1 1 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 80px;
+  }
+
+  &__slider {
+    @include b('mobile') {
+      width: 100%;
+    }
+  }
+
+  &__subtitle-wrapper {
+    display: flex;
+    flex-direction: column;
+    margin-left: 30px;
+
+    @include b('mobile') {
+      margin-left: 0;
+    }
+  }
+
+  &__title {
+    font-family: 'Monument Extended', sans-serif;
+    font-size: 32px;
+    line-height: 38px;
+    letter-spacing: 0.035em;
+    text-transform: uppercase;
+    position: relative;
+    padding-bottom: 24px;
+
+
+    &:after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      height: 2px;
+      width: 84px;
+      max-width: 84px; 
+      background: $red; 
+    }
+
+    @include b('mobile') {
+      font-size: 24px;
+      line-height: 29px;
+    }
+  }
+
+  &__line {
+    width: 84px;
+    border: 1px solid #D53038;
+    margin-top: 24px;
+  }
+
+  &__text-wrapper {
+    display: flex;
+    margin-top: 24px;
+    flex-direction: column;
+  }
+
+  &__list-paragraphs {
+    list-style-type: none;
+    padding: 0;
+  }
+
+  &__text {
+    font-family: 'Rubik', sans-serif;
+    font-size: 22px;
+    line-height: 32px;
+    margin-top: 24px;
+    opacity: 0.9;
+
+    @include b('mobile') {
+      font-size: 16px;
+      line-height: 24px;
+    }
+  }
+
+  &__text-color {
+    color: $red;
+  }
+}

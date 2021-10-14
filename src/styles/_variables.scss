@@ -28,7 +28,11 @@ $green: #38dea2;
 $green-l: #0cbd68;
 $red: #de3f3a;
 $red-button: #d53038;
+$dark-red: rgba(255, 103, 103, 0.2);
 
+$gradient-black: linear-gradient(180deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.1) 100%);
+$gradient-white: linear-gradient(180deg, rgba(0, 0, 0, 0.06) 0%, rgba(97, 90, 90, 0.1) 100%);
+$gradient-green: linear-gradient(180deg, rgba(245, 255, 244, 0.18) 0%, rgba(122, 255, 119, 0.21) 100%);
 $gradient: linear-gradient(180deg, #df3f3a 0%, #f47c45 100%);
 $shadow: -8px 8px 12px rgba(13, 36, 82, 0.1);
 $shadow-dark: -8px 8px 36px rgba(0, 0, 0, 0.5);

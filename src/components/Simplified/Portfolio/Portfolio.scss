@@ -1,0 +1,64 @@
+@import '../../../styles/_variables.scss';
+@import '../../../styles/mixins';
+
+.dark {
+  .portfolio {
+    &__title {
+      color: $white;
+    }
+    &__subtitle {
+      color: $white;
+    }
+  }
+}
+
+.light {
+  .portfolio {
+    &__title {
+      color: $black;
+    }
+    &__subtitle {
+      color: $black;
+    }
+  }
+}
+
+
+.portfolio {
+
+  &__img-wrapper {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    margin-top: 80px;
+  }
+
+  &__img {
+    @include b('mobile') {
+      width: 30%;
+    }
+  }
+
+  &__subtitle-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  &__subtitle {
+    font-family: 'Rubik', sans-serif;
+    font-size: 22px;
+    line-height: 34px;
+    text-align: center;
+    width: 568px;
+    opacity: 0.9;
+
+    @include b('mobile') {
+      margin-top: 25px;
+      text-align: left;
+      font-size: 16px;
+      line-height: 24px;
+      letter-spacing: 0.035em;
+    }
+  }
+}
