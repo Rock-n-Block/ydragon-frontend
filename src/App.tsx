@@ -19,6 +19,7 @@ import {
   NoPageFound,
   StakePage,
   YdrToken,
+  PbfPage,
   // StakePage,
   // YdrToken,
 } from './pages';
@@ -94,6 +95,9 @@ export const App: React.FC = observer(() => {
             </Route>
             <Route exact path="/about-us">
               <AboutUs />
+            </Route>
+            <Route exact path="/pbf">
+              <PbfPage />
             </Route>
             <Route component={NoPageFound} />
           </Switch>
