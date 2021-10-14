@@ -50,7 +50,7 @@ const Terminology: React.FC = () => {
       <div className="terminology__video-wrapper">
         <div className="terminology__video-content">
           <h4 className="terminology__content-title">Liquidity Pools</h4>
-          <p className="terminology__content-text">Pools of tokens that provide funding to exchanges,  to assist with the operations of those exchanges. Check out this great explanation from Finematics 
+          <p className="terminology__video-text">Pools of tokens that provide funding to exchanges,  to assist with the operations of those exchanges. Check out this great explanation from Finematics 
           <a href="/"> on Youtube</a> 
           </p>
           <video
@@ -68,8 +68,8 @@ const Terminology: React.FC = () => {
           </video>
         </div>
         <div className="terminology__video-content">
-          <h4 className="terminology__content-title">Liquidity Pools</h4>
-          <p className="terminology__content-text">Pools of tokens that provide funding to exchanges,  to assist with the operations of those exchanges. Check out this great explanation from Finematics 
+          <h4 className="terminology__content-title">Yield farming</h4>
+          <p className="terminology__video-text">This Is when you have staked your coins on a platform and are rewarded in the form of interest or given another token. Check out this great explanation from Finematics
           <a href="/"> on Youtube</a> 
           </p>
           <video

@@ -12,7 +12,7 @@ const Simplified: React.FC = () => {
       <About />
       <Purpose />
       <Basket />
-      <Diversify />
+      <Diversify /> 
       <Harvest />
       <Portfolio />
       <Governance />

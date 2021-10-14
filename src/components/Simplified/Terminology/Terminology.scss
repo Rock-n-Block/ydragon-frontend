@@ -30,12 +30,13 @@
     justify-content: flex-start;
     width: 100%;
     margin-top: 80px;
+    
   }
 
   &__title-container {
     display: flex;
     flex-direction: row;
-    align-items: flex-start;
+    align-items: center;
     width: 544px;
     height: 136px;
     border-radius: 32px 32px 32px 0px;
@@ -45,6 +46,7 @@
     @include b('tablet') {
       width: 400px;
       height: 144px;
+      
     }
 
     @include b('mobile') {
@@ -57,6 +59,11 @@
     font-family: 'Rubik', sans-serif;
     font-size: 20px;
     line-height: 32px;
+    max-width: 544px;
+    @include b('tablet') {
+      font-size:16px;
+      line-height: 32px;
+    }
 
     @include b('mobile') {
       font-size: 16px;
@@ -68,6 +75,11 @@
     display: flex;
     flex-direction: row;
     margin-top: 80px;
+
+    @include b('tablet') {
+      justify-content: center;
+      flex-direction: column;
+    }
     @include b('mobile') {
       justify-content: center;
       flex-direction: column;
@@ -77,11 +89,15 @@
   &__content {
     flex: 1 1 auto;
     margin: 40px;
+    padding: 10px;
     &:first-child {
       margin-left: 0;
     }
-
+    @include b('tablet') {
+      margin: 0;
+    }
     @include b('mobile') {
+      padding: 0;
       margin: 0;
     }
     display: flex;
@@ -98,7 +114,7 @@
     line-height: 32px;
 
     @include b('mobile') {
-      margin-top: 70px;
+      margin-top: 30px;
 
     }
   }
@@ -109,12 +125,16 @@
     line-height: 32px;
     opacity: 0.8;
     margin-top: 16px;
+    
   }
 
   &__video-wrapper {
     display: flex;
     flex-direction: row;
-
+    width: 100%;
+    @include b('tablet') {
+      flex-direction: column;
+    }
     @include b('mobile') {
       flex-direction: column;
     }
@@ -124,20 +144,41 @@
     display: flex;
     flex-direction: column;
     flex: 1 1 auto;
+    width: 50%;
     margin: 40px;
-
+    padding: 10px;
     &:first-child {
       margin-left: 0;
     }
 
+    
+    @include b('tablet') {
+      width: 100%;
+      margin: 0;
+    }
     @include b('mobile') {
+      width: 100%;
       margin: 0;
     }
   }
 
-  &__video {
-    width: 462px;
+  &__video-text {
+    font-family: 'Rubik', sans-serif;
+    font-size: 20px;
+    line-height: 32px;
+    opacity: 0.8;
+    margin-top: 16px;
+    min-height: 128px;
+  }
 
+  &__video {
+    width: 100%;
+    margin-top: 20px;
+
+    @include b('tablet') {
+      margin-top: 30px;
+      width: 90%;
+    }
     @include b('mobile') {
       width: 350px;
     }

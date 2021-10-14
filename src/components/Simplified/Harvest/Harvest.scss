@@ -97,6 +97,11 @@
     font-size: 20px;
     line-height: 32px;
 
+    @include b('tablet') {
+      font-size: 17px;
+      line-height: 19px;
+    }
+
     @include b('mobile') {
       font-size: 16px;
       line-height: 19px;

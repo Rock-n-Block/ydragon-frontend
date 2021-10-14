@@ -6,7 +6,7 @@ import { Card } from '../components';
 import { cardData } from '../components/data';
 // interface 
 import { ICard } from '../components/types';
-
+   
 
 const Purpose: React.FC = () => {
 

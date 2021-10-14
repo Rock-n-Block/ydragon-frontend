@@ -35,13 +35,12 @@
 
 .wheat {
   &__item {
-    width: 530px;
-    flex: 1 1 auto;
+    width:50%;
+    padding: 40px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin: 70px; 
     margin-top: 40px;
 
     @include b('tablet') {
@@ -49,8 +48,9 @@
     }
 
     @include b('mobile') {
-      width: 350px;
-      margin: 30px;
+      width: 100%;
+      padding: 0;
+      margin-top: 40px;
     }
 
   }
@@ -79,7 +79,8 @@
 
   &__weats-wrapper {
     display: flex;
-    justify-content: space-around;
+    width: 100%;
+    justify-content: center;
     align-items: center;
     flex-direction: row;
     margin-top: 40px;
@@ -176,6 +177,9 @@
   }
 
   &__img {
+    @include b('tablet') {
+      width: 20px;
+    }
     @include b('mobile') {
       width: 18px;
     }

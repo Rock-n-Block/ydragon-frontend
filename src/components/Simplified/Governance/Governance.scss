@@ -44,11 +44,17 @@
     justify-content: center;
     align-items: center;
     margin: 80px;
+    @include b('mobile') {
+      margin: 0;
+    }
   }
 
   &__slider {
+    @include b('tablet') {
+      width: 200%;
+    }
     @include b('mobile') {
-      width: 100%;
+      width: 80%;
     }
   }
 
@@ -89,11 +95,7 @@
     }
   }
 
-  &__line {
-    width: 84px;
-    border: 1px solid #D53038;
-    margin-top: 24px;
-  }
+  
 
   &__text-wrapper {
     display: flex;
