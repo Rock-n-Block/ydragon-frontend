@@ -6,4 +6,4 @@ export { default as Diversify } from './Diversify';
 export { default as Harvest } from './Harvest';
 export { default as Portfolio } from './Portfolio';
 export { default as Governance } from './Governance';
-export { default as Other } from './Other';
+export { default as Terminology } from './Terminology';

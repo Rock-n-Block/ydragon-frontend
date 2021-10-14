@@ -41,9 +41,7 @@
   
   &__subtitle {
     width: 530px;
-    font-family: Rubik;
-    font-style: normal;
-    font-weight: normal;
+    font-family: 'Rubik', sans-serif;
     font-size: 22px;
     line-height: 32px;
     opacity: 0.9;
@@ -55,9 +53,6 @@
     }
   }
 
-  &__img-wrapper {
-    padding: 0;
-  }
 
   &__img {
     width: 85%;

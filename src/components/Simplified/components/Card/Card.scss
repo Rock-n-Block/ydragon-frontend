@@ -1,0 +1,125 @@
+@import '../../../../styles/_variables.scss';
+@import '../../../../styles/mixins';
+
+.dark {
+  .purpose {
+    &__title {
+      color: $white;
+    }
+    &__subtitle {
+      color: $white;
+    }
+  }
+}
+
+.light {
+  .section{
+  &.purpose {
+    &__title {
+      color: $black;
+    }
+    &__subtitle {
+      color: $black;
+    }
+  
+  }
+}
+}
+
+.card {
+  &__item {
+    height: 640px;
+    padding: 40px;
+    @include b('mobile') {
+      width: 100%;
+      height: 410px;
+      padding: 0;
+      margin-top: 80px;
+    }
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__title-wrapper-Black {
+    width: 100%;
+    height: 70px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 16px 24px;
+    
+    @include b('tablet') {
+      width: 420px;
+    }
+    @include b('mobile') {
+      width: 90%;
+    }
+    border-radius: 16px;
+    background: $gradient-black;
+  }
+
+  &__title-wrapper-White {
+    width: 100%;
+    height: 70px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 16px 24px;
+    
+    @include b('tablet') {
+      width: 420px;
+    }
+    @include b('mobile') {
+      width: 90%;
+    }
+    border-radius: 16px;
+    background: $gradient-white;
+  }
+
+  &__title {
+    font-family: 'Monument Extended', sans-serif;
+    font-size: 24px;
+    padding-right: 20px;
+    line-height: 32px;
+    @include b('mobile') {
+      font-size: 18px;
+    }
+  }
+
+  &__img-wrapper {
+    display: flex;
+    height: 250px;
+    justify-content: center;
+    align-items: center;
+    margin-top: 80px;
+    padding: 10px;
+
+    @include b('mobile') {
+      margin-top: 30px;
+      padding: 5px;
+    }
+  }
+
+  &__img {
+    width: 90%;
+  }
+
+  &__text {
+    margin-top: 80px;
+    @include b('mobile') {
+      margin-top: 30px;
+    }
+    font-family: 'Rubik', sans-serif;
+    font-size: 22px;
+    line-height: 36px;
+    opacity: 0.9;
+
+    @include b('mobile') {
+      font-size: 16px;
+    }
+  }
+}

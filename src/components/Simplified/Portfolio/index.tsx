@@ -15,7 +15,7 @@ const Portfolio: React.FC = () => {
         <img className="portfolio__img" src={tokenImg} alt='' />
       </div>
       <div className="portfolio__subtitle-wrapper">
-        <span className="portfolio__subtitle">As a YDragon index investor, you will be given another token that is equal to the exact value of that bundle as a whole. This 1 index token can now be used to monitor the performance of all the tokens within the index.</span>
+        <p className="portfolio__subtitle">As a YDragon index investor, you will be given another token that is equal to the exact value of that bundle as a whole. This 1 index token can now be used to monitor the performance of all the tokens within the index.</p>
       </div>
     </section>
   )

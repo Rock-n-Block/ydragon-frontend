@@ -46,9 +46,7 @@
   }
 
   &__subtitle {
-    font-family: 'Rubik';
-    font-style: normal;
-    font-weight: normal;
+    font-family: 'Rubik', sans-serif;
     font-size: 22px;
     line-height: 34px;
     text-align: center;
@@ -56,8 +54,6 @@
     opacity: 0.9;
 
     @include b('mobile') {
-      font-style: normal;
-      font-weight: normal;
       margin-top: 25px;
       text-align: left;
       font-size: 16px;

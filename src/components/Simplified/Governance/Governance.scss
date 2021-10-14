@@ -63,13 +63,25 @@
   }
 
   &__title {
-    font-family: 'Monument Extended';
-    font-style: normal;
-    font-weight: normal;
+    font-family: 'Monument Extended', sans-serif;
     font-size: 32px;
     line-height: 38px;
     letter-spacing: 0.035em;
     text-transform: uppercase;
+    position: relative;
+    padding-bottom: 24px;
+
+
+    &:after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      height: 2px;
+      width: 84px;
+      max-width: 84px; 
+      background: $red; 
+    }
 
     @include b('mobile') {
       font-size: 24px;
@@ -89,10 +101,13 @@
     flex-direction: column;
   }
 
+  &__list-paragraphs {
+    list-style-type: none;
+    padding: 0;
+  }
+
   &__text {
-    font-family: 'Rubik';
-    font-style: normal;
-    font-weight: normal;
+    font-family: 'Rubik', sans-serif;
     font-size: 22px;
     line-height: 32px;
     margin-top: 24px;

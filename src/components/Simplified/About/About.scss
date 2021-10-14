@@ -47,12 +47,24 @@
   }
 
   &__title {
-    font-family: 'Monument Extended';
-    font-style: normal;
-    font-weight: normal;
+    font-family: 'Monument Extended', sans-serif;
     font-size: 32px;
     line-height: 132%;
     width: 30%;
+    padding-bottom: 24px;
+    position: relative;
+
+    &:after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      height: 2px;
+      width: 84px;
+      max-width: 84px; 
+      background: $red; 
+      border-radius: 2px;
+    }
 
     @include b('tablet') {
       font-size: 26px;
@@ -63,17 +75,9 @@
     }
   }
 
-  &__line {
-    width: 84px;
-    margin-top: 24px;
-    border: 1px solid $red;
-    border-radius: 2px;
-  }
 
   &__subtitle {
-    font-family: 'Rubik';
-    font-style: normal;
-    font-weight: normal;
+    font-family: 'Rubik', sans-serif;
     font-size: 19px;
     line-height: 36px;
     letter-spacing: 0.035em;

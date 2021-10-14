@@ -21,9 +21,7 @@
     &__subtitle {
       color: $black;
     }
-    &__title-wrapper {
-      background: linear-gradient(180deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.1) 100%);
-    }
+  
   }
 }
 }
@@ -52,103 +50,5 @@
     }
   }
 
-  &__item {
-    height: 640px;
-    padding: 40px;
-    @include b('mobile') {
-      width: 100%;
-      height: 410px;
-      padding: 0;
-      margin-top: 80px;
-    }
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
-
-  &__title-wrapper-Black {
-    width: 100%;
-    height: 70px;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    padding: 16px 24px;
-    
-    @include b('tablet') {
-      width: 420px;
-    }
-    @include b('mobile') {
-      width: 90%;
-    }
-    border-radius: 16px;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.1) 100%);
-  }
-
-  &__title-wrapper-White {
-    width: 100%;
-    height: 70px;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    padding: 16px 24px;
-    
-    @include b('tablet') {
-      width: 420px;
-    }
-    @include b('mobile') {
-      width: 90%;
-    }
-    border-radius: 16px;
-    background: linear-gradient(180deg, rgba(0, 0, 0, 0.06) 0%, rgba(97, 90, 90, 0.1) 100%);
-  }
-
-  &__title {
-    font-family: 'Monument Extended';
-    font-style: normal;
-    font-weight: normal;
-    font-size: 24px;
-    padding-right: 20px;
-    line-height: 32px;
-    @include b('mobile') {
-      font-size: 18px;
-    }
-  }
-
-  &__img-wrapper {
-    display: flex;
-    height: 250px;
-    justify-content: center;
-    align-items: center;
-    margin-top: 80px;
-    padding: 10px;
-
-    @include b('mobile') {
-      margin-top: 30px;
-      padding: 5px;
-    }
-  }
-
-  &__img {
-    width: 90%;
-  }
-
-  &__text {
-    margin-top: 80px;
-    @include b('mobile') {
-      margin-top: 30px;
-    }
-    font-family: 'Rubik';
-    font-style: normal;
-    font-weight: normal;
-    font-size: 22px;
-    line-height: 36px;
-    opacity: 0.9;
-
-    @include b('mobile') {
-      font-size: 16px;
-    }
-  }
+  
 }
