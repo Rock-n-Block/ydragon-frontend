@@ -33,21 +33,27 @@
   justify-content: center;
 
   .swiper-wrapper {
-    will-change: transform;
     transition: transform 15s linear 0s;
+    will-change: transform;
   }
+
   .swiper-container {
     overflow: visible;
+
     width: 100%;
   }
 
   &__link {
-    height: 147px;
     padding: 0 60px;
+
     display: flex;
     justify-content: center;
     align-items: center;
+
+    height: 147px;
+
     border-radius: 32px;
+
     &:hover {
       cursor: pointer;
     }
@@ -65,6 +71,7 @@
     text-align: center;
     gap: 43px;
     flex-wrap: wrap;
+
     & + & {
       margin-top: 54px;
     }

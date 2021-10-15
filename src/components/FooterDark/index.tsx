@@ -1,24 +1,25 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { NavHashLink } from 'react-router-hash-link';
-import PoweredBy from './PoweredBy';
+import { observer } from 'mobx-react-lite';
 
 import logo from '../../assets/img/icons/logo.svg';
+import coingecko from '../../assets/img/socials/coingecko.svg';
+import coinmarketcapL from '../../assets/img/socials/coinmarketcap-light.svg';
+import coinmarketcapD from '../../assets/img/socials/coinmarketcap.svg';
 // import dis from '../../assets/img/socials/discord.svg';
 import md from '../../assets/img/socials/medium.svg';
+import nomics from '../../assets/img/socials/nomics.png';
 import tg from '../../assets/img/socials/telegram.svg';
 import tw from '../../assets/img/socials/twitter.svg';
-import coingecko from '../../assets/img/socials/coingecko.svg';
-import coinmarketcapD from '../../assets/img/socials/coinmarketcap.svg';
-import coinmarketcapL from '../../assets/img/socials/coinmarketcap-light.svg';
-import nomics from '../../assets/img/socials/nomics.png';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import Whitepaper from '../../assets/pdf/YD WP.pdf';
+import { DARK, useMst } from '../../store/store';
+
+import PoweredBy from './PoweredBy';
 
 import './Footer.scss';
-import { DARK, useMst } from '../../store/store';
-import { observer } from 'mobx-react-lite';
 
 const Footer: React.FC = observer(() => {
   const { theme } = useMst();

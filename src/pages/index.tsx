@@ -9,3 +9,4 @@ export { default as IndexDashboard } from './IndexDashboard';
 export { default as AboutUs } from './AboutUs';
 export { default as NoPageFound } from './NoPageFound';
 export { default as Bridge } from './Bridge';
+export { default as Simplified } from './Simplified';

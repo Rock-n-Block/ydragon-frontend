@@ -1,0 +1,66 @@
+@import '../../../styles/_variables.scss';
+@import '../../../styles/mixins';
+
+.dark {
+  .about {
+    &__title {
+      color: $white;
+    }
+
+    &__subtitle {
+      color: $white;
+    }
+  }
+}
+
+.light {
+  .about {
+    &__title {
+      color: $black;
+    }
+
+    &__subtitle {
+      color: $black;
+    }
+  }
+}
+
+.basket {
+  &__main-wrapper {
+    margin-top: 70px;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    @include b('mobile') {
+      flex-direction: column;
+    }
+  }
+
+  &__subtitle {
+    width: 530px;
+
+    font-family: 'Rubik', sans-serif;
+    font-size: 22px;
+    line-height: 32px;
+
+    opacity: 0.9;
+
+    @include b('mobile') {
+      width: 330px;
+
+      font-size: 16px;
+      line-height: 24px;
+    }
+  }
+
+  &__img {
+    width: 85%;
+
+    @include b('mobile') {
+      margin-top: 50px;
+    }
+  }
+}

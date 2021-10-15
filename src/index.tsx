@@ -7,8 +7,8 @@ import { BrowserRouter as Router } from 'react-router-dom';
 
 import Connector from './services/walletConnect';
 import { Provider, rootStore } from './store/store';
-import { App } from './App';
 import ScollToTop from './utils/ScollToTop';
+import { App } from './App';
 
 ReactDOM.render(
   <Provider value={rootStore}>

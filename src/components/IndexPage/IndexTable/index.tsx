@@ -1,9 +1,10 @@
 import React from 'react';
 import BigNumber from 'bignumber.js/bignumber';
 
-import './IndexTable.scss';
-import arrowUp from '../../../assets/img/chart/arrow-up.svg';
 import arrowDown from '../../../assets/img/chart/arrow-down.svg';
+import arrowUp from '../../../assets/img/chart/arrow-up.svg';
+
+import './IndexTable.scss';
 
 export interface IToken {
   address: string;

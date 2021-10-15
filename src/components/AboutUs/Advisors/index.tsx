@@ -1,10 +1,10 @@
 import React from 'react';
 
 import eric from '../../../assets/img/about-us/advisors/eric.png';
-import geralt from '../../../assets/img/about-us/advisors/geralt.png';
-import markus from '../../../assets/img/about-us/advisors/markus.png';
-import mark from '../../../assets/img/about-us/advisors/mark.png';
 import farmtown from '../../../assets/img/about-us/advisors/farmtown.png';
+import geralt from '../../../assets/img/about-us/advisors/geralt.png';
+import mark from '../../../assets/img/about-us/advisors/mark.png';
+import markus from '../../../assets/img/about-us/advisors/markus.png';
 import nick from '../../../assets/img/about-us/advisors/nick.png';
 import iconLinkedIn from '../../../assets/img/icons/icon-linkedin.svg';
 import iconTwitter from '../../../assets/img/icons/icon-twitter.svg';

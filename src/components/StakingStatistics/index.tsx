@@ -10,10 +10,10 @@ import { useWalletConnectorContext } from '../../services/walletConnect';
 import { useMst } from '../../store/store';
 import { ProviderRpcError } from '../../types/errors';
 import { Button, Table } from '../index';
+import { HarvestModal } from '../Modals';
 import SmallTableCard from '../SmallTableCard/index';
 
 import './StakingStatistics.scss';
-import { HarvestModal } from '../Modals';
 
 interface IStakingStat {
   months: number;
