@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
-import { observer } from 'mobx-react-lite';
-
-import logo from '../../assets/img/icons/logo.svg';
-import pancakeIcon from '../../assets/img/icons/icon-pancake.svg';
-import uniswapIcon from '../../assets/img/icons/icon-uniswap.svg';
-import apeswapIcon from '../../assets/img/icons/icon-apeswap.png';
-import { Button, YDRTokenChart } from '../../components';
 // import { TradeYDRModal } from '../../components/Modals';
 // import { useMst } from '../../store/store';
 import nextId from 'react-id-generator';
+import { observer } from 'mobx-react-lite';
+
+import apeswapIcon from '../../assets/img/icons/icon-apeswap.png';
+import pancakeIcon from '../../assets/img/icons/icon-pancake.svg';
+import uniswapIcon from '../../assets/img/icons/icon-uniswap.svg';
+import logo from '../../assets/img/icons/logo.svg';
+import { Button, YDRTokenChart } from '../../components';
+
 // import { useWalletConnectorContext } from '../../services/walletConnect';
 import './YDRToken.scss';
 

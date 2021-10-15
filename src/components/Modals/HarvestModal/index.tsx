@@ -1,9 +1,9 @@
 import React from 'react';
 
+import { Button } from '../../index';
 import { Modal } from '../index';
 
 import './HarvestModal.scss';
-import { Button } from '../../index';
 
 interface HarvestModalProps {
   onOk: () => void;

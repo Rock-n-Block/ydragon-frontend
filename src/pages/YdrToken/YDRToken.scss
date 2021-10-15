@@ -29,25 +29,33 @@
   justify-content: space-between;
   @include b('tablet') {
     justify-content: center;
+
     .token-panel-item {
       display: flex;
       flex-direction: column;
       align-items: center;
     }
+
     .token-panel__btns {
       flex-wrap: wrap;
+
       flex-direction: row;
     }
   }
+
   .token-panel__content {
     width: fit-content;
   }
+
   .token-panel__btns {
-    width: fit-content;
     flex-direction: row;
+
+    width: fit-content;
   }
+
   &__btns {
     flex-wrap: wrap;
+
     display: grid;
     grid-template-columns: 401px 401px;
     @include b('tablet') {
@@ -56,18 +64,23 @@
   }
 
   .token-panel__btns-group {
-    display: flex;
-    align-items: center;
     padding: 11px 13px;
+
+    display: flex;
     justify-content: space-between;
+    align-items: center;
+
     border-radius: 40px;
     @include b('tablet') {
       flex-direction: column;
+
       .token-panel__info {
         margin-bottom: 10px;
+
         display: flex;
         align-items: center;
       }
+
       .token-panel__btns {
         flex-wrap: wrap;
       }
@@ -85,13 +98,17 @@
 
   .token-panel__logo {
     margin-right: 13px;
+    padding: 8px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
     width: 36px;
     height: 36px;
-    padding: 8px;
+
     border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+
     img {
       max-height: 100%;
     }
@@ -104,18 +121,21 @@
   .logo-uniswap {
     background: #be246e;
   }
+
   .logo-apeswap {
     padding: 0;
+
     width: 36px;
     height: 36px;
   }
 
   .token-panel__subtitle {
     margin-right: 17px;
+
     font-family: 'TT Norms', sans-serif;
-    font-style: normal;
-    font-weight: bold;
     font-size: 16px;
+    font-weight: bold;
+    font-style: normal;
     line-height: 19px;
   }
 }

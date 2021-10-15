@@ -1,9 +1,11 @@
 import React from 'react';
-import './PoweredBy.scss';
-import rnbLogoD from '../../../assets/img/icons/rnb-logo.svg';
-import rnbLogoL from '../../../assets/img/icons/rnb-logo-light.svg';
 import { observer } from 'mobx-react-lite';
+
+import rnbLogoL from '../../../assets/img/icons/rnb-logo-light.svg';
+import rnbLogoD from '../../../assets/img/icons/rnb-logo.svg';
 import { useMst } from '../../../store/store';
+
+import './PoweredBy.scss';
 
 const PoweredBy: React.FC = observer(() => {
   const { theme } = useMst();

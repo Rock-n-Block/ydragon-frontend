@@ -1,31 +1,32 @@
 import React, { useCallback } from 'react';
+import nextId from 'react-id-generator';
 import { observer } from 'mobx-react';
-import moonwolfL from '../../../assets/img/icons/partners/moonwolf-light.png';
-import moonwolfD from '../../../assets/img/icons/partners/moonwolf-dark.png';
-import marshlandL from '../../../assets/img/icons/partners/marshland-light.png';
-import marshlandD from '../../../assets/img/icons/partners/marshland-dark.png';
-import lossLessL from '../../../assets/img/icons/partners/lossless-light.svg';
-import lossLessD from '../../../assets/img/icons/partners/lossless-dark.svg';
-import magnusL from '../../../assets/img/icons/partners/magnus-light.png';
-import magnusD from '../../../assets/img/icons/partners/magnus-dark.png';
-import polygonL from '../../../assets/img/icons/partners/polygon-light.svg';
-import polygonD from '../../../assets/img/icons/partners/polygon-dark.svg';
+import SwiperCore, { Autoplay } from 'swiper/core';
+import { Swiper, SwiperSlide } from 'swiper/react';
+
 import bscPad from '../../../assets/img/icons/partners/bsc-pad.svg';
-import hyperconnectL from '../../../assets/img/icons/partners/hyperconnect-light.svg';
 import hyperconnectD from '../../../assets/img/icons/partners/hyperconnect-dark.svg';
-import qiDaoL from '../../../assets/img/icons/partners/qi-dao-light.png';
+import hyperconnectL from '../../../assets/img/icons/partners/hyperconnect-light.svg';
+import lossLessD from '../../../assets/img/icons/partners/lossless-dark.svg';
+import lossLessL from '../../../assets/img/icons/partners/lossless-light.svg';
+import magnusD from '../../../assets/img/icons/partners/magnus-dark.png';
+import magnusL from '../../../assets/img/icons/partners/magnus-light.png';
+import marshlandD from '../../../assets/img/icons/partners/marshland-dark.png';
+import marshlandL from '../../../assets/img/icons/partners/marshland-light.png';
+import moonwolfD from '../../../assets/img/icons/partners/moonwolf-dark.png';
+import moonwolfL from '../../../assets/img/icons/partners/moonwolf-light.png';
+import polygonD from '../../../assets/img/icons/partners/polygon-dark.svg';
+import polygonL from '../../../assets/img/icons/partners/polygon-light.svg';
 import qiDaoD from '../../../assets/img/icons/partners/qi-dao-dark.png';
+import qiDaoL from '../../../assets/img/icons/partners/qi-dao-light.png';
+import trustSwapD from '../../../assets/img/icons/partners/trust-swap-dark.svg';
 // import unimexL from '../../../assets/img/icons/partners/unimex-light.svg';
 // import unimexD from '../../../assets/img/icons/partners/unimex-dark.svg';
 import trustSwapL from '../../../assets/img/icons/partners/trust-swap-light.svg';
-import trustSwapD from '../../../assets/img/icons/partners/trust-swap-dark.svg';
 import { useMst } from '../../../store/store';
 
 import 'swiper/swiper.scss';
 import './Protocols.scss';
-import nextId from 'react-id-generator';
-import SwiperCore, { Autoplay } from 'swiper/core';
-import { Swiper, SwiperSlide } from 'swiper/react';
 
 SwiperCore.use([Autoplay]);
 

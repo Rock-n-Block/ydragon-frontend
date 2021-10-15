@@ -2,9 +2,9 @@ import React, { PropsWithChildren } from 'react';
 import { observer } from 'mobx-react-lite';
 
 import spinnerLogo from '../../assets/img/icons/logo.svg';
+
 // import spinner from '../../assets/img/icons/spinner.svg';
 // import { DARK, useMst } from '../../store/store';
-
 import './Spinner.scss';
 
 interface SpinnerProps {

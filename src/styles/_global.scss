@@ -73,9 +73,10 @@ p {
         background-image: url('../assets/img/home-dark-bg.png');
       }
     }
+
     &--simplified {
       background-image: none;
-      
+
       @include b('mobile') {
         background-image: url('../assets/img/home-dark-bg.png');
       }
@@ -141,7 +142,7 @@ p {
 
     &--simplified {
       background-image: none;
-      
+
       @include b('mobile') {
         background-image: url('../assets/img/home-bg.png');
       }
@@ -304,10 +305,13 @@ main {
   }
 
   &__title {
-    max-width: 100%;
-    text-overflow: ellipsis;
-    overflow: hidden;
     display: block;
+    overflow: hidden;
+
+    max-width: 100%;
+
+    text-overflow: ellipsis;
+
     &-wrapper {
       max-width: 100%;
     }

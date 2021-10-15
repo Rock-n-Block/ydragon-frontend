@@ -1,32 +1,31 @@
-import { ICard, IWheats } from '../../types/components/simplifiedTypes';
-// images
-import ReduceIcon from '../../assets/img/simplified/purpose/reduce.svg';
-import IncreaseIcon from '../../assets/img/simplified/purpose/increase.svg';
-import RiskImg from '../../assets/img/simplified/purpose/Risks.svg';
-import IncomeImg from '../../assets/img/simplified/purpose/income.svg';
-// diversify and harvest images
-import WheatImg from '../../assets/img/simplified/diversify/wheatY.svg';
 import WheatBImg from '../../assets/img/simplified/diversify/wheatB.svg';
-import WheatRImg from '../../assets/img/simplified/diversify/wheatR.svg';
-import WheatPImg from '../../assets/img/simplified/diversify/wheatP.svg';
 import WheatGImg from '../../assets/img/simplified/diversify/wheatG.svg';
 // Harvest component images
 import WheatNotImg from '../../assets/img/simplified/diversify/wheatNoProfit.svg';
-
+import WheatPImg from '../../assets/img/simplified/diversify/wheatP.svg';
+import WheatRImg from '../../assets/img/simplified/diversify/wheatR.svg';
+// diversify and harvest images
+import WheatImg from '../../assets/img/simplified/diversify/wheatY.svg';
+import IncomeImg from '../../assets/img/simplified/purpose/income.svg';
+import IncreaseIcon from '../../assets/img/simplified/purpose/increase.svg';
+// images
+import ReduceIcon from '../../assets/img/simplified/purpose/reduce.svg';
+import RiskImg from '../../assets/img/simplified/purpose/Risks.svg';
+import { ICard, IWheats } from '../../types/components/simplifiedTypes';
 
 // Card component
 export const cardData: Array<ICard> = [
-  { 
+  {
     title: 'Reduce risks',
     icon: ReduceIcon,
     img: RiskImg,
-    description: `The difference here is that you invest in several coins at once. Such a group is called an index - it's safer this way, below we will explain why.`
+    description: `The difference here is that you invest in several coins at once. Such a group is called an index - it's safer this way, below we will explain why.`,
   },
-  { 
+  {
     title: 'Increase income',
     icon: IncreaseIcon,
     img: IncomeImg,
-    description: `The coins in your index have value, with each offering opportunities to receive passive income - money earned without working!`
+    description: `The coins in your index have value, with each offering opportunities to receive passive income - money earned without working!`,
   },
 ];
 
@@ -40,29 +39,29 @@ export const diversifysData: Array<IWheats> = [
       {
         background: 'normal',
         profit: false,
-        wheat: WheatImg
+        wheat: WheatImg,
       },
       {
         background: 'normal',
         profit: false,
-        wheat: WheatImg
+        wheat: WheatImg,
       },
       {
         background: 'normal',
         profit: false,
-        wheat: WheatImg
+        wheat: WheatImg,
       },
       {
         background: 'normal',
         profit: false,
-        wheat: WheatImg
+        wheat: WheatImg,
       },
       {
         background: 'normal',
         profit: false,
-        wheat: WheatImg
+        wheat: WheatImg,
       },
-    ]
+    ],
   },
   {
     name: 'David',
@@ -72,33 +71,33 @@ export const diversifysData: Array<IWheats> = [
       {
         background: 'normal',
         profit: false,
-        wheat: WheatImg
+        wheat: WheatImg,
       },
       {
         background: 'normal',
         profit: false,
-        wheat: WheatBImg
+        wheat: WheatBImg,
       },
       {
         background: 'normal',
         profit: false,
-        wheat: WheatRImg
+        wheat: WheatRImg,
       },
       {
         background: 'normal',
         profit: false,
-        wheat: WheatPImg
+        wheat: WheatPImg,
       },
       {
         background: 'normal',
         profit: false,
-        wheat: WheatGImg
+        wheat: WheatGImg,
       },
-    ]
-  }
+    ],
+  },
 ];
 
-// Harvest component 
+// Harvest component
 export const harvestData: Array<IWheats> = [
   {
     name: 'John',
@@ -107,29 +106,29 @@ export const harvestData: Array<IWheats> = [
       {
         background: 'none',
         profit: false,
-        wheat: WheatNotImg
+        wheat: WheatNotImg,
       },
       {
         background: 'none',
         profit: false,
-        wheat: WheatNotImg
+        wheat: WheatNotImg,
       },
       {
         background: 'none',
         profit: false,
-        wheat: WheatNotImg
+        wheat: WheatNotImg,
       },
       {
         background: 'none',
         profit: false,
-        wheat: WheatNotImg
+        wheat: WheatNotImg,
       },
       {
         background: 'none',
         profit: false,
-        wheat: WheatNotImg
+        wheat: WheatNotImg,
       },
-    ]
+    ],
   },
   {
     name: 'David',
@@ -138,28 +137,28 @@ export const harvestData: Array<IWheats> = [
       {
         background: 'none',
         profit: false,
-        wheat: WheatNotImg
+        wheat: WheatNotImg,
       },
       {
         background: 'none',
         profit: true,
-        wheat: WheatBImg
+        wheat: WheatBImg,
       },
       {
         background: 'none',
         profit: true,
-        wheat: WheatRImg
+        wheat: WheatRImg,
       },
       {
         background: 'none',
         profit: true,
-        wheat: WheatPImg
+        wheat: WheatPImg,
       },
       {
         background: 'none',
         profit: true,
-        wheat: WheatGImg
-      }
-    ]
-  }
-]
+        wheat: WheatGImg,
+      },
+    ],
+  },
+];

@@ -6,6 +6,7 @@
     &__title {
       color: $white;
     }
+
     &__subtitle {
       color: $white;
     }
@@ -17,6 +18,7 @@
     &__title {
       color: $black;
     }
+
     &__subtitle {
       color: $black;
     }
@@ -33,13 +35,16 @@
 
   @include b('mobile') {
     margin-top: 40px;
+
     flex-direction: column;
   }
+
   &__title-wrapper {
-    width: 50%;
     display: flex;
-    justify-content: flex-start;
     flex-direction: column;
+    justify-content: flex-start;
+
+    width: 50%;
     @include b('mobile') {
       width: 100%;
       order: 2;
@@ -47,22 +52,28 @@
   }
 
   &__title {
+    position: relative;
+
+    padding-bottom: 24px;
+
+    width: 30%;
+
     font-family: 'Monument Extended', sans-serif;
     font-size: 32px;
     line-height: 132%;
-    width: 30%;
-    padding-bottom: 24px;
-    position: relative;
 
-    &:after {
+    &::after {
       content: '';
+
       position: absolute;
       left: 0;
       bottom: 0;
-      height: 2px;
+
       width: 84px;
-      max-width: 84px; 
-      background: $red; 
+      max-width: 84px;
+      height: 2px;
+
+      background: $red;
       border-radius: 2px;
     }
 
@@ -75,14 +86,15 @@
     }
   }
 
-
   &__subtitle {
+    margin-top: 24px;
+
     font-family: 'Rubik', sans-serif;
     font-size: 19px;
     line-height: 36px;
     letter-spacing: 0.035em;
+
     opacity: 0.9;
-    margin-top: 24px;
 
     @include b('tablet') {
       font-size: 19px;
@@ -99,15 +111,14 @@
     margin-top: 40px;
   }
 
-
-
-
   &__img-wrapper {
-    width: 50%;
     position: relative;
+
     display: flex;
     justify-content: center;
     align-items: center;
+
+    width: 50%;
     @include b('mobile') {
       width: 100%;
       order: 1;

@@ -1,9 +1,18 @@
 import React from 'react';
 
+import {
+  About,
+  Basket,
+  Diversify,
+  Governance,
+  Harvest,
+  Portfolio,
+  Purpose,
+  Terminology,
+  Title,
+} from '../../components/Simplified';
+
 import './Simplified.scss';
-
-import { Title, About, Purpose, Basket, Diversify, Harvest, Portfolio, Governance, Terminology } from '../../components/Simplified';
-
 
 const Simplified: React.FC = () => {
   return (
@@ -12,7 +21,7 @@ const Simplified: React.FC = () => {
       <About />
       <Purpose />
       <Basket />
-      <Diversify /> 
+      <Diversify />
       <Harvest />
       <Portfolio />
       <Governance />

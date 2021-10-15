@@ -6,6 +6,7 @@
     &__item {
       @include shadow-block;
       color: $white;
+
       &:hover {
         background: $table-selected;
       }
@@ -56,9 +57,10 @@
     &__item {
       @include light-block;
       color: $black;
+
       &:hover {
-        background: $table-selected;
         color: white;
+        background: $table-selected;
       }
     }
 
@@ -177,9 +179,12 @@
   }
 
   &__item {
-    cursor: pointer;
     padding: 20px 30px;
+
+    cursor: pointer;
+
     transition: background 0.3s;
+
     & + & {
       margin-top: 16px;
     }
@@ -195,15 +200,16 @@
   }
 
   &__name {
+    display: block;
+    overflow: hidden;
+
+    max-width: 200px;
+
     font-family: 'Monument Extended', sans-serif;
     font-size: 14px;
     font-weight: normal;
     line-height: 17px;
-
-    max-width: 200px;
     text-overflow: ellipsis;
-    overflow: hidden;
-    display: block;
   }
 
   &__market-cup {

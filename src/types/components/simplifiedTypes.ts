@@ -1,8 +1,8 @@
 //  Wheats component
 export interface IWheatImg {
-  background?: string,
-  profit: boolean,
-  wheat: string
+  background?: string;
+  profit: boolean;
+  wheat: string;
 }
 export interface IWheats {
   name: string;
@@ -11,7 +11,7 @@ export interface IWheats {
   wheat: IWheatImg[];
 }
 
-// Card component 
+// Card component
 export interface ICard {
   title: string;
   icon: string;

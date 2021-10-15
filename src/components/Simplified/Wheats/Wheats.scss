@@ -6,6 +6,7 @@
     &__title {
       color: $white;
     }
+
     &__subtitle {
       color: $white;
     }
@@ -21,12 +22,15 @@
     &__title {
       color: $black;
     }
+
     &__subtitle {
       color: $black;
     }
+
     &__title-wrapper {
       background: $gradient-white;
     }
+
     &__weats-wrapper-normal {
       background: $gradient-white;
     }
@@ -35,127 +39,144 @@
 
 .wheat {
   &__item {
-    width:50%;
+    margin-top: 40px;
     padding: 40px;
+
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-top: 40px;
+
+    width: 50%;
 
     @include b('tablet') {
       margin: 30px;
     }
 
     @include b('mobile') {
-      width: 100%;
-      padding: 0;
       margin-top: 40px;
-    }
+      padding: 0;
 
+      width: 100%;
+    }
   }
-  
 
   &__title-wrapper {
-    width: 100%;
+    padding: 16px 24px;
+
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    padding: 16px 24px;
+
+    width: 100%;
+
     border-radius: 16px;
-    
   }
 
   &__title {
     font-family: 'Monument Extended', sans-serif;
     font-size: 24px;
-    line-height: 32px; 
-    
+    line-height: 32px;
+
     @include b('mobile') {
       font-size: 18px;
     }
   }
 
   &__weats-wrapper {
+    margin-top: 40px;
+
     display: flex;
-    width: 100%;
+    flex-direction: row;
     justify-content: center;
     align-items: center;
-    flex-direction: row;
-    margin-top: 40px;
+
+    width: 100%;
   }
 
   &__weats-wrapper-normal {
-    width: 80px;
-    height: 80px;
-    @include b('mobile') {
-      width: 57px;
-      height: 57px;
-    }
     margin-left: 16px;
-
-    &:first-child {
-      margin-left: 0px;
-    }
 
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    border-radius: 16px;
+
+    width: 80px;
+    height: 80px;
+
     background: $gradient-black;
+    border-radius: 16px;
+
+    &:first-child {
+      margin-left: 0;
+    }
+    @include b('mobile') {
+      width: 57px;
+      height: 57px;
+    }
   }
 
   &__weats-wrapper-bad {
-    width: 80px;
-    height: 80px;
     position: relative;
-    @include b('mobile') {
-      width: 57px;
-      height: 57px;
-    }
 
-    &:first-child {
-      margin-left: 0px;
-    }
     margin-left: 16px;
+
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    border-radius: 16px;
+
+    width: 80px;
+    height: 80px;
+
     background: $dark-red;
+    border-radius: 16px;
+
+    &:first-child {
+      margin-left: 0;
+    }
+    @include b('mobile') {
+      width: 57px;
+      height: 57px;
+    }
   }
 
   &__weats-wrapper-profit {
-    width: 80px;
-    height: 80px;
     position: relative;
-    @include b('mobile') {
-      width: 57px;
-      height: 57px;
-    }
 
-    &:first-child {
-      margin-left: 0px;
-    }
     margin-left: 16px;
+
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    border-radius: 16px;
+
+    width: 80px;
+    height: 80px;
+
     background: $gradient-green;
+    border-radius: 16px;
+
+    &:first-child {
+      margin-left: 0;
+    }
+    @include b('mobile') {
+      width: 57px;
+      height: 57px;
+    }
   }
 
   &__text {
     position: absolute;
-    right: -5px;
     top: -5px;
+    right: -5px;
+
     font-family: 'Rubik', sans-serif;
     font-size: 24px;
     line-height: 24px;
+
     color: $green;
     @include b('mobile') {
       font-size: 18.0803px;
@@ -165,6 +186,7 @@
 
   &__subtitle {
     margin-top: 40px;
+
     font-family: 'Rubik', sans-serif;
     font-size: 22px;
     line-height: 32px;

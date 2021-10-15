@@ -23,7 +23,6 @@
   @include b('mobile') {
     margin-top: 45.77px;
   }
-
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -31,8 +30,9 @@
 
   &__img {
     position: absolute;
-    width: 40%;
     bottom: 50px;
+
+    width: 40%;
 
     @include b('tablet') {
       width: 30%;
@@ -42,7 +42,7 @@
       display: none;
     }
   }
-  
+
   &__title-wrapper {
     position: relative;
 
@@ -65,7 +65,7 @@
       line-height: 62px;
     }
   }
-  
+
   &__sub-title {
     position: absolute;
 
@@ -73,8 +73,8 @@
     font-size: 44px;
     font-weight: bold;
     line-height: 70px;
-    text-transform: uppercase;
     letter-spacing: 0.25em;
+    text-transform: uppercase;
 
     @include b('tablet') {
       font-size: 33px;
@@ -89,11 +89,13 @@
 
   &__main-message-wrapper {
     position: relative;
+
     display: inline-flex;
     justify-content: flex-end;
     align-items: center;
+
     width: 100%;
-    
+
     @include b('mobile') {
       margin-top: 30px;
     }
@@ -101,23 +103,27 @@
 
   &__main-message {
     position: relative;
-    
-    width: 482px;
-    height: 104px;
-    border-radius: 0px 32px 32px 32px;
-    background-color: $red;
+
     padding: 20px 40px;
 
+    width: 482px;
+    height: 104px;
+
+    background-color: $red;
+    border-radius: 0 32px 32px 32px;
+
     @include b('tablet') {
+      padding: 10px 40px;
+
       width: 400px;
       height: 88px;
-      padding: 10px 40px;
     }
 
     @include b('mobile') {
+      padding: 10px 40px;
+
       width: 350px;
       height: 77px;
-      padding: 10px 40px;
     }
   }
 

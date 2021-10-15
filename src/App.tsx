@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Route, Switch, useRouteMatch } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 
+import { Indexes } from './components/Admin';
+import { GetInModal, InfoModal, MetamaskErrModal } from './components/Modals';
 // import { Indexes } from './components/Admin';
 // import { GetInModal, InfoModal, MetamaskErrModal } from './components/Modals';
 // import AdminIndex from './pages/AdminIndex';
@@ -17,16 +19,14 @@ import {
   // Index,
   // IndexDashboard,
   NoPageFound,
-  StakePage,
-  YdrToken,
   // StakePage,
   // YdrToken,
   Simplified,
+  StakePage,
+  YdrToken,
 } from './pages';
 
 import './styles/index.scss';
-import { Indexes } from './components/Admin';
-import { GetInModal, InfoModal, MetamaskErrModal } from './components/Modals';
 
 export const App: React.FC = observer(() => {
   const [collapsed, setCollapsed] = useState<boolean>(true);
@@ -103,7 +103,6 @@ export const App: React.FC = observer(() => {
               <Simplified />
             </Route>
             <Route component={NoPageFound} />
-            
           </Switch>
           <MetamaskErrModal />
           <InfoModal />
