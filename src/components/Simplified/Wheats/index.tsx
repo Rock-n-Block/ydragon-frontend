@@ -1,7 +1,7 @@
 import React from 'react';
 import './Wheats.scss';
 // interface
-import { IWheats } from '../types';
+import { IWheats } from '../../../types/components/simplifiedTypes';
 
 const Wheat: React.FC<IWheats> = ({
   name,

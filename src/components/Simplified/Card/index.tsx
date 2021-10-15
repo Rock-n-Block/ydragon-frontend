@@ -2,7 +2,7 @@ import React from 'react';
 
 import './Card.scss';
 // interfaces
-import { ICard } from '../types';
+import { ICard } from '../../../types/components/simplifiedTypes';
 
 
 const Card: React.FC<ICard> = ({

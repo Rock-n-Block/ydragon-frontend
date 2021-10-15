@@ -1,11 +1,11 @@
 import React from 'react';
 
 import './diversify.scss';
-import { Wheat } from '../components/index';
+import { Wheat } from '../index';
 // data
-import { diversifysData } from '../components/data';
+import { diversifysData } from '../data';
 // interface
-import { IWheats } from '../components/types';
+import { IWheats } from '../../../types/components/simplifiedTypes';
 
 
 const Diversify: React.FC = () => {

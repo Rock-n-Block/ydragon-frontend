@@ -1,17 +1,17 @@
-import { ICard, IWheats } from './types';
+import { ICard, IWheats } from '../../types/components/simplifiedTypes';
 // images
-import ReduceIcon from '../../../assets/img/simplified/purpose/reduce.svg';
-import IncreaseIcon from '../../../assets/img/simplified/purpose/increase.svg';
-import RiskImg from '../../../assets/img/simplified/purpose/Risks.svg';
-import IncomeImg from '../../../assets/img/simplified/purpose/income.svg';
+import ReduceIcon from '../../assets/img/simplified/purpose/reduce.svg';
+import IncreaseIcon from '../../assets/img/simplified/purpose/increase.svg';
+import RiskImg from '../../assets/img/simplified/purpose/Risks.svg';
+import IncomeImg from '../../assets/img/simplified/purpose/income.svg';
 // diversify and harvest images
-import WheatImg from '../../../assets/img/simplified/diversify/wheatY.svg';
-import WheatBImg from '../../../assets/img/simplified/diversify/wheatB.svg';
-import WheatRImg from '../../../assets/img/simplified/diversify/wheatR.svg';
-import WheatPImg from '../../../assets/img/simplified/diversify/wheatP.svg';
-import WheatGImg from '../../../assets/img/simplified/diversify/wheatG.svg';
+import WheatImg from '../../assets/img/simplified/diversify/wheatY.svg';
+import WheatBImg from '../../assets/img/simplified/diversify/wheatB.svg';
+import WheatRImg from '../../assets/img/simplified/diversify/wheatR.svg';
+import WheatPImg from '../../assets/img/simplified/diversify/wheatP.svg';
+import WheatGImg from '../../assets/img/simplified/diversify/wheatG.svg';
 // Harvest component images
-import WheatNotImg from '../../../assets/img/simplified/diversify/wheatNoProfit.svg';
+import WheatNotImg from '../../assets/img/simplified/diversify/wheatNoProfit.svg';
 
 
 // Card component

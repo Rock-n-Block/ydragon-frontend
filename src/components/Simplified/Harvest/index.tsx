@@ -1,11 +1,11 @@
 import React from 'react';
 
 import './Harvest.scss';
-import { Wheat } from '../components/index';
+import { Wheat } from '../index';
 // data
-import { harvestData } from '../components/data';
+import { harvestData } from '../data';
 // interface
-import { IWheats } from '../components/types';
+import { IWheats } from '../../../types/components/simplifiedTypes';
 
 
 
@@ -23,9 +23,9 @@ const Harvest: React.FC = () => {
         }
       </div>
       <div className="harvest__subtitle-wrapper">
-        <span className="harvest__subtitle">{subtitle}</span>
+        <p className="harvest__subtitle">{subtitle}</p>
         <div className="harvest__main-subtitle-wrapper">
-          <span className="harvest__subtitle-main">Diversification creates <strong>Risk Reduction</strong>, which are both core benefits of investing in an index fund.</span>
+          <p className="harvest__subtitle-main">Diversification creates <strong>Risk Reduction</strong>, which are both core benefits of investing in an index fund.</p>
         </div>
       </div>
     </section>

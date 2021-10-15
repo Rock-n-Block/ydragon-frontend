@@ -1,11 +1,11 @@
 import React from 'react';
 
 import './Purpose.scss';
-import { Card } from '../components';
+import { Card } from '../index';
 // data
-import { cardData } from '../components/data';
+import { cardData } from '../data';
 // interface 
-import { ICard } from '../components/types';
+import { ICard } from '../../../types/components/simplifiedTypes';
    
 
 const Purpose: React.FC = () => {
