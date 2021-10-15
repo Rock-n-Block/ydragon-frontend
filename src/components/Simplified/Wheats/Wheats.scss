@@ -1,0 +1,209 @@
+@import '../../../styles/_variables.scss';
+@import '../../../styles/mixins';
+
+.dark {
+  .wheat {
+    &__title {
+      color: $white;
+    }
+
+    &__subtitle {
+      color: $white;
+    }
+
+    &__title-wrapper {
+      background: $gradient-black;
+    }
+  }
+}
+
+.light {
+  .wheat {
+    &__title {
+      color: $black;
+    }
+
+    &__subtitle {
+      color: $black;
+    }
+
+    &__title-wrapper {
+      background: $gradient-white;
+    }
+
+    &__weats-wrapper-normal {
+      background: $gradient-white;
+    }
+  }
+}
+
+.wheat {
+  &__item {
+    margin-top: 40px;
+    padding: 40px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    width: 50%;
+
+    @include b('tablet') {
+      margin: 30px;
+    }
+
+    @include b('mobile') {
+      margin-top: 40px;
+      padding: 0;
+
+      width: 100%;
+    }
+  }
+
+  &__title-wrapper {
+    padding: 16px 24px;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+
+    border-radius: 16px;
+  }
+
+  &__title {
+    font-family: 'Monument Extended', sans-serif;
+    font-size: 24px;
+    line-height: 32px;
+
+    @include b('mobile') {
+      font-size: 18px;
+    }
+  }
+
+  &__weats-wrapper {
+    margin-top: 40px;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+  }
+
+  &__weats-wrapper-normal {
+    margin-left: 16px;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    width: 80px;
+    height: 80px;
+
+    background: $gradient-black;
+    border-radius: 16px;
+
+    &:first-child {
+      margin-left: 0;
+    }
+    @include b('mobile') {
+      width: 57px;
+      height: 57px;
+    }
+  }
+
+  &__weats-wrapper-bad {
+    position: relative;
+
+    margin-left: 16px;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    width: 80px;
+    height: 80px;
+
+    background: $dark-red;
+    border-radius: 16px;
+
+    &:first-child {
+      margin-left: 0;
+    }
+    @include b('mobile') {
+      width: 57px;
+      height: 57px;
+    }
+  }
+
+  &__weats-wrapper-profit {
+    position: relative;
+
+    margin-left: 16px;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    width: 80px;
+    height: 80px;
+
+    background: $gradient-green;
+    border-radius: 16px;
+
+    &:first-child {
+      margin-left: 0;
+    }
+    @include b('mobile') {
+      width: 57px;
+      height: 57px;
+    }
+  }
+
+  &__text {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+
+    font-family: 'Rubik', sans-serif;
+    font-size: 24px;
+    line-height: 24px;
+
+    color: $green;
+    @include b('mobile') {
+      font-size: 18.0803px;
+      line-height: 18px;
+    }
+  }
+
+  &__subtitle {
+    margin-top: 40px;
+
+    font-family: 'Rubik', sans-serif;
+    font-size: 22px;
+    line-height: 32px;
+    text-align: center;
+
+    @include b('mobile') {
+      font-size: 16px;
+      line-height: 24px;
+    }
+  }
+
+  &__img {
+    @include b('tablet') {
+      width: 20px;
+    }
+    @include b('mobile') {
+      width: 18px;
+    }
+  }
+}

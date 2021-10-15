@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Route, Switch, useRouteMatch } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 
+import { Indexes } from './components/Admin';
+import { GetInModal, InfoModal, MetamaskErrModal } from './components/Modals';
 // import { Indexes } from './components/Admin';
 // import { GetInModal, InfoModal, MetamaskErrModal } from './components/Modals';
 // import AdminIndex from './pages/AdminIndex';
@@ -17,21 +19,22 @@ import {
   // Index,
   // IndexDashboard,
   NoPageFound,
+  // StakePage,
+  // YdrToken,
+  Simplified,
   StakePage,
   YdrToken,
   PbfPage,
-  // StakePage,
-  // YdrToken,
 } from './pages';
 
 import './styles/index.scss';
-import { Indexes } from './components/Admin';
-import { GetInModal, InfoModal, MetamaskErrModal } from './components/Modals';
 
 export const App: React.FC = observer(() => {
   const [collapsed, setCollapsed] = useState<boolean>(true);
   const main = useRouteMatch();
   const about = useRouteMatch('/about-us');
+  const simplified = useRouteMatch('/simplified');
+  const pbf = useRouteMatch('/pbf');
   const { theme } = useMst();
   const [bodyClass, setBodyClass] = useState('');
 
@@ -44,6 +47,10 @@ export const App: React.FC = observer(() => {
       result = `page-wrapper page-wrapper--home`;
     } else if (about) {
       result = `page-wrapper page-wrapper--about`;
+    } else if (simplified) {
+      result = `page-wrapper page-wrapper--simplified`;
+    } else if (pbf) {
+      result = `page-wrapper page-wrapper--pbf`;
     } else result = `page-wrapper`;
     return result;
   };
@@ -95,6 +102,9 @@ export const App: React.FC = observer(() => {
             </Route>
             <Route exact path="/about-us">
               <AboutUs />
+            </Route>
+            <Route exact path="/simplified">
+              <Simplified />
             </Route>
             <Route exact path="/pbf">
               <PbfPage />

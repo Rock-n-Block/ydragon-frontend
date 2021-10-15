@@ -73,6 +73,19 @@ p {
         background-image: url('../assets/img/home-dark-bg.png');
       }
     }
+
+    &--simplified {
+      background-image: none;
+
+      @include b('mobile') {
+        background-image: url('../assets/img/home-dark-bg.png');
+      }
+    }
+
+    &--pbf {
+      background-image: url('../assets/img/home-dark-bg.png'), url('../assets/img/pbf-bg-midle.png'),
+        url('../assets/img/pbf-bg-bottom.png');
+    }
   }
 
   .page__title-icon--index {
@@ -128,6 +141,14 @@ p {
       background-image: url('../assets/img/home-bg.png'), url('../assets/img/home-bg-bottom.png');
 
       @include b('tablet') {
+        background-image: url('../assets/img/home-bg.png');
+      }
+    }
+
+    &--simplified {
+      background-image: none;
+
+      @include b('mobile') {
         background-image: url('../assets/img/home-bg.png');
       }
     }
@@ -189,6 +210,12 @@ p {
       background-size: contain;
       background-blend-mode: unset;
     }
+  }
+
+  &--pbf {
+    background-position: top center, bottom 1740px center, bottom 400px center;
+    background-size: contain;
+    background-blend-mode: unset;
   }
 }
 
@@ -289,10 +316,13 @@ main {
   }
 
   &__title {
-    max-width: 100%;
-    text-overflow: ellipsis;
-    overflow: hidden;
     display: block;
+    overflow: hidden;
+
+    max-width: 100%;
+
+    text-overflow: ellipsis;
+
     &-wrapper {
       max-width: 100%;
     }

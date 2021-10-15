@@ -1,6 +1,7 @@
 @import '../../../styles/variables';
 
 .pbf-first-block__main {
+  padding-top: 100px;
   display: flex;
   align-items: center;
   flex-wrap: wrap;
@@ -49,4 +50,17 @@
   padding: 35px 10px;
   font-size: 22px;
   text-align: center;
+}
+
+.light {
+  .pbf-first-block__subsection {
+    background: linear-gradient(355.19deg, #fff 0%, #dde1f0 100%);
+    border-radius: 32px;
+    box-shadow: -8px 8px 36px rgba(203, 209, 230, 0.3);
+  }
+  .pbf-first-block__main-right {
+    svg g {
+      mix-blend-mode: normal !important;
+    }
+  }
 }

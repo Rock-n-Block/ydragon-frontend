@@ -1,5 +1,5 @@
 import React from 'react';
-import { FirstBlock, ConquerWithYdr, Tiers } from '../../components/PbfPage';
+import { FirstBlock, ConquerWithYdr, Tiers, Benefits, OurFunds } from '../../components/PbfPage';
 
 const PbfPage: React.FC = () => {
   return (
@@ -7,6 +7,8 @@ const PbfPage: React.FC = () => {
       <FirstBlock />
       <ConquerWithYdr />
       <Tiers />
+      <Benefits />
+      <OurFunds />
     </main>
   );
 };

@@ -7,8 +7,8 @@ import config from '../../services/web3/config';
 import { useMst } from '../../store/store';
 import { ProviderRpcError } from '../../types/errors';
 import { Button, Spinner } from '../index';
-import { HarvestModal } from '../Modals';
 import { InputNumber } from '../Input';
+import { HarvestModal } from '../Modals';
 import StakeItem, { IStakeItem } from '../StakeItem';
 
 import './Stake.scss';

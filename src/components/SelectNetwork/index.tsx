@@ -3,7 +3,6 @@ import { Select } from 'antd';
 import { observer } from 'mobx-react-lite';
 
 // import eth from '../../assets/img/icons/blockchains/eth.svg';
-
 import arrow from '../../assets/img/icons/icon-arrow-yellow.svg';
 import bncDark from '../../assets/img/icons/icon-binance-dark.svg';
 import bncLight from '../../assets/img/icons/icon-binance-light.svg';

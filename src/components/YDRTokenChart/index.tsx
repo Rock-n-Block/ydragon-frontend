@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Line } from 'react-chartjs-2';
-import moment from 'moment';
 import cn from 'classnames';
+import moment from 'moment';
 
 import { coingeckoApi } from '../../services/api';
 import PriceDifferenceBag from '../PriceDifferenceBag';

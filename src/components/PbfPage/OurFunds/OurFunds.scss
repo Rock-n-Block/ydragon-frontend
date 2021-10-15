@@ -1,0 +1,69 @@
+@import '../../../styles/variables';
+
+.ourfunds {
+}
+
+.ourfunds-title {
+  display: block !important;
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 48px;
+  margin-bottom: 80px;
+}
+
+.ourfunds-content {
+  background: linear-gradient(238.88deg, #000316 31.18%, #050c25 99.47%);
+  box-shadow: -8px 8px 36px rgba(0, 0, 0, 0.5);
+  border-radius: 32px;
+  padding: 80px 100px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 60px;
+  align-items: center;
+
+  &__title {
+    font-size: 32px;
+    text-transform: uppercase;
+    margin-bottom: 48px;
+    max-width: 348px;
+    position: relative;
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -22px;
+      left: 0;
+      width: 87px;
+      height: 3px;
+      background-color: $red;
+    }
+  }
+
+  &__subtitle {
+    font-size: 18px;
+    opacity: 0.8;
+    line-height: 1.5;
+  }
+
+  &__solana-logo {
+    margin-bottom: 74px;
+  }
+
+  &__buttons {
+    display: flex;
+    gap: 20px;
+  }
+}
+
+.light {
+  .ourfunds-content {
+    background: linear-gradient(355.19deg, #fff 0%, #dde1f0 100%);
+    border-radius: 32px;
+    box-shadow: -8px 8px 36px rgba(203, 209, 230, 0.3);
+
+    &__solana-logo {
+      svg path:not(:last-of-type) {
+        fill: #000;
+      }
+    }
+  }
+}

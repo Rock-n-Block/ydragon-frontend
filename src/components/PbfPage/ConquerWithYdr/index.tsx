@@ -8,16 +8,16 @@ import { ReactComponent as ConquerItem2 } from '../../../assets/img/pbf-page/con
 const ConquerWithYdr: React.FC = () => {
   return (
     <section className="conquer section">
-      <div className="conquer-title text-gradient">CONQUER WITH YDRAGON</div>
+      <h2 className="conquer-title text-gradient">CONQUER WITH YDRAGON</h2>
       <div className="conquer-item">
         <div className="conquer-item__inner">
           <div className="conquer-item__img">
             <ConquerItem1 />
           </div>
           <div className="conquer-item__content">
-            <div className="conquer-item__title text-MER">
+            <h3 className="conquer-item__title text-MER">
               <span>The</span> Problem
-            </div>
+            </h3>
             <div className="conquer-item__subtitle">
               <p>
                 Due to the recent growth spike across a number of blockchains another problem has
@@ -36,9 +36,9 @@ const ConquerWithYdr: React.FC = () => {
       <div className="conquer-item conquer-item--reverse">
         <div className="conquer-item__inner">
           <div className="conquer-item__content">
-            <div className="conquer-item__title text-MER">
+            <h3 className="conquer-item__title text-MER">
               <span>The</span> Solution
-            </div>
+            </h3>
             <div className="conquer-item__subtitle">
               <p>
                 The solution is simple — to utilise the YDragon platform to collateralise assets in

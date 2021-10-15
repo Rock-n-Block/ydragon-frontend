@@ -1,0 +1,120 @@
+@import '../../../styles/_variables.scss';
+@import '../../../styles/mixins';
+
+.dark {
+  .harvest {
+    &__title {
+      color: $white;
+    }
+
+    &__subtitle {
+      color: $white;
+    }
+  }
+}
+
+.light {
+  .harvest {
+    &__title {
+      color: $black;
+    }
+
+    &__subtitle {
+      color: $black;
+    }
+  }
+}
+
+.harvest {
+  &__wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    @include b('mobile') {
+      flex-direction: column;
+    }
+  }
+
+  &__subtitle-wrapper {
+    padding: 40px;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    @include b('mobile') {
+      padding: 0;
+
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+
+  &__subtitle {
+    width: 541px;
+
+    font-family: 'Rubik', sans-serif;
+    font-size: 22px;
+    line-height: 36px;
+
+    opacity: 0.9;
+
+    @include b('tablet') {
+      font-size: 18px;
+      line-height: 24px;
+    }
+    @include b('mobile') {
+      margin-top: 20px;
+
+      width: 100%;
+
+      font-size: 16px;
+      line-height: 24px;
+      order: 2;
+    }
+  }
+
+  &__main-subtitle-wrapper {
+    margin-left: 80px;
+    padding: 24px 32px 24px 40px;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    width: 509px;
+    height: 144px;
+
+    background-color: $red;
+    border-radius: 32px 32px 32px 0;
+
+    @include b('tablet') {
+      width: 400px;
+      height: 144px;
+    }
+
+    @include b('mobile') {
+      margin-left: 0;
+
+      width: 350px;
+      height: 124px;
+      order: 1;
+    }
+  }
+
+  &__subtitle-main {
+    font-family: 'Rubik', sans-serif;
+    font-size: 20px;
+    line-height: 32px;
+
+    @include b('tablet') {
+      font-size: 17px;
+      line-height: 19px;
+    }
+
+    @include b('mobile') {
+      font-size: 16px;
+      line-height: 19px;
+    }
+  }
+}

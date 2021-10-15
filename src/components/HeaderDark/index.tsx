@@ -9,8 +9,12 @@ import cross from '../../assets/img/icons/icon-cross.svg';
 import iconMenuBlack from '../../assets/img/icons/icon-menu-black.svg';
 import iconMenu from '../../assets/img/icons/icon-menu.svg';
 import logo from '../../assets/img/icons/logo.svg';
+import coingecko from '../../assets/img/socials/coingecko.svg';
+import coinmarketcapL from '../../assets/img/socials/coinmarketcap-light.svg';
+import coinmarketcapD from '../../assets/img/socials/coinmarketcap.svg';
 // import dis from '../../assets/img/socials/discord.svg';
 import md from '../../assets/img/socials/medium.svg';
+import nomics from '../../assets/img/socials/nomics.png';
 import tg from '../../assets/img/socials/telegram.svg';
 import tw from '../../assets/img/socials/twitter.svg';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -22,10 +26,6 @@ import EventBanner from '../EventBanner';
 import { Button, SelectNetwork, Switch } from '../index';
 
 import './Header.scss';
-import coinmarketcapD from '../../assets/img/socials/coinmarketcap.svg';
-import coinmarketcapL from '../../assets/img/socials/coinmarketcap-light.svg';
-import coingecko from '../../assets/img/socials/coingecko.svg';
-import nomics from '../../assets/img/socials/nomics.png';
 
 interface HeaderProps {
   collapsed: boolean;

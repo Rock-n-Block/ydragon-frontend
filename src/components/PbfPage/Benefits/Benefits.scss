@@ -1,0 +1,36 @@
+.benefits {
+}
+
+.benefits-title {
+  display: block !important;
+  text-align: center;
+  font-weight: 900;
+  font-size: 48px;
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 136px;
+}
+
+.benefits_items {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 40px;
+}
+
+.benefit_item {
+  &__logo {
+    margin-bottom: 42px;
+  }
+
+  &__title {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+
+  &__subtitle {
+    font-size: 18px;
+    line-height: 1.5;
+    letter-spacing: 0.035em;
+    opacity: 0.8;
+  }
+}

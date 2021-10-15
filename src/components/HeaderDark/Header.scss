@@ -274,6 +274,7 @@
       position: fixed;
       left: calc(50% - 332px / 2);
       bottom: 30px;
+
       display: flex;
       flex-direction: column;
       gap: 20px;
@@ -400,8 +401,9 @@
   &__wrapper {
     margin: 54px auto 0;
 
-    max-width: 605px;
     display: grid;
+
+    max-width: 605px;
     grid-template-columns: repeat(2, 1fr);
   }
 
