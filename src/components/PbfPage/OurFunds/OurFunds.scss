@@ -1,4 +1,5 @@
 @import '../../../styles/variables';
+@import '../../../styles/mixins';
 
 .ourfunds {
 }
@@ -8,7 +9,12 @@
   text-align: center;
   text-transform: uppercase;
   font-size: 48px;
+  font-weight: 900 !important;
   margin-bottom: 80px;
+  @include b(mobile) {
+    font-size: 32px;
+    margin-bottom: 30px;
+  }
 }
 
 .ourfunds-content {
@@ -21,12 +27,28 @@
   gap: 60px;
   align-items: center;
 
+  @include b(mobile) {
+    grid-template-columns: 1fr;
+    padding: 60px 50px;
+  }
+
+  @include b(extramobile) {
+    padding: 0;
+    background: none;
+    box-shadow: none;
+  }
+
   &__title {
     font-size: 32px;
     text-transform: uppercase;
     margin-bottom: 48px;
     max-width: 348px;
     position: relative;
+    @include b(extramobile) {
+      font-size: 24px;
+      max-width: 100%;
+      text-transform: capitalize;
+    }
     &::after {
       content: '';
       position: absolute;
@@ -42,15 +64,27 @@
     font-size: 18px;
     opacity: 0.8;
     line-height: 1.5;
+    @include b(extramobile) {
+      font-size: 16px;
+    }
   }
 
   &__solana-logo {
     margin-bottom: 74px;
+    @include b(extramobile) {
+      margin-bottom: 40px;
+    }
+    svg {
+      max-width: 100%;
+    }
   }
 
   &__buttons {
     display: flex;
     gap: 20px;
+    @include b(extramobile) {
+      flex-direction: column;
+    }
   }
 }
 
@@ -59,6 +93,11 @@
     background: linear-gradient(355.19deg, #fff 0%, #dde1f0 100%);
     border-radius: 32px;
     box-shadow: -8px 8px 36px rgba(203, 209, 230, 0.3);
+
+    @include b(extramobile) {
+      background: none;
+      box-shadow: none;
+    }
 
     &__solana-logo {
       svg path:not(:last-of-type) {

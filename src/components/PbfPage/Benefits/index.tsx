@@ -17,8 +17,10 @@ const BenefitItem: React.FC<IBenefitItemProps> = ({ title, subtitle, icon }) => 
   return (
     <div className="benefit_item">
       <div className="benefit_item__logo">{icon}</div>
-      <div className="benefit_item__title text-MER">{title}</div>
-      <div className="benefit_item__subtitle">{subtitle}</div>
+      <div className="benefit_item__text">
+        <div className="benefit_item__title text-MER">{title}</div>
+        <div className="benefit_item__subtitle">{subtitle}</div>
+      </div>
     </div>
   );
 };

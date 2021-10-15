@@ -85,6 +85,10 @@ p {
     &--pbf {
       background-image: url('../assets/img/home-dark-bg.png'), url('../assets/img/pbf-bg-midle.png'),
         url('../assets/img/pbf-bg-bottom.png');
+
+      @include b(tablet) {
+        background-image: url('../assets/img/home-dark-bg.png');
+      }
     }
   }
 

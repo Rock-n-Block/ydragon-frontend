@@ -1,58 +1,119 @@
 @import '../../../styles/variables';
+@import '../../../styles/mixins';
 
 .conquer {
   text-align: center;
 }
 
 .conquer-title {
-  font-weight: 800;
+  font-weight: 900 !important;
   font-size: 48px;
   margin-bottom: 130px;
+  @include b(mobile) {
+    font-size: 32px;
+    margin-bottom: 30px;
+  }
+  @include b(extramobile) {
+    text-align: left;
+  }
 }
 
 .conquer-item__inner {
-  display: flex;
   align-items: center;
   text-align: left;
+  justify-content: center;
+
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30px;
+  @include b(mobile) {
+    grid-template-columns: repeat(1, 1fr);
+  }
 }
 
-.conquer-item + .conquer-item {
-  margin-top: 250px;
-}
+.conquer-item {
+  & + & {
+    margin-top: 250px;
+    @include b(mobile) {
+      margin-top: 30px;
+    }
+  }
 
-.conquer-item__content {
-  padding-left: 100px;
-}
+  &__content {
+  }
 
-.conquer-item__title {
-  font-size: 32px;
-  margin-bottom: 32px;
-  text-transform: uppercase;
-  span {
+  &__title {
+    font-size: 32px;
+    margin-bottom: 32px;
+    text-transform: uppercase;
     position: relative;
+    @include b(extramobile) {
+      font-size: 24px;
+      text-transform: none;
+    }
     &::after {
       content: '';
       position: absolute;
       bottom: -15px;
       left: 0;
-      width: 100%;
+      width: 84px;
       height: 3px;
       background-color: $red;
     }
   }
-}
-.conquer-item__subtitle {
-  font-size: 20px;
-  line-height: 1.6;
-  opacity: 0.8;
-  p + p {
-    margin-top: 30px;
+
+  &__subtitle {
+    font-size: 20px;
+    line-height: 1.6;
+    opacity: 0.8;
+    @include b(extramobile) {
+      font-size: 16px;
+    }
+    p + p {
+      margin-top: 30px;
+    }
+  }
+
+  &__img {
+    &--light {
+      display: none;
+    }
+    display: flex;
+    justify-content: flex-start;
+    @include b(mobile) {
+      order: 2;
+      justify-content: center;
+    }
+    svg {
+      max-width: 100%;
+    }
   }
 }
 
 .conquer-item--reverse {
-  .conquer-item__content {
-    padding-left: 0;
-    padding-right: 100px;
+  .conquer-item__img {
+    justify-content: flex-end;
+    @include b(mobile) {
+      justify-content: center;
+    }
+  }
+}
+
+.light {
+  .conquer-item__img {
+    display: none;
+  }
+  .conquer-item__img--light {
+    display: flex;
+    justify-content: center;
+    svg {
+      max-width: 100%;
+    }
+    @include b(mobile) {
+      svg {
+        height: 250px;
+      }
+      order: 2;
+    }
   }
 }

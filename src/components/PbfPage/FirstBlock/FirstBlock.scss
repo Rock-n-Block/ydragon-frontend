@@ -1,28 +1,55 @@
 @import '../../../styles/variables';
+@import '../../../styles/mixins';
 
 .pbf-first-block__main {
   padding-top: 100px;
   display: flex;
   align-items: center;
-  flex-wrap: wrap;
+  flex-wrap: wrap-reverse;
   margin-bottom: 100px;
+
+  @include b(mobile) {
+    padding-top: 50px;
+  }
+
+  @include b(extramobile) {
+    margin-bottom: 30px;
+  }
 }
 
 .pbf-first-block__main-left {
   width: 60%;
   padding-right: 35px;
+  @include b(mobile) {
+    padding-right: 0;
+    width: 100%;
+  }
 }
 
 .pbf-first-block__main-right {
   width: 40%;
   display: flex;
   justify-content: center;
+  @include b(mobile) {
+    width: 100%;
+    margin-bottom: 40px;
+  }
+
+  @include b(mobile) {
+    svg {
+      max-width: 200px;
+      max-height: 200px;
+    }
+  }
 }
 
 .pbf-first-block__title {
   font-size: 48px;
   max-width: 455px;
   margin-bottom: 20px;
+  @include b(mobile) {
+    font-size: 30px;
+  }
   span {
     text-transform: uppercase;
     font-weight: 900;
@@ -34,10 +61,16 @@
 .pbf-first-block__subtitle {
   font-size: 22px;
   margin-bottom: 36px;
+  @include b(mobile) {
+    font-size: 16px;
+  }
 }
 
 .pbf-first-block__button {
   display: inline-block;
+  @include b(extramobile) {
+    display: block;
+  }
   button {
     padding: 15px 70px;
   }
@@ -50,6 +83,9 @@
   padding: 35px 10px;
   font-size: 22px;
   text-align: center;
+  @include b(mobile) {
+    padding: 20px 10px;
+  }
 }
 
 .light {

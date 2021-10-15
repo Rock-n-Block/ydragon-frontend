@@ -1,23 +1,42 @@
+@import '../../../styles/mixins';
+
 .benefits {
 }
 
 .benefits-title {
   display: block !important;
   text-align: center;
-  font-weight: 900;
+  font-weight: 900 !important;
   font-size: 48px;
   text-transform: uppercase;
   display: block;
   margin-bottom: 136px;
+  @include b(mobile) {
+    font-size: 32px;
+    margin-bottom: 30px;
+  }
 }
 
 .benefits_items {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 40px;
+
+  @include b(850) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include b(extramobile) {
+    grid-template-columns: 1fr;
+  }
 }
 
 .benefit_item {
+  @include b(extramobile) {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+  }
   &__logo {
     margin-bottom: 42px;
   }
@@ -25,6 +44,9 @@
   &__title {
     font-size: 24px;
     margin-bottom: 20px;
+    @include b(extramobile) {
+      margin-bottom: 0;
+    }
   }
 
   &__subtitle {
