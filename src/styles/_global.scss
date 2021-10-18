@@ -81,6 +81,15 @@ p {
         background-image: url('../assets/img/home-dark-bg.png');
       }
     }
+
+    &--pbf {
+      background-image: url('../assets/img/home-dark-bg.png'), url('../assets/img/pbf-bg-midle.png'),
+        url('../assets/img/pbf-bg-bottom.png');
+
+      @include b(tablet) {
+        background-image: url('../assets/img/home-dark-bg.png');
+      }
+    }
   }
 
   .page__title-icon--index {
@@ -205,6 +214,12 @@ p {
       background-size: contain;
       background-blend-mode: unset;
     }
+  }
+
+  &--pbf {
+    background-position: top center, bottom 1740px center, bottom 400px center;
+    background-size: contain;
+    background-blend-mode: unset;
   }
 }
 
