@@ -1,39 +1,37 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
+
+import { data } from './data';
 
 import './Tiers.scss';
 
-import { ReactComponent as Tier1 } from '../../../assets/img/pbf-page/tiers-tier-1.svg';
-import { ReactComponent as Tier2 } from '../../../assets/img/pbf-page/tiers-tier-2.svg';
+interface ITierItemProps {
+  title: string;
+  price: string;
+  subtitle: string;
+  logo: ReactElement<any, any>;
+}
+
+const TierItem: React.FC<ITierItemProps> = React.memo(({ title, price, subtitle, logo }) => (
+  <li className="tiers_item">
+    <div className="tiers_item__logo">{logo}</div>
+    <h2 className="tiers_item__title text-MER">{title}</h2>
+    <p className="tiers_item__price text-gradient">{price}</p>
+    <p className="tiers_item__subtitle">{subtitle}</p>
+  </li>
+));
 
 const Tiers: React.FC = () => {
   return (
     <section className="tiers section">
       <h2 className="tiers__title text-gradient">the tiers</h2>
-      <div className="tiers__subtitle">
+      <p className="tiers__subtitle">
         Tier requirements needed to access the Private Blockchain Funds
-      </div>
-      <div className="tiers_items">
-        <div className="tiers_item">
-          <div className="tiers_item__logo">
-            <Tier1 />
-          </div>
-          <div className="tiers_item__title text-MER">lottery den</div>
-          <div className="tiers_item__price text-gradient">15 000 YDR</div>
-          <div className="tiers_item__subtitle">
-            Staked on YDragon platform or any partner platform
-          </div>
-        </div>
-        <div className="tiers_item">
-          <div className="tiers_item__logo">
-            <Tier2 />
-          </div>
-          <div className="tiers_item__title text-MER">ruby den</div>
-          <div className="tiers_item__price text-gradient">50 000 YDR</div>
-          <div className="tiers_item__subtitle">
-            Staked on YDragon platform or any partner platform
-          </div>
-        </div>
-      </div>
+      </p>
+      <ul className="tiers_items">
+        {data.map((item) => (
+          <TierItem key={`${item.price}-${item.subtitle}`} {...item} logo={<item.logo />} />
+        ))}
+      </ul>
     </section>
   );
 };

@@ -5,8 +5,8 @@
   text-align: center;
 }
 
-.conquer-title {
-  font-weight: 900 !important;
+h2.conquer-title {
+  font-weight: 900;
   font-size: 48px;
   margin-bottom: 130px;
   @include b(mobile) {
@@ -95,25 +95,6 @@
     justify-content: flex-end;
     @include b(mobile) {
       justify-content: center;
-    }
-  }
-}
-
-.light {
-  .conquer-item__img {
-    display: none;
-  }
-  .conquer-item__img--light {
-    display: flex;
-    justify-content: center;
-    svg {
-      max-width: 100%;
-    }
-    @include b(mobile) {
-      svg {
-        height: 250px;
-      }
-      order: 2;
     }
   }
 }

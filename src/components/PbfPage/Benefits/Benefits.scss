@@ -3,10 +3,9 @@
 .benefits {
 }
 
-.benefits-title {
-  display: block !important;
+h2.benefits-title {
   text-align: center;
-  font-weight: 900 !important;
+  font-weight: 900;
   font-size: 48px;
   text-transform: uppercase;
   display: block;
@@ -21,6 +20,9 @@
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 40px;
+
+  list-style: none;
+  padding-left: 0;
 
   @include b(850) {
     grid-template-columns: repeat(2, 1fr);

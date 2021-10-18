@@ -1,4 +1,7 @@
 import React from 'react';
+import { observer } from 'mobx-react-lite';
+
+import { useMst } from '../../../store/store';
 
 import './ConquerWithYdr.scss';
 
@@ -6,16 +9,15 @@ import { ReactComponent as ConquerItem1 } from '../../../assets/img/pbf-page/con
 import { ReactComponent as ConquerItem2 } from '../../../assets/img/pbf-page/conquer-item-2.svg';
 import { ReactComponent as ConquerItem2Light } from '../../../assets/img/pbf-page/conquer-item-2-light.svg';
 
-const ConquerWithYdr: React.FC = () => {
+const ConquerWithYdr: React.FC = observer(() => {
+  const { theme } = useMst();
+
   return (
     <section className="conquer section">
       <h2 className="conquer-title text-gradient">CONQUER WITH YDRAGON</h2>
       <div className="conquer-item">
         <div className="conquer-item__inner">
           <div className="conquer-item__img">
-            <ConquerItem1 />
-          </div>
-          <div className="conquer-item__img--light">
             <ConquerItem1 />
           </div>
           <div className="conquer-item__content">
@@ -52,15 +54,12 @@ const ConquerWithYdr: React.FC = () => {
             </div>
           </div>
           <div className="conquer-item__img">
-            <ConquerItem2 />
-          </div>
-          <div className="conquer-item__img--light">
-            <ConquerItem2Light />
+            {theme.value === 'light' ? <ConquerItem2Light /> : <ConquerItem2 />}
           </div>
         </div>
       </div>
     </section>
   );
-};
+});
 
 export default ConquerWithYdr;
