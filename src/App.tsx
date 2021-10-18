@@ -16,14 +16,10 @@ import {
   Home,
   Index,
   IndexDashboard,
-  // Index,
-  // IndexDashboard,
   NoPageFound,
-  // StakePage,
-  // YdrToken,
   Simplified,
-  StakePage,
   YdrToken,
+  StakingPage,
 } from './pages';
 
 import './styles/index.scss';
@@ -36,7 +32,8 @@ export const App: React.FC = observer(() => {
   const { theme } = useMst();
   const [bodyClass, setBodyClass] = useState('');
 
-  const user = !!localStorage.getItem('yd_address') || false;
+  // const user = !!localStorage.getItem('yd_address') || false;
+  const user = true;
   const admin = !!localStorage.getItem('yd_token') || false;
 
   const addClass = () => {
@@ -76,10 +73,6 @@ export const App: React.FC = observer(() => {
             <Route exact path="/">
               <Home />
             </Route>
-            {/* <Route exact path="/auth">
-          <Auth />
-        </Route> */}
-            {/* <GuardedRoute exact path="/index/:indexId" component={Index} auth={user} /> */}
             <Route exact path="/index/:indexId">
               <Index />
             </Route>
@@ -89,10 +82,8 @@ export const App: React.FC = observer(() => {
             <GuardedRoute exact path="/admin" component={Admin} auth={admin} />
             <GuardedRoute exact path="/admin" component={Indexes} auth={admin} />
             <GuardedRoute exact path="/admin/index/:indexId" component={AdminIndex} auth={admin} />
-            <GuardedRoute exact path="/staking" component={StakePage} auth={user} />
-            {/* <Route exact path="/bridge">
-              <Bridge />
-            </Route> */}
+            <GuardedRoute exact path="/staking" component={StakingPage} auth={user} />
+
             <Route exact path="/indexes">
               <IndexDashboard />
             </Route>

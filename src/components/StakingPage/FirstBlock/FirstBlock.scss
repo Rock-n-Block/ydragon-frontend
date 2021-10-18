@@ -1,0 +1,25 @@
+.first-block {
+  padding-top: 50px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  &_right svg {
+    max-width: 100%;
+  }
+}
+
+h2.first-block_title {
+  font-size: 48px;
+  text-transform: uppercase;
+  letter-spacing: 0.24em;
+  font-weight: 900;
+}
+
+h3.first-block_subtitle {
+  font-size: 48px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  max-width: 600px;
+}
