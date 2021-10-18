@@ -11,3 +11,4 @@ export { default as NoPageFound } from './NoPageFound';
 export { default as Bridge } from './Bridge';
 export { default as Simplified } from './Simplified';
 export { default as StakingPage } from './StakingPage';
+export { default as PbfPage } from './PbfPage';

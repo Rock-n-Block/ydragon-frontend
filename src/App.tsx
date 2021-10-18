@@ -19,6 +19,7 @@ import {
   NoPageFound,
   Simplified,
   YdrToken,
+  PbfPage,
   StakingPage,
 } from './pages';
 
@@ -29,6 +30,8 @@ export const App: React.FC = observer(() => {
   const main = useRouteMatch();
   const about = useRouteMatch('/about-us');
   const simplified = useRouteMatch('/simplified');
+  const pbf = useRouteMatch('/pbf');
+  const staking = useRouteMatch('/staking');
   const { theme } = useMst();
   const [bodyClass, setBodyClass] = useState('');
 
@@ -44,6 +47,10 @@ export const App: React.FC = observer(() => {
       result = `page-wrapper page-wrapper--about`;
     } else if (simplified) {
       result = `page-wrapper page-wrapper--simplified`;
+    } else if (pbf) {
+      result = `page-wrapper page-wrapper--pbf`;
+    } else if (staking) {
+      result = `page-wrapper page-wrapper--staking`;
     } else result = `page-wrapper`;
     return result;
   };
@@ -92,6 +99,9 @@ export const App: React.FC = observer(() => {
             </Route>
             <Route exact path="/simplified">
               <Simplified />
+            </Route>
+            <Route exact path="/pbf">
+              <PbfPage />
             </Route>
             <Route component={NoPageFound} />
           </Switch>
