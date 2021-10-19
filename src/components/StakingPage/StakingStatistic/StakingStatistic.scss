@@ -190,3 +190,19 @@
     }
   }
 }
+
+.light {
+  .staking-statistic-red {
+    color: $white;
+  }
+
+  .staking-statistic-dark,
+  .staking-statistic-list {
+    background: linear-gradient(355.19deg, #ffffff 0%, #dde1f0 100%);
+    box-shadow: -8px 8px 36px rgba(203, 209, 230, 0.3);
+  }
+
+  .staking-statistic-dark_amount::after {
+    background-color: #000;
+  }
+}
