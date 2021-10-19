@@ -31,7 +31,7 @@ const networks: INetworks = {
 const testNetworks: INetworks = {
   bnb: '0x61',
   matic: '0x13881',
-  eth: '0x3',
+  eth: '0x2a',
 };
 
 export default class MetamaskService {

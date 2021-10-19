@@ -58,15 +58,15 @@ const devChains: IChains = {
     blockExplorerUrls: ['https://mumbai.polygonscan.com/'],
   },
   eth: {
-    chainId: '0x3',
-    chainName: 'Ropsten',
+    chainId: '0x2a',
+    chainName: 'Kovan Test Network',
     nativeCurrency: {
       name: 'tETH',
       symbol: 'tETH',
       decimals: 18,
     },
-    rpcUrls: ['https://ropsten.infura.io/v3/20a58948a748481580e7a27422bac480'],
-    blockExplorerUrls: ['https://ropsten.etherscan.io/'],
+    rpcUrls: ['https://kovan.infura.io'],
+    blockExplorerUrls: ['https://kovan.etherscan.io/'],
   },
 };
 const prodChains: IChains = {
