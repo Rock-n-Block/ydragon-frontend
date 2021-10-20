@@ -23,8 +23,17 @@ const OurFunds: React.FC = () => {
             <SolanaLogo />
           </div>
           <div className="ourfunds-content__buttons">
-            <Button>Learn more</Button>
-            <Button styledType="outline">Closed</Button>
+            <Button
+              linkClassName="ourfunds-content__button"
+              target="_blank"
+              rel="noreferrer noopener"
+              link="https://medium.com/ydragon-io/private-blockchain-funds-ydragons-first-product-c385434327cb"
+            >
+              Learn More
+            </Button>
+            <Button className="ourfunds-content__close_button" styledType="outline">
+              Closed
+            </Button>
           </div>
         </div>
       </div>

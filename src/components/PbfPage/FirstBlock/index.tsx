@@ -18,7 +18,12 @@ const FirstBlock: React.FC = () => {
             Identifying and capturing early blockchain growth to gain exposure to upcoming promising
             projects without the hassle.
           </div>
-          <Button linkClassName="pbf-first-block__button" link="/simplified">
+          <Button
+            linkClassName="pbf-first-block__button"
+            target="_blank"
+            rel="noreferrer noopener"
+            link="https://medium.com/ydragon-io/private-blockchain-funds-ydragons-first-product-c385434327cb"
+          >
             Learn More
           </Button>
         </div>
@@ -26,10 +31,10 @@ const FirstBlock: React.FC = () => {
           <Logo />
         </div>
       </div>
-      <div className="pbf-first-block__subsection">
+      {/* <div className="pbf-first-block__subsection">
         &quot;The YDragon project has currently <span className="text-gradient">XXXX$</span>
         diversified among indexes&quot;. (TVL)
-      </div>
+      </div> */}
     </section>
   );
 };

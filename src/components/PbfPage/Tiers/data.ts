@@ -6,12 +6,12 @@ export const data = [
     title: 'lottery den',
     price: '15 000 YDR',
     subtitle: 'Staked on YDragon platform or any partner platform',
-    logo: Tier1,
+    logo: Tier2,
   },
   {
     title: 'ruby den',
     price: '50 000 YDR',
     subtitle: 'Staked on YDragon platform or any partner platform',
-    logo: Tier2,
+    logo: Tier1,
   },
 ];
