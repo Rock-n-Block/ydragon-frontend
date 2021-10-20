@@ -24,16 +24,16 @@ const DropDown: React.FC<IDropDownProps> = ({ title, links }) => {
 
   return (
     <div className="dropdown">
-      <div
-        className={cn('dropdown-title', { 'dropdown-title--active': isActive })}
-        tabIndex={0}
-        onKeyDown={() => {}}
-        role="button"
-        onClick={() => setIsActive((prev) => !prev)}
-      >
-        {title}
-      </div>
       <OutsideAlerter fn={handleClose}>
+        <div
+          className={cn('dropdown-title', { 'dropdown-title--active': isActive })}
+          tabIndex={0}
+          onKeyDown={() => {}}
+          role="button"
+          onClick={() => setIsActive((prev) => !prev)}
+        >
+          {title}
+        </div>
         <div className={cn('dropdown-body', { 'dropdown-body--active': isActive })}>
           {links.map((link) => (
             <DropDownItem
