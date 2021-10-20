@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { Select } from 'antd';
 import { observer } from 'mobx-react-lite';
 
-// import eth from '../../assets/img/icons/blockchains/eth.svg';
+import eth from '../../assets/img/icons/blockchains/eth.svg';
 import arrow from '../../assets/img/icons/icon-arrow-yellow.svg';
 import bncDark from '../../assets/img/icons/icon-binance-dark.svg';
 import bncLight from '../../assets/img/icons/icon-binance-light.svg';
@@ -28,7 +28,7 @@ interface AddEthereumChainParameter {
   iconUrls?: string[]; // Currently ignored.
 }
 
-type ChainTypes = 'bnb' | 'matic' /* | 'eth' */;
+type ChainTypes = 'bnb' | 'matic' | 'eth';
 
 type IChains = {
   [key in ChainTypes]: AddEthereumChainParameter;
@@ -57,17 +57,17 @@ const devChains: IChains = {
     rpcUrls: ['https://rpc-mumbai.matic.today'],
     blockExplorerUrls: ['https://mumbai.polygonscan.com/'],
   },
-  /* eth: {
-     chainId: '0x3',
-     chainName: 'Ropsten',
-     nativeCurrency: {
-       name: 'tETH',
-       symbol: 'tETH',
-       decimals: 18,
-     },
-     rpcUrls: ['https://ropsten.infura.io/v3/20a58948a748481580e7a27422bac480'],
-     blockExplorerUrls: ['https://ropsten.etherscan.io/'],
-   }, */
+  eth: {
+    chainId: '0x2a',
+    chainName: 'Kovan Test Network',
+    nativeCurrency: {
+      name: 'tETH',
+      symbol: 'tETH',
+      decimals: 18,
+    },
+    rpcUrls: ['https://kovan.infura.io'],
+    blockExplorerUrls: ['https://kovan.etherscan.io/'],
+  },
 };
 const prodChains: IChains = {
   bnb: {
@@ -92,17 +92,17 @@ const prodChains: IChains = {
     rpcUrls: ['https://rpc-mainnet.matic.network'],
     blockExplorerUrls: ['https://polygonscan.com'],
   },
-  /* eth: {
-     chainId: '0x1',
-     chainName: 'Ethereum',
-     nativeCurrency: {
-       name: 'ETH',
-       symbol: 'ETH',
-       decimals: 18,
-     },
-     rpcUrls: ['https://mainnet.infura.io/v3/20a58948a748481580e7a27422bac480'],
-     blockExplorerUrls: ['https://etherscan.io/'],
-   }, */
+  eth: {
+    chainId: '0x1',
+    chainName: 'Ethereum',
+    nativeCurrency: {
+      name: 'ETH',
+      symbol: 'ETH',
+      decimals: 18,
+    },
+    rpcUrls: ['https://mainnet.infura.io/v3/20a58948a748481580e7a27422bac480'],
+    blockExplorerUrls: ['https://etherscan.io/'],
+  },
 };
 
 const SelectNetwork: React.FC = observer(() => {
@@ -128,6 +128,13 @@ const SelectNetwork: React.FC = observer(() => {
       name: 'Polygon (Matic)',
       image: theme.value === 'dark' ? plgDark : plgLight,
     },
+    ethereum: {
+      symbol: 'eth',
+      address: '0x0000000000000000000000000000000000000000',
+      decimals: 18,
+      name: 'Ethereum',
+      image: eth,
+    },
   };
   const getNetworks = useCallback(() => {
     networksApi
@@ -151,8 +158,8 @@ const SelectNetwork: React.FC = observer(() => {
             networks.setCurrNetwork('binance-smart-chain');
           } else if (currentChainId === chains.matic.chainId) {
             networks.setCurrNetwork('polygon-pos');
-            // } else if (currentChainId === chains.eth.chainId) {
-            //   networks.setCurrNetwork('ethereum');
+          } else if (currentChainId === chains.eth.chainId) {
+            networks.setCurrNetwork('ethereum');
           }
         }
       });
@@ -238,9 +245,9 @@ const SelectNetwork: React.FC = observer(() => {
       }
       dropdownClassName="select-network__dropdown"
     >
-      {/* <Option value="eth">
+      <Option value="eth">
         <TokenMini name="Ethereum" icon={eth} width="26" height="26" />
-      </Option> */}
+      </Option>
       <Option value="bnb">
         <TokenMini
           name="Binance"
@@ -249,7 +256,7 @@ const SelectNetwork: React.FC = observer(() => {
           height="26"
         />
       </Option>
-      <Option value="matic" disabled>
+      <Option value="matic">
         <TokenMini
           name="Polygon (coming soon)"
           icon={theme.value === 'dark' ? plgDark : plgLight}
