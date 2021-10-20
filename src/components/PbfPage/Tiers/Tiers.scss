@@ -30,7 +30,7 @@
 
   list-style: none;
   padding-left: 0;
-  
+
   @include b(mobile) {
     flex-direction: column;
   }
@@ -42,6 +42,11 @@
   border-radius: 32px;
   padding: 64px 48px;
   padding-bottom: 42px;
+
+  div {
+    margin: 0 auto;
+    margin-bottom: 40px;
+  }
   @include b(mobile) {
     padding: 20px;
   }

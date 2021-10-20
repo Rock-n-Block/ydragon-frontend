@@ -23,4 +23,5 @@ export { default as StakingStatistics } from './StakingStatistics';
 export { default as PriceDifferenceBag } from './PriceDifferenceBag';
 export { default as SelectNetwork } from './SelectNetwork';
 export { default as Loader } from './Loader';
+export { default as JsonAnimation } from './JsonAnimation';
 // export { default as Tooltip } from './Tooltip';

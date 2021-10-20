@@ -1,9 +1,11 @@
 import React from 'react';
 
-import icon1 from '../../../assets/img/featuring/icon-1.svg';
-import icon2 from '../../../assets/img/featuring/icon-2.svg';
-import icon3 from '../../../assets/img/featuring/icon-3.svg';
-import icon4 from '../../../assets/img/featuring/icon-4.svg';
+import { JsonAnimation } from '../../index';
+
+import iconAnim1 from '../../../assets/json-anim/feature-1.json';
+import iconAnim2 from '../../../assets/json-anim/feature-2.json';
+import iconAnim3 from '../../../assets/json-anim/feature-3.json';
+import iconAnim4 from '../../../assets/json-anim/feature-4.json';
 
 import './Features.scss';
 
@@ -16,7 +18,7 @@ const Features: React.FC = () => {
       <div className="features">
         <div className="features-item">
           <div className="features-item__icon">
-            <img src={icon1} alt="feature" width="64" height="64" />
+            <JsonAnimation animData={iconAnim1} height="64px" width="64px" />
           </div>
           <div className="features-item__content">
             <div className="features-item__title">Cross-Chain</div>
@@ -29,7 +31,7 @@ const Features: React.FC = () => {
 
         <div className="features-item">
           <div className="features-item__icon">
-            <img src={icon2} alt="feature" width="64" height="64" />
+            <JsonAnimation animData={iconAnim4} height="64px" width="64px" />
           </div>
           <div className="features-item__content">
             <div className="features-item__title">Yield Generation</div>
@@ -43,7 +45,7 @@ const Features: React.FC = () => {
 
         <div className="features-item">
           <div className="features-item__icon">
-            <img src={icon3} alt="feature" width="64" height="64" />
+            <JsonAnimation animData={iconAnim2} height="64px" width="64px" />
           </div>
           <div className="features-item__content">
             <div className="features-item__title">Risk Diversification</div>
@@ -56,7 +58,7 @@ const Features: React.FC = () => {
 
         <div className="features-item">
           <div className="features-item__icon">
-            <img src={icon4} alt="feature" width="64" height="64" />
+            <JsonAnimation animData={iconAnim3} height="64px" width="64px" />
           </div>
           <div className="features-item__content">
             <div className="features-item__title">Utility & Governance</div>

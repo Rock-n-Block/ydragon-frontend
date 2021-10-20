@@ -1,9 +1,9 @@
 import React from 'react';
-import { Button } from '../../index';
+import { Button, JsonAnimation } from '../../index';
 
 import './FirstBlock.scss';
 
-import { ReactComponent as Logo } from '../../../assets/img/pbf-page/first-block-logo.svg';
+import cirlceAnim from '../../../assets/json-anim/pbf-circle.json';
 
 const FirstBlock: React.FC = () => {
   return (
@@ -28,7 +28,7 @@ const FirstBlock: React.FC = () => {
           </Button>
         </div>
         <div className="pbf-first-block__main-right">
-          <Logo />
+          <JsonAnimation animData={cirlceAnim} width="fit-content" />
         </div>
       </div>
       {/* <div className="pbf-first-block__subsection">

@@ -1,5 +1,6 @@
 import React, { ReactElement } from 'react';
 
+import { JsonAnimation } from '../../index';
 import { data } from './data';
 
 import './Benefits.scss';
@@ -32,7 +33,7 @@ const Benefits: React.FC = () => {
             key={`${item.title}-${item.subtitle}`}
             title={item.title}
             subtitle={item.subtitle}
-            icon={<item.icon />}
+            icon={<JsonAnimation animData={item.icon} height="62px" width="62px" />}
           />
         ))}
       </ul>
