@@ -150,28 +150,6 @@
     justify-content: flex-start;
   }
 
-  &:nth-child(1) {
-    order: 1;
-  }
-  &:nth-child(2) {
-    order: 2;
-  }
-  &:nth-child(3) {
-    order: 3;
-  }
-  &:nth-child(4) {
-    order: 4;
-  }
-  &:nth-child(5) {
-    order: 5;
-  }
-  &:nth-child(6) {
-    order: 6;
-  }
-  &:nth-child(7) {
-    order: 7;
-  }
-
   @include b(tablet) {
     align-items: flex-start;
     flex-direction: column;
@@ -228,7 +206,7 @@
     }
     justify-content: flex-end;
     button {
-      transition: transform 0.8s ease-in-out;
+      transition: transform 0.4s ease-in-out;
 
       cursor: pointer;
       display: flex;
@@ -240,7 +218,7 @@
 
     &--active {
       button {
-        transform: rotate(540deg);
+        transform: rotate(180deg);
       }
     }
   }
