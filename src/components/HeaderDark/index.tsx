@@ -19,11 +19,12 @@ import tg from '../../assets/img/socials/telegram.svg';
 import tw from '../../assets/img/socials/twitter.svg';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-import Whitepaper from '../../assets/pdf/YD WP.pdf';
+import Whitepaper from '../../assets/pdf/YD_WP.pdf';
 import { useWalletConnectorContext } from '../../services/walletConnect';
 import { DARK, LIGHT, useMst } from '../../store/store';
 import EventBanner from '../EventBanner';
-import { Button, SelectNetwork, Switch } from '../index';
+import { Button, SelectNetwork, Switch, DropDown } from '../index';
+import { aboutLinks, productLinks } from './linksData';
 
 import './Header.scss';
 
@@ -145,9 +146,7 @@ const Header: React.FC<HeaderProps> = observer(({ collapsed, onCollapsedChange }
                   </Link>
                 </li>
                 <li className="header-nav__item">
-                  <Link to="/indexes" className="header-nav__link">
-                    Index Products
-                  </Link>
+                  <DropDown title="Products" links={productLinks} />
                 </li>
                 {user.address && (
                   <li className="header-nav__item">
@@ -157,19 +156,7 @@ const Header: React.FC<HeaderProps> = observer(({ collapsed, onCollapsedChange }
                   </li>
                 )}
                 <li className="header-nav__item">
-                  <a
-                    href="https://bridge.ydragon.io/"
-                    rel="noreferrer nooppener"
-                    target="_blank"
-                    className="header-nav__link"
-                  >
-                    Bridge
-                  </a>
-                </li>
-                <li className="header-nav__item">
-                  <Link to="/about-us" className="header-nav__link">
-                    About
-                  </Link>
+                  <DropDown title="About" links={aboutLinks} />
                 </li>
                 {localStorage.getItem('yd_token') && (
                   <li className="header-nav__item">

@@ -1,0 +1,125 @@
+@import '../../styles/variables';
+
+.dropdown {
+  position: relative;
+  font-size: 16px;
+}
+
+.dropdown-title {
+  cursor: pointer;
+
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    background: url('../../assets/img/icons/arrow-down.svg') 0 0 no-repeat;
+
+    top: 50%;
+    right: -25px;
+    transform: translateY(-50%);
+
+    height: 10px;
+    width: 14px;
+
+    transition: 0.4s ease-in-out;
+  }
+
+  &--active {
+    &::after {
+      transform: translateY(-50%) rotate(180deg);
+    }
+  }
+}
+
+.dropdown-body {
+  position: absolute;
+  z-index: 1001;
+  max-height: 0;
+  max-width: 100%;
+  overflow: hidden;
+
+  left: 0;
+  top: 40px;
+
+  background: #181c33;
+  box-shadow: -8px 8px 36px rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+
+  transition: max-height 0.5s cubic-bezier(0, 1, 0, 1), padding 0.4s ease-in-out,
+    max-width 0.5s cubic-bezier(0, 1, 0, 1);
+
+  &--active {
+    max-height: 1000px;
+    max-width: 1000px;
+
+    padding: 8px;
+
+    transition: max-height 1s ease-in-out, max-width 1s ease-in-out;
+  }
+
+  &_item {
+    display: block;
+    padding: 10px 16px;
+    border-radius: 10px;
+    white-space: nowrap;
+    cursor: pointer;
+    color: #fff;
+
+    transition: 0.4s ease;
+
+    &--active {
+      background: rgba(255, 255, 255, 0.05);
+      span {
+        background: $gradient;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+    }
+
+    &--not-allowed {
+      cursor: not-allowed;
+    }
+
+    & + & {
+      margin-top: 3px;
+    }
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.05);
+      span {
+        background: $gradient;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+    }
+  }
+}
+
+.light {
+  .dropdown-body {
+    background: #ffffff;
+    box-shadow: -8px 8px 36px rgba(0, 0, 0, 0.5);
+    &_item {
+      color: #000;
+
+      &--active {
+        background: #e9ebf3;
+        span {
+          background: $gradient;
+          background-clip: text;
+          -webkit-text-fill-color: transparent;
+        }
+      }
+
+      &:hover {
+        background: #e9ebf3;
+        span {
+          background: $gradient;
+          background-clip: text;
+          -webkit-text-fill-color: transparent;
+        }
+      }
+    }
+  }
+}

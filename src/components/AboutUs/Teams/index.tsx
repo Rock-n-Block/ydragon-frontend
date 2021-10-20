@@ -100,7 +100,7 @@ const Teams: React.FC = () => {
   ];
 
   return (
-    <section className="section teams">
+    <section className="section teams" id="team">
       <div className="teams__title-wrapper">
         <h1 className="teams__title text-outline">TEAM</h1>
       </div>
