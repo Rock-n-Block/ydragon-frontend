@@ -1,11 +1,13 @@
 import React from 'react';
 
+import { JsonAnimation } from '../../index';
+
 // interface
 import { IWheats } from '../../../types/components/simplifiedTypes';
 
 import './Wheats.scss';
 
-const Wheat: React.FC<IWheats> = ({ name, emoji, description, wheat }) => {
+const Wheat: React.FC<IWheats> = ({ name, emoji, description, wheat, isAnim, animData }) => {
   const iff = (condition: boolean, then: string, otherwise: string) => {
     return condition ? then : otherwise;
   };
@@ -18,18 +20,24 @@ const Wheat: React.FC<IWheats> = ({ name, emoji, description, wheat }) => {
       </div>
       {description && <p className="wheat__subtitle">{description}</p>}
       <div className="wheat__weats-wrapper">
-        {wheat.map((wheatImg) => (
-          <div
-            className={`wheat__weats-wrapper-${
-              wheatImg.background === 'normal'
-                ? 'normal'
-                : iff(wheatImg.profit === false, 'bad', 'profit')
-            }`}
-          >
-            {wheatImg.profit === true && <span className="wheat__text">+$</span>}
-            <img className="wheat__img" width="25" height="33" src={wheatImg.wheat} alt=" " />
+        {!isAnim ? (
+          wheat.map((wheatImg) => (
+            <div
+              className={`wheat__weats-wrapper-${
+                wheatImg.background === 'normal'
+                  ? 'normal'
+                  : iff(wheatImg.profit === false, 'bad', 'profit')
+              }`}
+            >
+              {wheatImg.profit === true && <span className="wheat__text">+$</span>}
+              <img className="wheat__img" width="30" height="38" src={wheatImg.wheat} alt=" " />
+            </div>
+          ))
+        ) : (
+          <div className="wheat__weats-wrapper-anim">
+            <JsonAnimation animData={animData} />
           </div>
-        ))}
+        )}
       </div>
     </div>
   );

@@ -6,25 +6,32 @@ import WheatPImg from '../../assets/img/simplified/diversify/wheatP.svg';
 import WheatRImg from '../../assets/img/simplified/diversify/wheatR.svg';
 // diversify and harvest images
 import WheatImg from '../../assets/img/simplified/diversify/wheatY.svg';
-import IncomeImg from '../../assets/img/simplified/purpose/income.svg';
 import IncreaseIcon from '../../assets/img/simplified/purpose/increase.svg';
 // images
 import ReduceIcon from '../../assets/img/simplified/purpose/reduce.svg';
-import RiskImg from '../../assets/img/simplified/purpose/Risks.svg';
 import { ICard, IWheats } from '../../types/components/simplifiedTypes';
+
+import DavidAnim from '../../assets/json-anim/simplified-bad-harvest-david.json';
+import DavidDiversifAnim from '../../assets/json-anim/simplified-diversif-david.json';
+
+import JhonAnim from '../../assets/json-anim/simplified-bad-harvest-jhon.json';
+import JhonDiversifAnim from '../../assets/json-anim/simplified-diversif-jhon.json';
+
+import graphAnim from '../../assets/json-anim/simplified-graph.json';
+import indexImg from '../../assets/json-anim/simplified-egg-index.json';
 
 // Card component
 export const cardData: Array<ICard> = [
   {
     title: 'Reduce risks',
     icon: ReduceIcon,
-    img: RiskImg,
+    img: indexImg,
     description: `The difference here is that you invest in several coins at once. Such a group is called an index - it's safer this way, below we will explain why.`,
   },
   {
     title: 'Increase income',
     icon: IncreaseIcon,
-    img: IncomeImg,
+    img: graphAnim,
     description: `The coins in your index have value, with each offering opportunities to receive passive income - money earned without working!`,
   },
 ];
@@ -34,6 +41,8 @@ export const diversifysData: Array<IWheats> = [
   {
     name: 'John',
     emoji: '🤔',
+    isAnim: true,
+    animData: JhonDiversifAnim,
     description: `John has five fields, and plants five fields of wheat. He has not diversified his portfolio.`,
     wheat: [
       {
@@ -66,6 +75,8 @@ export const diversifysData: Array<IWheats> = [
   {
     name: 'David',
     emoji: '😌',
+    isAnim: true,
+    animData: DavidDiversifAnim,
     description: `David also has 5 fields, but has planted a different crop in each one.`,
     wheat: [
       {
@@ -129,10 +140,13 @@ export const harvestData: Array<IWheats> = [
         wheat: WheatNotImg,
       },
     ],
+    animData: JhonAnim,
+    isAnim: true,
   },
   {
     name: 'David',
     emoji: '😎',
+    animData: DavidAnim,
     wheat: [
       {
         background: 'none',
@@ -160,5 +174,6 @@ export const harvestData: Array<IWheats> = [
         wheat: WheatGImg,
       },
     ],
+    isAnim: true,
   },
 ];
