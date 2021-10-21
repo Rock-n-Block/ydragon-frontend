@@ -1,11 +1,17 @@
 import React from 'react';
+import { observer } from 'mobx-react';
+
 import { Button, JsonAnimation } from '../../index';
+import { useMst } from '../../../store/store';
 
 import './FirstBlock.scss';
 
 import cirlceAnim from '../../../assets/json-anim/pbf-circle.json';
+import cirlceAnimLight from '../../../assets/json-anim/pbf-circle-light.json';
 
-const FirstBlock: React.FC = () => {
+const FirstBlock: React.FC = observer(() => {
+  const { theme } = useMst();
+
   return (
     <section className="pbf-first-block section">
       <div className="pbf-first-block__main">
@@ -28,7 +34,10 @@ const FirstBlock: React.FC = () => {
           </Button>
         </div>
         <div className="pbf-first-block__main-right">
-          <JsonAnimation animData={cirlceAnim} width="fit-content" />
+          <JsonAnimation
+            animData={theme.value === 'light' ? cirlceAnimLight : cirlceAnim}
+            width="fit-content"
+          />
         </div>
       </div>
       {/* <div className="pbf-first-block__subsection">
@@ -37,6 +46,6 @@ const FirstBlock: React.FC = () => {
       </div> */}
     </section>
   );
-};
+});
 
 export default FirstBlock;

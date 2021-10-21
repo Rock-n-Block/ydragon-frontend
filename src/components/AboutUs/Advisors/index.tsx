@@ -6,6 +6,8 @@ import geralt from '../../../assets/img/about-us/advisors/geralt.png';
 import mark from '../../../assets/img/about-us/advisors/mark.png';
 import markus from '../../../assets/img/about-us/advisors/markus.png';
 import nick from '../../../assets/img/about-us/advisors/nick.png';
+import mattew from '../../../assets/img/about-us/advisors/mattew.jpg';
+import david from '../../../assets/img/about-us/advisors/david.jpg';
 import iconLinkedIn from '../../../assets/img/icons/icon-linkedin.svg';
 import iconTwitter from '../../../assets/img/icons/icon-twitter.svg';
 
@@ -54,6 +56,18 @@ const Advisors: React.FC = () => {
       role: 'Founder at Unimex',
       img: farmtown,
       twitter: 'https://twitter.com/farmtownN',
+    },
+    {
+      name: 'David Marshall',
+      role: 'Founder at Marshland Digital Assets',
+      img: david,
+      twitter: '',
+    },
+    {
+      name: 'Matthew Land',
+      role: 'Founder at Marshland Digital Assets',
+      img: mattew,
+      twitter: '',
     },
   ];
 

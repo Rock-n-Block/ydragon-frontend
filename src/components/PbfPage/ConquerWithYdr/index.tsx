@@ -1,14 +1,19 @@
 import React from 'react';
+import { observer } from 'mobx-react';
 
 import { JsonAnimation } from '../../index';
+import { useMst } from '../../../store/store';
 
 import './ConquerWithYdr.scss';
 
 import chipAnim from '../../../assets/json-anim/pbf-chip.json';
+import chipAnimLight from '../../../assets/json-anim/pbf-chip-light.json';
 
 import { ReactComponent as ConquerItem1 } from '../../../assets/img/pbf-page/conquer-item-1.svg';
 
-const ConquerWithYdr: React.FC = () => {
+const ConquerWithYdr: React.FC = observer(() => {
+  const { theme } = useMst();
+
   return (
     <section className="conquer section">
       <h2 className="conquer-title text-gradient">CONQUER WITH YDRAGON</h2>
@@ -51,12 +56,12 @@ const ConquerWithYdr: React.FC = () => {
             </div>
           </div>
           <div className="conquer-item__img">
-            <JsonAnimation animData={chipAnim} />
+            <JsonAnimation animData={theme.value === 'light' ? chipAnimLight : chipAnim} />
           </div>
         </div>
       </div>
     </section>
   );
-};
+});
 
 export default ConquerWithYdr;

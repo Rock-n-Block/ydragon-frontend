@@ -1,5 +1,7 @@
 import React, { ReactElement } from 'react';
+import { observer } from 'mobx-react';
 
+import { useMst } from '../../../store/store';
 import { JsonAnimation } from '../../index';
 import { data } from './data';
 
@@ -23,7 +25,9 @@ const BenefitItem: React.FC<IBenefitItemProps> = React.memo(({ title, subtitle, 
   );
 });
 
-const Benefits: React.FC = () => {
+const Benefits: React.FC = observer(() => {
+  const { theme } = useMst();
+
   return (
     <section className="benefits section">
       <h2 className="text-gradient benefits-title">Benefits</h2>
@@ -33,12 +37,18 @@ const Benefits: React.FC = () => {
             key={`${item.title}-${item.subtitle}`}
             title={item.title}
             subtitle={item.subtitle}
-            icon={<JsonAnimation animData={item.icon} height="62px" width="62px" />}
+            icon={
+              <JsonAnimation
+                animData={theme.value === 'light' ? item.iconLight : item.icon}
+                height="62px"
+                width="62px"
+              />
+            }
           />
         ))}
       </ul>
     </section>
   );
-};
+});
 
 export default Benefits;

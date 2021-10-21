@@ -29,7 +29,7 @@ import {
 
 import './styles/index.scss';
 
-export const App: React.FC = observer(() => {
+const App: React.FC = observer(() => {
   const [collapsed, setCollapsed] = useState<boolean>(true);
   const main = useRouteMatch();
   const about = useRouteMatch('/about-us');
@@ -120,3 +120,5 @@ export const App: React.FC = observer(() => {
     </div>
   );
 });
+
+export default App;
