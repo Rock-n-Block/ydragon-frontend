@@ -158,6 +158,12 @@ p {
       }
     }
 
+    &--staking {
+      background-position: top center;
+      background-size: cover;
+      background-blend-mode: unset;
+    }
+
     .ant-tooltip-inner {
       color: $black !important;
       background-color: $gray-bg !important;
@@ -219,6 +225,12 @@ p {
 
   &--pbf {
     background-position: top center, bottom 1740px center, bottom 400px center;
+    background-size: contain;
+    background-blend-mode: unset;
+  }
+
+  &--staking {
+    background-position: top center;
     background-size: contain;
     background-blend-mode: unset;
   }

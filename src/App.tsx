@@ -16,15 +16,11 @@ import {
   Home,
   Index,
   IndexDashboard,
-  // Index,
-  // IndexDashboard,
   NoPageFound,
-  // StakePage,
-  // YdrToken,
   Simplified,
-  StakePage,
   YdrToken,
   PbfPage,
+  StakingPage,
 } from './pages';
 
 import './styles/index.scss';
@@ -35,6 +31,7 @@ const App: React.FC = observer(() => {
   const about = useRouteMatch('/about-us');
   const simplified = useRouteMatch('/simplified');
   const pbf = useRouteMatch('/pbf');
+  const staking = useRouteMatch('/staking');
   const { theme } = useMst();
   const [bodyClass, setBodyClass] = useState('');
 
@@ -51,6 +48,8 @@ const App: React.FC = observer(() => {
       result = `page-wrapper page-wrapper--simplified`;
     } else if (pbf) {
       result = `page-wrapper page-wrapper--pbf`;
+    } else if (staking) {
+      result = `page-wrapper page-wrapper--staking`;
     } else result = `page-wrapper`;
     return result;
   };
@@ -80,10 +79,6 @@ const App: React.FC = observer(() => {
             <Route exact path="/">
               <Home />
             </Route>
-            {/* <Route exact path="/auth">
-          <Auth />
-        </Route> */}
-            {/* <GuardedRoute exact path="/index/:indexId" component={Index} auth={user} /> */}
             <Route exact path="/index/:indexId">
               <Index />
             </Route>
@@ -93,10 +88,8 @@ const App: React.FC = observer(() => {
             <GuardedRoute exact path="/admin" component={Admin} auth={admin} />
             <GuardedRoute exact path="/admin" component={Indexes} auth={admin} />
             <GuardedRoute exact path="/admin/index/:indexId" component={AdminIndex} auth={admin} />
-            <GuardedRoute exact path="/staking" component={StakePage} auth={user} />
-            {/* <Route exact path="/bridge">
-              <Bridge />
-            </Route> */}
+            <GuardedRoute exact path="/staking" component={StakingPage} auth={user} />
+
             <Route exact path="/indexes">
               <IndexDashboard />
             </Route>

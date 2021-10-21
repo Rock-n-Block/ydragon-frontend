@@ -13,7 +13,7 @@ export interface IStyledType {
 }
 
 export interface IColorScheme {
-  colorScheme?: 'orange' | 'green' | 'red';
+  colorScheme?: 'orange' | 'green' | 'red' | 'blue';
 }
 
 export interface IBackground {
