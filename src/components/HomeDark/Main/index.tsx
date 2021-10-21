@@ -3,7 +3,7 @@ import React from 'react';
 import HomeImg from '../../../assets/img/start.svg';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-import Whitepaper from '../../../assets/pdf/YD WP.pdf';
+import Whitepaper from '../../../assets/pdf/YD_WP.pdf';
 import { Button } from '../../index';
 
 import './Main.scss';

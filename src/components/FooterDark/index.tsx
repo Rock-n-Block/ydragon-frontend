@@ -14,7 +14,7 @@ import tg from '../../assets/img/socials/telegram.svg';
 import tw from '../../assets/img/socials/twitter.svg';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-import Whitepaper from '../../assets/pdf/YD WP.pdf';
+import Whitepaper from '../../assets/pdf/YD_WP.pdf';
 import { DARK, useMst } from '../../store/store';
 
 import PoweredBy from './PoweredBy';

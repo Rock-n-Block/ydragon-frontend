@@ -113,7 +113,9 @@
 
   margin-bottom: 30px;
 
-  overflow: hidden;
+  @include b(1240) {
+    overflow: hidden;
+  }
 
   height: 119px;
   @media (max-width: 1240px) {
@@ -372,6 +374,11 @@
       flex-direction: column-reverse;
     }
   }
+
+  display: none;
+  @include b(1240) {
+    display: block;
+  }
 }
 
 .menu-nav {
@@ -405,6 +412,11 @@
 
     max-width: 605px;
     grid-template-columns: repeat(2, 1fr);
+
+    display: none;
+    @include b(1240) {
+      display: grid;
+    }
   }
 
   &__logo {
