@@ -18,6 +18,8 @@ import Whitepaper from '../../assets/pdf/YD WP.pdf';
 import { DARK, useMst } from '../../store/store';
 
 import PoweredBy from './PoweredBy';
+import SocialLink from './SocialLink';
+import { socialLinks } from '../../config';
 
 import './Footer.scss';
 
@@ -42,73 +44,19 @@ const Footer: React.FC = observer(() => {
 
             <div className="footer__socials">
               <div className="footer__socials-group">
-                <a
-                  href="https://t.me/ydrmain/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="footer__socials-item footer__socials-tg"
-                >
-                  <img src={tg} alt="telegram channel" width="16" height="16" />
-                  <span>Channel</span>
-                </a>
-
-                <a
-                  href="https://t.me/ydragonchat"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="footer__socials-item footer__socials-tg"
-                >
-                  <img src={tg} alt="telegram chat" width="16" height="16" />
-                  <span>Chat</span>
-                </a>
-                <a
-                  href="https://twitter.com/ydragons_"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="footer__socials-item"
-                >
-                  <img src={tw} alt="twitter" width="16" height="16" />
-                </a>
-                <a
-                  href="https://medium.com/ydragon-io"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="footer__socials-item"
-                >
-                  <img src={md} alt="medium" width="16" height="16" />
-                </a>
+                <SocialLink href={socialLinks.tgChannel} title="Channel" icon={tg} />
+                <SocialLink href={socialLinks.tgChat} title="Chat" icon={tg} />
+                <SocialLink href={socialLinks.twitter} icon={tw} />
+                <SocialLink href={socialLinks.medium} icon={md} />
               </div>
               <div className="footer__socials-divider" />
               <div className="footer__socials-group">
-                <a
-                  href="https://coinmarketcap.com/currencies/ydragon/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="footer__socials-item"
-                >
-                  <img
-                    src={theme.value === DARK ? coinmarketcapD : coinmarketcapL}
-                    alt="coinmarketcap"
-                    width="16"
-                    height="16"
-                  />
-                </a>
-                <a
-                  href="https://www.coingecko.com/en/coins/ydragon"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="footer__socials-item"
-                >
-                  <img src={coingecko} alt="coingecko" width="16" height="16" />
-                </a>
-                <a
-                  href="https://nomics.com/assets/ydr-ydragon"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="footer__socials-item"
-                >
-                  <img src={nomics} alt="nomics" width="16" height="16" />
-                </a>
+                <SocialLink
+                  href={socialLinks.coinMarketCap}
+                  icon={theme.value === DARK ? coinmarketcapD : coinmarketcapL}
+                />
+                <SocialLink href={socialLinks.coingecko} icon={coingecko} />
+                <SocialLink href={socialLinks.nomics} icon={nomics} />
               </div>
               {/*
               <a href="/" className="footer__socials-item">

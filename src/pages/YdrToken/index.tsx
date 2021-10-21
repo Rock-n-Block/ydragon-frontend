@@ -5,6 +5,7 @@ import nextId from 'react-id-generator';
 import { observer } from 'mobx-react-lite';
 
 import apeswapIcon from '../../assets/img/icons/icon-apeswap.png';
+import mateIcon from '../../assets/img/icons/icon-mate.png';
 import pancakeIcon from '../../assets/img/icons/icon-pancake.svg';
 import uniswapIcon from '../../assets/img/icons/icon-uniswap.svg';
 import logo from '../../assets/img/icons/logo.svg';
@@ -45,6 +46,9 @@ const YdrToken: React.FC = observer(() => {
           'https://app.apeswap.finance/swap?outputCurrency=0x3757232b55e60da4a8793183ac030cfce4c3865d',
         );
         break;
+      case 'MateSwap':
+        window.open('https://app.usemate.com/limit-order/ydr');
+        break;
       default:
         break;
     }
@@ -65,6 +69,9 @@ const YdrToken: React.FC = observer(() => {
         window.open(
           'https://app.apeswap.finance/swap?inputCurrency=0x3757232b55e60da4a8793183ac030cfce4c3865d',
         );
+        break;
+      case 'MateSwap':
+        window.open('https://app.usemate.com/?tokenIn=0x3757232B55E60da4A8793183aC030CfCE4c3865d');
         break;
       default:
         break;
@@ -146,6 +153,26 @@ const YdrToken: React.FC = observer(() => {
               <Button
                 className="token-panel__btn"
                 onClick={() => handleSell('ApeSwap')}
+                styledType="outline"
+              >
+                Sell
+              </Button>
+            </div>
+          </div>
+          <div className="token-panel__btns-group">
+            <div className="token-panel__info">
+              <div className="token-panel__logo  logo-apeswap">
+                <img src={mateIcon} alt="mate swap icon" />
+              </div>
+              <div className="token-panel__subtitle">ApeSwap</div>
+            </div>
+            <div className="token-panel__btns">
+              <Button className="token-panel__btn" onClick={() => handleBuy('MateSwap')}>
+                Buy
+              </Button>
+              <Button
+                className="token-panel__btn"
+                onClick={() => handleSell('MateSwap')}
                 styledType="outline"
               >
                 Sell
