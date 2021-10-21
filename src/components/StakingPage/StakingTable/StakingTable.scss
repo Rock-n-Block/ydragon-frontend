@@ -1,0 +1,25 @@
+@import '../../../styles/mixins';
+
+.staking-table_header {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr 0.9fr 0.3fr;
+
+  margin-bottom: 20px;
+  @include b(tablet) {
+    display: none;
+  }
+}
+
+.staking-table_header__cell {
+  display: flex;
+  justify-content: center;
+
+  font-family: 'Monument Extended', sans-serif;
+  font-size: 12px;
+}
+
+.staking-table_body {
+  @include b(tablet) {
+    margin: 0 -12px;
+  }
+}

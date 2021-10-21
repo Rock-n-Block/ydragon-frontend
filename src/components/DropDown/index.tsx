@@ -6,13 +6,14 @@ import DropDownItem from './DropDownItem';
 import './DropDown.scss';
 import OutsideAlerter from '../../utils/outsideClickWrapper';
 
+interface IDropDownLink {
+  title: string;
+  link: string;
+  needAuth?: boolean;
+}
 interface IDropDownProps {
   title: string;
-  links: Array<{
-    title: string;
-    link: string;
-    needAuth?: boolean;
-  }>;
+  links: Array<IDropDownLink>;
 }
 
 const DropDown: React.FC<IDropDownProps> = ({ title, links }) => {

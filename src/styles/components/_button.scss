@@ -188,6 +188,15 @@
       color: #27cd91;
       border: 3px solid #27cd91;
     }
+
+    &-blue {
+      background-color: #1b46bb;
+      box-shadow: none;
+      &:hover,
+      &:focus {
+        background: linear-gradient(180deg, #5381ff 0%, #1944b9 100%);
+      }
+    }
   }
 }
 

@@ -1,0 +1,259 @@
+@import '../../../../styles/mixins';
+@import '../../../../styles/variables';
+
+.staking-table_row {
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0) 100%),
+    linear-gradient(171.49deg, #1a1e3a 3.83%, #161a2a 100%);
+  box-shadow: -8px 8px 36px rgba(0, 0, 0, 0.5);
+  border-radius: 16px;
+
+  & + & {
+    margin-top: 15px;
+  }
+
+  overflow: hidden;
+}
+
+.staking-table_row__top {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr 0.9fr 0.3fr;
+
+  padding: 25px 22px;
+
+  position: relative;
+  &::before {
+    position: absolute;
+    height: 100px;
+    width: 100%;
+    background: #ffffff;
+    opacity: 0.05;
+    border-radius: 16px 16px 0px 0px;
+    pointer-events: none;
+  }
+
+  @include b(tablet) {
+    grid-template-columns: 1fr 1fr;
+    grid-column-gap: 60px;
+    grid-row-gap: 30px;
+    padding: 20px 12px;
+    &::before {
+      content: '';
+    }
+  }
+
+  @include b(extramobile) {
+    grid-column-gap: 30px;
+  }
+}
+
+.staking-table_row__bottom {
+  max-height: 0;
+  transition: max-height 0.5s cubic-bezier(0, 1, 0, 1);
+  &--opened {
+    max-height: 1000px;
+    transition: max-height 1s ease-in-out;
+  }
+
+  &__inner {
+    padding: 45px 60px 70px;
+
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 80px;
+
+    @include b(tablet) {
+      display: block;
+      padding: 16px 12px 36px;
+    }
+  }
+
+  &__cell {
+    text-align: center;
+
+    @include b(tablet) {
+      & + & {
+        margin-top: 40px;
+      }
+    }
+
+    &__title {
+      font-family: 'Monument Extended', sans-serif;
+      font-size: 20px;
+      margin-bottom: 22px;
+      span {
+        font-family: 'TTNorms', sans-serif;
+        letter-spacing: 0;
+        font-weight: 700;
+      }
+    }
+
+    &__input {
+      margin-bottom: 26px;
+      position: relative;
+
+      &::after {
+        content: 'MAX';
+        position: absolute;
+
+        font-family: 'TTNorms', sans-serif;
+        font-weight: 700;
+        opacity: 0.4;
+        font-size: 16px;
+
+        top: 50%;
+        right: 24px;
+
+        transform: translateY(-50%);
+      }
+
+      input {
+        width: 100%;
+        height: 56px;
+
+        background: linear-gradient(180deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0) 100%),
+          linear-gradient(171.49deg, #1a1e3a 3.83%, #161a2a 100%);
+        box-shadow: -8px 8px 36px rgba(0, 0, 0, 0.5);
+
+        padding: 0 65px 0 15px;
+
+        font-family: 'TTNorms', sans-serif;
+        font-size: 20px;
+        font-weight: 700;
+        line-height: 24px;
+        text-align: left;
+
+        border: 2px solid $blue;
+        border-radius: 60px;
+        outline: none;
+      }
+    }
+
+    &__logo {
+      margin-bottom: 22px;
+      display: flex;
+      justify-content: center;
+      img {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+      }
+    }
+  }
+}
+
+.staking-table_row__cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:first-child {
+    justify-content: flex-start;
+  }
+
+  @include b(tablet) {
+    align-items: flex-start;
+    flex-direction: column;
+    justify-content: flex-start;
+
+    &:nth-child(2) {
+      order: 3;
+    }
+    &:nth-child(3) {
+      order: 4;
+    }
+    &:nth-child(4) {
+      order: 5;
+    }
+    &:nth-child(5) {
+      order: 6;
+    }
+    &:nth-child(6) {
+      order: 7;
+    }
+    &:nth-child(7) {
+      order: 2;
+    }
+  }
+
+  &__title {
+    display: none;
+
+    font-family: 'Monument Extended', sans-serif;
+    font-size: 12px;
+    color: #fff;
+    opacity: 0.5;
+    text-transform: capitalize;
+
+    @include b(tablet) {
+      display: block;
+    }
+  }
+
+  &__value {
+    font-size: 16px;
+    @include b(tablet) {
+      font-size: 18px;
+    }
+    @include b(extramobile) {
+      font-size: 14px;
+    }
+  }
+
+  &--arrow {
+    @include b(tablet) {
+      align-items: flex-end;
+      justify-content: center;
+    }
+    justify-content: flex-end;
+    button {
+      transition: transform 0.4s ease-in-out;
+
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: transparent;
+      border: none;
+    }
+
+    &--active {
+      button {
+        transform: rotate(180deg);
+      }
+    }
+  }
+
+  button.staking-table_row__cell--button {
+    padding: 11px 32px;
+    border-radius: 32px;
+  }
+}
+
+.staking-table_row__cell__logo {
+  display: flex;
+  align-items: center;
+
+  font-family: 'Monument Extended', sans-serif;
+
+  &__info {
+    margin-left: 7px;
+    p:last-child {
+      margin-top: 8px;
+      font-size: 10px;
+    }
+  }
+}
+
+// ==============LIGHT THEME==============
+
+.light {
+  .staking-table_row,
+  .staking-table_row__bottom__cell__input input {
+    background: linear-gradient(355.19deg, #ffffff 0%, #dde1f0 100%);
+    box-shadow: -8px 8px 36px rgba(203, 209, 230, 0.3);
+  }
+  .staking-table_row__cell__title {
+    color: #959191;
+    opacity: 1;
+  }
+}
