@@ -64,7 +64,7 @@ const Footer: React.FC = observer(() => {
                   href={socialLinks.coingecko.url}
                   icon={socialLinks.coingecko.iconDark}
                 />
-                <SocialLink href={socialLinks.nomics.url} icon={socialLinks.nomics.url} />
+                <SocialLink href={socialLinks.nomics.url} icon={socialLinks.nomics.iconDark} />
               </div>
               {/*
               <a href="/" className="footer__socials-item">
