@@ -43,4 +43,8 @@ export const mobileLinksData = [
       { title: 'Contact us', link: 'mailto:info@ydragon.io' },
     ],
   },
+  {
+    title: 'Admin',
+    titleLink: '/admin',
+  },
 ];
