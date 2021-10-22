@@ -21,7 +21,6 @@ const Harvest: React.FC = () => {
             isAnim={data.isAnim}
             name={data.name}
             emoji={data.emoji}
-            wheat={data.wheat}
           />
         ))}
       </div>

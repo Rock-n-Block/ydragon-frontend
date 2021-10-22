@@ -1,11 +1,3 @@
-import WheatBImg from '../../assets/img/simplified/diversify/wheatB.svg';
-import WheatGImg from '../../assets/img/simplified/diversify/wheatG.svg';
-// Harvest component images
-import WheatNotImg from '../../assets/img/simplified/diversify/wheatNoProfit.svg';
-import WheatPImg from '../../assets/img/simplified/diversify/wheatP.svg';
-import WheatRImg from '../../assets/img/simplified/diversify/wheatR.svg';
-// diversify and harvest images
-import WheatImg from '../../assets/img/simplified/diversify/wheatY.svg';
 import IncreaseIcon from '../../assets/img/simplified/purpose/increase.svg';
 // images
 import ReduceIcon from '../../assets/img/simplified/purpose/reduce.svg';
@@ -21,7 +13,7 @@ import graphAnim from '../../assets/json-anim/simplified-graph.json';
 import indexImg from '../../assets/json-anim/simplified-egg-index.json';
 
 // Card component
-export const cardData: Array<ICard> = [
+export const purposeCardsData: Array<ICard> = [
   {
     title: 'Reduce risks',
     icon: ReduceIcon,
@@ -44,33 +36,6 @@ export const diversifysData: Array<IWheats> = [
     isAnim: true,
     animData: JhonDiversifAnim,
     description: `John has five fields, and plants five fields of wheat. He has not diversified his portfolio.`,
-    wheat: [
-      {
-        background: 'normal',
-        profit: false,
-        wheat: WheatImg,
-      },
-      {
-        background: 'normal',
-        profit: false,
-        wheat: WheatImg,
-      },
-      {
-        background: 'normal',
-        profit: false,
-        wheat: WheatImg,
-      },
-      {
-        background: 'normal',
-        profit: false,
-        wheat: WheatImg,
-      },
-      {
-        background: 'normal',
-        profit: false,
-        wheat: WheatImg,
-      },
-    ],
   },
   {
     name: 'David',
@@ -78,33 +43,6 @@ export const diversifysData: Array<IWheats> = [
     isAnim: true,
     animData: DavidDiversifAnim,
     description: `David also has 5 fields, but has planted a different crop in each one.`,
-    wheat: [
-      {
-        background: 'normal',
-        profit: false,
-        wheat: WheatImg,
-      },
-      {
-        background: 'normal',
-        profit: false,
-        wheat: WheatBImg,
-      },
-      {
-        background: 'normal',
-        profit: false,
-        wheat: WheatRImg,
-      },
-      {
-        background: 'normal',
-        profit: false,
-        wheat: WheatPImg,
-      },
-      {
-        background: 'normal',
-        profit: false,
-        wheat: WheatGImg,
-      },
-    ],
   },
 ];
 
@@ -113,33 +51,6 @@ export const harvestData: Array<IWheats> = [
   {
     name: 'John',
     emoji: '😭',
-    wheat: [
-      {
-        background: 'none',
-        profit: false,
-        wheat: WheatNotImg,
-      },
-      {
-        background: 'none',
-        profit: false,
-        wheat: WheatNotImg,
-      },
-      {
-        background: 'none',
-        profit: false,
-        wheat: WheatNotImg,
-      },
-      {
-        background: 'none',
-        profit: false,
-        wheat: WheatNotImg,
-      },
-      {
-        background: 'none',
-        profit: false,
-        wheat: WheatNotImg,
-      },
-    ],
     animData: JhonAnim,
     isAnim: true,
   },
@@ -147,33 +58,6 @@ export const harvestData: Array<IWheats> = [
     name: 'David',
     emoji: '😎',
     animData: DavidAnim,
-    wheat: [
-      {
-        background: 'none',
-        profit: false,
-        wheat: WheatNotImg,
-      },
-      {
-        background: 'none',
-        profit: true,
-        wheat: WheatBImg,
-      },
-      {
-        background: 'none',
-        profit: true,
-        wheat: WheatRImg,
-      },
-      {
-        background: 'none',
-        profit: true,
-        wheat: WheatPImg,
-      },
-      {
-        background: 'none',
-        profit: true,
-        wheat: WheatGImg,
-      },
-    ],
     isAnim: true,
   },
 ];

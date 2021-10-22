@@ -4,21 +4,14 @@ import { NavHashLink } from 'react-router-hash-link';
 import { observer } from 'mobx-react-lite';
 
 import logo from '../../assets/img/icons/logo.svg';
-import coingecko from '../../assets/img/socials/coingecko.svg';
-import coinmarketcapL from '../../assets/img/socials/coinmarketcap-light.svg';
-import coinmarketcapD from '../../assets/img/socials/coinmarketcap.svg';
-// import dis from '../../assets/img/socials/discord.svg';
-import md from '../../assets/img/socials/medium.svg';
-import nomics from '../../assets/img/socials/nomics.png';
-import tg from '../../assets/img/socials/telegram.svg';
-import tw from '../../assets/img/socials/twitter.svg';
+
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-import Whitepaper from '../../assets/pdf/YD WP.pdf';
+import Whitepaper from '../../assets/pdf/YD_WP.pdf';
 import { DARK, useMst } from '../../store/store';
 
 import PoweredBy from './PoweredBy';
-import SocialLink from './SocialLink';
+import SocialLink from '../SocialLink';
 import { socialLinks } from '../../config';
 
 import './Footer.scss';
@@ -44,19 +37,34 @@ const Footer: React.FC = observer(() => {
 
             <div className="footer__socials">
               <div className="footer__socials-group">
-                <SocialLink href={socialLinks.tgChannel} title="Channel" icon={tg} />
-                <SocialLink href={socialLinks.tgChat} title="Chat" icon={tg} />
-                <SocialLink href={socialLinks.twitter} icon={tw} />
-                <SocialLink href={socialLinks.medium} icon={md} />
+                <SocialLink
+                  href={socialLinks.tgChannel.url}
+                  title="Channel"
+                  icon={socialLinks.tgChannel.iconDark}
+                />
+                <SocialLink
+                  href={socialLinks.tgChat.url}
+                  title="Chat"
+                  icon={socialLinks.tgChannel.iconDark}
+                />
+                <SocialLink href={socialLinks.twitter.url} icon={socialLinks.twitter.iconDark} />
+                <SocialLink href={socialLinks.medium.url} icon={socialLinks.medium.iconDark} />
               </div>
               <div className="footer__socials-divider" />
               <div className="footer__socials-group">
                 <SocialLink
-                  href={socialLinks.coinMarketCap}
-                  icon={theme.value === DARK ? coinmarketcapD : coinmarketcapL}
+                  href={socialLinks.coinMarketCap.url}
+                  icon={
+                    theme.value === DARK
+                      ? socialLinks.coinMarketCap.iconDark
+                      : socialLinks.coinMarketCap.iconLight
+                  }
                 />
-                <SocialLink href={socialLinks.coingecko} icon={coingecko} />
-                <SocialLink href={socialLinks.nomics} icon={nomics} />
+                <SocialLink
+                  href={socialLinks.coingecko.url}
+                  icon={socialLinks.coingecko.iconDark}
+                />
+                <SocialLink href={socialLinks.nomics.url} icon={socialLinks.nomics.url} />
               </div>
               {/*
               <a href="/" className="footer__socials-item">

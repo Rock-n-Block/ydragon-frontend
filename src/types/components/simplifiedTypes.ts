@@ -8,7 +8,6 @@ export interface IWheats {
   name: string;
   emoji: string;
   description?: string;
-  wheat: IWheatImg[];
   animData?: any;
   isAnim: boolean;
 }

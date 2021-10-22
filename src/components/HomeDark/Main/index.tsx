@@ -3,16 +3,12 @@ import React from 'react';
 import HomeImg from '../../../assets/img/start.svg';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-import Whitepaper from '../../../assets/pdf/YD WP.pdf';
+import Whitepaper from '../../../assets/pdf/YD_WP.pdf';
 import { Button } from '../../index';
-import SocialLink from '../../FooterDark/SocialLink';
+import SocialLink from '../../SocialLink';
 import { socialLinks } from '../../../config';
 
 import './Main.scss';
-
-import md from '../../../assets/img/socials/medium.svg';
-import tg from '../../../assets/img/socials/telegram.svg';
-import tw from '../../../assets/img/socials/twitter.svg';
 
 const Main: React.FC = () => {
   return (
@@ -43,10 +39,14 @@ const Main: React.FC = () => {
         </Button>
       </div>
       <div className="home_social-links">
-        <SocialLink href={socialLinks.tgChannel} title="Channel" icon={tg} />
-        <SocialLink href={socialLinks.tgChat} title="Chat" icon={tg} />
-        <SocialLink href={socialLinks.twitter} icon={tw} />
-        <SocialLink href={socialLinks.medium} icon={md} />
+        <SocialLink
+          href={socialLinks.tgChannel.url}
+          title="Channel"
+          icon={socialLinks.tgChannel.iconDark}
+        />
+        <SocialLink href={socialLinks.tgChat.url} title="Chat" icon={socialLinks.tgChat.iconDark} />
+        <SocialLink href={socialLinks.twitter.url} icon={socialLinks.twitter.iconDark} />
+        <SocialLink href={socialLinks.medium.url} icon={socialLinks.medium.iconDark} />
       </div>
 
       {/* <div className="home__currently-price">

@@ -80,6 +80,9 @@
     align-items: center;
 
     border-radius: 40px;
+    @include b(extramobile){
+      border-radius: 20px;
+    }
     @include b(1150) {
       flex-direction: column;
 
@@ -107,8 +110,6 @@
 
   .token-panel__logo {
     margin-right: 13px;
-    padding: 8px;
-
     display: flex;
     justify-content: center;
     align-items: center;
