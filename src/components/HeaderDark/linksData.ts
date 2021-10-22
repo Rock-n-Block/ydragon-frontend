@@ -18,3 +18,29 @@ export const productLinks = [
   { title: 'Private Blockchain Funds', link: '/pbf' },
   { title: 'Bridge', link: 'https://bridge.ydragon.io/' },
 ];
+
+export const mobileLinksData = [
+  {
+    title: 'Home',
+    titleLink: '/',
+  },
+  {
+    title: 'Index Products',
+    links: [
+      { title: 'Index Products', link: '/indexes' },
+      { title: 'StakePad', link: '/staking' },
+      { title: 'Private Blockchain Fund', link: '/pbf' },
+      { title: 'Bridge', link: 'https://bridge.ydragon.io/' },
+    ],
+  },
+  {
+    title: 'About',
+    links: [
+      { title: 'About us', link: '/about-us#top' },
+      { title: 'YDragon simplified', link: '/simplified' },
+      { title: 'FAQ', link: '/about-us#FAQ' },
+      { title: 'Whitepaper', link: whitepaper },
+      { title: 'Contact us', link: 'mailto:info@ydragon.io' },
+    ],
+  },
+];

@@ -97,6 +97,8 @@
     line-height: 24px;
     letter-spacing: 0.035em;
 
+    max-width: 350px;
+
     @include b('tablet') {
       text-align: center;
     }
