@@ -9,7 +9,8 @@ import './ConquerWithYdr.scss';
 import chipAnim from '../../../assets/json-anim/pbf-chip.json';
 import chipAnimLight from '../../../assets/json-anim/pbf-chip-light.json';
 
-import { ReactComponent as ConquerItem1 } from '../../../assets/img/pbf-page/conquer-item-1.svg';
+// import { ReactComponent as ConquerItem1 } from '../../../assets/img/pbf-page/conquer-item-1.svg';
+import testImg from '../../../assets/img/pbf-page/test.png';
 
 const ConquerWithYdr: React.FC = observer(() => {
   const { theme } = useMst();
@@ -20,7 +21,8 @@ const ConquerWithYdr: React.FC = observer(() => {
       <div className="conquer-item">
         <div className="conquer-item__inner">
           <div className="conquer-item__img">
-            <ConquerItem1 />
+            {/* <ConquerItem1 /> */}
+            <img src={testImg} alt="testImg" />
           </div>
           <div className="conquer-item__content">
             <h3 className="conquer-item__title text-MER">The Problem</h3>
