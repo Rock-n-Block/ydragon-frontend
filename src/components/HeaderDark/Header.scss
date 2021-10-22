@@ -406,6 +406,18 @@
     font-family: 'Monument Extended', sans-serif;
     font-size: 18px;
     color: #fff;
+    position: relative;
+    &--arrow {
+      display: flex;
+      align-items: center;
+      &::after {
+        content: '';
+        width: 15px;
+        margin-left: 10px;
+        height: 10px;
+        background: url('../../assets/img/icons/arrow-down.svg') 0 0 no-repeat;
+      }
+    }
   }
 
   &__links {

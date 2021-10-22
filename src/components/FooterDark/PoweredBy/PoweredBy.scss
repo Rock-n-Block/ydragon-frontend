@@ -3,7 +3,7 @@
 
 .powered {
   margin-left: auto;
-  @include b(extramobile) {
+  @include b(tablet) {
     margin: 0 auto;
     text-align: center;
     margin-top: 25px;

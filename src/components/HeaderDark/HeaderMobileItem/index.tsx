@@ -58,7 +58,7 @@ const HeaderMobileItem: React.FC<IHeaderMobileItemProps> = ({
           role="button"
           onKeyDown={() => {}}
           onClick={() => setIsOpened((prev) => !prev)}
-          className="menu-nav__item__title"
+          className="menu-nav__item__title menu-nav__item__title--arrow"
         >
           {title}
         </div>
