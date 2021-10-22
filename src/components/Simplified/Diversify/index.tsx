@@ -18,7 +18,8 @@ const Diversify: React.FC = () => {
             name={data.name}
             emoji={data.emoji}
             description={data.description}
-            wheat={data.wheat}
+            isAnim={data.isAnim}
+            animData={data.animData}
           />
         ))}
       </div>

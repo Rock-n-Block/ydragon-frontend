@@ -95,22 +95,37 @@
     width: 100%;
   }
 
+  &__weats-wrapper-anim {
+    @include b(mobile) {
+      div {
+        height: 67px !important;
+      }
+    }
+  }
+
   &__weats-wrapper-normal {
-    margin-left: 16px;
+    margin-left: 10px;
+    @include b(mobile) {
+      margin-left: 9px;
+    }
 
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
 
-    width: 80px;
-    height: 80px;
+    width: 86px;
+    height: 86px;
 
     background: $gradient-black;
     border-radius: 16px;
 
     &:first-child {
       margin-left: 0;
+    }
+    @include b('tablet') {
+      width: 51px;
+      height: 51px;
     }
     @include b('mobile') {
       width: 57px;

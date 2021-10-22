@@ -42,6 +42,7 @@
 .light {
   .expand {
     background-image: url('../../assets/img/home-bg.jpg');
+    background-size: cover;
   }
 
   .collapse {
@@ -117,7 +118,7 @@
     overflow: hidden;
   }
 
-  height: 119px;
+  height: 79px;
   @media (max-width: 1240px) {
     width: 100%;
 
@@ -155,7 +156,7 @@
   &__inner {
     position: relative;
 
-    padding: 40px 0;
+    padding: 20px 0;
 
     display: flex;
     justify-content: space-between;
@@ -168,7 +169,7 @@
 
       width: 100%;
       max-width: 605px;
-      height: 120px;
+      height: 80px;
     }
   }
 

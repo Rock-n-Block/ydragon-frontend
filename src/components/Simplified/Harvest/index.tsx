@@ -16,7 +16,12 @@ const Harvest: React.FC = () => {
       <h2 className="section__title text-outline">what if it&apos;s a bad harvest?</h2>
       <div className="harvest__wrapper">
         {harvestData.map((data: IWheats) => (
-          <Wheat name={data.name} emoji={data.emoji} wheat={data.wheat} />
+          <Wheat
+            animData={data.animData}
+            isAnim={data.isAnim}
+            name={data.name}
+            emoji={data.emoji}
+          />
         ))}
       </div>
       <div className="harvest__subtitle-wrapper">

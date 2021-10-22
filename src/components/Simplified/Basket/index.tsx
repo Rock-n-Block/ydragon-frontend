@@ -1,6 +1,7 @@
 import React from 'react';
 
-import basketImg from '../../../assets/img/simplified/basket.svg';
+import { JsonAnimation } from '../../index';
+import basketAnim from '../../../assets/json-anim/simplified-basket.json';
 
 import './Basket.scss';
 
@@ -12,7 +13,9 @@ const Basket: React.FC = () => {
         <p className="basket__subtitle">
           Simply put, an index is a selection of high-performing assets, grouped into 1 basket
         </p>
-        <img className="basket__img" width="532" height="200" src={basketImg} alt="" />
+        <div className="basket__img">
+          <JsonAnimation animData={basketAnim} width="532px" height="200px" />
+        </div>
       </div>
     </section>
   );

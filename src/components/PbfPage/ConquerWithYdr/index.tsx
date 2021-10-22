@@ -1,13 +1,15 @@
 import React from 'react';
-import { observer } from 'mobx-react-lite';
+import { observer } from 'mobx-react';
 
+import { JsonAnimation } from '../../index';
 import { useMst } from '../../../store/store';
 
 import './ConquerWithYdr.scss';
 
+import chipAnim from '../../../assets/json-anim/pbf-chip.json';
+import chipAnimLight from '../../../assets/json-anim/pbf-chip-light.json';
+
 import { ReactComponent as ConquerItem1 } from '../../../assets/img/pbf-page/conquer-item-1.svg';
-import { ReactComponent as ConquerItem2 } from '../../../assets/img/pbf-page/conquer-item-2.svg';
-import { ReactComponent as ConquerItem2Light } from '../../../assets/img/pbf-page/conquer-item-2-light.svg';
 
 const ConquerWithYdr: React.FC = observer(() => {
   const { theme } = useMst();
@@ -54,7 +56,7 @@ const ConquerWithYdr: React.FC = observer(() => {
             </div>
           </div>
           <div className="conquer-item__img">
-            {theme.value === 'light' ? <ConquerItem2Light /> : <ConquerItem2 />}
+            <JsonAnimation animData={theme.value === 'light' ? chipAnimLight : chipAnim} />
           </div>
         </div>
       </div>

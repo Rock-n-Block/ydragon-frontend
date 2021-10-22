@@ -1,6 +1,7 @@
 import React, { ReactElement } from 'react';
 
 import { data } from './data';
+import { JsonAnimation } from '../../index';
 
 import './Tiers.scss';
 
@@ -29,7 +30,11 @@ const Tiers: React.FC = () => {
       </p>
       <ul className="tiers_items">
         {data.map((item) => (
-          <TierItem key={`${item.price}-${item.subtitle}`} {...item} logo={<item.logo />} />
+          <TierItem
+            key={`${item.price}-${item.subtitle}`}
+            {...item}
+            logo={<JsonAnimation animData={item.logo} height="200px" width="200px" />}
+          />
         ))}
       </ul>
     </section>

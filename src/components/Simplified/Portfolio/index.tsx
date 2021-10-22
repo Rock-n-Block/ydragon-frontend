@@ -1,8 +1,9 @@
 import React from 'react';
 
-import indexImg from '../../../assets/img/simplified/index.svg';
-import tokenImg from '../../../assets/img/simplified/token.svg';
-import waveImg from '../../../assets/img/simplified/Wave.svg';
+import { JsonAnimation } from '../../index';
+import waveAnim from '../../../assets/json-anim/simplified-wawe.json';
+import indexAnim from '../../../assets/json-anim/simplified-egg-index.json';
+import tokenAnim from '../../../assets/json-anim/simplified-egg-token.json';
 
 import './Portfolio.scss';
 
@@ -13,9 +14,11 @@ const Portfolio: React.FC = () => {
         But how does YDragon apply this to my Crypto portfolio?
       </h2>
       <div className="portfolio__img-wrapper">
-        <img className="portfolio__img" src={indexImg} alt="" />
-        <img className="portfolio__img" src={waveImg} alt="" />
-        <img className="portfolio__img" src={tokenImg} alt="" />
+        <JsonAnimation animData={indexAnim} />
+        <div className="portfolio__img-wave">
+          <JsonAnimation animData={waveAnim} />
+        </div>
+        <JsonAnimation animData={tokenAnim} />
       </div>
       <div className="portfolio__subtitle-wrapper">
         <p className="portfolio__subtitle">

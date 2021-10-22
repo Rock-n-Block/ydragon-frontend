@@ -5,6 +5,8 @@ import HomeImg from '../../../assets/img/start.svg';
 // @ts-ignore
 import Whitepaper from '../../../assets/pdf/YD_WP.pdf';
 import { Button } from '../../index';
+import SocialLink from '../../SocialLink';
+import { socialLinks } from '../../../config';
 
 import './Main.scss';
 
@@ -35,6 +37,16 @@ const Main: React.FC = () => {
         >
           Whitepaper
         </Button>
+      </div>
+      <div className="home_social-links">
+        <SocialLink
+          href={socialLinks.tgChannel.url}
+          title="Channel"
+          icon={socialLinks.tgChannel.iconDark}
+        />
+        <SocialLink href={socialLinks.tgChat.url} title="Chat" icon={socialLinks.tgChat.iconDark} />
+        <SocialLink href={socialLinks.twitter.url} icon={socialLinks.twitter.iconDark} />
+        <SocialLink href={socialLinks.medium.url} icon={socialLinks.medium.iconDark} />
       </div>
 
       {/* <div className="home__currently-price">

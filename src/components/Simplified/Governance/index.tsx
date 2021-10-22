@@ -1,6 +1,7 @@
 import React from 'react';
 
-import sliderImg from '../../../assets/img/simplified/sliders.svg';
+import { JsonAnimation } from '../../index';
+import sliderAnim from '../../../assets/json-anim/simplified-slider.json';
 
 import './Governance.scss';
 
@@ -12,7 +13,7 @@ const Governance: React.FC = () => {
       </h2>
       <div className="governance__wrapper">
         <div className="governance__slider-wrapper">
-          <img className="governance__slider" width="440" height="360" src={sliderImg} alt="" />
+          <JsonAnimation animData={sliderAnim} />
         </div>
         <div className="governance__subtitle-wrapper">
           <h3 className="governance__title">GOVERNANCE</h3>

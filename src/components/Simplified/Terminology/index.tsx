@@ -2,7 +2,11 @@ import React from 'react';
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-import MainVideo from '../../../assets/video/YDragon.mp4';
+import HowToLiquidity from '../../../assets/video/HowToLiquidity.mp4';
+
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import YiledFarm from '../../../assets/video/farm.mp4';
 
 import './Terminology.scss';
 
@@ -55,7 +59,10 @@ const Terminology: React.FC = () => {
           <p className="terminology__video-text">
             Pools of tokens that provide funding to exchanges, to assist with the operations of
             those exchanges. Check out this great explanation from Finematics
-            <a href="/"> on Youtube</a>
+            <a href="https://youtu.be/cizLhxSKrAc" target="_blank" rel="noreferrer noopener">
+              {' '}
+              on Youtube
+            </a>
           </p>
           <video
             className="terminology__video"
@@ -67,7 +74,7 @@ const Terminology: React.FC = () => {
             playsInline
             preload="metadata"
           >
-            <source src={MainVideo} type="video/mp4" />
+            <source src={HowToLiquidity} type="video/mp4" />
             {/* <track default kind="captions" srcLang="en" /> */}
           </video>
         </div>
@@ -76,7 +83,10 @@ const Terminology: React.FC = () => {
           <p className="terminology__video-text">
             This Is when you have staked your coins on a platform and are rewarded in the form of
             interest or given another token. Check out this great explanation from Finematics
-            <a href="/"> on Youtube</a>
+            <a href="https://youtu.be/ClnnLI1SClA" target="_blank" rel="noreferrer noopener">
+              {' '}
+              on Youtube
+            </a>
           </p>
           <video
             className="terminology__video"
@@ -88,7 +98,7 @@ const Terminology: React.FC = () => {
             playsInline
             preload="metadata"
           >
-            <source src={MainVideo} type="video/mp4" />
+            <source src={YiledFarm} type="video/mp4" />
             {/* <track default kind="captions" srcLang="en" /> */}
           </video>
         </div>

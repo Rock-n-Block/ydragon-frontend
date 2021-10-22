@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { JsonAnimation } from '../../index';
+
 // interfaces
 import { ICard } from '../../../types/components/simplifiedTypes';
 
@@ -14,7 +16,9 @@ const Card: React.FC<ICard> = ({ title, icon, img, description }) => {
           <img alt="" src={icon} />
         </div>
         <div className="card__img-wrapper">
-          <img alt="" className="card__img" src={img} />
+          <div className="card__img">
+            <JsonAnimation animData={img} />
+          </div>
         </div>
         <p className="card__text">{description}</p>
       </div>

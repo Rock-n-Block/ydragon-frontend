@@ -88,6 +88,22 @@
   }
 }
 
+.ourfunds-content__button {
+  width: 50%;
+  @include b(extramobile) {
+    width: 100%;
+  }
+  button {
+    height: 60px;
+  }
+}
+button.ourfunds-content__close_button {
+  width: 40%;
+  @include b(extramobile) {
+    width: 100%;
+  }
+}
+
 .light {
   .ourfunds-content {
     background: linear-gradient(355.19deg, #fff 0%, #dde1f0 100%);

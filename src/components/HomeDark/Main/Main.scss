@@ -194,3 +194,12 @@
     }
   }
 }
+
+.home_social-links {
+  display: flex;
+  margin-top: 25px;
+
+  @include b(tablet){
+    justify-content: center;
+  }
+}
