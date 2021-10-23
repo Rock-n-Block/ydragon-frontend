@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Route, Switch, useRouteMatch } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 
+import { Indexes } from './components/Admin';
+import { GetInModal, InfoModal, MetamaskErrModal } from './components/Modals';
 // import { Indexes } from './components/Admin';
 // import { GetInModal, InfoModal, MetamaskErrModal } from './components/Modals';
 // import AdminIndex from './pages/AdminIndex';
@@ -14,23 +16,22 @@ import {
   Home,
   Index,
   IndexDashboard,
-  // Index,
-  // IndexDashboard,
   NoPageFound,
-  StakePage,
+  Simplified,
   YdrToken,
-  // StakePage,
-  // YdrToken,
+  PbfPage,
+  StakingPage,
 } from './pages';
 
 import './styles/index.scss';
-import { Indexes } from './components/Admin';
-import { GetInModal, InfoModal, MetamaskErrModal } from './components/Modals';
 
-export const App: React.FC = observer(() => {
+const App: React.FC = observer(() => {
   const [collapsed, setCollapsed] = useState<boolean>(true);
   const main = useRouteMatch();
   const about = useRouteMatch('/about-us');
+  const simplified = useRouteMatch('/simplified');
+  const pbf = useRouteMatch('/pbf');
+  const staking = useRouteMatch('/staking');
   const { theme } = useMst();
   const [bodyClass, setBodyClass] = useState('');
 
@@ -43,6 +44,12 @@ export const App: React.FC = observer(() => {
       result = `page-wrapper page-wrapper--home`;
     } else if (about) {
       result = `page-wrapper page-wrapper--about`;
+    } else if (simplified) {
+      result = `page-wrapper page-wrapper--simplified`;
+    } else if (pbf) {
+      result = `page-wrapper page-wrapper--pbf`;
+    } else if (staking) {
+      result = `page-wrapper page-wrapper--staking`;
     } else result = `page-wrapper`;
     return result;
   };
@@ -72,10 +79,6 @@ export const App: React.FC = observer(() => {
             <Route exact path="/">
               <Home />
             </Route>
-            {/* <Route exact path="/auth">
-          <Auth />
-        </Route> */}
-            {/* <GuardedRoute exact path="/index/:indexId" component={Index} auth={user} /> */}
             <Route exact path="/index/:indexId">
               <Index />
             </Route>
@@ -85,15 +88,19 @@ export const App: React.FC = observer(() => {
             <GuardedRoute exact path="/admin" component={Admin} auth={admin} />
             <GuardedRoute exact path="/admin" component={Indexes} auth={admin} />
             <GuardedRoute exact path="/admin/index/:indexId" component={AdminIndex} auth={admin} />
-            <GuardedRoute exact path="/staking" component={StakePage} auth={user} />
-            {/* <Route exact path="/bridge">
-              <Bridge />
-            </Route> */}
+            <GuardedRoute exact path="/staking" component={StakingPage} auth={user} />
+
             <Route exact path="/indexes">
               <IndexDashboard />
             </Route>
             <Route exact path="/about-us">
               <AboutUs />
+            </Route>
+            <Route exact path="/simplified">
+              <Simplified />
+            </Route>
+            <Route exact path="/pbf">
+              <PbfPage />
             </Route>
             <Route component={NoPageFound} />
           </Switch>
@@ -106,3 +113,5 @@ export const App: React.FC = observer(() => {
     </div>
   );
 });
+
+export default App;

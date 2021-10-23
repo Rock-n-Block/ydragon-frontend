@@ -7,8 +7,8 @@ import config from '../../services/web3/config';
 import { useMst } from '../../store/store';
 import { ProviderRpcError } from '../../types/errors';
 import { Button, Spinner } from '../index';
-import { HarvestModal } from '../Modals';
 import { InputNumber } from '../Input';
+import { HarvestModal } from '../Modals';
 import StakeItem, { IStakeItem } from '../StakeItem';
 
 import './Stake.scss';
@@ -144,6 +144,7 @@ const Stake: React.FC<StakeProps> = ({ tokens, propsLoading, onStakeClick }) => 
                   type="number"
                   placeholder="0.0"
                   onChange={handleStakeValueChange}
+                  min={0}
                 />
                 <span
                   className="stake-amount__all"

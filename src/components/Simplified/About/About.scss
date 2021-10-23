@@ -1,0 +1,138 @@
+@import '../../../styles/_variables.scss';
+@import '../../../styles/mixins';
+
+.dark {
+  .about {
+    &__title {
+      color: $white;
+    }
+
+    &__subtitle {
+      color: $white;
+    }
+  }
+}
+
+.light {
+  .about {
+    &__title {
+      color: $black;
+    }
+
+    &__subtitle {
+      color: $black;
+    }
+  }
+}
+
+.about {
+  margin-top: 220px;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  @include b('mobile') {
+    margin-top: 40px;
+
+    flex-direction: column;
+  }
+
+  &__title-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+
+    width: 50%;
+    @include b('mobile') {
+      width: 100%;
+      order: 2;
+    }
+  }
+
+  &__title {
+    position: relative;
+
+    padding-bottom: 24px;
+
+    width: 30%;
+
+    font-family: 'Monument Extended', sans-serif;
+    font-size: 32px;
+    line-height: 132%;
+
+    &::after {
+      content: '';
+
+      position: absolute;
+      left: 0;
+      bottom: 0;
+
+      width: 84px;
+      max-width: 84px;
+      height: 2px;
+
+      background: $red;
+      border-radius: 2px;
+    }
+
+    @include b('tablet') {
+      font-size: 26px;
+    }
+
+    @include b('mobile') {
+      font-size: 24px;
+    }
+  }
+
+  &__subtitle {
+    margin-top: 24px;
+
+    font-family: 'Rubik', sans-serif;
+    font-size: 19px;
+    line-height: 36px;
+    letter-spacing: 0.035em;
+
+    opacity: 0.9;
+
+    @include b('tablet') {
+      font-size: 19px;
+      line-height: 32px;
+    }
+
+    @include b('mobile') {
+      font-size: 16px;
+      line-height: 24px;
+    }
+  }
+
+  &__btn {
+    margin-top: 40px;
+  }
+
+  &__img-wrapper {
+    position: relative;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 50%;
+    @include b('mobile') {
+      width: 100%;
+      order: 1;
+    }
+  }
+
+  &__img {
+    opacity: 0.5;
+    mix-blend-mode: luminosity;
+  }
+
+  &__img-click {
+    position: absolute;
+    left: 42%;
+    bottom: 2%;
+  }
+}

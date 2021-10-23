@@ -27,47 +27,72 @@
 .token-panel-ydr {
   flex-direction: row;
   justify-content: space-between;
-  @include b('tablet') {
+  @include b(1150) {
     justify-content: center;
+    flex-direction: column;
+
     .token-panel-item {
       display: flex;
       flex-direction: column;
       align-items: center;
     }
+
     .token-panel__btns {
       flex-wrap: wrap;
+
       flex-direction: row;
     }
   }
+
+  @include b(extramobile) {
+    padding: 30px 20px;
+  }
+
   .token-panel__content {
     width: fit-content;
   }
+
   .token-panel__btns {
-    width: fit-content;
     flex-direction: row;
+
+    width: fit-content;
   }
+
   &__btns {
     flex-wrap: wrap;
+
     display: grid;
     grid-template-columns: 401px 401px;
     @include b('tablet') {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    @include b(extramobile) {
       grid-template-columns: 1fr;
     }
   }
 
   .token-panel__btns-group {
-    display: flex;
-    align-items: center;
     padding: 11px 13px;
+
+    display: flex;
     justify-content: space-between;
+    align-items: center;
+
     border-radius: 40px;
-    @include b('tablet') {
+    @include b(extramobile){
+      border-radius: 20px;
+    }
+    @include b(1150) {
       flex-direction: column;
+
       .token-panel__info {
         margin-bottom: 10px;
+
         display: flex;
         align-items: center;
       }
+
       .token-panel__btns {
         flex-wrap: wrap;
       }
@@ -85,13 +110,15 @@
 
   .token-panel__logo {
     margin-right: 13px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
     width: 36px;
     height: 36px;
-    padding: 8px;
+
     border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+
     img {
       max-height: 100%;
     }
@@ -104,18 +131,21 @@
   .logo-uniswap {
     background: #be246e;
   }
+
   .logo-apeswap {
     padding: 0;
+
     width: 36px;
     height: 36px;
   }
 
   .token-panel__subtitle {
     margin-right: 17px;
+
     font-family: 'TT Norms', sans-serif;
-    font-style: normal;
-    font-weight: bold;
     font-size: 16px;
+    font-weight: bold;
+    font-style: normal;
     line-height: 19px;
   }
 }

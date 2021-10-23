@@ -1,0 +1,130 @@
+@import '../../../styles/_variables.scss';
+@import '../../../styles/mixins';
+
+.dark {
+  .card {
+    &__title {
+      color: $white;
+    }
+
+    &__subtitle {
+      color: $white;
+    }
+
+    &__title-wrapper {
+      background: $gradient-black;
+    }
+  }
+}
+
+.light {
+  .card {
+    &__title {
+      color: $black;
+    }
+
+    &__subtitle {
+      color: $black;
+    }
+
+    &__title-wrapper {
+      background: $gradient-white;
+    }
+  }
+}
+
+.card {
+  &__item {
+    padding: 40px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    width: 50%;
+    @include b('mobile') {
+      margin-top: 40px;
+      padding: 0;
+
+      width: 100%;
+    }
+  }
+
+  &__title-wrapper {
+    padding: 16px 24px;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+    height: 70px;
+
+    border-radius: 16px;
+
+    @include b('tablet') {
+      width: 100%;
+    }
+
+    @include b('mobile') {
+      width: 90%;
+    }
+  }
+
+  &__title {
+    padding-right: 20px;
+
+    font-family: 'Monument Extended', sans-serif;
+    font-size: 24px;
+    line-height: 32px;
+
+    @include b('tablet') {
+      font-size: 17px;
+    }
+    @include b('mobile') {
+      font-size: 16px;
+    }
+  }
+
+  &__img-wrapper {
+    margin-top: 80px;
+
+    display: flex;
+
+    width: 100%;
+
+    height: auto;
+    height: 300px;
+
+    min-height: 300px;
+
+    @include b('mobile') {
+      margin-top: 30px;
+      padding: 5px;
+
+      width: 100%;
+    }
+  }
+
+  &__img {
+    width: 100%;
+  }
+
+  &__text {
+    margin-top: 80px;
+    @include b('mobile') {
+      margin-top: 30px;
+    }
+    font-family: 'Rubik', sans-serif;
+    font-size: 22px;
+    line-height: 36px;
+
+    opacity: 0.9;
+
+    @include b('mobile') {
+      font-size: 16px;
+    }
+  }
+}

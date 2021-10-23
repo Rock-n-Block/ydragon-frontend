@@ -1,14 +1,14 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Line } from 'react-chartjs-2';
+import { AxiosResponse } from 'axios';
 import cn from 'classnames';
+import moment from 'moment';
 
 import { indexesApi } from '../../../services/api';
 import PriceDifferenceBag from '../../PriceDifferenceBag';
+import { IHistoricalToken } from '../IndexTable';
 
 import './IndexChart.scss';
-import { AxiosResponse } from 'axios';
-import { IHistoricalToken } from '../IndexTable';
-import moment from 'moment';
 
 interface IndexChartProps {
   onClick: (value: IFetchedData) => void;
@@ -101,8 +101,7 @@ const IndexChart: React.FC<IndexChartProps> = React.memo(({ onClick, indexId, di
         },
       },
       yAxis: {
-        suggestedMin: refMin.current,
-        suggestedMax: refMax.current,
+        offset: true,
       },
     },
     elements: {

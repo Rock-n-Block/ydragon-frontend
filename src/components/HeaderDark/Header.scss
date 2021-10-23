@@ -5,6 +5,7 @@
   .expand {
     background-color: $black;
     background-image: url('../../assets/img/home-dark-bg.png');
+    background-size: cover;
   }
 
   .collapse {
@@ -42,6 +43,7 @@
 .light {
   .expand {
     background-image: url('../../assets/img/home-bg.jpg');
+    background-size: cover;
   }
 
   .collapse {
@@ -113,10 +115,12 @@
 
   margin-bottom: 30px;
 
-  overflow: hidden;
+  @include b(1240) {
+    overflow: hidden;
+  }
 
-  height: 120px;
-  @media (max-width: 650px) {
+  height: 79px;
+  @media (max-width: 1240px) {
     width: 100%;
 
     transition: all 0.4s;
@@ -133,18 +137,25 @@
 
   width: 100%;
 }
+.header.expand {
+  .header__inner {
+    @include b(extramobile) {
+      display: block;
+    }
+  }
+}
 
 .header {
   &__menu {
     display: none;
 
     outline: none;
-    @media (max-width: 650px) {
+    @media (max-width: 1240px) {
       position: relative;
       top: 0;
       left: 0;
 
-      display: block;
+      display: flex;
 
       cursor: pointer;
     }
@@ -153,29 +164,29 @@
   &__inner {
     position: relative;
 
-    padding: 40px 0;
+    padding: 20px 0;
 
-    display: grid;
-    grid-template-columns: 1fr 410px 1fr;
-
+    display: flex;
+    justify-content: space-between;
     align-items: center;
-    @media (max-width: 650px) {
+    @media (max-width: 1240px) {
       margin: 0 auto;
 
       display: flex;
       justify-content: space-between;
 
       width: 100%;
-      max-width: 605px;
-      height: 120px;
     }
   }
 
   &__logo {
     display: flex;
     align-items: center;
-    @media (max-width: 650px) {
+    @media (max-width: 1240px) {
       margin: 0 auto;
+    }
+    @include b(extramobile) {
+      align-self: flex-end;
     }
   }
 
@@ -211,7 +222,7 @@
 
   &__nav,
   &__sign {
-    @media (max-width: 650px) {
+    @media (max-width: 1240px) {
       display: none;
     }
   }
@@ -275,6 +286,7 @@
       position: fixed;
       left: calc(50% - 332px / 2);
       bottom: 30px;
+
       display: flex;
       flex-direction: column;
       gap: 20px;
@@ -282,11 +294,6 @@
       &-item {
         width: 48px;
         height: 48px;
-      }
-
-      &-group {
-        display: flex;
-        justify-content: center;
       }
 
       &-tg {
@@ -309,7 +316,7 @@
   padding: 0;
 
   display: flex;
-  align-items: flex-start;
+  align-items: center;
 
   list-style: none;
 
@@ -324,7 +331,6 @@
     line-height: 20px;
     white-space: nowrap;
     text-decoration: none;
-    font-weight: 400 !important;
 
     transition: all 0.5s ease-in-out;
 
@@ -357,69 +363,117 @@
   margin: 0 auto;
 
   width: 100%;
-  max-width: 605px;
 
   &__nav {
     display: flex;
     justify-content: flex-start;
+    flex-grow: 1;
   }
 
   &__sign {
     display: flex;
-    justify-content: flex-end;
+    justify-content: flex-start;
     align-items: center;
     gap: 30px;
 
-    @include b('mobile') {
-      position: absolute;
-      top: 40px;
-      right: 0;
-
-      flex-direction: column-reverse;
+    @include b(extramobile) {
+      margin: 30px 0;
     }
+  }
+
+  display: none;
+  @include b(1240) {
+    display: flex;
+    flex-direction: column;
   }
 }
 
 .menu-nav {
-  margin: 0;
-  padding: 0;
-
-  display: flex;
-  flex-direction: column;
-  align-items: end;
-
   list-style: none;
-  gap: 30px;
+  padding: 0;
 
   &__btn {
     display: inline-block;
-
     width: 150px;
-  }
-
-  &__link,
-  .logout {
-    height: 42px;
   }
 }
 
-.footer {
-  &__wrapper {
-    margin: 54px auto 0;
+.menu-nav__item {
+  margin-bottom: 30px;
+  overflow: hidden;
 
-    max-width: 605px;
+  &__title {
+    font-family: 'Monument Extended', sans-serif;
+    font-size: 18px;
+    color: #fff;
+    position: relative;
+    &--arrow {
+      display: flex;
+      align-items: center;
+      &::after {
+        content: '';
+        width: 15px;
+        margin-left: 10px;
+        height: 10px;
+        background: url('../../assets/img/icons/arrow-down.svg') 0 0 no-repeat;
+      }
+    }
   }
 
-  &__logo {
-    margin: 0 auto;
+  &__links {
+    max-height: 0;
+    transition: max-height 0.5s cubic-bezier(0, 1, 0, 1);
+    &--active {
+      max-height: 1000px;
+      transition: max-height 1s ease-in-out;
+    }
   }
 
-  &__content {
-    flex-direction: column;
-    align-items: center;
+  &__link {
+    display: block;
+    font-size: 16px;
+    color: #5e697f;
+    & + & {
+      margin-top: 6px;
+    }
   }
+}
 
-  &__descr {
-    max-width: 350px;
+.light {
+  .menu-nav__item__title {
+    color: #000;
   }
+}
+
+.menu__sign {
+  @include b(extramobile) {
+    justify-content: space-between;
+  }
+  .select-network {
+    .ant-select-selector {
+      height: 42px !important;
+    }
+  }
+  button {
+    width: fit-content;
+  }
+  .switch {
+    @include b(extramobile) {
+      position: absolute;
+      top: 20px;
+      right: 0px;
+    }
+  }
+}
+
+.menu_social_links {
+  display: flex;
+  justify-content: center;
+}
+
+.menu_subitle {
+  font-size: 16;
+  text-align: center;
+  margin-top: 20px;
+  color: #5e697f;
 }

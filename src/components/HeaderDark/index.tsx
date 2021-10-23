@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
 import { Link } from 'react-router-dom';
-import { NavHashLink } from 'react-router-hash-link';
 import { observer } from 'mobx-react-lite';
 
 import crossBlack from '../../assets/img/icons/icon-cross-black.svg';
@@ -9,23 +8,20 @@ import cross from '../../assets/img/icons/icon-cross.svg';
 import iconMenuBlack from '../../assets/img/icons/icon-menu-black.svg';
 import iconMenu from '../../assets/img/icons/icon-menu.svg';
 import logo from '../../assets/img/icons/logo.svg';
-// import dis from '../../assets/img/socials/discord.svg';
-import md from '../../assets/img/socials/medium.svg';
-import tg from '../../assets/img/socials/telegram.svg';
-import tw from '../../assets/img/socials/twitter.svg';
+
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-import Whitepaper from '../../assets/pdf/YD WP.pdf';
-// import { useWalletConnectorContext } from '../../services/walletConnect';
+import { useWalletConnectorContext } from '../../services/walletConnect';
 import { DARK, LIGHT, useMst } from '../../store/store';
-// import EventBanner from '../EventBanner';
-import { Button, SelectNetwork, Switch } from '../index';
+import EventBanner from '../EventBanner';
+import { Button, SelectNetwork, Switch, DropDown } from '../index';
+import { aboutLinks, productLinks, mobileLinksData } from './linksData';
+import HeaderMobileItem from './HeaderMobileItem';
+
+import SocialLink from '../SocialLink/index';
+import { socialLinks } from '../../config/index';
 
 import './Header.scss';
-import coinmarketcapD from '../../assets/img/socials/coinmarketcap.svg';
-import coinmarketcapL from '../../assets/img/socials/coinmarketcap-light.svg';
-import coingecko from '../../assets/img/socials/coingecko.svg';
-import nomics from '../../assets/img/socials/nomics.png';
 
 interface HeaderProps {
   collapsed: boolean;
@@ -34,8 +30,8 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = observer(({ collapsed, onCollapsedChange }) => {
   const [fixed, setFixed] = useState(true);
-  const { theme } = useMst();
-  // const walletConnector = useWalletConnectorContext();
+  const { theme, user } = useMst();
+  const walletConnector = useWalletConnectorContext();
   const history = useHistory();
 
   const handleChangeTheme = () => {
@@ -46,7 +42,7 @@ const Header: React.FC<HeaderProps> = observer(({ collapsed, onCollapsedChange }
     }
   };
 
-  /* const handleLogOut = () => {
+  const handleLogOut = () => {
     onCollapsedChange(true);
     walletConnector.disconnect();
   };
@@ -54,7 +50,7 @@ const Header: React.FC<HeaderProps> = observer(({ collapsed, onCollapsedChange }
   const connectWallet = (): void => {
     onCollapsedChange(true);
     walletConnector.connect();
-  }; */
+  };
 
   const redirectHandler = (path: string) => {
     onCollapsedChange(true);
@@ -71,7 +67,7 @@ const Header: React.FC<HeaderProps> = observer(({ collapsed, onCollapsedChange }
 
   return (
     <div className={`header__wrapper  ${fixed ? 'fixed' : ''}`}>
-      {/* <EventBanner /> */}
+      <EventBanner />
       <div className={`header ${collapsed ? 'collapse' : 'expand'}`}>
         <div className="container">
           <div className="header__inner">
@@ -109,31 +105,25 @@ const Header: React.FC<HeaderProps> = observer(({ collapsed, onCollapsedChange }
               <div className="menu__sign">
                 <Switch checked={DARK === theme.value} onChange={handleChangeTheme} />
                 <SelectNetwork />
-                {/* <ul className="menu-nav">
-                  {user.address && (
-                    <li className="menu-nav__item">
-                      <Button
-                        className="menu-nav__link logout"
-                        type="text"
-                        styledType="clear"
-                        onClick={handleLogOut}
-                      >
-                        Log Out
-                      </Button>
-                    </li>
-                  )}
-                  {!user.address && (
-                    <li className="menu-nav__item">
-                      <Button
-                        linkClassName="menu-nav__btn"
-                        styledType="nav"
-                        onClick={connectWallet}
-                      >
-                        Connect wallet
-                      </Button>
-                    </li>
-                  )}
-                </ul> */}
+                {user.address && (
+                  <Button
+                    className="menu-nav__link logout menu-nav__link--button"
+                    type="text"
+                    styledType="clear"
+                    onClick={handleLogOut}
+                  >
+                    Log Out
+                  </Button>
+                )}
+                {!user.address && (
+                  <Button
+                    linkClassName="menu-nav__btn menu-nav__link--button"
+                    styledType="nav"
+                    onClick={connectWallet}
+                  >
+                    Connect wallet
+                  </Button>
+                )}
               </div>
             )}
 
@@ -144,46 +134,25 @@ const Header: React.FC<HeaderProps> = observer(({ collapsed, onCollapsedChange }
                     Home
                   </Link>
                 </li>
-                {/* <li className="header-nav__item">
-                  <Link to="/indexes" className="header-nav__link">
-                    Index Products
-                  </Link>
-                </li> */}
-                {/* {user.address && (
-                  <li className='header-nav__item'>
-                    <Link to='/staking' className='header-nav__link'>
-                      Staking
-                    </Link>
-                  </li>
-                )} */}
                 <li className="header-nav__item">
-                  <Link to="/about-us" className="header-nav__link">
-                    About
-                  </Link>
+                  <DropDown title="Products" links={productLinks} />
                 </li>
                 <li className="header-nav__item">
-                  <a
-                    href="https://bridge.ydragon.io/"
-                    rel="noreferrer nooppener"
-                    target="_blank"
-                    className="header-nav__link"
-                  >
-                    Bridge
-                  </a>
+                  <DropDown title="About" links={aboutLinks} />
                 </li>
-                {/* {localStorage.getItem('yd_token') && (
+                {localStorage.getItem('yd_token') && (
                   <li className="header-nav__item">
                     <Link to="/admin" className="header-nav__link">
                       Admin panel
                     </Link>
                   </li>
-                )} */}
+                )}
               </ul>
             </nav>
 
             <div className="header__sign">
               <Switch checked={DARK === theme.value} onChange={handleChangeTheme} />
-              {/* <SelectNetwork />
+              <SelectNetwork />
               <ul className="header-nav">
                 {user.address && (
                   <li className="header-nav__item">
@@ -208,199 +177,38 @@ const Header: React.FC<HeaderProps> = observer(({ collapsed, onCollapsedChange }
                     </Button>
                   </li>
                 )}
-              </ul> */}
+              </ul>
             </div>
           </div>
           <nav className="menu">
             <nav className="menu__nav">
               <ul className="menu-nav">
-                <li className="menu-nav__item">
-                  <Button
-                    styledType="clear"
-                    onClick={() => redirectHandler('/')}
-                    className="menu-nav__link"
-                  >
-                    Home
-                  </Button>
-                </li>
-                {/* <li className="menu-nav__item">
-                  <Button
-                    styledType="clear"
-                    onClick={() => redirectHandler('/indexes')}
-                    className="menu-nav__link"
-                  >
-                    Index Products
-                  </Button>
-                </li> */}
-                {/* {user.address && (
-                  <li className="menu-nav__item">
-                    <Button
-                      styledType="clear"
-                      onClick={() => redirectHandler('/staking')}
-                      className="menu-nav__link"
-                    >
-                      Staking
-                    </Button>
-                  </li>
-                )} */}
-                <li className="menu-nav__item">
-                  <Button
-                    styledType="clear"
-                    onClick={() => redirectHandler('/about-us')}
-                    className="menu-nav__link"
-                  >
-                    About
-                  </Button>
-                </li>
-                <li className="menu-nav__item">
-                  <Button
-                    styledType="clear"
-                    // onClick={() => redirectHandler('/bridge')}
-                    link="https://ydragon-bridge.herokuapp.com/"
-                    target="_blank"
-                    rel="noopener norefferer"
-                    className="menu-nav__link"
-                  >
-                    Bridge
-                  </Button>
-                </li>
-                {/* {localStorage.getItem('yd_token') && (
-                  <li className="menu-nav__item">
-                    <Button
-                      styledType="clear"
-                      onClick={() => redirectHandler('/admin')}
-                      className="menu-nav__link"
-                    >
-                      Admin panel
-                    </Button>
-                  </li>
-                )} */}
+                {mobileLinksData.map((item) => (
+                  <HeaderMobileItem
+                    title={item.title}
+                    links={item.links}
+                    onCollapsedChange={onCollapsedChange}
+                    titleLink={item.titleLink}
+                  />
+                ))}
               </ul>
             </nav>
+            <div className="menu_social_links">
+              <SocialLink
+                icon={socialLinks.tgChat.iconDark}
+                title="Chat"
+                href={socialLinks.tgChat.url}
+              />
+              <SocialLink
+                title="Channel"
+                icon={socialLinks.tgChannel.iconDark}
+                href={socialLinks.tgChat.url}
+              />
+              <SocialLink icon={socialLinks.twitter.iconDark} href={socialLinks.twitter.url} />
+              <SocialLink icon={socialLinks.medium.iconDark} href={socialLinks.medium.url} />
+            </div>
+            <div className="menu_subitle">© 2021 YDragon</div>
           </nav>
-          <div className="footer__wrapper">
-            <div className="footer__col">
-              <div className="footer__links-title">Product</div>
-
-              <div className="footer__links">
-                <a href={Whitepaper} target="_blank" rel="noopener noreferrer">
-                  Whitepaper
-                </a>
-                <span className="isDisabled">
-                  <a href="/">Privacy Policy</a>
-                </span>
-                <span className="isDisabled">
-                  <a href="/">Terms of Service</a>
-                </span>
-                <a href="mailto:info@ydragon.io" target="_blank" rel="noopener noreferrer">
-                  Contact us
-                </a>
-              </div>
-            </div>
-
-            <div className="footer__col">
-              <div className="footer__links-title">Engage</div>
-
-              <div className="footer__links">
-                <Link to="/about-us">About Us</Link>
-                <span className="isDisabled">
-                  <a href="/">Tutorial</a>
-                </span>
-                <NavHashLink to="/about-us#FAQ" smooth className="text-gray text-bold">
-                  FAQ
-                </NavHashLink>
-              </div>
-            </div>
-
-            <div className="footer__col">
-              <div className="footer__links-title">DeFi</div>
-
-              <div className="footer__links">
-                <span className="isDisabled">
-                  <a href="/">Index Products</a>
-                </span>
-                <span className="isDisabled">
-                  <a href="/">Become Partner</a>
-                </span>
-              </div>
-            </div>
-            {!collapsed && (
-              <div className="footer__socials">
-                <div className="footer__socials-group">
-                  <a
-                    href="https://t.me/ydrmain/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="footer__socials-item footer__socials-tg"
-                  >
-                    <img src={tg} alt="telegram channel" width="16" height="16" />
-                    <span>Channel</span>
-                  </a>
-
-                  <a
-                    href="https://t.me/ydragonchat"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="footer__socials-item footer__socials-tg"
-                  >
-                    <img src={tg} alt="telegram chat" width="16" height="16" />
-                    <span>Chat</span>
-                  </a>
-                  <a
-                    href="https://twitter.com/ydragons_"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="footer__socials-item"
-                  >
-                    <img src={tw} alt="twitter" width="16" height="16" />
-                  </a>
-                  <a
-                    href="https://medium.com/ydragon-io"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="footer__socials-item"
-                  >
-                    <img src={md} alt="medium" width="16" height="16" />
-                  </a>
-                </div>
-                <div className="footer__socials-group">
-                  <a
-                    href="https://coinmarketcap.com/currencies/ydragon/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="footer__socials-item"
-                  >
-                    <img
-                      src={theme.value === DARK ? coinmarketcapD : coinmarketcapL}
-                      alt="coinmarketcap"
-                      width="16"
-                      height="16"
-                    />
-                  </a>
-                  <a
-                    href="https://www.coingecko.com/en/coins/ydragon"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="footer__socials-item"
-                  >
-                    <img src={coingecko} alt="coingecko" width="16" height="16" />
-                  </a>
-                  <a
-                    href="https://nomics.com/assets/ydr-ydragon"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="footer__socials-item"
-                  >
-                    <img src={nomics} alt="nomics" width="16" height="16" />
-                  </a>
-                </div>
-
-                {/* <a href="/" className="footer__socials-item">
-                  <img src={dis} alt="logo" width="24" height="20" />
-                </a> */}
-              </div>
-            )}
-          </div>
         </div>
       </div>
     </div>

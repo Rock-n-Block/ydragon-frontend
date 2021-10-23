@@ -1,0 +1,42 @@
+@import '../../../styles/_variables.scss';
+@import '../../../styles/mixins';
+
+.dark {
+  .diversify {
+    &__title {
+      color: $white;
+    }
+
+    &__subtitle {
+      color: $white;
+    }
+  }
+}
+
+.light {
+  .diversify {
+    &__title {
+      color: $black;
+    }
+
+    &__subtitle {
+      color: $black;
+    }
+  }
+}
+
+.diversify {
+  &__container {
+    margin-top: 60px;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    @include b('mobile') {
+      margin-top: 40px;
+
+      flex-direction: column;
+    }
+  }
+}

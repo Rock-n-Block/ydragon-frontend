@@ -1,0 +1,54 @@
+@import '../../../styles/_variables.scss';
+@import '../../../styles/mixins';
+
+.dark {
+  .purpose {
+    &__title {
+      color: $white;
+    }
+
+    &__subtitle {
+      color: $white;
+    }
+  }
+}
+
+.light {
+  .purpose {
+    &__title {
+      color: $black;
+    }
+
+    &__subtitle {
+      color: $black;
+    }
+  }
+}
+
+.purpose {
+  margin-top: 300px;
+  @include b('mobile') {
+    margin-top: 100px;
+  }
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  &__purpose-wrapper {
+    margin-top: 50px;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+
+    @include b('mobile') {
+      margin-top: 30px;
+
+      flex-direction: column;
+    }
+  }
+}

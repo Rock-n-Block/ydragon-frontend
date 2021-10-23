@@ -1,0 +1,100 @@
+@import '../../../styles/variables';
+@import '../../../styles/mixins';
+
+.conquer {
+  text-align: center;
+}
+
+h2.conquer-title {
+  font-weight: 900;
+  font-size: 48px;
+  margin-bottom: 130px;
+  @include b(mobile) {
+    font-size: 32px;
+    margin-bottom: 30px;
+  }
+  @include b(extramobile) {
+    text-align: left;
+  }
+}
+
+.conquer-item__inner {
+  align-items: center;
+  text-align: left;
+  justify-content: center;
+
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30px;
+  @include b(mobile) {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
+.conquer-item {
+  & + & {
+    margin-top: 250px;
+    @include b(mobile) {
+      margin-top: 30px;
+    }
+  }
+
+  &__content {
+  }
+
+  &__title {
+    font-size: 32px;
+    margin-bottom: 32px;
+    text-transform: uppercase;
+    position: relative;
+    @include b(extramobile) {
+      font-size: 24px;
+      text-transform: none;
+    }
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -15px;
+      left: 0;
+      width: 84px;
+      height: 3px;
+      background-color: $red;
+    }
+  }
+
+  &__subtitle {
+    font-size: 20px;
+    line-height: 1.6;
+    opacity: 0.8;
+    @include b(extramobile) {
+      font-size: 16px;
+    }
+    p + p {
+      margin-top: 30px;
+    }
+  }
+
+  &__img {
+    &--light {
+      display: none;
+    }
+    display: flex;
+    justify-content: flex-start;
+    @include b(mobile) {
+      order: 2;
+      justify-content: center;
+    }
+    svg {
+      max-width: 100%;
+    }
+  }
+}
+
+.conquer-item--reverse {
+  .conquer-item__img {
+    justify-content: flex-end;
+    @include b(mobile) {
+      justify-content: center;
+    }
+  }
+}

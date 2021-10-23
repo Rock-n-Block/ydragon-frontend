@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Advisors, Description, Questions, Teams, Title } from '../../components/AboutUs';
-import { Protocols } from '../../components/HomeDark';
+import { Partners } from '../../components/HomeDark';
 
 const AboutUs: React.FC = () => {
   return (
@@ -9,7 +9,7 @@ const AboutUs: React.FC = () => {
       <Title />
       <Description />
       <Teams />
-      <Protocols />
+      <Partners />
       <Advisors />
       <Questions />
     </main>

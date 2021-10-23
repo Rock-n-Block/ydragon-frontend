@@ -1,69 +1,17 @@
 import React from 'react';
 
-import eric from '../../../assets/img/about-us/advisors/eric.png';
-import geralt from '../../../assets/img/about-us/advisors/geralt.png';
-import markus from '../../../assets/img/about-us/advisors/markus.png';
-import mark from '../../../assets/img/about-us/advisors/mark.png';
-import farmtown from '../../../assets/img/about-us/advisors/farmtown.png';
-import nick from '../../../assets/img/about-us/advisors/nick.png';
 import iconLinkedIn from '../../../assets/img/icons/icon-linkedin.svg';
 import iconTwitter from '../../../assets/img/icons/icon-twitter.svg';
-
-interface IEmployee {
-  name: string;
-  role?: string;
-  img: string;
-  linkedIn?: string;
-  twitter?: string;
-}
+import { team } from './data';
 
 const Advisors: React.FC = () => {
-  const team: Array<IEmployee> = [
-    {
-      name: 'Nick Ravanbakhsh',
-      role: 'Founder at Base Protocol',
-      img: nick,
-      linkedIn: 'https://www.linkedin.com/in/nick-ravanbakhsh-801896114/',
-    },
-    {
-      name: 'Geralt',
-      role: 'CEO at CyberFi',
-      img: geralt,
-      twitter: 'https://twitter.com/geraltceo',
-    },
-    {
-      name: 'Eric Kang',
-      role: 'Senior BD Associate at Ava Labs',
-      img: eric,
-      linkedIn: 'https://www.linkedin.com/in/ericxkang/',
-    },
-    {
-      name: 'Markus Jun',
-      role: 'Founder at ICON Hyperconnect',
-      img: markus,
-      linkedIn: 'https://www.linkedin.com/in/markusjun/',
-    },
-    {
-      name: 'Mark Stanwyck',
-      role: 'Director at Avalaunch',
-      img: mark,
-      linkedIn: 'https://www.linkedin.com/in/mark-stanwyck-07a04bb/',
-    },
-    {
-      name: 'farmtown',
-      role: 'Founder at Unimex',
-      img: farmtown,
-      twitter: 'https://twitter.com/farmtownN',
-    },
-  ];
-
   return (
     <section className="section teams">
       <div className="teams__title-wrapper">
         <h1 className="teams__title text-outline">Advisors</h1>
       </div>
       <div className="teams__items">
-        {team.map((employee: IEmployee) => (
+        {team.map((employee) => (
           <div className="team">
             <div className="team__img--wrapper">
               <img alt={employee.name} className="team__img" src={employee.img} />

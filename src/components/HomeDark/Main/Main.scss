@@ -30,9 +30,10 @@
 }
 
 .home {
+  position: relative;
+
   margin-top: 175px;
   padding: 0 50px 0;
-  position: relative;
 
   @include b('tablet') {
     margin-top: 30px;
@@ -43,14 +44,17 @@
 
   &__img {
     position: absolute;
-    right: 0;
     top: -43px;
-    @include b('tablet'){
-      margin: 18px 0 32px;
-      display: block;
-      margin-left: auto;
-      margin-right: auto;
+    right: 0;
+    @include b('tablet') {
       position: unset;
+
+      margin: 18px 0 32px;
+      margin-right: auto;
+      margin-left: auto;
+
+      display: block;
+
       width: 100%;
       max-width: 256px;
       height: auto;
@@ -59,17 +63,18 @@
 
   &__title-wrapper {
     position: relative;
-    font-weight: 900;
-    font-size: 48px;
-    letter-spacing: 0.2em;
     // line-height: 48px;
-
     display: flex;
-    flex-wrap: wrap;
     align-items: center;
-    @include b('tablet'){
+
+    font-size: 48px;
+    font-weight: 900;
+    letter-spacing: 0.2em;
+    flex-wrap: wrap;
+    @include b('tablet') {
       flex-direction: column;
       justify-content: center;
+
       font-size: 34px;
       line-height: 41px;
     }
@@ -78,9 +83,11 @@
   &__title {
     & + & {
       margin-left: 30px;
+
       display: block;
-      @include b('tablet'){
+      @include b('tablet') {
         margin-left: 0;
+
         font-size: 32px;
         line-height: 38px;
         letter-spacing: 0.08em;
@@ -108,18 +115,20 @@
   &__descr {
     margin-top: 35px;
 
+    max-width: 532px;
+
     font-size: 20px;
     line-height: 30px;
-    max-width: 532px;
     letter-spacing: 0.035em;
 
     // color: $white;
     @include b('tablet') {
       margin: 0 auto;
+
       max-width: 350px;
-      text-align: center;
 
       line-height: 22px;
+      text-align: center;
     }
   }
 
@@ -127,9 +136,9 @@
     margin-top: 35px;
 
     display: flex;
-    gap: 30px;
 
     width: 100%;
+    gap: 30px;
 
     .btn {
       padding: 17px 0;
@@ -137,9 +146,9 @@
 
     @include b('tablet') {
       flex-direction: column;
-      gap: 20px;
 
       align-items: center;
+      gap: 20px;
     }
   }
 
@@ -183,5 +192,14 @@
     @include b('tablet') {
       padding: 20px;
     }
+  }
+}
+
+.home_social-links {
+  display: flex;
+  margin-top: 25px;
+
+  @include b(tablet){
+    justify-content: center;
   }
 }

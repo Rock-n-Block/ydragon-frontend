@@ -1,24 +1,20 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { NavHashLink } from 'react-router-hash-link';
-import PoweredBy from './PoweredBy';
+import { observer } from 'mobx-react-lite';
 
 import logo from '../../assets/img/icons/logo.svg';
-// import dis from '../../assets/img/socials/discord.svg';
-import md from '../../assets/img/socials/medium.svg';
-import tg from '../../assets/img/socials/telegram.svg';
-import tw from '../../assets/img/socials/twitter.svg';
-import coingecko from '../../assets/img/socials/coingecko.svg';
-import coinmarketcapD from '../../assets/img/socials/coinmarketcap.svg';
-import coinmarketcapL from '../../assets/img/socials/coinmarketcap-light.svg';
-import nomics from '../../assets/img/socials/nomics.png';
+
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-import Whitepaper from '../../assets/pdf/YD WP.pdf';
+import Whitepaper from '../../assets/pdf/YD_WP.pdf';
+import { DARK, useMst } from '../../store/store';
+
+import PoweredBy from './PoweredBy';
+import SocialLink from '../SocialLink';
+import { socialLinks } from '../../config';
 
 import './Footer.scss';
-import { DARK, useMst } from '../../store/store';
-import { observer } from 'mobx-react-lite';
 
 const Footer: React.FC = observer(() => {
   const { theme } = useMst();
@@ -41,73 +37,34 @@ const Footer: React.FC = observer(() => {
 
             <div className="footer__socials">
               <div className="footer__socials-group">
-                <a
-                  href="https://t.me/ydrmain/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="footer__socials-item footer__socials-tg"
-                >
-                  <img src={tg} alt="telegram channel" width="16" height="16" />
-                  <span>Channel</span>
-                </a>
-
-                <a
-                  href="https://t.me/ydragonchat"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="footer__socials-item footer__socials-tg"
-                >
-                  <img src={tg} alt="telegram chat" width="16" height="16" />
-                  <span>Chat</span>
-                </a>
-                <a
-                  href="https://twitter.com/ydragons_"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="footer__socials-item"
-                >
-                  <img src={tw} alt="twitter" width="16" height="16" />
-                </a>
-                <a
-                  href="https://medium.com/ydragon-io"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="footer__socials-item"
-                >
-                  <img src={md} alt="medium" width="16" height="16" />
-                </a>
+                <SocialLink
+                  href={socialLinks.tgChannel.url}
+                  title="Channel"
+                  icon={socialLinks.tgChannel.iconDark}
+                />
+                <SocialLink
+                  href={socialLinks.tgChat.url}
+                  title="Chat"
+                  icon={socialLinks.tgChannel.iconDark}
+                />
+                <SocialLink href={socialLinks.twitter.url} icon={socialLinks.twitter.iconDark} />
+                <SocialLink href={socialLinks.medium.url} icon={socialLinks.medium.iconDark} />
               </div>
               <div className="footer__socials-divider" />
               <div className="footer__socials-group">
-                <a
-                  href="https://coinmarketcap.com/currencies/ydragon/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="footer__socials-item"
-                >
-                  <img
-                    src={theme.value === DARK ? coinmarketcapD : coinmarketcapL}
-                    alt="coinmarketcap"
-                    width="16"
-                    height="16"
-                  />
-                </a>
-                <a
-                  href="https://www.coingecko.com/en/coins/ydragon"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="footer__socials-item"
-                >
-                  <img src={coingecko} alt="coingecko" width="16" height="16" />
-                </a>
-                <a
-                  href="https://nomics.com/assets/ydr-ydragon"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="footer__socials-item"
-                >
-                  <img src={nomics} alt="nomics" width="16" height="16" />
-                </a>
+                <SocialLink
+                  href={socialLinks.coinMarketCap.url}
+                  icon={
+                    theme.value === DARK
+                      ? socialLinks.coinMarketCap.iconDark
+                      : socialLinks.coinMarketCap.iconLight
+                  }
+                />
+                <SocialLink
+                  href={socialLinks.coingecko.url}
+                  icon={socialLinks.coingecko.iconDark}
+                />
+                <SocialLink href={socialLinks.nomics.url} icon={socialLinks.nomics.iconDark} />
               </div>
               {/*
               <a href="/" className="footer__socials-item">

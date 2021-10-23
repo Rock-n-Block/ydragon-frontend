@@ -1,0 +1,141 @@
+@import '../../../styles/_variables.scss';
+@import '../../../styles/mixins';
+
+.dark {
+  .governance {
+    &__title {
+      color: $white;
+    }
+
+    &__subtitle {
+      color: $white;
+    }
+  }
+}
+
+.light {
+  .governance {
+    &__title {
+      color: $black;
+    }
+
+    &__subtitle {
+      color: $black;
+    }
+  }
+}
+
+.governance {
+  &__wrapper {
+    margin-top: 80px;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    @include b('mobile') {
+      margin-top: 24px;
+
+      flex-direction: column;
+    }
+  }
+
+  &__slider-wrapper {
+    margin: 80px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1 1 auto;
+    @include b('mobile') {
+      margin: 0;
+      svg{
+        width: 200px !important;
+        margin-bottom: 50px;
+      }
+    }
+  }
+
+  &__slider {
+    @include b('tablet') {
+      width: 200%;
+    }
+    @include b('mobile') {
+      width: 80%;
+    }
+  }
+
+  &__subtitle-wrapper {
+    margin-left: 30px;
+
+    display: flex;
+    flex-direction: column;
+
+    @include b('mobile') {
+      margin-left: 0;
+    }
+  }
+
+  &__title {
+    position: relative;
+
+    padding-bottom: 24px;
+
+    font-family: 'Monument Extended', sans-serif;
+    font-size: 32px;
+    line-height: 38px;
+    letter-spacing: 0.035em;
+    text-transform: uppercase;
+
+    &::after {
+      content: '';
+
+      position: absolute;
+      left: 0;
+      bottom: 0;
+
+      width: 84px;
+      max-width: 84px;
+      height: 2px;
+
+      background: $red;
+    }
+
+    @include b('mobile') {
+      font-size: 24px;
+      line-height: 29px;
+    }
+  }
+
+  &__text-wrapper {
+    margin-top: 24px;
+
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__list-paragraphs {
+    padding: 0;
+
+    list-style-type: none;
+  }
+
+  &__text {
+    margin-top: 24px;
+
+    font-family: 'Rubik', sans-serif;
+    font-size: 22px;
+    line-height: 32px;
+
+    opacity: 0.9;
+
+    @include b('mobile') {
+      font-size: 16px;
+      line-height: 24px;
+    }
+  }
+
+  &__text-color {
+    color: $red;
+  }
+}
