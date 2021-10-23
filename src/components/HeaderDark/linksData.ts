@@ -12,9 +12,9 @@ export const aboutLinks = [
 ];
 
 export const productLinks = [
-  { title: 'Index Products', link: '/indexes' },
+  // { title: 'Index Products', link: '/indexes' },
   // { title: 'IndexPad', link: '/simplified' },
-  { title: 'StakePad', link: '/staking', needAuth: true },
+  // { title: 'StakePad', link: '/staking', needAuth: true },
   { title: 'Private Blockchain Funds', link: '/pbf' },
   { title: 'Bridge', link: 'https://bridge.ydragon.io/' },
 ];
@@ -27,8 +27,8 @@ export const mobileLinksData = [
   {
     title: 'Index Products',
     links: [
-      { title: 'Index Products', link: '/indexes' },
-      { title: 'StakePad', link: '/staking' },
+      // { title: 'Index Products', link: '/indexes' },
+      // { title: 'StakePad', link: '/staking' },
       { title: 'Private Blockchain Fund', link: '/pbf' },
       { title: 'Bridge', link: 'https://bridge.ydragon.io/' },
     ],
@@ -43,8 +43,8 @@ export const mobileLinksData = [
       { title: 'Contact us', link: 'mailto:info@ydragon.io' },
     ],
   },
-  {
+  /* {
     title: 'Admin',
     titleLink: '/admin',
-  },
+  }, */
 ];

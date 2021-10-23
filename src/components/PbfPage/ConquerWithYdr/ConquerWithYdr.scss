@@ -93,6 +93,9 @@ h2.conquer-title {
 .conquer-item--reverse {
   .conquer-item__img {
     justify-content: flex-end;
+    img{
+      width: 100%;
+    }
     @include b(mobile) {
       justify-content: center;
     }

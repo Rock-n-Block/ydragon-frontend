@@ -49,7 +49,7 @@ const InitialMintEventItem: React.FC /* <InitialMintEventItemProps> */ = (/* { i
     <div className="initial-mint-event">
       <div className="initial-mint-event__timings">
         <div className="initial-mint-event__timing timing-start">
-          <p className="initial-mint-event__timing-name">DAYS UNTIL AWAKENING</p>
+          <p className="initial-mint-event__timing-name">Starts in</p>
           <p className="initial-mint-event__timer">
             <span className="initial-mint-event__timer-time">
               {/* {start.diff(now, 'days') < 0 ? 0 : start.diff(now, 'days')} */}

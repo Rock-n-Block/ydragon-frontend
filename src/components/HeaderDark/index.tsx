@@ -11,10 +11,10 @@ import logo from '../../assets/img/icons/logo.svg';
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-import { useWalletConnectorContext } from '../../services/walletConnect';
+// import { useWalletConnectorContext } from '../../services/walletConnect';
 import { DARK, LIGHT, useMst } from '../../store/store';
 import EventBanner from '../EventBanner';
-import { Button, SelectNetwork, Switch, DropDown } from '../index';
+import { Button, Switch, DropDown } from '../index';
 import { aboutLinks, productLinks, mobileLinksData } from './linksData';
 import HeaderMobileItem from './HeaderMobileItem';
 
@@ -30,8 +30,8 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = observer(({ collapsed, onCollapsedChange }) => {
   const [fixed, setFixed] = useState(true);
-  const { theme, user } = useMst();
-  const walletConnector = useWalletConnectorContext();
+  const { theme } = useMst();
+  // const walletConnector = useWalletConnectorContext();
   const history = useHistory();
 
   const handleChangeTheme = () => {
@@ -42,15 +42,15 @@ const Header: React.FC<HeaderProps> = observer(({ collapsed, onCollapsedChange }
     }
   };
 
-  const handleLogOut = () => {
-    onCollapsedChange(true);
-    walletConnector.disconnect();
-  };
-
-  const connectWallet = (): void => {
-    onCollapsedChange(true);
-    walletConnector.connect();
-  };
+  // const handleLogOut = () => {
+  //   onCollapsedChange(true);
+  //   walletConnector.disconnect();
+  // };
+  //
+  // const connectWallet = (): void => {
+  //   onCollapsedChange(true);
+  //   walletConnector.connect();
+  // };
 
   const redirectHandler = (path: string) => {
     onCollapsedChange(true);
@@ -104,8 +104,8 @@ const Header: React.FC<HeaderProps> = observer(({ collapsed, onCollapsedChange }
             ) : (
               <div className="menu__sign">
                 <Switch checked={DARK === theme.value} onChange={handleChangeTheme} />
-                <SelectNetwork />
-                {user.address && (
+                {/* <SelectNetwork /> */}
+                {/* {user.address && (
                   <Button
                     className="menu-nav__link logout menu-nav__link--button"
                     type="text"
@@ -123,7 +123,7 @@ const Header: React.FC<HeaderProps> = observer(({ collapsed, onCollapsedChange }
                   >
                     Connect wallet
                   </Button>
-                )}
+                )} */}
               </div>
             )}
 
@@ -152,7 +152,7 @@ const Header: React.FC<HeaderProps> = observer(({ collapsed, onCollapsedChange }
 
             <div className="header__sign">
               <Switch checked={DARK === theme.value} onChange={handleChangeTheme} />
-              <SelectNetwork />
+              {/* <SelectNetwork />
               <ul className="header-nav">
                 {user.address && (
                   <li className="header-nav__item">
@@ -177,7 +177,7 @@ const Header: React.FC<HeaderProps> = observer(({ collapsed, onCollapsedChange }
                     </Button>
                   </li>
                 )}
-              </ul>
+              </ul> */}
             </div>
           </div>
           <nav className="menu">

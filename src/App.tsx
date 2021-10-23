@@ -2,25 +2,25 @@ import React, { useEffect, useState } from 'react';
 import { Route, Switch, useRouteMatch } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 
-import { Indexes } from './components/Admin';
-import { GetInModal, InfoModal, MetamaskErrModal } from './components/Modals';
+// import { Indexes } from './components/Admin';
+// import { GetInModal, InfoModal, MetamaskErrModal } from './components/Modals';
 // import { Indexes } from './components/Admin';
 // import { GetInModal, InfoModal, MetamaskErrModal } from './components/Modals';
 // import AdminIndex from './pages/AdminIndex';
 import { useMst } from './store/store';
-import { Footer, GuardedRoute, /* GuardedRoute, */ Header } from './components';
+import { Footer, Header } from './components';
 import {
   AboutUs,
-  Admin,
-  AdminIndex,
+  // Admin,
+  // AdminIndex,
   Home,
-  Index,
-  IndexDashboard,
+  // Index,
+  // IndexDashboard,
   NoPageFound,
   Simplified,
   YdrToken,
   PbfPage,
-  StakingPage,
+  // StakingPage,
 } from './pages';
 
 import './styles/index.scss';
@@ -35,8 +35,8 @@ const App: React.FC = observer(() => {
   const { theme } = useMst();
   const [bodyClass, setBodyClass] = useState('');
 
-  const user = !!localStorage.getItem('yd_address') || false;
-  const admin = !!localStorage.getItem('yd_token') || false;
+  // const user = !!localStorage.getItem('yd_address') || false;
+  // const admin = !!localStorage.getItem('yd_token') || false;
 
   const addClass = () => {
     let result;
@@ -79,20 +79,20 @@ const App: React.FC = observer(() => {
             <Route exact path="/">
               <Home />
             </Route>
-            <Route exact path="/index/:indexId">
+            {/* <Route exact path="/index/:indexId">
               <Index />
-            </Route>
+            </Route> */}
             <Route exact path="/ydrtoken">
               <YdrToken />
             </Route>
-            <GuardedRoute exact path="/admin" component={Admin} auth={admin} />
+            {/* <GuardedRoute exact path="/admin" component={Admin} auth={admin} />
             <GuardedRoute exact path="/admin" component={Indexes} auth={admin} />
             <GuardedRoute exact path="/admin/index/:indexId" component={AdminIndex} auth={admin} />
-            <GuardedRoute exact path="/staking" component={StakingPage} auth={user} />
+            <GuardedRoute exact path="/staking" component={StakingPage} auth={user} /> */}
 
-            <Route exact path="/indexes">
+            {/* <Route exact path="/indexes">
               <IndexDashboard />
-            </Route>
+            </Route> */}
             <Route exact path="/about-us">
               <AboutUs />
             </Route>
@@ -104,9 +104,9 @@ const App: React.FC = observer(() => {
             </Route>
             <Route component={NoPageFound} />
           </Switch>
-          <MetamaskErrModal />
+          {/* <MetamaskErrModal />
           <InfoModal />
-          <GetInModal />
+          <GetInModal /> */}
           <Footer />
         </div>
       </div>
