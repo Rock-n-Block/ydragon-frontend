@@ -12,12 +12,13 @@ import { DARK, useMst } from '../../store/store';
 
 import PoweredBy from './PoweredBy';
 import SocialLink from '../SocialLink';
-import { socialLinks } from '../../config';
+import config from '../../config';
 
 import './Footer.scss';
 
 const Footer: React.FC = observer(() => {
   const { theme } = useMst();
+  const { SOCIAL_LINKS } = config;
   return (
     <footer className="footer">
       <div className="container">
@@ -38,33 +39,33 @@ const Footer: React.FC = observer(() => {
             <div className="footer__socials">
               <div className="footer__socials-group">
                 <SocialLink
-                  href={socialLinks.tgChannel.url}
+                  href={SOCIAL_LINKS.tgChannel.url}
                   title="Channel"
-                  icon={socialLinks.tgChannel.iconDark}
+                  icon={SOCIAL_LINKS.tgChannel.iconDark}
                 />
                 <SocialLink
-                  href={socialLinks.tgChat.url}
+                  href={SOCIAL_LINKS.tgChat.url}
                   title="Chat"
-                  icon={socialLinks.tgChannel.iconDark}
+                  icon={SOCIAL_LINKS.tgChannel.iconDark}
                 />
-                <SocialLink href={socialLinks.twitter.url} icon={socialLinks.twitter.iconDark} />
-                <SocialLink href={socialLinks.medium.url} icon={socialLinks.medium.iconDark} />
+                <SocialLink href={SOCIAL_LINKS.twitter.url} icon={SOCIAL_LINKS.twitter.iconDark} />
+                <SocialLink href={SOCIAL_LINKS.medium.url} icon={SOCIAL_LINKS.medium.iconDark} />
               </div>
               <div className="footer__socials-divider" />
               <div className="footer__socials-group">
                 <SocialLink
-                  href={socialLinks.coinMarketCap.url}
+                  href={SOCIAL_LINKS.coinMarketCap.url}
                   icon={
                     theme.value === DARK
-                      ? socialLinks.coinMarketCap.iconDark
-                      : socialLinks.coinMarketCap.iconLight
+                      ? SOCIAL_LINKS.coinMarketCap.iconDark
+                      : SOCIAL_LINKS.coinMarketCap.iconLight
                   }
                 />
                 <SocialLink
-                  href={socialLinks.coingecko.url}
-                  icon={socialLinks.coingecko.iconDark}
+                  href={SOCIAL_LINKS.coingecko.url}
+                  icon={SOCIAL_LINKS.coingecko.iconDark}
                 />
-                <SocialLink href={socialLinks.nomics.url} icon={socialLinks.nomics.iconDark} />
+                <SocialLink href={SOCIAL_LINKS.nomics.url} icon={SOCIAL_LINKS.nomics.iconDark} />
               </div>
               {/*
               <a href="/" className="footer__socials-item">

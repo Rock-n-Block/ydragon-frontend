@@ -8,7 +8,7 @@ import { useWhiteList } from '../../../hooks/useWhiteList';
 import { vaultsApi } from '../../../services/api';
 import { useWalletConnectorContext } from '../../../services/walletConnect';
 // import MetamaskService, { nativeTokens } from '../../../services/web3';
-import config from '../../../services/web3/config';
+import config from '../../../services/web3/config_ABI';
 import { useMst } from '../../../store/store';
 import { ProviderRpcError } from '../../../types/errors';
 import { Button, Input, InputWithSelect } from '../../index';

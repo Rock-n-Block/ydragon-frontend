@@ -5,8 +5,17 @@ import tw from '../assets/img/socials/twitter.svg';
 import coingecko from '../assets/img/socials/coingecko.svg';
 import coinmarketcapL from '../assets/img/socials/coinmarketcap-light.svg';
 import coinmarketcapD from '../assets/img/socials/coinmarketcap.svg';
+import bncDark from '../assets/img/icons/icon-binance-dark.svg';
+import bncLight from '../assets/img/icons/icon-binance-light.svg';
+import plgDark from '../assets/img/icons/icon-polygon-dark.svg';
+import plgLight from '../assets/img/icons/icon-polygon-light.svg';
+import eth from '../assets/img/icons/blockchains/eth.svg';
 
-export const socialLinks = {
+const IS_PRODUCTION = false;
+const BACKEND_URL = IS_PRODUCTION
+  ? 'https://preprod.ydragon.io/api/'
+  : 'https://dev-ydragon.rocknblock.io/api/';
+const SOCIAL_LINKS = {
   twitter: {
     url: 'https://twitter.com/ydragons_',
     iconLight: '',
@@ -41,5 +50,152 @@ export const socialLinks = {
     url: 'https://nomics.com/assets/ydr-ydragon',
     iconLight: '',
     iconDark: nomics,
+  },
+};
+
+export type TChain = 'eth' | 'bnb' | 'matic';
+
+const NETWORK_TOKENS = {
+  eth: {
+    symbol: 'eth',
+    address: '0x0000000000000000000000000000000000000000',
+    decimals: 18,
+    name: 'Ethereum',
+    image: (theme: string) => {
+      return theme === 'dark' ? eth : eth;
+    },
+    disabled: false,
+  },
+  bnb: {
+    symbol: 'bnb',
+    address: '0x0000000000000000000000000000000000000000',
+    decimals: 18,
+    name: 'Binance Coin',
+    image: (theme: string) => {
+      return theme === 'dark' ? bncDark : bncLight;
+    },
+    disabled: false,
+  },
+  matic: {
+    symbol: 'matic',
+    address: '0x0000000000000000000000000000000000000000',
+    decimals: 18,
+    name: 'Polygon (Matic)',
+    image: (theme: string) => {
+      return theme === 'dark' ? plgDark : plgLight;
+    },
+    disabled: false,
+  },
+};
+
+export default {
+  IS_PRODUCTION,
+  BACKEND_URL,
+  SOCIAL_LINKS,
+  BACKEND_NETWORKS: {
+    eth: 'eth',
+    bnb: 'binance-smart-chain',
+    matic: 'matic',
+  },
+  CHAIN_IDS: {
+    mainnet: {
+      eth: {
+        name: 'Ethereum',
+        id: '0x01',
+      },
+      bnb: {
+        name: 'Binance smart chain',
+        id: '0x38',
+      },
+      matic: {
+        name: 'Matic',
+        id: '0x89',
+      },
+    },
+    testnet: {
+      eth: {
+        name: 'Ethereum',
+        id: '0x2a',
+      },
+      bnb: {
+        name: 'Binance smart chain',
+        id: '0x61',
+      },
+      matic: {
+        name: 'Matic',
+        id: '0x13881',
+      },
+    },
+  },
+  NETWORK_BY_CHAIN_ID: {
+    mainnet: {
+      '0x01': 'ethereum',
+      '0x38': 'binance-smart-chain',
+      '0x89': 'polygon-pos',
+    },
+    testnet: {
+      '0x2a': 'ethereum',
+      '0x61': 'binance-smart-chain',
+      '0x13881': 'polygon-pos',
+    },
+  },
+  NATIVE_TOKENS: {
+    eth: { native: 'eth', wrapped: 'weth' },
+    bnb: { native: 'bnb', wrapped: 'wbnb' },
+    matic: { native: 'matic', wrapped: 'wmatic' },
+  },
+  FULL_CHAIN_INFO: {
+    mainnet: {
+      eth: {
+        chainId: '0x1',
+        chainName: 'Ethereum',
+        shortName: 'Ethereum',
+        nativeCurrency: NETWORK_TOKENS.eth,
+        rpcUrls: ['https://mainnet.infura.io/v3/'],
+        blockExplorerUrls: ['https://etherscan.io/'],
+      },
+      bnb: {
+        chainId: '0x38',
+        chainName: 'Binance Smart Chain Mainnet',
+        shortName: 'Binance',
+        nativeCurrency: NETWORK_TOKENS.bnb,
+        rpcUrls: ['https://bsc-dataseed1.binance.org'],
+        blockExplorerUrls: ['https://bscscan.com'],
+      },
+      matic: {
+        chainId: '0x89',
+        chainName: 'Matic(Polygon) Mainnet',
+        shortName: 'Polygon',
+        nativeCurrency: NETWORK_TOKENS.matic,
+        rpcUrls: ['https://rpc-mainnet.matic.network'],
+        blockExplorerUrls: ['https://polygonscan.com'],
+      },
+    },
+    testnet: {
+      eth: {
+        chainId: '0x2a',
+        chainName: 'Kovan Test Network',
+        shortName: 'Ethereum Testnet',
+        nativeCurrency: NETWORK_TOKENS.eth,
+        rpcUrls: ['https://kovan.infura.io'],
+        blockExplorerUrls: ['https://kovan.etherscan.io/'],
+      },
+      bnb: {
+        chainId: '0x61',
+        chainName: 'Binance Smart Chain Testnet',
+        shortName: 'Binance Testnet',
+        nativeCurrency: NETWORK_TOKENS.bnb,
+        rpcUrls: ['https://data-seed-prebsc-1-s1.binance.org:8545'],
+        blockExplorerUrls: ['https://testnet.bscscan.com'],
+      },
+      matic: {
+        chainId: '0x13881',
+        chainName: 'Matic Testnet Mumbai',
+        shortName: 'Polygon Testnet',
+        nativeCurrency: NETWORK_TOKENS.matic,
+        rpcUrls: ['https://rpc-mumbai.matic.today'],
+        blockExplorerUrls: ['https://mumbai.polygonscan.com/'],
+      },
+    },
   },
 };

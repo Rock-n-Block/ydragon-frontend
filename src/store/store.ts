@@ -1,7 +1,6 @@
 import { createContext, useContext } from 'react';
 import { Instance, onSnapshot, types } from 'mobx-state-tree';
 
-import { BasicTokens } from './BasicTokens';
 import { Modals } from './Modals';
 import { Networks } from './Networks';
 import { Theme } from './Theme';
@@ -15,7 +14,6 @@ const RootModel = types.model({
   user: User,
   theme: Theme,
   networks: Networks,
-  basicTokens: BasicTokens,
 });
 
 export const Store = RootModel.create({
@@ -41,7 +39,6 @@ export const Store = RootModel.create({
     networkId: '',
     networksList: [],
   },
-  basicTokens: {},
 });
 
 export const rootStore = Store;
