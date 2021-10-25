@@ -536,21 +536,22 @@ export default class MetamaskService {
     });
   }
 
+  // ================== NEW METHODS ====================
+
   getStakesCount() {
     return this.getContractByAddress(
-      // rootStore.networks.getCurrNetwork()?.staking_address ??
-      //   '0x0000000000000000000000000000000000000000',
-      '0x35f2Cb029CB2814066Ba38166bb8e341Ecd2609b',
+      rootStore.networks.getCurrNetwork()?.staking_address ??
+        '0x0000000000000000000000000000000000000000',
       config.StakingFactory.ABI,
     )
       .methods.stakesCount()
       .call();
   }
 
-  // ================== new methods ====================
   getStakeContractByIndex(index: number) {
     return this.getContractByAddress(
-      '0x35f2Cb029CB2814066Ba38166bb8e341Ecd2609b',
+      rootStore.networks.getCurrNetwork()?.staking_address ??
+        '0x0000000000000000000000000000000000000000',
       config.StakingFactory.ABI,
     )
       .methods.stakes(index)
@@ -569,7 +570,43 @@ export default class MetamaskService {
     return this.getContractByAddress(indexAdress, config.Index.ABI).methods.name().call();
   }
 
-  // ========== new methods end =================
+  getUserBalance(userWalletId: string, indexAddress: string) {
+    return this.getContractByAddress(indexAddress, config.Index.ABI)
+      .methods.balanceOf(userWalletId)
+      .call();
+  }
+
+  getUserStakedAmount(userWalletId: string, indexId: number) {
+    return this.getContractByAddress(
+      rootStore.networks.getCurrNetwork()?.staking_address ??
+        '0x0000000000000000000000000000000000000000',
+      config.StakingFactory.ABI,
+    )
+      .methods.getUserBalance(userWalletId, indexId)
+      .call();
+  }
+
+  getTotalStaked(indexId: number) {
+    return this.getContractByAddress(
+      rootStore.networks.getCurrNetwork()?.staking_address ??
+        '0x0000000000000000000000000000000000000000',
+      config.StakingFactory.ABI,
+    )
+      .methods.getTotalStaked(indexId)
+      .call();
+  }
+
+  getUserRewards(userWalletId: string, indexId: number) {
+    return this.getContractByAddress(
+      rootStore.networks.getCurrNetwork()?.staking_address ??
+        '0x0000000000000000000000000000000000000000',
+      config.StakingFactory.ABI,
+    )
+      .methods.getAvailToClaim(userWalletId, indexId)
+      .call();
+  }
+
+  // ========== NEW METHODS END =================
 
   getStakingFactoryTokenToEnter(index: number) {
     return this.getContractByAddress(

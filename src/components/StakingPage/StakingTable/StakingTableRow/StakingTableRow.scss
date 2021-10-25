@@ -12,11 +12,19 @@
   }
 
   overflow: hidden;
+
+  // BETA SKELETON
+  &--skelet {
+    min-height: 110px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 }
 
 .staking-table_row__top {
   display: grid;
-  grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr 0.9fr 0.3fr;
+  grid-template-columns: 1fr 1.5fr 1fr 1fr 1fr 0.9fr 0.3fr;
 
   padding: 25px 22px;
 

@@ -16,6 +16,7 @@ const StakingTable: React.FC = observer(() => {
   const getStakesCount = useCallback(() => {
     walletConnector.metamaskService.getStakesCount().then((count: number) => {
       setStakesCount(count);
+      console.log(count);
     });
   }, [walletConnector.metamaskService]);
 
@@ -38,7 +39,7 @@ const StakingTable: React.FC = observer(() => {
           <div className="staking-table_header__cell" />
         </div>
         <div className="staking-table_body">
-          {new Array(stakesCount).fill(1).map((el, i) => (
+          {new Array(+stakesCount).fill(1).map((el, i) => (
             <StakingTableRow index={i} />
           ))}
         </div>

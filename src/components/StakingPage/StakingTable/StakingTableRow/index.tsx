@@ -1,8 +1,11 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import cn from 'classnames';
+import { observer } from 'mobx-react';
+import BigNumber from 'bignumber.js/bignumber';
 
-import { Button } from '../../../index';
+import { Button, Loader } from '../../../index';
 import { useWalletConnectorContext } from '../../../../services/walletConnect';
+import { useMst } from '../../../../store/store';
 
 import './StakingTableRow.scss';
 
@@ -13,23 +16,83 @@ interface IStakingTableRowProps {
   index: number;
 }
 
-const StakingTableRow: React.FC<IStakingTableRowProps> = ({ index }) => {
-  const [isOpened, setIsOpened] = useState(false);
-
+const StakingTableRow: React.FC<IStakingTableRowProps> = observer(({ index }) => {
   const walletConnect = useWalletConnectorContext();
+  const [isOpened, setIsOpened] = useState(false);
+  const { user, networks } = useMst();
 
-  const getStakeSymbol = useCallback(async () => {
-    const stakeId = await walletConnect.metamaskService.getStakeContractByIndex(index);
-    const stakedToken = await walletConnect.metamaskService.getStakedTokenFromStake(stakeId);
-    const symbol = await walletConnect.metamaskService.getIndexSymbol(stakedToken);
-    console.log(symbol);
-  }, [index, walletConnect.metamaskService]);
+  // index info
+  const [symbol, setSymbol] = useState('');
+  const [name, setName] = useState('');
+  const [deposited, setDeposited] = useState('');
+  const [totalStaked, setTotalStaked] = useState('');
+  const [rewards, setRewards] = useState('');
+  const [balance, setBalance] = useState('');
+
+  // staking fabric > get current stake by indexId > get stakedTokenAdress in stake > profit!
+  // TODO: выполнить getStakeIndexAdress 1 раз при старте???
+  const getStakeIndexAdress = useCallback(
+    async (indexCount: number) => {
+      const stakeAdress = await walletConnect.metamaskService.getStakeContractByIndex(indexCount);
+      const stakedTokenAdress = await walletConnect.metamaskService.getStakedTokenFromStake(
+        stakeAdress,
+      );
+      return stakedTokenAdress;
+    },
+    [walletConnect.metamaskService],
+  );
+
+  const getStakeSymbolAndName = useCallback(async () => {
+    const stakedTokenAdress = await getStakeIndexAdress(index);
+    const indexSymbol = await walletConnect.metamaskService.getIndexSymbol(stakedTokenAdress);
+    const indexName = await walletConnect.metamaskService.getIndexName(stakedTokenAdress);
+    return { indexSymbol, indexName };
+  }, [walletConnect.metamaskService, getStakeIndexAdress, index]);
+
+  const getBalanceOfUser = useCallback(
+    async (userAdress: string) => {
+      const stakedTokenAdress = await getStakeIndexAdress(index);
+      const userBalance: string = await walletConnect.metamaskService.getUserBalance(
+        userAdress,
+        stakedTokenAdress,
+      );
+
+      return userBalance;
+    },
+    [walletConnect.metamaskService, index, getStakeIndexAdress],
+  );
 
   useEffect(() => {
-    getStakeSymbol();
-  }, [getStakeSymbol]);
+    // INDEX NAME AND SYMBOL
+    getStakeSymbolAndName().then((data) => {
+      setName(data.indexName);
+      setSymbol(data.indexSymbol);
+    });
+
+    // USER BALANCE IN THE WALLET
+    getBalanceOfUser(user.address).then((userBalance) => setBalance(userBalance));
+
+    // USER STAKED AMOUNT
+    walletConnect.metamaskService
+      .getUserStakedAmount(user.address, index)
+      .then((data: string) => setDeposited(data));
+
+    // TOTAL STAKED AMOUNT
+    walletConnect.metamaskService
+      .getTotalStaked(index)
+      .then((data: string) => setTotalStaked(data));
+
+    // USER REWARDS
+    walletConnect.metamaskService
+      .getUserRewards(user.address, index)
+      .then((data: string) => setRewards(data));
+  }, [getStakeSymbolAndName, getBalanceOfUser, user.address, walletConnect.metamaskService, index]);
+
+  if (!networks.currentNetwork) return <Loader />;
 
   // TODO: create skeleton
+  if (!symbol || !name || !totalStaked)
+    return <div className="staking-table_row staking-table_row--skelet">SKELETON</div>;
   return (
     <div className="staking-table_row">
       <div className="staking-table_row__top">
@@ -39,29 +102,35 @@ const StakingTableRow: React.FC<IStakingTableRowProps> = ({ index }) => {
               <img src={logoExample1} alt="token logo" />
             </div>
             <div className="staking-table_row__cell__logo__info">
-              <p>YDR</p>
-              <p>Ydragon</p>
+              <p>{symbol}</p>
+              <p>{name}</p>
             </div>
           </div>
         </div>
         <div className="staking-table_row__cell">
           <div className="staking-table_row__cell__title">balance</div>
-          <div className="staking-table_row__cell__value text-MER">$43.02</div>
+          <div className="staking-table_row__cell__value text-MER">
+            $ {new BigNumber(balance).dividedBy(10 ** 18).toFormat(2)}
+          </div>
         </div>
         <div className="staking-table_row__cell">
           <div className="staking-table_row__cell__title">deposited</div>
-          <div className="staking-table_row__cell__value text-MER">3,000.53 YDR</div>
+          <div className="staking-table_row__cell__value text-MER">
+            {deposited} {symbol}
+          </div>
         </div>
         <div className="staking-table_row__cell">
           <div className="staking-table_row__cell__title">your rewards</div>
-          <div className="staking-table_row__cell__value text-gradient">42 YDR</div>
+          <div className="staking-table_row__cell__value text-gradient">
+            {rewards} {symbol}
+          </div>
         </div>
         <div className="staking-table_row__cell">
           <div className="staking-table_row__cell__title">tvl</div>
-          <div className="staking-table_row__cell__value text-MER">$160,000</div>
+          <div className="staking-table_row__cell__value text-MER">$ {totalStaked}</div>
         </div>
         <div className="staking-table_row__cell">
-          <Button className="staking-table_row__cell--button">Get YDR</Button>
+          <Button className="staking-table_row__cell--button">Get {symbol}</Button>
         </div>
         <div
           className={cn('staking-table_row__cell staking-table_row__cell--arrow', {
@@ -82,7 +151,10 @@ const StakingTableRow: React.FC<IStakingTableRowProps> = ({ index }) => {
         <div className="staking-table_row__bottom__inner">
           <div className="staking-table_row__bottom__cell">
             <div className="staking-table_row__bottom__cell__title">
-              Wallet: <span className="text-gradient"> 0.0000 LP</span>
+              Wallet:{' '}
+              <span className="text-gradient">
+                {new BigNumber(balance).dividedBy(10 ** 18).toFormat(2)} {symbol}
+              </span>
             </div>
             <div className="staking-table_row__bottom__cell__input">
               <input placeholder="0.0" type="text" />
@@ -93,7 +165,10 @@ const StakingTableRow: React.FC<IStakingTableRowProps> = ({ index }) => {
           </div>
           <div className="staking-table_row__bottom__cell">
             <div className="staking-table_row__bottom__cell__title">
-              Deposited: <span className="text-gradient">0.0000 LP</span>
+              Deposited:{' '}
+              <span className="text-gradient">
+                {deposited} {symbol}
+              </span>
             </div>
             <div className="staking-table_row__bottom__cell__input">
               <input placeholder="0.0" type="text" />
@@ -104,7 +179,10 @@ const StakingTableRow: React.FC<IStakingTableRowProps> = ({ index }) => {
           </div>
           <div className="staking-table_row__bottom__cell">
             <div className="staking-table_row__bottom__cell__title">
-              Rewards: <span className="text-gradient">21.00 YDR</span>
+              Rewards:{' '}
+              <span className="text-gradient">
+                {rewards} {symbol}
+              </span>
             </div>
             <div className="staking-table_row__bottom__cell__logo">
               <img src={logoExample1} alt="token logo" />
@@ -117,6 +195,6 @@ const StakingTableRow: React.FC<IStakingTableRowProps> = ({ index }) => {
       </div>
     </div>
   );
-};
+});
 
 export default StakingTableRow;

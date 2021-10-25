@@ -2,7 +2,7 @@
 
 .staking-table_header {
   display: grid;
-  grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr 0.9fr 0.3fr;
+  grid-template-columns: 1fr 1.5fr 1fr 1fr 1fr 0.9fr 0.3fr;
 
   margin-bottom: 20px;
   @include b(tablet) {
