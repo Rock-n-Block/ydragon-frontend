@@ -664,38 +664,7 @@ export default class MetamaskService {
     return this.web3Provider.eth.sendTransaction({
       ...transactionConfig,
       from: this.walletAddress,
+      type: '0x2',
     });
-  }
-
-  getGasPrice(): Promise<string> {
-    return this.web3Provider.eth.getGasPrice();
-  }
-
-  checkBridgeAllowance(contractAddress: string, tokenAddress: string): Promise<boolean> {
-    return this.checkAllowanceById(tokenAddress, config.Token.ABI, contractAddress);
-  }
-
-  getBridgeFee(contractAddress: string, toBlockchain: number): Promise<string> {
-    const contract = this.getContractByAddress(contractAddress, config.Bridge.ABI);
-    return contract.methods.feeAmountOfBlockchain(toBlockchain).call();
-  }
-
-  getBridgeMinAmount(contractAddress: string): Promise<string> {
-    const contract = this.getContractByAddress(contractAddress, config.Bridge.ABI);
-    return contract.methods.minTokenAmount().call();
-  }
-
-  swapTokensToOtherBlockchain(
-    contractAddress: string,
-    toBlockchain: number,
-    amountAbsolute: string,
-    toAddress: string,
-  ): Promise<void> {
-    const contract = this.getContractByAddress(contractAddress, config.Bridge.ABI);
-    return contract.methods
-      .transferToOtherBlockchain(toBlockchain, amountAbsolute, toAddress)
-      .send({
-        from: this.walletAddress,
-      });
   }
 }
