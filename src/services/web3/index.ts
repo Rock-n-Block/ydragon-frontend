@@ -19,7 +19,7 @@ interface INetworks {
 
 export type TestNetworkTypes = 'bnb' | 'matic' | 'eth';
 
-export type ContractTypes = 'Router' | 'Factory' | 'Staking' | 'DexFactory' | 'Token';
+export type ContractTypes = 'Router' | 'Factory' | 'StakingFactory' | 'DexFactory' | 'Token';
 
 export const nativeTokens = ['bnb', 'wbnb', 'matic', 'wmatic'];
 
@@ -513,7 +513,7 @@ export default class MetamaskService {
   }
 
   harvestStakeItem(id: string | number) {
-    const method = MetamaskService.getMethodInterface(config.Staking.ABI, 'claimDividends');
+    const method = MetamaskService.getMethodInterface(config.StakingFactory.ABI, 'claimDividends');
 
     const signature = this.encodeFunctionCall(method, [id, '0']);
 
@@ -525,7 +525,7 @@ export default class MetamaskService {
   }
 
   endStake(id: string | number) {
-    const method = MetamaskService.getMethodInterface(config.Staking.ABI, 'stakeEnd');
+    const method = MetamaskService.getMethodInterface(config.StakingFactory.ABI, 'stakeEnd');
 
     const signature = this.encodeFunctionCall(method, [id]);
 
@@ -536,26 +536,51 @@ export default class MetamaskService {
     });
   }
 
-  getStakingTokensLen() {
+  getStakesCount() {
     return this.getContractByAddress(
-      rootStore.networks.getCurrNetwork()?.staking_address ??
-        '0x0000000000000000000000000000000000000000',
-      config.Staking.ABI,
+      // rootStore.networks.getCurrNetwork()?.staking_address ??
+      //   '0x0000000000000000000000000000000000000000',
+      '0x35f2Cb029CB2814066Ba38166bb8e341Ecd2609b',
+      config.StakingFactory.ABI,
     )
-      .methods.tokensToEnterLen()
+      .methods.stakesCount()
       .call();
   }
 
-  getStakingTokenToEnter(index: number) {
+  // ================== new methods ====================
+  getStakeContractByIndex(index: number) {
+    return this.getContractByAddress(
+      '0x35f2Cb029CB2814066Ba38166bb8e341Ecd2609b',
+      config.StakingFactory.ABI,
+    )
+      .methods.stakes(index)
+      .call();
+  }
+
+  getStakedTokenFromStake(stakeAdress: string) {
+    return this.getContractByAddress(stakeAdress, config.Stake.ABI).methods.stakedToken().call();
+  }
+
+  getIndexSymbol(indexAdress: string) {
+    return this.getContractByAddress(indexAdress, config.Index.ABI).methods.symbol().call();
+  }
+
+  getIndexName(indexAdress: string) {
+    return this.getContractByAddress(indexAdress, config.Index.ABI).methods.name().call();
+  }
+
+  // ========== new methods end =================
+
+  getStakingFactoryTokenToEnter(index: number) {
     return this.getContractByAddress(
       rootStore.networks.getCurrNetwork()?.staking_address ?? '',
-      config.Staking.ABI,
+      config.StakingFactory.ABI,
     )
       .methods.tokensToEnter(index)
       .call();
   }
 
-  getStakingPair(address: string) {
+  getStakingFactoryPair(address: string) {
     return this.getContractByAddress(
       rootStore.networks.getCurrNetwork()?.dex_factory_address ?? '',
       config.DexFactory.ABI,
@@ -594,7 +619,7 @@ export default class MetamaskService {
   }
 
   startStake(tokenAddress: string, amount: string, timeIntervalIndex: number) {
-    const method = MetamaskService.getMethodInterface(config.Staking.ABI, 'stakeStart');
+    const method = MetamaskService.getMethodInterface(config.StakingFactory.ABI, 'stakeStart');
 
     const signature = this.encodeFunctionCall(method, [
       tokenAddress,

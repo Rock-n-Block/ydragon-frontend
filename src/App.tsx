@@ -35,7 +35,7 @@ const App: React.FC = observer(() => {
   const { theme } = useMst();
   const [bodyClass, setBodyClass] = useState('');
 
-  const user = !!localStorage.getItem('yd_address') || false;
+  // const user = !!localStorage.getItem('yd_address') || false;
   const admin = !!localStorage.getItem('yd_token') || false;
 
   const addClass = () => {
@@ -88,7 +88,8 @@ const App: React.FC = observer(() => {
             <GuardedRoute exact path="/admin" component={Admin} auth={admin} />
             <GuardedRoute exact path="/admin" component={Indexes} auth={admin} />
             <GuardedRoute exact path="/admin/index/:indexId" component={AdminIndex} auth={admin} />
-            <GuardedRoute exact path="/staking" component={StakingPage} auth={user} />
+            {/* <GuardedRoute exact path="/staking" component={StakingPage} auth={user} /> */}
+            <Route exact path="/staking" component={StakingPage} />
 
             <Route exact path="/indexes">
               <IndexDashboard />

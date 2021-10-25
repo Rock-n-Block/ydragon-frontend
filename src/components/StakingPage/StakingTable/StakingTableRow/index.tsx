@@ -1,16 +1,35 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import cn from 'classnames';
 
 import { Button } from '../../../index';
+import { useWalletConnectorContext } from '../../../../services/walletConnect';
 
 import './StakingTableRow.scss';
 
 import arrowDownIcon from '../../../../assets/img/icons/arrow-down.svg';
 import logoExample1 from '../../../../assets/img/staking-page/logo-example-1.svg';
 
-const StakingTableRow: React.FC = () => {
+interface IStakingTableRowProps {
+  index: number;
+}
+
+const StakingTableRow: React.FC<IStakingTableRowProps> = ({ index }) => {
   const [isOpened, setIsOpened] = useState(false);
 
+  const walletConnect = useWalletConnectorContext();
+
+  const getStakeSymbol = useCallback(async () => {
+    const stakeId = await walletConnect.metamaskService.getStakeContractByIndex(index);
+    const stakedToken = await walletConnect.metamaskService.getStakedTokenFromStake(stakeId);
+    const symbol = await walletConnect.metamaskService.getIndexSymbol(stakedToken);
+    console.log(symbol);
+  }, [index, walletConnect.metamaskService]);
+
+  useEffect(() => {
+    getStakeSymbol();
+  }, [getStakeSymbol]);
+
+  // TODO: create skeleton
   return (
     <div className="staking-table_row">
       <div className="staking-table_row__top">
