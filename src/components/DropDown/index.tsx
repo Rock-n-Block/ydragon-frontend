@@ -11,6 +11,7 @@ interface IDropDownLink {
   link: string;
   needAuth?: boolean;
 }
+
 interface IDropDownProps {
   title: string;
   links: Array<IDropDownLink>;
@@ -31,20 +32,27 @@ const DropDown: React.FC<IDropDownProps> = ({ title, links }) => {
           tabIndex={0}
           onKeyDown={() => {}}
           role="button"
-          onClick={() => setIsActive((prev) => !prev)}
+          onMouseEnter={() => setIsActive(true)}
+          onMouseLeave={() => setIsActive(false)}
         >
           {title}
         </div>
-        <div className={cn('dropdown-body', { 'dropdown-body--active': isActive })}>
-          {links.map((link) => (
-            <DropDownItem
-              key={link.title}
-              handleClose={handleClose}
-              title={link.title}
-              link={link.link}
-              needAuth={link.needAuth || false}
-            />
-          ))}
+        <div className="dropdown-body_wrapper">
+          <div
+            className={cn('dropdown-body', { 'dropdown-body--active': isActive })}
+            onMouseEnter={() => setIsActive(true)}
+            onMouseLeave={() => setIsActive(false)}
+          >
+            {links.map((link) => (
+              <DropDownItem
+                key={link.title}
+                handleClose={handleClose}
+                title={link.title}
+                link={link.link}
+                needAuth={link.needAuth || false}
+              />
+            ))}
+          </div>
         </div>
       </OutsideAlerter>
     </div>
