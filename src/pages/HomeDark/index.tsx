@@ -3,7 +3,7 @@ import React from 'react';
 import {
   Advantages,
   Features,
-  InitialMintEvent,
+  Indexpad,
   Machine,
   Main,
   Partners,
@@ -14,7 +14,7 @@ const Home: React.FC = () => {
   return (
     <main className="container">
       <Main />
-      <InitialMintEvent />
+      <Indexpad />
       <Machine />
       <Features />
       <Advantages />

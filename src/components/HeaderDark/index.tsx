@@ -22,6 +22,7 @@ import SocialLink from '../SocialLink/index';
 import config from '../../config/index';
 
 import './Header.scss';
+import nextId from 'react-id-generator';
 
 interface HeaderProps {
   collapsed: boolean;
@@ -186,6 +187,7 @@ const Header: React.FC<HeaderProps> = observer(({ collapsed, onCollapsedChange }
               <ul className="menu-nav">
                 {mobileLinksData.map((item) => (
                   <HeaderMobileItem
+                    key={nextId()}
                     title={item.title}
                     links={item.links}
                     onCollapsedChange={onCollapsedChange}

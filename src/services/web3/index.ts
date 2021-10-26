@@ -47,6 +47,8 @@ const testNetworks: INetworks = {
   eth: '0x2a',
 };
 
+const { IS_PRODUCTION, NETWORK_BY_CHAIN_ID, NETWORK_TOKENS } = config;
+
 export default class MetamaskService {
   public wallet;
 
@@ -71,7 +73,6 @@ export default class MetamaskService {
   constructor() {
     this.wallet = window.ethereum;
 
-    const { IS_PRODUCTION } = config;
     this.web3Provider = new Web3(window.ethereum);
     this.isProduction = IS_PRODUCTION;
     // this.contract = new this.web3Provider.eth.Contract(config.ABI as Array<any>, config.ADDRESS);
@@ -85,15 +86,10 @@ export default class MetamaskService {
         if (!Object.values(this.usedChain).find((chainId) => chainId === currentChain)) {
           subscriber.next(`Please choose one of networks in header select.`);
         } else {
-          rootStore.networks.setNetworkId(this.wallet.chainId);
-          // TODO: change this on deploy
-          if (this.wallet.chainId === this.usedChain.bnb) {
-            rootStore.networks.setCurrNetwork('binance-smart-chain');
-          } else if (this.wallet.chainId === this.usedChain.matic) {
-            rootStore.networks.setCurrNetwork('polygon-pos');
-          } else if (this.wallet.chainId === this.usedChain.ethereum) {
-            rootStore.networks.setCurrNetwork('ethereum');
-          }
+          rootStore.networks.setNetworkId(currentChain);
+          rootStore.networks.setCurrNetwork(
+            (NETWORK_BY_CHAIN_ID[this.usedNetwork] as any)[currentChain],
+          );
           subscriber.next('');
         }
       });
@@ -227,14 +223,6 @@ export default class MetamaskService {
     return +decimals;
   }
 
-  /*
-  static getWrappedNativeAddress = (): string => {
-    const wrappedNativeSymbol =
-      rootStore.networks.currentNetwork === 'binance-smart-chain' ? 'wbnb' : 'wmatic';
-    const wrappedNativeAddress = rootStore.basicTokens.getTokenAddress(wrappedNativeSymbol);
-    return wrappedNativeAddress ?? '';
-  }; */
-
   static calcTransactionAmount(amount: number | string, tokenDecimal: number) {
     return new BigNumber(amount).times(new BigNumber(10).pow(tokenDecimal)).toString(10);
   }
@@ -338,7 +326,7 @@ export default class MetamaskService {
     });
   }
 
-  async approveById(toContractAddress: string, address: string) {
+  async approve(toContractAddress: string, address: string) {
     try {
       const approveMethod = MetamaskService.getMethodInterface(configABI.MAIN.ABI, 'approve');
 
@@ -364,11 +352,11 @@ export default class MetamaskService {
     imeAddress: string,
     decimals: number,
   ) {
-    const isBnb = spenderTokenName.toLowerCase() === 'bnb';
-    const methodName = isBnb ? 'enterImeNative' : 'enterImeToken';
+    const isNative = Object.keys(NETWORK_TOKENS).includes(spenderTokenName.toLowerCase());
+    const methodName = isNative ? 'enterImeNative' : 'enterImeToken';
     const enterMethod = MetamaskService.getMethodInterface(configABI.MAIN.ABI, methodName);
     let signature;
-    if (!isBnb) {
+    if (!isNative) {
       signature = this.encodeFunctionCall(enterMethod, [
         spenderTokenAddress,
         MetamaskService.calcTransactionAmount(value, decimals),
@@ -381,7 +369,7 @@ export default class MetamaskService {
       from: this.walletAddress,
       to: imeAddress,
       data: signature,
-      value: isBnb ? MetamaskService.calcTransactionAmount(value, decimals) : '',
+      value: isNative ? MetamaskService.calcTransactionAmount(value, decimals) : '',
     });
   }
 
@@ -527,18 +515,20 @@ export default class MetamaskService {
     return { address, name: tokenName, symbol: tokenSymbol, balance: tokenBalance };
   }
 
-  async getToken0FromPair(address: string) {
-    const contract = this.getContractByAddress(address, configABI.PAIR.ABI);
+  startStake(tokenAddress: string, amount: string, timeIntervalIndex: number) {
+    const method = MetamaskService.getMethodInterface(configABI.StakingFactory.ABI, 'stakeStart');
 
-    const token0 = await contract.methods.token0().call();
-    const token1 = await contract.methods.token1().call();
-    const det0 = await this.getTokenInfoByAddress(token0);
-    const det1 = await this.getTokenInfoByAddress(token1);
+    const signature = this.encodeFunctionCall(method, [
+      tokenAddress,
+      MetamaskService.calcTransactionAmount(amount, 18),
+      timeIntervalIndex,
+    ]);
 
-    if (det0.name === 'Wrapped BNB') {
-      return det1;
-    }
-    return det0;
+    return this.sendTransaction({
+      from: this.walletAddress,
+      to: rootStore.networks.getCurrNetwork()?.staking_address,
+      data: signature,
+    });
   }
 
   createNewIndex(

@@ -14,6 +14,7 @@ import { RebalanceModal } from '../../components/Modals';
 import { indexesApi, vaultsApi } from '../../services/api';
 import { useMst } from '../../store/store';
 import { IIndex, IIndexStatus, ITokensDiff } from '../Admin';
+import config, { TChain } from '../../config';
 
 interface IIndexId {
   indexId: string;
@@ -29,6 +30,7 @@ interface IRebalance extends IIndexStatus {
   price: number;
   network: string;
 }
+
 export interface IVault {
   id: number;
   apr: null | string;
@@ -42,12 +44,15 @@ export interface IVault {
   y_percent: string;
   farm_percent: string;
 }
+
 export interface IVaultMini {
   currency: string;
   total_x: string;
   total_y: string;
 }
+
 const AdminIndex: React.FC = () => {
+  const { BACKEND_NETWORKS } = config;
   const { indexId } = useParams<IIndexId>();
   const [index, setIndex] = useState<IRebalance>({} as IRebalance);
   const [vault, setVault] = useState<IVault[]>([] as IVault[]);
@@ -64,7 +69,7 @@ const AdminIndex: React.FC = () => {
       .getIndexesRebalance(+indexId)
       .then(({ data }) => {
         setIndex(data);
-        if (networks.currentNetwork !== data.index.network) {
+        if (BACKEND_NETWORKS[networks.currentNetwork as TChain] !== data.index.network) {
           history.push('/admin');
         }
       })
@@ -72,7 +77,7 @@ const AdminIndex: React.FC = () => {
         const { response } = err;
         console.log('get index composition collections error', response);
       });
-  }, [indexId, history, networks.currentNetwork]);
+  }, [indexId, BACKEND_NETWORKS, networks.currentNetwork, history]);
 
   const getVaults = useCallback(() => {
     vaultsApi

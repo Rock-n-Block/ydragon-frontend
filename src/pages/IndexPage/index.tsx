@@ -17,6 +17,7 @@ import { useWalletConnectorContext } from '../../services/walletConnect';
 import { useMst } from '../../store/store';
 
 import './Index.scss';
+import config, { TChain } from '../../config';
 
 interface IIndexId {
   indexId: string;
@@ -38,6 +39,7 @@ export interface IIndex {
 }
 
 const Index: React.FC = observer(() => {
+  const { BACKEND_NETWORKS } = config;
   const { indexId } = useParams<IIndexId>();
   const walletConnector = useWalletConnectorContext();
   const { modals, networks, user } = useMst();
@@ -55,7 +57,7 @@ const Index: React.FC = observer(() => {
       .getIndexById(+indexId)
       .then(({ data }) => {
         setIndexData(data);
-        if (networks.currentNetwork !== data.network) {
+        if (BACKEND_NETWORKS[networks.currentNetwork as TChain] !== data.network) {
           history.push('/indexes');
           // console.log(history);
         }
@@ -63,7 +65,7 @@ const Index: React.FC = observer(() => {
       .catch((err: any) => {
         console.log('get current index error', err);
       });
-  }, [history, networks.currentNetwork, indexId]);
+  }, [indexId, BACKEND_NETWORKS, networks.currentNetwork, history]);
 
   const getUserBalance = useCallback(
     (indexAddress: string) => {

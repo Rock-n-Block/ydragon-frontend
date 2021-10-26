@@ -1,12 +1,27 @@
 import axios from '../../core/axios';
 import { rootStore } from '../../store/store';
+import config, { TChain } from '../../config';
 
+const { BACKEND_NETWORKS } = config;
 export default {
-  getUserIndexes: () => axios.get(`indexes/user?network=${rootStore.networks.currentNetwork}`),
-  getAdminIndexes: () => axios.get(`indexes/admin?network=${rootStore.networks.currentNetwork}`),
-  getImeIndexes: () => axios.get(`indexes/ime?network=${rootStore.networks.currentNetwork}`),
-  getImeById: (id: number, address?: string) =>
-    axios.get(`indexes/ime/${id}${address ? `?address=${address}` : '/'}`),
+  getUserIndexes: () =>
+    axios.get(`indexes/user/`, {
+      params: {
+        network: BACKEND_NETWORKS[rootStore.networks.currentNetwork as TChain],
+      },
+    }),
+  getAdminIndexes: () =>
+    axios.get(`indexes/admin/`, {
+      params: {
+        network: BACKEND_NETWORKS[rootStore.networks.currentNetwork as TChain],
+      },
+    }),
+  getImeIndexes: () =>
+    axios.get(`indexes/ime`, {
+      params: {
+        network: BACKEND_NETWORKS[rootStore.networks.currentNetwork as TChain],
+      },
+    }),
   getIndexById: (id: number) => axios.get(`indexes/${id}`),
   getIndexWhiteList: (id: number) => axios.get(`indexes/${id}/whitelist`),
   getIndexesRebalance: (indexId: number) => axios.get(`indexes/${indexId}/rebalance/`),
@@ -30,5 +45,9 @@ export default {
   addTokenBackToIndex: (indexId: number, tokenId: number) =>
     axios.put(`/indexes/${indexId}/rebalance/tokens/${tokenId}/`, {}),
   getIndexTokensChart: (indexId: string, days: string) =>
-    axios.get(`/indexes/info/${indexId}${days !== 'max' ? `?days=${days}` : ''}`),
+    axios.get(`/indexes/info/${indexId}`, {
+      params: {
+        ...(days !== 'max' ? { days } : ''),
+      },
+    }),
 };

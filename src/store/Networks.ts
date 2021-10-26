@@ -15,7 +15,7 @@ const Network = types.model({
 export const Networks = types
   .model({
     networkId: types.string,
-    currentNetwork: types.maybeNull(types.string),
+    currentNetwork: types.string,
     networksList: types.optional(types.array(Network), []),
   })
   .actions((self) => {

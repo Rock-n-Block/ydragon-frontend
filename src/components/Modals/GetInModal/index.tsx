@@ -6,15 +6,17 @@ import { observer } from 'mobx-react-lite';
 import YDRLogo from '../../../assets/img/icons/logo.svg';
 import { useWhiteList } from '../../../hooks/useWhiteList';
 import { useWalletConnectorContext } from '../../../services/walletConnect';
-import config from '../../../services/web3/config_ABI';
+import configABI from '../../../services/web3/config_ABI';
 import { useMst } from '../../../store/store';
 import { ProviderRpcError } from '../../../types/errors';
 import { Button, Input, InputWithSelect } from '../../index';
 import { Modal } from '../index';
+import config from '../../../config';
 
 import './GetInModal.scss';
 
 const GetInModal: React.FC = observer(() => {
+  const { NETWORK_TOKENS } = config;
   const { modals, user } = useMst();
   const { whiteList, getTokenAddress } = useWhiteList(modals.getIn.id ?? 0);
   const walletConnector = useWalletConnectorContext();
@@ -34,15 +36,15 @@ const GetInModal: React.FC = observer(() => {
 
   const getDecimals = useCallback(
     async (currency: string) => {
-      if (currency === 'bnb') {
+      if (Object.keys(NETWORK_TOKENS).includes(currency)) {
         return new Promise((resolve) => resolve(18));
       }
       return walletConnector.metamaskService.getDecimals(
         getTokenAddress(currency),
-        config.Token.ABI,
+        configABI.Token.ABI,
       );
     },
-    [getTokenAddress, walletConnector.metamaskService],
+    [NETWORK_TOKENS, getTokenAddress, walletConnector.metamaskService],
   );
   const getBalance = useCallback(() => {
     walletConnector.metamaskService
@@ -59,9 +61,13 @@ const GetInModal: React.FC = observer(() => {
       });
   }, [getTokenAddress, getDecimals, walletConnector.metamaskService, firstCurrency]);
   const checkAllowance = useCallback(() => {
-    if (firstCurrency !== 'bnb') {
+    if (!Object.keys(NETWORK_TOKENS).includes(firstCurrency)) {
       walletConnector.metamaskService
-        .checkAllowanceById(getTokenAddress(firstCurrency), config.MAIN.ABI, modals.getIn.address)
+        .checkAllowanceById(
+          getTokenAddress(firstCurrency),
+          configABI.MAIN.ABI,
+          modals.getIn.address,
+        )
         .then((data: boolean) => {
           setIsNeedApprove(!data);
         })
@@ -70,7 +76,13 @@ const GetInModal: React.FC = observer(() => {
           console.log('allowance error', response);
         });
     }
-  }, [getTokenAddress, modals.getIn.address, walletConnector.metamaskService, firstCurrency]);
+  }, [
+    NETWORK_TOKENS,
+    firstCurrency,
+    walletConnector.metamaskService,
+    getTokenAddress,
+    modals.getIn.address,
+  ]);
 
   const handleSelectChange = (value: any) => {
     setFirstCurrency(value);
@@ -85,7 +97,7 @@ const GetInModal: React.FC = observer(() => {
   const handleApprove = (): void => {
     setIsLoading(true);
     walletConnector.metamaskService
-      .approveById(getTokenAddress(firstCurrency), modals.getIn.address)
+      .approve(getTokenAddress(firstCurrency), modals.getIn.address)
       .then(() => {
         setIsNeedApprove(false);
         modals.info.setMsg('Success', `Approve of ${firstCurrency} to IMO success`, 'success');
@@ -105,6 +117,7 @@ const GetInModal: React.FC = observer(() => {
         setPayInput('');
         getBalance();
         modals.info.setMsg('Success', 'You entered IMO', 'success');
+        setIsLoading(false);
       })
       .catch((err: ProviderRpcError) => {
         const { message } = err;
@@ -113,8 +126,8 @@ const GetInModal: React.FC = observer(() => {
           `Enter IMO error ${message.slice(0, message.indexOf(':'))}`,
           'error',
         );
-      })
-      .finally(() => setIsLoading(false));
+        setIsLoading(false);
+      });
   };
 
   const getBuyCourse = useCallback(() => {
@@ -148,7 +161,7 @@ const GetInModal: React.FC = observer(() => {
     walletConnector.metamaskService,
   ]);
   const handlePayInput = (e: any) => {
-    if (+e.target.value <= 0) {
+    if (+e.target.value < 0) {
       e.target.value = '';
     } else {
       setPayInput(e.target.value);
@@ -216,12 +229,12 @@ const GetInModal: React.FC = observer(() => {
 
           <Input placeholder={viewOnlyInputValue} disabled />
         </div>
-        {isNeedApprove && firstCurrency !== 'bnb' && firstCurrency !== 'matic' && (
+        {isNeedApprove && !Object.keys(NETWORK_TOKENS).includes(firstCurrency) && (
           <Button className="m-trade-ydr__btn" onClick={handleApprove} loading={isLoading}>
             Approve
           </Button>
         )}
-        {(!isNeedApprove || firstCurrency === 'bnb' || firstCurrency === 'matic') && (
+        {(!isNeedApprove || Object.keys(NETWORK_TOKENS).includes(firstCurrency)) && (
           <Button
             className="m-trade-ydr__btn"
             onClick={handleEnter}
