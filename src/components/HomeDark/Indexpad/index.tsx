@@ -5,19 +5,35 @@ import { observer } from 'mobx-react-lite';
 import { indexesApi } from '../../../services/api';
 import { useMst } from '../../../store/store';
 import { Spinner } from '../../index';
-import { InitialMintEventItem } from '../index';
+import { IndexpadItem } from '../index';
 
-import './InitialMintEvent.scss';
+import './Indexpad.scss';
+
+export interface IIndexpadToken {
+  count: string;
+  id: number;
+  address: string;
+  price_total: number;
+  price_for_one: number;
+  image: string;
+  current_weight: string;
+  unit_weight: string;
+  decimal: number;
+  symbol: string;
+  name: string;
+  percent_change: number;
+}
 
 export interface IIme {
   id: number;
   description: string | null;
-  tokens: Array<IImeToken>;
+  tokens: Array<IIndexpadToken>;
   name: string;
   address: string;
   ime_start_timestamp: number;
   ime_end_timestamp: number;
 }
+
 export interface IImeToken {
   name: string;
   symbol: string;
@@ -28,7 +44,8 @@ export interface IImeToken {
   total_price: number;
   user_quantity?: number;
 }
-const InitialMintEvent: React.FC = observer(() => {
+
+const Indexpad: React.FC = observer(() => {
   const { networks } = useMst();
   const [imeList, setImeList] = useState<IIme[]>([] as IIme[]);
   const [loading, setLoading] = useState<boolean>(false);
@@ -56,7 +73,7 @@ const InitialMintEvent: React.FC = observer(() => {
       <p className="section__sub-title">Index minting offering for upcoming indexes</p>
       <Spinner loading={loading} />
       {imeList.length
-        ? imeList.map((imeItem) => <InitialMintEventItem key={nextId()} imeItem={imeItem} />)
+        ? imeList.map((imeItem) => <IndexpadItem key={nextId()} imeItem={imeItem} />)
         : !loading && (
             <div className="no-ime">
               <p className="no-ime__text text-gradient">There is no IMO yet</p>
@@ -66,4 +83,4 @@ const InitialMintEvent: React.FC = observer(() => {
   );
 });
 
-export default InitialMintEvent;
+export default Indexpad;
