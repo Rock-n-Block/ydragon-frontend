@@ -4,11 +4,13 @@ import moment from 'moment';
 
 import { useMst } from '../../../store/store';
 import { Button } from '../../index';
-import { IIme } from '../Indexpad';
+import { IIme, IIndexpadToken } from '../Indexpad';
 
 import './IndexpadItem.scss';
 import IndexpadToken from './IndexpadToken';
 import { useWalletConnectorContext } from '../../../services/walletConnect';
+import { Sorter } from '../../../utils/sorter';
+import indexpadOther from '../../../assets/img/indexpad-other.svg';
 
 interface InitialMintEventItemProps {
   imeItem: IIme;
@@ -23,6 +25,7 @@ const IndexpadItem: React.FC<InitialMintEventItemProps> = ({ imeItem }) => {
   const [end, setEnd] = useState(moment());
   const [now, setNow] = useState(moment());
   const [imeEnabled, setImeEnabled] = useState<boolean>(false);
+  const [tokens, setTokens] = useState<IIndexpadToken[]>(imeItem.tokens);
   const handleGetIn = () => {
     modals.getIn.open(imeItem.id, imeItem.address, imeItem.name);
   };
@@ -32,6 +35,32 @@ const IndexpadItem: React.FC<InitialMintEventItemProps> = ({ imeItem }) => {
       setUserBalance(formatedData);
     });
   }, [imeItem.address, walletConnector.metamaskService]);
+  const formatTokens = useCallback(() => {
+    const compareFn = (a: IIndexpadToken, b: IIndexpadToken) =>
+      Sorter.DEFAULT(a, b, true, 'unit_weight');
+    if (imeItem.tokens.length >= 6) {
+      const sortedTokens = imeItem.tokens.sort(compareFn);
+      const firstFiveTokens = sortedTokens.slice(0, 5);
+      const lastTokensWeight = firstFiveTokens
+        .map((token) => token.unit_weight)
+        .reduce((previousValue, currValue) =>
+          new BigNumber(previousValue).plus(currValue).toString(),
+        );
+      const newToken = {
+        unit_weight: new BigNumber(100)
+          .minus(new BigNumber(lastTokensWeight).multipliedBy(100))
+          .toString(2),
+        name: 'Other',
+        image: indexpadOther,
+      } as IIndexpadToken;
+      console.log('...firstFiveTokens, newToken', [...firstFiveTokens, newToken]);
+      debugger;
+      setTokens([...firstFiveTokens, newToken]);
+    } else {
+      debugger;
+      setTokens(imeItem.tokens);
+    }
+  }, [imeItem.tokens]);
   useEffect(() => {
     const interval = setInterval(() => {
       setNow(moment());
@@ -58,6 +87,9 @@ const IndexpadItem: React.FC<InitialMintEventItemProps> = ({ imeItem }) => {
       getUserBalance();
     }
   }, [getUserBalance, imeItem.address]);
+  useEffect(() => {
+    formatTokens();
+  }, [formatTokens]);
   return (
     <div className="initial-mint-event">
       <div className="initial-mint-event__row">
@@ -124,7 +156,7 @@ const IndexpadItem: React.FC<InitialMintEventItemProps> = ({ imeItem }) => {
         <div className="initial-mint-event__content">
           <h3 className="initial-mint-event__title text-gradient">{imeItem.name} </h3>
           <div className="initial-mint-event__tokens">
-            {imeItem.tokens.slice(0, 5).map((token) => (
+            {tokens.map((token) => (
               <IndexpadToken token={token} key={`indexpad_${token.name}_token`} />
             ))}
           </div>
