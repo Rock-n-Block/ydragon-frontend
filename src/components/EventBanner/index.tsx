@@ -21,7 +21,7 @@ const EventBanner: React.FC = observer(() => {
   const [imeItem, setImeItem] = useState<IIme>({} as IIme);
   const [imeEnabled, setImeEnabled] = useState<boolean>(false);
   const [imeHidden, setImeHidden] = useState<boolean>(true);
-  const [bannerHidden, setBannerHidden] = useState<boolean>(true);
+  const [bannerHidden, setBannerHidden] = useState<boolean>(false);
   const handleGetIn = () => {
     modals.getIn.open(imeItem.id, imeItem.address, imeItem.name);
   };
