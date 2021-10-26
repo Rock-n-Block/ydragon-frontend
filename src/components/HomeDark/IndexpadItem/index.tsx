@@ -125,12 +125,7 @@ const IndexpadItem: React.FC<InitialMintEventItemProps> = ({ imeItem }) => {
           <h3 className="initial-mint-event__title text-gradient">{imeItem.name} </h3>
           <div className="initial-mint-event__tokens">
             {imeItem.tokens.slice(0, 5).map((token) => (
-              <>
-                <IndexpadToken token={token} key={`indexpad_${token.name}_token`} />
-                <IndexpadToken token={token} key={`indexpad_${token.name}_token`} />
-                <IndexpadToken token={token} key={`indexpad_${token.name}_token`} />
-                <IndexpadToken token={token} key={`indexpad_${token.name}_token`} />
-              </>
+              <IndexpadToken token={token} key={`indexpad_${token.name}_token`} />
             ))}
           </div>
         </div>
