@@ -85,7 +85,7 @@ const GetInModal: React.FC = observer(() => {
   const handleApprove = (): void => {
     setIsLoading(true);
     walletConnector.metamaskService
-      .approveById(getTokenAddress(firstCurrency), modals.getIn.address)
+      .approve(getTokenAddress(firstCurrency), modals.getIn.address)
       .then(() => {
         setIsNeedApprove(false);
         modals.info.setMsg('Success', `Approve of ${firstCurrency} to IMO success`, 'success');

@@ -7,14 +7,14 @@ import YDRLogo from '../../../assets/img/icons/logo.svg';
 import { useWhiteList } from '../../../hooks/useWhiteList';
 import { vaultsApi } from '../../../services/api';
 import { useWalletConnectorContext } from '../../../services/walletConnect';
-// import MetamaskService, { nativeTokens } from '../../../services/web3';
-import config from '../../../services/web3/config_ABI';
+import configABI from '../../../services/web3/config_ABI';
 import { useMst } from '../../../store/store';
 import { ProviderRpcError } from '../../../types/errors';
 import { Button, Input, InputWithSelect } from '../../index';
 import { Modal } from '../index';
 
 import './TradeIndexModal.scss';
+import config from '../../../config';
 
 interface TradeIndexModalProps {
   token: string;
@@ -25,6 +25,7 @@ interface TradeIndexModalProps {
 
 const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
   ({ token, indexAddress, tokenId, updateData }) => {
+    const { NATIVE_TOKENS } = config;
     const walletConnector = useWalletConnectorContext();
     const { user, modals } = useMst();
     const [isSell, setIsSell] = useState<boolean>(modals.tradeIndex.method === 'sell');
@@ -51,15 +52,15 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
     };
     const getDecimals = useCallback(
       async (currency: string) => {
-        if (!currency || currency.toLowerCase() === 'bnb' || currency.toLowerCase() === 'matic') {
+        if (!currency || Object.keys(NATIVE_TOKENS).includes(currency.toLowerCase())) {
           return new Promise((resolve) => resolve(18));
         }
         return walletConnector.metamaskService.getDecimals(
           getTokenAddress(currency),
-          config.Token.ABI,
+          configABI.Token.ABI,
         );
       },
-      [getTokenAddress, walletConnector.metamaskService],
+      [NATIVE_TOKENS, getTokenAddress, walletConnector.metamaskService],
     );
     const getBalance = useCallback(() => {
       walletConnector.metamaskService
@@ -171,7 +172,7 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
     const checkAllowance = useCallback(() => {
       if (!isSell) {
         walletConnector.metamaskService
-          .checkAllowanceById(getTokenAddress(firstCurrency), config.Token.ABI, indexAddress)
+          .checkAllowanceById(getTokenAddress(firstCurrency), configABI.Token.ABI, indexAddress)
           .then((data: boolean) => {
             setIsNeedApprove(!data);
           })
@@ -202,8 +203,7 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
     const handleApprove = (): void => {
       setIsLoading(true);
       walletConnector.metamaskService
-        // .approve(firstCurrency, undefined, indexAddress)
-        .approveById(getTokenAddress(firstCurrency), indexAddress)
+        .approve(getTokenAddress(firstCurrency), indexAddress)
         .then(() => {
           setIsNeedApprove(false);
           modals.info.setMsg('Success', `You approved ${token}`, 'success');

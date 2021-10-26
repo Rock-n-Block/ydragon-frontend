@@ -92,10 +92,11 @@ export default {
   IS_PRODUCTION,
   BACKEND_URL,
   SOCIAL_LINKS,
+  NETWORK_TOKENS,
   BACKEND_NETWORKS: {
-    eth: 'eth',
+    eth: 'ethereum',
     bnb: 'binance-smart-chain',
-    matic: 'matic',
+    matic: 'polygon-pos',
   },
   CHAIN_IDS: {
     mainnet: {
@@ -129,14 +130,14 @@ export default {
   },
   NETWORK_BY_CHAIN_ID: {
     mainnet: {
-      '0x01': 'ethereum',
-      '0x38': 'binance-smart-chain',
-      '0x89': 'polygon-pos',
+      '0x01': 'eth',
+      '0x38': 'bnb',
+      '0x89': 'matic',
     },
     testnet: {
-      '0x2a': 'ethereum',
-      '0x61': 'binance-smart-chain',
-      '0x13881': 'polygon-pos',
+      '0x2a': 'eth',
+      '0x61': 'bnb',
+      '0x13881': 'matic',
     },
   },
   NATIVE_TOKENS: {
