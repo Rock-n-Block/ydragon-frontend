@@ -5,7 +5,7 @@ import config, { TChain } from '../../config';
 const { BACKEND_NETWORKS } = config;
 export default {
   getUserIndexes: () =>
-    axios.get(`indexes/user`, {
+    axios.get(`indexes/user/`, {
       params: {
         network: BACKEND_NETWORKS[rootStore.networks.currentNetwork as TChain],
       },
