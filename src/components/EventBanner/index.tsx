@@ -7,7 +7,7 @@ import coinIcon from '../../assets/img/gif/COINS_YDRAGON.gif';
 import cross from '../../assets/img/icons/icon-close.svg';
 import { indexesApi } from '../../services/api';
 import { useMst } from '../../store/store';
-import { IIme } from '../HomeDark/InitialMintEvent';
+import { IIme } from '../HomeDark/Indexpad';
 import { Button } from '../index';
 
 import './EventBanner.scss';

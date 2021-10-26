@@ -14,7 +14,7 @@ import { observer } from 'mobx-react';
 import { ReactComponent as ArrowDownBlack } from '../../assets/img/icons/icon-arrow-down.svg';
 import { ReactComponent as ArrowDownWhite } from '../../assets/img/icons/icon-arrow-white.svg';
 import { DARK, useMst } from '../../store/store';
-import { ITokenMini } from '../../utils/tokenMini';
+import { ITokenMini } from '../TokenMini';
 
 const { Option } = Select;
 const { TextArea } = InputAntd;
