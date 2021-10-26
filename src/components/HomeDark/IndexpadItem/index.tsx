@@ -53,11 +53,8 @@ const IndexpadItem: React.FC<InitialMintEventItemProps> = ({ imeItem }) => {
         name: 'Other',
         image: indexpadOther,
       } as IIndexpadToken;
-      console.log('...firstFiveTokens, newToken', [...firstFiveTokens, newToken]);
-      debugger;
       setTokens([...firstFiveTokens, newToken]);
     } else {
-      debugger;
       setTokens(imeItem.tokens);
     }
   }, [imeItem.tokens]);
