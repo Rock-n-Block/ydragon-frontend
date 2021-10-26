@@ -31,7 +31,6 @@ export const useWhiteList = (indexId: number) => {
           ...NETWORK_TOKENS[currentNetwork],
           image: NETWORK_TOKENS[currentNetwork].image(theme.value),
         };
-        debugger;
         const newTokens = isWrappedToken ? [newToken, ...data.tokens] : [...data.tokens];
         setWhiteList(newTokens);
       })
