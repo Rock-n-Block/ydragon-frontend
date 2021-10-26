@@ -7,7 +7,7 @@ interface ILogin {
 }
 
 export default {
-  getMsg: () => axios.get('accounts/get_metamask_message/'),
+  getMsg: () => axios.get('accounts/get_metamask_message'),
   login: (data: ILogin) =>
     axios.post('accounts/metamask_login/', {
       address: data.address,
