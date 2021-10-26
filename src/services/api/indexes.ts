@@ -11,7 +11,7 @@ export default {
       },
     }),
   getAdminIndexes: () =>
-    axios.get(`indexes/admin`, {
+    axios.get(`indexes/admin/`, {
       params: {
         network: BACKEND_NETWORKS[rootStore.networks.currentNetwork as TChain],
       },
