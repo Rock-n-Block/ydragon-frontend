@@ -1,16 +1,18 @@
 import axios from 'axios';
+import config from '../config';
 
-axios.defaults.baseURL = process.env.REACT_APP_API_URL;
+const { BACKEND_URL } = config;
+axios.defaults.baseURL = BACKEND_URL;
 
 axios.interceptors.request.use(
-  (config) => {
-    config.headers.common = {
-      ...config.headers.common,
+  (axiosRequestConfig) => {
+    axiosRequestConfig.headers.common = {
+      ...axiosRequestConfig.headers.common,
       Authorization: `${
         localStorage.getItem('yd_token') ? `Token ${localStorage.getItem('yd_token')}` : ''
       }`,
     };
-    return config;
+    return axiosRequestConfig;
   },
   (error) => {
     console.log(error);

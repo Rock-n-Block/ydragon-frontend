@@ -19,7 +19,7 @@ import { aboutLinks, productLinks, mobileLinksData } from './linksData';
 import HeaderMobileItem from './HeaderMobileItem';
 
 import SocialLink from '../SocialLink/index';
-import { socialLinks } from '../../config/index';
+import config from '../../config/index';
 
 import './Header.scss';
 
@@ -29,6 +29,7 @@ interface HeaderProps {
 }
 
 const Header: React.FC<HeaderProps> = observer(({ collapsed, onCollapsedChange }) => {
+  const { SOCIAL_LINKS } = config;
   const [fixed, setFixed] = useState(true);
   const { theme, user } = useMst();
   const walletConnector = useWalletConnectorContext();
@@ -195,17 +196,17 @@ const Header: React.FC<HeaderProps> = observer(({ collapsed, onCollapsedChange }
             </nav>
             <div className="menu_social_links">
               <SocialLink
-                icon={socialLinks.tgChat.iconDark}
+                icon={SOCIAL_LINKS.tgChat.iconDark}
                 title="Chat"
-                href={socialLinks.tgChat.url}
+                href={SOCIAL_LINKS.tgChat.url}
               />
               <SocialLink
                 title="Channel"
-                icon={socialLinks.tgChannel.iconDark}
-                href={socialLinks.tgChat.url}
+                icon={SOCIAL_LINKS.tgChannel.iconDark}
+                href={SOCIAL_LINKS.tgChat.url}
               />
-              <SocialLink icon={socialLinks.twitter.iconDark} href={socialLinks.twitter.url} />
-              <SocialLink icon={socialLinks.medium.iconDark} href={socialLinks.medium.url} />
+              <SocialLink icon={SOCIAL_LINKS.twitter.iconDark} href={SOCIAL_LINKS.twitter.url} />
+              <SocialLink icon={SOCIAL_LINKS.medium.iconDark} href={SOCIAL_LINKS.medium.url} />
             </div>
             <div className="menu_subitle">© 2021 YDragon</div>
           </nav>

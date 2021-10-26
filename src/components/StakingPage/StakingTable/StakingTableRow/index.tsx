@@ -21,6 +21,13 @@ const StakingTableRow: React.FC<IStakingTableRowProps> = observer(({ index }) =>
   const [isOpened, setIsOpened] = useState(false);
   const { user, networks } = useMst();
 
+  // main info
+  const [stakedTokenAdr, setStakedTokenAdr] = useState('');
+
+  // inputs
+  const [toUnstakeAmount, setToUnstakeAmount] = useState('');
+  const [toStakeAmount, setToStakeAmount] = useState('');
+
   // index info
   const [symbol, setSymbol] = useState('');
   const [name, setName] = useState('');
@@ -29,9 +36,11 @@ const StakingTableRow: React.FC<IStakingTableRowProps> = observer(({ index }) =>
   const [rewards, setRewards] = useState('');
   const [balance, setBalance] = useState('');
 
-  // staking fabric > get current stake by indexId > get stakedTokenAdress in stake > profit!
-  // TODO: выполнить getStakeIndexAdress 1 раз при старте???
-  const getStakeIndexAdress = useCallback(
+  // buttons
+  const [isUnstakeLoad, setIsUnstakeLoad] = useState(false);
+
+  // staking fabric > get current stake by indexId > get stakedTokenAdress in stake === profit!
+  const getStakedTokenAdress = useCallback(
     async (indexCount: number) => {
       const stakeAdress = await walletConnect.metamaskService.getStakeContractByIndex(indexCount);
       const stakedTokenAdress = await walletConnect.metamaskService.getStakedTokenFromStake(
@@ -43,15 +52,15 @@ const StakingTableRow: React.FC<IStakingTableRowProps> = observer(({ index }) =>
   );
 
   const getStakeSymbolAndName = useCallback(async () => {
-    const stakedTokenAdress = await getStakeIndexAdress(index);
+    const stakedTokenAdress = await getStakedTokenAdress(index);
     const indexSymbol = await walletConnect.metamaskService.getIndexSymbol(stakedTokenAdress);
     const indexName = await walletConnect.metamaskService.getIndexName(stakedTokenAdress);
     return { indexSymbol, indexName };
-  }, [walletConnect.metamaskService, getStakeIndexAdress, index]);
+  }, [walletConnect.metamaskService, getStakedTokenAdress, index]);
 
   const getBalanceOfUser = useCallback(
     async (userAdress: string) => {
-      const stakedTokenAdress = await getStakeIndexAdress(index);
+      const stakedTokenAdress = await getStakedTokenAdress(index);
       const userBalance: string = await walletConnect.metamaskService.getUserBalance(
         userAdress,
         stakedTokenAdress,
@@ -59,7 +68,25 @@ const StakingTableRow: React.FC<IStakingTableRowProps> = observer(({ index }) =>
 
       return userBalance;
     },
-    [walletConnect.metamaskService, index, getStakeIndexAdress],
+    [walletConnect.metamaskService, index, getStakedTokenAdress],
+  );
+
+  const withdraw = useCallback(
+    async (tokenAdress: string, amount: string) => {
+      try {
+        setIsUnstakeLoad(true);
+        const res = await walletConnect.metamaskService.withdraw(tokenAdress, amount);
+        if (res.status) {
+          setDeposited((prev) => String(+prev - +amount));
+          setBalance((prev) => String(+prev + +amount));
+        }
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setIsUnstakeLoad(false);
+      }
+    },
+    [walletConnect.metamaskService],
   );
 
   useEffect(() => {
@@ -80,13 +107,19 @@ const StakingTableRow: React.FC<IStakingTableRowProps> = observer(({ index }) =>
     // TOTAL STAKED AMOUNT
     walletConnect.metamaskService
       .getTotalStaked(index)
-      .then((data: string) => setTotalStaked(data));
+      .then((data: string) => setTotalStaked(new BigNumber(data).dividedBy(10 ** 18).toFormat(4)));
 
     // USER REWARDS
     walletConnect.metamaskService
       .getUserRewards(user.address, index)
       .then((data: string) => setRewards(data));
   }, [getStakeSymbolAndName, getBalanceOfUser, user.address, walletConnect.metamaskService, index]);
+
+  useEffect(() => {
+    getStakedTokenAdress(index).then((data) => {
+      setStakedTokenAdr(data);
+    });
+  }, [getStakedTokenAdress, index]);
 
   if (!networks.currentNetwork) return <Loader />;
 
@@ -157,9 +190,18 @@ const StakingTableRow: React.FC<IStakingTableRowProps> = observer(({ index }) =>
               </span>
             </div>
             <div className="staking-table_row__bottom__cell__input">
-              <input placeholder="0.0" type="text" />
+              <input
+                value={toStakeAmount}
+                onChange={(e) => setToStakeAmount(e.target.value)}
+                placeholder="0.0"
+                type="text"
+              />
             </div>
-            <Button colorScheme="blue" className="staking-table_row__bottom__cell__button">
+            <Button
+              disabled={+toStakeAmount > +balance}
+              colorScheme="blue"
+              className="staking-table_row__bottom__cell__button"
+            >
               Stake
             </Button>
           </div>
@@ -171,9 +213,20 @@ const StakingTableRow: React.FC<IStakingTableRowProps> = observer(({ index }) =>
               </span>
             </div>
             <div className="staking-table_row__bottom__cell__input">
-              <input placeholder="0.0" type="text" />
+              <input
+                value={toUnstakeAmount}
+                onChange={(e) => setToUnstakeAmount(e.target.value)}
+                placeholder="0.0"
+                type="text"
+              />
             </div>
-            <Button colorScheme="blue" className="staking-table_row__bottom__cell__button">
+            <Button
+              disabled={!toUnstakeAmount || +deposited <= 0 || +toUnstakeAmount > +deposited}
+              colorScheme="blue"
+              className="staking-table_row__bottom__cell__button"
+              onClick={() => withdraw(stakedTokenAdr, toUnstakeAmount.trim())}
+              loading={isUnstakeLoad}
+            >
               Unstake
             </Button>
           </div>
@@ -187,7 +240,11 @@ const StakingTableRow: React.FC<IStakingTableRowProps> = observer(({ index }) =>
             <div className="staking-table_row__bottom__cell__logo">
               <img src={logoExample1} alt="token logo" />
             </div>
-            <Button colorScheme="blue" className="staking-table_row__bottom__cell__button">
+            <Button
+              disabled={+rewards <= 0}
+              colorScheme="blue"
+              className="staking-table_row__bottom__cell__button"
+            >
               Harvest
             </Button>
           </div>

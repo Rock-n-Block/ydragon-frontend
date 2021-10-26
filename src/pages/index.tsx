@@ -3,7 +3,6 @@ export { default as Auth } from './Auth';
 export { default as Index } from './IndexPage';
 export { default as YdrToken } from './YdrToken';
 export { default as Admin } from './Admin';
-export { default as StakePage } from './StakePage';
 export { default as AdminIndex } from './AdminIndex';
 export { default as IndexDashboard } from './IndexDashboard';
 export { default as AboutUs } from './AboutUs';

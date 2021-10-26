@@ -1,11 +1,11 @@
 import BigNumber from 'bignumber.js/bignumber';
-import moment from 'moment';
 import { Observable } from 'rxjs';
 import Web3 from 'web3';
 
 import { rootStore } from '../../store/store';
 
-import config from './config';
+import configABI from './config_ABI';
+import config from '../../config';
 
 declare global {
   interface Window {
@@ -17,9 +17,22 @@ interface INetworks {
   [key: string]: string;
 }
 
+interface AddEthereumChainParameter {
+  chainId: string; // A 0x-prefixed hexadecimal string
+  chainName: string;
+  nativeCurrency: {
+    name: string;
+    symbol: string; // 2-6 characters long
+    decimals: number;
+  };
+  rpcUrls: string[];
+  blockExplorerUrls?: string[];
+  iconUrls?: string[]; // Currently ignored.
+}
+
 export type TestNetworkTypes = 'bnb' | 'matic' | 'eth';
 
-export type ContractTypes = 'Router' | 'Factory' | 'StakingFactory' | 'DexFactory' | 'Token';
+export type ContractTypes = 'Router' | 'Factory' | 'Staking' | 'Token';
 
 export const nativeTokens = ['bnb', 'wbnb', 'matic', 'wmatic'];
 
@@ -51,15 +64,16 @@ export default class MetamaskService {
 
   public disconnectObs: any;
 
-  public usedNetwork: string;
+  public usedNetwork: 'mainnet' | 'testnet';
 
   public usedChain: INetworks;
 
   constructor() {
     this.wallet = window.ethereum;
 
+    const { IS_PRODUCTION } = config;
     this.web3Provider = new Web3(window.ethereum);
-    this.isProduction = process.env.REACT_APP_IS_PROD === 'production';
+    this.isProduction = IS_PRODUCTION;
     // this.contract = new this.web3Provider.eth.Contract(config.ABI as Array<any>, config.ADDRESS);
 
     this.usedNetwork = this.isProduction ? 'mainnet' : 'testnet';
@@ -94,6 +108,24 @@ export default class MetamaskService {
       this.wallet.on('disconnect', (code: number, reason: string) => {
         subscriber.next(reason);
       });
+    });
+  }
+
+  isWindowEthEnabled() {
+    return !!this.wallet;
+  }
+
+  static switchEthereumChain(chainId: string) {
+    return window.ethereum.request({
+      method: 'wallet_switchEthereumChain',
+      params: [{ chainId }],
+    });
+  }
+
+  static addEthereumChain(param: AddEthereumChainParameter) {
+    return window.ethereum.request({
+      method: 'wallet_switchEthereumChain',
+      params: [param],
     });
   }
 
@@ -168,13 +200,13 @@ export default class MetamaskService {
     if (address === '0x0000000000000000000000000000000000000000') {
       return this.getBNBBalance();
     }
-    return this.getContractByAddress(address, config.Token.ABI)
+    return this.getContractByAddress(address, configABI.Token.ABI)
       .methods.balanceOf(this.walletAddress)
       .call();
   }
 
   async getBalanceByAddress(address: string) {
-    return this.getContractByAddress(address, config.Token.ABI)
+    return this.getContractByAddress(address, configABI.Token.ABI)
       .methods.balanceOf(this.walletAddress)
       .call();
   }
@@ -184,7 +216,7 @@ export default class MetamaskService {
   }
 
   async totalSupply(contractAddress: string, tokenDecimals: number) {
-    const totalSupply = await this.getContractByAddress(contractAddress, config.Token.ABI)
+    const totalSupply = await this.getContractByAddress(contractAddress, configABI.Token.ABI)
       .methods.totalSupply()
       .call();
     return +new BigNumber(totalSupply).dividedBy(new BigNumber(10).pow(tokenDecimals)).toString(10);
@@ -195,12 +227,13 @@ export default class MetamaskService {
     return +decimals;
   }
 
+  /*
   static getWrappedNativeAddress = (): string => {
     const wrappedNativeSymbol =
       rootStore.networks.currentNetwork === 'binance-smart-chain' ? 'wbnb' : 'wmatic';
     const wrappedNativeAddress = rootStore.basicTokens.getTokenAddress(wrappedNativeSymbol);
     return wrappedNativeAddress ?? '';
-  };
+  }; */
 
   static calcTransactionAmount(amount: number | string, tokenDecimal: number) {
     return new BigNumber(amount).times(new BigNumber(10).pow(tokenDecimal)).toString(10);
@@ -211,12 +244,14 @@ export default class MetamaskService {
   }
 
   getStartDate(address: string) {
-    return this.getContractByAddress(address, config.MAIN.ABI).methods.imeStartTimestamp().call();
+    return this.getContractByAddress(address, configABI.MAIN.ABI)
+      .methods.imeStartTimestamp()
+      .call();
   }
 
   getEndDate(address: string) {
     // TODO: change this to normal contract later
-    return this.getContractByAddress(address, config.MAIN.ABI).methods.imeEndTimestamp().call();
+    return this.getContractByAddress(address, configABI.MAIN.ABI).methods.imeEndTimestamp().call();
   }
 
   async checkAllowanceById(toContractAddress: string, abi: Array<any>, spenderAddress: string) {
@@ -233,14 +268,14 @@ export default class MetamaskService {
   }
 
   checkAutoXYRebalaceAllowance(address: string) {
-    return this.getContractByAddress(address, config.MAIN.ABI)
+    return this.getContractByAddress(address, configABI.MAIN.ABI)
       .methods.isAllowedAutoXYRebalace()
       .call();
   }
 
   changeAutoXYRebalaceAllowance(address: string, value: boolean) {
     const method = MetamaskService.getMethodInterface(
-      config.MAIN.ABI,
+      configABI.MAIN.ABI,
       'setIsAllowedAutoXYRebalace',
     );
     const signature = this.encodeFunctionCall(method, [value]);
@@ -253,7 +288,7 @@ export default class MetamaskService {
   }
 
   startXyRebalance(address: string, value: number) {
-    const method = MetamaskService.getMethodInterface(config.MAIN.ABI, 'xyRebalance');
+    const method = MetamaskService.getMethodInterface(configABI.MAIN.ABI, 'xyRebalance');
     const signature = this.encodeFunctionCall(method, [value]);
 
     return this.sendTransaction({
@@ -271,8 +306,10 @@ export default class MetamaskService {
     decimals: number,
   ) {
     const isNative =
-      spenderTokenSymbol.toLowerCase() === 'bnb' || spenderTokenSymbol.toLowerCase() === 'matic';
-    const mintMethod = MetamaskService.getMethodInterface(config.MAIN.ABI, 'mint');
+      spenderTokenSymbol.toLowerCase() === 'eth' ||
+      spenderTokenSymbol.toLowerCase() === 'bnb' ||
+      spenderTokenSymbol.toLowerCase() === 'matic';
+    const mintMethod = MetamaskService.getMethodInterface(configABI.MAIN.ABI, 'mint');
     const signature = this.encodeFunctionCall(mintMethod, [
       spenderTokenAddress,
       MetamaskService.calcTransactionAmount(value, decimals),
@@ -287,7 +324,7 @@ export default class MetamaskService {
   }
 
   redeem(value: string, spenderTokenAddress: string, address: string) {
-    const redeemMethod = MetamaskService.getMethodInterface(config.MAIN.ABI, 'redeem');
+    const redeemMethod = MetamaskService.getMethodInterface(configABI.MAIN.ABI, 'redeem');
     const signature = this.encodeFunctionCall(redeemMethod, [
       MetamaskService.calcTransactionAmount(value, 18),
       spenderTokenAddress,
@@ -302,7 +339,7 @@ export default class MetamaskService {
 
   async approveById(toContractAddress: string, address: string) {
     try {
-      const approveMethod = MetamaskService.getMethodInterface(config.MAIN.ABI, 'approve');
+      const approveMethod = MetamaskService.getMethodInterface(configABI.MAIN.ABI, 'approve');
 
       const approveSignature = this.encodeFunctionCall(approveMethod, [
         address,
@@ -328,7 +365,7 @@ export default class MetamaskService {
   ) {
     const isBnb = spenderTokenName.toLowerCase() === 'bnb';
     const methodName = isBnb ? 'enterImeNative' : 'enterImeToken';
-    const enterMethod = MetamaskService.getMethodInterface(config.MAIN.ABI, methodName);
+    const enterMethod = MetamaskService.getMethodInterface(configABI.MAIN.ABI, methodName);
     let signature;
     if (!isBnb) {
       signature = this.encodeFunctionCall(enterMethod, [
@@ -347,45 +384,6 @@ export default class MetamaskService {
     });
   }
 
-  getYDRCourse(
-    spenderTokenSymbol: string,
-    spenderTokenAddress: string,
-    value: string,
-    buy: boolean,
-    decimals: number,
-  ) {
-    const isNative = nativeTokens.includes(spenderTokenSymbol.toLowerCase());
-    let otherTokenAddress /* = address */;
-    let path;
-    if (!isNative) {
-      otherTokenAddress = spenderTokenAddress;
-    }
-    if (buy) {
-      path = isNative
-        ? [MetamaskService.getWrappedNativeAddress(), rootStore.basicTokens.getTokenAddress('ydr')]
-        : [
-            otherTokenAddress,
-            MetamaskService.getWrappedNativeAddress(),
-            rootStore.basicTokens.getTokenAddress('ydr'),
-          ];
-    } else {
-      path = isNative
-        ? [rootStore.basicTokens.getTokenAddress('ydr'), MetamaskService.getWrappedNativeAddress()]
-        : [
-            rootStore.basicTokens.getTokenAddress('ydr'),
-            MetamaskService.getWrappedNativeAddress(),
-            otherTokenAddress,
-          ];
-    }
-
-    return this.getContractByAddress(
-      rootStore.networks.getCurrNetwork()?.router_address || '',
-      config.Router.ABI,
-    )
-      .methods.getAmountsOut(MetamaskService.calcTransactionAmount(value, decimals), path)
-      .call();
-  }
-
   getIndexCourse(
     currencyAddress: string,
     value: string,
@@ -394,14 +392,14 @@ export default class MetamaskService {
     decimals: number,
   ) {
     if (buy) {
-      return this.getContractByAddress(indexAddress, config.MAIN.ABI)
+      return this.getContractByAddress(indexAddress, configABI.MAIN.ABI)
         .methods.getBuyAmountOut(
           currencyAddress,
           MetamaskService.calcTransactionAmount(value, decimals),
         )
         .call();
     }
-    return this.getContractByAddress(indexAddress, config.MAIN.ABI)
+    return this.getContractByAddress(indexAddress, configABI.MAIN.ABI)
       .methods.getSellAmountOut(
         currencyAddress,
         MetamaskService.calcTransactionAmount(value, decimals),
@@ -409,111 +407,11 @@ export default class MetamaskService {
       .call();
   }
 
-  async buyYDRToken(
-    value: string,
-    spenderTokenSymbol: string,
-    spenderTokenAddress: string,
-    decimals: number,
-  ) {
-    let methodName: 'swapExactETHForTokens' | 'swapExactTokensForTokens';
-    const isNative =
-      spenderTokenSymbol.toLowerCase() === 'bnb' || spenderTokenSymbol.toLowerCase() === 'matic';
-    let otherTokenAddress /* = address */;
-
-    if (isNative) {
-      methodName = 'swapExactETHForTokens';
-    } else {
-      otherTokenAddress =
-        spenderTokenSymbol.toLowerCase() === 'wbnb' || spenderTokenSymbol.toLowerCase() === 'wmatic'
-          ? undefined
-          : spenderTokenAddress;
-      methodName = 'swapExactTokensForTokens';
-    }
-
-    const buyMethod = MetamaskService.getMethodInterface(config.Router.ABI, methodName);
-
-    let signature;
-    if (!isNative) {
-      signature = this.encodeFunctionCall(buyMethod, [
-        MetamaskService.calcTransactionAmount(value, decimals),
-        0,
-        otherTokenAddress
-          ? [
-              otherTokenAddress,
-              MetamaskService.getWrappedNativeAddress(),
-              rootStore.basicTokens.getTokenAddress('ydr'),
-            ]
-          : [
-              MetamaskService.getWrappedNativeAddress(),
-              rootStore.basicTokens.getTokenAddress('ydr'),
-            ],
-        this.walletAddress,
-        moment().add(30, 'minutes').format('X'),
-      ]);
-    } else {
-      signature = this.encodeFunctionCall(buyMethod, [
-        0,
-        [MetamaskService.getWrappedNativeAddress(), rootStore.basicTokens.getTokenAddress('ydr')],
-        this.walletAddress,
-        moment().add(30, 'minutes').format('X'),
-      ]);
-    }
-
-    return this.sendTransaction({
-      from: this.walletAddress,
-      to: rootStore.networks.getCurrNetwork()?.router_address,
-      data: signature,
-      value: isNative ? MetamaskService.calcTransactionAmount(value, decimals) : '',
-    });
-  }
-
-  sellYDRToken(
-    value: string,
-    spenderTokenSymbol: string,
-    spenderTokenAddress: string,
-    decimals: number,
-  ) {
-    let methodName: 'swapExactTokensForETH' | 'swapExactTokensForTokens';
-
-    const isNative =
-      spenderTokenSymbol.toLowerCase() === 'bnb' || spenderTokenSymbol.toLowerCase() === 'matic';
-    let otherTokenAddress /* = address */;
-
-    if (isNative) {
-      methodName = 'swapExactTokensForETH';
-    } else {
-      otherTokenAddress =
-        spenderTokenSymbol.toLowerCase() === 'wbnb' || spenderTokenSymbol.toLowerCase() === 'wmatic'
-          ? undefined
-          : spenderTokenAddress;
-      methodName = 'swapExactTokensForTokens';
-    }
-
-    const sellMethod = MetamaskService.getMethodInterface(config.Router.ABI, methodName);
-
-    const signature = this.encodeFunctionCall(sellMethod, [
-      MetamaskService.calcTransactionAmount(value, decimals),
-      '0x0000000000000000000000000000000000000000',
-      otherTokenAddress
-        ? [
-            rootStore.basicTokens.getTokenAddress('ydr'),
-            MetamaskService.getWrappedNativeAddress(),
-            otherTokenAddress,
-          ]
-        : [rootStore.basicTokens.getTokenAddress('ydr'), MetamaskService.getWrappedNativeAddress()],
-      this.walletAddress,
-      moment().add(30, 'minutes').format('X'),
-    ]);
-
-    return this.sendTransaction({
-      from: this.walletAddress,
-      to: rootStore.networks.getCurrNetwork()?.router_address,
-      data: signature,
-    });
-  }
-
   harvestStakeItem(id: string | number) {
-    const method = MetamaskService.getMethodInterface(config.StakingFactory.ABI, 'claimDividends');
+    const method = MetamaskService.getMethodInterface(
+      configABI.StakingFactory.ABI,
+      'claimDividends',
+    );
 
     const signature = this.encodeFunctionCall(method, [id, '0']);
 
@@ -525,7 +423,7 @@ export default class MetamaskService {
   }
 
   endStake(id: string | number) {
-    const method = MetamaskService.getMethodInterface(config.StakingFactory.ABI, 'stakeEnd');
+    const method = MetamaskService.getMethodInterface(configABI.StakingFactory.ABI, 'stakeEnd');
 
     const signature = this.encodeFunctionCall(method, [id]);
 
@@ -538,72 +436,62 @@ export default class MetamaskService {
 
   // ================== NEW METHODS ====================
 
-  getStakesCount() {
+  getStakingFactoryContract() {
     return this.getContractByAddress(
       rootStore.networks.getCurrNetwork()?.staking_address ??
         '0x0000000000000000000000000000000000000000',
-      config.StakingFactory.ABI,
-    )
-      .methods.stakesCount()
-      .call();
+      configABI.StakingFactory.ABI,
+    );
+  }
+
+  getStakesCount() {
+    return this.getStakingFactoryContract().methods.stakesCount().call();
   }
 
   getStakeContractByIndex(index: number) {
-    return this.getContractByAddress(
-      rootStore.networks.getCurrNetwork()?.staking_address ??
-        '0x0000000000000000000000000000000000000000',
-      config.StakingFactory.ABI,
-    )
-      .methods.stakes(index)
-      .call();
+    return this.getStakingFactoryContract().methods.stakes(index).call();
   }
 
   getStakedTokenFromStake(stakeAdress: string) {
-    return this.getContractByAddress(stakeAdress, config.Stake.ABI).methods.stakedToken().call();
+    return this.getContractByAddress(stakeAdress, configABI.Stake.ABI).methods.stakedToken().call();
   }
 
   getIndexSymbol(indexAdress: string) {
-    return this.getContractByAddress(indexAdress, config.Index.ABI).methods.symbol().call();
+    return this.getContractByAddress(indexAdress, configABI.Index.ABI).methods.symbol().call();
   }
 
   getIndexName(indexAdress: string) {
-    return this.getContractByAddress(indexAdress, config.Index.ABI).methods.name().call();
+    return this.getContractByAddress(indexAdress, configABI.Index.ABI).methods.name().call();
   }
 
   getUserBalance(userWalletId: string, indexAddress: string) {
-    return this.getContractByAddress(indexAddress, config.Index.ABI)
+    return this.getContractByAddress(indexAddress, configABI.Index.ABI)
       .methods.balanceOf(userWalletId)
       .call();
   }
 
   getUserStakedAmount(userWalletId: string, indexId: number) {
-    return this.getContractByAddress(
-      rootStore.networks.getCurrNetwork()?.staking_address ??
-        '0x0000000000000000000000000000000000000000',
-      config.StakingFactory.ABI,
-    )
-      .methods.getUserBalance(userWalletId, indexId)
-      .call();
+    return this.getStakingFactoryContract().methods.getUserBalance(userWalletId, indexId).call();
   }
 
   getTotalStaked(indexId: number) {
-    return this.getContractByAddress(
-      rootStore.networks.getCurrNetwork()?.staking_address ??
-        '0x0000000000000000000000000000000000000000',
-      config.StakingFactory.ABI,
-    )
-      .methods.getTotalStaked(indexId)
-      .call();
+    return this.getStakingFactoryContract().methods.getTotalStaked(indexId).call();
   }
 
   getUserRewards(userWalletId: string, indexId: number) {
-    return this.getContractByAddress(
-      rootStore.networks.getCurrNetwork()?.staking_address ??
-        '0x0000000000000000000000000000000000000000',
-      config.StakingFactory.ABI,
-    )
-      .methods.getAvailToClaim(userWalletId, indexId)
-      .call();
+    return this.getStakingFactoryContract().methods.getAvailToClaim(userWalletId, indexId).call();
+  }
+
+  withdraw(tokenAdress: string, amount: string) {
+    const method = MetamaskService.getMethodInterface(configABI.StakingFactory.ABI, 'withdraw');
+
+    const signature = this.encodeFunctionCall(method, [tokenAdress, amount]);
+
+    return this.sendTransaction({
+      from: this.walletAddress,
+      to: rootStore.networks.getCurrNetwork()?.staking_address,
+      data: signature,
+    });
   }
 
   // ========== NEW METHODS END =================
@@ -611,27 +499,18 @@ export default class MetamaskService {
   getStakingFactoryTokenToEnter(index: number) {
     return this.getContractByAddress(
       rootStore.networks.getCurrNetwork()?.staking_address ?? '',
-      config.StakingFactory.ABI,
+      configABI.StakingFactory.ABI,
     )
       .methods.tokensToEnter(index)
       .call();
   }
 
-  getStakingFactoryPair(address: string) {
-    return this.getContractByAddress(
-      rootStore.networks.getCurrNetwork()?.dex_factory_address ?? '',
-      config.DexFactory.ABI,
-    )
-      .methods.getPair(address, MetamaskService.getWrappedNativeAddress())
-      .call();
-  }
-
   getTokenName(address: string) {
-    return this.getContractByAddress(address, config.Token.ABI).methods.name().call();
+    return this.getContractByAddress(address, configABI.Token.ABI).methods.name().call();
   }
 
   getTokenSymbol(address: string) {
-    return this.getContractByAddress(address, config.Token.ABI).methods.symbol().call();
+    return this.getContractByAddress(address, configABI.Token.ABI).methods.symbol().call();
   }
 
   async getTokenInfoByAddress(address: string) {
@@ -642,7 +521,7 @@ export default class MetamaskService {
   }
 
   async getToken0FromPair(address: string) {
-    const contract = this.getContractByAddress(address, config.PAIR.ABI);
+    const contract = this.getContractByAddress(address, configABI.PAIR.ABI);
 
     const token0 = await contract.methods.token0().call();
     const token1 = await contract.methods.token1().call();
@@ -656,7 +535,7 @@ export default class MetamaskService {
   }
 
   startStake(tokenAddress: string, amount: string, timeIntervalIndex: number) {
-    const method = MetamaskService.getMethodInterface(config.StakingFactory.ABI, 'stakeStart');
+    const method = MetamaskService.getMethodInterface(configABI.StakingFactory.ABI, 'stakeStart');
 
     const signature = this.encodeFunctionCall(method, [
       tokenAddress,
@@ -679,7 +558,7 @@ export default class MetamaskService {
     tokenWeights: string[],
     initialPrice: string,
   ) {
-    const method = MetamaskService.getMethodInterface(config.Factory.ABI, 'deployNewAsset');
+    const method = MetamaskService.getMethodInterface(configABI.Factory.ABI, 'deployNewAsset');
 
     const signature = this.encodeFunctionCall(method, [
       name,
