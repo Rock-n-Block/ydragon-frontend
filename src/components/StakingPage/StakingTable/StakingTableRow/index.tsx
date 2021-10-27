@@ -20,7 +20,8 @@ interface IStakingTableRowProps {
   index: number;
 }
 
-const formatAmount = (amount: string | number, decimals = 2) => {
+const formatAmount = (amount: string | number, decimals = 6) => {
+  if (amount === '0') return '0';
   return new BigNumber(amount).toFormat(decimals);
 };
 
@@ -94,8 +95,8 @@ const StakingTableRow: React.FC<IStakingTableRowProps> = observer(({ index }) =>
         setIsUnstakeLoad(true);
         const res = await walletConnect.metamaskService.withdraw(tokenAdress, amount);
         if (res.status) {
-          setDeposited((prev) => String(+prev - +amount));
-          setBalance((prev) => String(+prev + +amount));
+          setDeposited((prev) => new BigNumber(prev).minus(amount).toString());
+          setBalance((prev) => new BigNumber(prev).plus(amount).toString());
           setTotalStaked((prev) => new BigNumber(prev).minus(amount).toString());
         }
       } catch (error) {
@@ -130,9 +131,9 @@ const StakingTableRow: React.FC<IStakingTableRowProps> = observer(({ index }) =>
         setIsFirstButtonLoad(true);
         const res = await walletConnect.metamaskService.deposit(stakedTokenAdr, amount);
         if (res.status) {
-          setBalance((prev) => String(+prev - +amount));
-          setDeposited((prev) => String(+prev + +amount));
-          setTotalStaked((prev) => String(+prev + +amount));
+          setBalance((prev) => new BigNumber(prev).minus(amount).toString());
+          setDeposited((prev) => new BigNumber(prev).plus(amount).toString());
+          setTotalStaked((prev) => new BigNumber(prev).plus(amount).toString());
         }
       } catch (error) {
         console.log(error);
@@ -150,7 +151,7 @@ const StakingTableRow: React.FC<IStakingTableRowProps> = observer(({ index }) =>
         const res = await walletConnect.metamaskService.claimReward(ind);
         if (res.status) {
           setRewards('0');
-          setBalance((prev) => String(+prev + +amount));
+          setBalance((prev) => new BigNumber(prev).plus(amount).toString());
         }
       } catch (error) {
         console.log(error);
@@ -240,23 +241,23 @@ const StakingTableRow: React.FC<IStakingTableRowProps> = observer(({ index }) =>
         </div>
         <div className="staking-table_row__cell">
           <div className="staking-table_row__cell__title">balance </div>
-          <Tippy content={balance}>
-            <div className="staking-table_row__cell__value text-MER">$ {balance}</div>
+          <Tippy content={formatAmount(balance)}>
+            <div className="staking-table_row__cell__value text-MER">$ {formatAmount(balance)}</div>
           </Tippy>
         </div>
         <div className="staking-table_row__cell">
           <div className="staking-table_row__cell__title">deposited</div>
-          <Tippy content={`${deposited} ${symbol}`}>
+          <Tippy content={`${formatAmount(deposited)} ${symbol}`}>
             <div className="staking-table_row__cell__value text-MER">
-              {deposited} {symbol}
+              {formatAmount(deposited)} {symbol}
             </div>
           </Tippy>
         </div>
         <div className="staking-table_row__cell">
           <div className="staking-table_row__cell__title">your rewards</div>
-          <Tippy content={`${rewards} ${symbol} `}>
+          <Tippy content={`${formatAmount(rewards)} ${symbol} `}>
             <div className="staking-table_row__cell__value text-gradient">
-              {rewards} {symbol}
+              {formatAmount(rewards)} {symbol}
             </div>
           </Tippy>
         </div>
@@ -297,7 +298,7 @@ const StakingTableRow: React.FC<IStakingTableRowProps> = observer(({ index }) =>
             <div className="staking-table_row__bottom__cell__title">
               <p>Wallet:</p>
               <span className="text-gradient">
-                {balance} {symbol}
+                {formatAmount(balance)} {symbol}
               </span>
             </div>
             <div className="staking-table_row__bottom__cell__input">
@@ -328,7 +329,7 @@ const StakingTableRow: React.FC<IStakingTableRowProps> = observer(({ index }) =>
             <div className="staking-table_row__bottom__cell__title">
               <p>Deposited:</p>
               <span className="text-gradient">
-                {deposited} {symbol}
+                {formatAmount(deposited)} {symbol}
               </span>
             </div>
             <div className="staking-table_row__bottom__cell__input">
@@ -353,7 +354,7 @@ const StakingTableRow: React.FC<IStakingTableRowProps> = observer(({ index }) =>
             <div className="staking-table_row__bottom__cell__title">
               <p>Rewards:</p>
               <span className="text-gradient">
-                {rewards} {symbol}
+                {formatAmount(rewards)} {symbol}
               </span>
             </div>
             <div className="staking-table_row__bottom__cell__logo">
