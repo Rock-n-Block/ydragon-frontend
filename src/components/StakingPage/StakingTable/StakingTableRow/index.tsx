@@ -71,9 +71,21 @@ const StakingTableRow: React.FC<IStakingTableRowProps> = observer(({ index }) =>
 
   const getStakeSymbolAndName = useCallback(async () => {
     const stakedTokenAdress = await getStakedTokenAdress(index);
-    const indexSymbol = await walletConnect.metamaskService.getIndexSymbol(stakedTokenAdress);
     const indexName = await walletConnect.metamaskService.getIndexName(stakedTokenAdress);
-    return { indexSymbol, indexName };
+    let indexSymbol: string = await walletConnect.metamaskService.getIndexSymbol(stakedTokenAdress);
+
+    if (indexSymbol.endsWith('LP')) {
+      const tokensAddresses = await walletConnect.metamaskService.getTokensFromLPToken(
+        stakedTokenAdress,
+      );
+
+      const firstSymbol = await walletConnect.metamaskService.getIndexSymbol(tokensAddresses[0]);
+      const secondSymbol = await walletConnect.metamaskService.getIndexSymbol(tokensAddresses[1]);
+
+      indexSymbol = `${firstSymbol} / ${secondSymbol} LP`;
+    }
+
+    return { indexSymbol: indexSymbol.toUpperCase(), indexName };
   }, [walletConnect.metamaskService, getStakedTokenAdress, index]);
 
   const getBalanceOfUser = useCallback(
@@ -210,7 +222,7 @@ const StakingTableRow: React.FC<IStakingTableRowProps> = observer(({ index }) =>
   useEffect(() => {
     getStakedTokenAdress(index).then((data) => {
       setStakedTokenAdr(data);
-      indexesApi.getIndexInfoByIndexHash(data).then((info: any) => {
+      indexesApi.getIndexInfoByIndexAddress(data).then((info: any) => {
         setTokenInfoFromBack(info.data);
       });
     });
@@ -224,7 +236,7 @@ const StakingTableRow: React.FC<IStakingTableRowProps> = observer(({ index }) =>
 
   // TODO: create skeleton
   if (!symbol || !name || !totalStaked)
-    return <div className="staking-table_row staking-table_row--skelet">SKELETON</div>;
+    return <div className="staking-table_row staking-table_row--skelet" />;
   return (
     <div className="staking-table_row">
       <div className="staking-table_row__top">
@@ -257,7 +269,7 @@ const StakingTableRow: React.FC<IStakingTableRowProps> = observer(({ index }) =>
           <div className="staking-table_row__cell__title">your rewards</div>
           <Tippy content={`${formatAmount(rewards)} ${symbol} `}>
             <div className="staking-table_row__cell__value text-gradient">
-              {formatAmount(rewards)} {symbol}
+              {formatAmount(rewards)} YDR
             </div>
           </Tippy>
         </div>
@@ -274,7 +286,7 @@ const StakingTableRow: React.FC<IStakingTableRowProps> = observer(({ index }) =>
             link={symbol === 'YDR' ? `/ydrtoken` : `/index/${tokenInfoFromBack.id}`}
             className="staking-table_row__cell--button"
           >
-            Get {symbol}
+            Get in
           </Button>
         </div>
         <div
@@ -308,6 +320,15 @@ const StakingTableRow: React.FC<IStakingTableRowProps> = observer(({ index }) =>
                 placeholder="0.0"
                 type="text"
               />
+              <div
+                role="button"
+                onKeyDown={() => {}}
+                tabIndex={0}
+                onClick={() => setToStakeAmount(balance)}
+                className="staking-table_row__bottom__cell__input--max"
+              >
+                MAX
+              </div>
             </div>
             <Button
               disabled={+toStakeAmount > +balance || (!toStakeAmount && isAllowance)}
@@ -339,6 +360,15 @@ const StakingTableRow: React.FC<IStakingTableRowProps> = observer(({ index }) =>
                 placeholder="0.0"
                 type="text"
               />
+              <div
+                role="button"
+                onKeyDown={() => {}}
+                tabIndex={0}
+                onClick={() => setToUnstakeAmount(deposited)}
+                className="staking-table_row__bottom__cell__input--max"
+              >
+                MAX
+              </div>
             </div>
             <Button
               disabled={!toUnstakeAmount || +deposited <= 0 || +toUnstakeAmount > +deposited}
@@ -353,9 +383,7 @@ const StakingTableRow: React.FC<IStakingTableRowProps> = observer(({ index }) =>
           <div className="staking-table_row__bottom__cell">
             <div className="staking-table_row__bottom__cell__title">
               <p>Rewards:</p>
-              <span className="text-gradient">
-                {formatAmount(rewards)} {symbol}
-              </span>
+              <span className="text-gradient">{formatAmount(rewards)} YDR</span>
             </div>
             <div className="staking-table_row__bottom__cell__logo">
               <img src={logoExample1} alt="token logo" />

@@ -489,6 +489,15 @@ export default class MetamaskService {
     });
   }
 
+  async getTokensFromLPToken(tokenAddress: string) {
+    const LPContract = this.getContractByAddress(tokenAddress, configABI.LPToken.ABI);
+
+    const token0 = await LPContract.methods.token0().call();
+    const token1 = await LPContract.methods.token1().call();
+
+    return [token0, token1];
+  }
+
   // ========== NEW METHODS END =================
 
   getStakingFactoryTokenToEnter(index: number) {
