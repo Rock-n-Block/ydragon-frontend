@@ -3,12 +3,12 @@ import { Select } from 'antd';
 import { observer } from 'mobx-react-lite';
 
 import arrow from '../../assets/img/icons/icon-arrow-yellow.svg';
+import config, { TChain } from '../../config';
 import { networksApi } from '../../services/api';
 import { useWalletConnectorContext } from '../../services/walletConnect';
+import MetamaskService from '../../services/web3';
 import { useMst } from '../../store/store';
 import TokenMini from '../TokenMini';
-import MetamaskService from '../../services/web3';
-import config, { TChain } from '../../config';
 
 const { Option } = Select;
 
@@ -24,7 +24,12 @@ const SelectNetwork: React.FC = observer(() => {
     networksApi
       .getNetworks()
       .then(({ data }) => {
-        networks.setNetworks(data);
+        networks.setNetworks([
+          {
+            ...data[0],
+            staking_address: '0x6A9a4B8227529fD5B86f02AdE4e925bb58cBC845',
+          },
+        ]);
       })
       .catch((err) => {
         const { response } = err;

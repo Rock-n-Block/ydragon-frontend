@@ -2,7 +2,12 @@
 
 .staking-table_header {
   display: grid;
-  grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr 0.9fr 0.3fr;
+  // grid-template-columns: 1fr 1.5fr 1fr 1fr 1fr 0.9fr 0.3fr;
+  grid-template-columns:
+    minmax(100px, 1fr) minmax(100px, 1.5fr) minmax(100px, 1fr) minmax(100px, 1fr)
+    minmax(100px, 1fr) minmax(100px, 0.9fr) minmax(10px, 0.3fr);
+
+  padding: 0 22px;
 
   margin-bottom: 20px;
   @include b(tablet) {
@@ -12,7 +17,6 @@
 
 .staking-table_header__cell {
   display: flex;
-  justify-content: center;
 
   font-family: 'Monument Extended', sans-serif;
   font-size: 12px;

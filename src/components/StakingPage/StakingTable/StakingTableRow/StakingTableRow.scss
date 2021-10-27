@@ -12,11 +12,22 @@
   }
 
   overflow: hidden;
+
+  // BETA SKELETON
+  &--skelet {
+    min-height: 110px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 }
 
 .staking-table_row__top {
   display: grid;
-  grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr 0.9fr 0.3fr;
+  // grid-template-columns: 1fr 1.5fr 1fr 1fr 1fr 0.9fr 0.3fr;
+  grid-template-columns:
+    minmax(100px, 1fr) minmax(100px, 1.5fr) minmax(100px, 1fr) minmax(100px, 1fr)
+    minmax(100px, 1fr) minmax(100px, 0.9fr) minmax(10px, 0.3fr);
 
   padding: 25px 22px;
 
@@ -32,7 +43,8 @@
   }
 
   @include b(tablet) {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: minmax(100px, 1fr) minmax(100px, 1fr);
+    // grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     grid-column-gap: 60px;
     grid-row-gap: 30px;
     padding: 20px 12px;
@@ -42,7 +54,7 @@
   }
 
   @include b(extramobile) {
-    grid-column-gap: 30px;
+    grid-column-gap: 10px;
   }
 }
 
@@ -58,7 +70,7 @@
     padding: 45px 60px 70px;
 
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 80px;
 
     @include b(tablet) {
@@ -84,6 +96,11 @@
         font-family: 'TTNorms', sans-serif;
         letter-spacing: 0;
         font-weight: 700;
+
+        max-width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
       }
     }
 
@@ -144,7 +161,6 @@
 .staking-table_row__cell {
   display: flex;
   align-items: center;
-  justify-content: center;
 
   &:first-child {
     justify-content: flex-start;
@@ -190,9 +206,14 @@
   }
 
   &__value {
+    max-width: 80%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
     font-size: 16px;
     @include b(tablet) {
       font-size: 18px;
+      max-width: 100%;
     }
     @include b(extramobile) {
       font-size: 14px;
