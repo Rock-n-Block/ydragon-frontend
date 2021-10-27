@@ -7,7 +7,7 @@ import moment from 'moment';
 
 import logo from '../../assets/img/icons/logo.svg';
 import { TokenPanel } from '../../components';
-import { IndexChart, IndexTable, RebalanceHistory } from '../../components/IndexPage';
+import { IndexChart, IndexTable } from '../../components/IndexPage';
 import { IFetchedData } from '../../components/IndexPage/IndexChart';
 import { IHistoricalToken, IToken } from '../../components/IndexPage/IndexTable';
 import { TradeIndexModal } from '../../components/Modals';
@@ -197,7 +197,7 @@ const Index: React.FC = observer(() => {
               />
             ))}
       </div>
-      <RebalanceHistory lastRebalance={indexData?.rebalance_date} />
+      {/* <RebalanceHistory lastRebalance={indexData?.rebalance_date} /> */}
       {/* <About /> */}
       <TradeIndexModal
         token={indexData?.name ?? ''}

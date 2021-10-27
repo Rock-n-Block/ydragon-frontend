@@ -3,14 +3,14 @@ import { useHistory, useParams } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 
 import {
-  Composition,
+  // Composition,
   IndexInfo,
   Options,
   Rebalance,
   TokensStructure,
   XYStructure,
 } from '../../components/Admin';
-import { RebalanceModal } from '../../components/Modals';
+// import { RebalanceModal } from '../../components/Modals';
 import { indexesApi, vaultsApi } from '../../services/api';
 import { useMst } from '../../store/store';
 import { IIndex, IIndexStatus, ITokensDiff } from '../Admin';
@@ -105,7 +105,7 @@ const AdminIndex: React.FC = () => {
   return (
     <main className="container">
       <IndexInfo marketCap={index.market_cap} price={index.price} />
-      <Composition status={index.status} tokens={index.tokens_diff} />
+      {/* <Composition status={index.status} tokens={index.tokens_diff} /> */}
       <Rebalance tokens={index.tokens_diff} />
       <Options
         address={index.index?.address}
@@ -113,11 +113,11 @@ const AdminIndex: React.FC = () => {
       />
       <TokensStructure vaults={vault} manualRebalanceValue={manualRebalanceValue} />
       <XYStructure vaults={vaultMini} />
-      <RebalanceModal
+      {/* <RebalanceModal
         name={index.index?.name}
         tokens={index.tokens_diff}
         onStart={getIndexComposition}
-      />
+      /> */}
     </main>
   );
 };
