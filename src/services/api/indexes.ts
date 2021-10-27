@@ -17,7 +17,7 @@ export default {
       },
     }),
   getImeIndexes: () =>
-    axios.get(`indexes/ime`, {
+    axios.get(`indexes/ime/`, {
       params: {
         network: BACKEND_NETWORKS[rootStore.networks.currentNetwork as TChain],
       },
