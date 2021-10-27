@@ -23,7 +23,7 @@ const IndexpadToken: React.FC<IProps> = ({ token }) => {
       </div>
 
       <Tippy content={token.name}>
-        <p className="indexpad-token__footer">{token.name}</p>
+        <p className="indexpad-token__footer text-ellipsis">{token.name}</p>
       </Tippy>
     </div>
   );

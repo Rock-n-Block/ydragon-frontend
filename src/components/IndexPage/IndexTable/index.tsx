@@ -5,6 +5,7 @@ import arrowDown from '../../../assets/img/chart/arrow-down.svg';
 import arrowUp from '../../../assets/img/chart/arrow-up.svg';
 
 import './IndexTable.scss';
+import Tippy from '@tippyjs/react';
 
 export interface IToken {
   address: string;
@@ -66,9 +67,12 @@ const IndexTable: React.FC<IndexTableProps> = ({ tokens }) => {
                   width="31"
                   height="31"
                 />
-                <div className="index-table__token">
-                  {'name' in token ? token.name : token.token_name}
-                </div>
+
+                <Tippy content={'name' in token ? token.name : token.token_name}>
+                  <div className="index-table__token text-ellipsis">
+                    {'name' in token ? token.name : token.token_name}
+                  </div>
+                </Tippy>
               </div>
               <div className="index-table__col">
                 <div className="index-table__quantity">
