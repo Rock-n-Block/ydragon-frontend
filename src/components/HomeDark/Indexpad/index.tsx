@@ -21,7 +21,7 @@ export interface IIndexpadToken {
   decimal: number;
   symbol: string;
   name: string;
-  percent_change: number;
+  percent_change: number | null;
 }
 
 export interface IIme {
