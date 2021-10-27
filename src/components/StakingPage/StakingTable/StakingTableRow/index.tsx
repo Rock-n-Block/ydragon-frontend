@@ -20,8 +20,13 @@ interface IStakingTableRowProps {
   index: number;
 }
 
-const formatAmount = (amount: string | number, decimals = 18) => {
-  return new BigNumber(amount).dividedBy(new BigNumber(10).pow(decimals)).toFormat(2);
+const formatAmount = (amount: string | number, decimals = 6) => {
+  if (amount === '0') return '0';
+  return new BigNumber(amount).toFormat(decimals);
+};
+
+const fromWeiToNormal = (amount: string | number, decimals = 18) => {
+  return new BigNumber(amount).dividedBy(new BigNumber(10).pow(decimals)).toString();
 };
 
 const StakingTableRow: React.FC<IStakingTableRowProps> = observer(({ index }) => {
@@ -41,6 +46,7 @@ const StakingTableRow: React.FC<IStakingTableRowProps> = observer(({ index }) =>
   // index info [all numbers in wei]
   const [symbol, setSymbol] = useState('');
   const [name, setName] = useState('');
+
   const [deposited, setDeposited] = useState('');
   const [totalStaked, setTotalStaked] = useState('');
   const [rewards, setRewards] = useState('');
@@ -89,9 +95,9 @@ const StakingTableRow: React.FC<IStakingTableRowProps> = observer(({ index }) =>
         setIsUnstakeLoad(true);
         const res = await walletConnect.metamaskService.withdraw(tokenAdress, amount);
         if (res.status) {
-          setDeposited((prev) => String(+prev - +amount * 10 ** 18));
-          setBalance((prev) => String(+prev + +amount * 10 ** 18));
-          setTotalStaked((prev) => String(+prev - +amount * 10 ** 18));
+          setDeposited((prev) => new BigNumber(prev).minus(amount).toString());
+          setBalance((prev) => new BigNumber(prev).plus(amount).toString());
+          setTotalStaked((prev) => new BigNumber(prev).minus(amount).toString());
         }
       } catch (error) {
         console.log(error);
@@ -125,9 +131,9 @@ const StakingTableRow: React.FC<IStakingTableRowProps> = observer(({ index }) =>
         setIsFirstButtonLoad(true);
         const res = await walletConnect.metamaskService.deposit(stakedTokenAdr, amount);
         if (res.status) {
-          setBalance((prev) => String(+prev - +amount * 10 ** 18));
-          setDeposited((prev) => String(+prev + +amount * 10 ** 18));
-          setTotalStaked((prev) => String(+prev + +amount * 10 ** 18));
+          setBalance((prev) => new BigNumber(prev).minus(amount).toString());
+          setDeposited((prev) => new BigNumber(prev).plus(amount).toString());
+          setTotalStaked((prev) => new BigNumber(prev).plus(amount).toString());
         }
       } catch (error) {
         console.log(error);
@@ -145,7 +151,7 @@ const StakingTableRow: React.FC<IStakingTableRowProps> = observer(({ index }) =>
         const res = await walletConnect.metamaskService.claimReward(ind);
         if (res.status) {
           setRewards('0');
-          setBalance((prev) => String(+prev + +amount));
+          setBalance((prev) => new BigNumber(prev).plus(amount).toString());
         }
       } catch (error) {
         console.log(error);
@@ -161,7 +167,7 @@ const StakingTableRow: React.FC<IStakingTableRowProps> = observer(({ index }) =>
     walletConnect.metamaskService
       .checkAllowanceById(
         stakedTokenAdr,
-        configABI.Index.ABI,
+        configABI.MAIN.ABI,
         networks.networksList[0].staking_address,
       )
       .then((data: boolean) => {
@@ -175,22 +181,22 @@ const StakingTableRow: React.FC<IStakingTableRowProps> = observer(({ index }) =>
     });
 
     // USER BALANCE IN THE WALLET
-    getBalanceOfUser(user.address).then((userBalance) => setBalance(userBalance));
+    getBalanceOfUser(user.address).then((userBalance) => setBalance(fromWeiToNormal(userBalance)));
 
     // USER STAKED AMOUNT
     walletConnect.metamaskService
       .getUserStakedAmount(user.address, index)
-      .then((data: string) => setDeposited(data));
+      .then((data: string) => setDeposited(fromWeiToNormal(data)));
 
     // TOTAL STAKED AMOUNT
     walletConnect.metamaskService
       .getTotalStaked(index)
-      .then((data: string) => setTotalStaked(data));
+      .then((data: string) => setTotalStaked(fromWeiToNormal(data)));
 
     // USER REWARDS
     walletConnect.metamaskService
       .getUserRewards(user.address, index)
-      .then((data: string) => setRewards(data));
+      .then((data: string) => setRewards(fromWeiToNormal(data)));
   }, [
     getStakeSymbolAndName,
     getBalanceOfUser,
@@ -241,7 +247,7 @@ const StakingTableRow: React.FC<IStakingTableRowProps> = observer(({ index }) =>
         </div>
         <div className="staking-table_row__cell">
           <div className="staking-table_row__cell__title">deposited</div>
-          <Tippy content={`${formatAmount(deposited)} ${symbol} `}>
+          <Tippy content={`${formatAmount(deposited)} ${symbol}`}>
             <div className="staking-table_row__cell__value text-MER">
               {formatAmount(deposited)} {symbol}
             </div>
