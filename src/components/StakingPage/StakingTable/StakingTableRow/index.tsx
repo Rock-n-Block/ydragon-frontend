@@ -2,11 +2,13 @@ import React, { useState, useCallback, useEffect } from 'react';
 import cn from 'classnames';
 import { observer } from 'mobx-react';
 import BigNumber from 'bignumber.js/bignumber';
+import Tippy from '@tippyjs/react';
 
 import { Button, Loader } from '../../../index';
 import { useWalletConnectorContext } from '../../../../services/walletConnect';
 import { useMst } from '../../../../store/store';
 import configABI from '../../../../services/web3/config_ABI';
+import { indexesApi } from '../../../../services/api';
 
 import './StakingTableRow.scss';
 
@@ -18,7 +20,7 @@ interface IStakingTableRowProps {
   index: number;
 }
 
-const formatAmount = (amount: string, decimals = 18) => {
+const formatAmount = (amount: string | number, decimals = 18) => {
   return new BigNumber(amount).dividedBy(new BigNumber(10).pow(decimals)).toFormat(2);
 };
 
@@ -30,6 +32,7 @@ const StakingTableRow: React.FC<IStakingTableRowProps> = observer(({ index }) =>
   // main info
   const [stakedTokenAdr, setStakedTokenAdr] = useState('');
   const [isAllowance, setIsAllowance] = useState(false);
+  const [tokenInfoFromBack, setTokenInfoFromBack] = useState({ id: '', price: '' });
 
   // inputs
   const [toUnstakeAmount, setToUnstakeAmount] = useState('');
@@ -88,6 +91,7 @@ const StakingTableRow: React.FC<IStakingTableRowProps> = observer(({ index }) =>
         if (res.status) {
           setDeposited((prev) => String(+prev - +amount * 10 ** 18));
           setBalance((prev) => String(+prev + +amount * 10 ** 18));
+          setTotalStaked((prev) => String(+prev - +amount * 10 ** 18));
         }
       } catch (error) {
         console.log(error);
@@ -101,7 +105,7 @@ const StakingTableRow: React.FC<IStakingTableRowProps> = observer(({ index }) =>
   const approve = useCallback(async () => {
     setIsFirstButtonLoad(true);
     try {
-      const data = await walletConnect.metamaskService.approveById(
+      const data = await walletConnect.metamaskService.approve(
         stakedTokenAdr,
         networks.networksList[0].staking_address,
       );
@@ -123,6 +127,7 @@ const StakingTableRow: React.FC<IStakingTableRowProps> = observer(({ index }) =>
         if (res.status) {
           setBalance((prev) => String(+prev - +amount * 10 ** 18));
           setDeposited((prev) => String(+prev + +amount * 10 ** 18));
+          setTotalStaked((prev) => String(+prev + +amount * 10 ** 18));
         }
       } catch (error) {
         console.log(error);
@@ -199,6 +204,9 @@ const StakingTableRow: React.FC<IStakingTableRowProps> = observer(({ index }) =>
   useEffect(() => {
     getStakedTokenAdress(index).then((data) => {
       setStakedTokenAdr(data);
+      indexesApi.getIndexInfoByIndexHash(data).then((info: any) => {
+        setTokenInfoFromBack(info.data);
+      });
     });
   }, [getStakedTokenAdress, index]);
 
@@ -226,29 +234,42 @@ const StakingTableRow: React.FC<IStakingTableRowProps> = observer(({ index }) =>
           </div>
         </div>
         <div className="staking-table_row__cell">
-          <div className="staking-table_row__cell__title">balance</div>
-          <div className="staking-table_row__cell__value text-MER">$ {formatAmount(balance)}</div>
+          <div className="staking-table_row__cell__title">balance </div>
+          <Tippy content={formatAmount(balance)}>
+            <div className="staking-table_row__cell__value text-MER">$ {formatAmount(balance)}</div>
+          </Tippy>
         </div>
         <div className="staking-table_row__cell">
           <div className="staking-table_row__cell__title">deposited</div>
-          <div className="staking-table_row__cell__value text-MER">
-            {formatAmount(deposited)} {symbol}
-          </div>
+          <Tippy content={`${formatAmount(deposited)} ${symbol} `}>
+            <div className="staking-table_row__cell__value text-MER">
+              {formatAmount(deposited)} {symbol}
+            </div>
+          </Tippy>
         </div>
         <div className="staking-table_row__cell">
           <div className="staking-table_row__cell__title">your rewards</div>
-          <div className="staking-table_row__cell__value text-gradient">
-            {formatAmount(rewards)} {symbol}
-          </div>
+          <Tippy content={`${formatAmount(rewards)} ${symbol} `}>
+            <div className="staking-table_row__cell__value text-gradient">
+              {formatAmount(rewards)} {symbol}
+            </div>
+          </Tippy>
         </div>
         <div className="staking-table_row__cell">
           <div className="staking-table_row__cell__title">tvl</div>
-          <div className="staking-table_row__cell__value text-MER">
-            $ {formatAmount(totalStaked)}
-          </div>
+          <Tippy content={`$ ${formatAmount(totalStaked)}`}>
+            <div className="staking-table_row__cell__value text-MER">
+              $ {formatAmount(totalStaked)}
+            </div>
+          </Tippy>
         </div>
         <div className="staking-table_row__cell">
-          <Button className="staking-table_row__cell--button">Get {symbol}</Button>
+          <Button
+            link={symbol === 'YDR' ? `/ydrtoken` : `/index/${tokenInfoFromBack.id}`}
+            className="staking-table_row__cell--button"
+          >
+            Get {symbol}
+          </Button>
         </div>
         <div
           className={cn('staking-table_row__cell staking-table_row__cell--arrow', {
@@ -283,7 +304,7 @@ const StakingTableRow: React.FC<IStakingTableRowProps> = observer(({ index }) =>
               />
             </div>
             <Button
-              disabled={+toStakeAmount > +balance || !toStakeAmount}
+              disabled={+toStakeAmount > +balance || (!toStakeAmount && isAllowance)}
               colorScheme="blue"
               loading={isFirstBtnLoad}
               className="staking-table_row__bottom__cell__button"

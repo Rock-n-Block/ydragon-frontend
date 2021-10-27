@@ -27,7 +27,7 @@ const SelectNetwork: React.FC = observer(() => {
         networks.setNetworks([
           {
             ...data[0],
-            staking_address: '0x35f2Cb029CB2814066Ba38166bb8e341Ecd2609b',
+            staking_address: '0x6A9a4B8227529fD5B86f02AdE4e925bb58cBC845',
           },
         ]);
       })

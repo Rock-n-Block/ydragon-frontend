@@ -407,7 +407,7 @@ export default class MetamaskService {
   }
 
   getStakesCount() {
-    return this.getStakingFactoryContract().methods.stakesCount().call();
+    return this.getStakingFactoryContract().methods.getStakedCount().call();
   }
 
   getStakeContractByIndex(index: number) {
@@ -561,7 +561,7 @@ export default class MetamaskService {
     return this.web3Provider.eth.sendTransaction({
       ...transactionConfig,
       from: this.walletAddress,
-      type: '0x2',
+      // type: '0x2',
     });
   }
 }
