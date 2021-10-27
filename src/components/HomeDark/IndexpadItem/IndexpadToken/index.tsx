@@ -2,6 +2,7 @@ import React from 'react';
 import { IIndexpadToken } from '../../Indexpad';
 import './IndexpadToken.scss';
 import BigNumber from 'bignumber.js/bignumber';
+import Tippy from '@tippyjs/react';
 
 interface IProps {
   token: IIndexpadToken;
@@ -20,7 +21,10 @@ const IndexpadToken: React.FC<IProps> = ({ token }) => {
           </span>
         </div>
       </div>
-      <div className="indexpad-token__footer">{token.name}</div>
+
+      <Tippy content={token.name}>
+        <p className="indexpad-token__footer text-ellipsis">{token.name}</p>
+      </Tippy>
     </div>
   );
 };

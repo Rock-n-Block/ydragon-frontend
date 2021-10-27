@@ -179,7 +179,7 @@ const StakingTableRow: React.FC<IStakingTableRowProps> = observer(({ index }) =>
     walletConnect.metamaskService
       .checkAllowanceById(
         stakedTokenAdr,
-        configABI.Index.ABI,
+        configABI.MAIN.ABI,
         networks.networksList[0].staking_address,
       )
       .then((data: boolean) => {

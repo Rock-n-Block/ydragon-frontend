@@ -37,25 +37,23 @@ const IndexpadItem: React.FC<InitialMintEventItemProps> = ({ imeItem }) => {
   }, [imeItem.address, walletConnector.metamaskService]);
   const formatTokens = useCallback(() => {
     const compareFn = (a: IIndexpadToken, b: IIndexpadToken) =>
-      Sorter.DEFAULT(a, b, true, 'unit_weight');
-    if (imeItem.tokens.length >= 6) {
-      const sortedTokens = imeItem.tokens.sort(compareFn);
+      Sorter.DEFAULT(a, b, false, 'unit_weight');
+    const sortedTokens = imeItem.tokens.sort(compareFn);
+    if (sortedTokens.length >= 6) {
       const firstFiveTokens = sortedTokens.slice(0, 5);
-      const lastTokensWeight = firstFiveTokens
-        .map((token) => token.unit_weight)
-        .reduce((previousValue, currValue) =>
-          new BigNumber(previousValue).plus(currValue).toString(),
-        );
+      const firstFiveTokensWeight = firstFiveTokens.map((token) => token.unit_weight);
+      const lastTokensWeight = firstFiveTokensWeight.reduce(
+        (previousValue, currValue) => new BigNumber(previousValue).plus(currValue),
+        new BigNumber(0),
+      );
       const newToken = {
-        unit_weight: new BigNumber(100)
-          .minus(new BigNumber(lastTokensWeight).multipliedBy(100))
-          .toString(2),
+        unit_weight: new BigNumber(1).minus(new BigNumber(lastTokensWeight)).toFixed(4),
         name: 'Other',
         image: indexpadOther,
       } as IIndexpadToken;
       setTokens([...firstFiveTokens, newToken]);
     } else {
-      setTokens(imeItem.tokens);
+      setTokens(sortedTokens);
     }
   }, [imeItem.tokens]);
   useEffect(() => {
