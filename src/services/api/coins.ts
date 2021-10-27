@@ -4,7 +4,7 @@ import config, { TChain } from '../../config';
 
 const { BACKEND_NETWORKS } = config;
 export default {
-  getUserIndexes: () => axios.get('indexes/user'),
+  getUserIndexes: () => axios.get('indexes/user/'),
   getCoinsList: (name: string) =>
     axios.get(`/coins_list/api/indexes/`, {
       params: {
