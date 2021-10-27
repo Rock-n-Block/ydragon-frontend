@@ -30,7 +30,6 @@ const IndexpadItem: React.FC<InitialMintEventItemProps> = ({ imeItem }) => {
     modals.getIn.open(imeItem.id, imeItem.address, imeItem.name);
   };
   const getUserBalance = useCallback(() => {
-    debugger;
     walletConnector.metamaskService.getBalanceOf(imeItem.address).then((data: string | number) => {
       const formatedData = new BigNumber(data).dividedBy(new BigNumber(10).pow(18)).toFixed(6);
       setUserBalance(formatedData);

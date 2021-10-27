@@ -75,7 +75,7 @@ const Rebalance: React.FC<RebalanceProps> = observer(({ tokens }) => {
   }, [tokens]);
   return (
     <section className="section section--admin">
-      <h2 className="section__title text-outline">Index rebalance</h2>
+      <h2 className="section__title text-outline">Index composition</h2>
 
       {tokens && (
         <>
