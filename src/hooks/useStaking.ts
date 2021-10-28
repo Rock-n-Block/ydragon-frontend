@@ -4,6 +4,7 @@ import BigNumber from 'bignumber.js/bignumber';
 import { useWalletConnectorContext } from '../services/walletConnect';
 import { fromWeiToNormal } from '../utils/fromWeiToNormal';
 import { indexesApi, coingeckoApi } from '../services/api';
+import txToast from '../components/ToastWithTxHash';
 
 import configABI from '../services/web3/config_ABI';
 
@@ -100,7 +101,11 @@ export const useStaking = (indexId: number, userAddress: string, stakingAddress:
   // STAKE TOKENS
   const deposit = useCallback(
     async (amount: string) => {
-      const res = await walletConnect.metamaskService.deposit(stakedTokenAdr, amount);
+      const res = await walletConnect.metamaskService
+        .deposit(stakedTokenAdr, amount)
+        .on('transactionHash', (hash: string) => {
+          txToast(hash);
+        });
       if (res.status) {
         setBalance((prev) => new BigNumber(prev).minus(amount).toString());
         setDeposited((prev) => new BigNumber(prev).plus(amount).toString());
@@ -113,7 +118,11 @@ export const useStaking = (indexId: number, userAddress: string, stakingAddress:
   // CLAIM REWORD
   const claimReward = useCallback(
     async (amount: string, ind: string | number) => {
-      const res = await walletConnect.metamaskService.claimReward(ind);
+      const res = await walletConnect.metamaskService
+        .claimReward(ind)
+        .on('transactionHash', (hash: string) => {
+          txToast(hash);
+        });
       if (res.status) {
         setRewards('0');
         console.log(amount);
@@ -126,7 +135,11 @@ export const useStaking = (indexId: number, userAddress: string, stakingAddress:
   // WITHDRAW
   const withdraw = useCallback(
     async (tokenAdress: string, amount: string) => {
-      const res = await walletConnect.metamaskService.withdraw(tokenAdress, amount);
+      const res = await walletConnect.metamaskService
+        .withdraw(tokenAdress, amount)
+        .on('transactionHash', (hash: string) => {
+          txToast(hash);
+        });
       if (res.status) {
         setDeposited((prev) => new BigNumber(prev).minus(amount).toString());
         setBalance((prev) => new BigNumber(prev).plus(amount).toString());
@@ -137,7 +150,11 @@ export const useStaking = (indexId: number, userAddress: string, stakingAddress:
   );
 
   const approve = useCallback(async () => {
-    const data = await walletConnect.metamaskService.approve(stakedTokenAdr, stakingAddress);
+    const data = await walletConnect.metamaskService
+      .approve(stakedTokenAdr, stakingAddress)
+      .on('transactionHash', (hash: string) => {
+        txToast(hash);
+      });
     if (data.status) {
       setIsAllowance(true);
     }
