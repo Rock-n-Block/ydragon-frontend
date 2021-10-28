@@ -192,6 +192,7 @@ const Header: React.FC<HeaderProps> = observer(({ collapsed, onCollapsedChange }
                     links={item.links}
                     onCollapsedChange={onCollapsedChange}
                     titleLink={item.titleLink}
+                    auth={item.auth || 'default'}
                   />
                 ))}
               </ul>
