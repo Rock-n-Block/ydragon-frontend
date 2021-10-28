@@ -15,6 +15,7 @@ import { Modal } from '../index';
 
 import './TradeIndexModal.scss';
 import config from '../../../config';
+import txToast from '../../ToastWithTxHash';
 
 interface TradeIndexModalProps {
   token: string;
@@ -204,6 +205,9 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
       setIsLoading(true);
       walletConnector.metamaskService
         .approve(getTokenAddress(firstCurrency), indexAddress)
+        .on('transactionHash', (hash: string) => {
+          txToast(hash);
+        })
         .then(() => {
           setIsNeedApprove(false);
           modals.info.setMsg('Success', `You approved ${token}`, 'success');
@@ -218,6 +222,9 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
       setIsLoading(true);
       walletConnector.metamaskService
         .mint(payInput, firstCurrency, getTokenAddress(firstCurrency), indexAddress, decimals)
+        .on('transactionHash', (hash: string) => {
+          txToast(hash);
+        })
         .then(() => {
           setPayInput('');
           getBalance();
@@ -234,6 +241,9 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
       setIsLoading(true);
       walletConnector.metamaskService
         .redeem(payInput, getTokenAddress(secondCurrency), indexAddress, 18)
+        .on('transactionHash', (hash: string) => {
+          txToast(hash);
+        })
         .then(() => {
           setPayInput('');
           getBalance();

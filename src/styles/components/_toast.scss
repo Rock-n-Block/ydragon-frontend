@@ -1,0 +1,23 @@
+@import "src/styles/variables";
+
+.dark {
+  .Toastify {
+    &__toast {
+      background: $main-dark-bg;
+      color:$white;
+    }
+  }
+}
+.light {
+  .Toastify {
+    &__toast {
+      background: $main-bg;
+      color:$black;
+    }
+  }
+}
+
+.Toastify {
+  &__toast {
+  }
+}

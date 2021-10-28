@@ -1,44 +1,44 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+// import { useParams } from 'react-router-dom';
 import BigNumber from 'bignumber.js/bignumber';
 
-import bluePlus from '../../../assets/img/icons/icon-plus-blue.svg';
+// import bluePlus from '../../../assets/img/icons/icon-plus-blue.svg';
 import { IVault } from '../../../pages/AdminIndex';
-import { indexesApi } from '../../../services/api';
-import { Button, Table } from '../../index';
-import { InputNumber } from '../../Input';
+// import { indexesApi } from '../../../services/api';
+import { Table } from '../../index';
+// import { InputNumber } from '../../Input';
 import SmallTableCard from '../../SmallTableCard/index';
 
 import './TokensStructure.scss';
 
-interface IIndexId {
-  indexId: string;
-}
+// interface IIndexId {
+//   indexId: string;
+// }
 interface TokensStructureProps {
   vaults: IVault[];
   manualRebalanceValue: string;
 }
 
 const TokensStructure: React.FC<TokensStructureProps> = ({ vaults, manualRebalanceValue }) => {
-  const { indexId } = useParams<IIndexId>();
+  // const { indexId } = useParams<IIndexId>();
   const [dataSource, setDataSource] = useState<any[]>([]);
-  const [inputs, setInputs] = useState<any[]>([]);
-  const handleInputChange = (value: string | number, index: number) => {
-    const newArr = [...inputs]; // copying the old datas array
-    newArr[index] = value; // replace e.target.value with whatever you want to change it to
-    setInputs(newArr);
-  };
-  const handleSubmitChange = () => {
-    const aprArray = vaults.map((vault, index) => {
-      return {
-        id: vault.id,
-        apr: inputs[index] || '0',
-      };
-    });
-    indexesApi.patchIndexesApr(+indexId, aprArray).catch((err) => {
-      console.log(err);
-    });
-  };
+  // const [inputs, setInputs] = useState<any[]>([]);
+  // const handleInputChange = (value: string | number, index: number) => {
+  //   const newArr = [...inputs]; // copying the old datas array
+  //   newArr[index] = value; // replace e.target.value with whatever you want to change it to
+  //   setInputs(newArr);
+  // };
+  // const handleSubmitChange = () => {
+  //   const aprArray = vaults.map((vault, index) => {
+  //     return {
+  //       id: vault.id,
+  //       apr: inputs[index] || '0',
+  //     };
+  //   });
+  //   indexesApi.patchIndexesApr(+indexId, aprArray).catch((err) => {
+  //     console.log(err);
+  //   });
+  // };
   const columns: any[] = [
     {
       title: 'Tokens per index',
@@ -83,35 +83,35 @@ const TokensStructure: React.FC<TokensStructureProps> = ({ vaults, manualRebalan
       dataIndex: 'returnValue',
       key: 'returnValue',
     },
-    {
-      title: (
-        <div className="apr-cell">
-          APR, %
-          <Button onClick={handleSubmitChange} className="apr-cell__btn" styledType="clear">
-            <img src={bluePlus} alt="add apr" width="32" height="32" />
-          </Button>
-        </div>
-      ),
-      dataIndex: 'apr',
-      key: 'apr',
-      render: (item: any) => (
-        <InputNumber
-          type="number"
-          value={item.apr === '0.0' ? '' : item.apr}
-          onChange={(value) => handleInputChange(value, item.index)}
-          placeholder="0"
-          min={0}
-          max={100}
-        />
-      ),
-    },
+    // {
+    //   title: (
+    //     <div className="apr-cell">
+    //       APR, %
+    //       <Button onClick={handleSubmitChange} className="apr-cell__btn" styledType="clear">
+    //         <img src={bluePlus} alt="add apr" width="32" height="32" />
+    //       </Button>
+    //     </div>
+    //   ),
+    //   dataIndex: 'apr',
+    //   key: 'apr',
+    //   render: (item: any) => (
+    //     <InputNumber
+    //       type="number"
+    //       value={item.apr === '0.0' ? '' : item.apr}
+    //       onChange={(value) => handleInputChange(value, item.index)}
+    //       placeholder="0"
+    //       min={0}
+    //       max={100}
+    //     />
+    //   ),
+    // },
   ];
-  useEffect(() => {
-    if (vaults) {
-      const aprArray = vaults.map((vault) => vault.apr || '');
-      setInputs(aprArray);
-    }
-  }, [vaults]);
+  // useEffect(() => {
+  //   if (vaults) {
+  //     const aprArray = vaults.map((vault) => vault.apr || '');
+  //     setInputs(aprArray);
+  //   }
+  // }, [vaults]);
   useEffect(() => {
     if (vaults) {
       const newData = vaults.map((vault, index) => {
@@ -142,12 +142,12 @@ const TokensStructure: React.FC<TokensStructureProps> = ({ vaults, manualRebalan
           farm,
           estimated,
           returnValue,
-          apr: { apr: inputs[index], index },
+          // apr: { apr: inputs[index], index },
         };
       });
       setDataSource(newData);
     }
-  }, [inputs, manualRebalanceValue, vaults]);
+  }, [manualRebalanceValue, vaults]);
   return (
     <section className="section section--admin">
       <h2 className="section__title text-outline">Tokens structure</h2>
@@ -171,7 +171,7 @@ const TokensStructure: React.FC<TokensStructureProps> = ({ vaults, manualRebalan
                   ['Farm', data.farm],
                   ['Estimated X Vault', data.estimated],
                   ['Must be returned from the farm', data.returnValue],
-                  [
+                  /* [
                     'APR, %',
                     <div className="apr-cell-small">
                       <InputNumber
@@ -190,7 +190,7 @@ const TokensStructure: React.FC<TokensStructureProps> = ({ vaults, manualRebalan
                         <img src={bluePlus} alt="add apr" width="32" height="32" />
                       </Button>
                     </div>,
-                  ],
+                  ], */
                 ]}
               />
             ))}

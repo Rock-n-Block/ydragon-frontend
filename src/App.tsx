@@ -24,6 +24,8 @@ import {
 } from './pages';
 
 import './styles/index.scss';
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
 
 const App: React.FC = observer(() => {
   const [collapsed, setCollapsed] = useState<boolean>(true);
@@ -73,6 +75,7 @@ const App: React.FC = observer(() => {
   return (
     <div className={theme.value}>
       <div className={addClass()}>
+        <ToastContainer hideProgressBar={false} />
         <Header collapsed={collapsed} onCollapsedChange={onCollapsedChange} />
         <div className={`${collapsed ? '' : 'expandWrapper'} content`}>
           <Switch>

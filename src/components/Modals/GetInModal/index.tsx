@@ -14,6 +14,7 @@ import { Modal } from '../index';
 import config from '../../../config';
 
 import './GetInModal.scss';
+import txToast from '../../ToastWithTxHash';
 
 const GetInModal: React.FC = observer(() => {
   const { NETWORK_TOKENS } = config;
@@ -98,6 +99,9 @@ const GetInModal: React.FC = observer(() => {
     setIsLoading(true);
     walletConnector.metamaskService
       .approve(getTokenAddress(firstCurrency), modals.getIn.address)
+      .on('transactionHash', (hash: string) => {
+        txToast(hash);
+      })
       .then(() => {
         setIsNeedApprove(false);
         modals.info.setMsg('Success', `Approve of ${firstCurrency} to IMO success`, 'success');
@@ -113,6 +117,9 @@ const GetInModal: React.FC = observer(() => {
     setIsLoading(true);
     walletConnector.metamaskService
       .mint(payInput, firstCurrency, getTokenAddress(firstCurrency), modals.getIn.address, decimals)
+      .on('transactionHash', (hash: string) => {
+        txToast(hash);
+      })
       .then(() => {
         setPayInput('');
         getBalance();

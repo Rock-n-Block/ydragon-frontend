@@ -9,6 +9,7 @@ import { Button, Switch } from '../../index';
 import Input from '../../Input';
 
 import './Options.scss';
+import txToast from '../../ToastWithTxHash';
 
 interface OptionsProps {
   address: string;
@@ -28,6 +29,9 @@ const Options: React.FC<OptionsProps> = observer(({ address, onManualInputChange
     setIsAutoRebalanceChecked(isChecked);
     walletConnector.metamaskService
       .changeAutoXYRebalaceAllowance(address, isChecked)
+      .on('transactionHash', (hash: string) => {
+        txToast(hash);
+      })
       .then(() => {
         modals.info.setMsg(
           'Operation success',
@@ -45,6 +49,9 @@ const Options: React.FC<OptionsProps> = observer(({ address, onManualInputChange
     if (inputValue) {
       walletConnector.metamaskService
         .startXyRebalance(address, +new BigNumber(inputValue).multipliedBy(100).toString(10))
+        .on('transactionHash', (hash: string) => {
+          txToast(hash);
+        })
         .then(() => {
           modals.info.setMsg(
             'Operation success',
