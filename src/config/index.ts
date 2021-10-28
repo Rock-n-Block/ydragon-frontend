@@ -7,8 +7,8 @@ import coinmarketcapL from '../assets/img/socials/coinmarketcap-light.svg';
 import coinmarketcapD from '../assets/img/socials/coinmarketcap.svg';
 import bncDark from '../assets/img/icons/icon-binance-dark.svg';
 import bncLight from '../assets/img/icons/icon-binance-light.svg';
-import plgDark from '../assets/img/icons/icon-polygon-dark.svg';
-import plgLight from '../assets/img/icons/icon-polygon-light.svg';
+// import plgDark from '../assets/img/icons/icon-polygon-dark.svg';
+// import plgLight from '../assets/img/icons/icon-polygon-light.svg';
 import eth from '../assets/img/icons/blockchains/eth.svg';
 
 const IS_PRODUCTION = false;
@@ -53,7 +53,7 @@ const SOCIAL_LINKS = {
   },
 };
 
-export type TChain = 'eth' | 'bnb' | 'matic';
+export type TChain = 'eth' | 'bnb' /* | 'matic' */;
 
 const NETWORK_TOKENS = {
   eth: {
@@ -76,16 +76,16 @@ const NETWORK_TOKENS = {
     },
     disabled: false,
   },
-  matic: {
-    symbol: 'matic',
-    address: '0x0000000000000000000000000000000000000000',
-    decimals: 18,
-    name: 'Polygon (Matic)',
-    image: (theme: string) => {
-      return theme === 'dark' ? plgDark : plgLight;
-    },
-    disabled: false,
-  },
+  // matic: {
+  //   symbol: 'matic',
+  //   address: '0x0000000000000000000000000000000000000000',
+  //   decimals: 18,
+  //   name: 'Polygon (Matic)',
+  //   image: (theme: string) => {
+  //     return theme === 'dark' ? plgDark : plgLight;
+  //   },
+  //   disabled: false,
+  // },
 };
 
 export default {
@@ -96,7 +96,7 @@ export default {
   BACKEND_NETWORKS: {
     eth: 'ethereum',
     bnb: 'binance-smart-chain',
-    matic: 'polygon-pos',
+    // matic: 'polygon-pos',
   },
   CHAIN_IDS: {
     mainnet: {
@@ -108,10 +108,10 @@ export default {
         name: 'Binance smart chain',
         id: '0x38',
       },
-      matic: {
-        name: 'Matic',
-        id: '0x89',
-      },
+      // matic: {
+      //   name: 'Matic',
+      //   id: '0x89',
+      // },
     },
     testnet: {
       eth: {
@@ -122,28 +122,28 @@ export default {
         name: 'Binance smart chain',
         id: '0x61',
       },
-      matic: {
-        name: 'Matic',
-        id: '0x13881',
-      },
+      // matic: {
+      //   name: 'Matic',
+      //   id: '0x13881',
+      // },
     },
   },
   NETWORK_BY_CHAIN_ID: {
     mainnet: {
       '0x01': 'eth',
       '0x38': 'bnb',
-      '0x89': 'matic',
+      // '0x89': 'matic',
     },
     testnet: {
       '0x2a': 'eth',
       '0x61': 'bnb',
-      '0x13881': 'matic',
+      // '0x13881': 'matic',
     },
   },
   NATIVE_TOKENS: {
     eth: { native: 'eth', wrapped: 'weth' },
     bnb: { native: 'bnb', wrapped: 'wbnb' },
-    matic: { native: 'matic', wrapped: 'wmatic' },
+    // matic: { native: 'matic', wrapped: 'wmatic' },
   },
   FULL_CHAIN_INFO: {
     mainnet: {
@@ -163,14 +163,14 @@ export default {
         rpcUrls: ['https://bsc-dataseed1.binance.org'],
         blockExplorerUrls: ['https://bscscan.com'],
       },
-      matic: {
-        chainId: '0x89',
-        chainName: 'Matic(Polygon) Mainnet',
-        shortName: 'Polygon',
-        nativeCurrency: NETWORK_TOKENS.matic,
-        rpcUrls: ['https://rpc-mainnet.matic.network'],
-        blockExplorerUrls: ['https://polygonscan.com'],
-      },
+      // matic: {
+      //   chainId: '0x89',
+      //   chainName: 'Matic(Polygon) Mainnet',
+      //   shortName: 'Polygon',
+      //   nativeCurrency: NETWORK_TOKENS.matic,
+      //   rpcUrls: ['https://rpc-mainnet.matic.network'],
+      //   blockExplorerUrls: ['https://polygonscan.com'],
+      // },
     },
     testnet: {
       eth: {
@@ -189,14 +189,14 @@ export default {
         rpcUrls: ['https://data-seed-prebsc-1-s1.binance.org:8545'],
         blockExplorerUrls: ['https://testnet.bscscan.com'],
       },
-      matic: {
-        chainId: '0x13881',
-        chainName: 'Matic Testnet Mumbai',
-        shortName: 'Polygon Testnet',
-        nativeCurrency: NETWORK_TOKENS.matic,
-        rpcUrls: ['https://rpc-mumbai.matic.today'],
-        blockExplorerUrls: ['https://mumbai.polygonscan.com/'],
-      },
+      // matic: {
+      //   chainId: '0x13881',
+      //   chainName: 'Matic Testnet Mumbai',
+      //   shortName: 'Polygon Testnet',
+      //   nativeCurrency: NETWORK_TOKENS.matic,
+      //   rpcUrls: ['https://rpc-mumbai.matic.today'],
+      //   blockExplorerUrls: ['https://mumbai.polygonscan.com/'],
+      // },
     },
   },
 };
