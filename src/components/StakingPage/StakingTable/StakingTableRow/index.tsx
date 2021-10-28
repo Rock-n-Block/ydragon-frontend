@@ -194,9 +194,7 @@ const StakingTableRow: React.FC<IStakingTableRowProps> = observer(({ index }) =>
               </div>
             </div>
             <Button
-              disabled={
-                +toStakeAmount > +balance || (!toStakeAmount && isAllowance) || !!toStakeAmount
-              }
+              disabled={+toStakeAmount > +balance || (!toStakeAmount && isAllowance)}
               colorScheme="blue"
               loading={isFirstBtnLoad}
               className="staking-table_row__bottom__cell__button"
