@@ -1,263 +1,104 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback } from 'react';
+import { Redirect } from 'react-router';
 import cn from 'classnames';
 import { observer } from 'mobx-react';
-import BigNumber from 'bignumber.js/bignumber';
-import Tippy from '@tippyjs/react';
 
 import { Button, Loader } from '../../../index';
-import { useWalletConnectorContext } from '../../../../services/walletConnect';
 import { useMst } from '../../../../store/store';
-import configABI from '../../../../services/web3/config_ABI';
-import { indexesApi, coingeckoApi } from '../../../../services/api';
+import { useStaking } from '../../../../hooks/useStaking';
+import { formatAmount } from '../../../../utils/formatAmount';
+import StakingTableRowCell from './StakingTableRowCell';
 
 import './StakingTableRow.scss';
 
 import arrowDownIcon from '../../../../assets/img/icons/arrow-down.svg';
 import logoExample1 from '../../../../assets/img/staking-page/logo-example-1.svg';
-import { Redirect } from 'react-router';
 
 interface IStakingTableRowProps {
   index: number;
 }
 
-const formatAmount = (amount: string | number, decimals = 6) => {
-  if (amount === '0') return '0';
-  return new BigNumber(amount).toFormat(decimals);
-};
-
-const fromWeiToNormal = (amount: string | number, decimals = 18) => {
-  return new BigNumber(amount).dividedBy(new BigNumber(10).pow(decimals)).toString();
-};
-
 const StakingTableRow: React.FC<IStakingTableRowProps> = observer(({ index }) => {
-  const walletConnect = useWalletConnectorContext();
   const [isOpened, setIsOpened] = useState(false);
   const { user, networks } = useMst();
 
-  // main info
-  const [stakedTokenAdr, setStakedTokenAdr] = useState('');
-  const [isAllowance, setIsAllowance] = useState(false);
-  const [tokenInfoFromBack, setTokenInfoFromBack] = useState({ link: '', priceInUsd: '' });
+  const {
+    symbol,
+    name,
+    deposited,
+    totalStaked,
+    rewards,
+    balance,
+    stakedTokenAdr,
+    tokenInfoFromBack,
+    isAllowance,
+    deposit,
+    claimReward,
+    approve,
+    withdraw,
+  } = useStaking(index, user.address, networks.networksList[0].staking_address);
 
   // inputs
   const [toUnstakeAmount, setToUnstakeAmount] = useState('');
   const [toStakeAmount, setToStakeAmount] = useState('');
-
-  // index info [all numbers in wei]
-  const [symbol, setSymbol] = useState('');
-  const [name, setName] = useState('');
-
-  const [deposited, setDeposited] = useState('');
-  const [totalStaked, setTotalStaked] = useState('');
-  const [rewards, setRewards] = useState('');
-  const [balance, setBalance] = useState('');
 
   // buttons
   const [isFirstBtnLoad, setIsFirstButtonLoad] = useState(false);
   const [isUnstakeLoad, setIsUnstakeLoad] = useState(false);
   const [isRewardLoad, setIsRewardLoad] = useState(false);
 
-  // staking fabric > get current stake by indexId > get stakedTokenAdress in stake === profit!
-  const getStakedTokenAdress = useCallback(
-    async (indexCount: number) => {
-      const stakeAdress = await walletConnect.metamaskService.getStakeContractByIndex(indexCount);
-      const stakedTokenAdress = await walletConnect.metamaskService.getStakedTokenFromStake(
-        stakeAdress,
-      );
-      return stakedTokenAdress;
-    },
-    [walletConnect.metamaskService],
-  );
-
-  const getStakeSymbolAndName = useCallback(async () => {
-    const stakedTokenAdress = await getStakedTokenAdress(index);
-    const indexName = await walletConnect.metamaskService.getTokenName(stakedTokenAdress);
-    let indexSymbol: string = await walletConnect.metamaskService.getTokenSymbol(stakedTokenAdress);
-
-    try {
-      const tokensAddresses = await walletConnect.metamaskService.getTokensFromLPToken(
-        stakedTokenAdress,
-      );
-
-      const firstSymbol = await walletConnect.metamaskService.getTokenSymbol(tokensAddresses[0]);
-      const secondSymbol = await walletConnect.metamaskService.getTokenSymbol(tokensAddresses[1]);
-
-      indexSymbol = `${firstSymbol} / ${secondSymbol} LP`;
-    } catch (error) {
-      console.log(error);
-    }
-
-    return { indexSymbol: indexSymbol.toUpperCase(), indexName };
-  }, [walletConnect.metamaskService, getStakedTokenAdress, index]);
-
-  const getBalanceOfUser = useCallback(async () => {
-    const stakedTokenAdress = await getStakedTokenAdress(index);
-    const userBalance: string = await walletConnect.metamaskService.getBalanceOf(stakedTokenAdress);
-
-    return userBalance;
-  }, [walletConnect.metamaskService, index, getStakedTokenAdress]);
-
-  const withdraw = useCallback(
+  const withdrawTokens = useCallback(
     async (tokenAdress: string, amount: string) => {
       try {
         setIsUnstakeLoad(true);
-        const res = await walletConnect.metamaskService.withdraw(tokenAdress, amount);
-        if (res.status) {
-          setDeposited((prev) => new BigNumber(prev).minus(amount).toString());
-          setBalance((prev) => new BigNumber(prev).plus(amount).toString());
-          setTotalStaked((prev) => new BigNumber(prev).minus(amount).toString());
-        }
+        await withdraw(tokenAdress, amount);
       } catch (error) {
         console.log(error);
       } finally {
         setIsUnstakeLoad(false);
       }
     },
-    [walletConnect.metamaskService],
+    [withdraw],
   );
 
-  const approve = useCallback(async () => {
-    setIsFirstButtonLoad(true);
+  const approveTokens = useCallback(async () => {
     try {
-      const data = await walletConnect.metamaskService.approve(
-        stakedTokenAdr,
-        networks.networksList[0].staking_address,
-      );
-      if (data.status) {
-        setIsAllowance(true);
-      }
+      setIsFirstButtonLoad(true);
+      await approve();
     } catch (error) {
       console.log(error);
     } finally {
       setIsFirstButtonLoad(false);
     }
-  }, [networks.networksList, walletConnect.metamaskService, stakedTokenAdr]);
+  }, [approve]);
 
-  const deposit = useCallback(
-    async (amount: string) => {
-      try {
-        setIsFirstButtonLoad(true);
-        const res = await walletConnect.metamaskService.deposit(stakedTokenAdr, amount);
-        if (res.status) {
-          setBalance((prev) => new BigNumber(prev).minus(amount).toString());
-          setDeposited((prev) => new BigNumber(prev).plus(amount).toString());
-          setTotalStaked((prev) => new BigNumber(prev).plus(amount).toString());
-        }
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setIsFirstButtonLoad(false);
-      }
-    },
-    [walletConnect.metamaskService, stakedTokenAdr],
-  );
-
-  const claimReward = useCallback(
+  const claimRewardTokens = useCallback(
     async (amount: string, ind: string | number) => {
       try {
         setIsRewardLoad(true);
-        const res = await walletConnect.metamaskService.claimReward(ind);
-        if (res.status) {
-          setRewards('0');
-          console.log(amount);
-          // setBalance((prev) => new BigNumber(prev).plus(amount).toString());
-        }
+        await claimReward(amount, ind);
       } catch (error) {
         console.log(error);
       } finally {
         setIsRewardLoad(false);
       }
     },
-    [walletConnect.metamaskService],
+    [claimReward],
   );
 
-  const getTokenPriceInUsd = useCallback(
-    async (indexID: string, isYdr?: boolean, isLp?: boolean) => {
+  const depositTokens = useCallback(
+    async (amount: string) => {
       try {
-        if (isYdr) {
-          const response = await coingeckoApi.getYdrCurrentPrice();
-          return {
-            link: '/ydrtoken',
-            priceInUsd: response.data.ydragon.usd,
-          };
-        }
-
-        if (isLp) {
-          return {
-            link: '/',
-            priceInUsd: '1',
-          };
-        }
-
-        const response = await indexesApi.getIndexInfoByIndexAddress(indexID);
-        return {
-          link: `/index/${response.data.id}`,
-          priceInUsd: response.data.price,
-        };
+        setIsFirstButtonLoad(true);
+        await deposit(amount);
       } catch (error) {
-        return {
-          link: '',
-          priceInUsd: '1',
-        };
+        console.log(error);
+      } finally {
+        setIsFirstButtonLoad(false);
       }
     },
-    [],
+    [deposit],
   );
-
-  useEffect(() => {
-    // ALLOWANCE
-    walletConnect.metamaskService
-      .checkAllowanceById(
-        stakedTokenAdr,
-        configABI.MAIN.ABI,
-        networks.networksList[0].staking_address,
-      )
-      .then((data: boolean) => {
-        setIsAllowance(data);
-      });
-
-    // INDEX NAME AND SYMBOL
-    getStakeSymbolAndName().then((data) => {
-      setName(data.indexName);
-      setSymbol(data.indexSymbol);
-    });
-
-    // USER BALANCE IN THE WALLET
-    getBalanceOfUser().then((userBalance) => setBalance(fromWeiToNormal(userBalance)));
-
-    // USER STAKED AMOUNT
-    walletConnect.metamaskService
-      .getUserStakedAmount(user.address, index)
-      .then((data: string) => setDeposited(fromWeiToNormal(data)));
-
-    // TOTAL STAKED AMOUNT
-    walletConnect.metamaskService
-      .getTotalStaked(index)
-      .then((data: string) => setTotalStaked(fromWeiToNormal(data)));
-
-    // USER REWARDS
-    walletConnect.metamaskService
-      .getUserRewards(user.address, index)
-      .then((data: string) => setRewards(fromWeiToNormal(data)));
-  }, [
-    getStakeSymbolAndName,
-    getBalanceOfUser,
-    user.address,
-    walletConnect.metamaskService,
-    index,
-    stakedTokenAdr,
-    networks.networksList,
-  ]);
-
-  useEffect(() => {
-    getStakedTokenAdress(index).then((data) => {
-      setStakedTokenAdr(data);
-
-      getTokenPriceInUsd(data, symbol === 'YDR').then((tokenInfo) => {
-        setTokenInfoFromBack(tokenInfo);
-      });
-    });
-  }, [getStakedTokenAdress, index, symbol, getTokenPriceInUsd]);
 
   if (!user.address) {
     return <Redirect to="/" />;
@@ -268,6 +109,7 @@ const StakingTableRow: React.FC<IStakingTableRowProps> = observer(({ index }) =>
   // TODO: create skeleton
   if (!symbol || !name || !totalStaked)
     return <div className="staking-table_row staking-table_row--skelet" />;
+
   return (
     <div className="staking-table_row">
       <div className="staking-table_row__top">
@@ -282,52 +124,29 @@ const StakingTableRow: React.FC<IStakingTableRowProps> = observer(({ index }) =>
             </div>
           </div>
         </div>
-        <div className="staking-table_row__cell">
-          <div className="staking-table_row__cell__title">balance </div>
-          <Tippy
-            content={`$ ${formatAmount(
-              new BigNumber(balance).multipliedBy(tokenInfoFromBack.priceInUsd).toString(),
-            )}`}
-          >
-            <div className="staking-table_row__cell__value text-MER">
-              ${' '}
-              {formatAmount(
-                new BigNumber(balance).multipliedBy(tokenInfoFromBack.priceInUsd).toString(),
-              )}
-            </div>
-          </Tippy>
-        </div>
-        <div className="staking-table_row__cell">
-          <div className="staking-table_row__cell__title">deposited</div>
-          <Tippy content={`${formatAmount(deposited)} ${symbol}`}>
-            <div className="staking-table_row__cell__value text-MER">
-              {formatAmount(deposited)} {symbol}
-            </div>
-          </Tippy>
-        </div>
-        <div className="staking-table_row__cell">
-          <div className="staking-table_row__cell__title">your rewards</div>
-          <Tippy content={`${formatAmount(rewards, 18)} ${symbol} `}>
-            <div className="staking-table_row__cell__value text-gradient">
-              {formatAmount(rewards)} YDR
-            </div>
-          </Tippy>
-        </div>
-        <div className="staking-table_row__cell">
-          <div className="staking-table_row__cell__title">tvl</div>
-          <Tippy
-            content={`$ ${formatAmount(
-              new BigNumber(totalStaked).multipliedBy(tokenInfoFromBack.priceInUsd).toString(),
-            )}`}
-          >
-            <div className="staking-table_row__cell__value text-MER">
-              ${' '}
-              {formatAmount(
-                new BigNumber(totalStaked).multipliedBy(tokenInfoFromBack.priceInUsd).toString(),
-              )}
-            </div>
-          </Tippy>
-        </div>
+
+        <StakingTableRowCell
+          title="balance"
+          value={balance}
+          textType="MER"
+          symbol="$"
+          usdPrice={tokenInfoFromBack.priceInUsd}
+        />
+        <StakingTableRowCell title="deposited" value={deposited} textType="MER" symbol={symbol} />
+        <StakingTableRowCell
+          title="your rewards"
+          value={rewards}
+          textType="gradient"
+          symbol="YDR"
+        />
+        <StakingTableRowCell
+          title="tvl"
+          value={totalStaked}
+          textType="MER"
+          symbol="$"
+          usdPrice={tokenInfoFromBack.priceInUsd}
+        />
+
         <div className="staking-table_row__cell">
           <Button link={tokenInfoFromBack.link} className="staking-table_row__cell--button">
             Get in
@@ -375,15 +194,17 @@ const StakingTableRow: React.FC<IStakingTableRowProps> = observer(({ index }) =>
               </div>
             </div>
             <Button
-              disabled={+toStakeAmount > +balance || (!toStakeAmount && isAllowance)}
+              disabled={
+                +toStakeAmount > +balance || (!toStakeAmount && isAllowance) || !!toStakeAmount
+              }
               colorScheme="blue"
               loading={isFirstBtnLoad}
               className="staking-table_row__bottom__cell__button"
               onClick={() => {
                 if (isAllowance) {
-                  deposit(toStakeAmount);
+                  depositTokens(toStakeAmount);
                 } else {
-                  approve();
+                  approveTokens();
                 }
               }}
             >
@@ -418,7 +239,7 @@ const StakingTableRow: React.FC<IStakingTableRowProps> = observer(({ index }) =>
               disabled={!toUnstakeAmount || +deposited <= 0 || +toUnstakeAmount > +deposited}
               colorScheme="blue"
               className="staking-table_row__bottom__cell__button"
-              onClick={() => withdraw(stakedTokenAdr, toUnstakeAmount.trim())}
+              onClick={() => withdrawTokens(stakedTokenAdr, toUnstakeAmount.trim())}
               loading={isUnstakeLoad}
             >
               Unstake
@@ -437,7 +258,7 @@ const StakingTableRow: React.FC<IStakingTableRowProps> = observer(({ index }) =>
               colorScheme="blue"
               className="staking-table_row__bottom__cell__button"
               loading={isRewardLoad}
-              onClick={() => claimReward(rewards, index)}
+              onClick={() => claimRewardTokens(rewards, index)}
             >
               Harvest
             </Button>

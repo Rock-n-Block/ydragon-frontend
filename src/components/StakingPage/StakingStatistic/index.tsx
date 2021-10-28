@@ -18,6 +18,7 @@ interface ITVLData {
   };
 
   'ydr_tvl': number;
+  'ydr_total_supply': number;
 }
 
 const StakingStatistic: React.FC = () => {
@@ -43,12 +44,23 @@ const StakingStatistic: React.FC = () => {
           <div className="staking-statistic-red_subtitle text-MER">
             Circulating <br /> supply staked
           </div>
-          <div className="staking-statistic-red_percent text-MER">11.56%</div>
+          <div className="staking-statistic-red_percent text-MER">
+            {new BigNumber(tvlData.ydr_tvl)
+              .dividedBy(tvlData.ydr_total_supply)
+              .multipliedBy(100)
+              .toFormat(5)}
+            %
+          </div>
         </li>
         <li className="staking-statistic-dark">
           <div className="staking-statistic-dark_title text-MER">Total Value Locked</div>
           <div className="staking-statistic-dark_amount text-MER text-gradient">
-            $2,656,921,515.69
+            ${' '}
+            {
+              +new BigNumber(tvlData['binance-smart-chain_tvl']?.in_dollars)
+                .plus(tvlData.ethereum_tvl?.in_dollars)
+                .toFormat(2)
+            }
           </div>
           <div className="staking-statistic-dark_prices">
             <div className="staking-statistic-dark_price">
