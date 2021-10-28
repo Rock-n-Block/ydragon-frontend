@@ -96,6 +96,11 @@ export default {
   MAX_ATTEMPT_GET_BALANCE,
   MS_RETRY_GET_BALANCE,
   NETWORK_TOKENS,
+  EXPLORERS: {
+    eth: IS_PRODUCTION ? 'https://etherscan.io/' : 'https://kovan.etherscan.io/',
+    bnb: IS_PRODUCTION ? 'https://bscscan.com/' : 'https://testnet.bscscan.com/',
+    // matic: IS_PRODUCTION ? 'https://polygonscan.com' : 'https://mumbai.polygonscan.com',
+  },
   BACKEND_NETWORKS: {
     eth: 'ethereum',
     bnb: 'binance-smart-chain',

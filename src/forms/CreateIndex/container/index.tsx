@@ -11,6 +11,7 @@ import { useWalletConnectorContext } from '../../../services/walletConnect';
 import { useMst } from '../../../store/store';
 import { ProviderRpcError } from '../../../types/errors';
 import CreateIndex, { ICreateIndex } from '../component';
+import txToast from '../../../components/ToastWithTxHash';
 
 const CreateIndexForm: React.FC = () => {
   const { modals } = useMst();
@@ -49,6 +50,7 @@ const CreateIndexForm: React.FC = () => {
           new BigNumber(values.price).multipliedBy(new BigNumber(10).pow(18)).toString(10),
         )
         .on('transactionHash', (hash: string) => {
+          txToast(hash);
           if (values.description) {
             indexesApi
               .addParamsToIndex(hash, values.description /* , values.price */)
