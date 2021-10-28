@@ -172,6 +172,7 @@ const EventBanner: React.FC = observer(() => {
                 onClick={handleGetIn}
                 className="event-banner__get-btn"
                 disabled={!imeEnabled}
+                needLogin="Please login"
               >
                 {' '}
                 Enter!

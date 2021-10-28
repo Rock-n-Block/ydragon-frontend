@@ -13,6 +13,7 @@ interface IHeaderMobileItemProps {
   titleLink?: string;
   links?: Array<IHeaderMobileItemLink>;
   onCollapsedChange: (foo: boolean) => void;
+  auth: string;
 }
 
 const HeaderMobLink: React.FC<IHeaderMobileItemLink> = ({ title, link, onCollapsedChange }) => {
@@ -40,8 +41,11 @@ const HeaderMobileItem: React.FC<IHeaderMobileItemProps> = ({
   links,
   onCollapsedChange,
   titleLink,
+  auth,
 }) => {
   const [isOpened, setIsOpened] = useState(true);
+
+  if (auth === 'admin' && !localStorage.getItem('yd_token')) return <></>;
   return (
     <li className="menu-nav__item">
       {titleLink ? (
