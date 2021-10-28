@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import BigNumber from 'bignumber.js/bignumber';
 
-import { rates } from '../../../services/api';
+import { rates, coingeckoApi } from '../../../services/api';
 import { numberFormatter } from '../../../utils/numberFormatter';
 
 import './StakingStatistic.scss';
@@ -22,8 +22,10 @@ interface ITVLData {
 
 const StakingStatistic: React.FC = () => {
   const [tvlData, setTvlData] = useState<ITVLData>({} as ITVLData);
+  const [ydrPrice, setYdrPrice] = useState('1');
 
   useEffect(() => {
+    coingeckoApi.getYdrCurrentPrice().then((data) => setYdrPrice(data.data.ydragon.usd));
     rates.getTvl().then((data) => setTvlData(data.data));
   }, []);
 
@@ -32,8 +34,12 @@ const StakingStatistic: React.FC = () => {
       <ul className="staking-statistic-list">
         <li className="staking-statistic-red">
           <div className="staking-statistic-red_title text-MER">Total YDR Staked</div>
-          <div className="staking-statistic-red_amount text-MER">51.8 M</div>
-          <div className="staking-statistic-red_subamount">($4,854,869.11)</div>
+          <div className="staking-statistic-red_amount text-MER">
+            {numberFormatter(+new BigNumber(tvlData.ydr_tvl).toString(), 0)}
+          </div>
+          <div className="staking-statistic-red_subamount">
+            $ {new BigNumber(tvlData.ydr_tvl).multipliedBy(ydrPrice).toFormat(2)}
+          </div>
           <div className="staking-statistic-red_subtitle text-MER">
             Circulating <br /> supply staked
           </div>

@@ -8,11 +8,11 @@ export default {
         days,
       },
     }),
-  getYdrCurrentPrice: () =>
+  getYdrCurrentPrice: (): Promise<{ data: { ydragon: { usd: string } } }> =>
     axios.get('https://api.coingecko.com/api/v3/simple/price', {
       params: {
         ids: 'ydragon',
-        vs_currency: 'usd',
+        vs_currencies: 'usd',
       },
     }),
 };
