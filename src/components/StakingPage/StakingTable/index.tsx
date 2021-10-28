@@ -38,11 +38,8 @@ const StakingTable: React.FC = observer(() => {
           <div className="staking-table_header__cell" />
         </div>
         <div className="staking-table_body">
-          {+stakesCount ? (
-            new Array(+stakesCount).fill(1).map((el, i) => <StakingTableRow index={i} />)
-          ) : (
-            <div>None</div>
-          )}
+          {+stakesCount &&
+            new Array(+stakesCount).fill(1).map((el, i) => <StakingTableRow index={i} />)}
         </div>
       </div>
     </section>
