@@ -47,7 +47,13 @@ const testNetworks: INetworks = {
   eth: '0x2a',
 };
 
-const { IS_PRODUCTION, NETWORK_BY_CHAIN_ID, NETWORK_TOKENS } = config;
+const {
+  IS_PRODUCTION,
+  NETWORK_BY_CHAIN_ID,
+  NETWORK_TOKENS,
+  MAX_ATTEMPT_GET_BALANCE,
+  MS_RETRY_GET_BALANCE,
+} = config;
 
 export default class MetamaskService {
   public wallet;
@@ -188,23 +194,65 @@ export default class MetamaskService {
     })[0];
   }
 
-  getBNBBalance() {
-    return this.web3Provider.eth.getBalance(this.walletAddress);
+  static delay(ms: number) {
+    return new Promise((res) => setTimeout(res, ms));
   }
 
-  getBalanceOf(address: string) {
+  async getBNBBalance() {
+    for (let i = 0; i < MAX_ATTEMPT_GET_BALANCE; i += 1) {
+      try {
+        if (this.walletAddress) {
+          /* eslint-disable no-await-in-loop */
+          const balance = await this.web3Provider.eth.getBalance(this.walletAddress);
+          return Number(balance);
+        }
+
+        return 0;
+      } catch (err: any) {
+        if (i < MAX_ATTEMPT_GET_BALANCE - 1) {
+          if (err.message === 'Network Error') {
+            await MetamaskService.delay(MS_RETRY_GET_BALANCE);
+          } else {
+            throw new Error('Get Balance failed');
+          }
+        }
+      }
+    }
+
+    throw new Error('Get Balance failed');
+    // return this.web3Provider.eth.getBalance(this.walletAddress);
+  }
+
+  async getBalanceOf(address: string) {
     if (address === '0x0000000000000000000000000000000000000000') {
       return this.getBNBBalance();
     }
-    return this.getContractByAddress(address, configABI.Token.ABI)
-      .methods.balanceOf(this.walletAddress)
-      .call();
-  }
+    for (let i = 0; i < MAX_ATTEMPT_GET_BALANCE; i += 1) {
+      try {
+        if (this.walletAddress) {
+          /* eslint-disable no-await-in-loop */
+          const balance = await this.getContractByAddress(address, configABI.Token.ABI)
+            .methods.balanceOf(this.walletAddress)
+            .call();
+          return Number(balance);
+        }
 
-  async getBalanceByAddress(address: string) {
-    return this.getContractByAddress(address, configABI.Token.ABI)
-      .methods.balanceOf(this.walletAddress)
-      .call();
+        return 0;
+      } catch (err: any) {
+        if (i < MAX_ATTEMPT_GET_BALANCE - 1) {
+          if (err.message === 'Network Error') {
+            await MetamaskService.delay(MS_RETRY_GET_BALANCE);
+          } else {
+            throw new Error('Get Balance failed');
+          }
+        }
+      }
+    }
+
+    throw new Error('Get Balance failed');
+    // return this.getContractByAddress(address, configABI.Token.ABI)
+    //   .methods.balanceOf(this.walletAddress)
+    //   .call();
   }
 
   encodeFunctionCall(abi: any, data: Array<any>) {
@@ -502,7 +550,7 @@ export default class MetamaskService {
   async getTokenInfoByAddress(address: string) {
     const tokenName = await this.getTokenName(address);
     const tokenSymbol = await this.getTokenSymbol(address);
-    const tokenBalance = await this.getBalanceByAddress(address);
+    const tokenBalance = await this.getBalanceOf(address);
     return { address, name: tokenName, symbol: tokenSymbol, balance: tokenBalance };
   }
 

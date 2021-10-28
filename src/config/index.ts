@@ -54,7 +54,8 @@ const SOCIAL_LINKS = {
 };
 
 export type TChain = 'eth' | 'bnb' /* | 'matic' */;
-
+const MAX_ATTEMPT_GET_BALANCE = 5;
+const MS_RETRY_GET_BALANCE = 1500;
 const NETWORK_TOKENS = {
   eth: {
     symbol: 'eth',
@@ -92,6 +93,8 @@ export default {
   IS_PRODUCTION,
   BACKEND_URL,
   SOCIAL_LINKS,
+  MAX_ATTEMPT_GET_BALANCE,
+  MS_RETRY_GET_BALANCE,
   NETWORK_TOKENS,
   BACKEND_NETWORKS: {
     eth: 'ethereum',

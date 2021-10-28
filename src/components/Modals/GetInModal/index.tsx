@@ -190,21 +190,20 @@ const GetInModal: React.FC = observer(() => {
     <Modal
       isVisible={!!modals.getIn.id}
       handleCancel={handleClose}
-      className="m-trade-ydr"
+      className="m-get-in"
       width={390}
     >
-      <div className="m-trade-ydr__content">
-        <div className="m-trade-ydr__logo">
+      <div className="m-get-in__content">
+        <div className="m-get-in__logo">
           <img src={YDRLogo} alt="logo" width="55" height="100%" />
         </div>
-        <h3 className="m-trade-ydr__header">
-          I want to buy <span className="m-trade-ydr__header-label"> {modals.getIn.name}</span>{' '}
-          tokens
+        <h3 className="m-get-in__header">
+          I want to buy <span className="m-get-in__header-label"> {modals.getIn.name}</span> tokens
         </h3>
-        <div className="m-trade-ydr__field">
-          <div className="m-trade-ydr__labels">
-            <span className="m-trade-ydr__label">You pay</span>
-            <span className="m-trade-ydr__label">
+        <div className="m-get-in__field">
+          <div className="m-get-in__labels">
+            <span className="m-get-in__label">You pay</span>
+            <span className="m-get-in__label">
               Balance:{' '}
               {new BigNumber(balance).dividedBy(new BigNumber(10).pow(decimals)).toFixed(7)}{' '}
               {firstCurrency.toUpperCase()}
@@ -222,21 +221,21 @@ const GetInModal: React.FC = observer(() => {
             onBlur={getBuyCourse}
           />
         </div>
-        <div className="m-trade-ydr__field">
-          <div className="m-trade-ydr__labels">
-            <span className="m-trade-ydr__label">You Receive</span>
+        <div className="m-get-in__field">
+          <div className="m-get-in__labels">
+            <span className="m-get-in__label">You Receive</span>
           </div>
 
           <Input placeholder={viewOnlyInputValue} disabled />
         </div>
         {isNeedApprove && !Object.keys(NETWORK_TOKENS).includes(firstCurrency) && (
-          <Button className="m-trade-ydr__btn" onClick={handleApprove} loading={isLoading}>
+          <Button className="m-get-in__btn" onClick={handleApprove} loading={isLoading}>
             Approve
           </Button>
         )}
         {(!isNeedApprove || Object.keys(NETWORK_TOKENS).includes(firstCurrency)) && (
           <Button
-            className="m-trade-ydr__btn"
+            className="m-get-in__btn"
             onClick={handleEnter}
             disabled={!payInput || !balance}
             loading={isLoading}
