@@ -75,7 +75,7 @@ const App: React.FC = observer(() => {
   return (
     <div className={theme.value}>
       <div className={addClass()}>
-        <ToastContainer hideProgressBar={false} />
+        <ToastContainer />
         <Header collapsed={collapsed} onCollapsedChange={onCollapsedChange} />
         <div className={`${collapsed ? '' : 'expandWrapper'} content`}>
           <Switch>

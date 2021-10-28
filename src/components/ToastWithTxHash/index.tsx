@@ -24,9 +24,6 @@ const ToastContentWithTxHash: React.FC<IProps> = observer(({ txHash }) => {
     </>
   );
 });
-const txToast = (txHash: string) =>
-  toast.info(<ToastContentWithTxHash txHash={txHash} />, {
-    hideProgressBar: false,
-  });
+const txToast = (txHash: string) => toast.info(<ToastContentWithTxHash txHash={txHash} />);
 
 export default txToast;
