@@ -1,8 +1,32 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import BigNumber from 'bignumber.js/bignumber';
+
+import { rates } from '../../../services/api';
+import { numberFormatter } from '../../../utils/numberFormatter';
 
 import './StakingStatistic.scss';
 
+interface ITVLData {
+  'binance-smart-chain_tvl': {
+    count: number;
+    in_dollars: number;
+  };
+
+  'ethereum_tvl': {
+    count: number;
+    in_dollars: number;
+  };
+
+  'ydr_tvl': number;
+}
+
 const StakingStatistic: React.FC = () => {
+  const [tvlData, setTvlData] = useState<ITVLData>({} as ITVLData);
+
+  useEffect(() => {
+    rates.getTvl().then((data) => setTvlData(data.data));
+  }, []);
+
   return (
     <section className="section">
       <ul className="staking-statistic-list">
@@ -26,13 +50,17 @@ const StakingStatistic: React.FC = () => {
                 Binance <br /> Smart Chain
               </div>
               <div className="staking-statistic-dark_price__amount text-MER text-gradient">
-                $520M
+                $
+                {numberFormatter(
+                  +new BigNumber(tvlData['binance-smart-chain_tvl']?.in_dollars).toFixed(0),
+                  1,
+                )}
               </div>
             </div>
             <div className="staking-statistic-dark_price">
               <div className="staking-statistic-dark_price__title text-MER">Ethereum</div>
               <div className="staking-statistic-dark_price__amount text-MER text-gradient">
-                $120M
+                ${numberFormatter(+new BigNumber(tvlData.ethereum_tvl?.in_dollars).toFixed(0), 1)}
               </div>
             </div>
           </div>

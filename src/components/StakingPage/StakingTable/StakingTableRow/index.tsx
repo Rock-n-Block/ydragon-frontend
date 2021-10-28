@@ -71,16 +71,16 @@ const StakingTableRow: React.FC<IStakingTableRowProps> = observer(({ index }) =>
 
   const getStakeSymbolAndName = useCallback(async () => {
     const stakedTokenAdress = await getStakedTokenAdress(index);
-    const indexName = await walletConnect.metamaskService.getIndexName(stakedTokenAdress);
-    let indexSymbol: string = await walletConnect.metamaskService.getIndexSymbol(stakedTokenAdress);
+    const indexName = await walletConnect.metamaskService.getTokenName(stakedTokenAdress);
+    let indexSymbol: string = await walletConnect.metamaskService.getTokenSymbol(stakedTokenAdress);
 
     if (indexSymbol.endsWith('LP')) {
       const tokensAddresses = await walletConnect.metamaskService.getTokensFromLPToken(
         stakedTokenAdress,
       );
 
-      const firstSymbol = await walletConnect.metamaskService.getIndexSymbol(tokensAddresses[0]);
-      const secondSymbol = await walletConnect.metamaskService.getIndexSymbol(tokensAddresses[1]);
+      const firstSymbol = await walletConnect.metamaskService.getTokenSymbol(tokensAddresses[0]);
+      const secondSymbol = await walletConnect.metamaskService.getTokenSymbol(tokensAddresses[1]);
 
       indexSymbol = `${firstSymbol} / ${secondSymbol} LP`;
     }
@@ -88,18 +88,12 @@ const StakingTableRow: React.FC<IStakingTableRowProps> = observer(({ index }) =>
     return { indexSymbol: indexSymbol.toUpperCase(), indexName };
   }, [walletConnect.metamaskService, getStakedTokenAdress, index]);
 
-  const getBalanceOfUser = useCallback(
-    async (userAdress: string) => {
-      const stakedTokenAdress = await getStakedTokenAdress(index);
-      const userBalance: string = await walletConnect.metamaskService.getUserBalance(
-        userAdress,
-        stakedTokenAdress,
-      );
+  const getBalanceOfUser = useCallback(async () => {
+    const stakedTokenAdress = await getStakedTokenAdress(index);
+    const userBalance: string = await walletConnect.metamaskService.getBalanceOf(stakedTokenAdress);
 
-      return userBalance;
-    },
-    [walletConnect.metamaskService, index, getStakedTokenAdress],
-  );
+    return userBalance;
+  }, [walletConnect.metamaskService, index, getStakedTokenAdress]);
 
   const withdraw = useCallback(
     async (tokenAdress: string, amount: string) => {
@@ -193,7 +187,7 @@ const StakingTableRow: React.FC<IStakingTableRowProps> = observer(({ index }) =>
     });
 
     // USER BALANCE IN THE WALLET
-    getBalanceOfUser(user.address).then((userBalance) => setBalance(fromWeiToNormal(userBalance)));
+    getBalanceOfUser().then((userBalance) => setBalance(fromWeiToNormal(userBalance)));
 
     // USER STAKED AMOUNT
     walletConnect.metamaskService
