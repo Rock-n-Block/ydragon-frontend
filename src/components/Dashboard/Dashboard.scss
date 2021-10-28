@@ -267,15 +267,13 @@
 
   &__tokens {
     display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
   }
 
   &__token {
     display: flex;
     align-items: center;
-
-    & + & {
-      margin-left: 10px;
-    }
   }
 
   &__token-color {
@@ -307,6 +305,11 @@
     font-weight: normal;
     line-height: 17px;
     text-transform: uppercase;
+
+    max-width: 120px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   &__composition {
