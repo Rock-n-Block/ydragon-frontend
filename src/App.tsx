@@ -1,31 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { Route, Switch, useRouteMatch } from 'react-router-dom';
+import { useRouteMatch } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 
-import { Indexes } from './components/Admin';
-import { GetInModal, InfoModal, MetamaskErrModal } from './components/Modals';
-// import { Indexes } from './components/Admin';
-// import { GetInModal, InfoModal, MetamaskErrModal } from './components/Modals';
-// import AdminIndex from './pages/AdminIndex';
 import { useMst } from './store/store';
-import { Footer, GuardedRoute, /* GuardedRoute, */ Header } from './components';
-import {
-  AboutUs,
-  Admin,
-  AdminIndex,
-  Home,
-  Index,
-  IndexDashboard,
-  NoPageFound,
-  Simplified,
-  YdrToken,
-  PbfPage,
-  StakingPage,
-} from './pages';
+import { Footer, Header } from './components';
 
 import './styles/index.scss';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
+import { Modals, Routes } from './containers';
 
 const App: React.FC = observer(() => {
   const [collapsed, setCollapsed] = useState<boolean>(true);
@@ -36,9 +19,6 @@ const App: React.FC = observer(() => {
   const staking = useRouteMatch('/staking');
   const { theme } = useMst();
   const [bodyClass, setBodyClass] = useState('');
-
-  const user = !!localStorage.getItem('yd_address') || false;
-  const admin = !!localStorage.getItem('yd_token') || false;
 
   const addClass = () => {
     let result;
@@ -74,42 +54,12 @@ const App: React.FC = observer(() => {
 
   return (
     <div className={theme.value}>
+      <ToastContainer />
       <div className={addClass()}>
-        <ToastContainer />
         <Header collapsed={collapsed} onCollapsedChange={onCollapsedChange} />
         <div className={`${collapsed ? '' : 'expandWrapper'} content`}>
-          <Switch>
-            <Route exact path="/">
-              <Home />
-            </Route>
-            <Route exact path="/index/:indexId">
-              <Index />
-            </Route>
-            <Route exact path="/ydrtoken">
-              <YdrToken />
-            </Route>
-            <GuardedRoute exact path="/admin" component={Admin} auth={admin} />
-            <GuardedRoute exact path="/admin" component={Indexes} auth={admin} />
-            <GuardedRoute exact path="/admin/index/:indexId" component={AdminIndex} auth={admin} />
-            <GuardedRoute exact path="/staking" component={StakingPage} auth={user} />
-
-            <Route exact path="/indexes">
-              <IndexDashboard />
-            </Route>
-            <Route exact path="/about-us">
-              <AboutUs />
-            </Route>
-            <Route exact path="/simplified">
-              <Simplified />
-            </Route>
-            <Route exact path="/pbf">
-              <PbfPage />
-            </Route>
-            <Route component={NoPageFound} />
-          </Switch>
-          <MetamaskErrModal />
-          <InfoModal />
-          <GetInModal />
+          <Routes />
+          <Modals />
           <Footer />
         </div>
       </div>
