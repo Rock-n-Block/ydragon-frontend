@@ -74,7 +74,7 @@ const StakingTableRow: React.FC<IStakingTableRowProps> = observer(({ index }) =>
     const indexName = await walletConnect.metamaskService.getTokenName(stakedTokenAdress);
     let indexSymbol: string = await walletConnect.metamaskService.getTokenSymbol(stakedTokenAdress);
 
-    if (indexSymbol.endsWith('LP')) {
+    try {
       const tokensAddresses = await walletConnect.metamaskService.getTokensFromLPToken(
         stakedTokenAdress,
       );
@@ -83,6 +83,8 @@ const StakingTableRow: React.FC<IStakingTableRowProps> = observer(({ index }) =>
       const secondSymbol = await walletConnect.metamaskService.getTokenSymbol(tokensAddresses[1]);
 
       indexSymbol = `${firstSymbol} / ${secondSymbol} LP`;
+    } catch (error) {
+      console.log(error);
     }
 
     return { indexSymbol: indexSymbol.toUpperCase(), indexName };
