@@ -46,5 +46,6 @@ export const mobileLinksData = [
   {
     title: 'Admin',
     titleLink: '/admin',
+    auth: 'admin',
   },
 ];
