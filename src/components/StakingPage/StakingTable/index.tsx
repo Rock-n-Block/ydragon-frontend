@@ -16,7 +16,6 @@ const StakingTable: React.FC = observer(() => {
   const getStakesCount = useCallback(() => {
     walletConnector.metamaskService.getStakesCount().then((count: number) => {
       setStakesCount(count);
-      console.log(count);
     });
   }, [walletConnector.metamaskService]);
 

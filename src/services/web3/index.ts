@@ -396,8 +396,6 @@ export default class MetamaskService {
       .call();
   }
 
-  // ================== NEW METHODS ====================
-
   getStakingFactoryContract() {
     return this.getContractByAddress(
       rootStore.networks.getCurrNetwork()?.staking_address ??
@@ -416,20 +414,6 @@ export default class MetamaskService {
 
   getStakedTokenFromStake(stakeAdress: string) {
     return this.getContractByAddress(stakeAdress, configABI.Stake.ABI).methods.stakedToken().call();
-  }
-
-  getIndexSymbol(indexAdress: string) {
-    return this.getContractByAddress(indexAdress, configABI.Index.ABI).methods.symbol().call();
-  }
-
-  getIndexName(indexAdress: string) {
-    return this.getContractByAddress(indexAdress, configABI.Index.ABI).methods.name().call();
-  }
-
-  getUserBalance(userWalletId: string, indexAddress: string) {
-    return this.getContractByAddress(indexAddress, configABI.Index.ABI)
-      .methods.balanceOf(userWalletId)
-      .call();
   }
 
   getUserStakedAmount(userWalletId: string, indexId: number) {
@@ -489,7 +473,14 @@ export default class MetamaskService {
     });
   }
 
-  // ========== NEW METHODS END =================
+  async getTokensFromLPToken(tokenAddress: string) {
+    const LPContract = this.getContractByAddress(tokenAddress, configABI.LPToken.ABI);
+
+    const token0 = await LPContract.methods.token0().call();
+    const token1 = await LPContract.methods.token1().call();
+
+    return [token0, token1];
+  }
 
   getStakingFactoryTokenToEnter(index: number) {
     return this.getContractByAddress(

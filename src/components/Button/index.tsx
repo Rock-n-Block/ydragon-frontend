@@ -72,13 +72,12 @@ const Button: React.FC<IButton> = observer((props: PropsWithChildren<IButton>) =
   const Btn = (
     <>
       <BtnAntd
-        className={classNames(
-          'btn',
-          `btn-${styledType}`,
-          `btn-${background}`,
-          `btn-${colorScheme}`,
-          disabled && styledType === 'outline' ? `disabled ${className}` : className,
-        )}
+        className={classNames('btn', className, {
+          disabled,
+          [`btn-${styledType}`]: styledType,
+          [`btn-${background}`]: background,
+          [`btn-${colorScheme}`]: colorScheme,
+        })}
         onClick={handleClick}
         disabled={disabled}
         {...otherButtonProps}

@@ -50,8 +50,10 @@ export default {
         ...(days !== 'max' ? { days } : ''),
       },
     }),
-  getIndexInfoByIndexHash: (indexHash: string): Promise<{ id: string; price: string }> =>
-    axios.get(`/indexes/${indexHash}`, {
+  getIndexInfoByIndexAddress: (
+    indexAddress: string,
+  ): Promise<{ data: { id: string; price: string } }> =>
+    axios.get(`/indexes/${indexAddress}`, {
       params: {
         network: BACKEND_NETWORKS[rootStore.networks.currentNetwork as TChain],
       },
