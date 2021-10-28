@@ -186,7 +186,7 @@ export default {
         chainName: 'Binance Smart Chain Testnet',
         shortName: 'Binance Testnet',
         nativeCurrency: NETWORK_TOKENS.bnb,
-        rpcUrls: ['https://data-seed-prebsc-1-s1.binance.org:8545'],
+        rpcUrls: ['https://data-seed-prebsc-1-s1.binance.org:8545/'],
         blockExplorerUrls: ['https://testnet.bscscan.com'],
       },
       // matic: {
