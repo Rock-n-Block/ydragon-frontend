@@ -50,7 +50,7 @@ const SelectNetwork: React.FC = observer(() => {
   const switchChain = async (chainName: TChain) => {
     try {
       await MetamaskService.switchEthereumChain(FULL_CHAIN_INFO[isProduction][chainName].chainId);
-    } catch (switchError) {
+    } catch (switchError: any) {
       // This error code indicates that the chain has not been added to MetaMask.
       if (switchError.code === 4902) {
         try {
