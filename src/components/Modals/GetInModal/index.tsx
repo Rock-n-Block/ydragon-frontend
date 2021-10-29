@@ -166,9 +166,7 @@ const GetInModal: React.FC = observer(() => {
     walletConnector.metamaskService,
   ]);
   const handlePayInput = (e: any) => {
-    if (+e.target.value < 0) {
-      e.target.value = '';
-    } else {
+    if (/^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$/.test(e.target.value) || e.target.value === '') {
       setPayInput(e.target.value);
     }
   };
@@ -221,7 +219,7 @@ const GetInModal: React.FC = observer(() => {
             selectValue={firstCurrency || ''}
             onSelectChange={handleSelectChange}
             onChange={handlePayInput}
-            type="number"
+            type="text"
             placeholder="0.0"
             onBlur={getBuyCourse}
           />
