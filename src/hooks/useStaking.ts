@@ -24,6 +24,7 @@ export const useStaking = (indexId: number, userAddress: string, stakingAddress:
   const [totalStaked, setTotalStaked] = useState('');
   const [rewards, setRewards] = useState('');
   const [balance, setBalance] = useState('');
+  const [isTokenLp, setIsLp] = useState(false);
 
   // staking fabric > get current stake by indexId > get stakedTokenAdress in stake === profit!
   const getStakedTokenAdress = useCallback(
@@ -51,6 +52,7 @@ export const useStaking = (indexId: number, userAddress: string, stakingAddress:
       const secondSymbol = await walletConnect.metamaskService.getTokenSymbol(tokensAddresses[1]);
 
       indexSymbol = `${firstSymbol} / ${secondSymbol} LP`;
+      setIsLp(true);
     } catch (error) {
       console.log(error);
     }
@@ -77,6 +79,8 @@ export const useStaking = (indexId: number, userAddress: string, stakingAddress:
         }
 
         if (isLp) {
+          const response = await indexesApi.getLpInfoByAddress(indexID);
+          console.log(response);
           return {
             link: '/',
             priceInUsd: '1',
@@ -193,7 +197,7 @@ export const useStaking = (indexId: number, userAddress: string, stakingAddress:
     getStakedTokenAdress(indexId).then((data) => {
       setStakedTokenAdr(data);
 
-      getTokenPriceInUsd(data, symbol === 'YDR').then((tokenInfo) => {
+      getTokenPriceInUsd(data, symbol === 'YDR', isTokenLp).then((tokenInfo) => {
         setTokenInfoFromBack(tokenInfo);
       });
     });
@@ -206,6 +210,7 @@ export const useStaking = (indexId: number, userAddress: string, stakingAddress:
     getStakedTokenAdress,
     getTokenPriceInUsd,
     symbol,
+    isTokenLp,
     stakedTokenAdr,
     stakingAddress,
   ]);
