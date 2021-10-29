@@ -58,4 +58,11 @@ export default {
         network: BACKEND_NETWORKS[rootStore.networks.currentNetwork as TChain],
       },
     }),
+
+  getLpInfoByAddress: (lpAddress: string): Promise<{ data: { id: string; price: string } }> =>
+    axios.get(`/indexes/lp/${lpAddress}/`, {
+      params: {
+        network: BACKEND_NETWORKS[rootStore.networks.currentNetwork as TChain],
+      },
+    }),
 };

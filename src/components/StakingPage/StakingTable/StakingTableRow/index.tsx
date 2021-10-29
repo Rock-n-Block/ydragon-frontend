@@ -62,8 +62,8 @@ const StakingTableRow: React.FC<IStakingTableRowProps> = observer(({ index }) =>
   );
 
   const approveTokens = useCallback(async () => {
+    setIsFirstButtonLoad(true);
     try {
-      setIsFirstButtonLoad(true);
       await approve();
     } catch (error) {
       console.log(error);
@@ -181,7 +181,8 @@ const StakingTableRow: React.FC<IStakingTableRowProps> = observer(({ index }) =>
                 value={toStakeAmount}
                 onChange={(e) => setToStakeAmount(e.target.value)}
                 placeholder="0.0"
-                type="text"
+                type="number"
+                pattern="[0-9]*"
               />
               <div
                 role="button"
@@ -221,7 +222,8 @@ const StakingTableRow: React.FC<IStakingTableRowProps> = observer(({ index }) =>
                 value={toUnstakeAmount}
                 onChange={(e) => setToUnstakeAmount(e.target.value)}
                 placeholder="0.0"
-                type="text"
+                type="number"
+                pattern="[0-9]*"
               />
               <div
                 role="button"
