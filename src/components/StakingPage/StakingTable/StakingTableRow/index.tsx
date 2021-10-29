@@ -182,6 +182,7 @@ const StakingTableRow: React.FC<IStakingTableRowProps> = observer(({ index }) =>
                 onChange={(e) => setToStakeAmount(e.target.value)}
                 placeholder="0.0"
                 type="number"
+                pattern="[0-9]*"
               />
               <div
                 role="button"
@@ -222,6 +223,7 @@ const StakingTableRow: React.FC<IStakingTableRowProps> = observer(({ index }) =>
                 onChange={(e) => setToUnstakeAmount(e.target.value)}
                 placeholder="0.0"
                 type="number"
+                pattern="[0-9]*"
               />
               <div
                 role="button"
