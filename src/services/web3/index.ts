@@ -17,14 +17,16 @@ interface INetworks {
   [key: string]: string;
 }
 
+interface INativeCurrency {
+  name: string;
+  symbol: string; // 2-6 characters long
+  decimals: number;
+}
+
 interface AddEthereumChainParameter {
   chainId: string; // A 0x-prefixed hexadecimal string
   chainName: string;
-  nativeCurrency: {
-    name: string;
-    symbol: string; // 2-6 characters long
-    decimals: number;
-  };
+  nativeCurrency: INativeCurrency;
   rpcUrls: string[];
   blockExplorerUrls?: string[];
   iconUrls?: string[]; // Currently ignored.
@@ -125,9 +127,21 @@ export default class MetamaskService {
   }
 
   static addEthereumChain(param: AddEthereumChainParameter) {
+    const newParam = {
+      chainId: param.chainId,
+      chainName: param.chainName,
+      rpcUrls: param.rpcUrls,
+      ...(!!param.blockExplorerUrls && { blockExplorerUrls: param.blockExplorerUrls }),
+      ...(!!param.iconUrls && { iconUrls: param.iconUrls }),
+      nativeCurrency: {
+        name: param.nativeCurrency.name,
+        decimals: param.nativeCurrency.decimals,
+        symbol: param.nativeCurrency.symbol,
+      },
+    } as AddEthereumChainParameter;
     return window.ethereum.request({
-      method: 'wallet_switchEthereumChain',
-      params: [param],
+      method: 'wallet_addEthereumChain',
+      params: [newParam],
     });
   }
 
