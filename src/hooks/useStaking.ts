@@ -1,3 +1,4 @@
+import config, { TChain } from '../config/index';
 import { useState, useCallback, useEffect } from 'react';
 import BigNumber from 'bignumber.js/bignumber';
 
@@ -7,6 +8,8 @@ import { indexesApi, coingeckoApi } from '../services/api';
 import txToast from '../components/ToastWithTxHash';
 
 import configABI from '../services/web3/config_ABI';
+
+const { SWAP_URLS } = config;
 
 export const useStaking = (
   indexId: number,
@@ -32,7 +35,8 @@ export const useStaking = (
   const [isTokenLp, setIsLp] = useState(false);
 
   // additional info
-  const [lpTokens, setLpTokens] = useState(['', '']);
+  const [lpTokenFirst, setLpTokenFirst] = useState('');
+  const [lpTokenSecond, setLpTokenSecond] = useState('');
 
   // staking fabric > get current stake by indexId > get stakedTokenAdress in stake === profit!
   const getStakedTokenAdress = useCallback(
@@ -55,7 +59,8 @@ export const useStaking = (
       const tokensAddresses = await walletConnect.metamaskService.getTokensFromLPToken(
         stakedTokenAdress,
       );
-      setLpTokens(tokensAddresses);
+      setLpTokenFirst(tokensAddresses[0]);
+      setLpTokenSecond(tokensAddresses[1]);
 
       const firstSymbol = await walletConnect.metamaskService.getTokenSymbol(tokensAddresses[0]);
       const secondSymbol = await walletConnect.metamaskService.getTokenSymbol(tokensAddresses[1]);
@@ -77,7 +82,7 @@ export const useStaking = (
   }, [walletConnect.metamaskService, indexId, getStakedTokenAdress]);
 
   const getTokenPriceInUsd = useCallback(
-    async (indexID: string, isYdr?: boolean, isLp?: boolean, lpTokensAddresses?: Array<string>) => {
+    async (indexID: string, isYdr?: boolean, isLp?: boolean) => {
       try {
         if (isYdr) {
           const response = await coingeckoApi.getYdrCurrentPrice();
@@ -89,19 +94,7 @@ export const useStaking = (
 
         if (isLp) {
           const response = await indexesApi.getLpInfoByAddress(indexID);
-          let link = '';
-
-          if (lpTokensAddresses?.length) {
-            link =
-              currentNetwork === 'bnb'
-                ? `https://pancakeswap.finance/add/${lpTokensAddresses[0]}/${lpTokensAddresses[1]}`
-                : `https://app.uniswap.org/#/add/${lpTokensAddresses[0]}/${lpTokensAddresses[1]}`;
-          } else {
-            link =
-              currentNetwork === 'bnb'
-                ? `https://pancakeswap.finance/add/`
-                : `https://app.uniswap.org/#/add/`;
-          }
+          const link = `${SWAP_URLS[currentNetwork as TChain]}${lpTokenFirst}/${lpTokenSecond}`;
 
           return {
             link,
@@ -121,7 +114,7 @@ export const useStaking = (
         };
       }
     },
-    [currentNetwork],
+    [currentNetwork, lpTokenFirst, lpTokenSecond],
   );
 
   // STAKE TOKENS
@@ -233,11 +226,11 @@ export const useStaking = (
     getStakedTokenAdress(indexId).then((data) => {
       setStakedTokenAdr(data);
 
-      getTokenPriceInUsd(data, symbol === 'YDR', isTokenLp, lpTokens).then((tokenInfo) => {
+      getTokenPriceInUsd(data, symbol === 'YDR', isTokenLp).then((tokenInfo) => {
         setTokenInfoFromBack(tokenInfo);
       });
     });
-  }, [getStakedTokenAdress, getTokenPriceInUsd, indexId, isTokenLp, symbol, lpTokens]);
+  }, [getStakedTokenAdress, getTokenPriceInUsd, indexId, isTokenLp, symbol]);
 
   return {
     symbol,
