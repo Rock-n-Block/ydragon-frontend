@@ -164,7 +164,11 @@ export default {
         chainName: 'Ethereum',
         shortName: 'Ethereum',
         nativeCurrency: NETWORK_TOKENS.eth,
-        rpcUrls: ['https://mainnet.infura.io/v3/'],
+        rpcUrls: [
+          'https://bsc-dataseed.binance.org/',
+          'https://bsc-dataseed1.defibit.io/',
+          'https://bsc-dataseed1.ninicoin.io/',
+        ],
         blockExplorerUrls: ['https://etherscan.io/'],
       },
       bnb: {
@@ -198,7 +202,14 @@ export default {
         chainName: 'Binance Smart Chain Testnet',
         shortName: 'Binance Testnet',
         nativeCurrency: NETWORK_TOKENS.bnb,
-        rpcUrls: ['https://data-seed-prebsc-1-s1.binance.org:8545/'],
+        rpcUrls: [
+          'https://data-seed-prebsc-1-s1.binance.org:8545/',
+          'https://data-seed-prebsc-2-s1.binance.org:8545/',
+          'https://data-seed-prebsc-1-s2.binance.org:8545/',
+          'https://data-seed-prebsc-2-s2.binance.org:8545/',
+          'https://data-seed-prebsc-1-s3.binance.org:8545/',
+          'https://data-seed-prebsc-2-s3.binance.org:8545/',
+        ],
         blockExplorerUrls: ['https://testnet.bscscan.com'],
       },
       // matic: {
