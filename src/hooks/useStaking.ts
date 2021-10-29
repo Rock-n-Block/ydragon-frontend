@@ -8,7 +8,12 @@ import txToast from '../components/ToastWithTxHash';
 
 import configABI from '../services/web3/config_ABI';
 
-export const useStaking = (indexId: number, userAddress: string, stakingAddress: string) => {
+export const useStaking = (
+  indexId: number,
+  userAddress: string,
+  stakingAddress: string,
+  currentNetwork: string,
+) => {
   // read methods first
   const walletConnect = useWalletConnectorContext();
 
@@ -25,6 +30,9 @@ export const useStaking = (indexId: number, userAddress: string, stakingAddress:
   const [rewards, setRewards] = useState('');
   const [balance, setBalance] = useState('');
   const [isTokenLp, setIsLp] = useState(false);
+
+  // additional info
+  const [lpTokens, setLpTokens] = useState(['', '']);
 
   // staking fabric > get current stake by indexId > get stakedTokenAdress in stake === profit!
   const getStakedTokenAdress = useCallback(
@@ -47,6 +55,7 @@ export const useStaking = (indexId: number, userAddress: string, stakingAddress:
       const tokensAddresses = await walletConnect.metamaskService.getTokensFromLPToken(
         stakedTokenAdress,
       );
+      setLpTokens(tokensAddresses);
 
       const firstSymbol = await walletConnect.metamaskService.getTokenSymbol(tokensAddresses[0]);
       const secondSymbol = await walletConnect.metamaskService.getTokenSymbol(tokensAddresses[1]);
@@ -68,7 +77,7 @@ export const useStaking = (indexId: number, userAddress: string, stakingAddress:
   }, [walletConnect.metamaskService, indexId, getStakedTokenAdress]);
 
   const getTokenPriceInUsd = useCallback(
-    async (indexID: string, isYdr?: boolean, isLp?: boolean) => {
+    async (indexID: string, isYdr?: boolean, isLp?: boolean, lpTokensAddresses?: Array<string>) => {
       try {
         if (isYdr) {
           const response = await coingeckoApi.getYdrCurrentPrice();
@@ -80,10 +89,23 @@ export const useStaking = (indexId: number, userAddress: string, stakingAddress:
 
         if (isLp) {
           const response = await indexesApi.getLpInfoByAddress(indexID);
-          console.log(response);
+          let link = '';
+
+          if (lpTokensAddresses?.length) {
+            link =
+              currentNetwork === 'bnb'
+                ? `https://pancakeswap.finance/add/${lpTokensAddresses[0]}/${lpTokensAddresses[1]}`
+                : `https://app.uniswap.org/#/add/${lpTokensAddresses[0]}/${lpTokensAddresses[1]}`;
+          } else {
+            link =
+              currentNetwork === 'bnb'
+                ? `https://pancakeswap.finance/add/`
+                : `https://app.uniswap.org/#/add/`;
+          }
+
           return {
-            link: '/',
-            priceInUsd: '1',
+            link,
+            priceInUsd: response.data.price,
           };
         }
 
@@ -95,11 +117,11 @@ export const useStaking = (indexId: number, userAddress: string, stakingAddress:
       } catch (error) {
         return {
           link: '',
-          priceInUsd: '1',
+          priceInUsd: '0',
         };
       }
     },
-    [],
+    [currentNetwork],
   );
 
   // STAKE TOKENS
@@ -192,15 +214,6 @@ export const useStaking = (indexId: number, userAddress: string, stakingAddress:
       .then((data: boolean) => {
         setIsAllowance(data);
       });
-
-    // STAKED TOKEN ADDRESS
-    getStakedTokenAdress(indexId).then((data) => {
-      setStakedTokenAdr(data);
-
-      getTokenPriceInUsd(data, symbol === 'YDR', isTokenLp).then((tokenInfo) => {
-        setTokenInfoFromBack(tokenInfo);
-      });
-    });
   }, [
     getStakeSymbolAndName,
     getBalanceOfUser,
@@ -214,6 +227,17 @@ export const useStaking = (indexId: number, userAddress: string, stakingAddress:
     stakedTokenAdr,
     stakingAddress,
   ]);
+
+  useEffect(() => {
+    // STAKED TOKEN ADDRESS
+    getStakedTokenAdress(indexId).then((data) => {
+      setStakedTokenAdr(data);
+
+      getTokenPriceInUsd(data, symbol === 'YDR', isTokenLp, lpTokens).then((tokenInfo) => {
+        setTokenInfoFromBack(tokenInfo);
+      });
+    });
+  }, [getStakedTokenAdress, getTokenPriceInUsd, indexId, isTokenLp, symbol, lpTokens]);
 
   return {
     symbol,
