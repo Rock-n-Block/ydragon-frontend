@@ -199,7 +199,7 @@ const StakingTableRow: React.FC<IStakingTableRowProps> = observer(({ index }) =>
                 role="button"
                 onKeyDown={() => {}}
                 tabIndex={0}
-                onClick={() => setToStakeAmount(new BigNumber(balance).toFixed(6, 1))}
+                onClick={() => setToStakeAmount(new BigNumber(balance).toFixed(18, 1))}
                 className="staking-table_row__bottom__cell__input--max"
               >
                 MAX
@@ -241,7 +241,7 @@ const StakingTableRow: React.FC<IStakingTableRowProps> = observer(({ index }) =>
                 role="button"
                 onKeyDown={() => {}}
                 tabIndex={0}
-                onClick={() => setToUnstakeAmount(new BigNumber(deposited).toFixed(6, 1))}
+                onClick={() => setToUnstakeAmount(new BigNumber(deposited).toFixed(18, 1))}
                 className="staking-table_row__bottom__cell__input--max"
               >
                 MAX
