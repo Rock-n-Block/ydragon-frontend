@@ -192,6 +192,7 @@ const StakingTableRow: React.FC<IStakingTableRowProps> = observer(({ index }) =>
                 placeholder="0.0"
                 type="number"
                 pattern="[0-9]*"
+                inputMode="numeric"
               />
               <div
                 role="button"
@@ -233,6 +234,7 @@ const StakingTableRow: React.FC<IStakingTableRowProps> = observer(({ index }) =>
                 placeholder="0.0"
                 type="number"
                 pattern="[0-9]*"
+                inputMode="numeric"
               />
               <div
                 role="button"
