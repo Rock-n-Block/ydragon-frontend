@@ -2,6 +2,7 @@ import React, { useState, useCallback } from 'react';
 import { Redirect } from 'react-router';
 import cn from 'classnames';
 import { observer } from 'mobx-react';
+import BigNumber from 'bignumber.js/bignumber';
 
 import { Button, Loader } from '../../../index';
 import { useMst } from '../../../../store/store';
@@ -198,7 +199,7 @@ const StakingTableRow: React.FC<IStakingTableRowProps> = observer(({ index }) =>
                 role="button"
                 onKeyDown={() => {}}
                 tabIndex={0}
-                onClick={() => setToStakeAmount(balance)}
+                onClick={() => setToStakeAmount(new BigNumber(balance).toFixed(6, 1))}
                 className="staking-table_row__bottom__cell__input--max"
               >
                 MAX
@@ -240,7 +241,7 @@ const StakingTableRow: React.FC<IStakingTableRowProps> = observer(({ index }) =>
                 role="button"
                 onKeyDown={() => {}}
                 tabIndex={0}
-                onClick={() => setToUnstakeAmount(deposited)}
+                onClick={() => setToUnstakeAmount(new BigNumber(deposited).toFixed(6, 1))}
                 className="staking-table_row__bottom__cell__input--max"
               >
                 MAX

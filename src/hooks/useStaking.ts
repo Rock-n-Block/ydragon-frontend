@@ -184,7 +184,9 @@ export const useStaking = (
     });
 
     // USER BALANCE IN THE WALLET
-    getBalanceOfUser().then((userBalance) => setBalance(fromWeiToNormal(userBalance)));
+    getBalanceOfUser().then((userBalance) => {
+      setBalance(fromWeiToNormal(userBalance));
+    });
 
     // USER STAKED AMOUNT
     walletConnect.metamaskService

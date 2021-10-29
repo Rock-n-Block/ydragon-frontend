@@ -234,7 +234,7 @@ export default class MetamaskService {
           const balance = await this.getContractByAddress(address, configABI.Token.ABI)
             .methods.balanceOf(this.walletAddress)
             .call();
-          return Number(balance);
+          return balance;
         }
 
         return 0;
