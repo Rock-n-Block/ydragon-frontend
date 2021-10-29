@@ -101,6 +101,10 @@ export default {
     bnb: IS_PRODUCTION ? 'https://bscscan.com/' : 'https://testnet.bscscan.com/',
     // matic: IS_PRODUCTION ? 'https://polygonscan.com' : 'https://mumbai.polygonscan.com',
   },
+  SWAP_URLS: {
+    eth: 'https://app.uniswap.org/#/add/',
+    bnb: 'https://pancakeswap.finance/add/',
+  },
   BACKEND_NETWORKS: {
     eth: 'ethereum',
     bnb: 'binance-smart-chain',

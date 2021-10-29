@@ -2,6 +2,7 @@ import React, { useState, useCallback } from 'react';
 import { Redirect } from 'react-router';
 import cn from 'classnames';
 import { observer } from 'mobx-react';
+import BigNumber from 'bignumber.js/bignumber';
 
 import { Button, Loader } from '../../../index';
 import { useMst } from '../../../../store/store';
@@ -36,7 +37,12 @@ const StakingTableRow: React.FC<IStakingTableRowProps> = observer(({ index }) =>
     claimReward,
     approve,
     withdraw,
-  } = useStaking(index, user.address, networks.networksList[0].staking_address);
+  } = useStaking(
+    index,
+    user.address,
+    networks.networksList[0].staking_address,
+    networks.currentNetwork,
+  );
 
   // inputs
   const [toUnstakeAmount, setToUnstakeAmount] = useState('');
@@ -107,7 +113,7 @@ const StakingTableRow: React.FC<IStakingTableRowProps> = observer(({ index }) =>
   if (!networks.currentNetwork) return <Loader />;
 
   // TODO: create skeleton
-  if (!symbol || !name || !totalStaked)
+  if (!symbol || !name || !totalStaked || !tokenInfoFromBack.priceInUsd)
     return <div className="staking-table_row staking-table_row--skelet" />;
 
   return (
@@ -148,7 +154,11 @@ const StakingTableRow: React.FC<IStakingTableRowProps> = observer(({ index }) =>
         />
 
         <div className="staking-table_row__cell">
-          <Button link={tokenInfoFromBack.link} className="staking-table_row__cell--button">
+          <Button
+            link={tokenInfoFromBack.link}
+            target="_blank"
+            className="staking-table_row__cell--button"
+          >
             Get in
           </Button>
         </div>
@@ -183,12 +193,13 @@ const StakingTableRow: React.FC<IStakingTableRowProps> = observer(({ index }) =>
                 placeholder="0.0"
                 type="number"
                 pattern="[0-9]*"
+                inputMode="numeric"
               />
               <div
                 role="button"
                 onKeyDown={() => {}}
                 tabIndex={0}
-                onClick={() => setToStakeAmount(balance)}
+                onClick={() => setToStakeAmount(new BigNumber(balance).toFixed(18, 1))}
                 className="staking-table_row__bottom__cell__input--max"
               >
                 MAX
@@ -224,12 +235,13 @@ const StakingTableRow: React.FC<IStakingTableRowProps> = observer(({ index }) =>
                 placeholder="0.0"
                 type="number"
                 pattern="[0-9]*"
+                inputMode="numeric"
               />
               <div
                 role="button"
                 onKeyDown={() => {}}
                 tabIndex={0}
-                onClick={() => setToUnstakeAmount(deposited)}
+                onClick={() => setToUnstakeAmount(new BigNumber(deposited).toFixed(18, 1))}
                 className="staking-table_row__bottom__cell__input--max"
               >
                 MAX
