@@ -41,7 +41,7 @@ const StakingTableRow: React.FC<IStakingTableRowProps> = observer(({ index }) =>
   } = useStaking(
     index,
     user.address,
-    networks.networksList[0].staking_address,
+    networks.getCurrNetwork()?.staking_address || '',
     networks.currentNetwork,
   );
 
