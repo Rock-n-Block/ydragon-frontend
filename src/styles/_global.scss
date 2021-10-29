@@ -409,3 +409,8 @@ main {
 .ant-tooltip {
   z-index: 10 !important;
 }
+
+.tippy-content {
+  word-break: break-all;
+  text-align: center;
+}

@@ -3,6 +3,7 @@ import { Redirect } from 'react-router';
 import cn from 'classnames';
 import { observer } from 'mobx-react';
 import BigNumber from 'bignumber.js/bignumber';
+import Tippy from '@tippyjs/react';
 
 import { Button, Loader } from '../../../index';
 import { useMst } from '../../../../store/store';
@@ -182,9 +183,11 @@ const StakingTableRow: React.FC<IStakingTableRowProps> = observer(({ index }) =>
           <div className="staking-table_row__bottom__cell">
             <div className="staking-table_row__bottom__cell__title">
               <p>Wallet:</p>
-              <span className="text-gradient">
-                {formatAmount(balance)} {symbol}
-              </span>
+              <Tippy content={formatAmount(balance)}>
+                <span className="text-gradient">
+                  {formatAmount(balance)} {symbol}
+                </span>
+              </Tippy>
             </div>
             <div className="staking-table_row__bottom__cell__input">
               <input
@@ -193,7 +196,7 @@ const StakingTableRow: React.FC<IStakingTableRowProps> = observer(({ index }) =>
                 placeholder="0.0"
                 type="number"
                 pattern="[0-9]*"
-                inputMode="numeric"
+                inputMode="decimal"
               />
               <div
                 role="button"
@@ -224,9 +227,12 @@ const StakingTableRow: React.FC<IStakingTableRowProps> = observer(({ index }) =>
           <div className="staking-table_row__bottom__cell">
             <div className="staking-table_row__bottom__cell__title">
               <p>Deposited:</p>
-              <span className="text-gradient">
-                {formatAmount(deposited)} {symbol}
-              </span>
+
+              <Tippy content={formatAmount(deposited)}>
+                <span className="text-gradient">
+                  {formatAmount(deposited)} {symbol}
+                </span>
+              </Tippy>
             </div>
             <div className="staking-table_row__bottom__cell__input">
               <input
@@ -235,7 +241,7 @@ const StakingTableRow: React.FC<IStakingTableRowProps> = observer(({ index }) =>
                 placeholder="0.0"
                 type="number"
                 pattern="[0-9]*"
-                inputMode="numeric"
+                inputMode="decimal"
               />
               <div
                 role="button"
@@ -260,7 +266,9 @@ const StakingTableRow: React.FC<IStakingTableRowProps> = observer(({ index }) =>
           <div className="staking-table_row__bottom__cell">
             <div className="staking-table_row__bottom__cell__title">
               <p>Rewards:</p>
-              <span className="text-gradient">{formatAmount(rewards, 18)} YDR</span>
+              <Tippy content={formatAmount(rewards, 18)}>
+                <span className="text-gradient">{formatAmount(rewards, 18)} YDR</span>
+              </Tippy>
             </div>
             <div className="staking-table_row__bottom__cell__logo">
               <img src={logoExample1} alt="token logo" />

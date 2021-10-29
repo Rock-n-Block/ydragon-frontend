@@ -84,7 +84,14 @@ export const InputWithSelect: React.FC<InputWithSelectProps> = observer((props) 
   }
   return (
     <div className="input-with-select input-border">
-      <InputAntd onWheel={(e) => e.currentTarget.blur()} className="input" {...otherInputProps} />
+      <InputAntd
+        onWheel={(e) => e.currentTarget.blur()}
+        className="input"
+        type="number"
+        pattern="[0-9]*"
+        inputMode="decimal"
+        {...otherInputProps}
+      />
       {tokenOrSelect}
     </div>
   );

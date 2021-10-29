@@ -14,6 +14,7 @@ import { Spinner } from '../index';
 import IndexSmallCard from './SmallCard/index';
 
 import './Dashboard.scss';
+import Tippy from '@tippyjs/react';
 
 export interface IUserIndex extends IIndex {
   name: string;
@@ -269,7 +270,9 @@ const Dashboard: React.FC = () => {
                             <span
                               className={`index-dashboard__token-color ${colorsClassNames[i]}`}
                             />
-                            <span className="index-dashboard__token-name">{token.symbol}</span>
+                            <Tippy content={token.symbol.toUpperCase()}>
+                              <span className="index-dashboard__token-name">{token.symbol}</span>
+                            </Tippy>
                           </div>
                         ))}
 
