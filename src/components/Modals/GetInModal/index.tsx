@@ -15,6 +15,7 @@ import config from '../../../config';
 
 import './GetInModal.scss';
 import txToast from '../../ToastWithTxHash';
+import { toast } from 'react-toastify';
 
 const GetInModal: React.FC = observer(() => {
   const { NETWORK_TOKENS } = config;
@@ -104,15 +105,15 @@ const GetInModal: React.FC = observer(() => {
       })
       .then(() => {
         setIsNeedApprove(false);
-        modals.info.setMsg('Success', `Approve of ${firstCurrency} to IMO success`, 'success');
+        toast.success(`Approve of ${firstCurrency} to IMO success`);
       })
       .catch((err: ProviderRpcError) => {
         const { message } = err;
-        modals.info.setMsg('Error', `Approve error ${message}`, 'error');
+        toast.error('Something went wrong');
+        console.error(`Approve error`, message);
       })
       .finally(() => setIsLoading(false));
   };
-
   const handleEnter = (): void => {
     setIsLoading(true);
     walletConnector.metamaskService
@@ -123,16 +124,13 @@ const GetInModal: React.FC = observer(() => {
       .then(() => {
         setPayInput('');
         getBalance();
-        modals.info.setMsg('Success', 'You entered IMO', 'success');
+        toast.success('You entered IMO');
         setIsLoading(false);
       })
       .catch((err: ProviderRpcError) => {
         const { message } = err;
-        modals.info.setMsg(
-          'Error',
-          `Enter IMO error ${message.slice(0, message.indexOf(':'))}`,
-          'error',
-        );
+        toast.error('Something went wrong');
+        console.error(`Enter IMO error `, message);
         setIsLoading(false);
       });
   };

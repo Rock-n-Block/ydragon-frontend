@@ -12,6 +12,7 @@ import { useMst } from '../../../store/store';
 import { ProviderRpcError } from '../../../types/errors';
 import CreateIndex, { ICreateIndex } from '../component';
 import txToast from '../../../components/ToastWithTxHash';
+import { toast } from 'react-toastify';
 
 const CreateIndexForm: React.FC = () => {
   const { modals } = useMst();
@@ -68,12 +69,13 @@ const CreateIndexForm: React.FC = () => {
           }
         })
         .then(() => {
-          modals.info.setMsg('Success', 'Index created', 'success');
+          toast.success('Index created');
         })
         .catch((error: ProviderRpcError) => {
           setFieldValue('isLoading', false);
           const { message } = error;
-          modals.info.setMsg('Error', message, 'error');
+          toast.error('Something went wrong');
+          console.error('Create index error', message);
         });
     },
     displayName: 'CreateIndex',

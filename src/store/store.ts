@@ -23,9 +23,7 @@ export const Store = RootModel.create({
     createIndex: { isOpen: false },
     getIn: { id: null, address: null },
     mint: { isOpen: false },
-    info: { msg: '', title: '', type: 'info' },
     redeem: { isOpen: false },
-    tradeYDR: { isOpen: false, method: '' },
     tradeIndex: { isOpen: false, method: '' },
   },
   user: {

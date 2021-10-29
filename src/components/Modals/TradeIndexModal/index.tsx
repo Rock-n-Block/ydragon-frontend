@@ -16,6 +16,7 @@ import { Modal } from '../index';
 import './TradeIndexModal.scss';
 import config from '../../../config';
 import txToast from '../../ToastWithTxHash';
+import { toast } from 'react-toastify';
 
 interface TradeIndexModalProps {
   token: string;
@@ -210,11 +211,12 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
         })
         .then(() => {
           setIsNeedApprove(false);
-          modals.info.setMsg('Success', `You approved ${token}`, 'success');
+          toast.success(`You approved ${token}`);
         })
         .catch((err: ProviderRpcError) => {
           const { message } = err;
-          modals.info.setMsg('Error', `${message}`, 'error');
+          toast.error('Something went wrong');
+          console.error(`Approve error `, message);
         })
         .finally(() => setIsLoading(false));
     };
@@ -228,12 +230,13 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
         .then(() => {
           setPayInput('');
           getBalance();
-          modals.info.setMsg('Success', `You bought ${token}`, 'success');
+          toast.success(`You bought ${token}`);
           if (updateData) updateData();
         })
         .catch((err: ProviderRpcError) => {
           const { message } = err;
-          modals.info.setMsg('Error', `${message.slice(0, message.indexOf(':'))}`, 'error');
+          toast.error('Something went wrong');
+          console.error(`Buy error `, message);
         })
         .finally(() => setIsLoading(false));
     };
@@ -247,12 +250,13 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
         .then(() => {
           setPayInput('');
           getBalance();
-          modals.info.setMsg('Success', `You sold ${token}`, 'success');
+          toast.success(`You sold ${token}`);
           if (updateData) updateData();
         })
         .catch((err: ProviderRpcError) => {
           const { message } = err;
-          modals.info.setMsg('Error', `${message.slice(0, message.indexOf(':'))}`, 'error');
+          toast.error('Something went wrong');
+          console.error(`Sell error `, message);
         })
         .finally(() => setIsLoading(false));
     };
