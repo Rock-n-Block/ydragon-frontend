@@ -76,6 +76,7 @@ module.exports = {
     'react/destructuring-assignment': 'off',
     'react/jsx-filename-extension': ['error', { extensions: ['.jsx', '.tsx'] }],
     'react/jsx-props-no-spreading': 'off',
+    'react/require-default-props': 'off',
     'react/jsx-wrap-multilines': [
       'warn',
       {

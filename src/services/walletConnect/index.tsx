@@ -81,7 +81,7 @@ class Connector extends React.Component<any, any> {
           localStorage.setItem('yd_metamask', 'true');
           // rootStore.user.update({ address });
         }
-      } catch (err) {
+      } catch (err: any) {
         const { response } = err;
         if (response) {
           if (response.status === 400 && response.data.result[0] === 'user is not admin') {
