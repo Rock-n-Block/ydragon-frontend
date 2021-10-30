@@ -285,6 +285,15 @@
 
   &__info {
     margin-left: 7px;
+    p {
+      max-width: 100px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+
+      @include b(tablet) {
+        max-width: 500%;
+      }
+    }
     p:last-child {
       margin-top: 8px;
       font-size: 10px;

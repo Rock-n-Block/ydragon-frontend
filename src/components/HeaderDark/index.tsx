@@ -32,7 +32,7 @@ interface HeaderProps {
 const Header: React.FC<HeaderProps> = observer(({ collapsed, onCollapsedChange }) => {
   const { SOCIAL_LINKS } = config;
   const [fixed, setFixed] = useState(true);
-  const { theme, user } = useMst();
+  const { theme, user, networks } = useMst();
   const walletConnector = useWalletConnectorContext();
   const history = useHistory();
 
@@ -142,7 +142,7 @@ const Header: React.FC<HeaderProps> = observer(({ collapsed, onCollapsedChange }
                 <li className="header-nav__item">
                   <DropDown title="About" links={aboutLinks} />
                 </li>
-                {localStorage.getItem('yd_token') && (
+                {localStorage.getItem('yd_token') && networks.currentNetwork === 'bnb' && (
                   <li className="header-nav__item">
                     <Link to="/admin" className="header-nav__link">
                       Admin panel

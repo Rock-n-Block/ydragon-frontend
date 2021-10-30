@@ -120,7 +120,7 @@ const StakingTableRow: React.FC<IStakingTableRowProps> = observer(({ index }) =>
   if (!networks.currentNetwork) return <Loader />;
 
   // TODO: create skeleton
-  if (!symbol || !name || !totalStaked || !tokenInfoFromBack.priceInUsd)
+  if (!symbol || !name || !totalStaked)
     return <div className="staking-table_row staking-table_row--skelet" />;
 
   return (
