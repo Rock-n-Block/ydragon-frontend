@@ -291,7 +291,8 @@
       text-overflow: ellipsis;
 
       @include b(tablet) {
-        max-width: 500%;
+        max-width: 200px;
+        white-space: nowrap;
       }
     }
     p:last-child {
