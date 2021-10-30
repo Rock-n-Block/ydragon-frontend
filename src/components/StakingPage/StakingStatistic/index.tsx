@@ -39,7 +39,7 @@ const StakingStatistic: React.FC = () => {
             {numberFormatter(+new BigNumber(tvlData.ydr_tvl || 0).toString(), 0)}
           </div>
           <div className="staking-statistic-red_subamount">
-            $ {new BigNumber(tvlData.ydr_tvl || 0).multipliedBy(ydrPrice || 0).toFormat(2)}
+            ($ {new BigNumber(tvlData.ydr_tvl || 0).multipliedBy(ydrPrice || 0).toFormat(2)})
           </div>
           <div className="staking-statistic-red_subtitle text-MER">
             Circulating <br /> supply staked

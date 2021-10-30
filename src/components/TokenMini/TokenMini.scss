@@ -24,6 +24,11 @@
     font-size: 18px;
     font-weight: 700;
     line-height: 21px;
+
+    max-width: 70px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   &__symbol {

@@ -242,15 +242,20 @@
   }
 
   &-item {
+    &__input-wrapper {
+      max-width: 35%;
+    }
     padding: 16px;
 
-    display: grid;
-    grid-template-columns: 1fr 134px 102px;
-    grid-column-gap: 15px;
+    display: flex;
+    gap: 10px;
+    justify-content: space-between;
+
+    @include b(extramobile) {
+      flex-wrap: wrap;
+    }
 
     align-items: center;
-
-    box-sizing: border-box;
 
     background: rgba(255, 255, 255, 0.05);
     border-radius: 40px;
@@ -295,8 +300,6 @@
     }
 
     &__remove {
-      margin-left: auto;
-
       width: fit-content;
     }
   }
@@ -335,7 +338,7 @@
 
     .input {
       background: linear-gradient(180deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0) 100%),
-      linear-gradient(171.49deg, #1a1e3a 3.83%, #161a2a 100%);
+        linear-gradient(171.49deg, #1a1e3a 3.83%, #161a2a 100%);
     }
   }
 
