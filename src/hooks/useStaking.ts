@@ -169,7 +169,11 @@ export const useStaking = (
   );
 
   const approve = useCallback(async () => {
-    const data = await walletConnect.metamaskService.approve(stakedTokenAdr, stakingAddress);
+    const data = await walletConnect.metamaskService
+      .approve(stakedTokenAdr, stakingAddress)
+      .on('transactionHash', (hash: string) => {
+        txToast(hash);
+      });
 
     if (data.status) {
       setIsAllowance(true);

@@ -107,6 +107,12 @@ const StakingTableRow: React.FC<IStakingTableRowProps> = observer(({ index }) =>
     [deposit],
   );
 
+  const handleNumericInput = (value: string, setValue: (value: string) => void) => {
+    if (/^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$/.test(value) || value === '') {
+      setValue(value);
+    }
+  };
+
   if (!user.address) {
     return <Redirect to="/" />;
   }
@@ -192,11 +198,9 @@ const StakingTableRow: React.FC<IStakingTableRowProps> = observer(({ index }) =>
             <div className="staking-table_row__bottom__cell__input">
               <input
                 value={toStakeAmount}
-                onChange={(e) => setToStakeAmount(e.target.value)}
+                onChange={(e) => handleNumericInput(e.target.value, setToStakeAmount)}
                 placeholder="0.0"
-                type="number"
-                pattern="[0-9]*"
-                inputMode="decimal"
+                type="text"
               />
               <div
                 role="button"
@@ -237,11 +241,9 @@ const StakingTableRow: React.FC<IStakingTableRowProps> = observer(({ index }) =>
             <div className="staking-table_row__bottom__cell__input">
               <input
                 value={toUnstakeAmount}
-                onChange={(e) => setToUnstakeAmount(e.target.value)}
+                onChange={(e) => handleNumericInput(e.target.value, setToUnstakeAmount)}
                 placeholder="0.0"
-                type="number"
-                pattern="[0-9]*"
-                inputMode="decimal"
+                type="text"
               />
               <div
                 role="button"
