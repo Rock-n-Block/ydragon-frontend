@@ -1,11 +1,15 @@
 import React, { useState } from 'react';
 import cn from 'classnames';
 import { NavHashLink } from 'react-router-hash-link';
+import { observer } from 'mobx-react-lite';
+
+import { useMst } from '../../../store/store';
 
 interface IHeaderMobileItemLink {
   title: string;
   link: string;
   onCollapsedChange?: (foo: boolean) => void;
+  auth?: string;
 }
 
 interface IHeaderMobileItemProps {
@@ -16,25 +20,32 @@ interface IHeaderMobileItemProps {
   auth: string;
 }
 
-const HeaderMobLink: React.FC<IHeaderMobileItemLink> = ({ title, link, onCollapsedChange }) => {
-  return (
-    <>
-      {link.startsWith('/') && !link.includes('.pdf') ? (
-        <NavHashLink
-          to={link}
-          className="menu-nav__item__link"
-          onClick={() => onCollapsedChange && onCollapsedChange(true)}
-        >
-          {title}
-        </NavHashLink>
-      ) : (
-        <a href={link} target="_blank" rel="noreferrer" className="menu-nav__item__link">
-          {title}
-        </a>
-      )}
-    </>
-  );
-};
+const HeaderMobLink: React.FC<IHeaderMobileItemLink> = observer(
+  ({ title, link, onCollapsedChange, auth }) => {
+    const { networks } = useMst();
+    if (auth === 'bnb' && networks.currentNetwork !== 'bnb') {
+      return <></>;
+    }
+
+    return (
+      <>
+        {link.startsWith('/') && !link.includes('.pdf') ? (
+          <NavHashLink
+            to={link}
+            className="menu-nav__item__link"
+            onClick={() => onCollapsedChange && onCollapsedChange(true)}
+          >
+            {title}
+          </NavHashLink>
+        ) : (
+          <a href={link} target="_blank" rel="noreferrer" className="menu-nav__item__link">
+            {title}
+          </a>
+        )}
+      </>
+    );
+  },
+);
 
 const HeaderMobileItem: React.FC<IHeaderMobileItemProps> = ({
   title,

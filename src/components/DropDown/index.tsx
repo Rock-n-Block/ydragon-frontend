@@ -9,7 +9,7 @@ import OutsideAlerter from '../../utils/outsideClickWrapper';
 interface IDropDownLink {
   title: string;
   link: string;
-  needAuth?: boolean;
+  auth?: Array<string>;
 }
 interface IDropDownProps {
   title: string;
@@ -42,7 +42,7 @@ const DropDown: React.FC<IDropDownProps> = ({ title, links }) => {
               handleClose={handleClose}
               title={link.title}
               link={link.link}
-              needAuth={link.needAuth || false}
+              auth={link.auth || ['']}
             />
           ))}
         </div>

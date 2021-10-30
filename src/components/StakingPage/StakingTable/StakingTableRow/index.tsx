@@ -69,8 +69,8 @@ const StakingTableRow: React.FC<IStakingTableRowProps> = observer(({ index }) =>
   );
 
   const approveTokens = useCallback(async () => {
-    setIsFirstButtonLoad(true);
     try {
+      setIsFirstButtonLoad(true);
       await approve();
     } catch (error) {
       console.log(error);

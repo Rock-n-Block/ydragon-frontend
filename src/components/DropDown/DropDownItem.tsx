@@ -7,19 +7,23 @@ import { useMst } from '../../store/store';
 interface IDropDownItem {
   title: string;
   link: string;
-  needAuth?: boolean;
+  auth?: Array<string>;
   handleClose: () => void;
 }
 
-const DropDownItem: React.FC<IDropDownItem> = observer(({ title, link, handleClose, needAuth }) => {
-  const { user } = useMst();
+const DropDownItem: React.FC<IDropDownItem> = observer(({ title, link, handleClose, auth }) => {
+  const { user, networks } = useMst();
 
-  if (needAuth && !user.address) {
+  if (auth?.includes('login') && !user.address) {
     return (
       <div className="dropdown-body_item dropdown-body_item--not-allowed">
         <span>{title}</span>
       </div>
     );
+  }
+
+  if (auth?.includes('bnb') && networks.currentNetwork === 'eth') {
+    return <></>;
   }
 
   return (
