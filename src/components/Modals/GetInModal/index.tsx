@@ -89,6 +89,7 @@ const GetInModal: React.FC = observer(() => {
   const handleSelectChange = (value: any) => {
     setFirstCurrency(value);
     setPayInput('');
+    setViewOnlyInputValue('0.0');
     setIsLoading(false);
 
     getDecimals(value).then((dec: number) => {

@@ -14,7 +14,11 @@ import CreateIndex, { ICreateIndex } from '../component';
 import txToast from '../../../components/ToastWithTxHash';
 import { toast } from 'react-toastify';
 
-const CreateIndexForm: React.FC = () => {
+interface IProps {
+  handleCancel: () => void;
+}
+
+const CreateIndexForm: React.FC<IProps> = ({ handleCancel }) => {
   const { modals } = useMst();
   const walletConnector = useWalletConnectorContext();
   const FormWithFormik = withFormik<any, ICreateIndex>({
@@ -61,6 +65,7 @@ const CreateIndexForm: React.FC = () => {
               })
               .finally(() => {
                 resetForm({});
+                handleCancel();
                 setFieldValue('isLoading', false);
                 modals.createIndex.close();
               });

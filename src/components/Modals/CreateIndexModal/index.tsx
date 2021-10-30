@@ -23,7 +23,7 @@ const CreateIndexModal: React.FC = observer(() => {
     >
       <div className="m-create-index__content">
         <div className="m-create-index__title">Create new index</div>
-        <CreateIndexForm />
+        <CreateIndexForm handleCancel={handleClose} />
       </div>
     </Modal>
   );
