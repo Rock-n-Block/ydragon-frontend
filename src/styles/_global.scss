@@ -206,13 +206,13 @@ p {
   // background-blend-mode: overlay;
   &--home {
     background-position: top center, bottom 390px center;
-    background-size: cover;
+    background-size: contain;
     background-blend-mode: unset;
   }
 
   &--about {
     background-position: top center, bottom 681px center;
-    background-size: cover;
+    background-size: contain;
     background-blend-mode: unset;
 
     @include b('tablet') {
@@ -224,13 +224,13 @@ p {
 
   &--pbf {
     background-position: top center, bottom 1740px center, bottom 400px center;
-    background-size: cover;
+    background-size: contain;
     background-blend-mode: unset;
   }
 
   &--staking {
     background-position: top center;
-    background-size: cover;
+    background-size: contain;
     background-blend-mode: unset;
   }
 }
