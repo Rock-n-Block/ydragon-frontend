@@ -158,7 +158,7 @@ const StakingTableRow: React.FC<IStakingTableRowProps> = observer(({ index }) =>
         <div className="staking-table_row__cell">
           <Button
             link={tokenInfoFromBack.link}
-            target="_blank"
+            target={tokenInfoFromBack.link[0] !== '/' ? '_blank' : ''}
             className="staking-table_row__cell--button"
           >
             Get in
