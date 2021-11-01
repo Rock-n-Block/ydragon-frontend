@@ -233,7 +233,7 @@
   }
 
   &__value {
-    @include text-elipsis(80%);
+    @include text-ellipsis(80%);
 
     font-size: 16px;
     @include b(tablet) {

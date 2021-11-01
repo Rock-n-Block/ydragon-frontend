@@ -170,7 +170,7 @@
 
     &-full {
       @include b(extramobile) {
-        @include text-elipsis(150px);
+        @include text-ellipsis(150px);
       }
     }
 

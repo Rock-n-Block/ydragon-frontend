@@ -67,61 +67,40 @@ const Footer: React.FC = observer(() => {
                 />
                 <SocialLink href={SOCIAL_LINKS.nomics.url} icon={SOCIAL_LINKS.nomics.iconDark} />
               </div>
-              {/*
-              <a href="/" className="footer__socials-item">
-                <img src={dis} alt="logo" width="16" height="16" />
-              </a> */}
             </div>
 
             <div className="footer__copyright">© 2021 YDRAGON</div>
           </div>
 
           <div className="footer__col">
-            <div className="footer__links-title">Product</div>
+            <div className="footer__links-title">Products</div>
 
             <div className="footer__links">
+              <Link to="/indexes">Index Products</Link>
+              <Link to="/staking">StakePad</Link>
+              <Link to="/pbf">Private Blockchain Funds</Link>
+              <a href="https://bridge.ydragon.io/" target="_blank" rel="noopener noreferrer">
+                Bridge
+              </a>
+            </div>
+          </div>
+          <div className="footer__col">
+            <div className="footer__links-title">About</div>
+
+            <div className="footer__links">
+              <NavHashLink to="/about-us#top">About Us</NavHashLink>
+              <Link to="/simplified">YDragon simplified</Link>
+              <NavHashLink to="/about-us#FAQ" smooth className="text-gray text-bold">
+                FAQ
+              </NavHashLink>
               <a href={Whitepaper} target="_blank" rel="noopener noreferrer">
                 Whitepaper
               </a>
-              {/* <span className="isDisabled">
-                <a href="/">Privacy Policy</a>
-              </span>
-              <span className="isDisabled">
-                <a href="/">Terms of Service</a>
-              </span> */}
               <a href="mailto:info@ydragon.io" target="_blank" rel="noopener noreferrer">
                 Contact us
               </a>
             </div>
           </div>
-          <div className="footer__col">
-            <div className="footer__links-title">Engage</div>
-
-            <div className="footer__links">
-              <NavHashLink to="/about-us#top">About Us</NavHashLink>
-
-              <NavHashLink to="/about-us#FAQ" smooth className="text-gray text-bold">
-                FAQ
-              </NavHashLink>
-              {/* <span className="isDisabled">
-                <a href="/">Tutorial</a>
-              </span>
-              <span className="isDisabled">
-              </span> */}
-            </div>
-          </div>
-          {/*
-          <div className="footer__col">
-            <div className="footer__links-title">DeFi</div>
-            <div className="footer__links">
-              <span className="isDisabled">
-                <a href="/">Index Products</a>
-              </span>
-              <span className="isDisabled">
-                <a href="/">Become Partner</a>
-              </span>
-            </div>
-          </div> */}
         </div>
         <PoweredBy />
       </div>

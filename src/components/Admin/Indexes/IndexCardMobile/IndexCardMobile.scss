@@ -70,7 +70,7 @@
   &__value {
     display: block;
     font-size: 18px;
-    @include text-elipsis();
+    @include text-ellipsis();
   }
 
   &__info {
