@@ -12,6 +12,7 @@ import { useMst } from '../../../store/store';
 import { ProviderRpcError } from '../../../types/errors';
 import { Button, Input, InputWithSelect } from '../../index';
 import { Modal } from '../index';
+import { handleNumericInput } from '../../../utils/handleNumericInput';
 
 import './TradeIndexModal.scss';
 import config from '../../../config';
@@ -260,11 +261,7 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
         })
         .finally(() => setIsLoading(false));
     };
-    const handlePayInput = (e: any) => {
-      if (/^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$/.test(e.target.value) || e.target.value === '') {
-        setPayInput(e.target.value);
-      }
-    };
+
     useEffect(() => {
       setIsSell(modals.tradeIndex.method === 'sell');
     }, [modals.tradeIndex.method]);
@@ -356,7 +353,7 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
                 tokens={whiteList}
                 selectValue={firstCurrency}
                 onSelectChange={handleSelectChange}
-                onChange={handlePayInput}
+                onChange={(e) => handleNumericInput(e.target.value, setPayInput)}
                 type="text"
                 placeholder="0.0"
                 onBlur={getBuyCourse}
@@ -364,7 +361,7 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
             ) : (
               <Input
                 value={payInput}
-                onChange={handlePayInput}
+                onChange={(e) => handleNumericInput(e.target.value, setPayInput)}
                 type="text"
                 placeholder="0.0"
                 onBlur={getSellCourse}

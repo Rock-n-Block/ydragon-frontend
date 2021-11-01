@@ -9,6 +9,7 @@ import { Button, Loader } from '../../../index';
 import { useMst } from '../../../../store/store';
 import { useStaking } from '../../../../hooks/useStaking';
 import { formatAmount } from '../../../../utils/formatAmount';
+import { handleNumericInput } from '../../../../utils/handleNumericInput';
 import StakingTableRowCell from './StakingTableRowCell';
 
 import './StakingTableRow.scss';
@@ -106,12 +107,6 @@ const StakingTableRow: React.FC<IStakingTableRowProps> = observer(({ index }) =>
     },
     [deposit],
   );
-
-  const handleNumericInput = (value: string, setValue: (value: string) => void) => {
-    if (/^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$/.test(value) || value === '') {
-      setValue(value);
-    }
-  };
 
   if (!user.address) {
     return <Redirect to="/" />;

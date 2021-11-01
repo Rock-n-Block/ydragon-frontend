@@ -12,6 +12,7 @@ import { ProviderRpcError } from '../../../types/errors';
 import { Button, Input, InputWithSelect } from '../../index';
 import { Modal } from '../index';
 import config from '../../../config';
+import { handleNumericInput } from '../../../utils/handleNumericInput';
 
 import './GetInModal.scss';
 import txToast from '../../ToastWithTxHash';
@@ -166,11 +167,6 @@ const GetInModal: React.FC = observer(() => {
     firstCurrency,
     walletConnector.metamaskService,
   ]);
-  const handlePayInput = (e: any) => {
-    if (/^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$/.test(e.target.value) || e.target.value === '') {
-      setPayInput(e.target.value);
-    }
-  };
 
   const setInitialCurrencies = useCallback(() => {
     setFirstCurrency(whiteList[0].symbol);
@@ -219,7 +215,7 @@ const GetInModal: React.FC = observer(() => {
             tokens={whiteList}
             selectValue={firstCurrency || ''}
             onSelectChange={handleSelectChange}
-            onChange={handlePayInput}
+            onChange={(e) => handleNumericInput(e.target.value, setPayInput)}
             type="text"
             placeholder="0.0"
             onBlur={getBuyCourse}
