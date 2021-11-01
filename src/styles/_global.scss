@@ -60,7 +60,7 @@ p {
     color: white;
   }
 
-  .page-wrapper {
+  &.page-wrapper {
     background-color: $main-dark-bg;
     background-image: url('../assets/img/home-dark-bg.png');
 
@@ -136,7 +136,7 @@ p {
     color: $black;
   }
 
-  .page-wrapper {
+  &.page-wrapper {
     background-color: $main-bg;
     background-image: url('../assets/img/home-bg.png');
 
@@ -196,6 +196,7 @@ p {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  overflow: hidden;
 
   min-height: 100vh;
   // background-color: $bg-color;
@@ -245,9 +246,9 @@ main {
   flex: 1 1 auto;
 }
 
-.content {
-  overflow: hidden;
-}
+//.content {
+//  overflow: hidden;
+//}
 
 .container {
   margin: 0 auto;

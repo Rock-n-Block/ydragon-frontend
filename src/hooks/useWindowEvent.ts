@@ -8,13 +8,13 @@ import useDebounce from './useDebounce';
  * @param func - Function that should apply after window event
  * @param delay
  */
-const useWindowEvent = (
+const useWindowEvent = <T>(
   listeningEvent: string,
-  observedState: any,
-  func: (arg: any) => void,
+  observedState: T,
+  func: (arg: T) => void,
   delay: number,
 ) => {
-  const [state, setState] = useState<any>();
+  const [state, setState] = useState<T>(observedState);
   const debouncedValue = useDebounce(state, delay);
 
   useEffect(() => {
@@ -27,6 +27,7 @@ const useWindowEvent = (
 
   useEffect(() => {
     func(debouncedValue);
+    console.log('windowWidth', debouncedValue);
   }, [debouncedValue, func]);
 };
 export default useWindowEvent;
