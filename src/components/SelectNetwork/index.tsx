@@ -9,6 +9,7 @@ import { useWalletConnectorContext } from '../../services/walletConnect';
 import MetamaskService from '../../services/web3';
 import { useMst } from '../../store/store';
 import TokenMini from '../TokenMini';
+import cn from 'classnames';
 
 const { Option } = Select;
 
@@ -92,7 +93,7 @@ const SelectNetwork: React.FC = observer(() => {
       suffixIcon={
         <img className="select__arrow" alt="select arrow" src={arrow} width="10" height="6" />
       }
-      dropdownClassName="select-network__dropdown"
+      dropdownClassName={cn(theme.value, 'select-network__dropdown')}
     >
       {Object.keys(FULL_CHAIN_INFO[isProduction]).map((network) => (
         <Option value={network as TChain}>
