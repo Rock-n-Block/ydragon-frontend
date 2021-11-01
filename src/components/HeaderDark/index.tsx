@@ -63,14 +63,7 @@ const Header: React.FC = observer(() => {
     setIsCollapsed(false);
     history.push(path);
   };
-
-  // useEffect(() => {
-  //   if (!collapsed) {
-  //     setTimeout(() => setFixed(true), 400);
-  //   } else {
-  //     setFixed(false);
-  //   }
-  // }, [collapsed]);
+  const handleBurgerClick = () => setIsCollapsed((prevState) => !prevState);
   useEffect(() => {
     if (!isCollapsed) {
       document.body.style.overflow = 'hidden';
@@ -86,8 +79,8 @@ const Header: React.FC = observer(() => {
           <div
             role="button"
             tabIndex={0}
-            onKeyDown={() => setIsCollapsed(!isCollapsed)}
-            onClick={() => setIsCollapsed(!isCollapsed)}
+            onKeyDown={handleBurgerClick}
+            onClick={handleBurgerClick}
             className="header__menu"
           >
             {DARK === theme.value ? (

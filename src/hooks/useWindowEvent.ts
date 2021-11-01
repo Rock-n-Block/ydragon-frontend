@@ -27,7 +27,6 @@ const useWindowEvent = <T>(
 
   useEffect(() => {
     func(debouncedValue);
-    console.log('windowWidth', debouncedValue);
   }, [debouncedValue, func]);
 };
 export default useWindowEvent;
