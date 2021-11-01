@@ -1,10 +1,11 @@
 import React from 'react';
 
-import HomeImg from '../../../assets/img/start.svg';
+import StackJson from '../../../assets/json-anim/home-stack.json';
+
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import Whitepaper from '../../../assets/pdf/YD_WP.pdf';
-import { Button } from '../../index';
+import { Button, JsonAnimation } from '../../index';
 import SocialLink from '../../SocialLink';
 import config from '../../../config';
 
@@ -18,7 +19,7 @@ const Main: React.FC = () => {
         <span className="home__title text-gradient">DEFI</span>
         <span className="home__title text-outline">MADE SIMPLE</span>
       </div>
-      <img src={HomeImg} alt="" className="home__img" />
+      <JsonAnimation animData={StackJson} className="home__img" width="400px" />
 
       <p className="home__descr">
         A cross-chain platform that delivers multiple sources of income. Carefully crafted by

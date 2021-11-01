@@ -29,9 +29,15 @@ const Routes: React.FC = observer(() => {
       <Route exact path="/">
         <Home />
       </Route>
-      <Route exact path="/index/:indexId">
+      {/* <Route exact path="/index/:indexId">
         <Index />
-      </Route>
+      </Route> */}
+      <GuardedRoute
+        component={Index}
+        exact
+        path="/index/:indexId"
+        auth={networks.currentNetwork === 'bnb'}
+      />
       <Route exact path="/ydrtoken">
         <YdrToken />
       </Route>

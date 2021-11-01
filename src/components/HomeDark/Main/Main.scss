@@ -44,7 +44,8 @@
 
   &__img {
     position: absolute;
-    top: -43px;
+    width: 400px;
+    top: -33px;
     right: 0;
     @include b('tablet') {
       position: unset;
