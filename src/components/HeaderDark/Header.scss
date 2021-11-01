@@ -8,7 +8,7 @@
     background-size: cover;
   }
 
-  .collapse {
+  .header__wrapper {
     background: $dark-bg;
     box-shadow: $shadow-dark;
   }
@@ -24,19 +24,19 @@
       }
     }
 
-    .container {
-      .menu-nav {
-        &__link,
-        &__item {
-          color: #f7f8fd;
-
-          &:hover,
-          &:active {
-            color: #f7f8fd;
-          }
-        }
-      }
-    }
+    //.container {
+    //  .menu-nav {
+    //    &__link,
+    //    &__item {
+    //      color: #f7f8fd;
+    //
+    //      &:hover,
+    //      &:active {
+    //        color: #f7f8fd;
+    //      }
+    //    }
+    //  }
+    //}
   }
 }
 
@@ -46,7 +46,7 @@
     background-size: cover;
   }
 
-  .collapse {
+  .header__wrapper {
     background: $white;
 
     box-shadow: $shadow;
@@ -68,25 +68,20 @@
       }
     }
 
-    .container {
-      .menu-nav {
-        &__link,
-        &__item {
-          color: $black;
-
-          &:hover,
-          &:active {
-            color: $black;
-          }
-        }
-      }
-    }
+    //.container {
+    //  .menu-nav {
+    //    &__link,
+    //    &__item {
+    //      color: $black;
+    //
+    //      &:hover,
+    //      &:active {
+    //        color: $black;
+    //      }
+    //    }
+    //  }
+    //}
   }
-}
-
-.fixed {
-  position: fixed !important;
-  z-index: 100;
 }
 
 .expand {
@@ -137,7 +132,11 @@
 
   width: 100%;
 }
+
 .header.expand {
+  display: flex;
+  flex-direction: column;
+
   .header__inner {
     @include b(extramobile) {
       display: block;
@@ -165,8 +164,8 @@
     position: relative;
 
     padding: 20px 0;
-
     display: flex;
+    flex-grow: 0;
     justify-content: space-between;
     align-items: center;
     @media (max-width: 1240px) {
@@ -210,6 +209,7 @@
   &__nav {
     display: flex;
     justify-content: center;
+    height: fit-content;
   }
 
   &__sign {
@@ -361,7 +361,7 @@
 
 .menu {
   margin: 0 auto;
-
+  flex-grow: 1;
   width: 100%;
 
   &__nav {
@@ -407,9 +407,11 @@
     font-size: 18px;
     color: #fff;
     position: relative;
+
     &--arrow {
       display: flex;
       align-items: center;
+
       &::after {
         content: '';
         width: 15px;
@@ -423,6 +425,7 @@
   &__links {
     max-height: 0;
     transition: max-height 0.5s cubic-bezier(0, 1, 0, 1);
+
     &--active {
       max-height: 1000px;
       transition: max-height 1s ease-in-out;
@@ -433,6 +436,7 @@
     display: block;
     font-size: 16px;
     color: #5e697f;
+
     & + & {
       margin-top: 6px;
     }
@@ -449,14 +453,17 @@
   @include b(extramobile) {
     justify-content: space-between;
   }
+
   .select-network {
     .ant-select-selector {
       height: 42px !important;
     }
   }
+
   button {
     width: fit-content;
   }
+
   .switch {
     @include b(extramobile) {
       position: absolute;
@@ -472,8 +479,8 @@
 }
 
 .menu_subitle {
-  font-size: 16;
+  font-size: 16px;
   text-align: center;
-  margin-top: 20px;
+  margin: 20px 0 30px;
   color: #5e697f;
 }
