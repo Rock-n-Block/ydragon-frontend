@@ -8,7 +8,7 @@ import useDebounce from './useDebounce';
  * @param func - Function that should apply after window event
  * @param delay
  */
-const useWindowEvent = <T>(
+const useWindowDebouncedEvent = <T>(
   listeningEvent: string,
   observedState: T,
   func: (arg: T) => void,
@@ -29,4 +29,4 @@ const useWindowEvent = <T>(
     func(debouncedValue);
   }, [debouncedValue, func]);
 };
-export default useWindowEvent;
+export default useWindowDebouncedEvent;

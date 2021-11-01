@@ -23,11 +23,10 @@ import config from '../../config/index';
 
 import './Header.scss';
 import nextId from 'react-id-generator';
-import useWindowEvent from '../../hooks/useWindowEvent';
+import useWindowDebouncedEvent from '../../hooks/useWindowDebouncedEvent';
 
 const Header: React.FC = observer(() => {
   const { SOCIAL_LINKS } = config;
-  // const [fixed, setFixed] = useState(true);
   const [isCollapsed, setIsCollapsed] = useState(true);
   const { theme, user, networks } = useMst();
   const walletConnector = useWalletConnectorContext();
@@ -39,7 +38,7 @@ const Header: React.FC = observer(() => {
     }
   };
 
-  useWindowEvent('resize', window.innerWidth, handleResize, 500);
+  useWindowDebouncedEvent('resize', window.innerWidth, handleResize, 500);
 
   const handleChangeTheme = () => {
     if (LIGHT === localStorage.theme) {

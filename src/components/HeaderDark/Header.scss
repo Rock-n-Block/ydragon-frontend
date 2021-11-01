@@ -123,7 +123,7 @@
 }
 
 .header__wrapper {
-  position: fixed;
+  position: sticky;
   z-index: 999;
   top: 0;
 
@@ -209,6 +209,7 @@
   &__nav {
     display: flex;
     justify-content: center;
+    height: fit-content;
   }
 
   &__sign {
