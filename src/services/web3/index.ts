@@ -388,23 +388,19 @@ export default class MetamaskService {
     });
   }
 
-  async approve(toContractAddress: string, address: string) {
-    try {
-      const approveMethod = MetamaskService.getMethodInterface(configABI.MAIN.ABI, 'approve');
+  approve(toContractAddress: string, address: string) {
+    const approveMethod = MetamaskService.getMethodInterface(configABI.MAIN.ABI, 'approve');
 
-      const approveSignature = this.encodeFunctionCall(approveMethod, [
-        address,
-        '0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff',
-      ]);
+    const approveSignature = this.encodeFunctionCall(approveMethod, [
+      address,
+      '0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff',
+    ]);
 
-      return this.sendTransaction({
-        from: this.walletAddress,
-        to: toContractAddress,
-        data: approveSignature,
-      });
-    } catch (error) {
-      return error;
-    }
+    return this.sendTransaction({
+      from: this.walletAddress,
+      to: toContractAddress,
+      data: approveSignature,
+    });
   }
 
   enterIme(
