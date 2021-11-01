@@ -70,10 +70,7 @@
   &__value {
     display: block;
     font-size: 18px;
-    max-width: 100%;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    @include text-elipsis();
   }
 
   &__info {

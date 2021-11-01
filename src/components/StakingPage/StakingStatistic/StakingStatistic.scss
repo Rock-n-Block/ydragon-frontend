@@ -60,9 +60,7 @@
       font-size: 28px;
       margin-bottom: 74px;
 
-      max-width: 100%;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      @include text-elipsis();
     }
 
     &_subtitle {

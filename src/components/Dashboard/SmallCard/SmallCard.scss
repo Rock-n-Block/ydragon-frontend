@@ -96,6 +96,7 @@
 
     &--name {
       font-size: 14px;
+      @include text-elipsis();
     }
   }
 

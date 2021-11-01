@@ -306,10 +306,7 @@
     line-height: 17px;
     text-transform: uppercase;
 
-    max-width: 120px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    @include text-elipsis(120px);
   }
 
   &__composition {

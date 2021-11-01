@@ -30,12 +30,8 @@
       -webkit-text-fill-color: $white;
     }
   }
-  &-ellipsis{
-
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    width: 100%;
+  &-ellipsis {
+    @include text-elipsis();
   }
   &-MER {
     font-family: 'Monument Extended', sans-serif;

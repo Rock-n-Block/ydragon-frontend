@@ -25,10 +25,7 @@
     font-weight: 700;
     line-height: 21px;
 
-    max-width: 70px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    @include text-elipsis(70px);
   }
 
   &__symbol {

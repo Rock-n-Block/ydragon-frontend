@@ -416,10 +416,7 @@ main {
 }
 
 .ant-table-cell span {
-  max-width: 400px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  @include text-elipsis(400px);
   display: block;
 }
 
