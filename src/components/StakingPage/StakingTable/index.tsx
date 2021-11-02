@@ -34,6 +34,7 @@ const StakingTable: React.FC = observer(() => {
           <div className="staking-table_header__cell">Deposited</div>
           <div className="staking-table_header__cell">Your Rewards</div>
           <div className="staking-table_header__cell">TVL</div>
+          <div className="staking-table_header__cell">APR</div>
           <div className="staking-table_header__cell" />
           <div className="staking-table_header__cell" />
         </div>
