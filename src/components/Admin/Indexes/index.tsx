@@ -7,7 +7,7 @@ import { IIndex } from '../../../pages/Admin';
 import { indexesApi } from '../../../services/api';
 import { useMst } from '../../../store/store';
 import { Sorter } from '../../../utils/sorter';
-import { Button, Spinner, Table } from '../../index';
+import { Button, Loader, Table } from '../../index';
 
 import { IndexCardMobile } from './IndexCardMobile/index';
 
@@ -195,7 +195,7 @@ const Indexes: React.FC = observer(() => {
           create new index
         </Button>
       </div>
-      <Spinner loading={loading} />
+      <Loader loading={loading} />
       {indexes && (
         <>
           <div className="indexs__table-big">
