@@ -4,7 +4,7 @@ import { observer } from 'mobx-react-lite';
 
 import { indexesApi } from '../../../services/api';
 import { useMst } from '../../../store/store';
-import { Spinner } from '../../index';
+import { Loader } from '../../index';
 import { IndexpadItem } from '../index';
 
 import './Indexpad.scss';
@@ -71,7 +71,7 @@ const Indexpad: React.FC = observer(() => {
     <section className="section">
       <h2 className="section__title text-outline">INDEXPAD</h2>
       <p className="section__sub-title">Index minting offering for upcoming indexes</p>
-      <Spinner loading={loading} />
+      <Loader loading={loading} />
       {imeList.length
         ? imeList.map((imeItem) => <IndexpadItem key={nextId()} imeItem={imeItem} />)
         : !loading && (

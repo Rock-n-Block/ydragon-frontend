@@ -112,7 +112,7 @@ const StakingTableRow: React.FC<IStakingTableRowProps> = observer(({ index }) =>
     return <Redirect to="/" />;
   }
 
-  if (!networks.currentNetwork) return <Loader />;
+  if (!networks.currentNetwork) return <Loader loading />;
 
   // TODO: create skeleton
   if (!symbol || !name || !totalStaked)

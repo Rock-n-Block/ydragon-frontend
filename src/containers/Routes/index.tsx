@@ -24,7 +24,7 @@ const Routes: React.FC = observer(() => {
   const user = !!localStorage.getItem('yd_address') || false;
   const admin = !!localStorage.getItem('yd_token') || false;
   return (
-    <Suspense fallback={<Loader />}>
+    <Suspense fallback={<Loader loading />}>
       <Switch>
         <Route exact path="/">
           <Home />
