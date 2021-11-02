@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Modal as ModalAntd } from 'antd';
 import classNames from 'classnames';
 import { observer } from 'mobx-react-lite';
@@ -6,6 +6,7 @@ import { observer } from 'mobx-react-lite';
 import { ReactComponent as CloseRed } from '../../../assets/img/icons/icon-close-red.svg';
 import { ReactComponent as CloseImg } from '../../../assets/img/icons/icon-close.svg';
 import { useMst } from '../../../store/store';
+import useWindowDebouncedEvent from '../../../hooks/useWindowDebouncedEvent';
 
 interface IModal {
   isVisible: boolean;
@@ -29,18 +30,10 @@ const Modal: React.FC<IModal> = observer(
     const { theme } = useMst();
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
-    const getWindowWidth = () => {
-      const { innerWidth } = window;
-      return innerWidth;
+    const handleResize = (screenWidth: number) => {
+      setWindowWidth(screenWidth);
     };
-    useEffect(() => {
-      function handleResize() {
-        setWindowWidth(getWindowWidth());
-      }
-
-      window.addEventListener('resize', handleResize);
-      return () => window.removeEventListener('resize', handleResize);
-    }, []);
+    useWindowDebouncedEvent('resize', window.innerWidth, handleResize, 500);
     return (
       <ModalAntd
         title={false}

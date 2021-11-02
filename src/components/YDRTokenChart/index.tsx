@@ -7,6 +7,7 @@ import { coingeckoApi } from '../../services/api';
 import PriceDifferenceBag from '../PriceDifferenceBag';
 
 import './YDRTokenChart.scss';
+import useWindowDebouncedEvent from '../../hooks/useWindowDebouncedEvent';
 
 interface TokenChartProps {
   price: (value: number) => void;
@@ -91,11 +92,6 @@ const YDRTokenChart: React.FC<TokenChartProps & React.HTMLAttributes<HTMLDivElem
         hitRadius: 400,
       },
     },
-  };
-
-  const getWindowWidth = () => {
-    const { innerWidth: width } = window;
-    return width;
   };
 
   const toggleHandler = (btnName: string) => {
@@ -197,14 +193,10 @@ const YDRTokenChart: React.FC<TokenChartProps & React.HTMLAttributes<HTMLDivElem
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [days]);
 
-  useEffect(() => {
-    function handleResize() {
-      setWindowWidth(getWindowWidth());
-    }
-
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
+  const handleResize = (screenWidth: number) => {
+    setWindowWidth(screenWidth);
+  };
+  useWindowDebouncedEvent('resize', window.innerWidth, handleResize, 500);
 
   useEffect(() => {
     axiosData();

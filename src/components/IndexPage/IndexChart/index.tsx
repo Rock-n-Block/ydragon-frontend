@@ -9,12 +9,14 @@ import PriceDifferenceBag from '../../PriceDifferenceBag';
 import { IHistoricalToken } from '../IndexTable';
 
 import './IndexChart.scss';
+import useWindowDebouncedEvent from '../../../hooks/useWindowDebouncedEvent';
 
 interface IndexChartProps {
   onClick: (value: IFetchedData) => void;
   indexId: any;
   diff: number;
 }
+
 export interface IFetchedData {
   diff: string;
   index: number;
@@ -115,10 +117,10 @@ const IndexChart: React.FC<IndexChartProps> = React.memo(({ onClick, indexId, di
     },
   };
 
-  const getWindowWidth = () => {
-    const { innerWidth: width } = window;
-    return width;
-  };
+  // const getWindowWidth = () => {
+  //   const { innerWidth: width } = window;
+  //   return width;
+  // };
 
   const toggleHandler = (btnName: string) => {
     setActiveBtn(btnName);
@@ -224,14 +226,10 @@ const IndexChart: React.FC<IndexChartProps> = React.memo(({ onClick, indexId, di
       });
   }, [indexId, days, getChartData]);
 
-  useEffect(() => {
-    function handleResize() {
-      setWindowWidth(getWindowWidth());
-    }
-
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
+  const handleResize = (width: number) => {
+    setWindowWidth(width);
+  };
+  useWindowDebouncedEvent('resize', window.innerWidth, handleResize, 500);
 
   useEffect(() => {
     axiosData();
