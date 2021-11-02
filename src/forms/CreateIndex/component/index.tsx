@@ -277,8 +277,8 @@ const CreateIndex: React.FC<FormikProps<ICreateIndex> & ICreateIndex> = observer
                     <div className="token-weights-items__head-col">Weight%</div>
                   </div>
                   {values.tokens?.map((tokenDiff, index) => (
-                    <>
-                      <div className="token-weights-item" key={`token ${tokenDiff.token.name}`}>
+                    <React.Fragment key={`token_${tokenDiff.token.name}`}>
+                      <div className="token-weights-item">
                         <div className="token-weights-item__info">
                           <TokenMini
                             icon={tokenDiff.token.image}
@@ -310,7 +310,7 @@ const CreateIndex: React.FC<FormikProps<ICreateIndex> & ICreateIndex> = observer
                           Remove
                         </Button>
                       </div>
-                    </>
+                    </React.Fragment>
                   ))}
                   <div className="token-weights__total">
                     <h3 className="token-weights__total-name">Total weight</h3>

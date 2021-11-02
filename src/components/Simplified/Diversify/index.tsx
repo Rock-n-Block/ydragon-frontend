@@ -15,6 +15,7 @@ const Diversify: React.FC = () => {
       <div className="diversify__container">
         {diversifysData.map((data: IWheats) => (
           <Wheat
+            key={`wheat_${data.name}`}
             name={data.name}
             emoji={data.emoji}
             description={data.description}

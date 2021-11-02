@@ -96,7 +96,7 @@ const SelectNetwork: React.FC = observer(() => {
       dropdownClassName={cn(theme.value, 'select-network__dropdown')}
     >
       {Object.keys(FULL_CHAIN_INFO[isProduction]).map((network) => (
-        <Option value={network as TChain}>
+        <Option value={network as TChain} key={`option_${network}`}>
           <TokenMini
             name={FULL_CHAIN_INFO[isProduction][network as TChain].shortName}
             icon={FULL_CHAIN_INFO[isProduction][network as TChain].nativeCurrency.image(

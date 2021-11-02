@@ -39,7 +39,10 @@ const StakingTable: React.FC = observer(() => {
         </div>
         <div className="staking-table_body">
           {+stakesCount
-            ? new Array(+stakesCount).fill(1).map((el, i) => <StakingTableRow index={i} />)
+            ? new Array(+stakesCount)
+                .fill(1)
+                // eslint-disable-next-line react/no-array-index-key
+                .map((el, i) => <StakingTableRow key={`staking-table_row_${i}`} index={i} />)
             : ''}
         </div>
       </div>
