@@ -13,10 +13,9 @@ import { toast } from 'react-toastify';
 
 interface OptionsProps {
   address: string;
-  onManualInputChange: (value: string) => void;
 }
 
-const Options: React.FC<OptionsProps> = observer(({ address, onManualInputChange }) => {
+const Options: React.FC<OptionsProps> = observer(({ address }) => {
   const [isAutoRebalanceChecked, setIsAutoRebalanceChecked] = useState<boolean | undefined>(
     undefined,
   );
@@ -71,7 +70,6 @@ const Options: React.FC<OptionsProps> = observer(({ address, onManualInputChange
         setIsError(false);
       }
     }
-    onManualInputChange(value);
   };
   const handleBlur = () => {
     if (+inputValue <= 5) {
