@@ -502,6 +502,46 @@ export default class MetamaskService {
     });
   }
 
+  /**
+   *A function for withdrawing a number of tokens from yVault to your address.
+   *tokenAmounts corresponds to the tokensInAsset array. The function can be called by the administrator only.
+   * @param tokenAmounts - in WEI
+   * @param indexAddress - address from withdraw
+   */
+  withdrawTokensForStaking(tokenAmounts: string[], indexAddress: string) {
+    const method = MetamaskService.getMethodInterface(
+      configABI.Index.ABI,
+      'withdrawTokensForStaking',
+    );
+
+    const signature = this.encodeFunctionCall(method, [tokenAmounts]);
+
+    return this.sendTransaction({
+      from: this.walletAddress,
+      to: indexAddress,
+      data: signature,
+    });
+  }
+
+  /**
+   * A function for sending tokens back to the index and for sending dividends to a staking contract.
+   * @param tokenAmounts - all token amounts in WEI, except NativeCurrency(eth,bnb)
+   * @param indexAddress - address to deposit
+   * @param value - NativeCurrency(eth,bnb) amount in WEI
+   */
+  depositToIndex(tokenAmounts: string[], indexAddress: string, value?: string) {
+    const method = MetamaskService.getMethodInterface(configABI.Index.ABI, 'depositToIndex');
+
+    const signature = this.encodeFunctionCall(method, [tokenAmounts]);
+
+    return this.sendTransaction({
+      from: this.walletAddress,
+      to: indexAddress,
+      data: signature,
+      ...(!!value && { value }),
+    });
+  }
+
   // UNSTAKE COINS
   withdraw(tokenAdress: string, amount: string) {
     const method = MetamaskService.getMethodInterface(configABI.StakingFactory.ABI, 'withdraw');
