@@ -25,11 +25,7 @@ const SelectNetwork: React.FC = observer(() => {
     networksApi
       .getNetworks()
       .then(({ data }) => {
-        // ПОКА БЭК НЕ ОБНОВИЛ КОНТРАКТЫ
-        networks.setNetworks([
-          data[0],
-          { ...data[1], staking_address: '0xf5B6C72645e5f84Ce19FfB919F5a6014b1813fb2' },
-        ]);
+        networks.setNetworks(data);
       })
       .catch((err) => {
         const { response } = err;
