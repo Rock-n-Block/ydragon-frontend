@@ -19,9 +19,10 @@ import logoExample1 from '../../../../assets/img/staking-page/logo-example-1.svg
 
 interface IStakingTableRowProps {
   index: number;
+  ydrPrice: string;
 }
 
-const StakingTableRow: React.FC<IStakingTableRowProps> = observer(({ index }) => {
+const StakingTableRow: React.FC<IStakingTableRowProps> = observer(({ index, ydrPrice }) => {
   const [isOpened, setIsOpened] = useState(false);
   const { user, networks } = useMst();
 
@@ -43,6 +44,7 @@ const StakingTableRow: React.FC<IStakingTableRowProps> = observer(({ index }) =>
     user.address,
     networks.getCurrNetwork()?.staking_address || '',
     networks.currentNetwork,
+    ydrPrice,
   );
 
   // inputs
@@ -110,7 +112,6 @@ const StakingTableRow: React.FC<IStakingTableRowProps> = observer(({ index }) =>
 
   if (!networks.currentNetwork) return <Loader loading />;
 
-  // TODO: create skeleton
   if (!symbol || !name || !totalStaked)
     return <div className="staking-table_row staking-table_row--skelet" />;
 
@@ -129,13 +130,7 @@ const StakingTableRow: React.FC<IStakingTableRowProps> = observer(({ index }) =>
           </div>
         </div>
 
-        <StakingTableRowCell
-          title="balance"
-          value={balance}
-          textType="MER"
-          symbol="$"
-          usdPrice={tokenInfoFromBack.priceInUsd}
-        />
+        <StakingTableRowCell title="wallet" value={balance} textType="MER" symbol={symbol} />
         <StakingTableRowCell title="deposited" value={deposited} textType="MER" symbol={symbol} />
         <StakingTableRowCell
           title="your rewards"
@@ -162,7 +157,7 @@ const StakingTableRow: React.FC<IStakingTableRowProps> = observer(({ index }) =>
             target={tokenInfoFromBack.link[0] !== '/' ? '_blank' : ''}
             className="staking-table_row__cell--button"
           >
-            Get in
+            <span>Get {symbol}</span>
           </Button>
         </div>
         <div

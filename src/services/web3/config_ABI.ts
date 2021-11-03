@@ -1541,6 +1541,13 @@ export default {
         type: 'function',
       },
       {
+        inputs: [],
+        name: 'stakedTokenSupply',
+        outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
         inputs: [{ internalType: 'address', name: '', type: 'address' }],
         name: 'userInfo',
         outputs: [

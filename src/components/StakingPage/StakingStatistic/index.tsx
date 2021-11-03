@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import BigNumber from 'bignumber.js/bignumber';
 
-import { rates, coingeckoApi } from '../../../services/api';
+import { ratesApi } from '../../../services/api';
 import { numberFormatter } from '../../../utils/numberFormatter';
 
 import './StakingStatistic.scss';
@@ -21,13 +21,15 @@ interface ITVLData {
   'ydr_total_supply': number;
 }
 
-const StakingStatistic: React.FC = () => {
+interface IYdrPrice {
+  ydrPrice: string;
+}
+
+const StakingStatistic: React.FC<IYdrPrice> = ({ ydrPrice }) => {
   const [tvlData, setTvlData] = useState<ITVLData>({} as ITVLData);
-  const [ydrPrice, setYdrPrice] = useState('1');
 
   useEffect(() => {
-    coingeckoApi.getYdrCurrentPrice().then((data) => setYdrPrice(data.data.ydragon.usd));
-    rates.getTvl().then((data) => setTvlData(data.data));
+    ratesApi.getTvl().then((data) => setTvlData(data.data));
   }, []);
 
   return (
@@ -48,7 +50,7 @@ const StakingStatistic: React.FC = () => {
             {new BigNumber(tvlData.ydr_tvl || 0)
               .dividedBy(tvlData.ydr_total_supply || 1)
               .multipliedBy(100)
-              .toFormat(5)}
+              .toFormat(2)}
             %
           </div>
         </li>

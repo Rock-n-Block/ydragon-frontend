@@ -19,10 +19,8 @@ const IndexDashboard = React.lazy(() => import('../../pages/IndexDashboard/index
 const NoPageFound = React.lazy(() => import('../../pages/NoPageFound/index'));
 
 const Routes: React.FC = observer(() => {
-  const { networks } = useMst();
+  const { networks, user } = useMst();
 
-  const user = !!localStorage.getItem('yd_address') || false;
-  const admin = !!localStorage.getItem('yd_token') || false;
   return (
     <Suspense fallback={<Loader loading />}>
       <Switch>
@@ -38,32 +36,17 @@ const Routes: React.FC = observer(() => {
         <Route exact path="/ydrtoken">
           <YdrToken />
         </Route>
-        <GuardedRoute
-          exact
-          path="/admin"
-          component={Admin}
-          auth={admin && networks.currentNetwork === 'bnb'}
-        />
-        <GuardedRoute
-          exact
-          path="/admin"
-          component={Indexes}
-          auth={admin && networks.currentNetwork === 'bnb'}
-        />
+        <GuardedRoute exact path="/admin" component={Admin} auth={user.isAdmin()} />
+        <GuardedRoute exact path="/admin" component={Indexes} auth={user.isAdmin()} />
         <GuardedRoute
           exact
           path="/admin/index/:indexId"
           component={AdminIndex}
-          auth={admin && networks.currentNetwork === 'bnb'}
+          auth={user.isAdmin()}
         />
-        <GuardedRoute exact path="/staking" component={StakingPage} auth={user} />
+        <GuardedRoute exact path="/staking" component={StakingPage} auth={!!user.address} />
 
-        <GuardedRoute
-          exact
-          path="/indexes"
-          auth={networks.currentNetwork === 'bnb'}
-          component={IndexDashboard}
-        />
+        <Route exact path="/indexes" component={IndexDashboard} />
         <Route exact path="/about-us">
           <AboutUs />
         </Route>
