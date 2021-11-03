@@ -14,7 +14,7 @@ interface IDropDownItem {
 const DropDownItem: React.FC<IDropDownItem> = observer(({ title, link, handleClose, auth }) => {
   const { user, networks } = useMst();
 
-  if (auth?.includes('login') && !user.address) {
+  if (auth?.includes('login') && !user.isUser) {
     return (
       <div className="dropdown-body_item dropdown-body_item--not-allowed">
         <span>{title}</span>

@@ -47,47 +47,46 @@ const HeaderMobLink: React.FC<IHeaderMobileItemLink> = observer(
   },
 );
 
-const HeaderMobileItem: React.FC<IHeaderMobileItemProps> = ({
-  title,
-  links,
-  onCollapsedChange,
-  titleLink,
-  auth,
-}) => {
-  const [isOpened, setIsOpened] = useState(true);
+const HeaderMobileItem: React.FC<IHeaderMobileItemProps> = observer(
+  ({ title, links, onCollapsedChange, titleLink, auth }) => {
+    const [isOpened, setIsOpened] = useState(true);
+    const { user } = useMst();
 
-  if (auth === 'admin' && !localStorage.getItem('yd_token')) return <></>;
-  return (
-    <li className="menu-nav__item">
-      {titleLink ? (
-        <NavHashLink
-          to={titleLink}
-          onClick={() => onCollapsedChange && onCollapsedChange(true)}
-          className="menu-nav__item__title"
-        >
-          {title}
-        </NavHashLink>
-      ) : (
-        <div
-          tabIndex={0}
-          role="button"
-          onKeyDown={() => {}}
-          onClick={() => setIsOpened((prev) => !prev)}
-          className="menu-nav__item__title menu-nav__item__title--arrow"
-        >
-          {title}
-        </div>
-      )}
+    if (auth === 'admin' && !user.isAdmin) return <></>;
+    return (
+      <li className="menu-nav__item">
+        {titleLink ? (
+          <NavHashLink
+            to={titleLink}
+            onClick={() => onCollapsedChange && onCollapsedChange(true)}
+            className="menu-nav__item__title"
+          >
+            {title}
+          </NavHashLink>
+        ) : (
+          <div
+            tabIndex={0}
+            role="button"
+            onKeyDown={() => {}}
+            onClick={() => setIsOpened((prev) => !prev)}
+            className="menu-nav__item__title menu-nav__item__title--arrow"
+          >
+            {title}
+          </div>
+        )}
 
-      {links && (
-        <div className={cn('menu-nav__item__links', { 'menu-nav__item__links--active': isOpened })}>
-          {links.map((link) => (
-            <HeaderMobLink key={link.link} {...link} onCollapsedChange={onCollapsedChange} />
-          ))}
-        </div>
-      )}
-    </li>
-  );
-};
+        {links && (
+          <div
+            className={cn('menu-nav__item__links', { 'menu-nav__item__links--active': isOpened })}
+          >
+            {links.map((link) => (
+              <HeaderMobLink key={link.link} {...link} onCollapsedChange={onCollapsedChange} />
+            ))}
+          </div>
+        )}
+      </li>
+    );
+  },
+);
 
 export default HeaderMobileItem;
