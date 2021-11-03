@@ -19,7 +19,7 @@ const IndexDashboard = React.lazy(() => import('../../pages/IndexDashboard/index
 const NoPageFound = React.lazy(() => import('../../pages/NoPageFound/index'));
 
 const Routes: React.FC = observer(() => {
-  const { networks, user } = useMst();
+  const { user } = useMst();
 
   return (
     <Suspense fallback={<Loader loading />}>
@@ -27,12 +27,7 @@ const Routes: React.FC = observer(() => {
         <Route exact path="/">
           <Home />
         </Route>
-        <GuardedRoute
-          component={Index}
-          exact
-          path="/index/:indexId"
-          auth={networks.currentNetwork === 'bnb'}
-        />
+        <Route component={Index} exact path="/index/:indexId" />
         <Route exact path="/ydrtoken">
           <YdrToken />
         </Route>
