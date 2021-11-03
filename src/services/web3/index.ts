@@ -547,7 +547,7 @@ export default class MetamaskService {
       from: this.walletAddress,
       to: indexAddress,
       data: signature,
-      ...(!!value && { value }),
+      value: value || 0,
     });
   }
 
