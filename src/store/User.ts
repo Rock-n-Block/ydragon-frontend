@@ -15,6 +15,12 @@ export const User = types
     const update = (userData: any) => {
       applySnapshot(self, userData);
     };
+    const isUser = () => {
+      return !!self.address;
+    };
+    const isAdmin = () => {
+      return !!self.token;
+    };
     const disconnect = () => {
       self.address = '';
       localStorage.setItem('yd_token', '');
@@ -26,5 +32,7 @@ export const User = types
       setToken,
       update,
       disconnect,
+      isUser,
+      isAdmin,
     };
   });

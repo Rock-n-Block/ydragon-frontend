@@ -47,7 +47,8 @@ const StakingTable: React.FC<IStakingTableProps> = observer(({ ydrPrice }) => {
           {+stakesCount ? (
             new Array(+stakesCount)
               .fill(1)
-              .map((el, i) => <StakingTableRow index={i} ydrPrice={ydrPrice} />)
+              // eslint-disable-next-line
+              .map((el, i) => <StakingTableRow key={i} index={i} ydrPrice={ydrPrice} />)
           ) : (
             <Loader loading />
           )}

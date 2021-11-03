@@ -21,7 +21,6 @@ const NoPageFound = React.lazy(() => import('../../pages/NoPageFound/index'));
 const Routes: React.FC = observer(() => {
   const { networks, user } = useMst();
 
-  const admin = !!localStorage.getItem('yd_token') || false;
   return (
     <Suspense fallback={<Loader loading />}>
       <Switch>
@@ -37,9 +36,14 @@ const Routes: React.FC = observer(() => {
         <Route exact path="/ydrtoken">
           <YdrToken />
         </Route>
-        <GuardedRoute exact path="/admin" component={Admin} auth={admin} />
-        <GuardedRoute exact path="/admin" component={Indexes} auth={admin} />
-        <GuardedRoute exact path="/admin/index/:indexId" component={AdminIndex} auth={admin} />
+        <GuardedRoute exact path="/admin" component={Admin} auth={user.isAdmin()} />
+        <GuardedRoute exact path="/admin" component={Indexes} auth={user.isAdmin()} />
+        <GuardedRoute
+          exact
+          path="/admin/index/:indexId"
+          component={AdminIndex}
+          auth={user.isAdmin()}
+        />
         <GuardedRoute exact path="/staking" component={StakingPage} auth={!!user.address} />
 
         <Route exact path="/indexes" component={IndexDashboard} />

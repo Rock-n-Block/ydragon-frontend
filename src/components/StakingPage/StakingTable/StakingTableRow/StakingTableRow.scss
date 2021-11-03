@@ -189,6 +189,10 @@
   display: flex;
   align-items: center;
 
+  .btn-link {
+    width: calc(min(100%, 200px));
+  }
+
   &:first-child {
     justify-content: flex-start;
   }

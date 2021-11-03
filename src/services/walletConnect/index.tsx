@@ -74,10 +74,13 @@ class Connector extends React.Component<any, any> {
           localStorage.setItem('yd_token', login.data.key);
           localStorage.setItem('yd_address', address);
           rootStore.user.setAddress(address);
+          rootStore.user.setToken(login.data.key);
           localStorage.setItem('yd_metamask', 'true');
           // rootStore.user.update({ address });
         } else {
           rootStore.user.setAddress(address);
+          const yd_token = localStorage.getItem('yd_token') || '';
+          rootStore.user.setToken(yd_token);
           localStorage.setItem('yd_metamask', 'true');
           // rootStore.user.update({ address });
         }
