@@ -19,9 +19,10 @@ import logoExample1 from '../../../../assets/img/staking-page/logo-example-1.svg
 
 interface IStakingTableRowProps {
   index: number;
+  ydrPrice: string;
 }
 
-const StakingTableRow: React.FC<IStakingTableRowProps> = observer(({ index }) => {
+const StakingTableRow: React.FC<IStakingTableRowProps> = observer(({ index, ydrPrice }) => {
   const [isOpened, setIsOpened] = useState(false);
   const { user, networks } = useMst();
 
@@ -43,6 +44,7 @@ const StakingTableRow: React.FC<IStakingTableRowProps> = observer(({ index }) =>
     user.address,
     networks.getCurrNetwork()?.staking_address || '',
     networks.currentNetwork,
+    ydrPrice,
   );
 
   // inputs
@@ -110,7 +112,6 @@ const StakingTableRow: React.FC<IStakingTableRowProps> = observer(({ index }) =>
 
   if (!networks.currentNetwork) return <Loader />;
 
-  // TODO: create skeleton
   if (!symbol || !name || !totalStaked)
     return <div className="staking-table_row staking-table_row--skelet" />;
 

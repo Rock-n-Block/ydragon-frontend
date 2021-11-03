@@ -466,6 +466,10 @@ export default class MetamaskService {
     return this.getStakingFactoryContract().methods.getStakedCount().call();
   }
 
+  getRewardPerBlock(stakedTokenAddress: string) {
+    return this.getStakingFactoryContract().methods.rewardPerBlock(stakedTokenAddress).call();
+  }
+
   getStakeContractByIndex(index: number) {
     return this.getStakingFactoryContract().methods.stakes(index).call();
   }
@@ -553,22 +557,6 @@ export default class MetamaskService {
     const tokenSymbol = await this.getTokenSymbol(address);
     const tokenBalance = await this.getBalanceOf(address);
     return { address, name: tokenName, symbol: tokenSymbol, balance: tokenBalance };
-  }
-
-  startStake(tokenAddress: string, amount: string, timeIntervalIndex: number) {
-    const method = MetamaskService.getMethodInterface(configABI.StakingFactory.ABI, 'stakeStart');
-
-    const signature = this.encodeFunctionCall(method, [
-      tokenAddress,
-      MetamaskService.calcTransactionAmount(amount, 18),
-      timeIntervalIndex,
-    ]);
-
-    return this.sendTransaction({
-      from: this.walletAddress,
-      to: rootStore.networks.getCurrNetwork()?.staking_address,
-      data: signature,
-    });
   }
 
   createNewIndex(

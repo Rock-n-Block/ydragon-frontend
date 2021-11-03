@@ -1,10 +1,10 @@
-import config, { TChain } from '../config/index';
+import config, { TChain, BLOCKS_PER_YEAR } from '../config/index';
 import { useState, useCallback, useEffect } from 'react';
 import BigNumber from 'bignumber.js/bignumber';
 
 import { useWalletConnectorContext } from '../services/walletConnect';
 import { fromWeiToNormal } from '../utils/fromWeiToNormal';
-import { indexesApi, coingeckoApi } from '../services/api';
+import { indexesApi } from '../services/api';
 import txToast from '../components/ToastWithTxHash';
 
 import configABI from '../services/web3/config_ABI';
@@ -16,6 +16,7 @@ export const useStaking = (
   userAddress: string,
   stakingAddress: string,
   currentNetwork: string,
+  ydrPrice: string,
 ) => {
   const walletConnect = useWalletConnectorContext();
 
@@ -69,7 +70,7 @@ export const useStaking = (
       indexSymbol = `${firstSymbol} / ${secondSymbol} LP`;
       setIsLp(true);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
 
     return { indexSymbol: indexSymbol.toUpperCase(), indexName };
@@ -86,10 +87,9 @@ export const useStaking = (
     async (indexID: string, isYdr?: boolean, isLp?: boolean) => {
       try {
         if (isYdr) {
-          const response = await coingeckoApi.getYdrCurrentPrice();
           return {
             link: '/ydrtoken',
-            priceInUsd: response.data.ydragon.usd,
+            priceInUsd: ydrPrice,
           };
         }
 
@@ -115,7 +115,7 @@ export const useStaking = (
         };
       }
     },
-    [currentNetwork, lpTokenFirst, lpTokenSecond],
+    [currentNetwork, lpTokenFirst, lpTokenSecond, ydrPrice],
   );
 
   // STAKE TOKENS
@@ -166,22 +166,20 @@ export const useStaking = (
     }
   }, [walletConnect.metamaskService, stakedTokenAdr, stakeAddress]);
 
-  // TODO: FIX HARDCODE FOR BLOCKS PER YEAR
   const getAprForStake = useCallback(
-    async (stakeAddressId: string) => {
-      const stakingTokenPrice = '1';
-      const rewardTokenPrice = '0.14';
+    async (stakeAddressId: string, stakingTokenPrice: string) => {
+      const rewardTokenPrice = ydrPrice;
 
       const totalStakedInPool = await walletConnect.metamaskService.getTotalStaked(
         stakedTokenAdr,
         stakeAddressId,
       );
 
-      const tokenPerBlock = '0.001';
+      const tokenPerBlock = await walletConnect.metamaskService.getRewardPerBlock(stakedTokenAdr);
 
       const totalRewardPricePerYear = new BigNumber(rewardTokenPrice)
-        .times(tokenPerBlock)
-        .times(10512000);
+        .times(fromWeiToNormal(tokenPerBlock))
+        .times(BLOCKS_PER_YEAR[currentNetwork as TChain]);
 
       const totalStakingTokenInPool = new BigNumber(stakingTokenPrice).times(
         fromWeiToNormal(totalStakedInPool),
@@ -191,7 +189,7 @@ export const useStaking = (
 
       return aprAmount.isNaN() || !aprAmount.isFinite() ? null : aprAmount.toNumber();
     },
-    [stakedTokenAdr, walletConnect.metamaskService],
+    [stakedTokenAdr, walletConnect.metamaskService, currentNetwork, ydrPrice],
   );
 
   useEffect(() => {
@@ -228,7 +226,7 @@ export const useStaking = (
             });
 
           // GET APR FOR STAKE
-          getAprForStake(stakeAddressId).then((data) => {
+          getAprForStake(stakeAddressId, tokenInfoFromBack.priceInUsd).then((data) => {
             setApr(data);
           });
         }
@@ -258,16 +256,18 @@ export const useStaking = (
     stakedTokenAdr,
     stakingAddress,
     getAprForStake,
+    tokenInfoFromBack.priceInUsd,
   ]);
 
   useEffect(() => {
     // STAKED TOKEN ADDRESS
     getStakedTokenAdress(indexId).then((data) => {
       setStakedTokenAdr(data);
-
-      getTokenPriceInUsd(data, symbol === 'YDR', isTokenLp).then((tokenInfo) => {
-        setTokenInfoFromBack(tokenInfo);
-      });
+      if (symbol) {
+        getTokenPriceInUsd(data, symbol === 'YDR', isTokenLp).then((tokenInfo) => {
+          setTokenInfoFromBack(tokenInfo);
+        });
+      }
     });
   }, [getStakedTokenAdress, getTokenPriceInUsd, indexId, isTokenLp, symbol]);
 
