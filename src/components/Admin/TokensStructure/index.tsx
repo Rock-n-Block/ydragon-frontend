@@ -13,6 +13,7 @@ import { toast } from 'react-toastify';
 import config, { TChain } from '../../../config';
 import { observer } from 'mobx-react-lite';
 import { useMst } from '../../../store/store';
+import config_ABI from '../../../services/web3/config_ABI';
 
 interface TokensStructureProps {
   vaults: IVault[];
@@ -27,6 +28,8 @@ const TokensStructure: React.FC<TokensStructureProps> = observer(({ vaults, inde
   const [isWithdrawBtnLoading, setIsWithdrawBtnLoading] = useState(false);
   const [isDepositBtnLoading, setIsDepositBtnLoading] = useState(false);
 
+  const [isAllowed, setIsAllowed] = useState(false);
+  const [tokenAddressesNeedAllowance, setTokenAddressesNeedAllowance] = useState<string[]>([]);
   const columns: any[] = [
     {
       title: 'Tokens per index',
@@ -65,7 +68,9 @@ const TokensStructure: React.FC<TokensStructureProps> = observer(({ vaults, inde
 
   const handleWithdrawTokensClick = () => {
     setIsWithdrawBtnLoading(true);
-    const preparedTokens = vaults.map((vault) => vault.y_balance);
+    const preparedTokens = vaults.map((vault) =>
+      new BigNumber(vault.y_balance).minus(new BigNumber(vault.farm_balance)).toString(),
+    );
     walletConnect.metamaskService
       .withdrawTokensForStaking(preparedTokens, indexAddress)
       .on('transactionHash', (hash: string) => {
@@ -86,10 +91,10 @@ const TokensStructure: React.FC<TokensStructureProps> = observer(({ vaults, inde
   const handleDepositClick = () => {
     setIsDepositBtnLoading(true);
     const nativeTokenValue = vaults.find(
-      (vault) => vault.token_name === NATIVE_TOKENS[networks.currentNetwork as TChain].native,
+      (vault) => vault.token_symbol === NATIVE_TOKENS[networks.currentNetwork as TChain].native,
     );
     const preparedTokens = vaults
-      .filter((vault) => vault.token_name !== nativeTokenValue?.token_name)
+      .filter((vault) => vault.token_symbol !== nativeTokenValue?.token_symbol)
       .map((vault) => vault.farm_balance);
     walletConnect.metamaskService
       .depositToIndex(preparedTokens, indexAddress, nativeTokenValue)
@@ -131,11 +136,62 @@ const TokensStructure: React.FC<TokensStructureProps> = observer(({ vaults, inde
     });
     setDataSource(newData);
   }, [vaults]);
+
+  const checkAllowance = useCallback(async () => {
+    const nativeToken = vaults.find(
+      (vault) => vault.token_symbol === NATIVE_TOKENS[networks.currentNetwork as TChain].native,
+    );
+    const filteredTokens = vaults
+      .filter((vault) => vault.token_symbol !== nativeToken?.token_symbol)
+      .map((vault) => vault.token_address);
+    const newArray: string[] = [];
+
+    const promiseArray = filteredTokens.map((address) => {
+      return walletConnect.metamaskService
+        .checkAllowanceById(address, config_ABI.Token.ABI, indexAddress)
+        .then((isApproved: boolean) => {
+          if (!isApproved) {
+            newArray.push(address);
+          }
+        });
+    });
+    try {
+      await Promise.all([...promiseArray]);
+      if (newArray.length) {
+        setIsAllowed(false);
+        setTokenAddressesNeedAllowance(newArray);
+      } else {
+        setIsAllowed(true);
+        setTokenAddressesNeedAllowance([]);
+      }
+    } catch (error) {
+      console.log('TokensStructure allowance error', error);
+    }
+  }, [NATIVE_TOKENS, indexAddress, networks.currentNetwork, vaults, walletConnect.metamaskService]);
+
+  const handleApproveAll = useCallback(async () => {
+    const promiseArray = tokenAddressesNeedAllowance.map((address) => {
+      return walletConnect.metamaskService.approve(address, indexAddress);
+    });
+    try {
+      await Promise.all([...promiseArray]);
+      setIsAllowed(true);
+      setTokenAddressesNeedAllowance([]);
+    } catch (error) {
+      console.log('TokensStructure approve error', error);
+    }
+  }, [indexAddress, tokenAddressesNeedAllowance, walletConnect.metamaskService]);
+
   useEffect(() => {
     if (vaults) {
       prepareData();
     }
   }, [prepareData, vaults]);
+  useEffect(() => {
+    if (vaults.length && indexAddress) {
+      checkAllowance();
+    }
+  }, [checkAllowance, indexAddress, vaults]);
   return (
     <section className="section section--admin">
       <h2 className="section__title text-outline">Tokens structure</h2>
@@ -171,9 +227,15 @@ const TokensStructure: React.FC<TokensStructureProps> = observer(({ vaults, inde
         >
           Withdraw
         </Button>
-        <Button styledType="outline" loading={isDepositBtnLoading} onClick={handleDepositClick}>
-          Deposit
-        </Button>
+        {isAllowed ? (
+          <Button styledType="outline" loading={isDepositBtnLoading} onClick={handleDepositClick}>
+            Deposit
+          </Button>
+        ) : (
+          <Button styledType="outline" loading={isDepositBtnLoading} onClick={handleApproveAll}>
+            Approve all
+          </Button>
+        )}
       </div>
     </section>
   );
