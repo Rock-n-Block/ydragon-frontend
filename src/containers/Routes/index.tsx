@@ -31,15 +31,15 @@ const Routes: React.FC = observer(() => {
         <Route exact path="/ydrtoken">
           <YdrToken />
         </Route>
-        <GuardedRoute exact path="/admin" component={Admin} auth={user.isAdmin()} />
-        <GuardedRoute exact path="/admin" component={Indexes} auth={user.isAdmin()} />
+        <GuardedRoute exact path="/admin" component={Admin} auth={user.isAdmin} />
+        <GuardedRoute exact path="/admin" component={Indexes} auth={user.isAdmin} />
         <GuardedRoute
           exact
           path="/admin/index/:indexId"
           component={AdminIndex}
-          auth={user.isAdmin()}
+          auth={user.isAdmin}
         />
-        <GuardedRoute exact path="/staking" component={StakingPage} auth={!!user.address} />
+        <GuardedRoute exact path="/staking" component={StakingPage} auth={user.isUser} />
 
         <Route exact path="/indexes" component={IndexDashboard} />
         <Route exact path="/about-us">
