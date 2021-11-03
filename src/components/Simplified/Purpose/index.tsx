@@ -14,7 +14,13 @@ const Purpose: React.FC = () => {
       <h2 className="section__title text-outline">PURPOSE</h2>
       <div className="purpose__purpose-wrapper">
         {purposeCardsData.map((item: ICard) => (
-          <Card title={item.title} icon={item.icon} img={item.img} description={item.description} />
+          <Card
+            key={`purpose_${item.title}`}
+            title={item.title}
+            icon={item.icon}
+            img={item.img}
+            description={item.description}
+          />
         ))}
       </div>
     </section>

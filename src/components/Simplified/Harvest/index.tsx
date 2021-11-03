@@ -17,6 +17,7 @@ const Harvest: React.FC = () => {
       <div className="harvest__wrapper">
         {harvestData.map((data: IWheats) => (
           <Wheat
+            key={`wheat_${data.name}`}
             animData={data.animData}
             isAnim={data.isAnim}
             name={data.name}

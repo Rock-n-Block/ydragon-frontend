@@ -47,7 +47,7 @@ const Terminology: React.FC = () => {
       </div>
       <div className="terminology__content-wrapper">
         {content.map((card: IContent) => (
-          <div className="terminology__content">
+          <div className="terminology__content" key={`termin_${card.title}`}>
             <h4 className="terminology__content-title">{card.title}</h4>
             <p className="terminology__content-text">{card.text}</p>
           </div>

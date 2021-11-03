@@ -54,7 +54,7 @@
   display: grid;
   grid-template-columns:
     minmax(100px, 1.2fr) minmax(100px, 1.5fr) minmax(100px, 1fr) minmax(100px, 1fr)
-    minmax(100px, 1fr) minmax(100px, 0.5fr) minmax(100px, 0.5fr) minmax(10px, 0.3fr);
+    minmax(100px, 1fr) minmax(100px, 0.5fr) minmax(100px, 1fr) minmax(10px, 0.3fr);
 
   padding: 25px 22px;
 
@@ -214,7 +214,7 @@
       order: 7;
     }
     &:nth-child(7) {
-      order: 2;
+      order: 8;
     }
   }
 
@@ -272,6 +272,9 @@
   button.staking-table_row__cell--button {
     padding: 11px 32px;
     border-radius: 32px;
+    span {
+      @include text-ellipsis(80px);
+    }
   }
 }
 

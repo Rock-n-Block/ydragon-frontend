@@ -110,7 +110,7 @@ const StakingTableRow: React.FC<IStakingTableRowProps> = observer(({ index, ydrP
     return <Redirect to="/" />;
   }
 
-  if (!networks.currentNetwork) return <Loader />;
+  if (!networks.currentNetwork) return <Loader loading />;
 
   if (!symbol || !name || !totalStaked)
     return <div className="staking-table_row staking-table_row--skelet" />;
@@ -130,13 +130,7 @@ const StakingTableRow: React.FC<IStakingTableRowProps> = observer(({ index, ydrP
           </div>
         </div>
 
-        <StakingTableRowCell
-          title="balance"
-          value={balance}
-          textType="MER"
-          symbol="$"
-          usdPrice={tokenInfoFromBack.priceInUsd}
-        />
+        <StakingTableRowCell title="wallet" value={balance} textType="MER" symbol={symbol} />
         <StakingTableRowCell title="deposited" value={deposited} textType="MER" symbol={symbol} />
         <StakingTableRowCell
           title="your rewards"
@@ -163,7 +157,7 @@ const StakingTableRow: React.FC<IStakingTableRowProps> = observer(({ index, ydrP
             target={tokenInfoFromBack.link[0] !== '/' ? '_blank' : ''}
             className="staking-table_row__cell--button"
           >
-            Get in
+            <span>Get {symbol}</span>
           </Button>
         </div>
         <div

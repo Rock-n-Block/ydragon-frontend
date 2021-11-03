@@ -12,7 +12,7 @@ const Advisors: React.FC = () => {
       </div>
       <div className="teams__items">
         {team.map((employee) => (
-          <div className="team">
+          <div className="team" key={`team_${employee.name}`}>
             <div className="team__img--wrapper">
               <img alt={employee.name} className="team__img" src={employee.img} />
             </div>

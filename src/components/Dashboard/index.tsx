@@ -9,7 +9,7 @@ import { IIndex } from '../../pages/Admin';
 import { indexesApi } from '../../services/api';
 import { useMst } from '../../store/store';
 import { Sorter } from '../../utils/sorter';
-import { Spinner } from '../index';
+import { Loader } from '../index';
 
 import IndexSmallCard from './SmallCard/index';
 
@@ -83,7 +83,7 @@ const Dashboard: React.FC = () => {
   return (
     <section className="section section--admin">
       <h2 className="section__title text-outline">Indexes</h2>
-      <Spinner loading={loading} />
+      <Loader loading={loading} />
       <div className="index-dashboard__big">
         <div className="index-dashboard">
           {indexes?.length ? (

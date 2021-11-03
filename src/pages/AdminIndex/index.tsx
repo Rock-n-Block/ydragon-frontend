@@ -57,13 +57,9 @@ const AdminIndex: React.FC = () => {
   const [index, setIndex] = useState<IRebalance>({} as IRebalance);
   const [vault, setVault] = useState<IVault[]>([] as IVault[]);
   const [vaultMini, setVaultMini] = useState<IVaultMini[]>([] as IVaultMini[]);
-  const [manualRebalanceValue, setManualRebalanceValue] = useState<string>('');
   const { networks } = useMst();
   const history = useHistory();
 
-  const handleManualRebalanceValueChange = (value: string) => {
-    setManualRebalanceValue(value);
-  };
   const getIndexComposition = useCallback(() => {
     indexesApi
       .getIndexesRebalance(+indexId)
@@ -107,11 +103,8 @@ const AdminIndex: React.FC = () => {
       <IndexInfo marketCap={index.market_cap} price={index.price} />
       {/* <Composition status={index.status} tokens={index.tokens_diff} /> */}
       <Rebalance tokens={index.tokens_diff} />
-      <Options
-        address={index.index?.address}
-        onManualInputChange={handleManualRebalanceValueChange}
-      />
-      <TokensStructure vaults={vault} manualRebalanceValue={manualRebalanceValue} />
+      <Options address={index.index?.address} />
+      <TokensStructure vaults={vault} indexAddress={index.index?.address} />
       <XYStructure vaults={vaultMini} />
       {/* <RebalanceModal
         name={index.index?.name}

@@ -35,7 +35,7 @@ const StakingTable: React.FC<IStakingTableProps> = observer(({ ydrPrice }) => {
       <div className="staking-table">
         <div className="staking-table_header">
           <div className="staking-table_header__cell" />
-          <div className="staking-table_header__cell">Balance</div>
+          <div className="staking-table_header__cell">Wallet</div>
           <div className="staking-table_header__cell">Deposited</div>
           <div className="staking-table_header__cell">Your Rewards</div>
           <div className="staking-table_header__cell">TVL</div>
@@ -49,7 +49,7 @@ const StakingTable: React.FC<IStakingTableProps> = observer(({ ydrPrice }) => {
               .fill(1)
               .map((el, i) => <StakingTableRow index={i} ydrPrice={ydrPrice} />)
           ) : (
-            <Loader />
+            <Loader loading />
           )}
         </div>
       </div>

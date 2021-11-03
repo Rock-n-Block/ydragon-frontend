@@ -25,7 +25,11 @@ const SelectNetwork: React.FC = observer(() => {
     networksApi
       .getNetworks()
       .then(({ data }) => {
-        networks.setNetworks(data);
+        // ПОКА БЭК НЕ ОБНОВИЛ КОНТРАКТЫ
+        networks.setNetworks([
+          data[0],
+          { ...data[1], staking_address: '0xf5B6C72645e5f84Ce19FfB919F5a6014b1813fb2' },
+        ]);
       })
       .catch((err) => {
         const { response } = err;
@@ -96,7 +100,7 @@ const SelectNetwork: React.FC = observer(() => {
       dropdownClassName={cn(theme.value, 'select-network__dropdown')}
     >
       {Object.keys(FULL_CHAIN_INFO[isProduction]).map((network) => (
-        <Option value={network as TChain}>
+        <Option value={network as TChain} key={`option_${network}`}>
           <TokenMini
             name={FULL_CHAIN_INFO[isProduction][network as TChain].shortName}
             icon={FULL_CHAIN_INFO[isProduction][network as TChain].nativeCurrency.image(

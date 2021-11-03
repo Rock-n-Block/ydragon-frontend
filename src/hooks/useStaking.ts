@@ -170,10 +170,7 @@ export const useStaking = (
     async (stakeAddressId: string, stakingTokenPrice: string) => {
       const rewardTokenPrice = ydrPrice;
 
-      const totalStakedInPool = await walletConnect.metamaskService.getTotalStaked(
-        stakedTokenAdr,
-        stakeAddressId,
-      );
+      const totalStakedInPool = await walletConnect.metamaskService.getTotalStaked(stakeAddressId);
 
       const tokenPerBlock = await walletConnect.metamaskService.getRewardPerBlock(stakedTokenAdr);
 
@@ -219,11 +216,9 @@ export const useStaking = (
 
         if (stakedTokenAdr) {
           // TOTAL STAKED AMOUNT
-          walletConnect.metamaskService
-            .getTotalStaked(stakedTokenAdr, stakeAddressId)
-            .then((data: string) => {
-              setTotalStaked(fromWeiToNormal(data));
-            });
+          walletConnect.metamaskService.getTotalStaked(stakeAddressId).then((data: string) => {
+            setTotalStaked(fromWeiToNormal(data));
+          });
 
           // GET APR FOR STAKE
           getAprForStake(stakeAddressId, tokenInfoFromBack.priceInUsd).then((data) => {
