@@ -110,7 +110,7 @@ const TokensStructure: React.FC<TokensStructureProps> = observer(({ vaults, inde
         console.error(`withdrawTokensForStaking error`, message);
       })
       .finally(() => {
-        setIsWithdrawBtnLoading(false);
+        setIsDepositBtnLoading(false);
       });
   };
   const prepareData = useCallback(() => {
