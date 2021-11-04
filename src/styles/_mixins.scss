@@ -125,3 +125,10 @@
   border-radius: 32px;
   box-shadow: -8px 8px 36px rgba(203, 209, 230, 0.3);
 }
+
+@mixin text-ellipsis($max-width: 100%) {
+  max-width: $max-width;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

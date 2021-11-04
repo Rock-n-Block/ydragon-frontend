@@ -7,11 +7,12 @@ import arrowUp from '../../assets/img/chart/arrow-up.svg';
 interface IPriceDifferenceBagProps {
   price: number;
   diff: Array<string | number>;
+  decimals?: number;
 }
 
-const PriceDifferenceBag: React.FC<IPriceDifferenceBagProps> = ({ price, diff }) => (
+const PriceDifferenceBag: React.FC<IPriceDifferenceBagProps> = ({ price, diff, decimals }) => (
   <div className="chart-panel-title">
-    ${new BigNumber(price).toFixed(6)}
+    ${new BigNumber(price).toFixed(decimals || 6)}
     <div className="diff">
       <div className={`diff-${diff[0]}`}>
         {diff[0] === 'up' && diff[1] !== '0.0' ? (

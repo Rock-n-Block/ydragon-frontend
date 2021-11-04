@@ -1,0 +1,28 @@
+@import '../../../styles/mixins';
+
+.staking-table_header {
+  display: grid;
+  grid-template-columns:
+    minmax(100px, 1.2fr) minmax(100px, 1.5fr) minmax(100px, 1fr) minmax(100px, 1fr)
+    minmax(100px, 1fr) minmax(100px, 0.5fr) minmax(100px, 1fr) minmax(10px, 0.3fr);
+
+  padding: 0 22px;
+
+  margin-bottom: 20px;
+  @include b(tablet) {
+    display: none;
+  }
+}
+
+.staking-table_header__cell {
+  display: flex;
+
+  font-family: 'Monument Extended', sans-serif;
+  font-size: 12px;
+}
+
+.staking-table_body {
+  @include b(tablet) {
+    margin: 0 -12px;
+  }
+}

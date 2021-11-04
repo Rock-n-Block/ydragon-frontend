@@ -6,15 +6,20 @@ import { observer } from 'mobx-react-lite';
 import YDRLogo from '../../../assets/img/icons/logo.svg';
 import { useWhiteList } from '../../../hooks/useWhiteList';
 import { useWalletConnectorContext } from '../../../services/walletConnect';
-import config from '../../../services/web3/config';
+import configABI from '../../../services/web3/config_ABI';
 import { useMst } from '../../../store/store';
 import { ProviderRpcError } from '../../../types/errors';
 import { Button, Input, InputWithSelect } from '../../index';
 import { Modal } from '../index';
+import config from '../../../config';
+import { handleNumericInput } from '../../../utils/handleNumericInput';
 
 import './GetInModal.scss';
+import txToast from '../../ToastWithTxHash';
+import { toast } from 'react-toastify';
 
 const GetInModal: React.FC = observer(() => {
+  const { NETWORK_TOKENS } = config;
   const { modals, user } = useMst();
   const { whiteList, getTokenAddress } = useWhiteList(modals.getIn.id ?? 0);
   const walletConnector = useWalletConnectorContext();
@@ -34,15 +39,15 @@ const GetInModal: React.FC = observer(() => {
 
   const getDecimals = useCallback(
     async (currency: string) => {
-      if (currency === 'bnb') {
+      if (Object.keys(NETWORK_TOKENS).includes(currency)) {
         return new Promise((resolve) => resolve(18));
       }
       return walletConnector.metamaskService.getDecimals(
         getTokenAddress(currency),
-        config.Token.ABI,
+        configABI.Token.ABI,
       );
     },
-    [getTokenAddress, walletConnector.metamaskService],
+    [NETWORK_TOKENS, getTokenAddress, walletConnector.metamaskService],
   );
   const getBalance = useCallback(() => {
     walletConnector.metamaskService
@@ -59,9 +64,13 @@ const GetInModal: React.FC = observer(() => {
       });
   }, [getTokenAddress, getDecimals, walletConnector.metamaskService, firstCurrency]);
   const checkAllowance = useCallback(() => {
-    if (firstCurrency !== 'bnb') {
+    if (!Object.keys(NETWORK_TOKENS).includes(firstCurrency)) {
       walletConnector.metamaskService
-        .checkAllowanceById(getTokenAddress(firstCurrency), config.MAIN.ABI, modals.getIn.address)
+        .checkAllowanceById(
+          getTokenAddress(firstCurrency),
+          configABI.MAIN.ABI,
+          modals.getIn.address,
+        )
         .then((data: boolean) => {
           setIsNeedApprove(!data);
         })
@@ -70,11 +79,18 @@ const GetInModal: React.FC = observer(() => {
           console.log('allowance error', response);
         });
     }
-  }, [getTokenAddress, modals.getIn.address, walletConnector.metamaskService, firstCurrency]);
+  }, [
+    NETWORK_TOKENS,
+    firstCurrency,
+    walletConnector.metamaskService,
+    getTokenAddress,
+    modals.getIn.address,
+  ]);
 
   const handleSelectChange = (value: any) => {
     setFirstCurrency(value);
     setPayInput('');
+    setViewOnlyInputValue('0.0');
     setIsLoading(false);
 
     getDecimals(value).then((dec: number) => {
@@ -85,36 +101,40 @@ const GetInModal: React.FC = observer(() => {
   const handleApprove = (): void => {
     setIsLoading(true);
     walletConnector.metamaskService
-      .approveById(getTokenAddress(firstCurrency), modals.getIn.address)
+      .approve(getTokenAddress(firstCurrency), modals.getIn.address)
+      .on('transactionHash', (hash: string) => {
+        txToast(hash);
+      })
       .then(() => {
         setIsNeedApprove(false);
-        modals.info.setMsg('Success', `Approve of ${firstCurrency} to IME success`, 'success');
+        toast.success(`Approve of ${firstCurrency} to IMO success`);
       })
       .catch((err: ProviderRpcError) => {
         const { message } = err;
-        modals.info.setMsg('Error', `Approve error ${message}`, 'error');
+        toast.error('Something went wrong');
+        console.error(`Approve error`, message);
       })
       .finally(() => setIsLoading(false));
   };
-
   const handleEnter = (): void => {
     setIsLoading(true);
     walletConnector.metamaskService
       .mint(payInput, firstCurrency, getTokenAddress(firstCurrency), modals.getIn.address, decimals)
+      .on('transactionHash', (hash: string) => {
+        txToast(hash);
+      })
       .then(() => {
         setPayInput('');
         getBalance();
-        modals.info.setMsg('Success', 'You entered IME', 'success');
+        toast.success('You entered IMO');
+        setIsLoading(false);
       })
       .catch((err: ProviderRpcError) => {
         const { message } = err;
-        modals.info.setMsg(
-          'Error',
-          `Enter IME error ${message.slice(0, message.indexOf(':'))}`,
-          'error',
-        );
-      })
-      .finally(() => setIsLoading(false));
+        toast.error('Something went wrong');
+        console.error(`Enter IMO error `, message);
+        setIsLoading(false);
+      });
   };
 
   const getBuyCourse = useCallback(() => {
@@ -147,13 +167,6 @@ const GetInModal: React.FC = observer(() => {
     firstCurrency,
     walletConnector.metamaskService,
   ]);
-  const handlePayInput = (e: any) => {
-    if (+e.target.value < 0) {
-      e.target.value = '';
-    } else {
-      setPayInput(e.target.value);
-    }
-  };
 
   const setInitialCurrencies = useCallback(() => {
     setFirstCurrency(whiteList[0].symbol);
@@ -177,21 +190,20 @@ const GetInModal: React.FC = observer(() => {
     <Modal
       isVisible={!!modals.getIn.id}
       handleCancel={handleClose}
-      className="m-trade-ydr"
+      className="m-get-in"
       width={390}
     >
-      <div className="m-trade-ydr__content">
-        <div className="m-trade-ydr__logo">
+      <div className="m-get-in__content">
+        <div className="m-get-in__logo">
           <img src={YDRLogo} alt="logo" width="55" height="100%" />
         </div>
-        <h3 className="m-trade-ydr__header">
-          I want to enter to index mint event of{' '}
-          <span className="m-trade-ydr__header-label"> {modals.getIn.name}</span>
+        <h3 className="m-get-in__header">
+          I want to buy <span className="m-get-in__header-label"> {modals.getIn.name}</span> tokens
         </h3>
-        <div className="m-trade-ydr__field">
-          <div className="m-trade-ydr__labels">
-            <span className="m-trade-ydr__label">You pay</span>
-            <span className="m-trade-ydr__label">
+        <div className="m-get-in__field">
+          <div className="m-get-in__labels">
+            <span className="m-get-in__label">You pay</span>
+            <span className="m-get-in__label">
               Balance:{' '}
               {new BigNumber(balance).dividedBy(new BigNumber(10).pow(decimals)).toFixed(7)}{' '}
               {firstCurrency.toUpperCase()}
@@ -203,29 +215,29 @@ const GetInModal: React.FC = observer(() => {
             tokens={whiteList}
             selectValue={firstCurrency || ''}
             onSelectChange={handleSelectChange}
-            onChange={handlePayInput}
-            type="number"
+            onChange={(e) => handleNumericInput(e.target.value, setPayInput)}
+            type="text"
             placeholder="0.0"
             onBlur={getBuyCourse}
           />
         </div>
-        <div className="m-trade-ydr__field">
-          <div className="m-trade-ydr__labels">
-            <span className="m-trade-ydr__label">You Receive</span>
+        <div className="m-get-in__field">
+          <div className="m-get-in__labels">
+            <span className="m-get-in__label">You Receive</span>
           </div>
 
           <Input placeholder={viewOnlyInputValue} disabled />
         </div>
-        {isNeedApprove && firstCurrency !== 'bnb' && firstCurrency !== 'matic' && (
-          <Button className="m-trade-ydr__btn" onClick={handleApprove} loading={isLoading}>
+        {isNeedApprove && !Object.keys(NETWORK_TOKENS).includes(firstCurrency) && (
+          <Button className="m-get-in__btn" onClick={handleApprove} loading={isLoading}>
             Approve
           </Button>
         )}
-        {(!isNeedApprove || firstCurrency === 'bnb' || firstCurrency === 'matic') && (
+        {(!isNeedApprove || Object.keys(NETWORK_TOKENS).includes(firstCurrency)) && (
           <Button
-            className="m-trade-ydr__btn"
+            className="m-get-in__btn"
             onClick={handleEnter}
-            disabled={!payInput}
+            disabled={!payInput || !balance}
             loading={isLoading}
           >
             Buy

@@ -97,6 +97,8 @@
     line-height: 24px;
     letter-spacing: 0.035em;
 
+    max-width: 350px;
+
     @include b('tablet') {
       text-align: center;
     }
@@ -155,6 +157,9 @@
         }
       }
     }
+    span {
+      margin-left: 5px;
+    }
 
     &-tg {
       padding: 6px 9px;
@@ -169,10 +174,6 @@
 
       color: #848484;
       border-radius: 100px;
-
-      img {
-        margin-right: 5px;
-      }
 
       &:hover,
       &:active {
@@ -192,10 +193,11 @@
 
     &-divider {
       margin: 0 15px;
+
       width: 1px;
       height: 12px;
-      background: #4F5665;
 
+      background: #4f5665;
     }
   }
 

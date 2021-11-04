@@ -1,11 +1,12 @@
-@import '../../styles/variables';
-@import '../../styles/mixins';
+@import 'src/styles/variables';
+@import 'src/styles/mixins';
 
 .dark {
   .index-dashboard {
     &__item {
       @include shadow-block;
       color: $white;
+
       &:hover {
         background: $table-selected;
       }
@@ -56,9 +57,10 @@
     &__item {
       @include light-block;
       color: $black;
+
       &:hover {
-        background: $table-selected;
         color: white;
+        background: $table-selected;
       }
     }
 
@@ -123,7 +125,7 @@
   &__row {
     display: grid;
     align-items: center;
-    grid-template-columns: 240px repeat(2,2fr) repeat(4,1fr);
+    grid-template-columns: 240px repeat(2, 2fr) repeat(4, 1fr);
     grid-column-gap: 20px;
     grid-template-rows: repeat(2, auto);
     grid-row-gap: 10px;
@@ -177,9 +179,12 @@
   }
 
   &__item {
-    cursor: pointer;
     padding: 20px 30px;
+
+    cursor: pointer;
+
     transition: background 0.3s;
+
     & + & {
       margin-top: 16px;
     }
@@ -195,10 +200,16 @@
   }
 
   &__name {
+    display: block;
+    overflow: hidden;
+
+    max-width: 200px;
+
     font-family: 'Monument Extended', sans-serif;
     font-size: 14px;
     font-weight: normal;
     line-height: 17px;
+    text-overflow: ellipsis;
   }
 
   &__market-cup {
@@ -256,15 +267,13 @@
 
   &__tokens {
     display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
   }
 
   &__token {
     display: flex;
     align-items: center;
-
-    & + & {
-      margin-left: 10px;
-    }
   }
 
   &__token-color {
@@ -296,6 +305,8 @@
     font-weight: normal;
     line-height: 17px;
     text-transform: uppercase;
+
+    @include text-ellipsis(120px);
   }
 
   &__composition {

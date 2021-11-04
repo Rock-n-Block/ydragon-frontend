@@ -1,9 +1,11 @@
 import React from 'react';
 import BigNumber from 'bignumber.js/bignumber';
 
-import './IndexTable.scss';
-import arrowUp from '../../../assets/img/chart/arrow-up.svg';
 import arrowDown from '../../../assets/img/chart/arrow-down.svg';
+import arrowUp from '../../../assets/img/chart/arrow-up.svg';
+
+import './IndexTable.scss';
+import Tippy from '@tippyjs/react';
 
 export interface IToken {
   address: string;
@@ -17,10 +19,11 @@ export interface IToken {
   price_total: number;
   symbol: string;
   unit_weight: number;
+  percent_change: number;
 }
 
 export interface IHistoricalToken {
-  diff: string;
+  percent_change: number;
   rate: string;
   repr_count: string;
   token_image: string;
@@ -30,7 +33,7 @@ export interface IHistoricalToken {
 }
 
 interface IndexTableProps {
-  tokens: Array<IToken> | Array<IHistoricalToken> | undefined;
+  tokens: Array<IHistoricalToken> | Array<IToken> | undefined;
 }
 
 const IndexTable: React.FC<IndexTableProps> = ({ tokens }) => {
@@ -39,7 +42,7 @@ const IndexTable: React.FC<IndexTableProps> = ({ tokens }) => {
       <div className="index-table__row index-table__row--head">
         <div className="index-table__col">Token</div>
         <div className="index-table__col">
-          Quantity <br /> per Set
+          Quantity <br /> in Index
         </div>
         <div className="index-table__col">Token Price</div>
         <div className="index-table__col">Current Weight</div>
@@ -51,7 +54,7 @@ const IndexTable: React.FC<IndexTableProps> = ({ tokens }) => {
 
       <div className="index-table__content">
         {tokens ? (
-          tokens.map((token) => (
+          tokens.map((token: IToken | IHistoricalToken) => (
             <div
               className="index-table__row"
               key={`token-${'id' in token ? token.id : token.token_name}`}
@@ -64,9 +67,12 @@ const IndexTable: React.FC<IndexTableProps> = ({ tokens }) => {
                   width="31"
                   height="31"
                 />
-                <div className="index-table__token">
-                  {'name' in token ? token.name : token.token_name}
-                </div>
+
+                <Tippy content={'name' in token ? token.name : token.token_name}>
+                  <div className="index-table__token text-ellipsis">
+                    {'name' in token ? token.name : token.token_name}
+                  </div>
+                </Tippy>
               </div>
               <div className="index-table__col">
                 <div className="index-table__quantity">
@@ -91,15 +97,18 @@ const IndexTable: React.FC<IndexTableProps> = ({ tokens }) => {
                 <div className="index-table__diff">
                   <div
                     className={`index-table__diff-${
-                      'diff' in token && +token?.diff < 0 ? 'down' : 'up'
+                      'percent_change' in token && +token?.percent_change < 0 ? 'down' : 'up'
                     }`}
                   >
-                    {'diff' in token && +token?.diff < 0 ? (
+                    {'percent_change' in token && +token?.percent_change < 0 ? (
                       <img src={arrowDown} alt="arrow down" width="10" height="10" />
                     ) : (
                       <img src={arrowUp} alt="arrow up" width="10" height="10" />
                     )}
-                    {new BigNumber('diff' in token ? token.diff : 0).toFixed(2)} %
+                    {new BigNumber(
+                      'percent_change' in token && token.percent_change ? token.percent_change : 0,
+                    ).toFixed(2)}{' '}
+                    %
                   </div>
                 </div>
               </div>

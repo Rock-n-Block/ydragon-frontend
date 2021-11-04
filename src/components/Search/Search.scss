@@ -141,6 +141,13 @@
     background: rgba(255, 255, 255, 0.05);
     border-radius: 40px;
 
+    flex-wrap: wrap;
+    gap: 20px;
+
+    @include b(extramobile) {
+      flex-direction: column;
+    }
+
     &-info {
       display: flex;
       align-items: center;
@@ -160,6 +167,12 @@
     line-height: 21px;
 
     color: white;
+
+    &-full {
+      @include b(extramobile) {
+        @include text-ellipsis(150px);
+      }
+    }
 
     &-symbol {
       text-transform: uppercase;

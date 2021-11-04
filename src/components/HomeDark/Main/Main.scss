@@ -30,33 +30,69 @@
 }
 
 .home {
-  margin-top: 175px;
+  position: relative;
 
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  margin-top: 175px;
+  padding: 0 50px 0;
 
   @include b('tablet') {
     margin-top: 30px;
+    padding: 0;
 
     min-height: unset;
   }
 
+  &__img {
+    position: absolute;
+    width: 400px;
+    top: -33px;
+    right: 0;
+    @include b('tablet') {
+      position: unset;
+
+      margin: 18px 0 32px;
+      margin-right: auto;
+      margin-left: auto;
+
+      display: block;
+
+      width: 100%;
+      max-width: 256px;
+      height: auto;
+    }
+  }
+
   &__title-wrapper {
     position: relative;
-
+    // line-height: 48px;
     display: flex;
-    justify-content: center;
     align-items: center;
+
+    font-size: 48px;
+    font-weight: 900;
+    letter-spacing: 0.2em;
+    flex-wrap: wrap;
+    @include b('tablet') {
+      flex-direction: column;
+      justify-content: center;
+
+      font-size: 34px;
+      line-height: 41px;
+    }
   }
 
   &__title {
-    font-size: 144px;
-    line-height: 173px;
-    @include b('tablet') {
-      font-size: 52px;
-      line-height: 62px;
+    & + & {
+      margin-left: 30px;
+
+      display: block;
+      @include b('tablet') {
+        margin-left: 0;
+
+        font-size: 32px;
+        line-height: 38px;
+        letter-spacing: 0.08em;
+      }
     }
   }
 
@@ -78,29 +114,32 @@
   }
 
   &__descr {
-    margin-top: 20px;
+    margin-top: 35px;
 
-    font-size: 18px;
+    max-width: 532px;
+
+    font-size: 20px;
     line-height: 30px;
-    text-align: center;
     letter-spacing: 0.035em;
 
     // color: $white;
     @include b('tablet') {
+      margin: 0 auto;
+
       max-width: 350px;
 
       line-height: 22px;
+      text-align: center;
     }
   }
 
   &__btns-row {
-    margin-top: 30px;
+    margin-top: 35px;
 
     display: flex;
-    justify-content: center;
-    gap: 30px;
 
     width: 100%;
+    gap: 30px;
 
     .btn {
       padding: 17px 0;
@@ -108,9 +147,9 @@
 
     @include b('tablet') {
       flex-direction: column;
-      gap: 20px;
 
       align-items: center;
+      gap: 20px;
     }
   }
 
@@ -135,7 +174,7 @@
   }
 
   &__currently-price {
-    margin-top: 100px;
+    margin-top: 150px;
     padding: 35px 85px;
 
     font-size: 22px;
@@ -154,5 +193,14 @@
     @include b('tablet') {
       padding: 20px;
     }
+  }
+}
+
+.home_social-links {
+  display: flex;
+  margin-top: 25px;
+
+  @include b(tablet){
+    justify-content: center;
   }
 }

@@ -1,13 +1,20 @@
 import React from 'react';
+import { observer } from 'mobx-react';
 
-import icon1 from '../../../assets/img/featuring/icon-1.svg';
-import icon2 from '../../../assets/img/featuring/icon-2.svg';
-import icon3 from '../../../assets/img/featuring/icon-3.svg';
-import icon4 from '../../../assets/img/featuring/icon-4.svg';
+import { useMst } from '../../../store/store';
+import { JsonAnimation } from '../../index';
+
+import iconAnim1 from '../../../assets/json-anim/feature-1.json';
+import iconAnim1L from '../../../assets/json-anim/feature-1-light.json';
+import iconAnim2 from '../../../assets/json-anim/feature-2.json';
+import iconAnim3 from '../../../assets/json-anim/feature-3.json';
+import iconAnim4 from '../../../assets/json-anim/feature-4.json';
 
 import './Features.scss';
 
-const Features: React.FC = () => {
+const Features: React.FC = observer(() => {
+  const { theme } = useMst();
+
   return (
     <section className="section">
       <h2 className="section__title text-outline">features</h2>
@@ -16,7 +23,11 @@ const Features: React.FC = () => {
       <div className="features">
         <div className="features-item">
           <div className="features-item__icon">
-            <img src={icon1} alt="feature" width="64" height="64" />
+            <JsonAnimation
+              animData={theme.value === 'light' ? iconAnim1L : iconAnim1}
+              height="64px"
+              width="64px"
+            />
           </div>
           <div className="features-item__content">
             <div className="features-item__title">Cross-Chain</div>
@@ -29,51 +40,47 @@ const Features: React.FC = () => {
 
         <div className="features-item">
           <div className="features-item__icon">
-            <img src={icon2} alt="feature" width="64" height="64" />
+            <JsonAnimation animData={iconAnim4} height="64px" width="64px" />
           </div>
           <div className="features-item__content">
             <div className="features-item__title">Yield Generation</div>
 
             <div className="features-item__descr">
-              When you lock your funds in an index, you will be entitled to a passive income through
-              smart revenue generation. Don&apos;t worry, we take care of everything, whilst you can
-              relax and let your money work for you.
+              Lock your funds in one of our index tokens and stake it to automatically receive
+              passive income.
             </div>
           </div>
         </div>
 
         <div className="features-item">
           <div className="features-item__icon">
-            <img src={icon3} alt="feature" width="64" height="64" />
+            <JsonAnimation animData={iconAnim2} height="64px" width="64px" />
           </div>
           <div className="features-item__content">
             <div className="features-item__title">Risk Diversification</div>
 
             <div className="features-item__descr">
-              Everyone knows it, do not put all your eggs in the same basket. That&apos;s why at
-              YDragon we decided to create indexes that split the risk into the top performing and
-              promising tokens.
+              Our indexes split the risk into the top performing and most promising tokens.
             </div>
           </div>
         </div>
 
         <div className="features-item">
           <div className="features-item__icon">
-            <img src={icon4} alt="feature" width="64" height="64" />
+            <JsonAnimation animData={iconAnim3} height="64px" width="64px" />
           </div>
           <div className="features-item__content">
             <div className="features-item__title">Utility & Governance</div>
 
             <div className="features-item__descr">
-              Our YDR token is, among other cool advantages, a utility and governance token. What
-              does it mean? You will be able to vote and decide of the future of the YDragon indexes
-              & strategies, and earn passive income at the same time.
+              Stake your YDR tokens to receive passive income and have your say by voting on the
+              future of YDragon indexes and strategies.
             </div>
           </div>
         </div>
       </div>
     </section>
   );
-};
+});
 
 export default Features;

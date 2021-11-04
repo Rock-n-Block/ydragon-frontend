@@ -6,7 +6,6 @@ import './IndexCardMobile.scss';
 interface IIndexCardProps {
   cap: string;
   created: string;
-  key: number;
   name: {
     id: number;
     name: string;

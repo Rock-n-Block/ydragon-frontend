@@ -1,18 +1,22 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Line } from 'react-chartjs-2';
+import { AxiosResponse } from 'axios';
+import cn from 'classnames';
+import moment from 'moment';
 
 import { indexesApi } from '../../../services/api';
 import PriceDifferenceBag from '../../PriceDifferenceBag';
+import { IHistoricalToken } from '../IndexTable';
 
 import './IndexChart.scss';
-import { AxiosResponse } from 'axios';
-import { IHistoricalToken } from '../IndexTable';
-import moment from 'moment';
+import useWindowDebouncedEvent from '../../../hooks/useWindowDebouncedEvent';
 
 interface IndexChartProps {
   onClick: (value: IFetchedData) => void;
   indexId: any;
+  diff: number;
 }
+
 export interface IFetchedData {
   diff: string;
   index: number;
@@ -23,12 +27,31 @@ export interface IFetchedData {
   total_supply: string;
 }
 
-const IndexChart: React.FC<IndexChartProps> = ({ onClick, indexId }) => {
+const btns = ['1d', '1m', '3m', 'MAX'];
+
+interface IMemoLine {
+  data: any;
+  options: any;
+  getElementAtEvent: (element: string | any[]) => void;
+}
+
+const MemoLine: React.FC<IMemoLine> = React.memo(
+  ({ data, options, getElementAtEvent }) => {
+    return (
+      <Line data={data} options={options} height={600} getElementAtEvent={getElementAtEvent} />
+    );
+  },
+  (prev, next) => {
+    return prev.data.datasets[0].data[0].time === next.data.datasets[0].data[0].time;
+  },
+);
+
+const IndexChart: React.FC<IndexChartProps> = React.memo(({ onClick, indexId, diff }) => {
   const [days, setDays] = useState('1');
+  const [activeBtn, setActiveBtn] = useState<string>(btns[0]);
   const refDataLength = useRef(1);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const refPrice = useRef(0.000001);
-  const daysFromUrl = days;
   const refMax = useRef(0);
   const refMin = useRef(0);
   const [chartData, setChartData] = useState({
@@ -50,13 +73,11 @@ const IndexChart: React.FC<IndexChartProps> = ({ onClick, indexId }) => {
   const [clickedElement, setClickedElement] = useState(
     chartData.datasets[0].data[refDataLength.current - 1].data,
   );
-  const [diff, setDiff] = useState(['up', 0.0]);
-
   const options = {
     layout: {
       padding: 10,
     },
-    aspectRatio: windowWidth > 768 ? 4 : 2,
+    aspectRatio: windowWidth > 768 ? 1.6 : 2,
     parsing: {
       xAxisKey: 'time',
       yAxisKey: 'data',
@@ -82,8 +103,7 @@ const IndexChart: React.FC<IndexChartProps> = ({ onClick, indexId }) => {
         },
       },
       yAxis: {
-        suggestedMin: refMin.current,
-        suggestedMax: refMax.current,
+        offset: true,
       },
     },
     elements: {
@@ -97,17 +117,14 @@ const IndexChart: React.FC<IndexChartProps> = ({ onClick, indexId }) => {
     },
   };
 
-  const getWindowWidth = () => {
-    const { innerWidth: width } = window;
-    return width;
-  };
+  // const getWindowWidth = () => {
+  //   const { innerWidth: width } = window;
+  //   return width;
+  // };
 
-  const toggleHandler = (event: any) => {
-    const btnsList = event.target.parentNode.children;
-    [...btnsList].forEach((item: any) => {
-      item.className = item === event.target ? 'chart-panel-btn active' : 'chart-panel-btn';
-    });
-    switch (event.target.innerHTML) {
+  const toggleHandler = (btnName: string) => {
+    setActiveBtn(btnName);
+    switch (btnName) {
       case '1d':
         setDays('1');
         break;
@@ -117,7 +134,7 @@ const IndexChart: React.FC<IndexChartProps> = ({ onClick, indexId }) => {
       case '3m':
         setDays('90');
         break;
-      case 'ALL':
+      case 'MAX':
         setDays('max');
         break;
       default:
@@ -127,69 +144,72 @@ const IndexChart: React.FC<IndexChartProps> = ({ onClick, indexId }) => {
 
   const parseDate = useCallback(
     (date: Date, dayAllowed?: boolean) => {
-      if (daysFromUrl === '1') {
+      if (days === '1') {
         // return moment(date).format('D/HH:MM');
-        return moment(date).format('Do MMM, HH:mm');
+        return moment(date).format('HH:mm');
         // return `${date.getHours()}:${date.getMinutes()}`;
       }
-      if (daysFromUrl === 'max' && !dayAllowed) {
+      if (days === 'max' && !dayAllowed) {
         return moment(date).format('DD MMM YYYY');
       }
       // return `${date.getMonth() + 1}/${date.getDate()} ${date.getHours()}:${date.getMinutes()}`;
       return moment(date).format('DD MMM, h A');
     },
-    [daysFromUrl],
+    [days],
   );
 
-  const getElementAtEvent = (element: string | any[]) => {
-    if (!element.length) return;
+  const getElementAtEvent = useCallback(
+    (element: string | any[]) => {
+      if (!element.length) return;
 
-    const { index } = element[0];
-    const chosenPrice = chartData.datasets[0].data[index].data;
-    const fetchedItem = fetchedData[index];
-    setClickedElement(chosenPrice);
-    onClick(fetchedItem);
-    const value = fetchedItem.diff;
-    const dir = +value < 0 ? 'down' : 'up';
-    setDiff([dir, value]);
-  };
+      const { index } = element[0];
+      const chosenPrice = chartData.datasets[0].data[index].data;
+      const fetchedItem = fetchedData[index];
+      setClickedElement(chosenPrice);
+      onClick(fetchedItem);
+    },
+    [chartData.datasets, fetchedData, onClick],
+  );
 
-  const getChartData = (data: any): any => {
-    const datasetsData: { time: string; data: number }[] = [];
-    const arr: number[] = [];
-    const dayAllowed =
-      (new Date(data[data.length - 1].time).getTime() - new Date(data[0].time).getTime()) /
-        (3600000 * 24) <
-      1;
-    if (data)
-      data.forEach((item: any) => {
-        const date = new Date(item.time);
-        // if (!datasetsData.find((element: any) => element.time === parseDate(date))) {}
-        arr.push(Number(item.rate));
-        datasetsData.push({
-          time: parseDate(date, dayAllowed),
-          data: Number(item.rate),
+  const getChartData = useCallback(
+    (data: any): any => {
+      const datasetsData: { time: string; data: number }[] = [];
+      const arr: number[] = [];
+      const dayAllowed =
+        (new Date(data[data.length - 1].time).getTime() - new Date(data[0].time).getTime()) /
+          (3600000 * 24) <
+        1;
+      if (data)
+        data.forEach((item: any) => {
+          const date = new Date(item.time);
+          // if (!datasetsData.find((element: any) => element.time === parseDate(date))) {}
+          arr.push(Number(item.rate));
+          datasetsData.push({
+            time: parseDate(date, dayAllowed),
+            data: Number(item.rate),
+          });
         });
-      });
-    refDataLength.current = datasetsData.length;
-    refMax.current = Math.max(...arr) + 1;
-    refMin.current = Math.min(...arr) - 1;
-    return {
-      labels: [],
-      datasets: [
-        {
-          data: datasetsData,
-          fill: false,
-          backgroundColor: 'transparent',
-          borderColor: '#df3f3a',
-          borderWidth: 3,
-          pointBackgroundColor: '#df3f3a',
-          pointBorderColor: '#fff',
-          tension: 0.5,
-        },
-      ],
-    };
-  };
+      refDataLength.current = datasetsData.length;
+      refMax.current = Math.max(...arr) + 1;
+      refMin.current = Math.min(...arr) - 1;
+      return {
+        labels: [],
+        datasets: [
+          {
+            data: datasetsData,
+            fill: false,
+            backgroundColor: 'transparent',
+            borderColor: '#df3f3a',
+            borderWidth: 3,
+            pointBackgroundColor: '#df3f3a',
+            pointBorderColor: '#fff',
+            tension: 0.5,
+          },
+        ],
+      };
+    },
+    [parseDate],
+  );
 
   const axiosData = useCallback(() => {
     indexesApi
@@ -204,18 +224,12 @@ const IndexChart: React.FC<IndexChartProps> = ({ onClick, indexId }) => {
       .catch((err: any) => {
         console.log('Request chartData error', err);
       });
+  }, [indexId, days, getChartData]);
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [indexId, days]);
-
-  useEffect(() => {
-    function handleResize() {
-      setWindowWidth(getWindowWidth());
-    }
-
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
+  const handleResize = (width: number) => {
+    setWindowWidth(width);
+  };
+  useWindowDebouncedEvent('resize', window.innerWidth, handleResize, 500);
 
   useEffect(() => {
     axiosData();
@@ -224,58 +238,35 @@ const IndexChart: React.FC<IndexChartProps> = ({ onClick, indexId }) => {
   return (
     <div className="chart">
       <div className="chart-panel">
-        <PriceDifferenceBag price={Number(clickedElement)} diff={diff} />
+        <PriceDifferenceBag
+          price={Number(clickedElement)}
+          diff={[diff >= 0 ? 'up' : 'down', diff]}
+          decimals={2}
+        />
         <div className="chart-panel-btns">
-          <div
-            className="chart-panel-btn active"
-            role="button"
-            tabIndex={0}
-            onClick={toggleHandler}
-            onKeyDown={toggleHandler}
-          >
-            1d
-          </div>
-          <div
-            className="chart-panel-btn"
-            role="button"
-            tabIndex={0}
-            onClick={toggleHandler}
-            onKeyDown={toggleHandler}
-          >
-            1m
-          </div>
-          <div
-            className="chart-panel-btn"
-            role="button"
-            tabIndex={0}
-            onClick={toggleHandler}
-            onKeyDown={toggleHandler}
-          >
-            3m
-          </div>
-          <div
-            className="chart-panel-btn"
-            role="button"
-            tabIndex={0}
-            onClick={toggleHandler}
-            onKeyDown={toggleHandler}
-          >
-            ALL
-          </div>
+          {btns.map((btn) => (
+            <div
+              key={btn}
+              className={cn('chart-panel-btn', {
+                active: activeBtn === btn,
+              })}
+              role="button"
+              tabIndex={0}
+              onClick={() => toggleHandler(btn)}
+              onKeyDown={() => {}}
+            >
+              {btn}
+            </div>
+          ))}
         </div>
       </div>
       {Object.keys(chartData).length ? (
-        <Line
-          data={chartData}
-          options={options}
-          // type="line"
-          getElementAtEvent={getElementAtEvent}
-        />
+        <MemoLine data={chartData} options={options} getElementAtEvent={getElementAtEvent} />
       ) : (
         <></>
       )}
     </div>
   );
-};
+});
 
 export default IndexChart;

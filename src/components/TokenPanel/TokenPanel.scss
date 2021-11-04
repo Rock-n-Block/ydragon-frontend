@@ -26,24 +26,35 @@
   padding: 30px 40px;
 
   display: flex;
-  flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  flex-wrap: wrap;
   gap: 20px;
+  @include b('mobile') {
+    flex-direction: column;
+  }
 
   &__content {
     display: flex;
     flex-wrap: wrap;
+
     justify-content: center;
     gap: 20px;
+
+    width: 100%;
+    @include b('mobile') {
+      flex-direction: column;
+      align-items: center;
+    }
   }
 
   &__btns {
     display: flex;
     gap: 20px;
+
+    flex-direction: column;
     @include b('mobile') {
       justify-content: center;
+      align-items: center;
 
       width: 100%;
 
@@ -55,8 +66,15 @@
 }
 
 .token-panel-item {
+  @include b('mobile') {
+    text-align: center;
+  }
+
   & + & {
     margin-left: 60px;
+    @include b('mobile') {
+      margin-left: 0;
+    }
   }
 
   &__value {

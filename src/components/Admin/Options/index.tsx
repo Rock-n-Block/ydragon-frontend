@@ -3,20 +3,19 @@ import BigNumber from 'bignumber.js/bignumber';
 import { observer } from 'mobx-react-lite';
 
 import { useWalletConnectorContext } from '../../../services/walletConnect';
-import { useMst } from '../../../store/store';
 import { ProviderRpcError } from '../../../types/errors';
 import { Button, Switch } from '../../index';
 import Input from '../../Input';
 
 import './Options.scss';
+import txToast from '../../ToastWithTxHash';
+import { toast } from 'react-toastify';
 
 interface OptionsProps {
   address: string;
-  onManualInputChange: (value: string) => void;
 }
 
-const Options: React.FC<OptionsProps> = observer(({ address, onManualInputChange }) => {
-  const { modals } = useMst();
+const Options: React.FC<OptionsProps> = observer(({ address }) => {
   const [isAutoRebalanceChecked, setIsAutoRebalanceChecked] = useState<boolean | undefined>(
     undefined,
   );
@@ -28,16 +27,16 @@ const Options: React.FC<OptionsProps> = observer(({ address, onManualInputChange
     setIsAutoRebalanceChecked(isChecked);
     walletConnector.metamaskService
       .changeAutoXYRebalaceAllowance(address, isChecked)
+      .on('transactionHash', (hash: string) => {
+        txToast(hash);
+      })
       .then(() => {
-        modals.info.setMsg(
-          'Operation success',
-          `Automatic rebalancing is ${isChecked ? 'enabled' : 'disabled'}`,
-          'success',
-        );
+        toast.success(`Automatic rebalancing is ${isChecked ? 'enabled' : 'disabled'}`);
       })
       .catch((error: ProviderRpcError) => {
         const { message } = error;
-        modals.info.setMsg('Error', `AutoRebalance error ${message}`, 'error');
+        toast.error('Something went wrong');
+        console.error(`AutoRebalance error`, message);
         setIsAutoRebalanceChecked(!isChecked);
       });
   };
@@ -45,12 +44,16 @@ const Options: React.FC<OptionsProps> = observer(({ address, onManualInputChange
     if (inputValue) {
       walletConnector.metamaskService
         .startXyRebalance(address, +new BigNumber(inputValue).multipliedBy(100).toString(10))
+        .on('transactionHash', (hash: string) => {
+          txToast(hash);
+        })
         .then(() => {
-          modals.info.setMsg('Operation success', 'Rebalance started', 'success');
+          toast.success(`Now xVault percentage is ${inputValue}%`);
         })
         .catch((error: ProviderRpcError) => {
           const { message } = error;
-          modals.info.setMsg('Error', `Rebalance error ${message}`, 'error');
+          toast.error('Something went wrong');
+          console.log(`Rebalance error`, message);
         });
     }
   };
@@ -67,7 +70,6 @@ const Options: React.FC<OptionsProps> = observer(({ address, onManualInputChange
         setIsError(false);
       }
     }
-    onManualInputChange(value);
   };
   const handleBlur = () => {
     if (+inputValue <= 5) {

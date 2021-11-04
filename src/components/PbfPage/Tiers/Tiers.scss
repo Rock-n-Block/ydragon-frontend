@@ -1,0 +1,102 @@
+@import '../../../styles/mixins';
+
+.tiers {
+  text-align: center;
+}
+
+.tiers__title {
+  font-size: 48px;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  font-weight: 900 !important;
+  @include b(mobile) {
+    font-size: 32px;
+  }
+}
+
+.tiers__subtitle {
+  font-size: 22px;
+  opacity: 0.8;
+  margin-bottom: 135px;
+  @include b(mobile) {
+    font-size: 16px;
+    margin-bottom: 20px;
+  }
+}
+
+.tiers_items {
+  display: flex;
+  gap: 45px;
+
+  list-style: none;
+  padding-left: 0;
+
+  @include b(mobile) {
+    flex-direction: column;
+  }
+}
+
+.tiers_item {
+  background: linear-gradient(238.88deg, #000316 31.18%, #050c25 99.47%);
+  box-shadow: -8px 8px 36px rgba(0, 0, 0, 0.5);
+  border-radius: 32px;
+  padding: 64px 48px;
+  padding-bottom: 42px;
+
+  div {
+    margin: 0 auto;
+    margin-bottom: 40px;
+  }
+  @include b(mobile) {
+    padding: 20px;
+  }
+
+  &__title {
+    font-size: 16px;
+    font-weight: 900 !important;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+    letter-spacing: 0.93em;
+    @include b(extramobile) {
+      margin-bottom: 15px;
+    }
+  }
+
+  &__price {
+    font-size: 42px;
+    letter-spacing: 0.015em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    @include b(extramobile) {
+      font-size: 28px;
+    }
+  }
+
+  &__subtitle {
+    font-size: 20px;
+    opacity: 0.8;
+    line-height: 1.6;
+    max-width: 70%;
+    margin: 0 auto;
+    @include b(mobile) {
+      max-width: 100%;
+      font-size: 16px;
+    }
+  }
+
+  &__logo {
+    margin-bottom: 40px;
+    svg {
+      border-radius: 50%;
+      max-width: 100%;
+    }
+  }
+}
+
+.light {
+  .tiers_item {
+    background: linear-gradient(355.19deg, #fff 0%, #dde1f0 100%);
+    border-radius: 32px;
+    box-shadow: -8px 8px 36px rgba(203, 209, 230, 0.3);
+  }
+}

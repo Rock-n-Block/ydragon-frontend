@@ -6,9 +6,11 @@
     @include shadow-dark-block;
     border-bottom: 1px solid rgba($white, 0.2);
     border-radius: 0;
-    &:hover{
-      background:$table-selected;
+
+    &:hover {
+      background: $table-selected;
     }
+
     &__title {
       color: rgba($white, 0.5);
     }
@@ -28,9 +30,10 @@
     &__title {
       color: rgba($black, 0.5);
     }
-    &:hover{
+
+    &:hover {
       color: $white;
-      background:$table-selected;
+      background: $table-selected;
 
       & .index-card-mobile__title {
         color: rgba($white, 0.5);
@@ -42,11 +45,12 @@
 .index-card-mobile {
   padding: 20px 12px;
 
-  transition: background 0.3s;
-  cursor: pointer;
-
   font-family: 'Monument Extended', sans-serif;
   font-weight: normal;
+
+  cursor: pointer;
+
+  transition: background 0.3s;
 
   &:first-child {
     margin-top: 12px;
@@ -64,13 +68,15 @@
   }
 
   &__value {
+    display: block;
     font-size: 18px;
+    @include text-ellipsis();
   }
 
   &__info {
     margin: 20px 0;
 
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   }
 }

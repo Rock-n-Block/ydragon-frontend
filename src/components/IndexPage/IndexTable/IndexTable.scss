@@ -40,7 +40,7 @@
 
     display: grid;
     align-items: center;
-    grid-template-columns: repeat(6, 1fr);
+    grid-template-columns:130px repeat(5, 1fr);
     grid-column-gap: 20px;
 
     & + & {
@@ -59,10 +59,12 @@
       line-height: 14px;
     }
   }
-  &__col{
+
+  &__col {
     display: flex;
     justify-content: flex-start;
   }
+
   &__content {
     padding: 0 20px;
   }
@@ -100,13 +102,14 @@
     font-weight: normal;
     line-height: 22px;
   }
+
   &__diff {
+    width: 112px;
 
     font-family: 'TTNorms', sans-serif;
     font-size: 15px;
-    line-height: 18px;
     font-weight: 700;
-    width: 112px;
+    line-height: 18px;
 
     &-down {
       padding: 10px 12px;

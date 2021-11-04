@@ -1,10 +1,15 @@
 import axios from '../../core/axios';
 import { rootStore } from '../../store/store';
+import config, { TChain } from '../../config';
 
+const { BACKEND_NETWORKS } = config;
 export default {
-  getUserIndexes: () => axios.get('indexes/user'),
+  getUserIndexes: () => axios.get('indexes/user/'),
   getCoinsList: (name: string) =>
-    axios.get(
-      `/coins_list/api/indexes/?search_pattern=${name}&network=${rootStore.networks.currentNetwork}`,
-    ),
+    axios.get(`/coins_list/api/indexes/`, {
+      params: {
+        search_pattern: name,
+        network: BACKEND_NETWORKS[rootStore.networks.currentNetwork as TChain],
+      },
+    }),
 };

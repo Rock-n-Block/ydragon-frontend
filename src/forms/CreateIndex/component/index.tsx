@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useState } from 'react';
+import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import BigNumber from 'bignumber.js/bignumber';
 import { FieldArray, FieldArrayRenderProps, Form, FormikProps } from 'formik';
 import { observer } from 'mobx-react-lite';
@@ -11,6 +11,7 @@ import { IToken } from '../../../components/IndexPage/IndexTable';
 import { ISearchToken } from '../../../components/Search';
 import { ITokensDiff } from '../../../pages/Admin';
 import { coinsApi } from '../../../services/api';
+import useDebounce from '../../../hooks/useDebounce';
 
 export interface ICreateIndex {
   name: string;
@@ -31,6 +32,7 @@ const CreateIndex: React.FC<FormikProps<ICreateIndex> & ICreateIndex> = observer
       symbol: true,
       price: true,
     });
+    const [tokenName, setTokenName] = useState<string>('');
     const onBlurHandler = (value: string) => {
       switch (value) {
         case 'name':
@@ -105,12 +107,14 @@ const CreateIndex: React.FC<FormikProps<ICreateIndex> & ICreateIndex> = observer
       .map((tokenDiff) => +tokenDiff.new_weight)
       .reduce((prevSum, newItem) => prevSum.plus(newItem), new BigNumber(0))
       .toString(10);
-    const handleNewTokenNameChange = (tokenName: string) => {
-      if (tokenName.length >= 3) {
+
+    const debounceTokenName = useDebounce(tokenName, 1000);
+
+    const handleNewTokenNameChange = useCallback(() => {
+      if (debounceTokenName.length >= 3) {
         coinsApi
-          .getCoinsList(tokenName)
+          .getCoinsList(debounceTokenName)
           .then(({ data }) => {
-            console.log(`tokens with ${tokenName}`, data);
             setFieldValue('searchTokens', data);
           })
           .catch((error) => {
@@ -120,14 +124,15 @@ const CreateIndex: React.FC<FormikProps<ICreateIndex> & ICreateIndex> = observer
       } else {
         setFieldValue('searchTokens', [] as ISearchToken[]);
       }
-    };
+    }, [debounceTokenName, setFieldValue]);
+
     const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
       setFieldValue('searchInput', e.target.value);
-      handleNewTokenNameChange(e.target.value);
+      setTokenName(e.target.value);
     };
     const handleClear = () => {
       setFieldValue('searchInput', '');
-      handleNewTokenNameChange('');
+      setTokenName('');
     };
     const handleRemove = (arrayHelper: FieldArrayRenderProps, index: number) => {
       arrayHelper.remove(index);
@@ -196,8 +201,8 @@ const CreateIndex: React.FC<FormikProps<ICreateIndex> & ICreateIndex> = observer
       console.log('Formatted Selected Time: ', dateString);
     }; */
     useEffect(() => {
-      console.log(values);
-    }, [values]);
+      handleNewTokenNameChange();
+    }, [handleNewTokenNameChange]);
     return (
       <Form name="form-create-index" className="form-create-index">
         <div className="form-create-index__inputs">
@@ -272,8 +277,8 @@ const CreateIndex: React.FC<FormikProps<ICreateIndex> & ICreateIndex> = observer
                     <div className="token-weights-items__head-col">Weight%</div>
                   </div>
                   {values.tokens?.map((tokenDiff, index) => (
-                    <>
-                      <div className="token-weights-item" key={`token ${tokenDiff.token.name}`}>
+                    <React.Fragment key={`token_${tokenDiff.token.name}`}>
+                      <div className="token-weights-item">
                         <div className="token-weights-item__info">
                           <TokenMini
                             icon={tokenDiff.token.image}
@@ -305,7 +310,7 @@ const CreateIndex: React.FC<FormikProps<ICreateIndex> & ICreateIndex> = observer
                           Remove
                         </Button>
                       </div>
-                    </>
+                    </React.Fragment>
                   ))}
                   <div className="token-weights__total">
                     <h3 className="token-weights__total-name">Total weight</h3>

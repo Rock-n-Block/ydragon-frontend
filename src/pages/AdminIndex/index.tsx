@@ -3,17 +3,18 @@ import { useHistory, useParams } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 
 import {
-  Composition,
+  // Composition,
   IndexInfo,
   Options,
   Rebalance,
   TokensStructure,
   XYStructure,
 } from '../../components/Admin';
-import { RebalanceModal } from '../../components/Modals';
+// import { RebalanceModal } from '../../components/Modals';
 import { indexesApi, vaultsApi } from '../../services/api';
 import { useMst } from '../../store/store';
 import { IIndex, IIndexStatus, ITokensDiff } from '../Admin';
+import config, { TChain } from '../../config';
 
 interface IIndexId {
   indexId: string;
@@ -29,12 +30,16 @@ interface IRebalance extends IIndexStatus {
   price: number;
   network: string;
 }
+
 export interface IVault {
   id: number;
+  address: string;
   apr: null | string;
   decimals: number;
   token_name: string;
   token_image: string;
+  token_address: string;
+  token_symbol: string;
   x_balance: string;
   y_balance: string;
   farm_balance: string;
@@ -42,29 +47,28 @@ export interface IVault {
   y_percent: string;
   farm_percent: string;
 }
+
 export interface IVaultMini {
   currency: string;
   total_x: string;
   total_y: string;
 }
+
 const AdminIndex: React.FC = () => {
+  const { BACKEND_NETWORKS } = config;
   const { indexId } = useParams<IIndexId>();
   const [index, setIndex] = useState<IRebalance>({} as IRebalance);
   const [vault, setVault] = useState<IVault[]>([] as IVault[]);
   const [vaultMini, setVaultMini] = useState<IVaultMini[]>([] as IVaultMini[]);
-  const [manualRebalanceValue, setManualRebalanceValue] = useState<string>('');
   const { networks } = useMst();
   const history = useHistory();
 
-  const handleManualRebalanceValueChange = (value: string) => {
-    setManualRebalanceValue(value);
-  };
   const getIndexComposition = useCallback(() => {
     indexesApi
       .getIndexesRebalance(+indexId)
       .then(({ data }) => {
         setIndex(data);
-        if (networks.currentNetwork !== data.index.network) {
+        if (BACKEND_NETWORKS[networks.currentNetwork as TChain] !== data.index.network) {
           history.push('/admin');
         }
       })
@@ -72,7 +76,7 @@ const AdminIndex: React.FC = () => {
         const { response } = err;
         console.log('get index composition collections error', response);
       });
-  }, [indexId, history, networks.currentNetwork]);
+  }, [indexId, BACKEND_NETWORKS, networks.currentNetwork, history]);
 
   const getVaults = useCallback(() => {
     vaultsApi
@@ -100,19 +104,16 @@ const AdminIndex: React.FC = () => {
   return (
     <main className="container">
       <IndexInfo marketCap={index.market_cap} price={index.price} />
-      <Composition status={index.status} tokens={index.tokens_diff} />
+      {/* <Composition status={index.status} tokens={index.tokens_diff} /> */}
       <Rebalance tokens={index.tokens_diff} />
-      <Options
-        address={index.index?.address}
-        onManualInputChange={handleManualRebalanceValueChange}
-      />
-      <TokensStructure vaults={vault} manualRebalanceValue={manualRebalanceValue} />
+      <Options address={index.index?.address} />
+      <TokensStructure vaults={vault} indexAddress={index.index?.address} />
       <XYStructure vaults={vaultMini} />
-      <RebalanceModal
+      {/* <RebalanceModal
         name={index.index?.name}
         tokens={index.tokens_diff}
         onStart={getIndexComposition}
-      />
+      /> */}
     </main>
   );
 };

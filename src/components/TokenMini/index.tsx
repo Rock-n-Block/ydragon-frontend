@@ -2,6 +2,14 @@ import React from 'react';
 
 import './TokenMini.scss';
 
+export interface ITokenMini {
+  name: string;
+  image: string;
+  address?: string;
+  symbol?: string;
+  decimals?: number;
+}
+
 export interface TokenMiniProps {
   icon?: string;
   name: string;

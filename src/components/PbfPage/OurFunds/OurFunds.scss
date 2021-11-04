@@ -1,0 +1,124 @@
+@import '../../../styles/variables';
+@import '../../../styles/mixins';
+
+.ourfunds {
+}
+
+.ourfunds-title {
+  display: block !important;
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 48px;
+  font-weight: 900 !important;
+  margin-bottom: 80px;
+  @include b(mobile) {
+    font-size: 32px;
+    margin-bottom: 30px;
+  }
+}
+
+.ourfunds-content {
+  background: linear-gradient(238.88deg, #000316 31.18%, #050c25 99.47%);
+  box-shadow: -8px 8px 36px rgba(0, 0, 0, 0.5);
+  border-radius: 32px;
+  padding: 80px 100px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 60px;
+  align-items: center;
+
+  @include b(mobile) {
+    grid-template-columns: 1fr;
+    padding: 60px 50px;
+  }
+
+  @include b(extramobile) {
+    padding: 0;
+    background: none;
+    box-shadow: none;
+  }
+
+  &__title {
+    font-size: 32px;
+    text-transform: uppercase;
+    margin-bottom: 48px;
+    max-width: 348px;
+    position: relative;
+    @include b(extramobile) {
+      font-size: 24px;
+      max-width: 100%;
+      text-transform: capitalize;
+    }
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -22px;
+      left: 0;
+      width: 87px;
+      height: 3px;
+      background-color: $red;
+    }
+  }
+
+  &__subtitle {
+    font-size: 18px;
+    opacity: 0.8;
+    line-height: 1.5;
+    @include b(extramobile) {
+      font-size: 16px;
+    }
+  }
+
+  &__solana-logo {
+    margin-bottom: 74px;
+    @include b(extramobile) {
+      margin-bottom: 40px;
+    }
+    svg {
+      max-width: 100%;
+    }
+  }
+
+  &__buttons {
+    display: flex;
+    gap: 20px;
+    @include b(extramobile) {
+      flex-direction: column;
+    }
+  }
+}
+
+.ourfunds-content__button {
+  width: 50%;
+  @include b(extramobile) {
+    width: 100%;
+  }
+  button {
+    height: 60px;
+  }
+}
+button.ourfunds-content__close_button {
+  width: 40%;
+  @include b(extramobile) {
+    width: 100%;
+  }
+}
+
+.light {
+  .ourfunds-content {
+    background: linear-gradient(355.19deg, #fff 0%, #dde1f0 100%);
+    border-radius: 32px;
+    box-shadow: -8px 8px 36px rgba(203, 209, 230, 0.3);
+
+    @include b(extramobile) {
+      background: none;
+      box-shadow: none;
+    }
+
+    &__solana-logo {
+      svg path:not(:last-of-type) {
+        fill: #000;
+      }
+    }
+  }
+}

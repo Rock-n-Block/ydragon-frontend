@@ -1,5 +1,7 @@
 import { applySnapshot, types } from 'mobx-state-tree';
+import config, { TChain } from '../config';
 
+const { BACKEND_NETWORKS } = config;
 const Network = types.model({
   id: types.number,
   name: types.string,
@@ -15,7 +17,7 @@ const Network = types.model({
 export const Networks = types
   .model({
     networkId: types.string,
-    currentNetwork: types.maybeNull(types.string),
+    currentNetwork: types.string,
     networksList: types.optional(types.array(Network), []),
   })
   .actions((self) => {
@@ -26,7 +28,9 @@ export const Networks = types
       self.currentNetwork = name;
     };
     const getCurrNetwork = () => {
-      return self.networksList.find((network) => network.name === self.currentNetwork);
+      return self.networksList.find(
+        (network) => network.name === BACKEND_NETWORKS[self.currentNetwork as TChain],
+      );
     };
     const setNetworks = (networks: any) => {
       self.networksList = networks;

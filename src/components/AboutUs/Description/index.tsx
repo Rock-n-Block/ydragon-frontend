@@ -2,7 +2,7 @@ import React from 'react';
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-import Whitepaper from '../../../assets/pdf/YD WP.pdf';
+import Whitepaper from '../../../assets/pdf/YD_WP.pdf';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import MainVideo from '../../../assets/video/YDragon.mp4';

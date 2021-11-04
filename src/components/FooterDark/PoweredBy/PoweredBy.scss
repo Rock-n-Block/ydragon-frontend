@@ -1,13 +1,20 @@
 @import '../../../styles/variables';
+@import '../../../styles/mixins';
 
 .powered {
   margin-left: auto;
+  @include b(tablet) {
+    margin: 0 auto;
+    text-align: center;
+    margin-top: 25px;
+  }
 
   &:hover {
     .powered-by {
       background: $gradient;
       background-clip: text;
       -webkit-text-fill-color: transparent;
+
       opacity: 1;
 
       &::selection {
@@ -22,10 +29,11 @@
 
   &-by {
     margin-bottom: 7px;
+
     font-family: 'Rubik', sans-serif;
-    font-style: normal;
-    font-weight: normal;
     font-size: 12px;
+    font-weight: normal;
+    font-style: normal;
     line-height: 14px;
     text-transform: uppercase;
 

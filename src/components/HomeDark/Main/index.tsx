@@ -1,24 +1,29 @@
 import React from 'react';
 
+import StackJson from '../../../assets/json-anim/home-stack.json';
+
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-import Whitepaper from '../../../assets/pdf/YD WP.pdf';
-import { Button } from '../../index';
+import Whitepaper from '../../../assets/pdf/YD_WP.pdf';
+import { Button, JsonAnimation } from '../../index';
+import SocialLink from '../../SocialLink';
+import config from '../../../config';
 
 import './Main.scss';
 
 const Main: React.FC = () => {
+  const { SOCIAL_LINKS } = config;
   return (
     <section className="section home">
       <div className="home__title-wrapper">
-        <h1 className="home__title text-outline">YDRAGON</h1>
-        <span className="home__sub-title">DeFi made simple</span>
+        <span className="home__title text-gradient">DEFI</span>
+        <span className="home__title text-outline">MADE SIMPLE</span>
       </div>
+      <JsonAnimation animData={StackJson} className="home__img" width="400px" />
 
       <p className="home__descr">
-        YDragon is a crypto index platform with cross-chain capabilities and yield-generation
-        opportunities. This combination of market-leading features allows us to offer you a
-        seamless, cross-chain, multi-asset experience. Made by investors, for investors.
+        A cross-chain platform that delivers multiple sources of income. Carefully crafted by
+        YDragon.
       </p>
 
       <div className="home__btns-row">
@@ -34,6 +39,20 @@ const Main: React.FC = () => {
         >
           Whitepaper
         </Button>
+      </div>
+      <div className="home_social-links">
+        <SocialLink
+          href={SOCIAL_LINKS.tgChannel.url}
+          title="Channel"
+          icon={SOCIAL_LINKS.tgChannel.iconDark}
+        />
+        <SocialLink
+          href={SOCIAL_LINKS.tgChat.url}
+          title="Chat"
+          icon={SOCIAL_LINKS.tgChat.iconDark}
+        />
+        <SocialLink href={SOCIAL_LINKS.twitter.url} icon={SOCIAL_LINKS.twitter.iconDark} />
+        <SocialLink href={SOCIAL_LINKS.medium.url} icon={SOCIAL_LINKS.medium.iconDark} />
       </div>
 
       {/* <div className="home__currently-price">

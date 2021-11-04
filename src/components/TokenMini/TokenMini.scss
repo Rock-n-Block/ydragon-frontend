@@ -24,6 +24,8 @@
     font-size: 18px;
     font-weight: 700;
     line-height: 21px;
+
+    @include text-ellipsis(70px);
   }
 
   &__symbol {

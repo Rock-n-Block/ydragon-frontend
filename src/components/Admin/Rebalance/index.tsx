@@ -12,48 +12,50 @@ interface RebalanceProps extends IIndexStatus {
   tokens: Array<ITokensDiff>;
 }
 
+const columns: any[] = [
+  {
+    title: 'Token',
+    dataIndex: 'name',
+    key: 'name',
+    render: (item: any) => (
+      <div className="table__col-with-logo">
+        <img
+          src={item.image}
+          className="table__col-with-logo__image"
+          alt={`${item.name} logo`}
+          width="31"
+          height="31"
+        />
+        <span className="table__col-with-logo__text">{item.name}</span>
+      </div>
+    ),
+  },
+  {
+    title: 'Quantity per index',
+    dataIndex: 'quantity',
+    key: 'quantity',
+    render: (item: any) => <span className="text-gradient">{item}</span>,
+  },
+  {
+    title: 'Token price',
+    dataIndex: 'price',
+    key: 'price',
+  },
+  {
+    title: 'Current Price Allocation',
+    dataIndex: 'weight',
+    key: 'weight',
+  },
+  {
+    title: 'Total price per index',
+    dataIndex: 'priceTotal',
+    key: 'priceTotal',
+  },
+];
+
 const Rebalance: React.FC<RebalanceProps> = observer(({ tokens }) => {
-  const columns: any[] = [
-    {
-      title: 'Token',
-      dataIndex: 'name',
-      key: 'name',
-      render: (item: any) => (
-        <div className="table__col-with-logo">
-          <img
-            src={item.image}
-            className="table__col-with-logo__image"
-            alt={`${item.name} logo`}
-            width="31"
-            height="31"
-          />
-          <span className="table__col-with-logo__text">{item.name}</span>
-        </div>
-      ),
-    },
-    {
-      title: 'Quantity per index',
-      dataIndex: 'quantity',
-      key: 'quantity',
-      render: (item: any) => <span className="text-gradient">{item}</span>,
-    },
-    {
-      title: 'Token price',
-      dataIndex: 'price',
-      key: 'price',
-    },
-    {
-      title: 'Current Price Allocation',
-      dataIndex: 'weight',
-      key: 'weight',
-    },
-    {
-      title: 'Total price per index',
-      dataIndex: 'priceTotal',
-      key: 'priceTotal',
-    },
-  ];
   const [dataSource, setDataSource] = useState<any[]>([]);
+
   useEffect(() => {
     if (tokens) {
       const newData = tokens.map((token, index) => {
@@ -73,7 +75,7 @@ const Rebalance: React.FC<RebalanceProps> = observer(({ tokens }) => {
   }, [tokens]);
   return (
     <section className="section section--admin">
-      <h2 className="section__title text-outline">Index rebalance</h2>
+      <h2 className="section__title text-outline">Index composition</h2>
 
       {tokens && (
         <>
@@ -83,6 +85,7 @@ const Rebalance: React.FC<RebalanceProps> = observer(({ tokens }) => {
           <div className="rebalance-table__small">
             {dataSource.map((data, i) => (
               <SmallTableCard
+                key={JSON.stringify(data)}
                 headerTitle="Token"
                 tokenLogo={data.name.image}
                 tokenName={data.name.name}

@@ -60,7 +60,7 @@ p {
     color: white;
   }
 
-  .page-wrapper {
+  &.page-wrapper {
     background-color: $main-dark-bg;
     background-image: url('../assets/img/home-dark-bg.png');
 
@@ -70,6 +70,23 @@ p {
         url('../assets/img/home-dark-bg-bottom.png');
 
       @include b('tablet') {
+        background-image: url('../assets/img/home-dark-bg.png');
+      }
+    }
+
+    &--simplified {
+      background-image: none;
+
+      @include b('mobile') {
+        background-image: url('../assets/img/home-dark-bg.png');
+      }
+    }
+
+    &--pbf {
+      background-image: url('../assets/img/home-dark-bg.png'), url('../assets/img/pbf-bg-midle.png'),
+        url('../assets/img/pbf-bg-bottom.png');
+
+      @include b(tablet) {
         background-image: url('../assets/img/home-dark-bg.png');
       }
     }
@@ -119,7 +136,7 @@ p {
     color: $black;
   }
 
-  .page-wrapper {
+  &.page-wrapper {
     background-color: $main-bg;
     background-image: url('../assets/img/home-bg.png');
 
@@ -130,6 +147,20 @@ p {
       @include b('tablet') {
         background-image: url('../assets/img/home-bg.png');
       }
+    }
+
+    &--simplified {
+      background-image: none;
+
+      @include b('mobile') {
+        background-image: url('../assets/img/home-bg.png');
+      }
+    }
+
+    &--staking {
+      background-position: top center;
+      background-size: cover;
+      background-blend-mode: unset;
     }
 
     .ant-tooltip-inner {
@@ -186,9 +217,21 @@ p {
 
     @include b('tablet') {
       background-position: top center;
-      background-size: contain;
+      background-size: cover;
       background-blend-mode: unset;
     }
+  }
+
+  &--pbf {
+    background-position: top center, bottom 1740px center, bottom 400px center;
+    background-size: contain;
+    background-blend-mode: unset;
+  }
+
+  &--staking {
+    background-position: top center;
+    background-size: contain;
+    background-blend-mode: unset;
   }
 }
 
@@ -198,9 +241,13 @@ p {
   height: 0%;
 }
 
-main {
-  flex: 1 1 auto;
+main.container {
+  margin-top: 30px;
 }
+
+//.content {
+//  overflow: hidden;
+//}
 
 .container {
   margin: 0 auto;
@@ -284,6 +331,19 @@ main {
     align-items: center;
   }
 
+  &__title {
+    display: block;
+    overflow: hidden;
+
+    max-width: 100%;
+
+    text-overflow: ellipsis;
+
+    &-wrapper {
+      max-width: 100%;
+    }
+  }
+
   &__title-icon {
     display: flex;
     justify-content: center;
@@ -348,4 +408,18 @@ main {
 
 .ant-tooltip {
   z-index: 10 !important;
+}
+
+.tippy-content {
+  word-break: break-all;
+  text-align: center;
+}
+
+.ant-table-cell span {
+  @include text-ellipsis(400px);
+  display: block;
+}
+
+.ant-select-dropdown {
+  position: fixed;
 }

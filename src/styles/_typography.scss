@@ -7,7 +7,7 @@
 
     /* Prefix required. Even Firefox only supports the -webkit- prefix */
     -webkit-text-fill-color: transparent; /* Will override color (regardless of order) */
-    -webkit-text-stroke-width: 2px;
+    -webkit-text-stroke-width: 2.5px;
     -webkit-text-stroke-color: $orange-l;
   }
 
@@ -30,7 +30,9 @@
       -webkit-text-fill-color: $white;
     }
   }
-
+  &-ellipsis {
+    @include text-ellipsis();
+  }
   &-MER {
     font-family: 'Monument Extended', sans-serif;
     font-weight: normal;

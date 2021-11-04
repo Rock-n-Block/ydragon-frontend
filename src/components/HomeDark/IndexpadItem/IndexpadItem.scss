@@ -1,0 +1,225 @@
+@import '../../../styles/variables';
+@import '../../../styles/mixins';
+
+.dark {
+  .initial-mint-event {
+    @include shadow-dark-block;
+
+    &__description,
+    &__timer,
+    &__unit-item {
+      color: $white;
+    }
+  }
+}
+
+.light {
+  .initial-mint-event {
+    @include shadow-light-block;
+
+    &__description,
+    &__timer,
+    &__unit-item {
+      color: $black;
+    }
+  }
+}
+
+.initial-mint-event {
+  margin-top: 80px;
+  padding: 40px;
+
+
+  @include b('tablet') {
+    margin-top: 40px;
+
+    flex-direction: column;
+    align-items: center;
+
+    text-align: center;
+  }
+  @include b('mobile') {
+    padding: 20px;
+  }
+
+  &__row {
+    display: flex;
+
+    & + & {
+      margin-top: 45px;
+    }
+
+    @include b('tablet') {
+      flex-direction: column;
+    }
+  }
+
+  &__col {
+    width: 100%;
+  }
+
+  &__about {
+    font-family: "Monument Extended", sans-serif;
+    font-size: 14px;
+    line-height: 17px;
+    text-transform: uppercase;
+  }
+
+  &__content {
+    align-self: flex-start;
+    margin-left: auto;
+
+    @include b('tablet') {
+      margin-right: auto;
+      order: -1;
+    }
+  }
+
+  &__title {
+    font-family: 'Monument Extended', sans-serif;
+    font-size: 24px;
+    font-weight: normal;
+    line-height: 29px;
+    text-transform: uppercase;
+
+    // color: $white;
+    @include b('tablet') {
+
+      text-align: center;
+    }
+  }
+
+  &__tokens {
+    margin-top: 14px;
+    display: grid;
+    gap: 10px;
+    grid-template-columns: repeat(3, 1fr);
+    @include b(1145) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    @include b('tablet') {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    @include b('mobile') {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  &__description {
+    margin-top: 10px;
+
+    font-size: 18px;
+    line-height: 30px;
+    // color: $white;
+    word-break: break-all;
+    @include b('tablet') {
+      font-size: 16px;
+      line-height: 24px;
+    }
+  }
+
+  &__balance {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: "Monument Extended", sans-serif;
+
+    &-number {
+      font-size: 30px;
+      line-height: 36px;
+    }
+
+    &-text {
+      margin-top: 9px;
+      font-size: 14px;
+      line-height: 17px;
+    }
+  }
+
+  &__timing {
+    @include b('tablet') {
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    & + & {
+      margin-top: 60px;
+    }
+  }
+
+  &__timing-name {
+    @include gradient-text;
+    font-size: 24px;
+    line-height: 29px;
+    text-transform: uppercase;
+    @include b('tablet') {
+      font-size: 20px;
+      line-height: 24px;
+    }
+  }
+
+  &__timer {
+    margin-top: 10px;
+
+    display: flex;
+
+    font-family: 'Monument Extended', sans-serif;
+    font-size: 48px;
+    font-weight: normal;
+    line-height: 58px;
+    text-align: center;
+
+    // color: $white;
+    @include b('tablet') {
+      font-size: 35px;
+      line-height: 42px;
+    }
+  }
+
+  &__timer-time {
+    min-width: 85px;
+    @include b('tablet') {
+      min-width: 56px;
+    }
+  }
+
+  &__timer-colon {
+    margin: 0 20px;
+
+    width: 12px;
+    @include b('tablet') {
+      margin: 0 10px;
+    }
+  }
+
+  &__unit {
+    display: flex;
+  }
+
+  &__unit-item {
+    width: 85px;
+
+    font-size: 18px;
+    line-height: 22px;
+    text-align: center;
+    letter-spacing: 0.035em;
+
+    color: rgba($white, 0.4);
+
+    & + & {
+      margin-left: 52px;
+      @include b('tablet') {
+        margin-left: 0;
+      }
+    }
+  }
+
+  &__get-btn {
+    margin: 30px auto 0 auto;
+
+    width: 100%;
+    max-width: 305px;
+  }
+}

@@ -11,6 +11,8 @@ import { useWalletConnectorContext } from '../../../services/walletConnect';
 import { useMst } from '../../../store/store';
 import { ProviderRpcError } from '../../../types/errors';
 import CreateIndex, { ICreateIndex } from '../component';
+import txToast from '../../../components/ToastWithTxHash';
+import { toast } from 'react-toastify';
 
 const CreateIndexForm: React.FC = () => {
   const { modals } = useMst();
@@ -49,6 +51,7 @@ const CreateIndexForm: React.FC = () => {
           new BigNumber(values.price).multipliedBy(new BigNumber(10).pow(18)).toString(10),
         )
         .on('transactionHash', (hash: string) => {
+          txToast(hash);
           if (values.description) {
             indexesApi
               .addParamsToIndex(hash, values.description /* , values.price */)
@@ -59,19 +62,20 @@ const CreateIndexForm: React.FC = () => {
               .finally(() => {
                 resetForm({});
                 setFieldValue('isLoading', false);
+                modals.createIndex.close();
               });
           } else {
             resetForm({});
           }
         })
         .then(() => {
-          modals.info.setMsg('Success', 'Index created', 'success');
-          modals.createIndex.close();
+          toast.success('Index created');
         })
         .catch((error: ProviderRpcError) => {
           setFieldValue('isLoading', false);
           const { message } = error;
-          modals.info.setMsg('Error', message, 'error');
+          toast.error('Something went wrong');
+          console.error('Create index error', message);
         });
     },
     displayName: 'CreateIndex',

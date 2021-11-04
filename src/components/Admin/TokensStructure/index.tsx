@@ -1,44 +1,35 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useCallback, useEffect, useState } from 'react';
 import BigNumber from 'bignumber.js/bignumber';
 
-import bluePlus from '../../../assets/img/icons/icon-plus-blue.svg';
 import { IVault } from '../../../pages/AdminIndex';
-import { indexesApi } from '../../../services/api';
 import { Button, Table } from '../../index';
-import { InputNumber } from '../../Input';
 import SmallTableCard from '../../SmallTableCard/index';
 
 import './TokensStructure.scss';
+import { useWalletConnectorContext } from '../../../services/walletConnect';
+import txToast from '../../ToastWithTxHash';
+import { ProviderRpcError } from '../../../types/errors';
+import { toast } from 'react-toastify';
+import config, { TChain } from '../../../config';
+import { observer } from 'mobx-react-lite';
+import { useMst } from '../../../store/store';
+import config_ABI from '../../../services/web3/config_ABI';
 
-interface IIndexId {
-  indexId: string;
-}
 interface TokensStructureProps {
   vaults: IVault[];
-  manualRebalanceValue: string;
+  indexAddress: string;
 }
 
-const TokensStructure: React.FC<TokensStructureProps> = ({ vaults, manualRebalanceValue }) => {
-  const { indexId } = useParams<IIndexId>();
+const TokensStructure: React.FC<TokensStructureProps> = observer(({ vaults, indexAddress }) => {
+  const { networks } = useMst();
+  const { NATIVE_TOKENS } = config;
+  const walletConnect = useWalletConnectorContext();
   const [dataSource, setDataSource] = useState<any[]>([]);
-  const [inputs, setInputs] = useState<any[]>([]);
-  const handleInputChange = (value: string | number, index: number) => {
-    const newArr = [...inputs]; // copying the old datas array
-    newArr[index] = value; // replace e.target.value with whatever you want to change it to
-    setInputs(newArr);
-  };
-  const handleSubmitChange = () => {
-    const aprArray = vaults.map((vault, index) => {
-      return {
-        id: vault.id,
-        apr: inputs[index] || '0',
-      };
-    });
-    indexesApi.patchIndexesApr(+indexId, aprArray).catch((err) => {
-      console.log(err);
-    });
-  };
+  const [isWithdrawBtnLoading, setIsWithdrawBtnLoading] = useState(false);
+  const [isDepositBtnLoading, setIsDepositBtnLoading] = useState(false);
+
+  const [isAllowed, setIsAllowed] = useState(false);
+  const [tokenAddressesNeedAllowance, setTokenAddressesNeedAllowance] = useState<string[]>([]);
   const columns: any[] = [
     {
       title: 'Tokens per index',
@@ -73,81 +64,134 @@ const TokensStructure: React.FC<TokensStructureProps> = ({ vaults, manualRebalan
       dataIndex: 'farm',
       key: 'farm',
     },
-    {
-      title: 'Estimated X Vault',
-      dataIndex: 'estimated',
-      key: 'estimated',
-    },
-    {
-      title: 'Must be returned from the farm',
-      dataIndex: 'returnValue',
-      key: 'returnValue',
-    },
-    {
-      title: (
-        <div className="apr-cell">
-          APR, %
-          <Button onClick={handleSubmitChange} className="apr-cell__btn" styledType="clear">
-            <img src={bluePlus} alt="add apr" width="32" height="32" />
-          </Button>
-        </div>
-      ),
-      dataIndex: 'apr',
-      key: 'apr',
-      render: (item: any) => (
-        <InputNumber
-          type="number"
-          value={item.apr === '0.0' ? '' : item.apr}
-          onChange={(value) => handleInputChange(value, item.index)}
-          placeholder="0"
-          min={0}
-          max={100}
-        />
-      ),
-    },
   ];
-  useEffect(() => {
-    if (vaults) {
-      const aprArray = vaults.map((vault) => vault.apr || '');
-      setInputs(aprArray);
-    }
-  }, [vaults]);
-  useEffect(() => {
-    if (vaults) {
-      const newData = vaults.map((vault, index) => {
-        const x_vault = new BigNumber(vault.x_balance)
-          .dividedBy(new BigNumber(10).pow(vault.decimals))
-          .toFixed(5);
-        const farm = new BigNumber(vault.farm_balance)
-          .dividedBy(new BigNumber(10).pow(vault.decimals))
-          .toFixed(5);
-        const y_vault = new BigNumber(
-          new BigNumber(vault.y_balance).minus(new BigNumber(vault.farm_balance)),
-        )
-          .dividedBy(new BigNumber(10).pow(vault.decimals))
-          .toFixed(5);
-        const estimated = new BigNumber(x_vault)
-          .plus(y_vault)
-          .plus(farm)
-          .multipliedBy(new BigNumber(manualRebalanceValue || 0).dividedBy(100))
-          .toFixed(5); // TODO: change multiplier
-        const returnValue = new BigNumber(estimated).minus(x_vault).minus(y_vault).isLessThan(0)
-          ? '0'
-          : new BigNumber(estimated).minus(x_vault).minus(y_vault).toFixed(5);
-        return {
-          key: index,
-          name: { image: vault.token_image, name: vault.token_name },
-          x_vault,
-          y_vault,
-          farm,
-          estimated,
-          returnValue,
-          apr: { apr: inputs[index], index },
-        };
+
+  const handleWithdrawTokensClick = () => {
+    setIsWithdrawBtnLoading(true);
+    const preparedTokens = vaults.map((vault) =>
+      new BigNumber(vault.y_balance).minus(new BigNumber(vault.farm_balance)).toString(),
+    );
+    walletConnect.metamaskService
+      .withdrawTokensForStaking(preparedTokens, indexAddress)
+      .on('transactionHash', (hash: string) => {
+        txToast(hash);
+      })
+      .then(() => {
+        toast.success('Tokens successfully withdrawed');
+      })
+      .catch((error: ProviderRpcError) => {
+        const { message } = error;
+        toast.error('Something went wrong');
+        console.error(`withdrawTokensForStaking error`, message);
+      })
+      .finally(() => {
+        setIsWithdrawBtnLoading(false);
       });
-      setDataSource(newData);
+  };
+  const handleDepositClick = () => {
+    setIsDepositBtnLoading(true);
+    const nativeTokenValue = vaults.find(
+      (vault) => vault.token_symbol === NATIVE_TOKENS[networks.currentNetwork as TChain].native,
+    );
+    const preparedTokens = vaults
+      .filter((vault) => vault.token_symbol !== nativeTokenValue?.token_symbol)
+      .map((vault) => vault.farm_balance);
+    walletConnect.metamaskService
+      .depositToIndex(preparedTokens, indexAddress, nativeTokenValue)
+      .on('transactionHash', (hash: string) => {
+        txToast(hash);
+      })
+      .then(() => {
+        toast.success('Tokens successfully deposited');
+      })
+      .catch((error: ProviderRpcError) => {
+        const { message } = error;
+        toast.error('Something went wrong');
+        console.error(`withdrawTokensForStaking error`, message);
+      })
+      .finally(() => {
+        setIsDepositBtnLoading(false);
+      });
+  };
+  const prepareData = useCallback(() => {
+    const newData = vaults.map((vault, index) => {
+      const x_vault = new BigNumber(vault.x_balance)
+        .dividedBy(new BigNumber(10).pow(vault.decimals))
+        .toFixed(5);
+      const farm = new BigNumber(vault.farm_balance)
+        .dividedBy(new BigNumber(10).pow(vault.decimals))
+        .toFixed(5);
+      const y_vault = new BigNumber(
+        new BigNumber(vault.y_balance).minus(new BigNumber(vault.farm_balance)),
+      )
+        .dividedBy(new BigNumber(10).pow(vault.decimals))
+        .toFixed(5);
+      return {
+        key: index,
+        name: { image: vault.token_image, name: vault.token_name },
+        x_vault,
+        y_vault,
+        farm,
+      };
+    });
+    setDataSource(newData);
+  }, [vaults]);
+
+  const checkAllowance = useCallback(async () => {
+    const nativeToken = vaults.find(
+      (vault) => vault.token_symbol === NATIVE_TOKENS[networks.currentNetwork as TChain].native,
+    );
+    const filteredTokens = vaults
+      .filter((vault) => vault.token_symbol !== nativeToken?.token_symbol)
+      .map((vault) => vault.token_address);
+    const newArray: string[] = [];
+
+    const promiseArray = filteredTokens.map((address) => {
+      return walletConnect.metamaskService
+        .checkAllowanceById(address, config_ABI.Token.ABI, indexAddress)
+        .then((isApproved: boolean) => {
+          if (!isApproved) {
+            newArray.push(address);
+          }
+        });
+    });
+    try {
+      await Promise.all([...promiseArray]);
+      if (newArray.length) {
+        setIsAllowed(false);
+        setTokenAddressesNeedAllowance(newArray);
+      } else {
+        setIsAllowed(true);
+        setTokenAddressesNeedAllowance([]);
+      }
+    } catch (error) {
+      console.log('TokensStructure allowance error', error);
     }
-  }, [inputs, manualRebalanceValue, vaults]);
+  }, [NATIVE_TOKENS, indexAddress, networks.currentNetwork, vaults, walletConnect.metamaskService]);
+
+  const handleApproveAll = useCallback(async () => {
+    const promiseArray = tokenAddressesNeedAllowance.map((address) => {
+      return walletConnect.metamaskService.approve(address, indexAddress);
+    });
+    try {
+      await Promise.all([...promiseArray]);
+      setIsAllowed(true);
+      setTokenAddressesNeedAllowance([]);
+    } catch (error) {
+      console.log('TokensStructure approve error', error);
+    }
+  }, [indexAddress, tokenAddressesNeedAllowance, walletConnect.metamaskService]);
+
+  useEffect(() => {
+    if (vaults) {
+      prepareData();
+    }
+  }, [prepareData, vaults]);
+  useEffect(() => {
+    if (vaults.length && indexAddress) {
+      checkAllowance();
+    }
+  }, [checkAllowance, indexAddress, vaults]);
   return (
     <section className="section section--admin">
       <h2 className="section__title text-outline">Tokens structure</h2>
@@ -169,35 +213,31 @@ const TokensStructure: React.FC<TokensStructureProps> = ({ vaults, manualRebalan
                   ['X Vault', data.x_vault],
                   ['Y Vault', data.y_vault],
                   ['Farm', data.farm],
-                  ['Estimated X Vault', data.estimated],
-                  ['Must be returned from the farm', data.returnValue],
-                  [
-                    'APR, %',
-                    <div className="apr-cell-small">
-                      <InputNumber
-                        type="number"
-                        value={data.apr.apr === '0.0' ? '' : data.apr.apr}
-                        onChange={(value) => handleInputChange(value, data.apr.index)}
-                        placeholder="0"
-                        min={0}
-                        max={100}
-                      />
-                      <Button
-                        onClick={handleSubmitChange}
-                        className="apr-cell__btn"
-                        styledType="clear"
-                      >
-                        <img src={bluePlus} alt="add apr" width="32" height="32" />
-                      </Button>
-                    </div>,
-                  ],
                 ]}
               />
             ))}
           </div>
         </>
       )}
+      <div className="token-structure__btns">
+        <Button
+          colorScheme="orange"
+          loading={isWithdrawBtnLoading}
+          onClick={handleWithdrawTokensClick}
+        >
+          Withdraw
+        </Button>
+        {isAllowed ? (
+          <Button styledType="outline" loading={isDepositBtnLoading} onClick={handleDepositClick}>
+            Deposit
+          </Button>
+        ) : (
+          <Button styledType="outline" loading={isDepositBtnLoading} onClick={handleApproveAll}>
+            Approve all
+          </Button>
+        )}
+      </div>
     </section>
   );
-};
+});
 export default TokensStructure;

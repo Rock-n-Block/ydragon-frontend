@@ -1,19 +1,44 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Line } from 'react-chartjs-2';
+import cn from 'classnames';
+import moment from 'moment';
 
 import { coingeckoApi } from '../../services/api';
 import PriceDifferenceBag from '../PriceDifferenceBag';
 
 import './YDRTokenChart.scss';
+import useWindowDebouncedEvent from '../../hooks/useWindowDebouncedEvent';
 
 interface TokenChartProps {
   price: (value: number) => void;
 }
 
-const YDRTokenChart: React.FC<TokenChartProps> = ({ price }) => {
+interface IMemoLine {
+  data: any;
+  options: any;
+  getElementAtEvent: (element: string | any[]) => void;
+}
+
+const MemoLine: React.FC<IMemoLine> = React.memo(
+  ({ data, options, getElementAtEvent }) => {
+    return (
+      <Line data={data} options={options} height={500} getElementAtEvent={getElementAtEvent} />
+    );
+  },
+  (prev, next) => {
+    return prev.data.datasets[0].data[0].time === next.data.datasets[0].data[0].time;
+  },
+);
+
+const btns = ['1d', '1m', '3m', 'MAX'];
+const YDRTokenChart: React.FC<TokenChartProps & React.HTMLAttributes<HTMLDivElement>> = ({
+  price,
+  className,
+}) => {
   const refDataLength = useRef(1);
   const refPrice = useRef(0.000001);
   const [days, setDays] = useState('1');
+  const [activeBtn, setActiveBtn] = useState<string>(btns[0]);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [diff, setDiff] = useState(['up', 0.0]);
   const [chartData, setChartData] = useState({
@@ -31,9 +56,8 @@ const YDRTokenChart: React.FC<TokenChartProps> = ({ price }) => {
       },
     ],
   });
-  const daysFromUrl = days;
   const options = {
-    aspectRatio: windowWidth > 768 ? 4 : 2,
+    aspectRatio: windowWidth > 768 ? 1.6 : 2,
     parsing: {
       xAxisKey: 'time',
       yAxisKey: 'data',
@@ -70,17 +94,9 @@ const YDRTokenChart: React.FC<TokenChartProps> = ({ price }) => {
     },
   };
 
-  const getWindowWidth = () => {
-    const { innerWidth: width } = window;
-    return width;
-  };
-
-  const toggleHandler = (event: any) => {
-    const btnsList = event.target.parentNode.children;
-    [...btnsList].forEach((item: any) => {
-      item.className = item === event.target ? 'chart-panel-btn active' : 'chart-panel-btn';
-    });
-    switch (event.target.innerHTML) {
+  const toggleHandler = (btnName: string) => {
+    setActiveBtn(btnName);
+    switch (btnName) {
       case '1d':
         setDays('1');
         break;
@@ -90,7 +106,7 @@ const YDRTokenChart: React.FC<TokenChartProps> = ({ price }) => {
       case '3m':
         setDays('90');
         break;
-      case 'ALL':
+      case 'MAX':
         setDays('max');
         break;
       default:
@@ -98,15 +114,21 @@ const YDRTokenChart: React.FC<TokenChartProps> = ({ price }) => {
     }
   };
 
-  const parseDate = (date: Date) => {
-    if (daysFromUrl === '1') {
-      return `${date.getHours()}:${date.getMinutes()}`;
-    }
-    if (daysFromUrl === 'max') {
-      return `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`;
-    }
-    return `${date.getMonth() + 1}/${date.getDate()} ${date.getHours()}:${date.getMinutes()}`;
-  };
+  const parseDate = useCallback(
+    (date: Date, dayAllowed?: boolean) => {
+      if (days === '1') {
+        // return moment(date).format('D/HH:MM');
+        return moment(date).format('HH:mm');
+        // return `${date.getHours()}:${date.getMinutes()}`;
+      }
+      if (days === 'max' && !dayAllowed) {
+        return moment(date).format('DD MMM YYYY');
+      }
+      // return `${date.getMonth() + 1}/${date.getDate()} ${date.getHours()}:${date.getMinutes()}`;
+      return moment(date).format('DD MMM, h A');
+    },
+    [days],
+  );
 
   const getChartData = (data: any): any => {
     const datasetsData: { time: string; data: number }[] = [];
@@ -171,65 +193,38 @@ const YDRTokenChart: React.FC<TokenChartProps> = ({ price }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [days]);
 
-  useEffect(() => {
-    function handleResize() {
-      setWindowWidth(getWindowWidth());
-    }
-
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
+  const handleResize = (screenWidth: number) => {
+    setWindowWidth(screenWidth);
+  };
+  useWindowDebouncedEvent('resize', window.innerWidth, handleResize, 500);
 
   useEffect(() => {
     axiosData();
   }, [axiosData]);
 
   return (
-    <div className="chart">
+    <div className={cn('chart', className)}>
       <div className="chart-panel">
         <PriceDifferenceBag price={clickedElement} diff={diff} />
         <div className="chart-panel-btns">
-          <div
-            className="chart-panel-btn active"
-            role="button"
-            tabIndex={0}
-            onClick={toggleHandler}
-            onKeyDown={toggleHandler}
-          >
-            1d
-          </div>
-          <div
-            className="chart-panel-btn"
-            role="button"
-            tabIndex={0}
-            onClick={toggleHandler}
-            onKeyDown={toggleHandler}
-          >
-            1m
-          </div>
-          <div
-            className="chart-panel-btn"
-            role="button"
-            tabIndex={0}
-            onClick={toggleHandler}
-            onKeyDown={toggleHandler}
-          >
-            3m
-          </div>
-          <div
-            className="chart-panel-btn"
-            role="button"
-            tabIndex={0}
-            onClick={toggleHandler}
-            onKeyDown={toggleHandler}
-          >
-            ALL
-          </div>
+          {btns.map((btn) => (
+            <div
+              key={btn}
+              className={cn('chart-panel-btn', {
+                active: activeBtn === btn,
+              })}
+              role="button"
+              tabIndex={0}
+              onClick={() => toggleHandler(btn)}
+              onKeyDown={() => {}}
+            >
+              {btn}
+            </div>
+          ))}
         </div>
       </div>
       {Object.keys(chartData).length ? (
-        <Line
-          height={500}
+        <MemoLine
           data={chartData}
           options={options}
           // type="line"

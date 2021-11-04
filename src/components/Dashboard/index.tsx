@@ -9,11 +9,12 @@ import { IIndex } from '../../pages/Admin';
 import { indexesApi } from '../../services/api';
 import { useMst } from '../../store/store';
 import { Sorter } from '../../utils/sorter';
-import { Spinner } from '../index';
+import { Loader } from '../index';
 
 import IndexSmallCard from './SmallCard/index';
 
 import './Dashboard.scss';
+import Tippy from '@tippyjs/react';
 
 export interface IUserIndex extends IIndex {
   name: string;
@@ -82,7 +83,7 @@ const Dashboard: React.FC = () => {
   return (
     <section className="section section--admin">
       <h2 className="section__title text-outline">Indexes</h2>
-      <Spinner loading={loading} />
+      <Loader loading={loading} />
       <div className="index-dashboard__big">
         <div className="index-dashboard">
           {indexes?.length ? (
@@ -269,7 +270,9 @@ const Dashboard: React.FC = () => {
                             <span
                               className={`index-dashboard__token-color ${colorsClassNames[i]}`}
                             />
-                            <span className="index-dashboard__token-name">{token.symbol}</span>
+                            <Tippy content={token.symbol.toUpperCase()}>
+                              <span className="index-dashboard__token-name">{token.symbol}</span>
+                            </Tippy>
                           </div>
                         ))}
 

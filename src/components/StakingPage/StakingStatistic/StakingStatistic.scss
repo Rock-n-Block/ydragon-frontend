@@ -1,0 +1,210 @@
+@import '../../../styles/variables';
+@import '../../../styles/mixins';
+
+.staking-statistic {
+  &-list {
+    list-style: none;
+    padding-left: 0;
+    display: flex;
+
+    background: linear-gradient(238.88deg, #000316 31.18%, #050c25 99.47%);
+    box-shadow: -8px 8px 36px rgba(0, 0, 0, 0.5);
+    border-radius: 32px;
+
+    border: 1px solid $red;
+    overflow: hidden;
+
+    @include b(1000) {
+      display: block;
+      background: none;
+      border: none;
+      box-shadow: none;
+    }
+  }
+
+  &-red {
+    border-radius: 32px;
+    background: linear-gradient(149.35deg, #b12e2a 53.78%, #f47c45 102.7%);
+
+    background-image: url('../../../assets/img/staking-page/staking-statistic-item-1-bg.svg'),
+      linear-gradient(149.35deg, #b12e2a 53.78%, #f47c45 102.7%);
+
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    padding: 78px 44px 60px;
+
+    @include b(mobile) {
+      padding: 78px 22px 60px;
+    }
+
+    text-align: center;
+
+    &_title {
+      letter-spacing: 0.5em;
+      text-transform: uppercase;
+      font-size: 14px;
+      margin-bottom: 30px;
+      &.text-MER {
+        font-weight: 900;
+      }
+    }
+
+    &_amount {
+      font-size: 48px;
+      letter-spacing: 0.03em;
+    }
+
+    &_subamount {
+      font-size: 28px;
+      margin-bottom: 74px;
+
+      @include text-ellipsis();
+    }
+
+    &_subtitle {
+      letter-spacing: 0.3em;
+      font-size: 14px;
+      text-transform: uppercase;
+      margin-bottom: 15px;
+      &.text-MER {
+        font-weight: 900;
+      }
+    }
+
+    &_percent {
+      font-size: 36px;
+      letter-spacing: 0.03em;
+    }
+  }
+
+  &-dark {
+    padding: 78px 10px 56px;
+    text-align: center;
+    flex-grow: 1;
+
+    @include b(mobile) {
+      padding: 20px 40px 40px;
+    }
+
+    @include b(1000) {
+      background: linear-gradient(238.88deg, #000316 31.18%, #050c25 99.47%);
+      box-shadow: -8px 8px 36px rgba(0, 0, 0, 0.5);
+      border-radius: 32px;
+      border: 1px solid $red;
+      margin-top: 30px;
+    }
+
+    &_title {
+      font-size: 14px;
+      letter-spacing: 0.8em;
+      text-transform: uppercase;
+      margin-bottom: 46px;
+      @include b(mobile) {
+        margin-bottom: 20px;
+      }
+      &.text-MER {
+        font-weight: 900;
+      }
+    }
+
+    &_amount {
+      font-size: 48px;
+      margin-bottom: 80px;
+      position: relative;
+
+      word-break: break-all;
+      white-space: wrap;
+
+      @include b(extramobile) {
+        font-size: 32px;
+        margin-bottom: 60px;
+      }
+
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: -20px;
+        left: 50%;
+        transform: translateX(-50%);
+        height: 1px;
+        width: 65%;
+        background-color: #fff;
+        opacity: 0.3;
+        @include b(mobile) {
+          width: 120%;
+        }
+      }
+    }
+
+    &_prices {
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      gap: 200px;
+
+      @include b(mobile) {
+        display: block;
+      }
+
+      position: relative;
+      &::after {
+        content: '';
+        position: absolute;
+
+        height: 42px;
+        width: 1px;
+        background-color: #fff;
+        opacity: 0.8;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      @include b(1000) {
+        &::after {
+          display: none;
+        }
+      }
+    }
+
+    &_price {
+      @include b(mobile) {
+        &:first-child {
+          margin-bottom: 30px;
+        }
+      }
+
+      &__title {
+        text-transform: uppercase;
+        font-size: 14px;
+        letter-spacing: 0.3em;
+        margin-bottom: 15px;
+        &.text-MER {
+          font-weight: 800;
+        }
+      }
+
+      &__amount {
+        font-size: 36px;
+      }
+    }
+  }
+}
+
+.light {
+  .staking-statistic-red {
+    color: $white;
+  }
+
+  .staking-statistic-dark,
+  .staking-statistic-list {
+    background: linear-gradient(355.19deg, #ffffff 0%, #dde1f0 100%);
+    box-shadow: -8px 8px 36px rgba(203, 209, 230, 0.3);
+  }
+
+  .staking-statistic-dark_amount::after {
+    background-color: #000;
+  }
+}

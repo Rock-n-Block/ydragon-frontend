@@ -100,13 +100,13 @@ const Teams: React.FC = () => {
   ];
 
   return (
-    <section className="section teams">
+    <section className="section teams" id="team">
       <div className="teams__title-wrapper">
         <h1 className="teams__title text-outline">TEAM</h1>
       </div>
       <div className="teams__items">
         {team.map((employee: IEmployee) => (
-          <div className="team">
+          <div className="team" key={`team_${employee.name}`}>
             <div className="team__img--wrapper">
               <img alt={employee.name} className="team__img" src={employee.img} />
             </div>
