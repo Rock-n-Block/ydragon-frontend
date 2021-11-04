@@ -53,7 +53,7 @@ const Options: React.FC<OptionsProps> = observer(({ address }) => {
         .catch((error: ProviderRpcError) => {
           const { message } = error;
           toast.error('Something went wrong');
-          console.log(`Rebalance error`, message);
+          console.error(`Rebalance error`, message);
         });
     }
   };
@@ -92,7 +92,7 @@ const Options: React.FC<OptionsProps> = observer(({ address }) => {
         })
         .catch((error: any) => {
           const { request } = error;
-          console.log(request);
+          console.error(request);
         });
     }
   }, [address, walletConnector]);

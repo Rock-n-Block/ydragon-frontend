@@ -119,7 +119,7 @@ const CreateIndex: React.FC<FormikProps<ICreateIndex> & ICreateIndex> = observer
           })
           .catch((error) => {
             const { response } = error;
-            console.log('search error', response);
+            console.error('search error', response);
           });
       } else {
         setFieldValue('searchTokens', [] as ISearchToken[]);

@@ -62,7 +62,7 @@ const StakingTableRow: React.FC<IStakingTableRowProps> = observer(({ index, ydrP
         setIsUnstakeLoad(true);
         await withdraw(amount);
       } catch (error) {
-        console.log(error);
+        console.error(error);
       } finally {
         setIsUnstakeLoad(false);
       }
@@ -75,7 +75,7 @@ const StakingTableRow: React.FC<IStakingTableRowProps> = observer(({ index, ydrP
       setIsFirstButtonLoad(true);
       await approve();
     } catch (error) {
-      console.log(error);
+      console.error(error);
     } finally {
       setIsFirstButtonLoad(false);
     }
@@ -86,7 +86,7 @@ const StakingTableRow: React.FC<IStakingTableRowProps> = observer(({ index, ydrP
       setIsRewardLoad(true);
       await withdraw('0');
     } catch (error) {
-      console.log(error);
+      console.error(error);
     } finally {
       setIsRewardLoad(false);
     }
@@ -98,7 +98,7 @@ const StakingTableRow: React.FC<IStakingTableRowProps> = observer(({ index, ydrP
         setIsFirstButtonLoad(true);
         await deposit(amount);
       } catch (error) {
-        console.log(error);
+        console.error(error);
       } finally {
         setIsFirstButtonLoad(false);
       }

@@ -74,7 +74,7 @@ const AdminIndex: React.FC = () => {
       })
       .catch((err) => {
         const { response } = err;
-        console.log('get index composition collections error', response);
+        console.error('get index composition collections error', response);
       });
   }, [indexId, BACKEND_NETWORKS, networks.currentNetwork, history]);
 
@@ -88,7 +88,7 @@ const AdminIndex: React.FC = () => {
       })
       .catch((err) => {
         const { response } = err;
-        console.log('get vaults collections error', response);
+        console.error('get vaults collections error', response);
       });
   }, [indexId]);
   useEffect(() => {
