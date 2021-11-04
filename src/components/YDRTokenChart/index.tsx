@@ -188,7 +188,7 @@ const YDRTokenChart: React.FC<TokenChartProps & React.HTMLAttributes<HTMLDivElem
         price(refPrice.current);
       })
       .catch((err: any) => {
-        console.log('Request chartData error', err);
+        console.error('Request chartData error', err);
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [days]);

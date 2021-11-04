@@ -26,7 +26,6 @@ const SmallCard: React.FC<IUserIndex> = ({
   const handleClick = () => {
     history.push(`/index/${id}`);
   };
-  console.log(handleClick);
   return (
     <div
       role="button"

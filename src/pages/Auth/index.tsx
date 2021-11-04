@@ -19,7 +19,7 @@ const Auth: React.FC = observer(() => {
         history.push('/');
       })
       .catch((err: any) => {
-        console.log('Connect error', err);
+        console.error('Connect error', err);
       });
   };
   return (

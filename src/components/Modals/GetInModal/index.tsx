@@ -60,7 +60,7 @@ const GetInModal: React.FC = observer(() => {
       })
       .catch((err: ProviderRpcError) => {
         const { message } = err;
-        console.log('getBalance error', message);
+        console.error('getBalance error', message);
       });
   }, [getTokenAddress, getDecimals, walletConnector.metamaskService, firstCurrency]);
   const checkAllowance = useCallback(() => {
@@ -76,7 +76,7 @@ const GetInModal: React.FC = observer(() => {
         })
         .catch((err: any) => {
           const { response } = err;
-          console.log('allowance error', response);
+          console.error('allowance error', response);
         });
     }
   }, [
@@ -154,7 +154,7 @@ const GetInModal: React.FC = observer(() => {
         })
         .catch((err: ProviderRpcError) => {
           const { message } = err;
-          console.log('getBuyCourse error', message);
+          console.error('getBuyCourse error', message);
         });
     } else {
       setViewOnlyInputValue('0.0');

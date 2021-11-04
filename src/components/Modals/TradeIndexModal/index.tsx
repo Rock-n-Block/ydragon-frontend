@@ -84,7 +84,7 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
         })
         .catch((err: ProviderRpcError) => {
           const { message } = err;
-          console.log('getBalance error', message);
+          console.error('getBalance error', message);
         });
     }, [
       walletConnector.metamaskService,
@@ -118,7 +118,7 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
             })
             .catch((err: ProviderRpcError) => {
               const { message } = err;
-              console.log('getBuyCourse error', message);
+              console.error('getBuyCourse error', message);
             });
         } catch (error) {
           //
@@ -153,7 +153,7 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
             })
             .catch((err: ProviderRpcError) => {
               const { message } = err;
-              console.log('getSellCourse error', message);
+              console.error('getSellCourse error', message);
             });
         } catch (error) {
           //
@@ -181,7 +181,7 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
           })
           .catch((err: ProviderRpcError) => {
             const { message } = err;
-            console.log('allowance error', message);
+            console.error('allowance error', message);
           });
       } else {
         setIsNeedApprove(false);
@@ -273,7 +273,7 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
         })
         .catch((err) => {
           const { response } = err;
-          console.log('get vaults collections error', response);
+          console.error('get vaults collections error', response);
         });
     }, [tokenId]);
     const setInitialCurrencies = useCallback(() => {

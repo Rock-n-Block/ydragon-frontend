@@ -165,7 +165,7 @@ const TokensStructure: React.FC<TokensStructureProps> = observer(({ vaults, inde
         setTokenAddressesNeedAllowance([]);
       }
     } catch (error) {
-      console.log('TokensStructure allowance error', error);
+      console.error('TokensStructure allowance error', error);
     }
   }, [NATIVE_TOKENS, indexAddress, networks.currentNetwork, vaults, walletConnect.metamaskService]);
 
@@ -178,7 +178,7 @@ const TokensStructure: React.FC<TokensStructureProps> = observer(({ vaults, inde
       setIsAllowed(true);
       setTokenAddressesNeedAllowance([]);
     } catch (error) {
-      console.log('TokensStructure approve error', error);
+      console.error('TokensStructure approve error', error);
     }
   }, [indexAddress, tokenAddressesNeedAllowance, walletConnect.metamaskService]);
 

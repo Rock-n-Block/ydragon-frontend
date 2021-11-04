@@ -57,7 +57,7 @@ const CreateIndexForm: React.FC = () => {
               .addParamsToIndex(hash, values.description /* , values.price */)
               .catch((error) => {
                 const { response } = error;
-                console.log('description not added', response);
+                console.error('description not added', response);
               })
               .finally(() => {
                 resetForm({});

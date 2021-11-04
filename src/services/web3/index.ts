@@ -313,7 +313,7 @@ export default class MetamaskService {
       if (result === '0') return false;
       return true;
     } catch (error) {
-      console.log(error);
+      console.error(error);
       return false;
     }
   }
