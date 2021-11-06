@@ -4,10 +4,15 @@ import { observer } from 'mobx-react';
 import StakingTableRow from './StakingTableRow';
 import { useWalletConnectorContext } from '../../../services/walletConnect';
 import { useMst } from '../../../store/store';
+import { Loader } from '../../index';
 
 import './StakingTable.scss';
 
-const StakingTable: React.FC = observer(() => {
+interface IStakingTableProps {
+  ydrPrice: string;
+}
+
+const StakingTable: React.FC<IStakingTableProps> = observer(({ ydrPrice }) => {
   const walletConnector = useWalletConnectorContext();
   const { networks } = useMst();
 
@@ -30,20 +35,23 @@ const StakingTable: React.FC = observer(() => {
       <div className="staking-table">
         <div className="staking-table_header">
           <div className="staking-table_header__cell" />
-          <div className="staking-table_header__cell">Balance</div>
+          <div className="staking-table_header__cell">Wallet</div>
           <div className="staking-table_header__cell">Deposited</div>
           <div className="staking-table_header__cell">Your Rewards</div>
           <div className="staking-table_header__cell">TVL</div>
+          <div className="staking-table_header__cell">APR</div>
           <div className="staking-table_header__cell" />
           <div className="staking-table_header__cell" />
         </div>
         <div className="staking-table_body">
-          {+stakesCount
-            ? new Array(+stakesCount)
-                .fill(1)
-                // eslint-disable-next-line react/no-array-index-key
-                .map((el, i) => <StakingTableRow key={`staking-table_row_${i}`} index={i} />)
-            : ''}
+          {+stakesCount ? (
+            new Array(+stakesCount)
+              .fill(1)
+              // eslint-disable-next-line
+              .map((el, i) => <StakingTableRow key={i} index={i} ydrPrice={ydrPrice} />)
+          ) : (
+            <Loader loading />
+          )}
         </div>
       </div>
     </section>

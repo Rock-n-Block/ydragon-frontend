@@ -158,7 +158,7 @@ const Indexes: React.FC = observer(() => {
       })
       .catch((error) => {
         const { response } = error;
-        console.log('get indexes error', response);
+        console.error('get indexes error', response);
         setLoading(false);
       });
   }, []);

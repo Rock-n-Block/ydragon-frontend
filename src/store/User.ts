@@ -27,4 +27,12 @@ export const User = types
       update,
       disconnect,
     };
-  });
+  })
+  .views((self) => ({
+    get isUser() {
+      return !!self.address;
+    },
+    get isAdmin() {
+      return !!self.token;
+    },
+  }));

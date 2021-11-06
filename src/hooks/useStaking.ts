@@ -1,10 +1,10 @@
-import config, { TChain } from '../config/index';
+import config, { TChain, BLOCKS_PER_YEAR } from '../config/index';
 import { useState, useCallback, useEffect } from 'react';
 import BigNumber from 'bignumber.js/bignumber';
 
 import { useWalletConnectorContext } from '../services/walletConnect';
 import { fromWeiToNormal } from '../utils/fromWeiToNormal';
-import { indexesApi, coingeckoApi } from '../services/api';
+import { indexesApi } from '../services/api';
 import txToast from '../components/ToastWithTxHash';
 
 import configABI from '../services/web3/config_ABI';
@@ -16,14 +16,16 @@ export const useStaking = (
   userAddress: string,
   stakingAddress: string,
   currentNetwork: string,
+  ydrPrice: string,
 ) => {
-  // read methods first
   const walletConnect = useWalletConnectorContext();
 
   // main info
   const [isAllowance, setIsAllowance] = useState(false);
   const [stakedTokenAdr, setStakedTokenAdr] = useState('');
+  const [stakeAddress, setStakeAddress] = useState('');
   const [tokenInfoFromBack, setTokenInfoFromBack] = useState({ link: '', priceInUsd: '' });
+  const [apr, setApr] = useState<number | null>(null);
 
   // index info
   const [symbol, setSymbol] = useState('');
@@ -68,7 +70,7 @@ export const useStaking = (
       indexSymbol = `${firstSymbol} / ${secondSymbol} LP`;
       setIsLp(true);
     } catch (error) {
-      console.log(error);
+      console.log('GET STAKE SYMBOL ERR [useStaking]', { info: error });
     }
 
     return { indexSymbol: indexSymbol.toUpperCase(), indexName };
@@ -85,10 +87,9 @@ export const useStaking = (
     async (indexID: string, isYdr?: boolean, isLp?: boolean) => {
       try {
         if (isYdr) {
-          const response = await coingeckoApi.getYdrCurrentPrice();
           return {
             link: '/ydrtoken',
-            priceInUsd: response.data.ydragon.usd,
+            priceInUsd: ydrPrice,
           };
         }
 
@@ -114,63 +115,48 @@ export const useStaking = (
         };
       }
     },
-    [currentNetwork, lpTokenFirst, lpTokenSecond],
+    [currentNetwork, lpTokenFirst, lpTokenSecond, ydrPrice],
   );
 
   // STAKE TOKENS
   const deposit = useCallback(
     async (amount: string) => {
       const res = await walletConnect.metamaskService
-        .deposit(stakedTokenAdr, amount)
+        .deposit(amount, stakeAddress)
         .on('transactionHash', (hash: string) => {
           txToast(hash);
         });
       if (res.status) {
         setBalance((prev) => new BigNumber(prev).minus(amount).toString());
         setDeposited((prev) => new BigNumber(prev).plus(amount).toString());
+        setRewards('0');
         setTotalStaked((prev) => new BigNumber(prev).plus(amount).toString());
       }
     },
-    [walletConnect.metamaskService, stakedTokenAdr, setDeposited, setBalance, setTotalStaked],
-  );
-
-  // CLAIM REWORD
-  const claimReward = useCallback(
-    async (amount: string, ind: string | number) => {
-      const res = await walletConnect.metamaskService
-        .claimReward(ind)
-        .on('transactionHash', (hash: string) => {
-          txToast(hash);
-        });
-      if (res.status) {
-        setRewards('0');
-        console.log(amount);
-        // setBalance((prev) => new BigNumber(prev).plus(amount).toString());
-      }
-    },
-    [walletConnect.metamaskService, setRewards],
+    [walletConnect.metamaskService, setDeposited, setBalance, setTotalStaked, stakeAddress],
   );
 
   // WITHDRAW
   const withdraw = useCallback(
-    async (tokenAdress: string, amount: string) => {
+    async (amount: string) => {
       const res = await walletConnect.metamaskService
-        .withdraw(tokenAdress, amount)
+        .withdraw(amount, stakeAddress)
         .on('transactionHash', (hash: string) => {
           txToast(hash);
         });
       if (res.status) {
         setDeposited((prev) => new BigNumber(prev).minus(amount).toString());
         setBalance((prev) => new BigNumber(prev).plus(amount).toString());
+        setRewards('0');
         setTotalStaked((prev) => new BigNumber(prev).minus(amount).toString());
       }
     },
-    [walletConnect.metamaskService, setDeposited, setBalance, setTotalStaked],
+    [walletConnect.metamaskService, setDeposited, setBalance, setTotalStaked, stakeAddress],
   );
 
   const approve = useCallback(async () => {
     const data = await walletConnect.metamaskService
-      .approve(stakedTokenAdr, stakingAddress)
+      .approve(stakedTokenAdr, stakeAddress)
       .on('transactionHash', (hash: string) => {
         txToast(hash);
       });
@@ -178,40 +164,79 @@ export const useStaking = (
     if (data.status) {
       setIsAllowance(true);
     }
-  }, [walletConnect.metamaskService, stakedTokenAdr, stakingAddress]);
+  }, [walletConnect.metamaskService, stakedTokenAdr, stakeAddress]);
+
+  const getAprForStake = useCallback(
+    async (stakeAddressId: string, stakingTokenPrice: string) => {
+      const rewardTokenPrice = ydrPrice;
+
+      const totalStakedInPool = await walletConnect.metamaskService.getTotalStaked(stakeAddressId);
+
+      const tokenPerBlock = await walletConnect.metamaskService.getRewardPerBlock(stakedTokenAdr);
+
+      const totalRewardPricePerYear = new BigNumber(rewardTokenPrice)
+        .times(fromWeiToNormal(tokenPerBlock))
+        .times(BLOCKS_PER_YEAR[currentNetwork as TChain]);
+
+      const totalStakingTokenInPool = new BigNumber(stakingTokenPrice).times(
+        fromWeiToNormal(totalStakedInPool),
+      );
+
+      const aprAmount = totalRewardPricePerYear.div(totalStakingTokenInPool).times(100);
+
+      return aprAmount.isNaN() || !aprAmount.isFinite() ? null : aprAmount.toNumber();
+    },
+    [stakedTokenAdr, walletConnect.metamaskService, currentNetwork, ydrPrice],
+  );
 
   useEffect(() => {
-    // INDEX NAME AND SYMBOL
-    getStakeSymbolAndName().then((data) => {
-      setName(data.indexName);
-      setSymbol(data.indexSymbol);
-    });
-
-    // USER BALANCE IN THE WALLET
-    getBalanceOfUser().then((userBalance) => {
-      setBalance(fromWeiToNormal(userBalance));
-    });
-
-    // USER STAKED AMOUNT
+    // GET STAKE ADDRESS
     walletConnect.metamaskService
-      .getUserStakedAmount(userAddress, indexId)
-      .then((data: string) => setDeposited(fromWeiToNormal(data)));
+      .getStakeContractByIndex(indexId)
+      .then((stakeAddressId: string) => {
+        setStakeAddress(stakeAddressId);
 
-    // TOTAL STAKED AMOUNT
-    walletConnect.metamaskService
-      .getTotalStaked(indexId)
-      .then((data: string) => setTotalStaked(fromWeiToNormal(data)));
+        // INDEX NAME AND SYMBOL
+        getStakeSymbolAndName().then((data) => {
+          setName(data.indexName);
+          setSymbol(data.indexSymbol);
+        });
 
-    // USER REWARDS
-    walletConnect.metamaskService
-      .getUserRewards(userAddress, indexId)
-      .then((data: string) => setRewards(fromWeiToNormal(data)));
+        // USER BALANCE IN THE WALLET
+        getBalanceOfUser().then((userBalance) => {
+          setBalance(fromWeiToNormal(userBalance));
+        });
 
-    // ALLOWANCE
-    walletConnect.metamaskService
-      .checkAllowanceById(stakedTokenAdr, configABI.MAIN.ABI, stakingAddress)
-      .then((data: boolean) => {
-        setIsAllowance(data);
+        // USER STAKED AMOUNT
+        walletConnect.metamaskService
+          .getUserStakedAmount(userAddress, stakeAddressId)
+          .then((data: any) => {
+            setDeposited(fromWeiToNormal(data.amount));
+          });
+
+        if (stakedTokenAdr) {
+          // TOTAL STAKED AMOUNT
+          walletConnect.metamaskService.getTotalStaked(stakeAddressId).then((data: string) => {
+            setTotalStaked(fromWeiToNormal(data));
+          });
+
+          // GET APR FOR STAKE
+          getAprForStake(stakeAddressId, tokenInfoFromBack.priceInUsd).then((data) => {
+            setApr(data);
+          });
+        }
+
+        // USER REWARDS
+        walletConnect.metamaskService
+          .getUserRewards(userAddress, stakeAddressId)
+          .then((data: string) => setRewards(fromWeiToNormal(data)));
+
+        // ALLOWANCE
+        walletConnect.metamaskService
+          .checkAllowanceById(stakedTokenAdr, configABI.MAIN.ABI, stakeAddressId)
+          .then((data: boolean) => {
+            setIsAllowance(data);
+          });
       });
   }, [
     getStakeSymbolAndName,
@@ -225,16 +250,19 @@ export const useStaking = (
     isTokenLp,
     stakedTokenAdr,
     stakingAddress,
+    getAprForStake,
+    tokenInfoFromBack.priceInUsd,
   ]);
 
   useEffect(() => {
     // STAKED TOKEN ADDRESS
     getStakedTokenAdress(indexId).then((data) => {
       setStakedTokenAdr(data);
-
-      getTokenPriceInUsd(data, symbol === 'YDR', isTokenLp).then((tokenInfo) => {
-        setTokenInfoFromBack(tokenInfo);
-      });
+      if (symbol) {
+        getTokenPriceInUsd(data, symbol === 'YDR', isTokenLp).then((tokenInfo) => {
+          setTokenInfoFromBack(tokenInfo);
+        });
+      }
     });
   }, [getStakedTokenAdress, getTokenPriceInUsd, indexId, isTokenLp, symbol]);
 
@@ -248,7 +276,7 @@ export const useStaking = (
     stakedTokenAdr,
     tokenInfoFromBack,
     isAllowance,
-    claimReward,
+    apr,
     setDeposited,
     setBalance,
     setTotalStaked,

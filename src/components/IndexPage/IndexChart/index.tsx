@@ -222,7 +222,7 @@ const IndexChart: React.FC<IndexChartProps> = React.memo(({ onClick, indexId, di
         setClickedElement(refPrice.current);
       })
       .catch((err: any) => {
-        console.log('Request chartData error', err);
+        console.error('Request chartData error', err);
       });
   }, [indexId, days, getChartData]);
 

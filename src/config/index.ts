@@ -223,3 +223,8 @@ export default {
     },
   },
 };
+
+export const BLOCKS_PER_YEAR = {
+  bnb: 10512000,
+  eth: 2102400,
+};

@@ -33,10 +33,13 @@ interface IRebalance extends IIndexStatus {
 
 export interface IVault {
   id: number;
+  address: string;
   apr: null | string;
   decimals: number;
   token_name: string;
   token_image: string;
+  token_address: string;
+  token_symbol: string;
   x_balance: string;
   y_balance: string;
   farm_balance: string;
@@ -57,13 +60,9 @@ const AdminIndex: React.FC = () => {
   const [index, setIndex] = useState<IRebalance>({} as IRebalance);
   const [vault, setVault] = useState<IVault[]>([] as IVault[]);
   const [vaultMini, setVaultMini] = useState<IVaultMini[]>([] as IVaultMini[]);
-  const [manualRebalanceValue, setManualRebalanceValue] = useState<string>('');
   const { networks } = useMst();
   const history = useHistory();
 
-  const handleManualRebalanceValueChange = (value: string) => {
-    setManualRebalanceValue(value);
-  };
   const getIndexComposition = useCallback(() => {
     indexesApi
       .getIndexesRebalance(+indexId)
@@ -75,7 +74,7 @@ const AdminIndex: React.FC = () => {
       })
       .catch((err) => {
         const { response } = err;
-        console.log('get index composition collections error', response);
+        console.error('get index composition collections error', response);
       });
   }, [indexId, BACKEND_NETWORKS, networks.currentNetwork, history]);
 
@@ -89,7 +88,7 @@ const AdminIndex: React.FC = () => {
       })
       .catch((err) => {
         const { response } = err;
-        console.log('get vaults collections error', response);
+        console.error('get vaults collections error', response);
       });
   }, [indexId]);
   useEffect(() => {
@@ -107,11 +106,8 @@ const AdminIndex: React.FC = () => {
       <IndexInfo marketCap={index.market_cap} price={index.price} />
       {/* <Composition status={index.status} tokens={index.tokens_diff} /> */}
       <Rebalance tokens={index.tokens_diff} />
-      <Options
-        address={index.index?.address}
-        onManualInputChange={handleManualRebalanceValueChange}
-      />
-      <TokensStructure vaults={vault} manualRebalanceValue={manualRebalanceValue} />
+      <Options address={index.index?.address} />
+      <TokensStructure vaults={vault} indexAddress={index.index?.address} />
       <XYStructure vaults={vaultMini} />
       {/* <RebalanceModal
         name={index.index?.name}

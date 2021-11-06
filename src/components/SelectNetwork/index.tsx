@@ -29,7 +29,7 @@ const SelectNetwork: React.FC = observer(() => {
       })
       .catch((err) => {
         const { response } = err;
-        console.log(response);
+        console.error(response);
       });
   }, [networks]);
 

@@ -47,3 +47,12 @@
 .table__col-with-logo__image {
   border-radius: 50%;
 }
+.token-structure__btns{
+  margin-top: 32px;
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  .btn{
+    max-width: 320px;
+  }
+}

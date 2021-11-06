@@ -19,9 +19,10 @@ import logoExample1 from '../../../../assets/img/staking-page/logo-example-1.svg
 
 interface IStakingTableRowProps {
   index: number;
+  ydrPrice: string;
 }
 
-const StakingTableRow: React.FC<IStakingTableRowProps> = observer(({ index }) => {
+const StakingTableRow: React.FC<IStakingTableRowProps> = observer(({ index, ydrPrice }) => {
   const [isOpened, setIsOpened] = useState(false);
   const { user, networks } = useMst();
 
@@ -32,11 +33,10 @@ const StakingTableRow: React.FC<IStakingTableRowProps> = observer(({ index }) =>
     totalStaked,
     rewards,
     balance,
-    stakedTokenAdr,
     tokenInfoFromBack,
     isAllowance,
+    apr,
     deposit,
-    claimReward,
     approve,
     withdraw,
   } = useStaking(
@@ -44,6 +44,7 @@ const StakingTableRow: React.FC<IStakingTableRowProps> = observer(({ index }) =>
     user.address,
     networks.getCurrNetwork()?.staking_address || '',
     networks.currentNetwork,
+    ydrPrice,
   );
 
   // inputs
@@ -56,12 +57,12 @@ const StakingTableRow: React.FC<IStakingTableRowProps> = observer(({ index }) =>
   const [isRewardLoad, setIsRewardLoad] = useState(false);
 
   const withdrawTokens = useCallback(
-    async (tokenAdress: string, amount: string) => {
+    async (amount: string) => {
       try {
         setIsUnstakeLoad(true);
-        await withdraw(tokenAdress, amount);
+        await withdraw(amount);
       } catch (error) {
-        console.log(error);
+        console.error(error);
       } finally {
         setIsUnstakeLoad(false);
       }
@@ -74,25 +75,22 @@ const StakingTableRow: React.FC<IStakingTableRowProps> = observer(({ index }) =>
       setIsFirstButtonLoad(true);
       await approve();
     } catch (error) {
-      console.log(error);
+      console.error(error);
     } finally {
       setIsFirstButtonLoad(false);
     }
   }, [approve]);
 
-  const claimRewardTokens = useCallback(
-    async (amount: string, ind: string | number) => {
-      try {
-        setIsRewardLoad(true);
-        await claimReward(amount, ind);
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setIsRewardLoad(false);
-      }
-    },
-    [claimReward],
-  );
+  const claimRewardTokens = useCallback(async () => {
+    try {
+      setIsRewardLoad(true);
+      await withdraw('0');
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsRewardLoad(false);
+    }
+  }, [withdraw]);
 
   const depositTokens = useCallback(
     async (amount: string) => {
@@ -100,7 +98,7 @@ const StakingTableRow: React.FC<IStakingTableRowProps> = observer(({ index }) =>
         setIsFirstButtonLoad(true);
         await deposit(amount);
       } catch (error) {
-        console.log(error);
+        console.error(error);
       } finally {
         setIsFirstButtonLoad(false);
       }
@@ -114,7 +112,6 @@ const StakingTableRow: React.FC<IStakingTableRowProps> = observer(({ index }) =>
 
   if (!networks.currentNetwork) return <Loader loading />;
 
-  // TODO: create skeleton
   if (!symbol || !name || !totalStaked)
     return <div className="staking-table_row staking-table_row--skelet" />;
 
@@ -133,13 +130,7 @@ const StakingTableRow: React.FC<IStakingTableRowProps> = observer(({ index }) =>
           </div>
         </div>
 
-        <StakingTableRowCell
-          title="balance"
-          value={balance}
-          textType="MER"
-          symbol="$"
-          usdPrice={tokenInfoFromBack.priceInUsd}
-        />
+        <StakingTableRowCell title="wallet" value={balance} textType="MER" symbol={symbol} />
         <StakingTableRowCell title="deposited" value={deposited} textType="MER" symbol={symbol} />
         <StakingTableRowCell
           title="your rewards"
@@ -154,14 +145,19 @@ const StakingTableRow: React.FC<IStakingTableRowProps> = observer(({ index }) =>
           symbol="$"
           usdPrice={tokenInfoFromBack.priceInUsd}
         />
-
+        <StakingTableRowCell
+          title="APR"
+          value={apr?.toString() || '00'}
+          textType="MER"
+          symbol="%"
+        />
         <div className="staking-table_row__cell">
           <Button
             link={tokenInfoFromBack.link}
             target={tokenInfoFromBack.link[0] !== '/' ? '_blank' : ''}
             className="staking-table_row__cell--button"
           >
-            Get in
+            <span>Get {symbol}</span>
           </Button>
         </div>
         <div
@@ -244,7 +240,9 @@ const StakingTableRow: React.FC<IStakingTableRowProps> = observer(({ index }) =>
                 role="button"
                 onKeyDown={() => {}}
                 tabIndex={0}
-                onClick={() => setToUnstakeAmount(new BigNumber(deposited).toFixed(18, 1))}
+                onClick={() => {
+                  setToUnstakeAmount(new BigNumber(deposited).toFixed(18, 1));
+                }}
                 className="staking-table_row__bottom__cell__input--max"
               >
                 MAX
@@ -254,10 +252,10 @@ const StakingTableRow: React.FC<IStakingTableRowProps> = observer(({ index }) =>
               disabled={!toUnstakeAmount || +deposited <= 0 || +toUnstakeAmount > +deposited}
               colorScheme="blue"
               className="staking-table_row__bottom__cell__button"
-              onClick={() => withdrawTokens(stakedTokenAdr, toUnstakeAmount.trim())}
+              onClick={() => withdrawTokens(toUnstakeAmount.trim())}
               loading={isUnstakeLoad}
             >
-              Unstake
+              Unstake and harvest
             </Button>
           </div>
           <div className="staking-table_row__bottom__cell">
@@ -275,7 +273,7 @@ const StakingTableRow: React.FC<IStakingTableRowProps> = observer(({ index }) =>
               colorScheme="blue"
               className="staking-table_row__bottom__cell__button"
               loading={isRewardLoad}
-              onClick={() => claimRewardTokens(rewards, index)}
+              onClick={() => claimRewardTokens()}
             >
               Harvest
             </Button>

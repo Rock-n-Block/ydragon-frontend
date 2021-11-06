@@ -31,8 +31,8 @@ const StakingTableRowCell: React.FC<IStakingTableRowCellProps> = ({
       >
         <div className={`staking-table_row__cell__value text-${textType}`}>
           {symbol === '$' && usdPrice
-            ? `$ ${formatAmount(new BigNumber(value).multipliedBy(usdPrice).toString(), 6)}`
-            : `${formatAmount(value, 6)} ${symbol}`}
+            ? `$ ${formatAmount(new BigNumber(value).multipliedBy(usdPrice).toString(), 0)}`
+            : `${formatAmount(value, 0)} ${symbol}`}
         </div>
       </Tippy>
     </div>

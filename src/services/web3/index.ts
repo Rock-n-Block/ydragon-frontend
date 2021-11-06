@@ -313,7 +313,7 @@ export default class MetamaskService {
       if (result === '0') return false;
       return true;
     } catch (error) {
-      console.log(error);
+      console.error(error);
       return false;
     }
   }
@@ -466,6 +466,10 @@ export default class MetamaskService {
     return this.getStakingFactoryContract().methods.getStakedCount().call();
   }
 
+  getRewardPerBlock(stakedTokenAddress: string) {
+    return this.getStakingFactoryContract().methods.rewardPerBlock(stakedTokenAddress).call();
+  }
+
   getStakeContractByIndex(index: number) {
     return this.getStakingFactoryContract().methods.stakes(index).call();
   }
@@ -474,59 +478,90 @@ export default class MetamaskService {
     return this.getContractByAddress(stakeAdress, configABI.Stake.ABI).methods.stakedToken().call();
   }
 
-  getUserStakedAmount(userWalletId: string, indexId: number) {
-    return this.getStakingFactoryContract().methods.getUserBalance(userWalletId, indexId).call();
+  getUserStakedAmount(userWalletId: string, stakeAddress: string) {
+    return this.getContractByAddress(stakeAddress, configABI.Stake.ABI)
+      .methods.userInfo(userWalletId)
+      .call();
   }
 
-  getTotalStaked(indexId: number) {
-    return this.getStakingFactoryContract().methods.getTotalStaked(indexId).call();
+  getTotalStaked(stakeAddress: string) {
+    return this.getContractByAddress(stakeAddress, configABI.Stake.ABI)
+      .methods.stakedTokenSupply()
+      .call();
   }
 
-  getUserRewards(userWalletId: string, indexId: number) {
-    return this.getStakingFactoryContract().methods.getAvailToClaim(userWalletId, indexId).call();
+  getUserRewards(userWalletId: string, stakeId: string) {
+    return this.getContractByAddress(stakeId, configABI.Stake.ABI)
+      .methods.pendingReward(userWalletId)
+      .call();
   }
 
   // STAKE COINS
-  deposit(tokenAddress: string, amount: string) {
-    const method = MetamaskService.getMethodInterface(configABI.StakingFactory.ABI, 'deposit');
+  deposit(amount: string, stakedAddress: string) {
+    const method = MetamaskService.getMethodInterface(configABI.Stake.ABI, 'deposit');
 
     const signature = this.encodeFunctionCall(method, [
-      tokenAddress,
       MetamaskService.calcTransactionAmount(amount, 18),
     ]);
 
     return this.sendTransaction({
       from: this.walletAddress,
-      to: rootStore.networks.getCurrNetwork()?.staking_address,
+      to: stakedAddress,
       data: signature,
+    });
+  }
+
+  /**
+   *A function for withdrawing a number of tokens from yVault to your address.
+   *tokenAmounts corresponds to the tokensInAsset array. The function can be called by the administrator only.
+   * @param tokenAmounts - in WEI
+   * @param indexAddress - address from withdraw
+   */
+  withdrawTokensForStaking(tokenAmounts: string[], indexAddress: string) {
+    const method = MetamaskService.getMethodInterface(
+      configABI.Index.ABI,
+      'withdrawTokensForStaking',
+    );
+
+    const signature = this.encodeFunctionCall(method, [tokenAmounts]);
+
+    return this.sendTransaction({
+      from: this.walletAddress,
+      to: indexAddress,
+      data: signature,
+    });
+  }
+
+  /**
+   * A function for sending tokens back to the index and for sending dividends to a staking contract.
+   * @param tokenAmounts - all token amounts in WEI, except NativeCurrency(eth,bnb)
+   * @param indexAddress - address to deposit
+   * @param value - NativeCurrency(eth,bnb) amount in WEI
+   */
+  depositToIndex(tokenAmounts: string[], indexAddress: string, value?: string) {
+    const method = MetamaskService.getMethodInterface(configABI.Index.ABI, 'depositToIndex');
+
+    const signature = this.encodeFunctionCall(method, [tokenAmounts]);
+
+    return this.sendTransaction({
+      from: this.walletAddress,
+      to: indexAddress,
+      data: signature,
+      value: value || 0,
     });
   }
 
   // UNSTAKE COINS
-  withdraw(tokenAdress: string, amount: string) {
-    const method = MetamaskService.getMethodInterface(configABI.StakingFactory.ABI, 'withdraw');
+  withdraw(amount: string, stakeAddres: string) {
+    const method = MetamaskService.getMethodInterface(configABI.Stake.ABI, 'withdraw');
 
     const signature = this.encodeFunctionCall(method, [
-      tokenAdress,
       MetamaskService.calcTransactionAmount(amount, 18),
     ]);
 
     return this.sendTransaction({
       from: this.walletAddress,
-      to: rootStore.networks.getCurrNetwork()?.staking_address,
-      data: signature,
-    });
-  }
-
-  // CLAIM REWARD FOR STAKE
-  claimReward(id: string | number) {
-    const method = MetamaskService.getMethodInterface(configABI.StakingFactory.ABI, 'claimReward');
-
-    const signature = this.encodeFunctionCall(method, [id]);
-
-    return this.sendTransaction({
-      from: this.walletAddress,
-      to: rootStore.networks.getCurrNetwork()?.staking_address,
+      to: stakeAddres,
       data: signature,
     });
   }
@@ -562,22 +597,6 @@ export default class MetamaskService {
     const tokenSymbol = await this.getTokenSymbol(address);
     const tokenBalance = await this.getBalanceOf(address);
     return { address, name: tokenName, symbol: tokenSymbol, balance: tokenBalance };
-  }
-
-  startStake(tokenAddress: string, amount: string, timeIntervalIndex: number) {
-    const method = MetamaskService.getMethodInterface(configABI.StakingFactory.ABI, 'stakeStart');
-
-    const signature = this.encodeFunctionCall(method, [
-      tokenAddress,
-      MetamaskService.calcTransactionAmount(amount, 18),
-      timeIntervalIndex,
-    ]);
-
-    return this.sendTransaction({
-      from: this.walletAddress,
-      to: rootStore.networks.getCurrNetwork()?.staking_address,
-      data: signature,
-    });
   }
 
   createNewIndex(

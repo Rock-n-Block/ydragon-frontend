@@ -13,10 +13,9 @@ import { toast } from 'react-toastify';
 
 interface OptionsProps {
   address: string;
-  onManualInputChange: (value: string) => void;
 }
 
-const Options: React.FC<OptionsProps> = observer(({ address, onManualInputChange }) => {
+const Options: React.FC<OptionsProps> = observer(({ address }) => {
   const [isAutoRebalanceChecked, setIsAutoRebalanceChecked] = useState<boolean | undefined>(
     undefined,
   );
@@ -54,7 +53,7 @@ const Options: React.FC<OptionsProps> = observer(({ address, onManualInputChange
         .catch((error: ProviderRpcError) => {
           const { message } = error;
           toast.error('Something went wrong');
-          console.log(`Rebalance error`, message);
+          console.error(`Rebalance error`, message);
         });
     }
   };
@@ -71,7 +70,6 @@ const Options: React.FC<OptionsProps> = observer(({ address, onManualInputChange
         setIsError(false);
       }
     }
-    onManualInputChange(value);
   };
   const handleBlur = () => {
     if (+inputValue <= 5) {
@@ -94,7 +92,7 @@ const Options: React.FC<OptionsProps> = observer(({ address, onManualInputChange
         })
         .catch((error: any) => {
           const { request } = error;
-          console.log(request);
+          console.error(request);
         });
     }
   }, [address, walletConnector]);
