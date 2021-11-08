@@ -25,6 +25,7 @@ export const Store = RootModel.create({
     mint: { isOpen: false },
     redeem: { isOpen: false },
     tradeIndex: { isOpen: false, method: '' },
+    connectWallet: { isOpen: false },
   },
   user: {
     address: '',

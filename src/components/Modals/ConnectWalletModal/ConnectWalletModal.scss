@@ -1,0 +1,157 @@
+@import '/src/styles/variables';
+@import '/src/styles/mixins';
+
+.dark {
+  .wallets-container {
+    color: $white;
+    @include shadow-dark-block;
+
+    &__wallet {
+      background: $dark-bg;
+    }
+  }
+}
+
+.light {
+  .wallets-container {
+    color: $black;
+    @include shadow-light-block;
+
+    &__wallet {
+      background: $main-bg;
+    }
+  }
+}
+
+.connect-wallet-box {
+  .ant-modal-content {
+    position: relative;
+
+    border-radius: 32px;
+
+    .background-image-container {
+      position: absolute;
+
+      width: 100%;
+
+      background: linear-gradient(111.35deg, #b12e2a 21.78%, #f47c45 102.7%);
+      border-radius: 32px;
+      box-shadow: -8px 0 36px #000;
+
+      &__text {
+        position: absolute;
+        top: 35px;
+        left: 31px;
+
+        font-family: 'Monument Extended', sans-serif;
+        font-size: 18px;
+        letter-spacing: 0.035em;
+      }
+    }
+
+    .wallets-container {
+      position: relative;
+      top: 93px;
+
+      padding: 40px 25px;
+
+      display: flex;
+      grid-gap: 10px;
+
+      @include b(600) {
+        flex-direction: column;
+      }
+
+      &__wallet {
+        padding: 44px 40px 50px;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        width: 270px;
+        min-width: 100px;
+
+        cursor: pointer;
+
+        border: none;
+        border-radius: 16px;
+        box-shadow: $shadow-dark;
+
+        transition: transform 0.3s ease;
+
+        &:first-child {
+          z-index: 1;
+        }
+
+        &:hover {
+          transform: scale(1.03);
+        }
+
+        @include b(600) {
+          padding: 30px 25px;
+
+          flex-direction: row;
+
+          width: initial;
+        }
+
+        &__img-container {
+          margin-bottom: 37px;
+
+          display: flex;
+
+          height: 111px;
+
+          @include b(600) {
+            margin-right: 28px;
+
+            float: left;
+
+            min-width: 77px;
+            max-width: 89px;
+            height: 92px;
+          }
+
+          img {
+            margin: auto;
+
+            width: 100%;
+            height: 100%;
+          }
+        }
+
+        &__text {
+          display: flex;
+          flex-direction: column;
+        }
+
+        &__title {
+          margin-bottom: 27px;
+
+          font-family: 'Monument Extended', sans-serif;
+          font-size: 18px;
+          line-height: 22px;
+          white-space: nowrap;
+        }
+
+        &__description {
+          font-family: 'TT Norms', sans-serif;
+          font-size: 16px;
+          line-height: 19px;
+          text-align: center;
+
+          opacity: 0.5;
+        }
+      }
+    }
+  }
+}
+
+.walletconnect-qrcode__text {
+  color: rgba(60, 66, 82, 0.6) !important;
+}
+
+.walletconnect-modal__base__row__h3 {
+  color: #25292e !important;
+}

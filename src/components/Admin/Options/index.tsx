@@ -25,7 +25,7 @@ const Options: React.FC<OptionsProps> = observer(({ address }) => {
 
   const handleAutoRebalanceChange = (isChecked: boolean) => {
     setIsAutoRebalanceChecked(isChecked);
-    walletConnector.metamaskService
+    walletConnector.walletService
       .changeAutoXYRebalaceAllowance(address, isChecked)
       .on('transactionHash', (hash: string) => {
         txToast(hash);
@@ -42,7 +42,7 @@ const Options: React.FC<OptionsProps> = observer(({ address }) => {
   };
   const handleManualRebalanceStart = () => {
     if (inputValue) {
-      walletConnector.metamaskService
+      walletConnector.walletService
         .startXyRebalance(address, +new BigNumber(inputValue).multipliedBy(100).toString(10))
         .on('transactionHash', (hash: string) => {
           txToast(hash);
@@ -85,7 +85,7 @@ const Options: React.FC<OptionsProps> = observer(({ address }) => {
   };
   useEffect(() => {
     if (address) {
-      walletConnector.metamaskService
+      walletConnector.walletService
         .checkAutoXYRebalaceAllowance(address)
         .then((data: boolean) => {
           setIsAutoRebalanceChecked(data);

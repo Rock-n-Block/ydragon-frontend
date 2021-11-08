@@ -19,10 +19,10 @@ const StakingTable: React.FC<IStakingTableProps> = observer(({ ydrPrice }) => {
   const [stakesCount, setStakesCount] = useState(0);
 
   const getStakesCount = useCallback(() => {
-    walletConnector.metamaskService.getStakesCount().then((count: number) => {
+    walletConnector.walletService.getStakesCount().then((count: number) => {
       setStakesCount(count);
     });
-  }, [walletConnector.metamaskService]);
+  }, [walletConnector.walletService]);
 
   useEffect(() => {
     if (networks.currentNetwork) {

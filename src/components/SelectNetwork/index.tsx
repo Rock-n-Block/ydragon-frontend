@@ -6,7 +6,7 @@ import arrow from '../../assets/img/icons/icon-arrow-yellow.svg';
 import config, { TChain } from '../../config';
 import { networksApi } from '../../services/api';
 import { useWalletConnectorContext } from '../../services/walletConnect';
-import MetamaskService from '../../services/web3';
+import WalletService from '../../services/web3';
 import { useMst } from '../../store/store';
 import TokenMini from '../TokenMini';
 import cn from 'classnames';
@@ -34,7 +34,7 @@ const SelectNetwork: React.FC = observer(() => {
   }, [networks]);
 
   const getCurrentChain = useCallback(() => {
-    walletConnector.metamaskService.ethGetCurrentChain().then((currentChainId: string) => {
+    walletConnector.walletService.requestCurrentChain().then((currentChainId: string) => {
       Object.keys(chains).forEach((key) => {
         if (chains[key as TChain].chainId === currentChainId) {
           setPickedChain(key as TChain);
@@ -42,16 +42,16 @@ const SelectNetwork: React.FC = observer(() => {
         }
       });
     });
-  }, [walletConnector.metamaskService, chains, networks, NETWORK_BY_CHAIN_ID, isProduction]);
+  }, [walletConnector.walletService, chains, networks, NETWORK_BY_CHAIN_ID, isProduction]);
 
   const switchChain = async (chainName: TChain) => {
     try {
-      await MetamaskService.switchEthereumChain(FULL_CHAIN_INFO[isProduction][chainName].chainId);
+      await WalletService.switchEthereumChain(FULL_CHAIN_INFO[isProduction][chainName].chainId);
     } catch (switchError: any) {
       // This error code indicates that the chain has not been added to MetaMask.
       if (switchError.code === 4902) {
         try {
-          await MetamaskService.addEthereumChain(FULL_CHAIN_INFO[isProduction][chainName]);
+          await WalletService.addEthereumChain(FULL_CHAIN_INFO[isProduction][chainName]);
         } catch (addError) {
           console.error('add chain error', addError);
           // handle "add" error
@@ -67,10 +67,10 @@ const SelectNetwork: React.FC = observer(() => {
   }, [getNetworks]);
 
   useEffect(() => {
-    if (walletConnector.metamaskService.isWindowEthEnabled() && networks.networksList.length) {
+    if (walletConnector.walletService.isWindowEthEnabled() && networks.networksList.length) {
       getCurrentChain();
     }
-  }, [getCurrentChain, networks.networksList.length, walletConnector.metamaskService]);
+  }, [getCurrentChain, networks.networksList.length, walletConnector.walletService]);
 
   useEffect(() => {
     Object.keys(chains).forEach((key) => {

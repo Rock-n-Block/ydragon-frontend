@@ -42,15 +42,15 @@ const GetInModal: React.FC = observer(() => {
       if (Object.keys(NETWORK_TOKENS).includes(currency)) {
         return new Promise((resolve) => resolve(18));
       }
-      return walletConnector.metamaskService.getDecimals(
+      return walletConnector.walletService.getDecimals(
         getTokenAddress(currency),
         configABI.Token.ABI,
       );
     },
-    [NETWORK_TOKENS, getTokenAddress, walletConnector.metamaskService],
+    [NETWORK_TOKENS, getTokenAddress, walletConnector.walletService],
   );
   const getBalance = useCallback(() => {
-    walletConnector.metamaskService
+    walletConnector.walletService
       .getBalanceOf(getTokenAddress(firstCurrency))
       .then((data: any) => {
         setBalance(data);
@@ -62,10 +62,10 @@ const GetInModal: React.FC = observer(() => {
         const { message } = err;
         console.error('getBalance error', message);
       });
-  }, [getTokenAddress, getDecimals, walletConnector.metamaskService, firstCurrency]);
+  }, [getTokenAddress, getDecimals, walletConnector.walletService, firstCurrency]);
   const checkAllowance = useCallback(() => {
     if (!Object.keys(NETWORK_TOKENS).includes(firstCurrency)) {
-      walletConnector.metamaskService
+      walletConnector.walletService
         .checkAllowanceById(
           getTokenAddress(firstCurrency),
           configABI.MAIN.ABI,
@@ -82,7 +82,7 @@ const GetInModal: React.FC = observer(() => {
   }, [
     NETWORK_TOKENS,
     firstCurrency,
-    walletConnector.metamaskService,
+    walletConnector.walletService,
     getTokenAddress,
     modals.getIn.address,
   ]);
@@ -100,7 +100,7 @@ const GetInModal: React.FC = observer(() => {
 
   const handleApprove = (): void => {
     setIsLoading(true);
-    walletConnector.metamaskService
+    walletConnector.walletService
       .approve(getTokenAddress(firstCurrency), modals.getIn.address)
       .on('transactionHash', (hash: string) => {
         txToast(hash);
@@ -118,7 +118,7 @@ const GetInModal: React.FC = observer(() => {
   };
   const handleEnter = (): void => {
     setIsLoading(true);
-    walletConnector.metamaskService
+    walletConnector.walletService
       .mint(payInput, firstCurrency, getTokenAddress(firstCurrency), modals.getIn.address, decimals)
       .on('transactionHash', (hash: string) => {
         txToast(hash);
@@ -139,7 +139,7 @@ const GetInModal: React.FC = observer(() => {
 
   const getBuyCourse = useCallback(() => {
     if (payInput) {
-      walletConnector.metamaskService
+      walletConnector.walletService
         .getIndexCourse(
           getTokenAddress(firstCurrency),
           payInput,
@@ -165,7 +165,7 @@ const GetInModal: React.FC = observer(() => {
     decimals,
     payInput,
     firstCurrency,
-    walletConnector.metamaskService,
+    walletConnector.walletService,
   ]);
 
   const setInitialCurrencies = useCallback(() => {

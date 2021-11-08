@@ -92,6 +92,18 @@ const MetamaskModal = types
       self.errMsg = '';
     },
   }));
+const ConnectWalletModal = types
+  .model({
+    isOpen: types.boolean,
+  })
+  .actions((self) => ({
+    open() {
+      self.isOpen = true;
+    },
+    close() {
+      self.isOpen = false;
+    },
+  }));
 
 export const Modals = types
   .model({
@@ -102,6 +114,7 @@ export const Modals = types
     redeem: RedeemModal,
     tradeIndex: TradeIndexModal,
     metamask: MetamaskModal,
+    connectWallet: ConnectWalletModal,
   })
   .actions((self) => ({
     closeAll() {
@@ -112,5 +125,6 @@ export const Modals = types
       self.tradeIndex.close();
       self.rebalance.close();
       self.createIndex.close();
+      self.connectWallet.close();
     },
   }));

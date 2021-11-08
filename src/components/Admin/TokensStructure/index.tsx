@@ -71,7 +71,7 @@ const TokensStructure: React.FC<TokensStructureProps> = observer(({ vaults, inde
     const preparedTokens = vaults.map((vault) =>
       new BigNumber(vault.y_balance).minus(new BigNumber(vault.farm_balance)).toString(),
     );
-    walletConnect.metamaskService
+    walletConnect.walletService
       .withdrawTokensForStaking(preparedTokens, indexAddress)
       .on('transactionHash', (hash: string) => {
         txToast(hash);
@@ -96,7 +96,7 @@ const TokensStructure: React.FC<TokensStructureProps> = observer(({ vaults, inde
     const preparedTokens = vaults
       .filter((vault) => vault.token_symbol !== nativeTokenValue?.token_symbol)
       .map((vault) => vault.farm_balance);
-    walletConnect.metamaskService
+    walletConnect.walletService
       .depositToIndex(preparedTokens, indexAddress, nativeTokenValue)
       .on('transactionHash', (hash: string) => {
         txToast(hash);
@@ -147,7 +147,7 @@ const TokensStructure: React.FC<TokensStructureProps> = observer(({ vaults, inde
     const newArray: string[] = [];
 
     const promiseArray = filteredTokens.map((address) => {
-      return walletConnect.metamaskService
+      return walletConnect.walletService
         .checkAllowanceById(address, config_ABI.Token.ABI, indexAddress)
         .then((isApproved: boolean) => {
           if (!isApproved) {
@@ -167,11 +167,11 @@ const TokensStructure: React.FC<TokensStructureProps> = observer(({ vaults, inde
     } catch (error) {
       console.error('TokensStructure allowance error', error);
     }
-  }, [NATIVE_TOKENS, indexAddress, networks.currentNetwork, vaults, walletConnect.metamaskService]);
+  }, [NATIVE_TOKENS, indexAddress, networks.currentNetwork, vaults, walletConnect.walletService]);
 
   const handleApproveAll = useCallback(async () => {
     const promiseArray = tokenAddressesNeedAllowance.map((address) => {
-      return walletConnect.metamaskService.approve(address, indexAddress);
+      return walletConnect.walletService.approve(address, indexAddress);
     });
     try {
       await Promise.all([...promiseArray]);
@@ -180,7 +180,7 @@ const TokensStructure: React.FC<TokensStructureProps> = observer(({ vaults, inde
     } catch (error) {
       console.error('TokensStructure approve error', error);
     }
-  }, [indexAddress, tokenAddressesNeedAllowance, walletConnect.metamaskService]);
+  }, [indexAddress, tokenAddressesNeedAllowance, walletConnect.walletService]);
 
   useEffect(() => {
     if (vaults) {
