@@ -4,21 +4,25 @@ import { observer } from 'mobx-react';
 
 import { rootStore } from '../../store/store';
 import { accountsApi } from '../api';
-import MetamaskService from '../web3';
+import WalletService, { WALLET_TYPE } from '../web3';
 // import { userApi } from '../api';
 
 const walletConnectorContext = createContext<any>({
-  metamaskService: {},
+  walletService: {},
   connect: (): void => {},
 });
 
 @observer
 class Connector extends React.Component<any, any> {
+  private static isWalletType(walletType: string): walletType is WALLET_TYPE {
+    return (Object.values(WALLET_TYPE) as any[]).includes(walletType);
+  }
+
   constructor(props: any) {
     super(props);
 
     this.state = {
-      provider: new MetamaskService(),
+      provider: new WalletService(),
     };
 
     this.connect = this.connect.bind(this);
@@ -27,38 +31,37 @@ class Connector extends React.Component<any, any> {
 
   componentDidMount() {
     const self = this;
-    if (window.ethereum) {
-      if (localStorage.getItem('yd_metamask')) {
-        this.connect();
-      }
-      this.state.provider.chainChangedObs.subscribe({
-        next(err: string) {
-          if (err) {
-            self.disconnect();
-            rootStore.modals.metamask.setErr(err);
-          } else {
-            window.location.reload();
-          }
-        },
-      });
-
-      this.state.provider.accountChangedObs.subscribe({
-        next() {
-          self.disconnect();
-        },
-      });
-      this.state.provider.disconnectObs.subscribe({
-        next(reason: string) {
-          console.log('disconnect', reason);
-        },
-      });
+    const walletType = sessionStorage.getItem('yd_wallet');
+    if (walletType && Connector.isWalletType(walletType)) {
+      this.connect(walletType);
     }
+    this.state.provider.chainChangedObs.subscribe({
+      next(err: string) {
+        if (err) {
+          self.disconnect();
+          rootStore.modals.metamask.setErr(err);
+        } else {
+          window.location.reload();
+        }
+      },
+    });
+
+    this.state.provider.accountChangedObs.subscribe({
+      next() {
+        self.disconnect();
+      },
+    });
+    this.state.provider.disconnectObs.subscribe({
+      next(reason: string) {
+        console.log('disconnect', reason);
+      },
+    });
   }
 
-  connect = async () => {
+  connect = async (walletType: WALLET_TYPE) => {
     if (window.ethereum) {
       try {
-        const { address } = await this.state.provider.connect();
+        const { address } = await this.state.provider.connect(walletType);
 
         if (!localStorage.getItem('yd_address')) {
           const metMsg: any = await accountsApi.getMsg();
@@ -116,7 +119,7 @@ class Connector extends React.Component<any, any> {
     return (
       <walletConnectorContext.Provider
         value={{
-          metamaskService: this.state.provider,
+          walletService: this.state.provider,
           connect: this.connect,
           disconnect: this.disconnect,
         }}

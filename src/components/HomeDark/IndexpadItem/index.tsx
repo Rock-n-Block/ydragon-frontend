@@ -30,11 +30,11 @@ const IndexpadItem: React.FC<InitialMintEventItemProps> = ({ imeItem }) => {
     modals.getIn.open(imeItem.id, imeItem.address, imeItem.name);
   };
   const getUserBalance = useCallback(() => {
-    walletConnector.metamaskService.getBalanceOf(imeItem.address).then((data: string | number) => {
+    walletConnector.walletService.getBalanceOf(imeItem.address).then((data: string | number) => {
       const formatedData = new BigNumber(data).dividedBy(new BigNumber(10).pow(18)).toFixed(6);
       setUserBalance(formatedData);
     });
-  }, [imeItem.address, walletConnector.metamaskService]);
+  }, [imeItem.address, walletConnector.walletService]);
   const formatTokens = useCallback(() => {
     const compareFn = (a: IIndexpadToken, b: IIndexpadToken) =>
       Sorter.DEFAULT(a, b, false, 'unit_weight');

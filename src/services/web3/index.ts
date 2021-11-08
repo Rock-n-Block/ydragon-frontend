@@ -49,6 +49,10 @@ const testNetworks: INetworks = {
   eth: '0x2a',
 };
 
+export enum WALLET_TYPE {
+  METAMASK = 'metamask',
+  WALLETCONNECT = 'walletconnect',
+}
 const {
   IS_PRODUCTION,
   NETWORK_BY_CHAIN_ID,
@@ -57,7 +61,7 @@ const {
   MS_RETRY_GET_BALANCE,
 } = config;
 
-export default class MetamaskService {
+export default class WalletService {
   public wallet;
 
   public web3Provider;
@@ -77,6 +81,8 @@ export default class MetamaskService {
   public usedNetwork: 'mainnet' | 'testnet';
 
   public usedChain: INetworks;
+
+  protected walletType: WALLET_TYPE | undefined;
 
   constructor() {
     this.wallet = window.ethereum;
@@ -225,7 +231,7 @@ export default class MetamaskService {
       } catch (err: any) {
         if (i < MAX_ATTEMPT_GET_BALANCE - 1) {
           if (err.message === 'Network Error') {
-            await MetamaskService.delay(MS_RETRY_GET_BALANCE);
+            await WalletService.delay(MS_RETRY_GET_BALANCE);
           } else {
             throw new Error('Get Balance failed');
           }
@@ -255,7 +261,7 @@ export default class MetamaskService {
       } catch (err: any) {
         if (i < MAX_ATTEMPT_GET_BALANCE - 1) {
           if (err.message === 'Network Error') {
-            await MetamaskService.delay(MS_RETRY_GET_BALANCE);
+            await WalletService.delay(MS_RETRY_GET_BALANCE);
           } else {
             throw new Error('Get Balance failed');
           }
@@ -325,7 +331,7 @@ export default class MetamaskService {
   }
 
   changeAutoXYRebalaceAllowance(address: string, value: boolean) {
-    const method = MetamaskService.getMethodInterface(
+    const method = WalletService.getMethodInterface(
       configABI.MAIN.ABI,
       'setIsAllowedAutoXYRebalace',
     );
@@ -339,7 +345,7 @@ export default class MetamaskService {
   }
 
   startXyRebalance(address: string, value: number) {
-    const method = MetamaskService.getMethodInterface(configABI.MAIN.ABI, 'xyRebalance');
+    const method = WalletService.getMethodInterface(configABI.MAIN.ABI, 'xyRebalance');
     const signature = this.encodeFunctionCall(method, [value]);
 
     return this.sendTransaction({
@@ -360,24 +366,24 @@ export default class MetamaskService {
       spenderTokenSymbol.toLowerCase() === 'eth' ||
       spenderTokenSymbol.toLowerCase() === 'bnb' ||
       spenderTokenSymbol.toLowerCase() === 'matic';
-    const mintMethod = MetamaskService.getMethodInterface(configABI.MAIN.ABI, 'mint');
+    const mintMethod = WalletService.getMethodInterface(configABI.MAIN.ABI, 'mint');
     const signature = this.encodeFunctionCall(mintMethod, [
       spenderTokenAddress,
-      MetamaskService.calcTransactionAmount(value, decimals),
+      WalletService.calcTransactionAmount(value, decimals),
     ]);
 
     return this.sendTransaction({
       from: this.walletAddress,
       to: indexAddress,
       data: signature,
-      value: isNative ? MetamaskService.calcTransactionAmount(value, decimals) : '',
+      value: isNative ? WalletService.calcTransactionAmount(value, decimals) : '',
     });
   }
 
   redeem(value: string, spenderTokenAddress: string, address: string) {
-    const redeemMethod = MetamaskService.getMethodInterface(configABI.MAIN.ABI, 'redeem');
+    const redeemMethod = WalletService.getMethodInterface(configABI.MAIN.ABI, 'redeem');
     const signature = this.encodeFunctionCall(redeemMethod, [
-      MetamaskService.calcTransactionAmount(value, 18),
+      WalletService.calcTransactionAmount(value, 18),
       spenderTokenAddress,
     ]);
 
@@ -389,7 +395,7 @@ export default class MetamaskService {
   }
 
   approve(toContractAddress: string, address: string) {
-    const approveMethod = MetamaskService.getMethodInterface(configABI.MAIN.ABI, 'approve');
+    const approveMethod = WalletService.getMethodInterface(configABI.MAIN.ABI, 'approve');
 
     const approveSignature = this.encodeFunctionCall(approveMethod, [
       address,
@@ -412,12 +418,12 @@ export default class MetamaskService {
   ) {
     const isNative = Object.keys(NETWORK_TOKENS).includes(spenderTokenName.toLowerCase());
     const methodName = isNative ? 'enterImeNative' : 'enterImeToken';
-    const enterMethod = MetamaskService.getMethodInterface(configABI.MAIN.ABI, methodName);
+    const enterMethod = WalletService.getMethodInterface(configABI.MAIN.ABI, methodName);
     let signature;
     if (!isNative) {
       signature = this.encodeFunctionCall(enterMethod, [
         spenderTokenAddress,
-        MetamaskService.calcTransactionAmount(value, decimals),
+        WalletService.calcTransactionAmount(value, decimals),
       ]);
     } else {
       signature = this.encodeFunctionCall(enterMethod, []);
@@ -427,7 +433,7 @@ export default class MetamaskService {
       from: this.walletAddress,
       to: imeAddress,
       data: signature,
-      value: isNative ? MetamaskService.calcTransactionAmount(value, decimals) : '',
+      value: isNative ? WalletService.calcTransactionAmount(value, decimals) : '',
     });
   }
 
@@ -442,14 +448,14 @@ export default class MetamaskService {
       return this.getContractByAddress(indexAddress, configABI.MAIN.ABI)
         .methods.getBuyAmountOut(
           currencyAddress,
-          MetamaskService.calcTransactionAmount(value, decimals),
+          WalletService.calcTransactionAmount(value, decimals),
         )
         .call();
     }
     return this.getContractByAddress(indexAddress, configABI.MAIN.ABI)
       .methods.getSellAmountOut(
         currencyAddress,
-        MetamaskService.calcTransactionAmount(value, decimals),
+        WalletService.calcTransactionAmount(value, decimals),
       )
       .call();
   }
@@ -498,10 +504,10 @@ export default class MetamaskService {
 
   // STAKE COINS
   deposit(amount: string, stakedAddress: string) {
-    const method = MetamaskService.getMethodInterface(configABI.Stake.ABI, 'deposit');
+    const method = WalletService.getMethodInterface(configABI.Stake.ABI, 'deposit');
 
     const signature = this.encodeFunctionCall(method, [
-      MetamaskService.calcTransactionAmount(amount, 18),
+      WalletService.calcTransactionAmount(amount, 18),
     ]);
 
     return this.sendTransaction({
@@ -518,7 +524,7 @@ export default class MetamaskService {
    * @param indexAddress - address from withdraw
    */
   withdrawTokensForStaking(tokenAmounts: string[], indexAddress: string) {
-    const method = MetamaskService.getMethodInterface(
+    const method = WalletService.getMethodInterface(
       configABI.Index.ABI,
       'withdrawTokensForStaking',
     );
@@ -539,7 +545,7 @@ export default class MetamaskService {
    * @param value - NativeCurrency(eth,bnb) amount in WEI
    */
   depositToIndex(tokenAmounts: string[], indexAddress: string, value?: string) {
-    const method = MetamaskService.getMethodInterface(configABI.Index.ABI, 'depositToIndex');
+    const method = WalletService.getMethodInterface(configABI.Index.ABI, 'depositToIndex');
 
     const signature = this.encodeFunctionCall(method, [tokenAmounts]);
 
@@ -553,10 +559,10 @@ export default class MetamaskService {
 
   // UNSTAKE COINS
   withdraw(amount: string, stakeAddres: string) {
-    const method = MetamaskService.getMethodInterface(configABI.Stake.ABI, 'withdraw');
+    const method = WalletService.getMethodInterface(configABI.Stake.ABI, 'withdraw');
 
     const signature = this.encodeFunctionCall(method, [
-      MetamaskService.calcTransactionAmount(amount, 18),
+      WalletService.calcTransactionAmount(amount, 18),
     ]);
 
     return this.sendTransaction({
@@ -607,7 +613,7 @@ export default class MetamaskService {
     tokenWeights: string[],
     initialPrice: string,
   ) {
-    const method = MetamaskService.getMethodInterface(configABI.Factory.ABI, 'deployNewAsset');
+    const method = WalletService.getMethodInterface(configABI.Factory.ABI, 'deployNewAsset');
 
     const signature = this.encodeFunctionCall(method, [
       name,

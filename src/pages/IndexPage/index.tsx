@@ -69,13 +69,13 @@ const Index: React.FC = observer(() => {
 
   const getUserBalance = useCallback(
     (indexAddress: string) => {
-      walletConnector.metamaskService.getBalanceOf(indexAddress).then((data: string) => {
+      walletConnector.walletService.getBalanceOf(indexAddress).then((data: string) => {
         setBalance(
           new BigNumber(data).dividedBy(new BigNumber(10).pow(18)).toFixed(+data === 0 ? 2 : 7),
         );
       });
     },
-    [walletConnector.metamaskService],
+    [walletConnector.walletService],
   );
 
   const updateData = () => {
