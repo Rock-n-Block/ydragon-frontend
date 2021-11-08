@@ -178,9 +178,15 @@ export default class WalletService {
         56: 'https://bsc-dataseed.binance.org/',
         97: 'https://data-seed-prebsc-2-s1.binance.org:8545/',
       },
+      qrcodeModalOptions: {
+        mobileLinks: ['metamask', 'trust'],
+        desktopLinks: ['encrypted ink'],
+      },
       qrcodeModal: QRCodeModal,
     });
-    this.wallet.enable();
+    this.wallet.enable().catch((err: any) => {
+      console.log(err);
+    });
     this.web3Provider.setProvider(this.wallet);
     this.subscribeOnChanges();
   }
