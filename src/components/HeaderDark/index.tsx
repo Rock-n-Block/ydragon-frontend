@@ -28,7 +28,7 @@ import useWindowDebouncedEvent from '../../hooks/useWindowDebouncedEvent';
 const Header: React.FC = observer(() => {
   const { SOCIAL_LINKS } = config;
   const [isCollapsed, setIsCollapsed] = useState(true);
-  const { theme, user, networks } = useMst();
+  const { theme, user, networks, modals } = useMst();
   const walletConnector = useWalletConnectorContext();
   const history = useHistory();
 
@@ -55,7 +55,9 @@ const Header: React.FC = observer(() => {
 
   const connectWallet = (): void => {
     setIsCollapsed(false);
-    walletConnector.connect();
+    modals.connectWallet.open();
+
+    // walletConnector.connect();
   };
 
   const redirectHandler = (path: string) => {
