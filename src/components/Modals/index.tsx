@@ -5,3 +5,4 @@ export { default as TradeIndexModal } from './TradeIndexModal';
 export { default as CreateIndexModal } from './CreateIndexModal';
 export { default as GetInModal } from './GetInModal';
 export { default as HarvestModal } from './HarvestModal';
+export { default as ConnectWalletModal } from './ConnectWalletModal';

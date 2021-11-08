@@ -1,5 +1,7 @@
 import BigNumber from 'bignumber.js/bignumber';
-import { Observable } from 'rxjs';
+import WalletConnect from '@walletconnect/web3-provider';
+import QRCodeModal from '@walletconnect/qrcode-modal';
+import { Subject } from 'rxjs';
 import Web3 from 'web3';
 
 import { rootStore } from '../../store/store';
@@ -53,6 +55,7 @@ export enum WALLET_TYPE {
   METAMASK = 'metamask',
   WALLETCONNECT = 'walletconnect',
 }
+
 const {
   IS_PRODUCTION,
   NETWORK_BY_CHAIN_ID,
@@ -62,21 +65,19 @@ const {
 } = config;
 
 export default class WalletService {
-  public wallet;
+  public wallet: any;
 
-  public web3Provider;
-
-  // public contract: any;
+  public web3Provider: Web3;
 
   public isProduction?: boolean;
 
   public walletAddress = '';
 
-  public chainChangedObs: any;
+  public chainChangedObs: Subject<string>;
 
-  public accountChangedObs: any;
+  public accountChangedObs: Subject<void>;
 
-  public disconnectObs: any;
+  public disconnectObs: Subject<string>;
 
   public usedNetwork: 'mainnet' | 'testnet';
 
@@ -85,16 +86,14 @@ export default class WalletService {
   protected walletType: WALLET_TYPE | undefined;
 
   constructor() {
-    this.wallet = window.ethereum;
-
-    this.web3Provider = new Web3(window.ethereum);
+    this.web3Provider = new Web3();
     this.isProduction = IS_PRODUCTION;
     // this.contract = new this.web3Provider.eth.Contract(config.ABI as Array<any>, config.ADDRESS);
 
     this.usedNetwork = this.isProduction ? 'mainnet' : 'testnet';
     this.usedChain = this.isProduction ? networks : testNetworks;
-
-    this.chainChangedObs = new Observable((subscriber) => {
+    this.chainChangedObs = new Subject();
+    /* this.chainChangedObs = new Observable((subscriber) => {
       this.wallet.on('chainChanged', () => {
         const currentChain = this.wallet.chainId;
         if (!Object.values(this.usedChain).find((chainId) => chainId === currentChain)) {
@@ -107,22 +106,151 @@ export default class WalletService {
           subscriber.next('');
         }
       });
-    });
-
-    this.accountChangedObs = new Observable((subscriber) => {
-      this.wallet.on('accountsChanged', () => {
-        subscriber.next();
-      });
-    });
-    this.disconnectObs = new Observable((subscriber) => {
+    }); */
+    this.accountChangedObs = new Subject();
+    /* this.accountChangedObs = new Observable((subscriber) => {
+       this.wallet.on('accountsChanged', () => {
+         subscriber.next();
+       });
+     }); */
+    this.disconnectObs = new Subject();
+    /* this.disconnectObs = new Observable((subscriber) => {
       this.wallet.on('disconnect', (code: number, reason: string) => {
         subscriber.next(reason);
       });
+    }); */
+  }
+
+  protected subscribeOnChanges(): void {
+    let isFirstTimeChainChanged = true;
+    let isFirstTimeAccountChanged = true;
+
+    this.wallet.on('chainChanged', () => {
+      if (this.walletType === WALLET_TYPE.WALLETCONNECT && isFirstTimeChainChanged) {
+        isFirstTimeChainChanged = false;
+        return;
+      }
+
+      const currentChain = this.getChainId();
+      if (!Object.values(this.usedChain).find((chainId) => chainId === currentChain)) {
+        this.chainChangedObs.next(`Please choose one of networks in header select.`);
+      } else {
+        rootStore.networks.setNetworkId(currentChain);
+        rootStore.networks.setCurrNetwork(
+          (NETWORK_BY_CHAIN_ID[this.usedNetwork] as any)[currentChain],
+        );
+        this.chainChangedObs.next('');
+      }
     });
+
+    this.wallet.on('accountsChanged', () => {
+      if (this.walletType === WALLET_TYPE.WALLETCONNECT && isFirstTimeAccountChanged) {
+        isFirstTimeAccountChanged = false;
+        return;
+      }
+
+      this.accountChangedObs.next();
+    });
+
+    this.wallet.on('disconnect', (errorMessage: any) => {
+      this.disconnectObs.next(errorMessage);
+    });
+  }
+
+  private connectMetamask(): void {
+    if (!window.ethereum) {
+      throw Error('No Metamask (or other Web3 Provider) installed');
+    }
+
+    this.walletType = WALLET_TYPE.METAMASK;
+    this.wallet = window.ethereum;
+    this.web3Provider.setProvider(this.wallet);
+    this.subscribeOnChanges();
+  }
+
+  private connectWalletconnect(): void {
+    this.walletType = WALLET_TYPE.WALLETCONNECT;
+    this.wallet = new WalletConnect({
+      infuraId: 'e15330fb7e954a868e15297dd74dea37',
+      rpc: {
+        1: 'https://mainnet.infura.io/v3/e15330fb7e954a868e15297dd74dea37',
+        3: 'https://ropsten.infura.io/v3/e15330fb7e954a868e15297dd74dea37',
+        56: 'https://bsc-dataseed.binance.org/',
+        97: 'https://data-seed-prebsc-2-s1.binance.org:8545/',
+      },
+      bridge: 'https://bridge.walletconnect.org', // Required
+      qrcodeModal: QRCodeModal,
+    });
+    this.web3Provider.setProvider(this.wallet);
+    this.subscribeOnChanges();
+  }
+
+  async connect(walletType: WALLET_TYPE): Promise<{ address: string; network: string }> {
+    if (walletType === WALLET_TYPE.METAMASK) {
+      this.connectMetamask();
+    } else {
+      this.connectWalletconnect();
+    }
+
+    return new Promise((resolve, reject) => {
+      if (!this.wallet) {
+        reject(new Error('metamask wallet is not injected'));
+      }
+      const isChainAcceptable = (currChain: string) => {
+        return !!Object.values(this.usedChain).find((chainId) => chainId === currChain);
+      };
+      const currentChain = this.wallet.chainId;
+      if (!currentChain || currentChain === null) {
+        this.wallet
+          .request({ method: 'eth_chainId' })
+          .then((resChain: any) => {
+            if (isChainAcceptable(resChain)) {
+              this.requestAccounts()
+                .then((account: any) => {
+                  [this.walletAddress] = account;
+                  resolve({
+                    address: account[0],
+                    network: resChain,
+                  });
+                })
+                .catch(() => reject(new Error('Not authorized')));
+            } else {
+              reject(new Error(`Please choose one of networks in header select.`));
+            }
+          })
+          .catch(() => reject(new Error('Not authorized')));
+      } else if (isChainAcceptable(currentChain)) {
+        this.requestAccounts()
+          .then((account: any) => {
+            [this.walletAddress] = account;
+            resolve({
+              address: account[0],
+              network: currentChain,
+            });
+          })
+          .catch(() => reject(new Error('Not authorized')));
+      } else {
+        reject(new Error(`Please choose one of networks in header select.`));
+      }
+    });
+  }
+
+  public async disconnect(): Promise<void> {
+    if (this.walletType === WALLET_TYPE.WALLETCONNECT) {
+      await this.wallet.close();
+    }
   }
 
   isWindowEthEnabled() {
     return !!this.wallet;
+  }
+
+  private getChainId(): string {
+    if (this.walletType === WALLET_TYPE.METAMASK) {
+      return this.wallet.chainId;
+    }
+
+    return `0x${this.wallet.chainId.toString(16)}`;
   }
 
   static switchEthereumChain(chainId: string) {
@@ -151,19 +279,27 @@ export default class WalletService {
     });
   }
 
-  ethRequestAccounts() {
-    return this.wallet.request({ method: 'eth_requestAccounts' });
+  private async requestAccounts(): Promise<string[]> {
+    if (this.walletType === WALLET_TYPE.METAMASK) {
+      return this.wallet.request({ method: 'eth_requestAccounts' });
+    }
+
+    return this.wallet.enable();
   }
 
-  ethGetCurrentChain() {
-    return this.wallet.request({ method: 'eth_chainId' });
+  async requestCurrentChain(): Promise<string> {
+    if (this.walletType === WALLET_TYPE.METAMASK) {
+      return this.wallet.request({ method: 'eth_chainId' });
+    }
+
+    return `0x${this.wallet.chainId.toString(16)}`;
   }
 
   getContractByAddress(address: string, abi: Array<any>) {
     return new this.web3Provider.eth.Contract(abi, address);
   }
 
-  public connect() {
+  /* public connect() {
     const currentChain = this.wallet.chainId;
 
     return new Promise((resolve, reject) => {
@@ -206,7 +342,7 @@ export default class WalletService {
         reject(new Error(`Please choose one of networks in header select.`));
       }
     });
-  }
+  } */
 
   static getMethodInterface(abi: Array<any>, methodName: string) {
     return abi.filter((m) => {

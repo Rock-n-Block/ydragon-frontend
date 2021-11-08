@@ -34,7 +34,7 @@ const SelectNetwork: React.FC = observer(() => {
   }, [networks]);
 
   const getCurrentChain = useCallback(() => {
-    walletConnector.walletService.ethGetCurrentChain().then((currentChainId: string) => {
+    walletConnector.walletService.requestCurrentChain().then((currentChainId: string) => {
       Object.keys(chains).forEach((key) => {
         if (chains[key as TChain].chainId === currentChainId) {
           setPickedChain(key as TChain);

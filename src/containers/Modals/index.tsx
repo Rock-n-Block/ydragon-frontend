@@ -1,4 +1,4 @@
-import { GetInModal, MetamaskErrModal } from '../../components/Modals';
+import { GetInModal, MetamaskErrModal, ConnectWalletModal } from '../../components/Modals';
 import React from 'react';
 
 const Modals: React.FC = () => {
@@ -6,6 +6,7 @@ const Modals: React.FC = () => {
     <>
       <MetamaskErrModal />
       <GetInModal />
+      <ConnectWalletModal />
     </>
   );
 };
