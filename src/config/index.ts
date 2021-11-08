@@ -96,6 +96,7 @@ export default {
   MAX_ATTEMPT_GET_BALANCE,
   MS_RETRY_GET_BALANCE,
   NETWORK_TOKENS,
+  INFURA_KEY: 'e15330fb7e954a868e15297dd74dea37',
   EXPLORERS: {
     eth: IS_PRODUCTION ? 'https://etherscan.io/' : 'https://kovan.etherscan.io/',
     bnb: IS_PRODUCTION ? 'https://bscscan.com/' : 'https://testnet.bscscan.com/',

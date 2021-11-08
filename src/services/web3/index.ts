@@ -1,6 +1,5 @@
 import BigNumber from 'bignumber.js/bignumber';
 import WalletConnect from '@walletconnect/web3-provider';
-import QRCodeModal from '@walletconnect/qrcode-modal';
 import { Subject } from 'rxjs';
 import Web3 from 'web3';
 
@@ -171,21 +170,13 @@ export default class WalletService {
   private connectWalletconnect(): void {
     this.walletType = WALLET_TYPE.WALLETCONNECT;
     this.wallet = new WalletConnect({
-      infuraId: 'e15330fb7e954a868e15297dd74dea37',
+      infuraId: config.INFURA_KEY,
       rpc: {
-        1: 'https://mainnet.infura.io/v3/e15330fb7e954a868e15297dd74dea37',
-        3: 'https://ropsten.infura.io/v3/e15330fb7e954a868e15297dd74dea37',
+        1: `https://mainnet.infura.io/v3/${config.INFURA_KEY}`,
+        3: `https://ropsten.infura.io/v3/${config.INFURA_KEY}`,
         56: 'https://bsc-dataseed.binance.org/',
         97: 'https://data-seed-prebsc-2-s1.binance.org:8545/',
       },
-      qrcodeModalOptions: {
-        mobileLinks: ['metamask', 'trust'],
-        desktopLinks: ['encrypted ink'],
-      },
-      qrcodeModal: QRCodeModal,
-    });
-    this.wallet.enable().catch((err: any) => {
-      console.log(err);
     });
     this.web3Provider.setProvider(this.wallet);
     this.subscribeOnChanges();
