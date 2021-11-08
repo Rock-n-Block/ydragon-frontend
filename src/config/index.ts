@@ -114,7 +114,7 @@ export default {
     mainnet: {
       eth: {
         name: 'Ethereum',
-        id: '0x01',
+        id: '0x1',
       },
       bnb: {
         name: 'Binance smart chain',
@@ -142,7 +142,7 @@ export default {
   },
   NETWORK_BY_CHAIN_ID: {
     mainnet: {
-      '0x01': 'eth',
+      '0x1': 'eth',
       '0x38': 'bnb',
       // '0x89': 'matic',
     },

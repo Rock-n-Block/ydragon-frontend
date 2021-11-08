@@ -192,47 +192,29 @@ export default class WalletService {
       this.connectWalletconnect();
     }
 
-    return new Promise((resolve, reject) => {
-      if (!this.wallet) {
-        reject(new Error('metamask wallet is not injected'));
-      }
-      const isChainAcceptable = (currChain: string) => {
-        return !!Object.values(this.usedChain).find((chainId) => chainId === currChain);
-      };
-      const currentChain = this.wallet.chainId;
-      if (!currentChain || currentChain === null) {
-        this.wallet
-          .request({ method: 'eth_chainId' })
-          .then((resChain: any) => {
-            if (isChainAcceptable(resChain)) {
-              this.requestAccounts()
-                .then((account: any) => {
-                  [this.walletAddress] = account;
-                  resolve({
-                    address: account[0],
-                    network: resChain,
-                  });
-                })
-                .catch(() => reject(new Error('Not authorized')));
-            } else {
-              reject(new Error(`Please choose one of networks in header select.`));
-            }
-          })
-          .catch(() => reject(new Error('Not authorized')));
-      } else if (isChainAcceptable(currentChain)) {
-        this.requestAccounts()
-          .then((account: any) => {
-            [this.walletAddress] = account;
-            resolve({
-              address: account[0],
-              network: currentChain,
-            });
-          })
-          .catch(() => reject(new Error('Not authorized')));
-      } else {
-        reject(new Error(`Please choose one of networks in header select.`));
-      }
+    if (!this.wallet) {
+      throw new Error('wallet is not injected');
+    }
+
+    const isChainAcceptable = (currChain: string) => {
+      return !!Object.values(this.usedChain).find((chainId) => chainId === currChain);
+    };
+
+    [this.walletAddress] = await this.requestAccounts().catch(() => {
+      throw new Error('Not authorized');
     });
+    let currentChain = this.getChainId();
+    if (!currentChain && walletType === WALLET_TYPE.METAMASK) {
+      currentChain = await this.requestCurrentChain();
+    }
+
+    if (isChainAcceptable(currentChain)) {
+      return {
+        address: this.walletAddress,
+        network: currentChain,
+      };
+    }
+    throw new Error(`Please choose one of networks in header select.`);
   }
 
   public async disconnect(): Promise<void> {

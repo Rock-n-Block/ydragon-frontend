@@ -3,8 +3,8 @@ import { withRouter } from 'react-router-dom';
 import { observer } from 'mobx-react';
 
 import { rootStore } from '../../store/store';
-import { accountsApi } from '../api';
 import WalletService, { WALLET_TYPE } from '../web3';
+import { accountsApi } from '../api';
 // import { userApi } from '../api';
 
 const walletConnectorContext = createContext<any>({
@@ -63,21 +63,23 @@ class Connector extends React.Component<any, any> {
       const { address } = await this.state.provider.connect(walletType);
 
       if (!localStorage.getItem('yd_address')) {
-        const metMsg: any = await accountsApi.getMsg();
+        if (walletType === WALLET_TYPE.METAMASK) {
+          const metMsg: any = await accountsApi.getMsg();
 
-        const signedMsg = await this.state.provider.signMsg(metMsg.data);
+          const signedMsg = await this.state.provider.signMsg(metMsg.data);
 
-        const login: any = await accountsApi.login({
-          address,
-          msg: metMsg.data,
-          signed_msg: signedMsg,
-        });
+          const login: any = await accountsApi.login({
+            address,
+            msg: metMsg.data,
+            signed_msg: signedMsg,
+          });
+          localStorage.setItem('yd_token', login.data.key);
+          rootStore.user.setToken(login.data.key);
+        }
 
-        localStorage.setItem('yd_token', login.data.key);
         localStorage.setItem('yd_wallet', walletType);
         localStorage.setItem('yd_address', address);
         rootStore.user.setAddress(address);
-        rootStore.user.setToken(login.data.key);
         localStorage.setItem('yd_metamask', 'true');
         // rootStore.user.update({ address });
       } else {
@@ -93,7 +95,7 @@ class Connector extends React.Component<any, any> {
       if (response) {
         if (response.status === 400 && response.data.result[0] === 'user is not admin') {
           localStorage.setItem('yd_isAdmin', 'false');
-          const { address } = await this.state.provider.connect();
+          const { address } = await this.state.provider.connect(walletType);
           localStorage.setItem('yd_address', address);
           rootStore.user.setAddress(address);
           localStorage.setItem('yd_metamask', 'true');
