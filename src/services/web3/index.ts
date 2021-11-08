@@ -178,9 +178,9 @@ export default class WalletService {
         56: 'https://bsc-dataseed.binance.org/',
         97: 'https://data-seed-prebsc-2-s1.binance.org:8545/',
       },
-      bridge: 'https://bridge.walletconnect.org', // Required
       qrcodeModal: QRCodeModal,
     });
+    this.wallet.enable();
     this.web3Provider.setProvider(this.wallet);
     this.subscribeOnChanges();
   }
