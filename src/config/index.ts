@@ -7,6 +7,7 @@ import coinmarketcapL from '../assets/img/socials/coinmarketcap-light.svg';
 import coinmarketcapD from '../assets/img/socials/coinmarketcap.svg';
 import bncDark from '../assets/img/icons/icon-binance-dark.svg';
 import bncLight from '../assets/img/icons/icon-binance-light.svg';
+import avalancheLogo from '../assets/img/icons/icon-avalanche.svg';
 // import plgDark from '../assets/img/icons/icon-polygon-dark.svg';
 // import plgLight from '../assets/img/icons/icon-polygon-light.svg';
 import eth from '../assets/img/icons/blockchains/eth.svg';
@@ -83,8 +84,7 @@ const NETWORK_TOKENS = {
     decimals: 18,
     name: 'Avalanche Coin',
     image: (theme: string) => {
-      // TODO: change img
-      return theme === 'dark' ? bncDark : bncLight;
+      return theme === 'dark' ? avalancheLogo : avalancheLogo;
     },
     disabled: false,
   },
