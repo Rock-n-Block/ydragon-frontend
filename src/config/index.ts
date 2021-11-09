@@ -271,5 +271,5 @@ export default {
 export const BLOCKS_PER_YEAR = {
   bnb: 10512000,
   eth: 2102400,
-  avalanche: 2102400, // TODO: change block number
+  avalanche: 15768000,
 };
