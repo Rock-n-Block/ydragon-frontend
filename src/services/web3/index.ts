@@ -33,7 +33,7 @@ interface AddEthereumChainParameter {
   iconUrls?: string[]; // Currently ignored.
 }
 
-export type TestNetworkTypes = 'bnb' | 'matic' | 'eth';
+// export type TestNetworkTypes = 'bnb' | 'matic' | 'eth';
 
 export type ContractTypes = 'Router' | 'Factory' | 'Staking' | 'Token';
 
@@ -477,10 +477,12 @@ export default class WalletService {
     indexAddress: string,
     decimals: number,
   ) {
-    const isNative =
+    /* const isNative =
       spenderTokenSymbol.toLowerCase() === 'eth' ||
       spenderTokenSymbol.toLowerCase() === 'bnb' ||
-      spenderTokenSymbol.toLowerCase() === 'matic';
+      spenderTokenSymbol.toLowerCase() === 'matic'; */
+    // TODO: change network tokens
+    const isNative = Object.keys(NETWORK_TOKENS).includes(spenderTokenSymbol.toLowerCase());
     const mintMethod = WalletService.getMethodInterface(configABI.MAIN.ABI, 'mint');
     const signature = this.encodeFunctionCall(mintMethod, [
       spenderTokenAddress,
