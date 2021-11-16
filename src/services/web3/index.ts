@@ -37,17 +37,19 @@ interface AddEthereumChainParameter {
 
 export type ContractTypes = 'Router' | 'Factory' | 'Staking' | 'Token';
 
-export const nativeTokens = ['bnb', 'wbnb', 'matic', 'wmatic'];
+// export const nativeTokens = ['bnb', 'wbnb', 'matic', 'wmatic'];
 
 const networks: INetworks = {
   bnb: '0x38',
   matic: '0x89',
   eth: '0x1',
+  avalanche: '0xa86a',
 };
 const testNetworks: INetworks = {
   bnb: '0x61',
   matic: '0x13881',
   eth: '0x2a',
+  avalanche: '0xa869',
 };
 
 export enum WALLET_TYPE {
@@ -90,6 +92,7 @@ export default class WalletService {
     // this.contract = new this.web3Provider.eth.Contract(config.ABI as Array<any>, config.ADDRESS);
 
     this.usedNetwork = this.isProduction ? 'mainnet' : 'testnet';
+    // this.usedChain = this.isProduction ? networks : testNetworks;
     this.usedChain = this.isProduction ? networks : testNetworks;
     this.chainChangedObs = new Subject();
     /* this.chainChangedObs = new Observable((subscriber) => {
