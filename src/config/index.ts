@@ -12,7 +12,7 @@ import avalancheLogo from '../assets/img/icons/icon-avalanche.svg';
 // import plgLight from '../assets/img/icons/icon-polygon-light.svg';
 import eth from '../assets/img/icons/blockchains/eth.svg';
 
-const IS_PRODUCTION = false;
+const IS_PRODUCTION = true;
 const BACKEND_URL = IS_PRODUCTION
   ? 'https://ydragon.io/api/'
   : 'https://dev-ydragon.rocknblock.io/api/';
