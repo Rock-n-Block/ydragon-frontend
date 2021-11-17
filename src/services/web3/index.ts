@@ -6,7 +6,7 @@ import Web3 from 'web3';
 import { rootStore } from '../../store/store';
 
 import configABI from './config_ABI';
-import config from '../../config';
+import config, { TChain } from '../../config';
 
 declare global {
   interface Window {
@@ -480,12 +480,9 @@ export default class WalletService {
     indexAddress: string,
     decimals: number,
   ) {
-    /* const isNative =
-      spenderTokenSymbol.toLowerCase() === 'eth' ||
-      spenderTokenSymbol.toLowerCase() === 'bnb' ||
-      spenderTokenSymbol.toLowerCase() === 'matic'; */
-    // TODO: change network tokens
-    const isNative = Object.keys(NETWORK_TOKENS).includes(spenderTokenSymbol.toLowerCase());
+    const isNative =
+      NETWORK_TOKENS[rootStore.networks.currentNetwork as TChain].symbol ===
+      spenderTokenSymbol.toLowerCase();
     const mintMethod = WalletService.getMethodInterface(configABI.MAIN.ABI, 'mint');
     const signature = this.encodeFunctionCall(mintMethod, [
       spenderTokenAddress,
@@ -526,34 +523,6 @@ export default class WalletService {
       from: this.walletAddress,
       to: toContractAddress,
       data: approveSignature,
-    });
-  }
-
-  enterIme(
-    value: string,
-    spenderTokenName: string,
-    spenderTokenAddress: string,
-    imeAddress: string,
-    decimals: number,
-  ) {
-    const isNative = Object.keys(NETWORK_TOKENS).includes(spenderTokenName.toLowerCase());
-    const methodName = isNative ? 'enterImeNative' : 'enterImeToken';
-    const enterMethod = WalletService.getMethodInterface(configABI.MAIN.ABI, methodName);
-    let signature;
-    if (!isNative) {
-      signature = this.encodeFunctionCall(enterMethod, [
-        spenderTokenAddress,
-        WalletService.calcTransactionAmount(value, decimals),
-      ]);
-    } else {
-      signature = this.encodeFunctionCall(enterMethod, []);
-    }
-
-    return this.sendTransaction({
-      from: this.walletAddress,
-      to: imeAddress,
-      data: signature,
-      value: isNative ? WalletService.calcTransactionAmount(value, decimals) : '',
     });
   }
 
