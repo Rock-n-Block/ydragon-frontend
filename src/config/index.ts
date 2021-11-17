@@ -12,7 +12,7 @@ import avalancheLogo from '../assets/img/icons/icon-avalanche.svg';
 // import plgLight from '../assets/img/icons/icon-polygon-light.svg';
 import eth from '../assets/img/icons/blockchains/eth.svg';
 
-const IS_PRODUCTION = true;
+const IS_PRODUCTION = false;
 const BACKEND_URL = IS_PRODUCTION
   ? 'https://ydragon.io/api/'
   : 'https://dev-ydragon.rocknblock.io/api/';
@@ -99,6 +99,7 @@ const NETWORK_TOKENS = {
   //   disabled: false,
   // },
 };
+const INFURA_KEY = 'e15330fb7e954a868e15297dd74dea37';
 
 export default {
   IS_PRODUCTION,
@@ -107,7 +108,7 @@ export default {
   MAX_ATTEMPT_GET_BALANCE,
   MS_RETRY_GET_BALANCE,
   NETWORK_TOKENS,
-  INFURA_KEY: 'e15330fb7e954a868e15297dd74dea37',
+  INFURA_KEY,
   EXPLORERS: {
     eth: IS_PRODUCTION ? 'https://etherscan.io/' : 'https://kovan.etherscan.io/',
     bnb: IS_PRODUCTION ? 'https://bscscan.com/' : 'https://testnet.bscscan.com/',
@@ -192,11 +193,7 @@ export default {
         chainName: 'Ethereum',
         shortName: 'Ethereum',
         nativeCurrency: NETWORK_TOKENS.eth,
-        rpcUrls: [
-          'https://bsc-dataseed.binance.org/',
-          'https://bsc-dataseed1.defibit.io/',
-          'https://bsc-dataseed1.ninicoin.io/',
-        ],
+        rpcUrls: [`https://mainnet.infura.io/v3/${INFURA_KEY}`],
         blockExplorerUrls: ['https://etherscan.io/'],
       },
       bnb: {
@@ -204,7 +201,7 @@ export default {
         chainName: 'Binance Smart Chain Mainnet',
         shortName: 'Binance',
         nativeCurrency: NETWORK_TOKENS.bnb,
-        rpcUrls: ['https://bsc-dataseed1.binance.org'],
+        rpcUrls: ['https://bsc-dataseed.binance.org'],
         blockExplorerUrls: ['https://bscscan.com'],
       },
       avalanche: {
