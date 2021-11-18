@@ -8,9 +8,14 @@ import coinmarketcapD from '../assets/img/socials/coinmarketcap.svg';
 import bncDark from '../assets/img/icons/icon-binance-dark.svg';
 import bncLight from '../assets/img/icons/icon-binance-light.svg';
 import avalancheLogo from '../assets/img/icons/icon-avalanche.svg';
+import metamaskImg from '../assets/img/auth/metamask.svg';
+import walletConnectImg from '../assets/img/auth/walletconnect.svg';
 // import plgDark from '../assets/img/icons/icon-polygon-dark.svg';
 // import plgLight from '../assets/img/icons/icon-polygon-light.svg';
 import eth from '../assets/img/icons/blockchains/eth.svg';
+import { chainsEnum, IConnectWallet, IContracts } from '../types';
+import { rootStore } from '../store/store';
+import { factoryAbi, routerAbi, tokenAbi } from './abi';
 
 const IS_PRODUCTION = false;
 const BACKEND_URL = IS_PRODUCTION
@@ -54,11 +59,10 @@ const SOCIAL_LINKS = {
   },
 };
 
-export type TChain = 'eth' | 'bnb' | 'avalanche' /* | 'matic' */;
 const MAX_ATTEMPT_GET_BALANCE = 5;
 const MS_RETRY_GET_BALANCE = 1500;
 const NETWORK_TOKENS = {
-  eth: {
+  'Ethereum': {
     symbol: 'eth',
     address: '0x0000000000000000000000000000000000000000',
     decimals: 18,
@@ -68,7 +72,7 @@ const NETWORK_TOKENS = {
     },
     disabled: false,
   },
-  bnb: {
+  'Binance-Smart-Chain': {
     symbol: 'bnb',
     address: '0x0000000000000000000000000000000000000000',
     decimals: 18,
@@ -78,7 +82,7 @@ const NETWORK_TOKENS = {
     },
     disabled: false,
   },
-  avalanche: {
+  'Avalanche': {
     symbol: 'avax',
     address: '0x0000000000000000000000000000000000000000',
     decimals: 18,
@@ -101,6 +105,169 @@ const NETWORK_TOKENS = {
 };
 const INFURA_KEY = 'e15330fb7e954a868e15297dd74dea37';
 
+const chains: {
+  [key: string]: {
+    name: chainsEnum;
+    chainId: number;
+    provider: {
+      [key: string]: any;
+    };
+    img?: any;
+    explorer: string;
+  };
+} = {
+  [chainsEnum.Ethereum]: {
+    name: chainsEnum.Ethereum,
+    chainId: IS_PRODUCTION ? 1 : 42,
+    img: eth,
+    explorer: IS_PRODUCTION ? '' : '',
+    provider: {
+      MetaMask: { name: 'MetaMask', img: metamaskImg },
+      WalletConnect: {
+        img: walletConnectImg,
+        name: 'WalletConnect',
+        useProvider: 'rpc',
+        provider: {
+          rpc: {
+            rpc: {
+              [IS_PRODUCTION ? 1 : 42]: IS_PRODUCTION
+                ? 'https://bsc-dataseed.binance.org/'
+                : 'https://data-seed-prebsc-2-s1.binance.org:8545/',
+            },
+            chainId: IS_PRODUCTION ? 1 : 42,
+          },
+        },
+      },
+    },
+  },
+  [chainsEnum['Binance-Smart-Chain']]: {
+    name: chainsEnum['Binance-Smart-Chain'],
+    chainId: IS_PRODUCTION ? 56 : 97,
+    img: (theme: string) => {
+      return theme === 'dark' ? bncDark : bncLight;
+    },
+    provider: {
+      MetaMask: { name: 'MetaMask', img: metamaskImg },
+      WalletConnect: {
+        img: walletConnectImg,
+        name: 'WalletConnect',
+        useProvider: 'rpc',
+        provider: {
+          rpc: {
+            rpc: {
+              [IS_PRODUCTION ? 56 : 97]: IS_PRODUCTION
+                ? 'https://bsc-dataseed.binance.org/'
+                : 'https://data-seed-prebsc-2-s1.binance.org:8545/',
+            },
+            chainId: IS_PRODUCTION ? 56 : 97,
+          },
+        },
+      },
+    },
+    explorer: IS_PRODUCTION ? 'https://bscscan.com' : 'https://testnet.bscscan.com',
+  },
+  [chainsEnum.Avalanche]: {
+    name: chainsEnum.Avalanche,
+    chainId: IS_PRODUCTION ? 0xa86a : 0xa869,
+    img: avalancheLogo,
+    provider: {
+      MetaMask: { name: 'MetaMask', img: metamaskImg },
+      WalletConnect: {
+        img: walletConnectImg,
+        name: 'WalletConnect',
+        useProvider: 'rpc',
+        provider: {
+          rpc: {
+            rpc: {
+              [IS_PRODUCTION ? 43114 : 43113]: IS_PRODUCTION
+                ? 'https://api.avax.network/ext/bc/C/rpc'
+                : 'https://api.avax-test.network/ext/bc/C/rpc',
+            },
+            chainId: IS_PRODUCTION ? 43114 : 43113,
+          },
+        },
+      },
+    },
+    explorer: IS_PRODUCTION ? 'https://bscscan.com' : 'https://testnet.bscscan.com',
+  },
+  /* [chainsEnum.Polygon]: {
+    name: chainsEnum.Polygon,
+    chainId: IS_PRODUCTION ? 137 : 80001,
+    img:  (theme: string) => {
+      return theme === 'dark' ? po : bncLight;
+    },
+    provider: {
+      MetaMask: {name: 'MetaMask', img: metamaskImg},
+      WalletConnect: {
+        img: walletConnectImg,
+        name: 'WalletConnect',
+        useProvider: 'rpc',
+        provider: {
+          rpc: {
+            rpc: {
+              [IS_PRODUCTION ? 137 : 80001]: IS_PRODUCTION
+                ? 'https://bsc-dataseed.binance.org/'
+                : 'https://data-seed-prebsc-2-s1.binance.org:8545/',
+            },
+            chainId: IS_PRODUCTION ? 137 : 80001,
+          },
+        },
+      },
+    },
+    explorer: IS_PRODUCTION ? 'https://polygonscan.com' : 'https://mumbai.polygonscan.com',
+  }, */
+};
+
+export const connectWallet = (
+  chainName: chainsEnum,
+): IConnectWallet & {
+  blockchains: Array<string>;
+} => {
+  const chain = chains[chainName];
+
+  return {
+    wallets: ['MetaMask', 'WalletConnect'],
+    blockchains: ['Ethereum', 'Binance Smart Chain', 'Avalanche', 'Polygon'],
+    network: {
+      name: chain.name.toString(),
+      chainID: chain.chainId,
+    },
+    provider: chain.provider,
+    settings: { providerType: true },
+  };
+};
+export type ContractTypes = 'Router' | 'Factory' | 'Staking' | 'Token';
+
+export const contracts: IContracts = {
+  type: IS_PRODUCTION ? 'mainnet' : 'testnet',
+  names: ['Router', 'Factory', 'Staking', 'Token'],
+  decimals: 18,
+  params: {
+    Router: {
+      address: rootStore.networks.getCurrNetwork()?.router_address || '',
+      abi: routerAbi,
+    },
+    Factory: {
+      address: rootStore.networks.getCurrNetwork()?.fabric_address || '',
+      abi: factoryAbi,
+    },
+    Staking: {
+      address: rootStore.networks.getCurrNetwork()?.staking_address || '',
+      abi: routerAbi,
+    },
+    Token: {
+      address: '',
+      abi: tokenAbi,
+    },
+  },
+};
+export const BACKEND_NETWORKS = {
+  'Ethereum': 'ethereum',
+  'Binance-Smart-Chain': 'binance-smart-chain',
+  'Avalanche': 'avalanche',
+  // matic: 'polygon-pos',
+};
+
 export default {
   IS_PRODUCTION,
   BACKEND_URL,
@@ -110,35 +277,29 @@ export default {
   NETWORK_TOKENS,
   INFURA_KEY,
   EXPLORERS: {
-    eth: IS_PRODUCTION ? 'https://etherscan.io/' : 'https://kovan.etherscan.io/',
-    bnb: IS_PRODUCTION ? 'https://bscscan.com/' : 'https://testnet.bscscan.com/',
-    avalanche: IS_PRODUCTION
+    'Ethereum': IS_PRODUCTION ? 'https://etherscan.io/' : 'https://kovan.etherscan.io/',
+    'Binance-Smart-Chain': IS_PRODUCTION ? 'https://bscscan.com/' : 'https://testnet.bscscan.com/',
+    'Avalanche': IS_PRODUCTION
       ? 'https://cchain.explorer.avax.network'
       : 'https://cchain.explorer.avax-test.network',
     // matic: IS_PRODUCTION ? 'https://polygonscan.com' : 'https://mumbai.polygonscan.com',
   },
   SWAP_URLS: {
-    eth: 'https://app.uniswap.org/#/add/',
-    bnb: 'https://pancakeswap.finance/add/',
-    avalanche: 'https://app.partyswap.io/#/home',
-  },
-  BACKEND_NETWORKS: {
-    eth: 'ethereum',
-    bnb: 'binance-smart-chain',
-    avalanche: 'avalanche',
-    // matic: 'polygon-pos',
+    'Ethereum': 'https://app.uniswap.org/#/add/',
+    'Binance-Smart-Chain': 'https://pancakeswap.finance/add/',
+    'Avalanche': 'https://app.partyswap.io/#/home',
   },
   CHAIN_IDS: {
     mainnet: {
-      eth: {
+      'Ethereum': {
         name: 'Ethereum',
         id: '0x1',
       },
-      bnb: {
+      'Binance-Smart-Chain': {
         name: 'Binance smart chain',
         id: '0x38',
       },
-      avalanche: {
+      'Avalanche': {
         name: 'Avalanche',
         id: '0xa86a',
       },
@@ -148,15 +309,15 @@ export default {
       // },
     },
     testnet: {
-      eth: {
+      'Ethereum': {
         name: 'Ethereum',
         id: '0x2a',
       },
-      bnb: {
+      'Binance-Smart-Chain': {
         name: 'Binance smart chain',
         id: '0x61',
       },
-      avalanche: {
+      'Avalanche': {
         name: 'Avalanche Fuji Testnet',
         id: '0xa869',
       },
@@ -168,47 +329,47 @@ export default {
   },
   NETWORK_BY_CHAIN_ID: {
     mainnet: {
-      '0x1': 'eth',
-      '0x38': 'bnb',
-      '0xa86a': 'avalanche',
+      '0x1': 'Ethereum',
+      '0x38': 'Binance-Smart-Chain',
+      '0xa86a': 'Avalanche',
       // '0x89': 'matic',
     },
     testnet: {
-      '0x2a': 'eth',
-      '0x61': 'bnb',
-      '0xa869': 'avalanche',
+      '0x2a': 'Eth',
+      '0x61': 'Binance-Smart-Chain',
+      '0xa869': 'Avalanche',
       // '0x13881': 'matic',
     },
   },
   NATIVE_TOKENS: {
-    eth: { native: 'eth', wrapped: 'weth' },
-    bnb: { native: 'bnb', wrapped: 'wbnb' },
-    avalanche: { native: 'avax', wrapped: 'wavax' },
+    'Ethereum': { native: 'eth', wrapped: 'weth' },
+    'Binance-Smart-Chain': { native: 'bnb', wrapped: 'wbnb' },
+    'Avalanche': { native: 'avax', wrapped: 'wavax' },
     // matic: { native: 'matic', wrapped: 'wmatic' },
   },
   FULL_CHAIN_INFO: {
     mainnet: {
-      eth: {
+      'Ethereum': {
         chainId: '0x1',
         chainName: 'Ethereum',
         shortName: 'Ethereum',
-        nativeCurrency: NETWORK_TOKENS.eth,
+        nativeCurrency: NETWORK_TOKENS.Ethereum,
         rpcUrls: [`https://mainnet.infura.io/v3/${INFURA_KEY}`],
         blockExplorerUrls: ['https://etherscan.io/'],
       },
-      bnb: {
+      'Binance-Smart-Chain': {
         chainId: '0x38',
         chainName: 'Binance Smart Chain Mainnet',
         shortName: 'Binance',
-        nativeCurrency: NETWORK_TOKENS.bnb,
+        nativeCurrency: NETWORK_TOKENS['Binance-Smart-Chain'],
         rpcUrls: ['https://bsc-dataseed.binance.org'],
         blockExplorerUrls: ['https://bscscan.com'],
       },
-      avalanche: {
+      'Avalanche': {
         chainId: '0xa86a',
         chainName: 'Avalanche',
         shortName: 'Avalanche',
-        nativeCurrency: NETWORK_TOKENS.avalanche,
+        nativeCurrency: NETWORK_TOKENS.Avalanche,
         rpcUrls: ['https://api.avax.network/ext/bc/C/rpc'],
         blockExplorerUrls: ['https://cchain.explorer.avax.network'],
       },
@@ -222,19 +383,19 @@ export default {
       // },
     },
     testnet: {
-      eth: {
+      'Ethereum': {
         chainId: '0x2a',
         chainName: 'Kovan Test Network',
         shortName: 'Ethereum Testnet',
-        nativeCurrency: NETWORK_TOKENS.eth,
+        nativeCurrency: NETWORK_TOKENS.Ethereum,
         rpcUrls: ['https://kovan.infura.io'],
         blockExplorerUrls: ['https://kovan.etherscan.io/'],
       },
-      bnb: {
+      'Binance-Smart-Chain': {
         chainId: '0x61',
         chainName: 'Binance Smart Chain Testnet',
         shortName: 'Binance Testnet',
-        nativeCurrency: NETWORK_TOKENS.bnb,
+        nativeCurrency: NETWORK_TOKENS['Binance-Smart-Chain'],
         rpcUrls: [
           'https://data-seed-prebsc-1-s1.binance.org:8545/',
           'https://data-seed-prebsc-2-s1.binance.org:8545/',
@@ -245,11 +406,11 @@ export default {
         ],
         blockExplorerUrls: ['https://testnet.bscscan.com'],
       },
-      avalanche: {
+      'Avalanche': {
         chainId: '0xa869',
         chainName: 'Avalanche Fuji Testnet',
         shortName: 'Avalanche Testnet',
-        nativeCurrency: NETWORK_TOKENS.avalanche,
+        nativeCurrency: NETWORK_TOKENS.Avalanche,
         rpcUrls: ['https://api.avax-test.network/ext/bc/C/rpc'],
         blockExplorerUrls: ['https://cchain.explorer.avax-test.network'],
       },
@@ -266,7 +427,7 @@ export default {
 };
 
 export const BLOCKS_PER_YEAR = {
-  bnb: 10512000,
-  eth: 2102400,
-  avalanche: 15768000,
+  'Binance-Smart-Chain': 10512000,
+  'Ethereum': 2102400,
+  'Avalanche': 15768000,
 };

@@ -24,7 +24,7 @@ import config from '../../config/index';
 import './Header.scss';
 import nextId from 'react-id-generator';
 // import useWindowDebouncedEvent from '../../hooks/useWindowDebouncedEvent';
-import _ from "lodash";
+import _ from 'lodash';
 
 const Header: React.FC = observer(() => {
   const { SOCIAL_LINKS } = config;
@@ -43,7 +43,7 @@ const Header: React.FC = observer(() => {
 
   useEffect(() => {
     const handler = () => {
-      _.debounce(()=>handleResize(window.innerWidth),500);
+      _.debounce(() => handleResize(window.innerWidth), 500);
     };
     window.addEventListener('resize', handler);
     return () => window.removeEventListener('resize', handler);
@@ -58,19 +58,19 @@ const Header: React.FC = observer(() => {
   };
 
   const handleLogOut = () => {
-    setIsCollapsed(false);
+    setIsCollapsed(true);
     walletConnector.disconnect();
   };
 
   const connectWallet = (): void => {
-    setIsCollapsed(false);
+    setIsCollapsed(true);
     modals.connectWallet.open();
 
     // walletConnector.connect();
   };
 
   const redirectHandler = (path: string) => {
-    setIsCollapsed(false);
+    setIsCollapsed(true);
     history.push(path);
   };
   const handleBurgerClick = () => setIsCollapsed((prevState) => !prevState);
@@ -155,7 +155,7 @@ const Header: React.FC = observer(() => {
               <li className="header-nav__item">
                 <DropDown title="About" links={aboutLinks} />
               </li>
-              {localStorage.getItem('yd_token') && networks.currentNetwork === 'bnb' && (
+              {localStorage.getItem('ydr_token') && networks.currentNetwork === 'bnb' && (
                 <li className="header-nav__item">
                   <Link to="/admin" className="header-nav__link">
                     Admin panel

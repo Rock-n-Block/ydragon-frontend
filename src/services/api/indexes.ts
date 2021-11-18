@@ -1,25 +1,25 @@
 import axios from '../../core/axios';
 import { rootStore } from '../../store/store';
-import config, { TChain } from '../../config';
+import { BACKEND_NETWORKS } from '../../config';
+import { chainsEnum } from '../../types';
 
-const { BACKEND_NETWORKS } = config;
 export default {
   getUserIndexes: () =>
     axios.get(`indexes/user/`, {
       params: {
-        network: BACKEND_NETWORKS[rootStore.networks.currentNetwork as TChain],
+        network: BACKEND_NETWORKS[rootStore.networks.currentNetwork as chainsEnum],
       },
     }),
   getAdminIndexes: () =>
     axios.get(`indexes/admin/`, {
       params: {
-        network: BACKEND_NETWORKS[rootStore.networks.currentNetwork as TChain],
+        network: BACKEND_NETWORKS[rootStore.networks.currentNetwork as chainsEnum],
       },
     }),
   getImeIndexes: () =>
     axios.get(`indexes/ime/`, {
       params: {
-        network: BACKEND_NETWORKS[rootStore.networks.currentNetwork as TChain],
+        network: BACKEND_NETWORKS[rootStore.networks.currentNetwork as chainsEnum],
       },
     }),
   getIndexById: (id: number) => axios.get(`indexes/${id}/`),
@@ -55,14 +55,14 @@ export default {
   ): Promise<{ data: { id: string; price: string } }> =>
     axios.get(`/indexes/${indexAddress}`, {
       params: {
-        network: BACKEND_NETWORKS[rootStore.networks.currentNetwork as TChain],
+        network: BACKEND_NETWORKS[rootStore.networks.currentNetwork as chainsEnum],
       },
     }),
 
   getLpInfoByAddress: (lpAddress: string): Promise<{ data: { address: string; price: string } }> =>
     axios.get(`/indexes/lp/${lpAddress}/`, {
       params: {
-        network: BACKEND_NETWORKS[rootStore.networks.currentNetwork as TChain],
+        network: BACKEND_NETWORKS[rootStore.networks.currentNetwork as chainsEnum],
       },
     }),
 };
