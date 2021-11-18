@@ -168,7 +168,7 @@ const chains: {
   },
   [chainsEnum.Avalanche]: {
     name: chainsEnum.Avalanche,
-    chainId: IS_PRODUCTION ? 0xa86a : 0xa869,
+    chainId: IS_PRODUCTION ? 43114 : 43113,
     img: avalancheLogo,
     provider: {
       MetaMask: { name: 'MetaMask', img: metamaskImg },
