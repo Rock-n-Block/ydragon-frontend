@@ -3,6 +3,9 @@
 
 .dark {
   .m-trade-ydr {
+    &__content {
+      @include shadow-block;
+    }
     &__field {
       .input-border {
         .input,
@@ -11,11 +14,18 @@
         }
       }
     }
+    &__logo{
+      background: white;
+      border: 9px solid #181c33;
+    }
   }
 }
 
 .light {
   .m-trade-ydr {
+    &__content {
+      @include shadow-light-block;
+    }
     &__field {
       .input-border {
         .input,
@@ -23,6 +33,10 @@
           background: $white;
         }
       }
+    }
+    &__logo{
+      background: #191C34;
+      border: 9px solid white;
     }
   }
 }
@@ -32,7 +46,7 @@
     position: relative;
 
     padding: 100px 20px 26px;
-    @include shadow-block;
+    //@include shadow-block;
     display: flex;
     flex-direction: column;
   }
@@ -49,8 +63,6 @@
     width: 131px;
     height: 131px;
 
-    background: white;
-    border: 9px solid #181c33;
     border-radius: 50%;
 
     transform: translate(-50%, 0);
