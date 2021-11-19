@@ -24,7 +24,7 @@ interface IHeaderMobileItemProps {
 const HeaderMobLink: React.FC<IHeaderMobileItemLink> = observer(
   ({ title, link, onCollapsedChange, auth }) => {
     const { networks } = useMst();
-    if (auth === 'bnb' && networks.currentNetwork !== chainsEnum['Binance-Smart-Chain']) {
+    if (auth === 'notEth' && networks.currentNetwork === chainsEnum.Ethereum) {
       return <></>;
     }
 

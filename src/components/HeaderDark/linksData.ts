@@ -12,7 +12,7 @@ export const aboutLinks = [
 ];
 
 export const productLinks = [
-  { title: 'Index Products', link: '/indexes', auth: ['login', 'bnb'] },
+  { title: 'Index Products', link: '/indexes', auth: ['login', 'notEth'] },
   // { title: 'IndexPad', link: '/simplified' },
   { title: 'StakePad', link: '/staking' },
   { title: 'Private Blockchain Funds', link: '/pbf' },
@@ -27,7 +27,7 @@ export const mobileLinksData = [
   {
     title: 'Index Products',
     links: [
-      { title: 'Index Products', link: '/indexes', auth: 'bnb' },
+      { title: 'Index Products', link: '/indexes', auth: 'notEth' },
       { title: 'StakePad', link: '/staking' },
       { title: 'Private Blockchain Fund', link: '/pbf' },
       { title: 'Bridge', link: 'https://bridge.ydragon.io/' },

@@ -23,7 +23,7 @@ const DropDownItem: React.FC<IDropDownItem> = observer(({ title, link, handleClo
     );
   }
 
-  if (auth?.includes('bnb') && networks.currentNetwork !== chainsEnum['Binance-Smart-Chain']) {
+  if (auth?.includes('noEth') && networks.currentNetwork === chainsEnum.Ethereum) {
     return <></>;
   }
 
