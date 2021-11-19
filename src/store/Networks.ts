@@ -1,7 +1,7 @@
 import { applySnapshot, types } from 'mobx-state-tree';
-import config, { TChain } from '../config';
+import { BACKEND_NETWORKS } from '../config';
+import { chainsEnum } from '../types';
 
-const { BACKEND_NETWORKS } = config;
 const Network = types.model({
   id: types.number,
   name: types.string,
@@ -29,7 +29,7 @@ export const Networks = types
     };
     const getCurrNetwork = () => {
       return self.networksList.find(
-        (network) => network.name === BACKEND_NETWORKS[self.currentNetwork as TChain],
+        (network) => network.name === BACKEND_NETWORKS[self.currentNetwork as chainsEnum],
       );
     };
     const setNetworks = (networks: any) => {

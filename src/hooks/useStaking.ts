@@ -1,4 +1,4 @@
-import config, { TChain, BLOCKS_PER_YEAR } from '../config/index';
+import config, { BLOCKS_PER_YEAR } from '../config/index';
 import { useState, useCallback, useEffect } from 'react';
 import BigNumber from 'bignumber.js/bignumber';
 
@@ -8,6 +8,7 @@ import { indexesApi } from '../services/api';
 import txToast from '../components/ToastWithTxHash';
 
 import configABI from '../services/web3/config_ABI';
+import { chainsEnum } from '../types';
 
 const { SWAP_URLS } = config;
 
@@ -95,7 +96,7 @@ export const useStaking = (
 
         if (isLp) {
           const response = await indexesApi.getLpInfoByAddress(indexID);
-          const link = `${SWAP_URLS[currentNetwork as TChain]}${lpTokenFirst}/${lpTokenSecond}`;
+          const link = `${SWAP_URLS[currentNetwork as chainsEnum]}${lpTokenFirst}/${lpTokenSecond}`;
 
           return {
             link,
@@ -176,7 +177,7 @@ export const useStaking = (
 
       const totalRewardPricePerYear = new BigNumber(rewardTokenPrice)
         .times(fromWeiToNormal(tokenPerBlock))
-        .times(BLOCKS_PER_YEAR[currentNetwork as TChain]);
+        .times(BLOCKS_PER_YEAR[currentNetwork as chainsEnum]);
 
       const totalStakingTokenInPool = new BigNumber(stakingTokenPrice).times(
         fromWeiToNormal(totalStakedInPool),

@@ -1,28 +1,41 @@
 import React, { createContext, useContext } from 'react';
 import { withRouter } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { observer } from 'mobx-react';
-
-import { rootStore } from '../../store/store';
-import WalletService, { WALLET_TYPE } from '../web3';
 import { accountsApi } from '../api';
-// import { userApi } from '../api';
+import { WalletConnect } from '../walletService';
+import { rootStore } from '../../store/store';
+import { chainsEnum } from '../../types';
+import config from '../../config';
 
-const walletConnectorContext = createContext<any>({
-  walletService: {},
+declare global {
+  interface Window {
+    ethereum: any;
+  }
+}
+const { IS_PRODUCTION } = config;
+const walletConnectorContext = createContext<{
+  connect: (chainName: chainsEnum, providerName: 'MetaMask' | 'WalletConnect') => void;
+  disconnect: () => void;
+  walletService: WalletConnect;
+}>({
   connect: (): void => {},
+  disconnect: (): void => {},
+  walletService: new WalletConnect(),
 });
 
 @observer
-class Connector extends React.Component<any, any> {
-  private static isWalletType(walletType: string): walletType is WALLET_TYPE {
-    return (Object.values(WALLET_TYPE) as any[]).includes(walletType);
+class Connector extends React.Component<
+  any,
+  {
+    provider: WalletConnect;
   }
-
+> {
   constructor(props: any) {
     super(props);
 
     this.state = {
-      provider: new WalletService(),
+      provider: new WalletConnect(),
     };
 
     this.connect = this.connect.bind(this);
@@ -30,88 +43,88 @@ class Connector extends React.Component<any, any> {
   }
 
   componentDidMount() {
-    const self = this;
-    const walletType = localStorage.getItem('yd_wallet');
-    if (walletType && Connector.isWalletType(walletType)) {
-      this.connect(walletType);
+    if (window.ethereum) {
+      if (localStorage.ydr_chainName && localStorage.ydr_providerName) {
+        this.connect(localStorage.ydr_chainName, localStorage.ydr_providerName);
+      }
     }
-    this.state.provider.chainChangedObs.subscribe({
-      next(err: string) {
-        if (err) {
-          self.disconnect();
-          rootStore.modals.metamask.setErr(err);
-        } else {
-          window.location.reload();
-        }
-      },
-    });
-
-    this.state.provider.accountChangedObs.subscribe({
-      next() {
-        self.disconnect();
-      },
-    });
-    this.state.provider.disconnectObs.subscribe({
-      next(reason: string) {
-        console.log('disconnect', reason);
-      },
-    });
   }
 
-  connect = async (walletType: WALLET_TYPE) => {
-    try {
-      const { address } = await this.state.provider.connect(walletType);
+  connect = async (chainName: chainsEnum, providerName: 'MetaMask' | 'WalletConnect') => {
+    if (window.ethereum) {
+      try {
+        const isConnected = await this.state.provider.initWalletConnect(
+          chainName,
+          providerName as any,
+        );
+        if (isConnected) {
+          const subscriber = this.state.provider.getAccount().subscribe(
+            async (userAccount: any) => {
+              if (rootStore.user.address && userAccount.address !== rootStore.user.address) {
+                subscriber.unsubscribe();
+                this.disconnect();
+              } else {
+                this.state.provider.setAccountAddress(userAccount.address);
+                if (!localStorage.ydr_token) {
+                  const metMsg: any = await accountsApi.getMsg();
+                  const signedMsg = await this.state.provider.connectWallet.signMsg(
+                    userAccount.address,
+                    metMsg.data,
+                  );
 
-      if (!localStorage.getItem('yd_address')) {
-        const metMsg: any = await accountsApi.getMsg();
-
-        const signedMsg = await this.state.provider.signMsg(metMsg.data);
-
-        const login: any = await accountsApi.login({
-          address,
-          msg: metMsg.data,
-          signed_msg: signedMsg,
-        });
-        localStorage.setItem('yd_token', login.data.key);
-        rootStore.user.setToken(login.data.key);
-
-        localStorage.setItem('yd_wallet', walletType);
-        localStorage.setItem('yd_address', address);
-        rootStore.user.setAddress(address);
-        localStorage.setItem('yd_metamask', 'true');
-        // rootStore.user.update({ address });
-      } else {
-        rootStore.user.setAddress(address);
-        const yd_token = localStorage.getItem('yd_token') || '';
-        rootStore.user.setToken(yd_token);
-        localStorage.setItem('yd_wallet', walletType);
-        localStorage.setItem('yd_metamask', 'true');
-        // rootStore.user.update({ address });
-      }
-    } catch (err: any) {
-      const { response } = err;
-      if (response) {
-        if (response.status === 400 && response.data.result[0] === 'user is not admin') {
-          localStorage.setItem('yd_isAdmin', 'false');
-          const { address } = await this.state.provider.connect(walletType);
-          localStorage.setItem('yd_address', address);
-          rootStore.user.setAddress(address);
-          localStorage.setItem('yd_metamask', 'true');
-          localStorage.setItem('yd_wallet', walletType);
-          rootStore.user.update({ address });
-        } else {
-          throw err;
+                  await accountsApi
+                    .login({
+                      address: userAccount.address,
+                      msg: metMsg.data,
+                      signed_msg: signedMsg,
+                    })
+                    .then(({ data }) => {
+                      localStorage.ydr_token = data.key;
+                    })
+                    .catch((error) => {
+                      const { response } = error;
+                      if (
+                        response &&
+                        response.status === 400 &&
+                        response.data.result[0] === 'user is not admin'
+                      )
+                        console.log('user is not admin');
+                    });
+                }
+                localStorage.ydr_chainName = chainName;
+                localStorage.ydr_providerName = providerName;
+                rootStore.user.setAddress(userAccount.address);
+              }
+            },
+            (err: any) => {
+              console.error('getAccount wallet connect - get user account err: ', err);
+              if (!(err.code && err.code === 6)) {
+                this.disconnect();
+              }
+              toast.error(
+                `Wrong Network, please select ${chainName} ${
+                  IS_PRODUCTION ? 'mainnet' : 'testnet'
+                } network in your wallet and try again`,
+              );
+            },
+          );
         }
-      } else {
-        rootStore.modals.metamask.setErr(err.message);
+      } catch (err) {
+        console.error(err);
         this.disconnect();
       }
     }
   };
 
-  disconnect = () => {
+  disconnect() {
     rootStore.user.disconnect();
-  };
+    // delete localStorage.ydr_chainName;
+    delete localStorage.ydr_providerName;
+    delete localStorage.walletconnect;
+    delete localStorage.ydr_token;
+
+    this.props.history.push('/');
+  }
 
   render() {
     return (

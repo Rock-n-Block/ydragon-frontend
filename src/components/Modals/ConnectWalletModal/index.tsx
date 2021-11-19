@@ -10,10 +10,11 @@ import { useMst } from '../../../store/store';
 import { Modal } from '../index';
 
 import './ConnectWalletModal.scss';
+import { chainsEnum } from '../../../types';
 
 const ConnectWalletModal: React.FC = observer(() => {
-  const { modals } = useMst();
-  const walletConnector = useWalletConnectorContext();
+  const { modals, networks } = useMst();
+  const { connect } = useWalletConnectorContext();
 
   const [walletconnectClicked, setWalletconnectClicked] = React.useState(false);
 
@@ -21,10 +22,8 @@ const ConnectWalletModal: React.FC = observer(() => {
     if (walletType === WALLET_TYPE.WALLETCONNECT) {
       setWalletconnectClicked(true);
     }
-    walletConnector.connect(walletType).then(() => {
-      modals.connectWallet.close();
-      setWalletconnectClicked(false);
-    });
+    connect(networks.currentNetwork as chainsEnum, walletType);
+    modals.connectWallet.close();
   };
 
   return (

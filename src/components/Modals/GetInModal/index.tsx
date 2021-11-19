@@ -69,7 +69,7 @@ const GetInModal: React.FC = observer(() => {
         .checkAllowanceById(
           getTokenAddress(firstCurrency),
           configABI.MAIN.ABI,
-          modals.getIn.address,
+          modals.getIn.address || '',
         )
         .then((data: boolean) => {
           setIsNeedApprove(!data);
@@ -101,7 +101,7 @@ const GetInModal: React.FC = observer(() => {
   const handleApprove = (): void => {
     setIsLoading(true);
     walletConnector.walletService
-      .approve(getTokenAddress(firstCurrency), modals.getIn.address)
+      .approve(getTokenAddress(firstCurrency), modals.getIn.address || '')
       .on('transactionHash', (hash: string) => {
         txToast(hash);
       })
@@ -119,7 +119,13 @@ const GetInModal: React.FC = observer(() => {
   const handleEnter = (): void => {
     setIsLoading(true);
     walletConnector.walletService
-      .mint(payInput, firstCurrency, getTokenAddress(firstCurrency), modals.getIn.address, decimals)
+      .mint(
+        payInput,
+        firstCurrency,
+        getTokenAddress(firstCurrency),
+        modals.getIn.address || '',
+        decimals,
+      )
       .on('transactionHash', (hash: string) => {
         txToast(hash);
       })
@@ -144,7 +150,7 @@ const GetInModal: React.FC = observer(() => {
           getTokenAddress(firstCurrency),
           payInput,
           true,
-          modals.getIn.address,
+          modals.getIn.address || '',
           decimals,
         )
         .then((data: any) => {

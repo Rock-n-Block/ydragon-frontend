@@ -10,10 +10,11 @@ import { useWalletConnectorContext } from '../../../services/walletConnect';
 import txToast from '../../ToastWithTxHash';
 import { ProviderRpcError } from '../../../types/errors';
 import { toast } from 'react-toastify';
-import config, { TChain } from '../../../config';
+import config from '../../../config';
 import { observer } from 'mobx-react-lite';
 import { useMst } from '../../../store/store';
 import config_ABI from '../../../services/web3/config_ABI';
+import { chainsEnum } from '../../../types';
 
 interface TokensStructureProps {
   vaults: IVault[];
@@ -91,13 +92,13 @@ const TokensStructure: React.FC<TokensStructureProps> = observer(({ vaults, inde
   const handleDepositClick = () => {
     setIsDepositBtnLoading(true);
     const nativeTokenValue = vaults.find(
-      (vault) => vault.token_symbol === NATIVE_TOKENS[networks.currentNetwork as TChain].native,
+      (vault) => vault.token_symbol === NATIVE_TOKENS[networks.currentNetwork as chainsEnum].native,
     );
     const preparedTokens = vaults
       .filter((vault) => vault.token_symbol !== nativeTokenValue?.token_symbol)
       .map((vault) => vault.farm_balance);
     walletConnect.walletService
-      .depositToIndex(preparedTokens, indexAddress, nativeTokenValue)
+      .depositToIndex(preparedTokens, indexAddress, nativeTokenValue?.farm_balance)
       .on('transactionHash', (hash: string) => {
         txToast(hash);
       })
@@ -139,7 +140,7 @@ const TokensStructure: React.FC<TokensStructureProps> = observer(({ vaults, inde
 
   const checkAllowance = useCallback(async () => {
     const nativeToken = vaults.find(
-      (vault) => vault.token_symbol === NATIVE_TOKENS[networks.currentNetwork as TChain].native,
+      (vault) => vault.token_symbol === NATIVE_TOKENS[networks.currentNetwork as chainsEnum].native,
     );
     const filteredTokens = vaults
       .filter((vault) => vault.token_symbol !== nativeToken?.token_symbol)

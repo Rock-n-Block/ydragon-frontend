@@ -14,7 +14,8 @@ import {
 import { indexesApi, vaultsApi } from '../../services/api';
 import { useMst } from '../../store/store';
 import { IIndex, IIndexStatus, ITokensDiff } from '../Admin';
-import config, { TChain } from '../../config';
+import { BACKEND_NETWORKS } from '../../config';
+import { chainsEnum } from '../../types';
 
 interface IIndexId {
   indexId: string;
@@ -55,7 +56,6 @@ export interface IVaultMini {
 }
 
 const AdminIndex: React.FC = () => {
-  const { BACKEND_NETWORKS } = config;
   const { indexId } = useParams<IIndexId>();
   const [index, setIndex] = useState<IRebalance>({} as IRebalance);
   const [vault, setVault] = useState<IVault[]>([] as IVault[]);
@@ -68,7 +68,7 @@ const AdminIndex: React.FC = () => {
       .getIndexesRebalance(+indexId)
       .then(({ data }) => {
         setIndex(data);
-        if (BACKEND_NETWORKS[networks.currentNetwork as TChain] !== data.index.network) {
+        if (BACKEND_NETWORKS[networks.currentNetwork as chainsEnum] !== data.index.network) {
           history.push('/admin');
         }
       })
@@ -76,7 +76,7 @@ const AdminIndex: React.FC = () => {
         const { response } = err;
         console.error('get index composition collections error', response);
       });
-  }, [indexId, BACKEND_NETWORKS, networks.currentNetwork, history]);
+  }, [indexId, networks.currentNetwork, history]);
 
   const getVaults = useCallback(() => {
     vaultsApi

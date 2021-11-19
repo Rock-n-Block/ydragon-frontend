@@ -1,8 +1,9 @@
 import React from 'react';
-import config, { TChain } from '../../config';
+import config from '../../config';
 import { toast } from 'react-toastify';
 import { useMst } from '../../store/store';
 import { observer } from 'mobx-react-lite';
+import { chainsEnum } from '../../types';
 
 interface IProps {
   txHash: string;
@@ -15,7 +16,7 @@ const ToastContentWithTxHash: React.FC<IProps> = observer(({ txHash }) => {
     <>
       <p>Transaction submitted</p>
       <a
-        href={`${EXPLORERS[networks.currentNetwork as TChain]}/tx/${txHash}`}
+        href={`${EXPLORERS[networks.currentNetwork as chainsEnum]}/tx/${txHash}`}
         target="_blank"
         rel="noopener noreferrer"
       >

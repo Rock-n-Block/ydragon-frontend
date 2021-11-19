@@ -37,7 +37,7 @@ export const Store = RootModel.create({
   networks: {
     networkId: '',
     networksList: [],
-    currentNetwork: '',
+    currentNetwork: localStorage.getItem('ydr_chainName') ?? '',
   },
 });
 

@@ -6,7 +6,8 @@ import Web3 from 'web3';
 import { rootStore } from '../../store/store';
 
 import configABI from './config_ABI';
-import config, { TChain } from '../../config';
+import config from '../../config';
+import { chainsEnum } from '../../types';
 
 declare global {
   interface Window {
@@ -53,8 +54,8 @@ const testNetworks: INetworks = {
 };
 
 export enum WALLET_TYPE {
-  METAMASK = 'metamask',
-  WALLETCONNECT = 'walletconnect',
+  METAMASK = 'MetaMask',
+  WALLETCONNECT = 'WalletConnect',
 }
 
 const {
@@ -481,7 +482,7 @@ export default class WalletService {
     decimals: number,
   ) {
     const isNative =
-      NETWORK_TOKENS[rootStore.networks.currentNetwork as TChain].symbol ===
+      NETWORK_TOKENS[rootStore.networks.currentNetwork as chainsEnum].symbol ===
       spenderTokenSymbol.toLowerCase();
     const mintMethod = WalletService.getMethodInterface(configABI.MAIN.ABI, 'mint');
     const signature = this.encodeFunctionCall(mintMethod, [
