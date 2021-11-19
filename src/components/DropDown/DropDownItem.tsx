@@ -3,6 +3,7 @@ import { NavHashLink } from 'react-router-hash-link';
 import { observer } from 'mobx-react';
 
 import { useMst } from '../../store/store';
+import { chainsEnum } from '../../types';
 
 interface IDropDownItem {
   title: string;
@@ -22,7 +23,7 @@ const DropDownItem: React.FC<IDropDownItem> = observer(({ title, link, handleClo
     );
   }
 
-  if (auth?.includes('bnb') && networks.currentNetwork === 'eth') {
+  if (auth?.includes('bnb') && networks.currentNetwork !== chainsEnum['Binance-Smart-Chain']) {
     return <></>;
   }
 

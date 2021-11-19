@@ -420,6 +420,18 @@
         margin-left: 10px;
         height: 10px;
         background: url('../../assets/img/icons/arrow-down.svg') 0 0 no-repeat;
+        transition: all 0.4s ease-out;
+      }
+    }
+    &--opened{
+      &::after {
+        content: '';
+        width: 15px;
+        margin-left: 10px;
+        height: 10px;
+        background: url('../../assets/img/icons/arrow-down.svg') 0 0 no-repeat;
+        transform: rotate(180deg);
+        transition: all 0.4s ease-out;
       }
     }
   }

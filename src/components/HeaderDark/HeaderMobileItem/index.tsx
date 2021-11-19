@@ -4,6 +4,7 @@ import { NavHashLink } from 'react-router-hash-link';
 import { observer } from 'mobx-react-lite';
 
 import { useMst } from '../../../store/store';
+import { chainsEnum } from '../../../types';
 
 interface IHeaderMobileItemLink {
   title: string;
@@ -23,7 +24,7 @@ interface IHeaderMobileItemProps {
 const HeaderMobLink: React.FC<IHeaderMobileItemLink> = observer(
   ({ title, link, onCollapsedChange, auth }) => {
     const { networks } = useMst();
-    if (auth === 'bnb' && networks.currentNetwork !== 'bnb') {
+    if (auth === 'bnb' && networks.currentNetwork !== chainsEnum['Binance-Smart-Chain']) {
       return <></>;
     }
 
@@ -69,7 +70,9 @@ const HeaderMobileItem: React.FC<IHeaderMobileItemProps> = observer(
             role="button"
             onKeyDown={() => {}}
             onClick={() => setIsOpened((prev) => !prev)}
-            className="menu-nav__item__title menu-nav__item__title--arrow"
+            className={cn('menu-nav__item__title menu-nav__item__title--arrow', {
+              'menu-nav__item__title--opened': isOpened,
+            })}
           >
             {title}
           </div>
