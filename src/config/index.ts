@@ -17,10 +17,9 @@ import { chainsEnum, IConnectWallet, IContracts } from '../types';
 import { rootStore } from '../store/store';
 import { factoryAbi, routerAbi, tokenAbi } from './abi';
 
-const IS_PRODUCTION = true;
+const IS_PRODUCTION = false;
 const BACKEND_URL = IS_PRODUCTION
-  ? // ? 'https://ydragon.io/api/'
-    'https://preprod.ydragon.io/api/'
+  ? 'https://ydragon.io/api/'
   : 'https://dev-ydragon.rocknblock.io/api/';
 const SOCIAL_LINKS = {
   twitter: {
