@@ -80,6 +80,7 @@ class Connector extends React.Component<
                     })
                     .then(({ data }) => {
                       localStorage.ydr_token = data.key;
+                      rootStore.user.setToken(data.key);
                     })
                     .catch((error) => {
                       const { response } = error;
