@@ -122,18 +122,17 @@ const GetInModal: React.FC = observer(() => {
       )
       .on('transactionHash', (hash: string) => {
         txToast(hash);
+        setPayInput('');
+        modals.getIn.close();
+        setIsLoading(false);
       })
       .then(() => {
-        setPayInput('');
-        getBalance();
         toast.success('You entered IMO');
-        setIsLoading(false);
       })
       .catch((err: ProviderRpcError) => {
         const { message } = err;
         toast.error('Something went wrong');
         console.error(`Enter IMO error `, message);
-        setIsLoading(false);
       });
   };
 

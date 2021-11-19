@@ -228,10 +228,11 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
         .mint(payInput, firstCurrency, getTokenAddress(firstCurrency), indexAddress, decimals)
         .on('transactionHash', (hash: string) => {
           txToast(hash);
+          setPayInput('');
+          modals.tradeIndex.close();
+          setIsLoading(false);
         })
         .then(() => {
-          setPayInput('');
-          getBalance();
           toast.success(`You bought ${token}`);
           if (updateData) updateData();
         })
@@ -239,8 +240,7 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
           const { message } = err;
           toast.error('Something went wrong');
           console.error(`Buy error `, message);
-        })
-        .finally(() => setIsLoading(false));
+        });
     };
     const handleSell = (): void => {
       setIsLoading(true);
@@ -248,10 +248,11 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
         .redeem(payInput, getTokenAddress(secondCurrency), indexAddress, 18)
         .on('transactionHash', (hash: string) => {
           txToast(hash);
+          setPayInput('');
+          modals.tradeIndex.close();
+          setIsLoading(false);
         })
         .then(() => {
-          setPayInput('');
-          getBalance();
           toast.success(`You sold ${token}`);
           if (updateData) updateData();
         })
@@ -259,8 +260,7 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
           const { message } = err;
           toast.error('Something went wrong');
           console.error(`Sell error `, message);
-        })
-        .finally(() => setIsLoading(false));
+        });
     };
 
     useEffect(() => {
