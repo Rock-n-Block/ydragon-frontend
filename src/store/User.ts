@@ -18,8 +18,6 @@ export const User = types
     const disconnect = () => {
       self.address = '';
       localStorage.setItem('ydr_token', '');
-      localStorage.setItem('ydr_metamask', '');
-      localStorage.setItem('ydr_address', '');
     };
     return {
       setAddress,

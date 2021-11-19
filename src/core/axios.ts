@@ -9,7 +9,7 @@ axios.interceptors.request.use(
     axiosRequestConfig.headers.common = {
       ...axiosRequestConfig.headers.common,
       Authorization: `${
-        localStorage.getItem('ydr_token') ? `Token ${localStorage.getItem('yd_token')}` : ''
+        localStorage.getItem('ydr_token') ? `Token ${localStorage.getItem('ydr_token')}` : ''
       }`,
     };
     return axiosRequestConfig;
