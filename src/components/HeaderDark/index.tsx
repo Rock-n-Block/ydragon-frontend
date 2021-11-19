@@ -25,6 +25,7 @@ import './Header.scss';
 import nextId from 'react-id-generator';
 // import useWindowDebouncedEvent from '../../hooks/useWindowDebouncedEvent';
 import _ from 'lodash';
+import { chainsEnum } from '../../types';
 
 const Header: React.FC = observer(() => {
   const { SOCIAL_LINKS } = config;
@@ -155,13 +156,14 @@ const Header: React.FC = observer(() => {
               <li className="header-nav__item">
                 <DropDown title="About" links={aboutLinks} />
               </li>
-              {localStorage.getItem('ydr_token') && networks.currentNetwork === 'bnb' && (
-                <li className="header-nav__item">
-                  <Link to="/admin" className="header-nav__link">
-                    Admin panel
-                  </Link>
-                </li>
-              )}
+              {localStorage.getItem('ydr_token') &&
+                networks.currentNetwork !== chainsEnum.Ethereum && (
+                  <li className="header-nav__item">
+                    <Link to="/admin" className="header-nav__link">
+                      Admin panel
+                    </Link>
+                  </li>
+                )}
             </ul>
           </nav>
 
