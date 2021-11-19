@@ -9,15 +9,16 @@ import { vaultsApi } from '../../../services/api';
 import { useWalletConnectorContext } from '../../../services/walletConnect';
 import configABI from '../../../services/web3/config_ABI';
 import { useMst } from '../../../store/store';
-import { ProviderRpcError } from '../../../types/errors';
+import { ProviderRpcError } from '../../../types';
 import { Button, Input, InputWithSelect } from '../../index';
 import { Modal } from '../index';
 import { handleNumericInput } from '../../../utils/handleNumericInput';
 
 import './TradeIndexModal.scss';
-import config from '../../../config';
+// import config from '../../../config';
 import txToast from '../../ToastWithTxHash';
 import { toast } from 'react-toastify';
+import { isNativeToken } from '../../../utils/nativeTokenHelper';
 
 interface TradeIndexModalProps {
   token: string;
@@ -28,7 +29,7 @@ interface TradeIndexModalProps {
 
 const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
   ({ token, indexAddress, tokenId, updateData }) => {
-    const { NATIVE_TOKENS } = config;
+    // const { NATIVE_TOKENS } = config;
     const walletConnector = useWalletConnectorContext();
     const { user, modals } = useMst();
     const [isSell, setIsSell] = useState<boolean>(modals.tradeIndex.method === 'sell');
@@ -55,7 +56,7 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
     };
     const getDecimals = useCallback(
       async (currency: string) => {
-        if (!currency || Object.keys(NATIVE_TOKENS).includes(currency.toLowerCase())) {
+        if (!currency || isNativeToken(currency)) {
           return new Promise((resolve) => resolve(18));
         }
         return walletConnector.walletService.getDecimals(
@@ -63,7 +64,7 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
           configABI.Token.ABI,
         );
       },
-      [NATIVE_TOKENS, getTokenAddress, walletConnector.walletService],
+      [getTokenAddress, walletConnector.walletService],
     );
     const getBalance = useCallback(() => {
       walletConnector.walletService
@@ -386,12 +387,12 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
             )}
           </div>
           {fee ? <p className="m-trade-ydr__label m-trade-ydr__fee">Service Fee {fee}</p> : <></>}
-          {isNeedApprove && !Object.keys(NATIVE_TOKENS).includes(firstCurrency) && !isSell && (
+          {isNeedApprove && !isNativeToken(firstCurrency) && !isSell && (
             <Button className="m-trade-ydr__btn" onClick={handleApprove} loading={isLoading}>
               Approve
             </Button>
           )}
-          {!isSell && (!isNeedApprove || Object.keys(NATIVE_TOKENS).includes(firstCurrency)) && (
+          {!isSell && (!isNeedApprove || isNativeToken(firstCurrency)) && (
             <Button
               className="m-trade-ydr__btn"
               onClick={handleBuy}

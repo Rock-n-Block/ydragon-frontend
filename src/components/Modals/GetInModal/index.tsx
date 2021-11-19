@@ -8,18 +8,18 @@ import { useWhiteList } from '../../../hooks/useWhiteList';
 import { useWalletConnectorContext } from '../../../services/walletConnect';
 import configABI from '../../../services/web3/config_ABI';
 import { useMst } from '../../../store/store';
-import { ProviderRpcError } from '../../../types/errors';
+import { ProviderRpcError } from '../../../types';
 import { Button, Input, InputWithSelect } from '../../index';
 import { Modal } from '../index';
-import config from '../../../config';
 import { handleNumericInput } from '../../../utils/handleNumericInput';
 
 import './GetInModal.scss';
 import txToast from '../../ToastWithTxHash';
 import { toast } from 'react-toastify';
+import { isNativeToken } from '../../../utils/nativeTokenHelper';
 
 const GetInModal: React.FC = observer(() => {
-  const { NETWORK_TOKENS } = config;
+  // const { NETWORK_TOKENS } = config;
   const { modals, user } = useMst();
   const { whiteList, getTokenAddress } = useWhiteList(modals.getIn.id ?? 0);
   const walletConnector = useWalletConnectorContext();
@@ -39,7 +39,7 @@ const GetInModal: React.FC = observer(() => {
 
   const getDecimals = useCallback(
     async (currency: string) => {
-      if (Object.keys(NETWORK_TOKENS).includes(currency)) {
+      if (isNativeToken(currency)) {
         return new Promise((resolve) => resolve(18));
       }
       return walletConnector.walletService.getDecimals(
@@ -47,7 +47,7 @@ const GetInModal: React.FC = observer(() => {
         configABI.Token.ABI,
       );
     },
-    [NETWORK_TOKENS, getTokenAddress, walletConnector.walletService],
+    [getTokenAddress, walletConnector.walletService],
   );
   const getBalance = useCallback(() => {
     walletConnector.walletService
@@ -64,7 +64,7 @@ const GetInModal: React.FC = observer(() => {
       });
   }, [getTokenAddress, getDecimals, walletConnector.walletService, firstCurrency]);
   const checkAllowance = useCallback(() => {
-    if (!Object.keys(NETWORK_TOKENS).includes(firstCurrency)) {
+    if (!isNativeToken(firstCurrency)) {
       walletConnector.walletService
         .checkAllowanceById(
           getTokenAddress(firstCurrency),
@@ -79,13 +79,7 @@ const GetInModal: React.FC = observer(() => {
           console.error('allowance error', response);
         });
     }
-  }, [
-    NETWORK_TOKENS,
-    firstCurrency,
-    walletConnector.walletService,
-    getTokenAddress,
-    modals.getIn.address,
-  ]);
+  }, [firstCurrency, walletConnector.walletService, getTokenAddress, modals.getIn.address]);
 
   const handleSelectChange = (value: any) => {
     setFirstCurrency(value);
@@ -234,12 +228,12 @@ const GetInModal: React.FC = observer(() => {
 
           <Input placeholder={viewOnlyInputValue} disabled />
         </div>
-        {isNeedApprove && !Object.keys(NETWORK_TOKENS).includes(firstCurrency) && (
+        {isNeedApprove && !isNativeToken(firstCurrency) && (
           <Button className="m-get-in__btn" onClick={handleApprove} loading={isLoading}>
             Approve
           </Button>
         )}
-        {(!isNeedApprove || Object.keys(NETWORK_TOKENS).includes(firstCurrency)) && (
+        {(!isNeedApprove || isNativeToken(firstCurrency)) && (
           <Button
             className="m-get-in__btn"
             onClick={handleEnter}
