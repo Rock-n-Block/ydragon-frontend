@@ -23,9 +23,8 @@ import config from '../../config/index';
 
 import './Header.scss';
 import nextId from 'react-id-generator';
-// import useWindowDebouncedEvent from '../../hooks/useWindowDebouncedEvent';
-import _ from 'lodash';
 import { chainsEnum } from '../../types';
+import useWindowWidth from '../../hooks/useWindowWidth';
 
 const Header: React.FC = observer(() => {
   const { SOCIAL_LINKS } = config;
@@ -33,22 +32,15 @@ const Header: React.FC = observer(() => {
   const { theme, user, networks, modals } = useMst();
   const walletConnector = useWalletConnectorContext();
   const history = useHistory();
-
-  const handleResize = (windowWidth: number) => {
-    if (windowWidth >= 1240) {
-      setIsCollapsed(true);
-    }
-  };
+  const width = useWindowWidth();
 
   // useWindowDebouncedEvent('resize', window.innerWidth, handleResize, 500);
 
   useEffect(() => {
-    const handler = () => {
-      _.debounce(() => handleResize(window.innerWidth), 500);
-    };
-    window.addEventListener('resize', handler);
-    return () => window.removeEventListener('resize', handler);
-  }, []);
+    if (width >= 1240) {
+      setIsCollapsed(true);
+    }
+  }, [width]);
 
   const handleChangeTheme = () => {
     if (LIGHT === localStorage.theme) {
