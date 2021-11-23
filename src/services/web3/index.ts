@@ -42,13 +42,13 @@ export type ContractTypes = 'Router' | 'Factory' | 'Staking' | 'Token';
 
 const networks: INetworks = {
   bnb: '0x38',
-  matic: '0x89',
+  // matic: '0x89',
   eth: '0x1',
   avalanche: '0xa86a',
 };
 const testNetworks: INetworks = {
   bnb: '0x61',
-  matic: '0x13881',
+  // matic: '0x13881',
   eth: '0x2a',
   avalanche: '0xa869',
 };

@@ -36,7 +36,7 @@ export const useWhiteList = (indexId: number) => {
         setWhiteList(newTokens);
       })
       .catch((err) => {
-        console.log(`err in getting index ${indexId} whitelist:\n`, err);
+        console.error(`err in getting index ${indexId} whitelist:\n`, err);
       });
   }, [NETWORK_TOKENS, currentNetwork, findWrappedToken, indexId, theme.value]);
 

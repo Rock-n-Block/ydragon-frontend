@@ -54,7 +54,7 @@ const Dashboard: React.FC = () => {
       })
       .catch((error) => {
         const { response } = error;
-        console.log('get indexes error', response);
+        console.error('get indexes error', response);
       })
       .finally(() => setLoading(false));
   }, []);

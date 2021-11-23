@@ -81,6 +81,7 @@ class Connector extends React.Component<
                     .then(({ data }) => {
                       localStorage.ydr_token = data.key;
                       rootStore.user.setToken(data.key);
+                      toast.info('Logged in as admin');
                     })
                     .catch((error) => {
                       const { response } = error;
@@ -89,11 +90,12 @@ class Connector extends React.Component<
                         response.status === 400 &&
                         response.data.result[0] === 'user is not admin'
                       )
-                        console.log('user is not admin');
+                        toast.info('Logged in as user');
                     });
                 }
                 localStorage.ydr_chainName = chainName;
                 localStorage.ydr_providerName = providerName;
+                localStorage.ydr_address = userAccount.address;
                 rootStore.user.setAddress(userAccount.address);
               }
             },
@@ -123,6 +125,7 @@ class Connector extends React.Component<
     delete localStorage.ydr_providerName;
     delete localStorage.walletconnect;
     delete localStorage.ydr_token;
+    delete localStorage.ydr_address;
 
     this.props.history.push('/');
   }

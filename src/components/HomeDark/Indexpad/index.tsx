@@ -58,7 +58,7 @@ const Indexpad: React.FC = observer(() => {
       })
       .catch((error) => {
         const { response } = error;
-        console.log('get ime list error', response);
+        console.error('get ime list error', response);
       })
       .finally(() => setLoading(false));
   }, []);

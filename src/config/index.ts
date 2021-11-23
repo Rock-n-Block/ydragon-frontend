@@ -227,7 +227,7 @@ export const connectWallet = (
 
   return {
     wallets: ['MetaMask', 'WalletConnect'],
-    blockchains: ['Ethereum', 'Binance Smart Chain', 'Avalanche', 'Polygon'],
+    blockchains: ['Ethereum', 'Binance Smart Chain', 'Avalanche'],
     network: {
       chainName: chain.name.toString(),
       chainID: chain.chainId,

@@ -59,7 +59,6 @@ const Index: React.FC = observer(() => {
         setIndexData(data);
         if (BACKEND_NETWORKS[networks.currentNetwork as chainsEnum] !== data.network) {
           history.push('/indexes');
-          // console.log(history);
         }
       })
       .catch((err: any) => {
