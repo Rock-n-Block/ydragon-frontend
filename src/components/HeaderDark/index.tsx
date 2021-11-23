@@ -32,7 +32,7 @@ const Header: React.FC = observer(() => {
   const { theme, user, networks, modals } = useMst();
   const walletConnector = useWalletConnectorContext();
   const history = useHistory();
-  const width = useWindowWidth();
+  const width = useWindowWidth(100);
 
   // useWindowDebouncedEvent('resize', window.innerWidth, handleResize, 500);
 
