@@ -406,7 +406,7 @@ export class WalletConnect {
       configABI.Index.ABI,
       'withdrawTokensForStaking',
     );
-    const signature = this.encodeFunctionCall(method, [tokenAmounts.reverse()]);
+    const signature = this.encodeFunctionCall(method, [tokenAmounts]);
 
     return this.sendTransaction({
       from: this.walletAddress,
