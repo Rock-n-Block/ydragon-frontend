@@ -58,10 +58,10 @@ class Connector extends React.Component<
           providerName as any,
         );
         if (isConnected) {
-          const subscriber = this.state.provider.getAccount().subscribe(
-            async (userAccount: any) => {
+          this.state.provider
+            .getAccount()
+            .then(async (userAccount: any) => {
               if (rootStore.user.address && userAccount.address !== rootStore.user.address) {
-                subscriber.unsubscribe();
                 this.disconnect();
               } else {
                 this.state.provider.setAccountAddress(userAccount.address);
@@ -98,8 +98,8 @@ class Connector extends React.Component<
                 localStorage.ydr_address = userAccount.address;
                 rootStore.user.setAddress(userAccount.address);
               }
-            },
-            (err: any) => {
+            })
+            .catch((err: any) => {
               console.error('getAccount wallet connect - get user account err: ', err);
               if (!(err.code && err.code === 6)) {
                 this.disconnect();
@@ -109,8 +109,7 @@ class Connector extends React.Component<
                   IS_PRODUCTION ? 'mainnet' : 'testnet'
                 } network in your wallet and try again`,
               );
-            },
-          );
+            });
         }
       } catch (err) {
         console.error(err);
