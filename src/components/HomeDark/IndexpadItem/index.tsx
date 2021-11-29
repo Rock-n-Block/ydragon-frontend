@@ -71,10 +71,10 @@ const IndexpadItem: React.FC<InitialMintEventItemProps> = ({ imeItem }) => {
   }, [now, end, start]);
   useEffect(() => {
     setEnd(
-      moment(new Date(+new BigNumber(imeItem.ime_end_timestamp).multipliedBy(1000).toString())),
+      moment(new Date(+new BigNumber(imeItem.ime_end_timestamp).multipliedBy(1000).toString(10))),
     );
     setStart(
-      moment(new Date(+new BigNumber(imeItem.ime_start_timestamp).multipliedBy(1000).toString())),
+      moment(new Date(+new BigNumber(imeItem.ime_start_timestamp).multipliedBy(1000).toString(10))),
     );
   }, [imeItem.ime_end_timestamp, imeItem.ime_start_timestamp]);
   useEffect(() => {

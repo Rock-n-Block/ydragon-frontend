@@ -38,7 +38,7 @@ const StakingStatistic: React.FC<IYdrPrice> = ({ ydrPrice }) => {
         <li className="staking-statistic-red">
           <div className="staking-statistic-red_title text-MER">Total YDR Staked</div>
           <div className="staking-statistic-red_amount text-MER">
-            {numberFormatter(+new BigNumber(tvlData.ydr_tvl || 0).toString(), 0)}
+            {numberFormatter(+new BigNumber(tvlData.ydr_tvl || 0).toString(10), 0)}
           </div>
           <div className="staking-statistic-red_subamount">
             ($ {new BigNumber(tvlData.ydr_tvl || 0).multipliedBy(ydrPrice || 0).toFormat(2)})

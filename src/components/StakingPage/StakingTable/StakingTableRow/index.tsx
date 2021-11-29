@@ -147,7 +147,7 @@ const StakingTableRow: React.FC<IStakingTableRowProps> = observer(({ index, ydrP
         />
         <StakingTableRowCell
           title="APR"
-          value={apr?.toString() || '00'}
+          value={apr?.toString(10) || '00'}
           textType="MER"
           symbol="%"
         />

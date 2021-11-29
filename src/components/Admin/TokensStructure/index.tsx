@@ -70,7 +70,7 @@ const TokensStructure: React.FC<TokensStructureProps> = observer(({ vaults, inde
   const handleWithdrawTokensClick = () => {
     setIsWithdrawBtnLoading(true);
     const preparedTokens = vaults.map((vault) =>
-      new BigNumber(vault.y_balance).minus(new BigNumber(vault.farm_balance)).toString(),
+      new BigNumber(vault.y_balance).minus(new BigNumber(vault.farm_balance)).toString(10),
     );
     walletConnect.walletService
       .withdrawTokensForStaking(preparedTokens, indexAddress)

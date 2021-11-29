@@ -340,7 +340,7 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
                     setPayInput(
                       new BigNumber(new BigNumber(balance).minus(1))
                         .times(new BigNumber(10).pow(isSell ? -18 : -decimals))
-                        .toString(),
+                        .toString(10),
                     )
                   }
                 >
