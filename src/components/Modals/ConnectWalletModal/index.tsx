@@ -4,6 +4,7 @@ import { observer } from 'mobx-react-lite';
 import backgroundImg from '../../../assets/img/connect-wallet/background-img.svg';
 import metamaskLogo from '../../../assets/img/connect-wallet/metamask.svg';
 import walletconnectLogo from '../../../assets/img/connect-wallet/walletconnect.svg';
+import dAppBrowserLogo from '../../../assets/img/connect-wallet/dAppBrowser.svg';
 import { useWalletConnectorContext } from '../../../services/walletConnect';
 import { WALLET_TYPE } from '../../../services/web3';
 import { useMst } from '../../../store/store';
@@ -72,6 +73,25 @@ const ConnectWalletModal: React.FC = observer(() => {
               {!walletconnectClicked
                 ? 'Connect to your Wallet Connect Wallet'
                 : 'Sign message in your wallet (it may take a while to appear)'}
+            </div>
+          </div>
+        </button>
+        <button
+          type="button"
+          className="wallets-container__wallet"
+          onClick={() => onConnect(WALLET_TYPE.METAMASK)}
+        >
+          <div className="wallets-container__wallet__img-container">
+            <img
+              src={dAppBrowserLogo}
+              alt="dApp browser"
+              className="wallets-container__wallet__logo"
+            />
+          </div>
+          <div className="wallets-container__wallet__text">
+            <div className="wallets-container__wallet__title">TrustWallet</div>
+            <div className="wallets-container__wallet__description">
+              Connect to your TrustWallet
             </div>
           </div>
         </button>
