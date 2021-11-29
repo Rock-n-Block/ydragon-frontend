@@ -190,7 +190,7 @@ const IndexpadItem: React.FC<InitialMintEventItemProps> = ({ imeItem }) => {
         </div>
         <div className="info__divider" />
         <div className="initial-mint-event__starting-price info__item">
-          <h3 className="info__title">starting price</h3>
+          <h3 className="info__title">price</h3>
           <p className="info__value text-gradient">${imeItem.price}</p>
         </div>
       </div>

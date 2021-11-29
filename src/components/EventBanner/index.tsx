@@ -104,8 +104,8 @@ const EventBanner: React.FC = observer(() => {
             <p className="event-banner-timer__title">
               <span>
                 {start.diff(now, 'seconds') > 0
-                  ? 'DAYS UNTIL Index minting Event AWAKENING'
-                  : 'DAYS BEFORE Index minting Event DISTRIBUTION'}{' '}
+                  ? 'Time before index minting starts'
+                  : 'Time before index minting ends'}{' '}
               </span>
             </p>
 

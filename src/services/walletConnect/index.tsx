@@ -65,7 +65,7 @@ class Connector extends React.Component<
                 this.disconnect();
               } else {
                 this.state.provider.setAccountAddress(userAccount.address);
-                if (!localStorage.ydr_token) {
+                if (!localStorage.ydr_address) {
                   const metMsg: any = await accountsApi.getMsg();
                   const signedMsg = await this.state.provider.connectWallet.signMsg(
                     userAccount.address,
