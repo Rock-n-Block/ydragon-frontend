@@ -2,7 +2,6 @@ import { ConnectWallet } from '@amfi/connect-wallet';
 import { IConnect, IError } from '@amfi/connect-wallet/dist/interface';
 import { chainsEnum } from '../../types';
 import config, { connectWallet as connectWalletConfig, contracts } from '../../config';
-import { Observable } from 'rxjs';
 import BigNumber from 'bignumber.js/bignumber';
 import { rootStore } from '../../store/store';
 import configABI from '../web3/config_ABI';
@@ -58,7 +57,7 @@ export class WalletConnect {
     this.walletAddress = address;
   }
 
-  public getAccount(): Observable<IConnect | IError> {
+  public getAccount(): Promise<IConnect | IError | { address: string }> {
     return this.connectWallet.getAccounts();
   }
 

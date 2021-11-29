@@ -414,6 +414,10 @@ export default class WalletService {
     return new BigNumber(amount).times(new BigNumber(10).pow(tokenDecimal)).toString(10);
   }
 
+  static calcTransactionAmountMinusOne(amount: number | string, tokenDecimal: number) {
+    return new BigNumber(amount).times(new BigNumber(10).pow(tokenDecimal)).minus(1).toString(10);
+  }
+
   signMsg(msg: string) {
     return this.web3Provider.eth.personal.sign(msg, this.walletAddress, '');
   }
@@ -501,7 +505,7 @@ export default class WalletService {
   redeem(value: string, spenderTokenAddress: string, address: string) {
     const redeemMethod = WalletService.getMethodInterface(configABI.MAIN.ABI, 'redeem');
     const signature = this.encodeFunctionCall(redeemMethod, [
-      WalletService.calcTransactionAmount(value, 18),
+      WalletService.calcTransactionAmountMinusOne(value, 18),
       spenderTokenAddress,
     ]);
 

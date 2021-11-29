@@ -19,7 +19,7 @@ import { factoryAbi, routerAbi, tokenAbi } from './abi';
 
 const IS_PRODUCTION = false;
 const BACKEND_URL = IS_PRODUCTION
-  ? 'https://preprod.ydragon.io/api/'
+  ? 'https://ydragon.io/api/'
   : 'https://dev-ydragon.rocknblock.io/api/';
 const SOCIAL_LINKS = {
   twitter: {
