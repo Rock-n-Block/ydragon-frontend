@@ -11,6 +11,7 @@ import IndexpadToken from './IndexpadToken';
 import { useWalletConnectorContext } from '../../../services/walletConnect';
 import { Sorter } from '../../../utils/sorter';
 import indexpadOther from '../../../assets/img/indexpad-other.svg';
+import { numberFormatter } from '../../../utils/numberFormatter';
 
 interface InitialMintEventItemProps {
   imeItem: IIme;
@@ -178,6 +179,19 @@ const IndexpadItem: React.FC<InitialMintEventItemProps> = ({ imeItem }) => {
             {' '}
             Enter!
           </Button>
+        </div>
+      </div>
+      <div className="initial-mint-event__info">
+        <div className="initial-mint-event__market-cap info__item">
+          <h3 className="info__title">market cap</h3>
+          <p className="info__value text-gradient">
+            ${numberFormatter(+new BigNumber(imeItem.market_cap || 0).toString(10), 0)}
+          </p>
+        </div>
+        <div className="info__divider" />
+        <div className="initial-mint-event__starting-price info__item">
+          <h3 className="info__title">starting price</h3>
+          <p className="info__value text-gradient">${imeItem.price}</p>
         </div>
       </div>
     </div>

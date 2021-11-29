@@ -30,6 +30,8 @@ export interface IIme {
   tokens: Array<IIndexpadToken>;
   name: string;
   address: string;
+  market_cap: string | number;
+  price: string | number;
   ime_start_timestamp: number;
   ime_end_timestamp: number;
 }

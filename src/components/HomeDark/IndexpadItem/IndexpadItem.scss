@@ -222,4 +222,55 @@
     width: 100%;
     max-width: 305px;
   }
+
+  &__info {
+    margin-top: 45px;
+    border-top: 1px solid rgba(#FFFFFF, 0.2);
+    padding-top: 40px;
+    font-family: "Monument Extended", sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 84px;
+    @include b('mobile') {
+      border: none;
+      padding: 0;
+      margin-top: 40px;
+      flex-direction: column;
+      gap: 40px;
+    }
+  }
+}
+
+.info {
+  &__divider {
+    width: 1px;
+    height: 42px;
+    background: rgba(#FFFFFF, 0.5);
+    @include b('mobile') {
+      width: 60%;
+      height: 1px;
+    }
+  }
+
+  &__title {
+    font-weight: 900;
+    font-size: 14px;
+    line-height: 150%;
+    /* identical to box height, or 21px */
+
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+  }
+
+  &__value {
+    margin-top: 25px;
+    font-size: 36px;
+    line-height: 120%;
+    /* or 43px */
+
+    text-align: center;
+    letter-spacing: 0.03em;
+    font-feature-settings: 'liga' off;
+  }
 }
