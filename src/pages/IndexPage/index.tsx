@@ -62,6 +62,7 @@ const Index: React.FC = observer(() => {
         }
       })
       .catch((err: any) => {
+        history.push('/*');
         console.error('get current index error', err);
       });
   }, [indexId, networks.currentNetwork, history]);

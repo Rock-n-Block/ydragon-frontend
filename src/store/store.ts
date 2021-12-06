@@ -1,5 +1,5 @@
 import { createContext, useContext } from 'react';
-import { Instance, onSnapshot, types } from 'mobx-state-tree';
+import { Instance, types } from 'mobx-state-tree';
 
 import { Modals } from './Modals';
 import { Networks } from './Networks';
@@ -43,9 +43,9 @@ export const Store = RootModel.create({
 
 export const rootStore = Store;
 
-onSnapshot(rootStore, (snapshot) => {
+/* onSnapshot(rootStore, (snapshot) => {
   console.log('Snapshoot:', snapshot);
-});
+}); */
 
 export type RootInstance = Instance<typeof RootModel>;
 const RootStoreContext = createContext<null | RootInstance>(null);
