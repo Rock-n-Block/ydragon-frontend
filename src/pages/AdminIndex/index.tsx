@@ -10,12 +10,12 @@ import {
   TokensStructure,
   XYStructure,
 } from '../../components/Admin';
-// import { RebalanceModal } from '../../components/Modals';
+import { RebalanceModal } from '../../components/Modals';
+import { BACKEND_NETWORKS } from '../../config';
 import { indexesApi, vaultsApi } from '../../services/api';
 import { useMst } from '../../store/store';
-import { IIndex, IIndexStatus, ITokensDiff } from '../Admin';
-import { BACKEND_NETWORKS } from '../../config';
 import { chainsEnum } from '../../types';
+import { IIndex, IIndexStatus, ITokensDiff } from '../Admin';
 
 interface IIndexId {
   indexId: string;
@@ -109,11 +109,11 @@ const AdminIndex: React.FC = () => {
       <Options address={index.index?.address} />
       <TokensStructure vaults={vault} indexAddress={index.index?.address} />
       <XYStructure vaults={vaultMini} />
-      {/* <RebalanceModal
+      <RebalanceModal
         name={index.index?.name}
         tokens={index.tokens_diff}
         onStart={getIndexComposition}
-      /> */}
+      />
     </main>
   );
 };

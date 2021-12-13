@@ -19,7 +19,7 @@ const RootModel = types.model({
 export const Store = RootModel.create({
   modals: {
     metamask: {},
-    rebalance: { isOpen: false },
+    rebalance: { isOpen: true },
     createIndex: { isOpen: false },
     getIn: { id: null, address: null },
     mint: { isOpen: false },
