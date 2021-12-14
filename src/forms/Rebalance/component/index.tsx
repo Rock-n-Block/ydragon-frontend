@@ -49,20 +49,7 @@ const Rebalance: React.FC<FormikProps<IRebalance> & IRebalance> = observer(
       }
     };
     const handleRemove = (arrayHelper: FieldArrayRenderProps, index: number) => {
-      indexesApi
-        .removeTokenFromIndex(+indexId, values.tokens[index].id)
-        .then(() => {
-          if (!values.tokens[index].pending) {
-            setFieldValue(`tokens[${index}].to_delete`, !values.tokens[index].to_delete);
-            setFieldValue(`tokens[${index}].new_weight`, 0);
-          } else {
-            arrayHelper.remove(index);
-          }
-        })
-        .catch((error: ProviderRpcError) => {
-          const { message } = error;
-          toast.error(`Remove token error ${message}`);
-        });
+      arrayHelper.remove(index);
     };
     const handleAddBack = (arrayHelper: FieldArrayRenderProps, index: number) => {
       indexesApi
@@ -80,29 +67,25 @@ const Rebalance: React.FC<FormikProps<IRebalance> & IRebalance> = observer(
         });
     };
     const handleAddNewToken = (arrayHelper: FieldArrayRenderProps, pickedItem: ISearchToken) => {
-      indexesApi
-        .addTokenToIndex(+indexId, pickedItem.symbol)
-        .then(({ data }) => {
-          arrayHelper.push({
-            to_delete: false,
-            new_weight: '0',
-            pending: true,
-            id: data.id,
-            old_weight: '0',
-            diff: 0,
-            token: {
-              name: pickedItem.name,
-              symbol: pickedItem.symbol,
-              image: pickedItem.image,
-              address: pickedItem.address,
-              id: 0,
-            } as IToken,
-          } as ITokensDiff);
-        })
-        .catch((error) => {
-          const { response } = error;
-          console.log('add new token error', response);
-        });
+      const isUnique = !values.tokens.find((item: any) => item.token.name === pickedItem.name);
+      if (isUnique) {
+        const newId = values.tokens[values.tokens.length - 1].id + 1;
+        arrayHelper.push({
+          to_delete: false,
+          new_weight: '0',
+          pending: true,
+          id: newId,
+          old_weight: '0',
+          diff: 0,
+          token: {
+            name: pickedItem.name,
+            symbol: pickedItem.symbol,
+            image: pickedItem.image,
+            address: pickedItem.address,
+            id: newId,
+          } as IToken,
+        } as ITokensDiff);
+      }
     };
     const handleChangeInput = (e: any) => {
       if (+e.target.value < 0) {
@@ -118,6 +101,7 @@ const Rebalance: React.FC<FormikProps<IRebalance> & IRebalance> = observer(
       setNewTokenName('');
       handleNewTokenNameChange('');
     };
+
     return (
       <Form name="form-rebalance" className="form-rebalance">
         <FieldArray

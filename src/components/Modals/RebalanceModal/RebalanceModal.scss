@@ -185,6 +185,8 @@
     &__info {
       display: flex;
       align-items: center;
+      max-width: 116px;
+      width: 100%;
     }
 
     &__name-wrapper {
@@ -218,11 +220,18 @@
   &__total {
     padding: 20px 16px;
 
-    display: grid;
-    grid-template-columns: 1fr 134px 102px;
-    grid-gap: 15px;
+    display: flex!important;
 
     align-items: center;
+
+    @include b(mobile) {
+      justify-content: space-between;
+    }
+
+    .weights-sum {
+      max-width: 164px;
+      margin-left: 15px;
+    }
 
     &-name {
       font-family: 'TTNorms', sans-serif;
