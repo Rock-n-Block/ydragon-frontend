@@ -1,6 +1,4 @@
-import React, { ChangeEvent, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { toast } from 'react-toastify';
+import React, { ChangeEvent, useEffect, useMemo, useState } from 'react';
 import BigNumber from 'bignumber.js/bignumber';
 import { FieldArray, FieldArrayRenderProps, Form, FormikProps } from 'formik';
 import { observer } from 'mobx-react-lite';
@@ -10,12 +8,11 @@ import { Button, Input, Search, TokenMini } from '../../../components';
 import { IToken } from '../../../components/IndexPage/IndexTable';
 import { ISearchToken } from '../../../components/Search';
 import { ITokensDiff } from '../../../pages/Admin';
-import { coinsApi, indexesApi } from '../../../services/api';
-import { ProviderRpcError } from '../../../types';
+import { coinsApi } from '../../../services/api';
 
-interface IIndexId {
-  indexId: string;
-}
+// interface IIndexId {
+//   indexId: string;
+// }
 export interface IRebalance {
   index: { name: string };
   tokens: Array<ITokensDiff>;
@@ -25,14 +22,19 @@ export interface IRebalance {
 }
 
 const Rebalance: React.FC<FormikProps<IRebalance> & IRebalance> = observer(
-  ({ setFieldValue, handleChange, handleBlur, values, handleSubmit }) => {
-    const { indexId } = useParams<IIndexId>();
+  ({ handleChange, handleBlur, values, handleSubmit }) => {
+    // const { indexId } = useParams<IIndexId>();
     const [searchTokens, setSearchTokens] = useState<ISearchToken[]>([] as ISearchToken[]);
     const [newTokenName, setNewTokenName] = useState<string>('');
-    const weightsSum = values.tokens
-      .map((tokenDiff) => +tokenDiff.new_weight)
-      .reduce((prevSum, newItem) => prevSum.plus(newItem), new BigNumber(0))
-      .toString(10);
+    const weightsSum = useMemo(
+      () =>
+        values.tokens
+          .map((tokenDiff) => +tokenDiff.new_weight)
+          .reduce((prevSum, newItem) => prevSum.plus(newItem), new BigNumber(0))
+          .toString(10),
+      [values.tokens],
+    );
+    const [isBtnDisabled, setIsBtnDisabled] = useState<boolean>(true);
     const handleNewTokenNameChange = (tokenName: string) => {
       if (tokenName.length >= 3) {
         coinsApi
@@ -51,21 +53,21 @@ const Rebalance: React.FC<FormikProps<IRebalance> & IRebalance> = observer(
     const handleRemove = (arrayHelper: FieldArrayRenderProps, index: number) => {
       arrayHelper.remove(index);
     };
-    const handleAddBack = (arrayHelper: FieldArrayRenderProps, index: number) => {
-      indexesApi
-        .addTokenBackToIndex(+indexId, values.tokens[index].id)
-        .then(({ data }) => {
-          setFieldValue(`tokens[${index}].to_delete`, !values.tokens[index].to_delete);
-          setFieldValue(
-            `tokens[${index}].new_weight`,
-            new BigNumber(data.new_weight).multipliedBy(100),
-          );
-        })
-        .catch((error: ProviderRpcError) => {
-          const { message } = error;
-          toast.error(`Add token back error ${message}`);
-        });
-    };
+    // const handleAddBack = (arrayHelper: FieldArrayRenderProps, index: number) => {
+    //   indexesApi
+    //     .addTokenBackToIndex(+indexId, values.tokens[index].id)
+    //     .then(({ data }) => {
+    //       setFieldValue(`tokens[${index}].to_delete`, !values.tokens[index].to_delete);
+    //       setFieldValue(
+    //         `tokens[${index}].new_weight`,
+    //         new BigNumber(data.new_weight).multipliedBy(100),
+    //       );
+    //     })
+    //     .catch((error: ProviderRpcError) => {
+    //       const { message } = error;
+    //       toast.error(`Add token back error ${message}`);
+    //     });
+    // };
     const handleAddNewToken = (arrayHelper: FieldArrayRenderProps, pickedItem: ISearchToken) => {
       const isUnique = !values.tokens.find((item: any) => item.token.name === pickedItem.name);
       if (isUnique) {
@@ -101,6 +103,11 @@ const Rebalance: React.FC<FormikProps<IRebalance> & IRebalance> = observer(
       setNewTokenName('');
       handleNewTokenNameChange('');
     };
+    useEffect(() => {
+      if (+weightsSum === 0 || +weightsSum === 100) {
+        setIsBtnDisabled(false);
+      } else setIsBtnDisabled(true);
+    }, [weightsSum]);
 
     return (
       <Form name="form-rebalance" className="form-rebalance">
@@ -136,27 +143,15 @@ const Rebalance: React.FC<FormikProps<IRebalance> & IRebalance> = observer(
                       />
                     </div>
 
-                    {!tokenDiff.to_delete ? (
-                      <Button
-                        styledType="outline"
-                        colorScheme="red"
-                        className="token-weights-item__remove"
-                        onClick={() => handleRemove(arrayHelper, index)}
-                        disabled={values.tokens.length === 1}
-                      >
-                        Remove
-                      </Button>
-                    ) : (
-                      <Button
-                        styledType="outline"
-                        colorScheme="green"
-                        className="token-weights-item__remove"
-                        onClick={() => handleAddBack(arrayHelper, index)}
-                        disabled={values.tokens.length === 1}
-                      >
-                        Add back
-                      </Button>
-                    )}
+                    <Button
+                      styledType="outline"
+                      colorScheme="red"
+                      className="token-weights-item__remove"
+                      onClick={() => handleRemove(arrayHelper, index)}
+                      disabled={values.tokens.length === 1}
+                    >
+                      Remove
+                    </Button>
                   </div>
                 ))
               ) : (
@@ -164,11 +159,7 @@ const Rebalance: React.FC<FormikProps<IRebalance> & IRebalance> = observer(
               )}
               <div className="token-weights__total">
                 <h3 className="token-weights__total-name">Total weight</h3>
-                <div
-                  className={`input-border weights-sum${
-                    +weightsSum === 0 || +weightsSum === 100 ? '' : '--error'
-                  }`}
-                >
+                <div className={`input-border weights-sum${!isBtnDisabled ? '' : '--error'}`}>
                   <span className="input">{+weightsSum > 0 ? weightsSum : '0'}</span>
                 </div>
               </div>
@@ -194,7 +185,11 @@ const Rebalance: React.FC<FormikProps<IRebalance> & IRebalance> = observer(
         </div>
 
         <div className="rebalance-modal__btn-row">
-          <Button onClick={() => handleSubmit()} loading={values.isLoading}>
+          <Button
+            disabled={isBtnDisabled}
+            onClick={() => handleSubmit()}
+            loading={values.isLoading}
+          >
             Start rebalance
           </Button>
         </div>

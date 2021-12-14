@@ -159,7 +159,7 @@
     padding: 16px;
 
     display: grid;
-    grid-template-columns: 1fr 134px 102px;
+    grid-template-columns: 1fr 1fr 1fr;
     grid-column-gap: 15px;
 
     align-items: center;
@@ -220,15 +220,13 @@
   &__total {
     padding: 20px 16px;
 
-    display: flex!important;
-
     align-items: center;
 
     @include b(mobile) {
       justify-content: space-between;
     }
 
-    .weights-sum {
+    .div {
       max-width: 164px;
       margin-left: 15px;
     }

@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
+import React, { ChangeEvent, useCallback, useEffect, useMemo, useState } from 'react';
 import BigNumber from 'bignumber.js/bignumber';
 import { FieldArray, FieldArrayRenderProps, Form, FormikProps } from 'formik';
 import { observer } from 'mobx-react-lite';
@@ -33,6 +33,7 @@ const CreateIndex: React.FC<FormikProps<ICreateIndex> & ICreateIndex> = observer
       price: true,
     });
     const [tokenName, setTokenName] = useState<string>('');
+    const [isWeightCorrect, setIsWeightCorrect] = useState<boolean>(true);
     const onBlurHandler = (value: string) => {
       switch (value) {
         case 'name':
@@ -103,10 +104,14 @@ const CreateIndex: React.FC<FormikProps<ICreateIndex> & ICreateIndex> = observer
         (current && current > moment().add(1, 'year'))
       );
     };
-    const weightsSum = values.tokens
-      .map((tokenDiff) => +tokenDiff.new_weight)
-      .reduce((prevSum, newItem) => prevSum.plus(newItem), new BigNumber(0))
-      .toString(10);
+    const weightsSum = useMemo(
+      () =>
+        values.tokens
+          .map((tokenDiff) => +tokenDiff.new_weight)
+          .reduce((prevSum, newItem) => prevSum.plus(newItem), new BigNumber(0))
+          .toString(10),
+      [values.tokens],
+    );
 
     const debounceTokenName = useDebounce(tokenName, 1000);
 
@@ -203,6 +208,12 @@ const CreateIndex: React.FC<FormikProps<ICreateIndex> & ICreateIndex> = observer
     useEffect(() => {
       handleNewTokenNameChange();
     }, [handleNewTokenNameChange]);
+    useEffect(() => {
+      if (+weightsSum === 0 || +weightsSum === 100) {
+        setIsWeightCorrect(true);
+      } else setIsWeightCorrect(false);
+    }, [weightsSum]);
+
     return (
       <Form name="form-create-index" className="form-create-index">
         <div className="form-create-index__inputs">
@@ -316,7 +327,7 @@ const CreateIndex: React.FC<FormikProps<ICreateIndex> & ICreateIndex> = observer
                     <h3 className="token-weights__total-name">Total weight</h3>
                     <div
                       className={`input-border weights-sum${
-                        +weightsSum === 0 || +weightsSum === 100 ? '' : '--error'
+                        isWeightCorrect ? '' : '--error'
                       }`}
                     >
                       <span className="input">{+weightsSum > 0 ? weightsSum : '0'}</span>
@@ -353,7 +364,8 @@ const CreateIndex: React.FC<FormikProps<ICreateIndex> & ICreateIndex> = observer
               values.dateRange === null ||
               values.dateRange[0] === '' ||
               values.dateRange[1] === '' ||
-              values.price === ''
+              values.price === '' ||
+              isWeightCorrect
             }
             loading={values.isLoading}
           >
