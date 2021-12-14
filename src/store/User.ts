@@ -32,7 +32,6 @@ export const User = types
       return !!self.address || !!localStorage.getItem('ydr_address');
     },
     get isAdmin() {
-      // return !!self.token || !!localStorage.getItem('ydr_token');
-      return true;
+      return !!self.token || !!localStorage.getItem('ydr_token');
     },
   }));

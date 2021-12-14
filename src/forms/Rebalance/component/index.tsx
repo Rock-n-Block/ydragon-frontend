@@ -1,5 +1,6 @@
 import React, { ChangeEvent, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import BigNumber from 'bignumber.js/bignumber';
 import { FieldArray, FieldArrayRenderProps, Form, FormikProps } from 'formik';
 import { observer } from 'mobx-react-lite';
@@ -10,6 +11,7 @@ import { IToken } from '../../../components/IndexPage/IndexTable';
 import { ISearchToken } from '../../../components/Search';
 import { ITokensDiff } from '../../../pages/Admin';
 import { coinsApi, indexesApi } from '../../../services/api';
+import { ProviderRpcError } from '../../../types';
 
 interface IIndexId {
   indexId: string;
@@ -17,7 +19,6 @@ interface IIndexId {
 export interface IRebalance {
   index: { name: string };
   tokens: Array<ITokensDiff>;
-  days: number | string;
   hours: number | string;
   steps: number | string;
   isLoading?: boolean;
@@ -25,7 +26,6 @@ export interface IRebalance {
 
 const Rebalance: React.FC<FormikProps<IRebalance> & IRebalance> = observer(
   ({ setFieldValue, handleChange, handleBlur, values, handleSubmit }) => {
-    // const { modals } = useMst();
     const { indexId } = useParams<IIndexId>();
     const [searchTokens, setSearchTokens] = useState<ISearchToken[]>([] as ISearchToken[]);
     const [newTokenName, setNewTokenName] = useState<string>('');
@@ -59,10 +59,10 @@ const Rebalance: React.FC<FormikProps<IRebalance> & IRebalance> = observer(
             arrayHelper.remove(index);
           }
         })
-        // .catch((error: ProviderRpcError) => {
-        //   const { message } = error;
-        //   modals.info.setMsg('Error', `Remove token error ${message}`, 'error');
-        // });
+        .catch((error: ProviderRpcError) => {
+          const { message } = error;
+          toast.error(`Remove token error ${message}`);
+        });
     };
     const handleAddBack = (arrayHelper: FieldArrayRenderProps, index: number) => {
       indexesApi
@@ -74,10 +74,10 @@ const Rebalance: React.FC<FormikProps<IRebalance> & IRebalance> = observer(
             new BigNumber(data.new_weight).multipliedBy(100),
           );
         })
-        // .catch((error: ProviderRpcError) => {
-        //   const { message } = error;
-        //   modals.info.setMsg('Error', `Add token back error ${message}`, 'error');
-        // });
+        .catch((error: ProviderRpcError) => {
+          const { message } = error;
+          toast.error(`Add token back error ${message}`);
+        });
     };
     const handleAddNewToken = (arrayHelper: FieldArrayRenderProps, pickedItem: ISearchToken) => {
       indexesApi
@@ -196,10 +196,6 @@ const Rebalance: React.FC<FormikProps<IRebalance> & IRebalance> = observer(
                 newTokenName={newTokenName}
                 handleClear={handleClear}
                 onPick={(pickedToken: ISearchToken) => handleAddNewToken(arrayHelper, pickedToken)}
-                // className="token-weights__search"
-                // data={searchTokens}
-                // onChange={(e) => handleNewTokenNameChange(e)}
-                // onPick={(pickedToken: ISearchToken) => handleAddNewToken(arrayHelper, pickedToken)}
               />
             </div>
           )}
@@ -209,20 +205,6 @@ const Rebalance: React.FC<FormikProps<IRebalance> & IRebalance> = observer(
           <div className="rebalance-options-row__title">Rebalance options</div>
 
           <div className="rebalance-options">
-            <div className="rebalance-option">
-              <div className="rebalance-option__label">Days</div>
-              <div className="rebalance-option__input-wrapper">
-                <Input
-                  name="days"
-                  value={values.days}
-                  onChange={handleChangeInput}
-                  onBlur={handleBlur}
-                  type="number"
-                  placeholder="0"
-                />
-              </div>
-            </div>
-
             <div className="rebalance-option">
               <div className="rebalance-option__label">Hours</div>
               <div className="rebalance-option__input-wrapper">

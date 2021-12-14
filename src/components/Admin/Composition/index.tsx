@@ -45,7 +45,7 @@ const Composition: React.FC<CompositionProps> = observer(({ status, tokens }) =>
           onClick={handleRebalanceOpen}
           disabled={rebalanceInProgress}
         >
-          Change index
+          Rebalance index
         </Button>
       </div>
     </section>

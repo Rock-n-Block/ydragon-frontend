@@ -20,6 +20,9 @@
 }
 
 .light {
+  .input-border {
+    background: $gradient-white !important;
+  }
   .token-weights {
     &-items {
       &__gead {

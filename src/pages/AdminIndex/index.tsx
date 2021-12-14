@@ -16,6 +16,7 @@ import { indexesApi, vaultsApi } from '../../services/api';
 import { useMst } from '../../store/store';
 import { chainsEnum } from '../../types';
 import { IIndex, IIndexStatus, ITokensDiff } from '../Admin';
+import Composition from '../../components/Admin/Composition';
 
 interface IIndexId {
   indexId: string;
@@ -104,7 +105,7 @@ const AdminIndex: React.FC = () => {
   return (
     <main className="container">
       <IndexInfo marketCap={index.market_cap} price={index.price} />
-      {/* <Composition status={index.status} tokens={index.tokens_diff} /> */}
+      <Composition status={index.status} tokens={index.tokens_diff} />
       <Rebalance tokens={index.tokens_diff} />
       <Options address={index.index?.address} />
       <TokensStructure vaults={vault} indexAddress={index.index?.address} />

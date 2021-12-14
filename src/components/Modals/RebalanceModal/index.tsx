@@ -22,7 +22,7 @@ const RebalanceModal: React.FC<RebalanceModalProps> = ({ name, tokens, onStart }
   };
   return (
     <Modal
-      isVisible={ modals.rebalance.isOpen }
+      isVisible={modals.rebalance.isOpen}
       className="m-rebalance"
       handleCancel={handleClose}
       closeIcon
