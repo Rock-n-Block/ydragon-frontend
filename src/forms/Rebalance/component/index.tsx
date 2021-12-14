@@ -201,42 +201,6 @@ const Rebalance: React.FC<FormikProps<IRebalance> & IRebalance> = observer(
           )}
         />
 
-        <div className="rebalance-options-row">
-          <div className="rebalance-options-row__title">Rebalance options</div>
-
-          <div className="rebalance-options">
-            <div className="rebalance-option">
-              <div className="rebalance-option__label">Hours</div>
-              <div className="rebalance-option__input-wrapper">
-                <Input
-                  name="hours"
-                  value={values.hours}
-                  onChange={handleChangeInput}
-                  onBlur={handleBlur}
-                  type="number"
-                  placeholder="0"
-                  className="rebalance-option__input-hours"
-                  error={values.hours > 23}
-                />
-              </div>
-            </div>
-
-            <div className="rebalance-option">
-              <div className="rebalance-option__label">Steps</div>
-              <div className="rebalance-option__input-wrapper">
-                <Input
-                  name="steps"
-                  value={values.steps}
-                  onChange={handleChangeInput}
-                  onBlur={handleBlur}
-                  type="number"
-                  placeholder="0"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-
         <div className="token-weights-items__empty">
           <img src={DangerCircle} alt="alert" width="20" height="20" />
           <span>
