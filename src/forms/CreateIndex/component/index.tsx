@@ -209,7 +209,7 @@ const CreateIndex: React.FC<FormikProps<ICreateIndex> & ICreateIndex> = observer
       handleNewTokenNameChange();
     }, [handleNewTokenNameChange]);
     useEffect(() => {
-      if (+weightsSum === 0 || +weightsSum === 100) {
+      if (+weightsSum === 100) {
         setIsWeightCorrect(true);
       } else setIsWeightCorrect(false);
     }, [weightsSum]);

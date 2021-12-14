@@ -104,7 +104,7 @@ const Rebalance: React.FC<FormikProps<IRebalance> & IRebalance> = observer(
       handleNewTokenNameChange('');
     };
     useEffect(() => {
-      if (+weightsSum === 0 || +weightsSum === 100) {
+      if (+weightsSum === 100) {
         setIsBtnDisabled(false);
       } else setIsBtnDisabled(true);
     }, [weightsSum]);
