@@ -22,7 +22,7 @@
 .light {
   .input {
     color: $black;
-    background: $white;
+    background: $gradient-white !important;
   }
 
   .ant-input[disabled] {

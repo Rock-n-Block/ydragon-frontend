@@ -1,5 +1,5 @@
 export { default as Modal } from './Modal';
-// export { default as RebalanceModal } from './RebalanceModal';
+export { default as RebalanceModal } from './RebalanceModal';
 export { default as MetamaskErrModal } from './MetamaskErrModal';
 export { default as TradeIndexModal } from './TradeIndexModal';
 export { default as CreateIndexModal } from './CreateIndexModal';
