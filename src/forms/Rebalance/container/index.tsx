@@ -7,9 +7,9 @@ import { observer } from 'mobx-react-lite';
 
 import { ITokensDiff } from '../../../pages/Admin';
 import { indexesApi } from '../../../services/api';
-import { useMst } from '../../../store/store';
-import Rebalance, { IRebalance } from '../component';
 import { ProviderRpcError } from '../../../types';
+// import { useMst } from '../../../store/store';
+import Rebalance, { IRebalance } from '../component';
 
 interface IIndexId {
   indexId: string;
@@ -20,8 +20,8 @@ interface RebalanceFormProps {
   onStart: () => void;
 }
 
-const RebalanceForm: React.FC<RebalanceFormProps> = observer(({ name, tokens, onStart }) => {
-  const { modals } = useMst();
+const RebalanceForm: React.FC<RebalanceFormProps> = observer(({ name, tokens }) => {
+  // const { modals } = useMst();
   const { indexId } = useParams<IIndexId>();
   const FormWithFormik = withFormik<any, IRebalance>({
     enableReinitialize: true,
@@ -58,24 +58,28 @@ const RebalanceForm: React.FC<RebalanceFormProps> = observer(({ name, tokens, on
         tokens_diff,
         attempts_count: +values.steps,
       };
+      // mock
+      console.log('handleSubmitData: ', newData);
+      setTimeout(() => setFieldValue('isLoading', false), 2000);
+      //
       indexesApi
         .putIndexesRebalance(+indexId, newData)
-        .then(() => {
-          indexesApi
-            .launchRebalance(+indexId)
-            .then(() => {
-              toast.success(`launch rebalance success`);
-              onStart();
-              modals.rebalance.close();
-            })
-            .catch((err: any) => {
-              const { response } = err;
-              toast.error(`Launch rebalance error ${response.data}`);
-            })
-            .finally(() => {
-              setFieldValue('isLoading', false);
-            });
-        })
+        // .then(() => {
+        //   indexesApi
+        //     .launchRebalance(+indexId)
+        //     .then(() => {
+        //       toast.success(`launch rebalance success`);
+        //       onStart();
+        //       modals.rebalance.close();
+        //     })
+        //     .catch((err: any) => {
+        //       const { response } = err;
+        //       toast.error(`Launch rebalance error ${response.data}`);
+        //     })
+        //     .finally(() => {
+        //       setFieldValue('isLoading', false);
+        //     });
+        // })
         .catch((err: ProviderRpcError) => {
           setFieldValue('isLoading', false);
           const { message } = err;

@@ -37,13 +37,13 @@ export default {
   getStakingStatistic: (address: string) => axios.get(`indexes/staking/${address}/`),
   putIndexesRebalance: (indexId: number, data: any) =>
     axios.put(`indexes/${indexId}/rebalance/`, data),
-  launchRebalance: (indexId: number) => axios.post(`indexes/${indexId}/rebalance/launch/`, {}),
-  addTokenToIndex: (indexId: number, symbol: string) =>
-    axios.post(`/indexes/${indexId}/rebalance/tokens/`, { symbol, new_weight: 0 }),
-  removeTokenFromIndex: (indexId: number, tokenId: number) =>
-    axios.delete(`/indexes/${indexId}/rebalance/tokens/${tokenId}/`),
-  addTokenBackToIndex: (indexId: number, tokenId: number) =>
-    axios.put(`/indexes/${indexId}/rebalance/tokens/${tokenId}/`, {}),
+  // launchRebalance: (indexId: number) => axios.post(`indexes/${indexId}/rebalance/launch/`, { indexId }),
+  // addTokenToIndex: (indexId: number, symbol: string) =>
+  //   axios.post(`/indexes/${indexId}/rebalance/tokens/`, { symbol, new_weight: 0 }),
+  // removeTokenFromIndex: (indexId: number, tokenId: number) =>
+  //   axios.delete(`/indexes/${indexId}/rebalance/tokens/${tokenId}/`),
+  // addTokenBackToIndex: (indexId: number, tokenId: number) =>
+  //   axios.put(`/indexes/${indexId}/rebalance/tokens/${tokenId}/`, {}),
   getIndexTokensChart: (indexId: string, days: string) =>
     axios.get(`/indexes/info/${indexId}/`, {
       params: {
