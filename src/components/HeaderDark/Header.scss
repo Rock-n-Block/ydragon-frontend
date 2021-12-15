@@ -10,6 +10,12 @@
 
   .header__wrapper {
     background: transparent;
+    transition: all .3s ease-in-out;
+  }
+
+  .black {
+    background: black!important;
+    transition: all .2s ease-in-out;
   }
 
   .header {
@@ -22,6 +28,8 @@
         color: $white;
       }
     }
+
+
 
     //.container {
     //  .menu-nav {
