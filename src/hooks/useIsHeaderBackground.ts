@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useState } from 'react';
 
-const UseIsHeaderBackground = (scrollYAmount: number) => {
-  const [isHeaderBackground, setIsHeaderBackground] = useState(false);
+const UseIsHeaderBackground = (scrollYAmount: number): boolean => {
+  const [isHeaderBackground, setIsHeaderBackground] = useState<boolean>(false);
 
-  const [scrollY, setScrollY] = useState(0);
+  const [scrollY, setScrollY] = useState<number>(0);
 
   const logIt = useCallback(() => {
     setScrollY(window.pageYOffset);
