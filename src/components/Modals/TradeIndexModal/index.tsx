@@ -306,7 +306,6 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
         getFee();
       }
     }, [getFee, whiteList.length, modals.tradeIndex.method, getBuyCourse, getSellCourse, payInput]);
-    console.log('isLoading: ', isLoading);
     return (
       <Modal
         isVisible={modals.tradeIndex.isOpen}
