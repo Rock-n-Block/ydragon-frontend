@@ -8,7 +8,7 @@
     }
 
     &__link {
-      background: linear-gradient(238.88deg, #000316 31.18%, #050c25 99.47%);
+      @include shadow-dark-block;
     }
   }
 }

@@ -64,32 +64,32 @@ p {
     background-color: $main-dark-bg;
     background-image: url('../assets/img/home-dark-bg.png');
 
-    &--home,
-    &--about {
-      background-image: url('../assets/img/home-dark-bg.png'),
-        url('../assets/img/home-dark-bg-bottom.png');
+    //&--home,
+    //&--about {
+    //  background-image: url('../assets/img/home-dark-bg.png'),
+    //    url('../assets/img/home-dark-bg-bottom.png');
+    //
+    //  @include b('tablet') {
+    //    background-image: url('../assets/img/home-dark-bg.png');
+    //  }
+    //}
 
-      @include b('tablet') {
-        background-image: url('../assets/img/home-dark-bg.png');
-      }
-    }
-
-    &--simplified {
-      background-image: none;
-
-      @include b('mobile') {
-        background-image: url('../assets/img/home-dark-bg.png');
-      }
-    }
-
-    &--pbf {
-      background-image: url('../assets/img/home-dark-bg.png'), url('../assets/img/pbf-bg-midle.png'),
-        url('../assets/img/pbf-bg-bottom.png');
-
-      @include b(tablet) {
-        background-image: url('../assets/img/home-dark-bg.png');
-      }
-    }
+    //&--simplified {
+    //  background-image: none;
+    //
+    //  @include b('mobile') {
+    //    background-image: url('../assets/img/home-dark-bg.png');
+    //  }
+    //}
+    //
+    //&--pbf {
+    //  background-image: url('../assets/img/home-dark-bg.png'), url('../assets/img/pbf-bg-midle.png'),
+    //    url('../assets/img/pbf-bg-bottom.png');
+    //
+    //  @include b(tablet) {
+    //    background-image: url('../assets/img/home-dark-bg.png');
+    //  }
+    //}
   }
 
   .page__title-icon--index {
