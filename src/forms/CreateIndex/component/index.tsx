@@ -365,7 +365,7 @@ const CreateIndex: React.FC<FormikProps<ICreateIndex> & ICreateIndex> = observer
               values.dateRange[0] === '' ||
               values.dateRange[1] === '' ||
               values.price === '' ||
-              isWeightCorrect
+              !isWeightCorrect
             }
             loading={values.isLoading}
           >
