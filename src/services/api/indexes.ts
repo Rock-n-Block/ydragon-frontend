@@ -1,6 +1,6 @@
+import { BACKEND_NETWORKS } from '../../config';
 import axios from '../../core/axios';
 import { rootStore } from '../../store/store';
-import { BACKEND_NETWORKS } from '../../config';
 import { chainsEnum } from '../../types';
 
 export default {
