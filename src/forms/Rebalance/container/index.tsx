@@ -1,19 +1,20 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
-import { toast } from 'react-toastify';
+// import { useParams } from 'react-router-dom';
+// import { toast } from 'react-toastify';
 import BigNumber from 'bignumber.js/bignumber';
 import { withFormik } from 'formik';
 import { observer } from 'mobx-react-lite';
 
 import { ITokensDiff } from '../../../pages/Admin';
-import { indexesApi } from '../../../services/api';
-import { ProviderRpcError } from '../../../types';
+// import { indexesApi } from '../../../services/api';
+// import { ProviderRpcError } from '../../../types';
 // import { useMst } from '../../../store/store';
 import Rebalance, { IRebalance } from '../component';
-
-interface IIndexId {
-  indexId: string;
-}
+// import { useWalletConnectorContext } from '../../../services/walletConnect';
+//
+// interface IIndexId {
+//   indexId: string;
+// }
 interface RebalanceFormProps {
   name: string;
   tokens: Array<ITokensDiff>;
@@ -22,7 +23,8 @@ interface RebalanceFormProps {
 
 const RebalanceForm: React.FC<RebalanceFormProps> = observer(({ name, tokens }) => {
   // const { modals } = useMst();
-  const { indexId } = useParams<IIndexId>();
+  // const { indexId } = useParams<IIndexId>();
+  // const { walletService } = useWalletConnectorContext();
   const FormWithFormik = withFormik<any, IRebalance>({
     enableReinitialize: true,
     mapPropsToValues: () => ({
@@ -60,9 +62,10 @@ const RebalanceForm: React.FC<RebalanceFormProps> = observer(({ name, tokens }) 
       };
       // mock
       console.log('handleSubmitData: ', newData);
-      setTimeout(() => setFieldValue('isLoading', false), 2000);
+      setFieldValue('isLoading', false);
+      // walletService.rebalance(indexId)
       //
-      indexesApi
+      /* indexesApi
         .putIndexesRebalance(+indexId, newData)
         // .then(() => {
         //   indexesApi
@@ -84,7 +87,7 @@ const RebalanceForm: React.FC<RebalanceFormProps> = observer(({ name, tokens }) 
           setFieldValue('isLoading', false);
           const { message } = err;
           toast.error(`Put rebalance error ${message}`);
-        });
+        }); */
     },
     displayName: 'Rebalance',
   })(Rebalance);

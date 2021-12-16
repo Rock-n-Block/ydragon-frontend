@@ -8,6 +8,7 @@ const Network = types.model({
   fabric_address: types.string,
   oracle_address: types.string,
   staking_address: types.string,
+  old_staking_address: types.maybeNull(types.string),
   router_address: types.string,
   dex_factory_address: types.string,
   endpoint: types.string,
