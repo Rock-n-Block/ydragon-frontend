@@ -25,7 +25,7 @@
     background: linear-gradient(149.35deg, #b12e2a 53.78%, #f47c45 102.7%);
 
     background-image: url('../../../assets/img/staking-page/staking-statistic-item-1-bg.svg'),
-      linear-gradient(149.35deg, #b12e2a 53.78%, #f47c45 102.7%);
+    linear-gradient(149.35deg, #b12e2a 53.78%, #f47c45 102.7%);
 
     background-position: center center;
     background-repeat: no-repeat;
@@ -44,6 +44,7 @@
       text-transform: uppercase;
       font-size: 14px;
       margin-bottom: 30px;
+
       &.text-MER {
         font-weight: 900;
       }
@@ -66,6 +67,7 @@
       font-size: 14px;
       text-transform: uppercase;
       margin-bottom: 15px;
+
       &.text-MER {
         font-weight: 900;
       }
@@ -102,6 +104,7 @@
       @include b(mobile) {
         margin-bottom: 20px;
       }
+
       &.text-MER {
         font-weight: 900;
       }
@@ -138,27 +141,28 @@
 
     &_prices {
       display: flex;
-      justify-content: center;
+      justify-content: space-around;
       align-items: flex-end;
-      gap: 200px;
+      //gap: 200px;
+      //margin: 0 64px;
 
       @include b(mobile) {
         display: block;
       }
 
       position: relative;
-      &::after {
-        content: '';
-        position: absolute;
+      /* &::after {
+         content: '';
+         position: absolute;
 
-        height: 42px;
-        width: 1px;
-        background-color: #fff;
-        opacity: 0.8;
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%, -50%);
-      }
+         height: 42px;
+         width: 1px;
+         background-color: #fff;
+         opacity: 0.8;
+         left: 50%;
+         top: 50%;
+         transform: translate(-50%, -50%);
+       } */
 
       @include b(1000) {
         &::after {
@@ -168,6 +172,7 @@
     }
 
     &_price {
+      position: relative;
       @include b(mobile) {
         &:first-child {
           margin-bottom: 30px;
@@ -179,6 +184,7 @@
         font-size: 14px;
         letter-spacing: 0.3em;
         margin-bottom: 15px;
+
         &.text-MER {
           font-weight: 800;
         }
@@ -186,6 +192,16 @@
 
       &__amount {
         font-size: 36px;
+      }
+
+      &-divider {
+        width: 1px;
+        height: 42px;
+        background-color:rgba($white,0.5);
+        align-self: center;
+        @include b(mobile) {
+          display: none;
+        }
       }
     }
   }
