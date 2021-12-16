@@ -14,10 +14,7 @@ import { coinsApi } from '../../../services/api';
 //   indexId: string;
 // }
 export interface IRebalance {
-  index: { name: string };
   tokens: Array<ITokensDiff>;
-  hours: number | string;
-  steps: number | string;
   isLoading?: boolean;
 }
 

@@ -112,6 +112,7 @@ const AdminIndex: React.FC = () => {
       <XYStructure vaults={vaultMini} />
       <RebalanceModal
         name={index.index?.name}
+        address={index.index?.address}
         tokens={index.tokens_diff}
         onStart={getIndexComposition}
       />

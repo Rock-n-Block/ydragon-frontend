@@ -250,8 +250,8 @@ export class WalletConnect {
     });
   }
 
-  rebalance(indexAddress: string, tokenAddresses: string[], tokenWeights: string[]) {
-    const method = WalletService.getMethodInterface(configABI.MAIN.ABI, 'rebalance');
+  rebase(indexAddress: string, tokenAddresses: string[], tokenWeights: string[]) {
+    const method = WalletService.getMethodInterface(configABI.MAIN.ABI, 'rebase');
     const signature = this.encodeFunctionCall(method, [tokenAddresses, tokenWeights]);
 
     return this.sendTransaction({
