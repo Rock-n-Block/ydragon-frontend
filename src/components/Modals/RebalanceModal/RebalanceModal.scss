@@ -1,0 +1,268 @@
+@import '../../../styles/variables';
+@import '../../../styles/mixins';
+
+.dark {
+  .token-weights {
+    &-items {
+      &__gead {
+        color: rgba($white, 0.5);
+      }
+    }
+  }
+
+  .rebalance {
+    &-options-row {
+      color: $white;
+      border-top: 1px solid rgba($white, 0.1);
+      border-bottom: 1px solid rgba($white, 0.1);
+    }
+  }
+}
+
+.light {
+  .input-border {
+    background: $gradient-white !important;
+  }
+  .token-weights {
+    &-items {
+      &__gead {
+        color: rgba($black, 0.5);
+      }
+    }
+  }
+
+  .rebalance {
+    &-options-row {
+      color: $black;
+      border-top: 1px solid rgba($black, 0.1);
+      border-bottom: 1px solid rgba($black, 0.1);
+    }
+  }
+}
+
+.m-rebalance {
+  &__content {
+    padding: 30px;
+  }
+}
+
+.rebalance {
+  &-items {
+    margin-top: 20px;
+  }
+
+  &-modal {
+    position: relative;
+
+    &__title {
+      font-family: 'Monument Extended', sans-serif;
+      font-size: 20px;
+      font-weight: normal;
+      line-height: 24px;
+    }
+
+    &__btn-row {
+      margin-top: 20px;
+
+      display: flex;
+      justify-content: center;
+
+      .btn {
+        padding: 14px 40px;
+
+        max-width: 207px;
+      }
+    }
+  }
+
+  &-options {
+    margin-right: 13px;
+
+    display: flex;
+    gap: 10px;
+
+    &-row {
+      padding: 20px 0;
+
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      font-size: 14px;
+      line-height: 17px;
+
+      &__title {
+        max-width: 103px;
+
+        font-family: 'TTNorms', sans-serif;
+        font-size: 18px;
+        font-weight: normal;
+        line-height: 21px;
+      }
+    }
+  }
+
+  &-option {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+
+    &__input-wrapper {
+      width: 100px;
+    }
+
+    .input {
+      background: linear-gradient(180deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0) 100%),
+      linear-gradient(171.49deg, #1a1e3a 3.83%, #161a2a 100%);
+    }
+  }
+}
+
+.token-weights {
+  &-items {
+    &__head {
+      margin-bottom: 10px;
+      padding: 0 16px;
+
+      display: grid;
+
+      font-family: 'Monument Extended', sans-serif;
+      font-size: 12px;
+      font-weight: normal;
+      line-height: 14px;
+      text-align: center;
+
+      grid-template-columns: 1fr 134px 102px;
+      grid-column-gap: 15px;
+
+      &-col {
+        grid-column-start: 2;
+      }
+    }
+
+    &__empty {
+      margin: 25px 0;
+
+      display: flex;
+      align-items: flex-start;
+
+      font-family: 'Monument Extended', sans-serif;
+      font-size: 16px;
+      font-weight: normal;
+      line-height: 19px;
+      gap: 9px;
+    }
+  }
+
+  &-item {
+    padding: 16px;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-column-gap: 15px;
+
+    align-items: center;
+
+    box-sizing: border-box;
+
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 40px;
+
+    .input {
+      background: rgb(35, 38, 60);
+
+      &[disabled] {
+        color: rgba(white, 0.25);
+        background: rgb(35, 38, 60);
+      }
+    }
+
+    & + & {
+      margin-top: 10px;
+    }
+
+    &__info {
+      display: flex;
+      align-items: center;
+      max-width: 116px;
+      width: 100%;
+    }
+
+    &__name-wrapper {
+      margin-left: 10px;
+    }
+
+    &__name {
+      font-family: 'TTNorms', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 21px;
+
+      color: white;
+    }
+
+    &__abbr {
+      font-size: 18px;
+      line-height: 21px;
+      text-transform: uppercase;
+
+      color: rgba(white, 0.4);
+    }
+
+    &__remove {
+      margin-left: auto;
+
+      width: fit-content;
+    }
+  }
+
+  &__total {
+    padding: 20px 16px;
+
+    align-items: center;
+
+    @include b(mobile) {
+      justify-content: space-between;
+    }
+
+    .div {
+      max-width: 164px;
+      margin-left: 15px;
+    }
+
+    &-name {
+      font-family: 'TTNorms', sans-serif;
+      font-size: 18px;
+      font-weight: normal;
+      line-height: 21px;
+
+      color: white;
+    }
+
+    .input-border {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      width: 100%;
+
+      .input {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+
+    .input {
+      background: linear-gradient(180deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0) 100%),
+      linear-gradient(171.49deg, #1a1e3a 3.83%, #161a2a 100%);
+    }
+  }
+
+  &__search {
+    padding: 20px 0;
+
+    border-top: 1px solid rgba(white, 0.1);
+  }
+}

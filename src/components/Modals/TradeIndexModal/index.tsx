@@ -218,9 +218,9 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
         .catch((err: ProviderRpcError) => {
           const { message } = err;
           toast.error('Something went wrong');
+          setIsLoading(false);
           console.error(`Approve error `, message);
-        })
-        .finally(() => setIsLoading(false));
+        });
     };
     const handleBuy = (): void => {
       setIsLoading(true);
@@ -239,6 +239,7 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
         .catch((err: ProviderRpcError) => {
           const { message } = err;
           toast.error('Something went wrong');
+          setIsLoading(false);
           console.error(`Buy error `, message);
         });
     };
@@ -259,6 +260,7 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
         .catch((err: ProviderRpcError) => {
           const { message } = err;
           toast.error('Something went wrong');
+          setIsLoading(false);
           console.error(`Sell error `, message);
         });
     };

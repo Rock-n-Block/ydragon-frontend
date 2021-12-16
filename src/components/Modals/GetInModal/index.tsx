@@ -106,6 +106,7 @@ const GetInModal: React.FC = observer(() => {
       .catch((err: ProviderRpcError) => {
         const { message } = err;
         toast.error('Something went wrong');
+        setIsLoading(false);
         console.error(`Approve error`, message);
       })
       .finally(() => setIsLoading(false));
@@ -132,6 +133,7 @@ const GetInModal: React.FC = observer(() => {
       .catch((err: ProviderRpcError) => {
         const { message } = err;
         toast.error('Something went wrong');
+        setIsLoading(false);
         console.error(`Enter IMO error `, message);
       });
   };

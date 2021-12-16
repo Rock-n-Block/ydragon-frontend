@@ -131,8 +131,8 @@ const chains: {
           rpc: {
             rpc: {
               [IS_PRODUCTION ? 1 : 42]: IS_PRODUCTION
-                ? 'https://bsc-dataseed.binance.org/'
-                : 'https://data-seed-prebsc-2-s1.binance.org:8545/',
+                ? `https://mainnet.infura.io/v3/${INFURA_KEY}`
+                : `https://rinkeby.infura.io/v3/${INFURA_KEY}`,
             },
             chainId: IS_PRODUCTION ? 1 : 42,
           },
@@ -157,7 +157,7 @@ const chains: {
             rpc: {
               [IS_PRODUCTION ? 56 : 97]: IS_PRODUCTION
                 ? 'https://bsc-dataseed.binance.org/'
-                : 'https://data-seed-prebsc-2-s1.binance.org:8545/',
+                : 'https://data-seed-prebsc-1-s1.binance.org:8545/',
             },
             chainId: IS_PRODUCTION ? 56 : 97,
           },
