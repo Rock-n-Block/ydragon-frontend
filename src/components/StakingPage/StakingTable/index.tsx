@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { observer } from 'mobx-react';
 
 import StakingTableRow from './StakingTableRow';
@@ -6,28 +6,33 @@ import StakingTableRow from './StakingTableRow';
 // import { useMst } from '../../../store/store';
 
 import './StakingTable.scss';
+import { useMst } from '../../../store/store';
+import { useWalletConnectorContext } from '../../../services/walletConnect';
+import { Loader } from '../../index';
 
 interface IStakingTableProps {
   ydrPrice: string;
 }
 
 const StakingTable: React.FC<IStakingTableProps> = observer(({ ydrPrice }) => {
-  // const walletConnector = useWalletConnectorContext();
-  // const { networks } = useMst();
+  const walletConnector = useWalletConnectorContext();
+  const { networks } = useMst();
 
-  // const [stakesCount, setStakesCount] = useState(0);
-  //
-  // const getStakesCount = useCallback(() => {
-  //   walletConnector.walletService.getStakesCount().then((count: number) => {
-  //     setStakesCount(count);
-  //   });
-  // }, [walletConnector.walletService]);
+  const [stakesCount, setStakesCount] = useState<number | null>(null);
 
-  // useEffect(() => {
-  //   if (networks.currentNetwork) {
-  //     getStakesCount();
-  //   }
-  // }, [getStakesCount, networks.currentNetwork]);
+  const getStakesCount = useCallback(() => {
+    walletConnector.walletService
+      .getStakesCount(networks.getCurrNetwork()?.staking_address ?? '')
+      .then((count: string) => {
+        setStakesCount(+count || 0);
+      });
+  }, [networks, walletConnector.walletService]);
+
+  useEffect(() => {
+    if (networks.networksList.length) {
+      getStakesCount();
+    }
+  }, [getStakesCount, networks.networksList.length]);
 
   return (
     <section className="section">
@@ -45,8 +50,16 @@ const StakingTable: React.FC<IStakingTableProps> = observer(({ ydrPrice }) => {
         <div className="staking-table_body">
           {new Array(2).fill(1).map((el, i) => (
             // eslint-disable-next-line
-            <StakingTableRow key={i} index={i} ydrPrice={ydrPrice} />
+            <StakingTableRow key={i} index={i} ydrPrice={ydrPrice} old />
           ))}
+          {typeof stakesCount === 'number' ? (
+            new Array(+stakesCount)
+              .fill(1)
+              // eslint-disable-next-line
+              .map((el, i) => <StakingTableRow key={i} index={i} ydrPrice={ydrPrice} />)
+          ) : (
+            <Loader loading />
+          )}
         </div>
       </div>
     </section>
