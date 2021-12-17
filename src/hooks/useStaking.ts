@@ -81,7 +81,7 @@ export const useStaking = (
       indexSymbol = `${firstSymbol} / ${secondSymbol} LP`;
       setIsLp(true);
     } catch (error) {
-      console.error('GET STAKE SYMBOL ERR [useStaking]', { info: error });
+      console.log(`GET STAKE SYMBOL ${indexName}, not LP`, { info: error });
     }
 
     return { indexSymbol: indexSymbol.toUpperCase(), indexName };
