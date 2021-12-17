@@ -213,6 +213,7 @@ const TradeIndexModal: React.FC<TradeIndexModalProps> = observer(
         })
         .then(() => {
           setIsNeedApprove(false);
+          setIsLoading(false);
           toast.success(`You approved ${token}`);
         })
         .catch((err: ProviderRpcError) => {

@@ -40,8 +40,8 @@ const App: React.FC = observer(() => {
 
   return (
     <div className={cn(theme.value, bodyClass)}>
-      <ToastContainer />
       <Header />
+      <ToastContainer />
       <Routes />
       <Modals />
       <Footer />

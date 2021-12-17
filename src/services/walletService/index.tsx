@@ -250,6 +250,17 @@ export class WalletConnect {
     });
   }
 
+  rebase(indexAddress: string, tokenAddresses: string[], tokenWeights: string[]) {
+    const method = WalletService.getMethodInterface(configABI.MAIN.ABI, 'rebase');
+    const signature = this.encodeFunctionCall(method, [tokenAddresses, tokenWeights]);
+
+    return this.sendTransaction({
+      from: this.walletAddress,
+      to: indexAddress,
+      data: signature,
+    });
+  }
+
   startXyRebalance(address: string, value: number) {
     const method = WalletService.getMethodInterface(configABI.MAIN.ABI, 'xyRebalance');
     const signature = this.encodeFunctionCall(method, [value]);
@@ -337,24 +348,22 @@ export class WalletConnect {
       .call();
   }
 
-  getStakingFactoryContract() {
-    return this.getContractByAddress(
-      rootStore.networks.getCurrNetwork()?.staking_address ??
-        '0x0000000000000000000000000000000000000000',
-      configABI.StakingFactory.ABI,
-    );
+  getStakingFactoryContract(address: string) {
+    return this.getContractByAddress(address, configABI.StakingFactory.ABI);
   }
 
-  getStakesCount() {
-    return this.getStakingFactoryContract().methods.getStakedCount().call();
+  getStakesCount(address: string) {
+    return this.getStakingFactoryContract(address).methods.getStakedCount().call();
   }
 
-  getRewardPerBlock(stakedTokenAddress: string) {
-    return this.getStakingFactoryContract().methods.rewardPerBlock(stakedTokenAddress).call();
+  getRewardPerBlock(stakedTokenAddress: string, address: string) {
+    return this.getStakingFactoryContract(address)
+      .methods.rewardPerBlock(stakedTokenAddress)
+      .call();
   }
 
-  getStakeContractByIndex(index: number) {
-    return this.getStakingFactoryContract().methods.stakes(index).call();
+  getStakeContractByIndex(index: number, address: string) {
+    return this.getStakingFactoryContract(address).methods.stakes(index).call();
   }
 
   getStakedTokenFromStake(stakeAdress: string) {
