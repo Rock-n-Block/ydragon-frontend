@@ -28,6 +28,8 @@ const TokensStructure: React.FC<TokensStructureProps> = observer(({ vaults, inde
   const [dataSource, setDataSource] = useState<any[]>([]);
   const [isWithdrawBtnLoading, setIsWithdrawBtnLoading] = useState(false);
   const [isDepositBtnLoading, setIsDepositBtnLoading] = useState(false);
+  const [isDepositAvailable, setIsDepositAvailable] = useState(false);
+  const [isWithdrawAvailable, setIsWithdrawAvailable] = useState(false);
 
   const [isAllowed, setIsAllowed] = useState(false);
   const [tokenAddressesNeedAllowance, setTokenAddressesNeedAllowance] = useState<string[]>([]);
@@ -199,7 +201,24 @@ const TokensStructure: React.FC<TokensStructureProps> = observer(({ vaults, inde
       console.error('TokensStructure approve error', error);
     }
   }, [indexAddress, tokenAddressesNeedAllowance, walletConnect.walletService]);
-
+  const checkIsDepositAvailable = useCallback(() => {
+    const isSomeFarmBalance = vaults.some((vault) =>
+      new BigNumber(vault.farm_balance).isGreaterThan(0),
+    );
+    setIsDepositAvailable(isSomeFarmBalance);
+  }, [vaults]);
+  const checkIsWithdrawAvailable = useCallback(() => {
+    const isSomeFarmBalance = vaults.some((vault) =>
+      new BigNumber(vault.y_balance).minus(new BigNumber(vault.farm_balance)).isGreaterThan(0),
+    );
+    setIsWithdrawAvailable(isSomeFarmBalance);
+  }, [vaults]);
+  useEffect(() => {
+    checkIsDepositAvailable();
+  }, [checkIsDepositAvailable]);
+  useEffect(() => {
+    checkIsWithdrawAvailable();
+  }, [checkIsWithdrawAvailable]);
   useEffect(() => {
     if (vaults) {
       prepareData();
@@ -242,11 +261,17 @@ const TokensStructure: React.FC<TokensStructureProps> = observer(({ vaults, inde
           colorScheme="orange"
           loading={isWithdrawBtnLoading}
           onClick={handleWithdrawTokensClick}
+          disabled={isWithdrawAvailable}
         >
           Withdraw
         </Button>
         {isAllowed ? (
-          <Button styledType="outline" loading={isDepositBtnLoading} onClick={handleDepositClick}>
+          <Button
+            styledType="outline"
+            loading={isDepositBtnLoading}
+            onClick={handleDepositClick}
+            disabled={isDepositAvailable}
+          >
             Deposit
           </Button>
         ) : (
