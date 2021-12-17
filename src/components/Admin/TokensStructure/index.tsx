@@ -104,14 +104,13 @@ const TokensStructure: React.FC<TokensStructureProps> = observer(({ vaults, inde
       })
       .then(() => {
         toast.success('Tokens successfully deposited');
+        setIsDepositBtnLoading(false);
       })
       .catch((error: ProviderRpcError) => {
         const { message } = error;
         toast.error('Something went wrong');
-        console.error(`withdrawTokensForStaking error`, message);
-      })
-      .finally(() => {
         setIsDepositBtnLoading(false);
+        console.error(`withdrawTokensForStaking error`, message);
       });
   };
   const prepareData = useCallback(() => {
