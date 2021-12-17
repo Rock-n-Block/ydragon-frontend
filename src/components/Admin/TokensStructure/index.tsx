@@ -171,13 +171,31 @@ const TokensStructure: React.FC<TokensStructureProps> = observer(({ vaults, inde
   }, [NATIVE_TOKENS, indexAddress, networks.currentNetwork, vaults, walletConnect.walletService]);
 
   const handleApproveAll = useCallback(async () => {
-    const promiseArray = tokenAddressesNeedAllowance.map((address) => {
-      return walletConnect.walletService.approve(address, indexAddress);
-    });
+    setIsDepositBtnLoading(true);
+    const approveRecursion = (index: number) => {
+      if (index >= tokenAddressesNeedAllowance.length) {
+        return;
+      }
+      walletConnect.walletService
+        .approve(tokenAddressesNeedAllowance[index], indexAddress)
+        .on('transactionHash', () => {
+          approveRecursion(index + 1);
+        })
+        .then(() => {
+          if (index === tokenAddressesNeedAllowance.length) {
+            setIsAllowed(true);
+            setTokenAddressesNeedAllowance([]);
+            setIsDepositBtnLoading(false);
+          }
+        });
+    };
+    // const promiseArray = tokenAddressesNeedAllowance.map((address) => {
+    //   return handleApprove(address);
+    // });
     try {
-      await Promise.all([...promiseArray]);
-      setIsAllowed(true);
-      setTokenAddressesNeedAllowance([]);
+      // await Promise.all([...promiseArray]);
+      const index = 0;
+      approveRecursion(index);
     } catch (error) {
       console.error('TokensStructure approve error', error);
     }
