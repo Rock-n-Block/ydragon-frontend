@@ -42,7 +42,7 @@ const TokenPanel: React.FC<TokenPanelProps> = observer(
               onClick={handleBuy}
               needLogin={`${needLogin ? 'Please login' : ''}`}
             >
-              Buy
+              Mint
             </Button>
           )}
           {((isTokenPicked && handleSell) || (!isTokenPicked && handleSell)) && (
@@ -51,7 +51,7 @@ const TokenPanel: React.FC<TokenPanelProps> = observer(
               onClick={handleSell}
               needLogin={`${needLogin ? 'Please login' : ''}`}
             >
-              Sell
+              Redeem
             </Button>
           )}
         </div>
