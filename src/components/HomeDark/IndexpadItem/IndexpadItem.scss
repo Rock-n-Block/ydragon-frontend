@@ -39,7 +39,7 @@
     text-align: center;
   }
   @include b('mobile') {
-    padding: 0;
+    padding: 16px;
   }
 
   &__row {

@@ -9,8 +9,13 @@
   }
 
   .header__wrapper {
-    background: $dark-bg;
-    box-shadow: $shadow-dark;
+    background: transparent;
+    transition: all .3s ease-in-out;
+  }
+
+  .black {
+    background: black!important;
+    transition: all .2s ease-in-out;
   }
 
   .header {
@@ -23,20 +28,6 @@
         color: $white;
       }
     }
-
-    //.container {
-    //  .menu-nav {
-    //    &__link,
-    //    &__item {
-    //      color: #f7f8fd;
-    //
-    //      &:hover,
-    //      &:active {
-    //        color: #f7f8fd;
-    //      }
-    //    }
-    //  }
-    //}
   }
 }
 
@@ -67,20 +58,6 @@
         }
       }
     }
-
-    //.container {
-    //  .menu-nav {
-    //    &__link,
-    //    &__item {
-    //      color: $black;
-    //
-    //      &:hover,
-    //      &:active {
-    //        color: $black;
-    //      }
-    //    }
-    //  }
-    //}
   }
 }
 

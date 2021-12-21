@@ -50,7 +50,7 @@
     width: 50%;
 
     @include b('tablet') {
-      margin: 30px;
+
     }
 
     @include b('mobile') {
@@ -123,6 +123,7 @@
     &:first-child {
       margin-left: 0;
     }
+
     @include b('tablet') {
       width: 51px;
       height: 51px;
@@ -152,6 +153,7 @@
     &:first-child {
       margin-left: 0;
     }
+
     @include b('mobile') {
       width: 57px;
       height: 57px;
@@ -177,6 +179,7 @@
     &:first-child {
       margin-left: 0;
     }
+
     @include b('mobile') {
       width: 57px;
       height: 57px;
@@ -206,6 +209,13 @@
     font-size: 22px;
     line-height: 32px;
     text-align: center;
+
+    @include b('1120') {
+      height: 90px;
+    }
+    @include b('mobile') {
+      height: initial;
+    }
 
     @include b('mobile') {
       font-size: 16px;

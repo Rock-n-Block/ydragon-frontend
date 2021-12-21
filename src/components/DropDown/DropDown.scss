@@ -42,9 +42,10 @@
   left: 0;
   top: 40px;
 
-  background: #181c33;
-  box-shadow: -8px 8px 36px rgba(0, 0, 0, 0.5);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.1) 100%);
+  box-shadow: 0 8px 36px rgba(0, 0, 0, 0.5);
   border-radius: 10px;
+  backdrop-filter: blur(40px);
 
   transition: max-height 0.5s cubic-bezier(0, 1, 0, 1), padding 0.4s ease-in-out,
     max-width 0.5s cubic-bezier(0, 1, 0, 1);

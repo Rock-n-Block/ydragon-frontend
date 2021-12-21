@@ -40,7 +40,7 @@
   padding: 40px 50px;
 
   @include b('tablet') {
-    padding: 0;
+    padding: 16px;
 
     display: flex;
     flex-direction: column;
@@ -125,6 +125,10 @@
     padding-top: 30px;
 
     width: 100%;
+  }
+
+  @include b('mobile') {
+    padding: 40px 16px 30px 16px;
   }
 
   &__title {

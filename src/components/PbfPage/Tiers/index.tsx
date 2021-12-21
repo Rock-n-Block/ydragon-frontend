@@ -1,7 +1,8 @@
 import React, { ReactElement } from 'react';
 
-import { data } from './data';
 import { JsonAnimation } from '../../index';
+
+import { data } from './data';
 
 import './Tiers.scss';
 

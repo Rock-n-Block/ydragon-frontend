@@ -25,6 +25,7 @@ import './Header.scss';
 import nextId from 'react-id-generator';
 import { chainsEnum } from '../../types';
 import useWindowWidth from '../../hooks/useWindowWidth';
+import UseIsHeaderBackground from '../../hooks/useIsHeaderBackground';
 
 const Header: React.FC = observer(() => {
   const { SOCIAL_LINKS } = config;
@@ -33,6 +34,7 @@ const Header: React.FC = observer(() => {
   const walletConnector = useWalletConnectorContext();
   const history = useHistory();
   const width = useWindowWidth(100);
+  const isHeaderBackground = UseIsHeaderBackground(200);
 
   // useWindowDebouncedEvent('resize', window.innerWidth, handleResize, 500);
 
@@ -75,7 +77,7 @@ const Header: React.FC = observer(() => {
     }
   }, [isCollapsed]);
   return (
-    <header className="header__wrapper">
+    <header className={`header__wrapper ${isHeaderBackground ? 'black' : ''}`}>
       <EventBanner />
       <div className={`header container ${isCollapsed ? 'collapse' : 'expand'}`}>
         <div className="header__inner">
