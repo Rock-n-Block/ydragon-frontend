@@ -4,7 +4,6 @@ import { observer } from 'mobx-react';
 import StakingTableRow from './StakingTableRow';
 // import { useWalletConnectorContext } from '../../../services/walletConnect';
 // import { useMst } from '../../../store/store';
-
 import './StakingTable.scss';
 import { useMst } from '../../../store/store';
 import { useWalletConnectorContext } from '../../../services/walletConnect';
@@ -48,10 +47,11 @@ const StakingTable: React.FC<IStakingTableProps> = observer(({ ydrPrice }) => {
           <div className="staking-table_header__cell" />
         </div>
         <div className="staking-table_body">
-          {new Array(2).fill(1).map((el, i) => (
-            // eslint-disable-next-line
-            <StakingTableRow key={`StakingTableRow_${i}`} index={i} ydrPrice={ydrPrice} old />
-          ))}
+          {networks.getCurrNetwork()?.old_staking_address &&
+            new Array(2).fill(1).map((el, i) => (
+              // eslint-disable-next-line
+              <StakingTableRow key={`StakingTableRow_${i}`} index={i} ydrPrice={ydrPrice} old />
+            ))}
           {typeof stakesCount === 'number' ? (
             new Array(+stakesCount)
               .fill(1)

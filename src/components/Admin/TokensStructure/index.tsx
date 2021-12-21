@@ -261,7 +261,7 @@ const TokensStructure: React.FC<TokensStructureProps> = observer(({ vaults, inde
           colorScheme="orange"
           loading={isWithdrawBtnLoading}
           onClick={handleWithdrawTokensClick}
-          disabled={isWithdrawAvailable}
+          disabled={!isWithdrawAvailable}
         >
           Withdraw
         </Button>
@@ -270,7 +270,7 @@ const TokensStructure: React.FC<TokensStructureProps> = observer(({ vaults, inde
             styledType="outline"
             loading={isDepositBtnLoading}
             onClick={handleDepositClick}
-            disabled={isDepositAvailable}
+            disabled={!isDepositAvailable}
           >
             Deposit
           </Button>

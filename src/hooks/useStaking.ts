@@ -1,5 +1,5 @@
 import config, { BLOCKS_PER_YEAR } from '../config/index';
-import { useState, useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import BigNumber from 'bignumber.js/bignumber';
 
 import { useWalletConnectorContext } from '../services/walletConnect';
@@ -81,7 +81,7 @@ export const useStaking = (
       indexSymbol = `${firstSymbol} / ${secondSymbol} LP`;
       setIsLp(true);
     } catch (error) {
-      console.log(`GET STAKE SYMBOL ${indexName}, not LP`, { info: error });
+      // console.log(`GET STAKE SYMBOL ${indexName}, not LP`, { info: error });
     }
 
     return { indexSymbol: indexSymbol.toUpperCase(), indexName };
@@ -204,7 +204,7 @@ export const useStaking = (
   );
 
   useEffect(() => {
-    if (!networks.networksList.length) return;
+    if (!networks.networksList.length || !stakingContractAddress) return;
     // GET STAKE ADDRESS
     walletConnect.walletService
       .getStakeContractByIndex(indexId, stakingContractAddress)
