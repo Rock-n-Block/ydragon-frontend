@@ -1,12 +1,12 @@
 import { INetwork, IProvider, ISettings } from '@amfi/connect-wallet/dist/interface';
 
-export type TChain = 'Ethereum' | 'Binance-Smart-Chain' /* | 'Avalanche'  | 'Polygon' */;
+export type TChain = 'Ethereum' | 'Binance-Smart-Chain' | 'Avalanche' /*   | 'Polygon' */;
 
 export enum chainsEnum {
   Ethereum = 'Ethereum',
   'Binance-Smart-Chain' = 'Binance-Smart-Chain',
   // Polygon = 'Polygon',
-  // Avalanche = 'Avalanche',
+  Avalanche = 'Avalanche',
 }
 
 export interface IConnectWallet {
