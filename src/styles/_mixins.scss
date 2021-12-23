@@ -120,6 +120,12 @@
   border-radius: 32px;
 }
 
+@mixin shadow-index-hover {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.1) 100%);
+  box-shadow: -8px 8px 36px rgba(0, 0, 0, 0.5);
+  border-radius: 32px;
+}
+
 @mixin shadow-light-block {
   background: linear-gradient(355.19deg, #fff 0%, #dde1f0 100%);
   border-radius: 32px;
