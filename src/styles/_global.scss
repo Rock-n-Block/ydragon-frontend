@@ -13,6 +13,7 @@ body {
 
   .dark {
     color: white;
+    background-image: url('../assets/img/home-dark-bg.png');
   }
 
   .light {
@@ -61,8 +62,8 @@ p {
   }
 
   &.page-wrapper {
-    background-color: $main-dark-bg;
-    background-image: url('../assets/img/home-dark-bg.png');
+    //background-color: $main-dark-bg;
+    //background-image: url('../assets/img/home-dark-bg.png');
 
     //&--home,
     //&--about {
@@ -264,6 +265,9 @@ main.container {
 
   & + & {
     margin-top: 175px;
+    @include b('mobile') {
+      margin-top: 30px;
+    }
   }
 
   &--admin {
