@@ -136,6 +136,7 @@ const Index: React.FC = observer(() => {
             value: balance,
           },
         ]}
+        tradeInfo={{ address: indexData?.address, symbol: indexData?.name }}
         handleBuy={handleBuy}
         handleSell={handleSell}
         needLogin
