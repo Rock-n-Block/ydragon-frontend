@@ -4,11 +4,11 @@
 .dark {
   .index-dashboard {
     &__item {
-      @include shadow-block;
+      @include shadow-dark-block;
       color: $white;
 
       &:hover {
-        background: $table-selected;
+        @include shadow-index-hover;
       }
     }
 
