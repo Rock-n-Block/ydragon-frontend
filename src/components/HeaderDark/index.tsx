@@ -34,7 +34,7 @@ const Header: React.FC = observer(() => {
   const walletConnector = useWalletConnectorContext();
   const history = useHistory();
   const width = useWindowWidth(100);
-  const isHeaderBackground = UseIsHeaderBackground(200);
+  const isHeaderBackground = UseIsHeaderBackground();
 
   // useWindowDebouncedEvent('resize', window.innerWidth, handleResize, 500);
 

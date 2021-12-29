@@ -19,7 +19,9 @@
 
 .about-us {
   margin-top: 175px;
-
+  @include b(1000){
+    margin-top:75px;
+  }
   @include b('mobile') {
     margin-top: 45.77px;
   }

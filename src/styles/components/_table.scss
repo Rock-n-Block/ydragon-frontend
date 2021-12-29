@@ -91,7 +91,7 @@
     }
 
     .ant-table-tbody {
-      @include light-block;
+      @include shadow-light-block;
 
       & > tr.ant-table-placeholder:hover > td > .ant-empty > .ant-empty-description {
         color: rgba($white, 0.5) !important;

@@ -8,6 +8,22 @@
         color: rgba($white, 0.5);
       }
     }
+    &-item{
+      background: rgba(255, 255, 255, 0.05);
+      .input {
+        background: $main-dark-bg;
+
+        &[disabled] {
+          color: rgba(white, 0.25);
+          background: $main-dark-bg;
+        }
+      }
+    }
+    &__total{
+      .input {
+        background: $main-dark-bg;
+      }
+    }
   }
 
   .rebalance {
@@ -27,6 +43,22 @@
     &-items {
       &__gead {
         color: rgba($black, 0.5);
+      }
+    }
+    &-item{
+      background: rgba(0, 0, 0, 0.05);
+      .input {
+        background: $main-bg;
+
+        &[disabled] {
+          color: rgba(white, 0.25);
+          background: $main-bg;
+        }
+      }
+    }
+    &__total{
+      .input {
+        background: $main-bg;
       }
     }
   }
@@ -166,17 +198,8 @@
 
     box-sizing: border-box;
 
-    background: rgba(255, 255, 255, 0.05);
     border-radius: 40px;
 
-    .input {
-      background: rgb(35, 38, 60);
-
-      &[disabled] {
-        color: rgba(white, 0.25);
-        background: rgb(35, 38, 60);
-      }
-    }
 
     & + & {
       margin-top: 10px;
@@ -254,10 +277,6 @@
       }
     }
 
-    .input {
-      background: linear-gradient(180deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0) 100%),
-      linear-gradient(171.49deg, #1a1e3a 3.83%, #161a2a 100%);
-    }
   }
 
   &__search {

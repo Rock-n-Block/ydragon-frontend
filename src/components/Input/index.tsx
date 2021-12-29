@@ -60,6 +60,7 @@ export const InputWithSelect: React.FC<InputWithSelectProps> = observer((props) 
           value={selectValue}
           getPopupContainer={getPopupContainer ? (trigger) => trigger.parentNode : undefined}
           suffixIcon={<Icon component={DARK === theme.value ? ArrowDownWhite : ArrowDownBlack} />}
+          dropdownClassName={theme.value}
         >
           {tokens.map((token) => (
             <Option value={token.symbol ?? ''} key={nextId()}>

@@ -14,7 +14,7 @@
 
     @include b(1000) {
       display: block;
-      background: none;
+      //background: none;
       border: none;
       box-shadow: none;
     }
@@ -89,8 +89,8 @@
     }
 
     @include b(1000) {
-      background: linear-gradient(238.88deg, #000316 31.18%, #050c25 99.47%);
-      box-shadow: -8px 8px 36px rgba(0, 0, 0, 0.5);
+      //background: linear-gradient(238.88deg, #000316 31.18%, #050c25 99.47%);
+      //box-shadow: -8px 8px 36px rgba(0, 0, 0, 0.5);
       border-radius: 32px;
       border: 1px solid $red;
       margin-top: 30px;

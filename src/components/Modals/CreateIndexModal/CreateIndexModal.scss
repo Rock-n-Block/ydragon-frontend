@@ -10,13 +10,13 @@
 
     .ant-picker,
     .ant-picker-range {
-      background: $dark-bg;
+      background: $main-dark-bg;
     }
 
     .form-create-index {
       .ant-input {
         color: $white;
-        background: $dark-bg;
+        background: $main-dark-bg;
       }
 
       input:-webkit-autofill,
@@ -47,7 +47,7 @@
 
       &__description {
         .ant-input-textarea-show-count {
-          background: $dark-bg;
+          background: $main-dark-bg;
 
           &::after {
             color: #bfbfbf;
@@ -67,7 +67,7 @@
 
     .form-create-index {
       .ant-input {
-        background: transparent;
+        background: linear-gradient(355.19deg, #fff 0%, #dde1f0 100%);
       }
 
       input,

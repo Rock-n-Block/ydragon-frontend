@@ -3,7 +3,8 @@
 
 .dark {
   .small-card {
-    @include shadow-block;
+    @include shadow-dark-block;
+    background-color: $main-dark-bg;
 
     &__title {
       color: white;
@@ -56,7 +57,7 @@
       &:hover {
         .small-card__body {
           color: $white;
-          background-color: $table-selected;
+          //background-color: $table-selected;
         }
       }
     }
@@ -64,7 +65,7 @@
     &--selected {
       .small-card__body {
         color: $white;
-        background-color: $table-selected;
+        //background-color: $table-selected;
       }
 
       .small-card__title {
@@ -73,7 +74,7 @@
 
       .small-card__header {
         color: $white;
-        background-color: rgba($table-selected, 0.7);
+        //background-color: rgba($table-selected, 0.7);
       }
     }
   }

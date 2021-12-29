@@ -4,10 +4,10 @@
 .dark {
   .wallets-container {
     color: $white;
-    @include shadow-dark-block;
+    background: $main-dark-bg;
 
     &__wallet {
-      background: $dark-bg;
+      @include shadow-dark-block;
     }
   }
 }
@@ -27,7 +27,6 @@
   .ant-modal-content {
     position: relative;
 
-    border-radius: 32px;
 
     .background-image-container {
       position: absolute;
@@ -52,6 +51,7 @@
     .wallets-container {
       position: relative;
       top: 93px;
+      border-radius: 32px;
 
       padding: 40px 25px;
 
@@ -75,7 +75,7 @@
         cursor: pointer;
 
         border: none;
-        border-radius: 16px;
+        border-radius: 32px;
         box-shadow: $shadow-dark;
 
         transition: transform 0.3s ease;

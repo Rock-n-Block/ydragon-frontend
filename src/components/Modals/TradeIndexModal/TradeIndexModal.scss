@@ -3,9 +3,6 @@
 
 .dark {
   .m-trade-ydr {
-    &__content {
-      @include shadow-block;
-    }
     &__field {
       .input-border {
         .input,
@@ -15,7 +12,7 @@
       }
     }
     &__logo{
-      background: white;
+      background: $main-bg;
       border: 9px solid #181c33;
     }
   }
@@ -23,9 +20,6 @@
 
 .light {
   .m-trade-ydr {
-    &__content {
-      @include shadow-light-block;
-    }
     &__field {
       .input-border {
         .input,
@@ -35,7 +29,7 @@
       }
     }
     &__logo{
-      background: #191C34;
+      background: $main-dark-bg;
       border: 9px solid white;
     }
   }

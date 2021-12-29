@@ -4,7 +4,8 @@
 .dark {
   .index-table {
     &__content {
-      @include shadow-block;
+      @include shadow-dark-block;
+      border-radius: 16px;
     }
 
     &__token,
@@ -21,7 +22,7 @@
 .light {
   .index-table {
     &__content {
-      @include light-block;
+      @include shadow-light-block;
     }
 
     &__token,

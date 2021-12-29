@@ -3,7 +3,7 @@
 
 .dark {
   .token-panel {
-    @include shadow-block;
+    @include shadow-dark-block;
 
     &-item__label {
       color: white;
@@ -13,7 +13,7 @@
 
 .light {
   .token-panel {
-    @include light-block;
+    @include shadow-light-block;
 
     &-item__label {
       color: $black;
@@ -24,6 +24,7 @@
 .token-panel {
   margin-top: 30px;
   padding: 30px 40px;
+  border-radius: 32px;
 
   display: flex;
   justify-content: space-between;

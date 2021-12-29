@@ -14,11 +14,11 @@
     color: $white;
   }
 
-  &.select-network__dropdown,
+  //&.select-network__dropdown,
   &.ant-select-dropdown {
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.1) 100%);
-    box-shadow: 0 8px 36px rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(40px);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.1) 100%) !important;
+    box-shadow: 0 8px 36px rgba(0, 0, 0, 0.5)!important;
+    backdrop-filter: blur(40px)!important;
 
     .ant-select-item-option-selected,
     .ant-select-item-option-active {

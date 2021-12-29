@@ -2,16 +2,25 @@
 @import '../_mixins.scss';
 
 .dark {
-  .ant-modal-content {
-    color: $white;
-    @include shadow-block;
+  .ant-modal {
+    &-content {
+      color: $white;
+      //@include shadow-dark-block;
+      background-color: $main-dark-bg;
+    }
+
+    &-body {
+      @include shadow-dark-block;
+      border-radius: 32px;
+    }
   }
 }
 
 .light {
   .ant-modal-content {
     color: $black;
-    @include shadow-light-block;
+    //@include shadow-light-block;
+    background-color: $main-bg;
   }
 }
 
@@ -19,6 +28,18 @@
 }
 
 .ant-modal {
+  border-radius: 32px;
+
+  padding: 0;
+
+  &-content {
+    border-radius: 32px;
+  }
+
+  &-body {
+    border-radius: 32px;
+  }
+
   &-close {
     top: 30px;
 
