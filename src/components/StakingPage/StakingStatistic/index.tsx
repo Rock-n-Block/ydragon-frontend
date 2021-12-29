@@ -92,7 +92,7 @@ const StakingStatistic: React.FC<IYdrPrice> = ({ ydrPrice }) => {
                 )}
               </div>
             </div>
-            {/* <div className="staking-statistic-dark_price-divider" />
+            <div className="staking-statistic-dark_price-divider" />
             <div className="staking-statistic-dark_price">
               <div className="staking-statistic-dark_price__title text-MER">Avalanche</div>
               <div className="staking-statistic-dark_price__amount text-MER text-gradient">
@@ -102,7 +102,7 @@ const StakingStatistic: React.FC<IYdrPrice> = ({ ydrPrice }) => {
                   1,
                 )}
               </div>
-            </div> */}
+            </div>
           </div>
         </li>
       </ul>

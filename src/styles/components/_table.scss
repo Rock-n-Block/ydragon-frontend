@@ -3,13 +3,15 @@
 
 .dark {
   .ant-table-tbody > tr.ant-table-placeholder:hover > td {
-    background: $table-selected;
+    //background: $table-selected;
+
+    @include shadow-dark-block;
   }
 
   .table {
     &:hover {
       & > td {
-        background: $table-selected !important;
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.1) 100%) !important;
       }
     }
 
@@ -26,13 +28,15 @@
         & > td {
           cursor: pointer;
 
-          background: $table-selected !important;
+          //background: $table-selected !important;
+          background: linear-gradient(180deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.1) 100%) !important;
         }
       }
     }
 
     .ant-table-tbody {
-      background: $dark-bg;
+      @include shadow-dark-block;
+      border-radius: 0;
 
       & > tr.ant-table-placeholder:hover > td > .ant-empty > .ant-empty-description {
         color: rgba($black, 0.5);
