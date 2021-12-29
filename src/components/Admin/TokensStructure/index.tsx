@@ -183,7 +183,10 @@ const TokensStructure: React.FC<TokensStructureProps> = observer(({ vaults, inde
           approveRecursion(index + 1);
         })
         .then(() => {
-          if (index === tokenAddressesNeedAllowance.length - 1) {
+<<<<<<< fixes/newDesign
+          if (index >= tokenAddressesNeedAllowance.length) {
+=======
+>>>>>>> develop
             setIsAllowed(true);
             setTokenAddressesNeedAllowance([]);
             setIsDepositBtnLoading(false);

@@ -138,7 +138,7 @@ p {
   }
 
   &.page-wrapper {
-    background-color: $main-bg;
+    background-color: $main-dark-bg;
     background-image: url('../assets/img/home-bg.png');
 
     &--home,
@@ -359,7 +359,7 @@ main.container {
     border-radius: 50% !important;
 
     &--ydr {
-      background-color: #191c34;
+      background-color: $main-dark-bg;
     }
   }
 
