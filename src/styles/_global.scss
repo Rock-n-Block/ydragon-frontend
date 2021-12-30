@@ -13,7 +13,6 @@ body {
 
   .dark {
     color: white;
-    background-image: url('../assets/img/home-dark-bg.png');
   }
 
   .light {
@@ -163,6 +162,33 @@ p {
 
   .ant-tooltip-arrow-content {
     background-color: $black !important;
+  }
+}
+
+.dark {
+  transition: all 0.4s;
+
+  &.page-wrapper {
+    background-color: $black;
+    background-image: url('../assets/img/home-dark-bg.png');
+
+    &--home,
+    &--about{
+      background-image: url('../assets/img/home-dark-bg.png'), url('../assets/img/home-dark-bg-bottom.png');
+
+      @include b('tablet') {
+        background-image: url('../assets/img/home-dark-bg.png');
+      }
+    }
+    &--simplified{
+      background-image: url('../assets/img/simplified-bg.png');
+    }
+
+    &--staking {
+      background-position: top center;
+      background-size: cover;
+      background-blend-mode: unset;
+    }
   }
 }
 
