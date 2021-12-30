@@ -172,18 +172,10 @@ p {
     background-color: $black;
 
     &--home,
-    &--about {
+    &--about, &--simplified {
       background-image: url('../assets/img/home-dark-bg.png'), url('../assets/img/home-dark-bg-bottom.png');
 
       @include b('tablet') {
-        background-image: url('../assets/img/home-dark-bg.png');
-      }
-    }
-
-    &--simplified {
-      background-image: none;
-
-      @include b('mobile') {
         background-image: url('../assets/img/home-dark-bg.png');
       }
     }
