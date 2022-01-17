@@ -23,10 +23,12 @@ interface IHeaderMobileItemProps {
 
 const HeaderMobLink: React.FC<IHeaderMobileItemLink> = observer(
   ({ title, link, onCollapsedChange, auth }) => {
-    const { networks } = useMst();
+    const { networks, user, modals } = useMst();
     if (auth === 'notEth' && networks.currentNetwork === chainsEnum.Ethereum) {
       return <></>;
     }
+
+    const isNeedWalletModal = auth === 'login' && !user.address;
 
     return (
       <>
@@ -34,7 +36,15 @@ const HeaderMobLink: React.FC<IHeaderMobileItemLink> = observer(
           <NavHashLink
             to={link}
             className="menu-nav__item__link"
-            onClick={() => onCollapsedChange && onCollapsedChange(true)}
+            onClick={(e) => {
+              if (onCollapsedChange) {
+                onCollapsedChange(true);
+                if (isNeedWalletModal) {
+                  modals.connectWallet.open();
+                  e.preventDefault();
+                }
+              }
+            }}
           >
             {title}
           </NavHashLink>

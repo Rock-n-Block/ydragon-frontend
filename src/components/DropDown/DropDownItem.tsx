@@ -13,11 +13,17 @@ interface IDropDownItem {
 }
 
 const DropDownItem: React.FC<IDropDownItem> = observer(({ title, link, handleClose, auth }) => {
-  const { user, networks } = useMst();
+  const { user, networks, modals } = useMst();
 
   if (auth?.includes('login') && !user.isUser) {
     return (
-      <div className="dropdown-body_item dropdown-body_item--not-allowed">
+      <div
+        role="button"
+        onKeyDown={() => {}}
+        tabIndex={0}
+        onClick={() => modals.connectWallet.open()}
+        className="dropdown-body_item"
+      >
         <span>{title}</span>
       </div>
     );
