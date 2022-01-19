@@ -15,7 +15,11 @@ declare global {
 }
 const { IS_PRODUCTION } = config;
 const walletConnectorContext = createContext<{
-  connect: (chainName: chainsEnum, providerName: 'MetaMask' | 'WalletConnect') => void;
+  connect: (
+    chainName: chainsEnum,
+    providerName: 'MetaMask' | 'WalletConnect',
+    redirectRouteAfterLogin?: string,
+  ) => void;
   disconnect: () => void;
   walletService: WalletConnect;
 }>({
@@ -50,7 +54,11 @@ class Connector extends React.Component<
     }
   }
 
-  connect = async (chainName: chainsEnum, providerName: 'MetaMask' | 'WalletConnect') => {
+  connect = async (
+    chainName: chainsEnum,
+    providerName: 'MetaMask' | 'WalletConnect',
+    redirectRouteAfterLogin?: string,
+  ) => {
     if (window.ethereum) {
       try {
         const isConnected = await this.state.provider.initWalletConnect(
@@ -97,6 +105,9 @@ class Connector extends React.Component<
                 localStorage.ydr_providerName = providerName;
                 localStorage.ydr_address = userAccount.address;
                 rootStore.user.setAddress(userAccount.address);
+                if (redirectRouteAfterLogin) {
+                  this.props.history.push(redirectRouteAfterLogin);
+                }
               }
             })
             .catch((err: any) => {

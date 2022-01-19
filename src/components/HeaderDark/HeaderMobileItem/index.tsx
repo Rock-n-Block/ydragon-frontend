@@ -40,7 +40,7 @@ const HeaderMobLink: React.FC<IHeaderMobileItemLink> = observer(
               if (onCollapsedChange) {
                 onCollapsedChange(true);
                 if (isNeedWalletModal) {
-                  modals.connectWallet.open();
+                  modals.connectWallet.open(link);
                   e.preventDefault();
                 }
               }
