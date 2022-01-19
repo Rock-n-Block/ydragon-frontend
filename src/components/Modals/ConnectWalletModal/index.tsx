@@ -23,7 +23,11 @@ const ConnectWalletModal: React.FC = observer(() => {
     if (walletType === WALLET_TYPE.WALLETCONNECT) {
       setWalletconnectClicked(true);
     }
-    connect(networks.currentNetwork as chainsEnum, walletType);
+    connect(
+      networks.currentNetwork as chainsEnum,
+      walletType,
+      modals.connectWallet.redirectRouteAfterLogin,
+    );
     modals.connectWallet.close();
   };
 

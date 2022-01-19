@@ -95,10 +95,12 @@ const MetamaskModal = types
 const ConnectWalletModal = types
   .model({
     isOpen: types.boolean,
+    redirectRouteAfterLogin: types.optional(types.string, ''),
   })
   .actions((self) => ({
-    open() {
+    open(redirectRoute?: string) {
       self.isOpen = true;
+      self.redirectRouteAfterLogin = redirectRoute || '';
     },
     close() {
       self.isOpen = false;

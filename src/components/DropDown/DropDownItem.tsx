@@ -21,7 +21,7 @@ const DropDownItem: React.FC<IDropDownItem> = observer(({ title, link, handleClo
         role="button"
         onKeyDown={() => {}}
         tabIndex={0}
-        onClick={() => modals.connectWallet.open()}
+        onClick={() => modals.connectWallet.open(link)}
         className="dropdown-body_item"
       >
         <span>{title}</span>
