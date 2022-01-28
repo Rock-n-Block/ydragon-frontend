@@ -32,6 +32,10 @@ const Input: React.FC<InputWithProps> = (props) => {
     </div>
   );
 };
+Input.defaultProps = {
+  error: false,
+  className: '',
+};
 
 interface InputWithSelectProps extends InputProps {
   tokens: ITokenMini | Array<ITokenMini>;
@@ -106,5 +110,9 @@ export const StyledTextArea: React.FC<ITextArea> = (props) => {
       <TextArea className={`input ${textAreaClassName || ''}`} {...otherProps} />
     </div>
   );
+};
+
+StyledTextArea.defaultProps = {
+  textAreaClassName: '',
 };
 export default Input;

@@ -7,7 +7,7 @@ import Web3 from 'web3';
 import { rootStore } from '../../store/store';
 
 import config from './config';
-import { devChains, prodChains } from "../../config/networks";
+import { devChains, prodChains } from '../../config/networks';
 
 declare global {
   interface Window {
@@ -27,14 +27,14 @@ export const nativeTokens = ['bnb', 'wbnb', 'matic', 'wmatic'];
 
 const networks: INetworks = {
   bnb: '0x38',
-  matic: '0x89',
+  avax: '',
   eth: '0x1',
 };
 
 const testNetworks: INetworks = {
   bnb: '0x61',
-  matic: '0x13881',
-  eth: '0x3',
+  avax: '0xa869',
+  eth: '0x2a',
 };
 
 export enum WALLET_TYPE {
@@ -98,7 +98,7 @@ export default class WalletService {
         if (currentChain === this.usedChain.bnb) {
           rootStore.networks.setCurrNetwork('binance-smart-chain');
         } else if (currentChain === this.usedChain.matic) {
-          rootStore.networks.setCurrNetwork('polygon-pos');
+          rootStore.networks.setCurrNetwork('avax');
         } else if (currentChain === this.usedChain.matic) {
           rootStore.networks.setCurrNetwork('ethereum');
         }
@@ -137,7 +137,7 @@ export default class WalletService {
       infuraId: 'e15330fb7e954a868e15297dd74dea37',
       rpc: {
         1: 'https://mainnet.infura.io/v3/e15330fb7e954a868e15297dd74dea37',
-        3: 'https://ropsten.infura.io/v3/e15330fb7e954a868e15297dd74dea37',
+        42: 'https://kovan.infura.io/v3/68921e4290344321ad607569b85f0c9e',
         56: 'https://bsc-dataseed.binance.org/',
         97: 'https://data-seed-prebsc-2-s1.binance.org:8545/',
       },

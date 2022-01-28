@@ -4,6 +4,7 @@ import { observer } from 'mobx-react-lite';
 
 import bscLogo from '../../assets/img/icons/blockchains/bsc.svg';
 import ethLogo from '../../assets/img/icons/blockchains/eth.svg';
+import avaxLogo from '../../assets/img/icons/blockchains/avax.svg';
 import link from '../../assets/img/icons/icon-link.svg';
 import { Button } from '../../components';
 import Dropdown from '../../components/Bridge/Dropdown';
@@ -20,9 +21,10 @@ import './Bridge.scss';
   },
 ]; */
 
-const isProduction = process.env.REACT_APP_IS_PROD === 'production';
+// const isProduction = process.env.REACT_APP_IS_PROD === 'production';
+const isProduction = false;
 
-type ChainType = 'eth' | 'bsc';
+type ChainType = 'eth' | 'bsc' | 'avax';
 
 const blockchains = [
   {
@@ -30,34 +32,50 @@ const blockchains = [
     img: ethLogo,
     title: 'Ethereum',
     shortTitle: 'Ethereum',
-    chainId: isProduction ? '0x1' : '0x3',
+    chainId: isProduction ? '0x1' : '0x2a',
     contractAddress: isProduction
       ? '0x67AC0F6872251b5e99c52a1208D992e7184EEF26'
-      : '0x3a14E30cd01a1F77e9D558A96b14724480D13b66',
+      : '0x6C5856A05BF10553371D61617bD01854bd2670AC',
     contractId: 2,
     tokenAddress: isProduction
       ? '0x3757232B55E60da4A8793183aC030CfCE4c3865d'
-      : '0x741728B806E82df82E9510c5c87a37f0a1F6A4B1',
-    link: `https://${
-      isProduction ? '' : 'ropsten.'
-    }etherscan.io/address/0x741728B806E82df82E9510c5c87a37f0a1F6A4B1`,
+      : '0x9C3A3c0ff82D79c4ee260Ee038A7c1cE93945066',
+
+    link: isProduction
+      ? 'https://kovan.etherscan.io/address/0x3757232B55E60da4A8793183aC030CfCE4c3865d'
+      : 'https://kovan.etherscan.io/address/0x9C3A3c0ff82D79c4ee260Ee038A7c1cE93945066',
   },
   {
     key: 'bsc' as ChainType,
     img: bscLogo,
     title: 'Binance Smart Chain',
     shortTitle: 'BSC',
-    chainId: isProduction ? '0x38' : '0x61',
+    chainId: isProduction ? '0x56' : '0x61',
     contractAddress: isProduction
       ? '0x67AC0F6872251b5e99c52a1208D992e7184EEF26'
-      : '0x84046c5a51A081720B11dCc0C3df64839EFF39cd',
+      : '0x544E185E871CA28F4a1e2cF4f63EBE002B279839',
     contractId: 1,
     tokenAddress: isProduction
-      ? '0x3757232b55e60da4a8793183ac030cfce4c3865d'
-      : '0x05Ac77598AB89ec2753B58107B0c145dc93982d3',
-    link: `https://${
-      isProduction ? '' : 'testnet.'
-    }bscscan.com/address/0x05Ac77598AB89ec2753B58107B0c145dc93982d3`,
+      ? '0x3757232B55E60da4A8793183aC030CfCE4c3865d'
+      : '0x9C3A3c0ff82D79c4ee260Ee038A7c1cE93945066',
+
+    link: isProduction
+      ? 'https://bscscan.com/address/0x3757232B55E60da4A8793183aC030CfCE4c3865d'
+      : 'https://testnet.bscscan.com/address/0x9C3A3c0ff82D79c4ee260Ee038A7c1cE93945066',
+  },
+  {
+    key: 'avax' as ChainType,
+    img: avaxLogo,
+    title: 'Avalanche',
+    shortTitle: 'avalanche',
+    chainId: isProduction ? '0x43113' : '0xa869',
+    contractAddress: isProduction ? '' : '0x544E185E871CA28F4a1e2cF4f63EBE002B279839',
+    contractId: 7,
+    tokenAddress: isProduction ? '' : '0x9C3A3c0ff82D79c4ee260Ee038A7c1cE93945066',
+
+    link: isProduction
+      ? 'https://snowtrace.io/address/'
+      : 'https://testnet.snowtrace.io/address/0x9C3A3c0ff82D79c4ee260Ee038A7c1cE93945066',
   },
 ];
 
@@ -85,24 +103,24 @@ const Bridge: React.FC = observer(() => {
   const [fee, setFee] = useState<BlockchainInfo<BigNumber | undefined>>({
     eth: undefined,
     bsc: undefined,
+    avax: undefined,
   });
   const [minAmount, setMinAmount] = useState<BlockchainInfo<BigNumber | undefined>>({
     eth: undefined,
     bsc: undefined,
+    avax: undefined,
   });
   const [maxGasPrice, setMaxGasPrice] = useState<BlockchainInfo<BigNumber | undefined>>({
     eth: undefined,
     bsc: undefined,
+    avax: undefined,
   });
 
   const setBlockchainIndex = useCallback((type: 'from' | 'to', index: number): void => {
-    const oppositeIndex = index === 0 ? 1 : 0;
     if (type === 'from') {
       setFromBlockchainIndex(index);
-      setToBlockchainIndex(oppositeIndex);
     } else {
       setToBlockchainIndex(index);
-      setFromBlockchainIndex(oppositeIndex);
     }
   }, []);
 
@@ -186,10 +204,11 @@ const Bridge: React.FC = observer(() => {
       setCurrentBlockchainId(chainId);
       const blockchainIndex = blockchains.findIndex((blockchain) => blockchain.chainId === chainId);
       if (blockchainIndex !== -1) {
+        if (toBlockchainIndex === blockchainIndex) return;
         setBlockchainIndex('from', blockchainIndex);
       }
     });
-  }, [setBlockchainIndex, walletConnector.walletService]);
+  }, [setBlockchainIndex, walletConnector.walletService, toBlockchainIndex]);
 
   const getBalance = useCallback(async () => {
     if (user.address && (await checkChainSettings())) {
@@ -211,14 +230,17 @@ const Bridge: React.FC = observer(() => {
       const bscData = data.find(
         (networkInfo: any) => networkInfo.network === 'Binance-Smart-Chain',
       );
+      const avaxData = data.find((networkInfo: any) => networkInfo.network === 'Avalanche');
 
       setFee({
         eth: new BigNumber(ethData.fee),
         bsc: new BigNumber(bscData.fee),
+        avax: new BigNumber(avaxData.fee),
       });
       setMinAmount({
         eth: new BigNumber(ethData.min_amount),
         bsc: new BigNumber(bscData.min_amount),
+        avax: new BigNumber(avaxData.min_amount),
       });
     });
   }, []);
@@ -226,9 +248,11 @@ const Bridge: React.FC = observer(() => {
   const getGasPrices = useCallback(async () => {
     const ethGasPriceInfo = (await bridgeApi.getEthGasPrice()).data.price_limit;
     const bscGasPriceInfo = (await bridgeApi.getBscGasPrice()).data.price_limit;
+    const avaxGasPriceInfo = (await bridgeApi.getAvalancheGasPrice()).data.price_limit;
     setMaxGasPrice({
       eth: new BigNumber(ethGasPriceInfo),
       bsc: new BigNumber(bscGasPriceInfo),
+      avax: new BigNumber(avaxGasPriceInfo),
     });
   }, []);
 
@@ -286,17 +310,6 @@ const Bridge: React.FC = observer(() => {
   return (
     <div className="bridge">
       <form className="form">
-        {/*  <div className="form__item">
-          <div className="form__item__header">
-            <div className="form__item__header__title">Choose Token</div>
-          </div>
-          <Dropdown
-            items={indexes}
-            activeIndex={activeTokenIndex}
-            setActiveIndex={setActiveTokenIndex}
-          />
-        </div> */}
-
         <div className="form__item">
           <div className="form__item__header">
             <div className="form__item__header__title">From</div>
