@@ -16,7 +16,7 @@ const { Option } = Select;
 
 const SelectNetwork: React.FC = observer(() => {
   // const isProduction = process.env.REACT_APP_IS_PROD === 'production';
-  const isProduction = false;
+  const isProduction = true;
   const chains = isProduction ? prodChains : devChains;
 
   const { networks, /* basicTokens, */ theme, user } = useMst();
@@ -77,12 +77,6 @@ const SelectNetwork: React.FC = observer(() => {
     });
   }, [chains, networks.networkId]);
 
-  /* useEffect(() => {
-     if (networks.currentNetwork) {
-       getBasicTokens();
-     }
-   }, [getBasicTokens, networks.currentNetwork]); */
-
   return (
     <Select
       value={pickedChain}
@@ -92,7 +86,6 @@ const SelectNetwork: React.FC = observer(() => {
       className="select-network"
       dropdownMatchSelectWidth={false}
       dropdownStyle={{ position: 'fixed' }}
-      // getPopupContainer={(trigger) => trigger.parentNode}
       suffixIcon={
         <img className="select__arrow" alt="select arrow" src={arrow} width="10" height="6" />
       }

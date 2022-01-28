@@ -14,15 +14,8 @@ import { useMst } from '../../store/store';
 
 import './Bridge.scss';
 
-/* const indexes = [
-  {
-    img: indexLogo,
-    title: 'YDragon',
-  },
-]; */
-
 // const isProduction = process.env.REACT_APP_IS_PROD === 'production';
-const isProduction = false;
+const isProduction = true;
 
 type ChainType = 'eth' | 'bsc' | 'avax';
 
@@ -42,7 +35,7 @@ const blockchains = [
       : '0x9C3A3c0ff82D79c4ee260Ee038A7c1cE93945066',
 
     link: isProduction
-      ? 'https://kovan.etherscan.io/address/0x3757232B55E60da4A8793183aC030CfCE4c3865d'
+      ? 'https://etherscan.io/address/0x3757232B55E60da4A8793183aC030CfCE4c3865d'
       : 'https://kovan.etherscan.io/address/0x9C3A3c0ff82D79c4ee260Ee038A7c1cE93945066',
   },
   {
@@ -50,7 +43,7 @@ const blockchains = [
     img: bscLogo,
     title: 'Binance Smart Chain',
     shortTitle: 'BSC',
-    chainId: isProduction ? '0x56' : '0x61',
+    chainId: isProduction ? '0x38' : '0x61',
     contractAddress: isProduction
       ? '0x67AC0F6872251b5e99c52a1208D992e7184EEF26'
       : '0x544E185E871CA28F4a1e2cF4f63EBE002B279839',
@@ -68,13 +61,17 @@ const blockchains = [
     img: avaxLogo,
     title: 'Avalanche',
     shortTitle: 'avalanche',
-    chainId: isProduction ? '0x43113' : '0xa869',
-    contractAddress: isProduction ? '' : '0x544E185E871CA28F4a1e2cF4f63EBE002B279839',
+    chainId: isProduction ? '0xa86a' : '0xa869',
+    contractAddress: isProduction
+      ? '0xF8EfA0E4c026ec26e80e52cb8C9a34ac0d2ACd16'
+      : '0x544E185E871CA28F4a1e2cF4f63EBE002B279839',
     contractId: 7,
-    tokenAddress: isProduction ? '' : '0x9C3A3c0ff82D79c4ee260Ee038A7c1cE93945066',
+    tokenAddress: isProduction
+      ? '0xf03Dccaec9A28200A6708c686cf0b8BF26dDc356'
+      : '0x9C3A3c0ff82D79c4ee260Ee038A7c1cE93945066',
 
     link: isProduction
-      ? 'https://snowtrace.io/address/'
+      ? 'https://snowtrace.io/address/0xf03Dccaec9A28200A6708c686cf0b8BF26dDc356'
       : 'https://testnet.snowtrace.io/address/0x9C3A3c0ff82D79c4ee260Ee038A7c1cE93945066',
   },
 ];
@@ -93,7 +90,6 @@ const Bridge: React.FC = observer(() => {
   const [currentBlockchainId, setCurrentBlockchainId] = useState<string | undefined>(undefined);
   const [fromBlockchainIndex, setFromBlockchainIndex] = useState(0);
   const [toBlockchainIndex, setToBlockchainIndex] = useState(1);
-  // const [activeTokenIndex, setActiveTokenIndex] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [isApproved, setIsApproved] = useState(false);
 

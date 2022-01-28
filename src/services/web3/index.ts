@@ -27,7 +27,7 @@ export const nativeTokens = ['bnb', 'wbnb', 'matic', 'wmatic'];
 
 const networks: INetworks = {
   bnb: '0x38',
-  avax: '',
+  avax: '0xa86a',
   eth: '0x1',
 };
 
@@ -68,7 +68,8 @@ export default class WalletService {
   constructor() {
     this.web3Provider = new Web3();
 
-    this.isProduction = process.env.REACT_APP_IS_PROD === 'production';
+    // this.isProduction = process.env.REACT_APP_IS_PROD === 'production';
+    this.isProduction = true;
     // this.contract = new this.web3Provider.eth.Contract(config.ABI as Array<any>, config.ADDRESS);
 
     this.usedNetwork = this.isProduction ? 'mainnet' : 'testnet';

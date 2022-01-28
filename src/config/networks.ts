@@ -86,7 +86,7 @@ export const prodChains: IChains = {
     supportsEIP1559: true,
   },
   avax: {
-    chainId: '0x43114',
+    chainId: '0xa86a',
     chainName: 'Avalanche Mainnet',
     nativeCurrency: {
       name: 'AVAX',
