@@ -204,11 +204,10 @@ const Bridge: React.FC = observer(() => {
       setCurrentBlockchainId(chainId);
       const blockchainIndex = blockchains.findIndex((blockchain) => blockchain.chainId === chainId);
       if (blockchainIndex !== -1) {
-        if (toBlockchainIndex === blockchainIndex) return;
         setBlockchainIndex('from', blockchainIndex);
       }
     });
-  }, [setBlockchainIndex, walletConnector.walletService, toBlockchainIndex]);
+  }, [setBlockchainIndex, walletConnector.walletService]);
 
   const getBalance = useCallback(async () => {
     if (user.address && (await checkChainSettings())) {
@@ -317,7 +316,12 @@ const Bridge: React.FC = observer(() => {
           <Dropdown
             items={blockchains}
             activeIndex={fromBlockchainIndex}
-            setActiveIndex={(index) => setBlockchainIndex('from', index)}
+            setActiveIndex={(index) => {
+              if (toBlockchainIndex === index) {
+                setBlockchainIndex('to', fromBlockchainIndex);
+              }
+              setBlockchainIndex('from', index);
+            }}
           />
         </div>
 
@@ -328,7 +332,12 @@ const Bridge: React.FC = observer(() => {
           <Dropdown
             items={blockchains}
             activeIndex={toBlockchainIndex}
-            setActiveIndex={(index) => setBlockchainIndex('to', index)}
+            setActiveIndex={(index) => {
+              if (fromBlockchainIndex === index) {
+                setBlockchainIndex('from', toBlockchainIndex);
+              }
+              setBlockchainIndex('to', index);
+            }}
           />
         </div>
 
