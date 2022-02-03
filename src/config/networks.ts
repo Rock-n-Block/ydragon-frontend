@@ -1,5 +1,5 @@
 // type ChainTypes = 'bnb' | 'matic' | 'eth';
-export type ChainTypes = 'bnb' | 'eth';
+export type ChainTypes = 'bnb' | 'eth' | 'avax';
 
 export interface AddEthereumChainParameter {
   chainId: string; // A 0x-prefixed hexadecimal string
@@ -34,27 +34,28 @@ export const devChains: IChains = {
     blockExplorerUrls: ['https://testnet.bscscan.com'],
     supportsEIP1559: false,
   },
-  /*  matic: {
-    chainId: '0x13881',
-    chainName: 'Matic Testnet Mumbai',
-    nativeCurrency: {
-      name: 'tMATIC',
-      symbol: 'tMATIC',
-      decimals: 18,
-    },
-    rpcUrls: ['https://rpc-mumbai.matic.today'],
-    blockExplorerUrls: ['https://mumbai.polygonscan.com/'],
-  }, */
   eth: {
-    chainId: '0x3',
-    chainName: 'Ropsten',
+    chainId: '0x2a',
+    chainName: 'Kovan',
     nativeCurrency: {
       name: 'tETH',
       symbol: 'tETH',
       decimals: 18,
     },
-    rpcUrls: ['https://ropsten.infura.io/v3/e15330fb7e954a868e15297dd74dea37'],
-    blockExplorerUrls: ['https://ropsten.etherscan.io/'],
+    rpcUrls: ['https://kovan.infura.io/v3/68921e4290344321ad607569b85f0c9e'],
+    blockExplorerUrls: ['https://kovan.etherscan.io/'],
+    supportsEIP1559: true,
+  },
+  avax: {
+    chainId: '0xa869',
+    chainName: 'Avalanche Fuji Testnet',
+    nativeCurrency: {
+      name: 'AVAX',
+      symbol: 'AVAX',
+      decimals: 18,
+    },
+    rpcUrls: ['https://api.avax-test.network/ext/bc/C/rpc'],
+    blockExplorerUrls: ['https://testnet.avascan.info/'],
     supportsEIP1559: true,
   },
 };
@@ -72,17 +73,6 @@ export const prodChains: IChains = {
     blockExplorerUrls: ['https://bscscan.com'],
     supportsEIP1559: false,
   },
-  /*  matic: {
-      chainId: '0x89',
-      chainName: 'Matic(Polygon) Mainnet',
-      nativeCurrency: {
-        name: 'MATIC',
-        symbol: 'MATIC',
-        decimals: 18,
-      },
-      rpcUrls: ['https://rpc-mainnet.matic.network'],
-      blockExplorerUrls: ['https://polygonscan.com'],
-    }, */
   eth: {
     chainId: '0x1',
     chainName: 'Ethereum',
@@ -93,6 +83,18 @@ export const prodChains: IChains = {
     },
     rpcUrls: ['https://mainnet.infura.io/v3/e15330fb7e954a868e15297dd74dea37'],
     blockExplorerUrls: ['https://etherscan.io/'],
+    supportsEIP1559: true,
+  },
+  avax: {
+    chainId: '0xa86a',
+    chainName: 'Avalanche Mainnet',
+    nativeCurrency: {
+      name: 'AVAX',
+      symbol: 'AVAX',
+      decimals: 18,
+    },
+    rpcUrls: ['https://api.avax.network/ext/bc/C/rpc'],
+    blockExplorerUrls: ['https://snowtrace.io'],
     supportsEIP1559: true,
   },
 };

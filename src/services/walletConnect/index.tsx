@@ -72,7 +72,7 @@ class Connector extends React.Component<any, any> {
           sessionStorage.setItem('yd_wallet', walletType);
           // rootStore.user.update({ address });
         }
-      } catch (err) {
+      } catch (err: any) {
         const { response } = err;
         if (
           response &&
@@ -88,7 +88,7 @@ class Connector extends React.Component<any, any> {
           throw err;
         }
       }
-    } catch (err) {
+    } catch (err: any) {
       rootStore.modals.metamask.setErr(err.message);
       this.disconnect();
     }
