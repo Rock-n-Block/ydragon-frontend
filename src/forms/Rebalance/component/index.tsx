@@ -41,7 +41,7 @@ const Rebalance: React.FC<FormikProps<IRebalance> & IRebalance> = observer(
           })
           .catch((error) => {
             const { response } = error;
-            console.log('search error', response);
+            console.error('search error', response);
           });
       } else {
         setSearchTokens([] as ISearchToken[]);

@@ -18,7 +18,7 @@ import { rootStore } from '../store/store';
 import { factoryAbi, routerAbi, tokenAbi } from './abi';
 import { INetwork } from '@amfi/connect-wallet/dist/interface';
 
-const IS_PRODUCTION = false;
+const IS_PRODUCTION = true;
 const BACKEND_URL = IS_PRODUCTION
   ? 'https://ydragon.io/api/'
   : 'https://dev-ydragon.rocknblock.io/api/';
