@@ -3,10 +3,10 @@
 
 .dark {
   .index-small-card {
-    background: $dark-bg;
+    //background: $dark-bg;
 
     &:hover {
-      background: $table-selected;
+      //background: $table-selected;
     }
 
     &__header {
@@ -32,7 +32,7 @@
 
     &:hover {
       color: $white;
-      background: $table-selected;
+      //background: $table-selected;
     }
 
     &__header {

@@ -3,13 +3,13 @@
 
 .dark {
   .composition {
-    @include shadow-block;
+    @include shadow-dark-block;
   }
 }
 
 .light {
   .composition {
-    @include light-block;
+    @include shadow-light-block;
   }
 }
 

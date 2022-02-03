@@ -54,7 +54,7 @@ const Dashboard: React.FC = () => {
       })
       .catch((error) => {
         const { response } = error;
-        console.log('get indexes error', response);
+        console.error('get indexes error', response);
       })
       .finally(() => setLoading(false));
   }, []);
@@ -293,25 +293,26 @@ const Dashboard: React.FC = () => {
                                 style={{
                                   width: `${new BigNumber(token.current_weight)
                                     .multipliedBy(100)
-                                    .toString()}%`,
+                                    .toString(10)}%`,
                                 }}
                               >
-                                {new BigNumber(token.current_weight).multipliedBy(100).toString()}%
+                                {new BigNumber(token.current_weight).multipliedBy(100).toString(10)}
+                                %
                               </div>
                             )}
                           </React.Fragment>
                         ))}
                       {index.tokens.length > 3 &&
-                        calculateOthersWeight(index).multipliedBy(100).toString() !== '0' && (
+                        calculateOthersWeight(index).multipliedBy(100).toString(10) !== '0' && (
                           <div
                             className="index-dashboard__token-percent"
                             style={{
                               width: `${calculateOthersWeight(index)
                                 .multipliedBy(100)
-                                .toString()}%`,
+                                .toString(10)}%`,
                             }}
                           >
-                            {calculateOthersWeight(index).multipliedBy(100).toString()}%
+                            {calculateOthersWeight(index).multipliedBy(100).toString(10)}%
                           </div>
                         )}
                     </div>

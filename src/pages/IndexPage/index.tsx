@@ -17,7 +17,8 @@ import { useWalletConnectorContext } from '../../services/walletConnect';
 import { useMst } from '../../store/store';
 
 import './Index.scss';
-import config, { TChain } from '../../config';
+import { BACKEND_NETWORKS } from '../../config';
+import { chainsEnum } from '../../types';
 
 interface IIndexId {
   indexId: string;
@@ -39,7 +40,6 @@ export interface IIndex {
 }
 
 const Index: React.FC = observer(() => {
-  const { BACKEND_NETWORKS } = config;
   const { indexId } = useParams<IIndexId>();
   const walletConnector = useWalletConnectorContext();
   const { modals, networks, user } = useMst();
@@ -57,25 +57,25 @@ const Index: React.FC = observer(() => {
       .getIndexById(+indexId)
       .then(({ data }) => {
         setIndexData(data);
-        if (BACKEND_NETWORKS[networks.currentNetwork as TChain] !== data.network) {
+        if (BACKEND_NETWORKS[networks.currentNetwork as chainsEnum] !== data.network) {
           history.push('/indexes');
-          // console.log(history);
         }
       })
       .catch((err: any) => {
+        history.push('/*');
         console.error('get current index error', err);
       });
-  }, [indexId, BACKEND_NETWORKS, networks.currentNetwork, history]);
+  }, [indexId, networks.currentNetwork, history]);
 
   const getUserBalance = useCallback(
     (indexAddress: string) => {
-      walletConnector.metamaskService.getBalanceOf(indexAddress).then((data: string) => {
+      walletConnector.walletService.getBalanceOf(indexAddress).then((data: string) => {
         setBalance(
           new BigNumber(data).dividedBy(new BigNumber(10).pow(18)).toFixed(+data === 0 ? 2 : 7),
         );
       });
     },
-    [walletConnector.metamaskService],
+    [walletConnector.walletService],
   );
 
   const updateData = () => {
@@ -136,6 +136,7 @@ const Index: React.FC = observer(() => {
             value: balance,
           },
         ]}
+        tradeInfo={{ address: indexData?.address, symbol: indexData?.name }}
         handleBuy={handleBuy}
         handleSell={handleSell}
         needLogin

@@ -6,12 +6,13 @@ import { useCallback, useEffect, useState } from 'react';
 // import plgLight from '../assets/img/icons/icon-polygon-light.svg';
 import { indexesApi } from '../services/api';
 import { useMst } from '../store/store';
-import config, { TChain } from '../config';
+import config from '../config';
+import { chainsEnum } from '../types';
 
 export const useWhiteList = (indexId: number) => {
   const { networks, theme } = useMst();
   const { NETWORK_TOKENS, NATIVE_TOKENS } = config;
-  const currentNetwork = networks.currentNetwork as TChain;
+  const currentNetwork = networks.currentNetwork as chainsEnum;
   const [whiteList, setWhiteList] = useState<any[]>([]);
 
   const findWrappedToken = useCallback(
@@ -35,7 +36,7 @@ export const useWhiteList = (indexId: number) => {
         setWhiteList(newTokens);
       })
       .catch((err) => {
-        console.log(`err in getting index ${indexId} whitelist:\n`, err);
+        console.error(`err in getting index ${indexId} whitelist:\n`, err);
       });
   }, [NETWORK_TOKENS, currentNetwork, findWrappedToken, indexId, theme.value]);
 

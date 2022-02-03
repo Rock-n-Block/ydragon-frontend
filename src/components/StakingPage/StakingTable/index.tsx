@@ -2,11 +2,12 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { observer } from 'mobx-react';
 
 import StakingTableRow from './StakingTableRow';
-import { useWalletConnectorContext } from '../../../services/walletConnect';
-import { useMst } from '../../../store/store';
-import { Loader } from '../../index';
-
+// import { useWalletConnectorContext } from '../../../services/walletConnect';
+// import { useMst } from '../../../store/store';
 import './StakingTable.scss';
+import { useMst } from '../../../store/store';
+import { useWalletConnectorContext } from '../../../services/walletConnect';
+import { Loader } from '../../index';
 
 interface IStakingTableProps {
   ydrPrice: string;
@@ -16,19 +17,21 @@ const StakingTable: React.FC<IStakingTableProps> = observer(({ ydrPrice }) => {
   const walletConnector = useWalletConnectorContext();
   const { networks } = useMst();
 
-  const [stakesCount, setStakesCount] = useState(0);
+  const [stakesCount, setStakesCount] = useState<number | null>(null);
 
   const getStakesCount = useCallback(() => {
-    walletConnector.metamaskService.getStakesCount().then((count: number) => {
-      setStakesCount(count);
-    });
-  }, [walletConnector.metamaskService]);
+    walletConnector.walletService
+      .getStakesCount(networks.getCurrNetwork()?.staking_address ?? '')
+      .then((count: string) => {
+        setStakesCount(+count || 0);
+      });
+  }, [networks, walletConnector.walletService]);
 
   useEffect(() => {
-    if (networks.currentNetwork) {
+    if (networks.networksList.length) {
       getStakesCount();
     }
-  }, [getStakesCount, networks.currentNetwork]);
+  }, [getStakesCount, networks.networksList.length]);
 
   return (
     <section className="section">
@@ -44,11 +47,18 @@ const StakingTable: React.FC<IStakingTableProps> = observer(({ ydrPrice }) => {
           <div className="staking-table_header__cell" />
         </div>
         <div className="staking-table_body">
-          {+stakesCount ? (
+          {networks.getCurrNetwork()?.old_staking_address &&
+            new Array(2).fill(1).map((el, i) => (
+              // eslint-disable-next-line
+              <StakingTableRow key={`StakingTableRow_${i}`} index={i} ydrPrice={ydrPrice} old />
+            ))}
+          {typeof stakesCount === 'number' ? (
             new Array(+stakesCount)
               .fill(1)
               // eslint-disable-next-line
-              .map((el, i) => <StakingTableRow key={i} index={i} ydrPrice={ydrPrice} />)
+              .map((el, i) => (
+                <StakingTableRow key={`StakingTableRow_${i + 2}`} index={i} ydrPrice={ydrPrice} />
+              ))
           ) : (
             <Loader loading />
           )}

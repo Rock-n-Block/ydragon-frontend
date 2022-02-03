@@ -10,10 +10,11 @@ import { useWalletConnectorContext } from '../../../services/walletConnect';
 import txToast from '../../ToastWithTxHash';
 import { ProviderRpcError } from '../../../types/errors';
 import { toast } from 'react-toastify';
-import config, { TChain } from '../../../config';
+import config from '../../../config';
 import { observer } from 'mobx-react-lite';
 import { useMst } from '../../../store/store';
 import config_ABI from '../../../services/web3/config_ABI';
+import { chainsEnum } from '../../../types';
 
 interface TokensStructureProps {
   vaults: IVault[];
@@ -27,6 +28,8 @@ const TokensStructure: React.FC<TokensStructureProps> = observer(({ vaults, inde
   const [dataSource, setDataSource] = useState<any[]>([]);
   const [isWithdrawBtnLoading, setIsWithdrawBtnLoading] = useState(false);
   const [isDepositBtnLoading, setIsDepositBtnLoading] = useState(false);
+  const [isDepositAvailable, setIsDepositAvailable] = useState(false);
+  const [isWithdrawAvailable, setIsWithdrawAvailable] = useState(false);
 
   const [isAllowed, setIsAllowed] = useState(false);
   const [tokenAddressesNeedAllowance, setTokenAddressesNeedAllowance] = useState<string[]>([]);
@@ -69,9 +72,9 @@ const TokensStructure: React.FC<TokensStructureProps> = observer(({ vaults, inde
   const handleWithdrawTokensClick = () => {
     setIsWithdrawBtnLoading(true);
     const preparedTokens = vaults.map((vault) =>
-      new BigNumber(vault.y_balance).minus(new BigNumber(vault.farm_balance)).toString(),
+      new BigNumber(vault.y_balance).minus(new BigNumber(vault.farm_balance)).toString(10),
     );
-    walletConnect.metamaskService
+    walletConnect.walletService
       .withdrawTokensForStaking(preparedTokens, indexAddress)
       .on('transactionHash', (hash: string) => {
         txToast(hash);
@@ -91,26 +94,25 @@ const TokensStructure: React.FC<TokensStructureProps> = observer(({ vaults, inde
   const handleDepositClick = () => {
     setIsDepositBtnLoading(true);
     const nativeTokenValue = vaults.find(
-      (vault) => vault.token_symbol === NATIVE_TOKENS[networks.currentNetwork as TChain].native,
+      (vault) => vault.token_symbol === NATIVE_TOKENS[networks.currentNetwork as chainsEnum].native,
     );
     const preparedTokens = vaults
       .filter((vault) => vault.token_symbol !== nativeTokenValue?.token_symbol)
       .map((vault) => vault.farm_balance);
-    walletConnect.metamaskService
-      .depositToIndex(preparedTokens, indexAddress, nativeTokenValue)
+    walletConnect.walletService
+      .depositToIndex(preparedTokens, indexAddress, nativeTokenValue?.farm_balance)
       .on('transactionHash', (hash: string) => {
         txToast(hash);
       })
       .then(() => {
         toast.success('Tokens successfully deposited');
+        setIsDepositBtnLoading(false);
       })
       .catch((error: ProviderRpcError) => {
         const { message } = error;
         toast.error('Something went wrong');
-        console.error(`withdrawTokensForStaking error`, message);
-      })
-      .finally(() => {
         setIsDepositBtnLoading(false);
+        console.error(`withdrawTokensForStaking error`, message);
       });
   };
   const prepareData = useCallback(() => {
@@ -139,7 +141,7 @@ const TokensStructure: React.FC<TokensStructureProps> = observer(({ vaults, inde
 
   const checkAllowance = useCallback(async () => {
     const nativeToken = vaults.find(
-      (vault) => vault.token_symbol === NATIVE_TOKENS[networks.currentNetwork as TChain].native,
+      (vault) => vault.token_symbol === NATIVE_TOKENS[networks.currentNetwork as chainsEnum].native,
     );
     const filteredTokens = vaults
       .filter((vault) => vault.token_symbol !== nativeToken?.token_symbol)
@@ -147,7 +149,7 @@ const TokensStructure: React.FC<TokensStructureProps> = observer(({ vaults, inde
     const newArray: string[] = [];
 
     const promiseArray = filteredTokens.map((address) => {
-      return walletConnect.metamaskService
+      return walletConnect.walletService
         .checkAllowanceById(address, config_ABI.Token.ABI, indexAddress)
         .then((isApproved: boolean) => {
           if (!isApproved) {
@@ -167,21 +169,56 @@ const TokensStructure: React.FC<TokensStructureProps> = observer(({ vaults, inde
     } catch (error) {
       console.error('TokensStructure allowance error', error);
     }
-  }, [NATIVE_TOKENS, indexAddress, networks.currentNetwork, vaults, walletConnect.metamaskService]);
+  }, [NATIVE_TOKENS, indexAddress, networks.currentNetwork, vaults, walletConnect.walletService]);
 
   const handleApproveAll = useCallback(async () => {
-    const promiseArray = tokenAddressesNeedAllowance.map((address) => {
-      return walletConnect.metamaskService.approve(address, indexAddress);
-    });
+    setIsDepositBtnLoading(true);
+    const approveRecursion = (index: number) => {
+      if (index >= tokenAddressesNeedAllowance.length) {
+        return;
+      }
+      walletConnect.walletService
+        .approve(tokenAddressesNeedAllowance[index], indexAddress)
+        .on('transactionHash', () => {
+          approveRecursion(index + 1);
+        })
+        .then(() => {
+          if (index >= tokenAddressesNeedAllowance.length - 1) {
+            setIsAllowed(true);
+            setTokenAddressesNeedAllowance([]);
+            setIsDepositBtnLoading(false);
+          }
+        });
+    };
+    // const promiseArray = tokenAddressesNeedAllowance.map((address) => {
+    //   return handleApprove(address);
+    // });
     try {
-      await Promise.all([...promiseArray]);
-      setIsAllowed(true);
-      setTokenAddressesNeedAllowance([]);
+      // await Promise.all([...promiseArray]);
+      const index = 0;
+      approveRecursion(index);
     } catch (error) {
       console.error('TokensStructure approve error', error);
     }
-  }, [indexAddress, tokenAddressesNeedAllowance, walletConnect.metamaskService]);
-
+  }, [indexAddress, tokenAddressesNeedAllowance, walletConnect.walletService]);
+  const checkIsDepositAvailable = useCallback(() => {
+    const isSomeFarmBalance = vaults.some((vault) =>
+      new BigNumber(vault.farm_balance).isGreaterThan(0),
+    );
+    setIsDepositAvailable(isSomeFarmBalance);
+  }, [vaults]);
+  const checkIsWithdrawAvailable = useCallback(() => {
+    const isSomeFarmBalance = vaults.some((vault) =>
+      new BigNumber(vault.y_balance).minus(new BigNumber(vault.farm_balance)).isGreaterThan(0),
+    );
+    setIsWithdrawAvailable(isSomeFarmBalance);
+  }, [vaults]);
+  useEffect(() => {
+    checkIsDepositAvailable();
+  }, [checkIsDepositAvailable]);
+  useEffect(() => {
+    checkIsWithdrawAvailable();
+  }, [checkIsWithdrawAvailable]);
   useEffect(() => {
     if (vaults) {
       prepareData();
@@ -224,11 +261,17 @@ const TokensStructure: React.FC<TokensStructureProps> = observer(({ vaults, inde
           colorScheme="orange"
           loading={isWithdrawBtnLoading}
           onClick={handleWithdrawTokensClick}
+          disabled={!isWithdrawAvailable}
         >
           Withdraw
         </Button>
         {isAllowed ? (
-          <Button styledType="outline" loading={isDepositBtnLoading} onClick={handleDepositClick}>
+          <Button
+            styledType="outline"
+            loading={isDepositBtnLoading}
+            onClick={handleDepositClick}
+            disabled={!isDepositAvailable}
+          >
             Deposit
           </Button>
         ) : (

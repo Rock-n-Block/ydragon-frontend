@@ -30,6 +30,8 @@ export interface IIme {
   tokens: Array<IIndexpadToken>;
   name: string;
   address: string;
+  market_cap: string | number;
+  price: string | number;
   ime_start_timestamp: number;
   ime_end_timestamp: number;
 }
@@ -58,7 +60,7 @@ const Indexpad: React.FC = observer(() => {
       })
       .catch((error) => {
         const { response } = error;
-        console.log('get ime list error', response);
+        console.error('get ime list error', response);
       })
       .finally(() => setLoading(false));
   }, []);

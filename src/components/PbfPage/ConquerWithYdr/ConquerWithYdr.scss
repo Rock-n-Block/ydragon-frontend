@@ -83,6 +83,10 @@ h2.conquer-title {
     @include b(mobile) {
       order: 2;
       justify-content: center;
+      img {
+        object-fit: cover;
+        width: 100%;
+      }
     }
     svg {
       max-width: 100%;

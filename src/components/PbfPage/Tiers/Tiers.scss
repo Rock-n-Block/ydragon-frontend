@@ -37,9 +37,7 @@
 }
 
 .tiers_item {
-  background: linear-gradient(238.88deg, #000316 31.18%, #050c25 99.47%);
-  box-shadow: -8px 8px 36px rgba(0, 0, 0, 0.5);
-  border-radius: 32px;
+  @include shadow-dark-block;
   padding: 64px 48px;
   padding-bottom: 42px;
 

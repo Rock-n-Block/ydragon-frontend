@@ -4,11 +4,11 @@
 .dark {
   .index-dashboard {
     &__item {
-      @include shadow-block;
+      @include shadow-dark-block;
       color: $white;
 
       &:hover {
-        background: $table-selected;
+        @include shadow-index-hover;
       }
     }
 
@@ -55,12 +55,12 @@
 .light {
   .index-dashboard {
     &__item {
-      @include light-block;
+      @include shadow-light-block;
       color: $black;
 
       &:hover {
-        color: white;
-        background: $table-selected;
+        //color: white;
+        background: $gradient-black;
       }
     }
 

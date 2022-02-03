@@ -10,11 +10,13 @@ import {
   TokensStructure,
   XYStructure,
 } from '../../components/Admin';
-// import { RebalanceModal } from '../../components/Modals';
+import { RebalanceModal } from '../../components/Modals';
+import { BACKEND_NETWORKS } from '../../config';
 import { indexesApi, vaultsApi } from '../../services/api';
 import { useMst } from '../../store/store';
+import { chainsEnum } from '../../types';
 import { IIndex, IIndexStatus, ITokensDiff } from '../Admin';
-import config, { TChain } from '../../config';
+import Composition from '../../components/Admin/Composition';
 
 interface IIndexId {
   indexId: string;
@@ -55,7 +57,6 @@ export interface IVaultMini {
 }
 
 const AdminIndex: React.FC = () => {
-  const { BACKEND_NETWORKS } = config;
   const { indexId } = useParams<IIndexId>();
   const [index, setIndex] = useState<IRebalance>({} as IRebalance);
   const [vault, setVault] = useState<IVault[]>([] as IVault[]);
@@ -68,7 +69,7 @@ const AdminIndex: React.FC = () => {
       .getIndexesRebalance(+indexId)
       .then(({ data }) => {
         setIndex(data);
-        if (BACKEND_NETWORKS[networks.currentNetwork as TChain] !== data.index.network) {
+        if (BACKEND_NETWORKS[networks.currentNetwork as chainsEnum] !== data.index.network) {
           history.push('/admin');
         }
       })
@@ -76,7 +77,7 @@ const AdminIndex: React.FC = () => {
         const { response } = err;
         console.error('get index composition collections error', response);
       });
-  }, [indexId, BACKEND_NETWORKS, networks.currentNetwork, history]);
+  }, [indexId, networks.currentNetwork, history]);
 
   const getVaults = useCallback(() => {
     vaultsApi
@@ -104,16 +105,17 @@ const AdminIndex: React.FC = () => {
   return (
     <main className="container">
       <IndexInfo marketCap={index.market_cap} price={index.price} />
-      {/* <Composition status={index.status} tokens={index.tokens_diff} /> */}
+      <Composition status={index.status} tokens={index.tokens_diff} />
       <Rebalance tokens={index.tokens_diff} />
       <Options address={index.index?.address} />
       <TokensStructure vaults={vault} indexAddress={index.index?.address} />
       <XYStructure vaults={vaultMini} />
-      {/* <RebalanceModal
+      <RebalanceModal
         name={index.index?.name}
+        address={index.index?.address}
         tokens={index.tokens_diff}
         onStart={getIndexComposition}
-      /> */}
+      />
     </main>
   );
 };

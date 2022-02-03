@@ -19,6 +19,10 @@
     margin-left: 10px;
   }
 
+  &__icon {
+    border-radius: 100%;
+  }
+
   &__name {
     font-family: 'TTNorms', sans-serif;
     font-size: 18px;
@@ -32,6 +36,7 @@
     font-size: 18px;
     line-height: 21px;
     text-transform: uppercase;
+    @include text-ellipsis(70px);
 
     opacity: 0.4;
   }

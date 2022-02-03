@@ -1,6 +1,7 @@
+@import 'src/styles/variables';
 .dark {
   .loader-container {
-    background: linear-gradient(238.88deg, #000316 31.18%, #050c25 99.47%);
+    background: $gradient-white;
   }
   .loader::before {
     border-bottom: 0 solid #ffffff05;

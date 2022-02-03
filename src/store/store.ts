@@ -1,5 +1,5 @@
 import { createContext, useContext } from 'react';
-import { Instance, onSnapshot, types } from 'mobx-state-tree';
+import { Instance, types } from 'mobx-state-tree';
 
 import { Modals } from './Modals';
 import { Networks } from './Networks';
@@ -25,6 +25,7 @@ export const Store = RootModel.create({
     mint: { isOpen: false },
     redeem: { isOpen: false },
     tradeIndex: { isOpen: false, method: '' },
+    connectWallet: { isOpen: false },
   },
   user: {
     address: '',
@@ -36,15 +37,15 @@ export const Store = RootModel.create({
   networks: {
     networkId: '',
     networksList: [],
-    currentNetwork: '',
+    currentNetwork: localStorage.getItem('ydr_chainName') ?? '',
   },
 });
 
 export const rootStore = Store;
 
-onSnapshot(rootStore, (snapshot) => {
+/* onSnapshot(rootStore, (snapshot) => {
   console.log('Snapshoot:', snapshot);
-});
+}); */
 
 export type RootInstance = Instance<typeof RootModel>;
 const RootStoreContext = createContext<null | RootInstance>(null);

@@ -8,18 +8,18 @@ import { useWhiteList } from '../../../hooks/useWhiteList';
 import { useWalletConnectorContext } from '../../../services/walletConnect';
 import configABI from '../../../services/web3/config_ABI';
 import { useMst } from '../../../store/store';
-import { ProviderRpcError } from '../../../types/errors';
+import { ProviderRpcError } from '../../../types';
 import { Button, Input, InputWithSelect } from '../../index';
 import { Modal } from '../index';
-import config from '../../../config';
 import { handleNumericInput } from '../../../utils/handleNumericInput';
 
 import './GetInModal.scss';
 import txToast from '../../ToastWithTxHash';
 import { toast } from 'react-toastify';
+import { isNativeToken } from '../../../utils/nativeTokenHelper';
 
 const GetInModal: React.FC = observer(() => {
-  const { NETWORK_TOKENS } = config;
+  // const { NETWORK_TOKENS } = config;
   const { modals, user } = useMst();
   const { whiteList, getTokenAddress } = useWhiteList(modals.getIn.id ?? 0);
   const walletConnector = useWalletConnectorContext();
@@ -39,18 +39,18 @@ const GetInModal: React.FC = observer(() => {
 
   const getDecimals = useCallback(
     async (currency: string) => {
-      if (Object.keys(NETWORK_TOKENS).includes(currency)) {
+      if (isNativeToken(currency)) {
         return new Promise((resolve) => resolve(18));
       }
-      return walletConnector.metamaskService.getDecimals(
+      return walletConnector.walletService.getDecimals(
         getTokenAddress(currency),
         configABI.Token.ABI,
       );
     },
-    [NETWORK_TOKENS, getTokenAddress, walletConnector.metamaskService],
+    [getTokenAddress, walletConnector.walletService],
   );
   const getBalance = useCallback(() => {
-    walletConnector.metamaskService
+    walletConnector.walletService
       .getBalanceOf(getTokenAddress(firstCurrency))
       .then((data: any) => {
         setBalance(data);
@@ -62,14 +62,14 @@ const GetInModal: React.FC = observer(() => {
         const { message } = err;
         console.error('getBalance error', message);
       });
-  }, [getTokenAddress, getDecimals, walletConnector.metamaskService, firstCurrency]);
+  }, [getTokenAddress, getDecimals, walletConnector.walletService, firstCurrency]);
   const checkAllowance = useCallback(() => {
-    if (!Object.keys(NETWORK_TOKENS).includes(firstCurrency)) {
-      walletConnector.metamaskService
+    if (!isNativeToken(firstCurrency)) {
+      walletConnector.walletService
         .checkAllowanceById(
           getTokenAddress(firstCurrency),
           configABI.MAIN.ABI,
-          modals.getIn.address,
+          modals.getIn.address || '',
         )
         .then((data: boolean) => {
           setIsNeedApprove(!data);
@@ -79,13 +79,7 @@ const GetInModal: React.FC = observer(() => {
           console.error('allowance error', response);
         });
     }
-  }, [
-    NETWORK_TOKENS,
-    firstCurrency,
-    walletConnector.metamaskService,
-    getTokenAddress,
-    modals.getIn.address,
-  ]);
+  }, [firstCurrency, walletConnector.walletService, getTokenAddress, modals.getIn.address]);
 
   const handleSelectChange = (value: any) => {
     setFirstCurrency(value);
@@ -100,8 +94,8 @@ const GetInModal: React.FC = observer(() => {
 
   const handleApprove = (): void => {
     setIsLoading(true);
-    walletConnector.metamaskService
-      .approve(getTokenAddress(firstCurrency), modals.getIn.address)
+    walletConnector.walletService
+      .approve(getTokenAddress(firstCurrency), modals.getIn.address || '')
       .on('transactionHash', (hash: string) => {
         txToast(hash);
       })
@@ -112,39 +106,46 @@ const GetInModal: React.FC = observer(() => {
       .catch((err: ProviderRpcError) => {
         const { message } = err;
         toast.error('Something went wrong');
+        setIsLoading(false);
         console.error(`Approve error`, message);
       })
       .finally(() => setIsLoading(false));
   };
   const handleEnter = (): void => {
     setIsLoading(true);
-    walletConnector.metamaskService
-      .mint(payInput, firstCurrency, getTokenAddress(firstCurrency), modals.getIn.address, decimals)
+    walletConnector.walletService
+      .mint(
+        payInput,
+        firstCurrency,
+        getTokenAddress(firstCurrency),
+        modals.getIn.address || '',
+        decimals,
+      )
       .on('transactionHash', (hash: string) => {
         txToast(hash);
+        setPayInput('');
+        modals.getIn.close();
+        setIsLoading(false);
       })
       .then(() => {
-        setPayInput('');
-        getBalance();
         toast.success('You entered IMO');
-        setIsLoading(false);
       })
       .catch((err: ProviderRpcError) => {
         const { message } = err;
         toast.error('Something went wrong');
-        console.error(`Enter IMO error `, message);
         setIsLoading(false);
+        console.error(`Enter IMO error `, message);
       });
   };
 
   const getBuyCourse = useCallback(() => {
     if (payInput) {
-      walletConnector.metamaskService
+      walletConnector.walletService
         .getIndexCourse(
           getTokenAddress(firstCurrency),
           payInput,
           true,
-          modals.getIn.address,
+          modals.getIn.address || '',
           decimals,
         )
         .then((data: any) => {
@@ -165,7 +166,7 @@ const GetInModal: React.FC = observer(() => {
     decimals,
     payInput,
     firstCurrency,
-    walletConnector.metamaskService,
+    walletConnector.walletService,
   ]);
 
   const setInitialCurrencies = useCallback(() => {
@@ -228,12 +229,12 @@ const GetInModal: React.FC = observer(() => {
 
           <Input placeholder={viewOnlyInputValue} disabled />
         </div>
-        {isNeedApprove && !Object.keys(NETWORK_TOKENS).includes(firstCurrency) && (
+        {isNeedApprove && !isNativeToken(firstCurrency) && (
           <Button className="m-get-in__btn" onClick={handleApprove} loading={isLoading}>
             Approve
           </Button>
         )}
-        {(!isNeedApprove || Object.keys(NETWORK_TOKENS).includes(firstCurrency)) && (
+        {(!isNeedApprove || isNativeToken(firstCurrency)) && (
           <Button
             className="m-get-in__btn"
             onClick={handleEnter}

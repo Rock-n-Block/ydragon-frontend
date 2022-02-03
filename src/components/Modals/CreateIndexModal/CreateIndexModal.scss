@@ -10,13 +10,13 @@
 
     .ant-picker,
     .ant-picker-range {
-      background: $dark-bg;
+      background: $main-dark-bg;
     }
 
     .form-create-index {
       .ant-input {
         color: $white;
-        background: $dark-bg;
+        background: $main-dark-bg;
       }
 
       input:-webkit-autofill,
@@ -47,7 +47,7 @@
 
       &__description {
         .ant-input-textarea-show-count {
-          background: $dark-bg;
+          background: $main-dark-bg;
 
           &::after {
             color: #bfbfbf;
@@ -219,7 +219,7 @@
       line-height: 14px;
       text-align: center;
 
-      grid-template-columns: 1fr 134px 102px;
+      grid-template-columns: 1fr 1fr 1fr;
       grid-column-gap: 15px;
 
       &-col {
@@ -242,17 +242,13 @@
   }
 
   &-item {
-    &__input-wrapper {
-      max-width: 35%;
-    }
     padding: 16px;
 
-    display: flex;
+    display: grid;
     gap: 10px;
-    justify-content: space-between;
 
     @include b(extramobile) {
-      flex-wrap: wrap;
+      grid-template-columns: 1fr 1fr;
     }
 
     align-items: center;
@@ -308,10 +304,14 @@
     padding: 20px 16px;
 
     display: grid;
-    grid-template-columns: 1fr 134px 102px;
+    grid-template-columns: 1fr 1fr 1fr;
     grid-gap: 15px;
 
     align-items: center;
+
+    @include b(extramobile) {
+      grid-template-columns: 1fr 1fr;
+    }
 
     &-name {
       font-family: 'TTNorms', sans-serif;
@@ -328,6 +328,7 @@
       align-items: center;
 
       width: 100%;
+      max-width: 164px;
 
       .input {
         display: flex;

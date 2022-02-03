@@ -23,22 +23,26 @@ import config from '../../config/index';
 
 import './Header.scss';
 import nextId from 'react-id-generator';
-import useWindowDebouncedEvent from '../../hooks/useWindowDebouncedEvent';
+import { chainsEnum } from '../../types';
+import useWindowWidth from '../../hooks/useWindowWidth';
+import UseIsHeaderBackground from '../../hooks/useIsHeaderBackground';
 
 const Header: React.FC = observer(() => {
   const { SOCIAL_LINKS } = config;
   const [isCollapsed, setIsCollapsed] = useState(true);
-  const { theme, user, networks } = useMst();
+  const { theme, user, networks, modals } = useMst();
   const walletConnector = useWalletConnectorContext();
   const history = useHistory();
+  const width = useWindowWidth(100);
+  const isHeaderBackground = UseIsHeaderBackground();
 
-  const handleResize = (windowWidth: number) => {
-    if (windowWidth >= 1240) {
+  // useWindowDebouncedEvent('resize', window.innerWidth, handleResize, 500);
+
+  useEffect(() => {
+    if (width >= 1240) {
       setIsCollapsed(true);
     }
-  };
-
-  useWindowDebouncedEvent('resize', window.innerWidth, handleResize, 500);
+  }, [width]);
 
   const handleChangeTheme = () => {
     if (LIGHT === localStorage.theme) {
@@ -49,17 +53,19 @@ const Header: React.FC = observer(() => {
   };
 
   const handleLogOut = () => {
-    setIsCollapsed(false);
+    setIsCollapsed(true);
     walletConnector.disconnect();
   };
 
   const connectWallet = (): void => {
-    setIsCollapsed(false);
-    walletConnector.connect();
+    setIsCollapsed(true);
+    modals.connectWallet.open();
+
+    // walletConnector.connect();
   };
 
   const redirectHandler = (path: string) => {
-    setIsCollapsed(false);
+    setIsCollapsed(true);
     history.push(path);
   };
   const handleBurgerClick = () => setIsCollapsed((prevState) => !prevState);
@@ -71,7 +77,7 @@ const Header: React.FC = observer(() => {
     }
   }, [isCollapsed]);
   return (
-    <header className="header__wrapper">
+    <header className={`header__wrapper ${isHeaderBackground ? 'black' : ''}`}>
       <EventBanner />
       <div className={`header container ${isCollapsed ? 'collapse' : 'expand'}`}>
         <div className="header__inner">
@@ -144,13 +150,14 @@ const Header: React.FC = observer(() => {
               <li className="header-nav__item">
                 <DropDown title="About" links={aboutLinks} />
               </li>
-              {localStorage.getItem('yd_token') && networks.currentNetwork === 'bnb' && (
-                <li className="header-nav__item">
-                  <Link to="/admin" className="header-nav__link">
-                    Admin panel
-                  </Link>
-                </li>
-              )}
+              {localStorage.getItem('ydr_token') &&
+                networks.currentNetwork !== chainsEnum.Ethereum && (
+                  <li className="header-nav__item">
+                    <Link to="/admin" className="header-nav__link">
+                      Admin panel
+                    </Link>
+                  </li>
+                )}
             </ul>
           </nav>
 

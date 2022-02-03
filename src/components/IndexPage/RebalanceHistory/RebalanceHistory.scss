@@ -3,7 +3,7 @@
 
 .dark {
   .index-rebalance-history {
-    @include shadow-block;
+    @include shadow-dark-block;
 
     &__title {
       color: white;
@@ -13,7 +13,7 @@
 
 .light {
   .index-rebalance-history {
-    @include light-block;
+    @include shadow-light-block;
 
     &__title {
       color: $black;

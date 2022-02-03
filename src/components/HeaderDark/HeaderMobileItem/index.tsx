@@ -4,6 +4,7 @@ import { NavHashLink } from 'react-router-hash-link';
 import { observer } from 'mobx-react-lite';
 
 import { useMst } from '../../../store/store';
+import { chainsEnum } from '../../../types';
 
 interface IHeaderMobileItemLink {
   title: string;
@@ -22,10 +23,12 @@ interface IHeaderMobileItemProps {
 
 const HeaderMobLink: React.FC<IHeaderMobileItemLink> = observer(
   ({ title, link, onCollapsedChange, auth }) => {
-    const { networks } = useMst();
-    if (auth === 'bnb' && networks.currentNetwork !== 'bnb') {
+    const { networks, user, modals } = useMst();
+    if (auth === 'notEth' && networks.currentNetwork === chainsEnum.Ethereum) {
       return <></>;
     }
+
+    const isNeedWalletModal = auth === 'login' && !user.address;
 
     return (
       <>
@@ -33,7 +36,15 @@ const HeaderMobLink: React.FC<IHeaderMobileItemLink> = observer(
           <NavHashLink
             to={link}
             className="menu-nav__item__link"
-            onClick={() => onCollapsedChange && onCollapsedChange(true)}
+            onClick={(e) => {
+              if (onCollapsedChange) {
+                onCollapsedChange(true);
+                if (isNeedWalletModal) {
+                  modals.connectWallet.open(link);
+                  e.preventDefault();
+                }
+              }
+            }}
           >
             {title}
           </NavHashLink>
@@ -69,7 +80,9 @@ const HeaderMobileItem: React.FC<IHeaderMobileItemProps> = observer(
             role="button"
             onKeyDown={() => {}}
             onClick={() => setIsOpened((prev) => !prev)}
-            className="menu-nav__item__title menu-nav__item__title--arrow"
+            className={cn('menu-nav__item__title menu-nav__item__title--arrow', {
+              'menu-nav__item__title--opened': isOpened,
+            })}
           >
             {title}
           </div>

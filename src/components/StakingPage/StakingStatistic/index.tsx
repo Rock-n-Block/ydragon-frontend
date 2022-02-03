@@ -7,6 +7,11 @@ import { numberFormatter } from '../../../utils/numberFormatter';
 import './StakingStatistic.scss';
 
 interface ITVLData {
+  'avalanche_tvl': {
+    count: number;
+    in_dollars: number;
+  };
+
   'binance-smart-chain_tvl': {
     count: number;
     in_dollars: number;
@@ -38,7 +43,7 @@ const StakingStatistic: React.FC<IYdrPrice> = ({ ydrPrice }) => {
         <li className="staking-statistic-red">
           <div className="staking-statistic-red_title text-MER">Total YDR Staked</div>
           <div className="staking-statistic-red_amount text-MER">
-            {numberFormatter(+new BigNumber(tvlData.ydr_tvl || 0).toString(), 0)}
+            {numberFormatter(+new BigNumber(tvlData.ydr_tvl || 0).toString(10), 0)}
           </div>
           <div className="staking-statistic-red_subamount">
             ($ {new BigNumber(tvlData.ydr_tvl || 0).multipliedBy(ydrPrice || 0).toFormat(2)})
@@ -47,10 +52,10 @@ const StakingStatistic: React.FC<IYdrPrice> = ({ ydrPrice }) => {
             Circulating <br /> supply staked
           </div>
           <div className="staking-statistic-red_percent text-MER">
-            {new BigNumber(tvlData.ydr_tvl || 0)
-              .dividedBy(tvlData.ydr_total_supply || 1)
+            {new BigNumber(+tvlData.ydr_tvl || 0)
+              .dividedBy(+tvlData.ydr_total_supply || 1)
               .multipliedBy(100)
-              .toFormat(2)}
+              .toFixed(2)}
             %
           </div>
         </li>
@@ -60,6 +65,7 @@ const StakingStatistic: React.FC<IYdrPrice> = ({ ydrPrice }) => {
             ${' '}
             {new BigNumber(tvlData['binance-smart-chain_tvl']?.in_dollars || 0)
               .plus(tvlData.ethereum_tvl?.in_dollars || 0)
+              .plus(tvlData.avalanche_tvl?.in_dollars || 0)
               .toFormat(2)}
           </div>
           <div className="staking-statistic-dark_prices">
@@ -75,12 +81,24 @@ const StakingStatistic: React.FC<IYdrPrice> = ({ ydrPrice }) => {
                 )}
               </div>
             </div>
+            <div className="staking-statistic-dark_price-divider" />
             <div className="staking-statistic-dark_price">
               <div className="staking-statistic-dark_price__title text-MER">Ethereum</div>
               <div className="staking-statistic-dark_price__amount text-MER text-gradient">
                 $
                 {numberFormatter(
                   +new BigNumber(tvlData.ethereum_tvl?.in_dollars || 0).toFixed(0),
+                  1,
+                )}
+              </div>
+            </div>
+            <div className="staking-statistic-dark_price-divider" />
+            <div className="staking-statistic-dark_price">
+              <div className="staking-statistic-dark_price__title text-MER">Avalanche</div>
+              <div className="staking-statistic-dark_price__amount text-MER text-gradient">
+                $
+                {numberFormatter(
+                  +new BigNumber(tvlData.avalanche_tvl?.in_dollars || 0).toFixed(0),
                   1,
                 )}
               </div>

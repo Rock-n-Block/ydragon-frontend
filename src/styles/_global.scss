@@ -60,56 +60,29 @@ p {
     color: white;
   }
 
+
   &.page-wrapper {
     background-color: $main-dark-bg;
-    background-image: url('../assets/img/home-dark-bg.png');
-
-    &--home,
-    &--about {
-      background-image: url('../assets/img/home-dark-bg.png'),
-        url('../assets/img/home-dark-bg-bottom.png');
-
-      @include b('tablet') {
-        background-image: url('../assets/img/home-dark-bg.png');
-      }
-    }
-
-    &--simplified {
-      background-image: none;
-
-      @include b('mobile') {
-        background-image: url('../assets/img/home-dark-bg.png');
-      }
-    }
-
-    &--pbf {
-      background-image: url('../assets/img/home-dark-bg.png'), url('../assets/img/pbf-bg-midle.png'),
-        url('../assets/img/pbf-bg-bottom.png');
-
-      @include b(tablet) {
-        background-image: url('../assets/img/home-dark-bg.png');
-      }
-    }
   }
 
   .page__title-icon--index {
-    @include shadow-block;
+    @include shadow-dark-block;
   }
 
-  .ant-select-dropdown {
-    color: $white;
-    background-color: $black;
-    border: $black;
-
-    .ant-select-item-option {
-      color: $white;
-    }
-
-    .ant-select-item-option-selected,
-    .ant-select-item-option-active {
-      background-color: #3a3a66;
-    }
-  }
+  //.ant-select-dropdown {
+  //  color: $white;
+  //  background-color: $black;
+  //  border: $black;
+  //
+  //  .ant-select-item-option {
+  //    color: $white;
+  //  }
+  //
+  //  .ant-select-item-option-selected,
+  //  .ant-select-item-option-active {
+  //    background-color: #3a3a66;
+  //  }
+  //}
 
   .ant-tooltip-inner {
     color: $black !important;
@@ -177,10 +150,10 @@ p {
     @include shadow-light-block;
   }
 
-  .ant-select-dropdown {
-    color: $black;
-    background-color: $white;
-  }
+  //.ant-select-dropdown {
+  //  color: $black;
+  //  background-color: $white;
+  //}
 
   .ant-tooltip-inner {
     color: $white !important;
@@ -192,13 +165,39 @@ p {
   }
 }
 
+.dark {
+  transition: all 0.4s;
+
+  &.page-wrapper {
+    background-color: $black;
+    background-image: url('../assets/img/home-dark-bg.png');
+
+    &--home,
+    &--about{
+      background-image: url('../assets/img/home-dark-bg.png'), url('../assets/img/home-dark-bg-bottom.png');
+
+      @include b('tablet') {
+        background-image: url('../assets/img/home-dark-bg.png');
+      }
+    }
+    &--simplified{
+      background-image: url('../assets/img/simplified-bg.png');
+    }
+
+    &--staking {
+      background-position: top center;
+      background-size: cover;
+      background-blend-mode: unset;
+    }
+  }
+}
+
 .page-wrapper {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 
   min-height: 100vh;
-  // background-color: $bg-color;
   background-repeat: no-repeat;
   background-position: top center;
   background-size: cover;
@@ -264,6 +263,9 @@ main.container {
 
   & + & {
     margin-top: 175px;
+    @include b('mobile') {
+      margin-top: 30px;
+    }
   }
 
   &--admin {
@@ -355,7 +357,7 @@ main.container {
     border-radius: 50% !important;
 
     &--ydr {
-      background-color: #191c34;
+      background-color: $main-dark-bg;
     }
   }
 

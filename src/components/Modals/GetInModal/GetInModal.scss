@@ -4,7 +4,7 @@
 .dark {
   .m-get-in {
     &__content {
-      @include shadow-block;
+      @include shadow-dark-block;
     }
 
     &__logo {

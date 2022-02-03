@@ -17,9 +17,8 @@ export const User = types
     };
     const disconnect = () => {
       self.address = '';
-      localStorage.setItem('yd_token', '');
-      localStorage.setItem('yd_metamask', '');
-      localStorage.setItem('yd_address', '');
+      localStorage.setItem('ydr_token', '');
+      localStorage.setItem('ydr_address', '');
     };
     return {
       setAddress,
@@ -30,9 +29,9 @@ export const User = types
   })
   .views((self) => ({
     get isUser() {
-      return !!self.address;
+      return !!self.address || !!localStorage.getItem('ydr_address');
     },
     get isAdmin() {
-      return !!self.token;
+      return !!self.token || !!localStorage.getItem('ydr_token');
     },
   }));

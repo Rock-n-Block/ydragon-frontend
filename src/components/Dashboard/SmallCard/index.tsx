@@ -114,12 +114,12 @@ const SmallCard: React.FC<IUserIndex> = ({
             <div
               className="index-small-card__percents--item__line"
               style={{
-                width: `${new BigNumber(token.current_weight).multipliedBy(100).toString()}%`,
+                width: `${new BigNumber(token.current_weight).multipliedBy(100).toString(10)}%`,
               }}
             >
               <div className="index-small-card__percents--item__line--body" />
               <div className="index-small-card__percents--item__line--number">
-                {new BigNumber(token.current_weight).multipliedBy(100).toString()}%
+                {new BigNumber(token.current_weight).multipliedBy(100).toString(10)}%
               </div>
             </div>
           </div>

@@ -75,10 +75,12 @@ const EventBanner: React.FC = observer(() => {
   useEffect(() => {
     if (imeItem) {
       setEnd(
-        moment(new Date(+new BigNumber(imeItem.ime_end_timestamp).multipliedBy(1000).toString())),
+        moment(new Date(+new BigNumber(imeItem.ime_end_timestamp).multipliedBy(1000).toString(10))),
       );
       setStart(
-        moment(new Date(+new BigNumber(imeItem.ime_start_timestamp).multipliedBy(1000).toString())),
+        moment(
+          new Date(+new BigNumber(imeItem.ime_start_timestamp).multipliedBy(1000).toString(10)),
+        ),
       );
     }
   }, [imeItem]);
@@ -102,8 +104,8 @@ const EventBanner: React.FC = observer(() => {
             <p className="event-banner-timer__title">
               <span>
                 {start.diff(now, 'seconds') > 0
-                  ? 'DAYS UNTIL Index minting Event AWAKENING'
-                  : 'DAYS BEFORE Index minting Event DISTRIBUTION'}{' '}
+                  ? 'Time before index minting starts'
+                  : 'Time before index minting ends'}{' '}
               </span>
             </p>
 

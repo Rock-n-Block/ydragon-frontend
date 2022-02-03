@@ -4,7 +4,7 @@
 .dark {
   .input {
     color: $white;
-    background: $dark-bg;
+    //background: $dark-bg;
   }
 
   .ant-input[disabled] {
@@ -17,16 +17,19 @@
       border: none;
     }
   }
+  .ant-input-affix-wrapper {
+    background: $main-dark-bg;
+  }
 }
 
 .light {
   .input {
     color: $black;
-    background: $white;
+    //background: $white;
   }
 
   .ant-input[disabled] {
-    background: $white !important;
+    background: $white;
   }
 
   .input-with-select__select {

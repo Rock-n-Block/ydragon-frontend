@@ -3,7 +3,7 @@
 
 .dark {
   .options {
-    @include shadow-block;
+    @include shadow-dark-block;
 
     &__option__input-wrapper {
       .ant-input-affix-wrapper {
@@ -17,7 +17,7 @@
 
 .light {
   .options {
-    @include light-block;
+    @include shadow-light-block;
 
     &__option__input-wrapper {
       .ant-input-affix-wrapper {
@@ -58,6 +58,7 @@
         flex-direction: column;
       }
     }
+
     @include b('mobile') {
       justify-content: center;
 

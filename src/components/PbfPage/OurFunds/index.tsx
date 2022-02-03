@@ -1,10 +1,9 @@
 import React from 'react';
 
+import { ReactComponent as SolanaLogo } from '../../../assets/img/pbf-page/solana-logo.svg';
 import { Button } from '../../index';
 
 import './OurFunds.scss';
-
-import { ReactComponent as SolanaLogo } from '../../../assets/img/pbf-page/solana-logo.svg';
 
 const OurFunds: React.FC = () => {
   return (

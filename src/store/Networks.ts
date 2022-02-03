@@ -1,13 +1,14 @@
 import { applySnapshot, types } from 'mobx-state-tree';
-import config, { TChain } from '../config';
+import { BACKEND_NETWORKS } from '../config';
+import { chainsEnum } from '../types';
 
-const { BACKEND_NETWORKS } = config;
 const Network = types.model({
   id: types.number,
   name: types.string,
   fabric_address: types.string,
   oracle_address: types.string,
   staking_address: types.string,
+  old_staking_address: types.maybeNull(types.string),
   router_address: types.string,
   dex_factory_address: types.string,
   endpoint: types.string,
@@ -29,7 +30,7 @@ export const Networks = types
     };
     const getCurrNetwork = () => {
       return self.networksList.find(
-        (network) => network.name === BACKEND_NETWORKS[self.currentNetwork as TChain],
+        (network) => network.name === BACKEND_NETWORKS[self.currentNetwork as chainsEnum],
       );
     };
     const setNetworks = (networks: any) => {

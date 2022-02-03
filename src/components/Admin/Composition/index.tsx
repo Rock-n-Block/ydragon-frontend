@@ -22,7 +22,7 @@ const Composition: React.FC<CompositionProps> = observer(({ status, tokens }) =>
 
   return (
     <section className="section section--admin">
-      <h2 className="section__title text-outline">head</h2>
+      <h2 className="section__title text-outline">tokens structure</h2>
 
       <div className="composition">
         <div className="composition__title">Index composition</div>
@@ -45,7 +45,7 @@ const Composition: React.FC<CompositionProps> = observer(({ status, tokens }) =>
           onClick={handleRebalanceOpen}
           disabled={rebalanceInProgress}
         >
-          Change index
+          Rebalance index
         </Button>
       </div>
     </section>

@@ -3,6 +3,7 @@ import { NavHashLink } from 'react-router-hash-link';
 import { observer } from 'mobx-react';
 
 import { useMst } from '../../store/store';
+import { chainsEnum } from '../../types';
 
 interface IDropDownItem {
   title: string;
@@ -12,17 +13,23 @@ interface IDropDownItem {
 }
 
 const DropDownItem: React.FC<IDropDownItem> = observer(({ title, link, handleClose, auth }) => {
-  const { user, networks } = useMst();
+  const { user, networks, modals } = useMst();
 
   if (auth?.includes('login') && !user.isUser) {
     return (
-      <div className="dropdown-body_item dropdown-body_item--not-allowed">
+      <div
+        role="button"
+        onKeyDown={() => {}}
+        tabIndex={0}
+        onClick={() => modals.connectWallet.open(link)}
+        className="dropdown-body_item"
+      >
         <span>{title}</span>
       </div>
     );
   }
 
-  if (auth?.includes('bnb') && networks.currentNetwork === 'eth') {
+  if (auth?.includes('noEth') && networks.currentNetwork === chainsEnum.Ethereum) {
     return <></>;
   }
 
