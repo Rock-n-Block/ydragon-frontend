@@ -2,7 +2,7 @@
 import farmtown from '../../../assets/img/about-us/advisors/farmtown.png';
 import geralt from '../../../assets/img/about-us/advisors/geralt.png';
 import mark from '../../../assets/img/about-us/advisors/mark.png';
-import markus from '../../../assets/img/about-us/advisors/markus.png';
+// import markus from '../../../assets/img/about-us/advisors/markus.png';
 import nick from '../../../assets/img/about-us/advisors/nick.png';
 import mattew from '../../../assets/img/about-us/advisors/mattew.jpg';
 import david from '../../../assets/img/about-us/advisors/david.jpg';
@@ -34,12 +34,12 @@ export const team: Array<IEmployee> = [
   //   img: eric,
   //   linkedIn: 'https://www.linkedin.com/in/ericxkang/',
   // },
-  {
-    name: 'Markus Jun',
-    role: 'Founder at ICON Hyperconnect',
-    img: markus,
-    linkedIn: 'https://www.linkedin.com/in/markusjun/',
-  },
+  // {
+  //   name: 'Markus Jun',
+  //   role: 'Founder at ICON Hyperconnect',
+  //   img: markus,
+  //   linkedIn: 'https://www.linkedin.com/in/markusjun/',
+  // },
   {
     name: 'Mark Stanwyck',
     role: 'Director at Avalaunch',
