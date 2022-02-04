@@ -719,6 +719,8 @@ export default class WalletService {
     toAddress: string,
   ): Promise<void> {
     const contract = this.getContractByAddress(contractAddress, config.Bridge.ABI);
+    console.log(this.getTxReceiptType());
+
     return contract.methods
       .transferToOtherBlockchain(toBlockchain, amountAbsolute, toAddress)
       .send({
@@ -728,7 +730,8 @@ export default class WalletService {
   }
 
   getTxReceiptType() {
-    const isProduction = process.env.REACT_APP_IS_PROD === 'production';
+    // const isProduction = process.env.REACT_APP_IS_PROD === 'production';
+    const isProduction = false;
     const chains = isProduction ? prodChains : devChains;
     const chainsAsArray = Object.values(chains);
     const chainId = this.getChainId();
