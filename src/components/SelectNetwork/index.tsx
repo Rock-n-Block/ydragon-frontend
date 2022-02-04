@@ -64,7 +64,7 @@ const SelectNetwork: React.FC = observer(() => {
   };
 
   useEffect(() => {
-    if (networks.networksList.length && user.address) {
+    if (user.address) {
       getCurrentChain();
     }
   }, [getCurrentChain, networks.networksList.length, user.address]);
@@ -92,23 +92,18 @@ const SelectNetwork: React.FC = observer(() => {
       dropdownClassName="select-network__dropdown"
     >
       <Option value="eth">
-        <TokenMini name="Ethereum" icon={eth} width="26" height="26" />
+        <TokenMini name="Ethereum" icon={eth} width="20" height="20" />
       </Option>
       <Option value="bnb">
         <TokenMini
           name="Binance"
           icon={theme.value === 'dark' ? bncDark : bncLight}
-          width="26"
-          height="26"
+          width="20"
+          height="20"
         />
       </Option>
       <Option value="avax">
-        <TokenMini
-          name="Avalanche"
-          icon={theme.value === 'dark' ? avax : avax}
-          width="26"
-          height="26"
-        />
+        <TokenMini name="Avalanche" icon={avax} width="20" height="20" />
       </Option>
     </Select>
   );
