@@ -69,7 +69,7 @@ export default class WalletService {
     this.web3Provider = new Web3();
 
     // this.isProduction = process.env.REACT_APP_IS_PROD === 'production';
-    this.isProduction = true;
+    this.isProduction = false;
     // this.contract = new this.web3Provider.eth.Contract(config.ABI as Array<any>, config.ADDRESS);
 
     this.usedNetwork = this.isProduction ? 'mainnet' : 'testnet';

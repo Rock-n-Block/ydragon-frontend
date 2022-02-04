@@ -15,7 +15,7 @@ import { useMst } from '../../store/store';
 import './Bridge.scss';
 
 // const isProduction = process.env.REACT_APP_IS_PROD === 'production';
-const isProduction = true;
+const isProduction = false;
 
 type ChainType = 'eth' | 'bsc' | 'avax';
 
