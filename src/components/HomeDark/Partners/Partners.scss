@@ -1,0 +1,120 @@
+@import '../../../styles/_variables.scss';
+@import '../../../styles/mixins';
+
+.dark {
+  .partners {
+    &__title {
+      color: $white;
+    }
+
+    &__link {
+      @include shadow-dark-block;
+    }
+  }
+}
+
+.light {
+  .partners {
+    &__title {
+      color: $black;
+    }
+
+    &__link {
+      @include shadow-dark-block;
+    }
+  }
+}
+
+.partners {
+  margin-top: 50px;
+
+  padding: 40px 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  @include b('tablet'){
+    padding: 16px;
+  }
+  .swiper-wrapper {
+    transition: transform 15s linear 0s;
+    will-change: transform;
+  }
+
+  .swiper-container {
+    overflow: visible;
+
+    width: 100%;
+  }
+
+  &__link {
+    padding: 0 30px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    height: 147px;
+
+    border-radius: 32px;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  &__title {
+    @include title-text;
+    text-align: center;
+  }
+
+  &__tabs{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 16px;
+    &_btn{
+      cursor: pointer;
+      padding: 20px 28px;
+      font-family: Monument Extended,sans-serif;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 18px;
+      line-height: 120%;
+      /* identical to box height, or 22px */
+
+      font-feature-settings: 'liga' off;
+
+      border: none;
+      @include shadow-dark-block;
+      border-radius: 20px;
+      transition:all 0.5s;
+      &:hover{
+        box-shadow: 0px 0px 24px rgba(234, 98, 64, 0.5);
+      }
+      &-active{
+        background: linear-gradient(149.35deg, #B12E2A 53.78%, #F47C45 102.7%);
+        box-shadow: 0px 0px 24px rgba(234, 98, 64, 0.5);
+      }
+    }
+  }
+
+  &__block{
+    margin-top: 80px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  &__item{
+    animation: fade-in 1s forwards;
+  }
+}
+
+@keyframes fade-in {
+  0%{
+    opacity: 0;
+  }
+  100%{
+    opacity: 1;
+  }
+}
