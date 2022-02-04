@@ -69,7 +69,7 @@ export default class WalletService {
     this.web3Provider = new Web3();
 
     // this.isProduction = process.env.REACT_APP_IS_PROD === 'production';
-    this.isProduction = false;
+    this.isProduction = true;
     // this.contract = new this.web3Provider.eth.Contract(config.ABI as Array<any>, config.ADDRESS);
 
     this.usedNetwork = this.isProduction ? 'mainnet' : 'testnet';
@@ -693,7 +693,6 @@ export default class WalletService {
 
   approveBridgeToken(tokenAddress: string, contractAddress: string): Promise<void> {
     const allowance = new BigNumber(2).pow(256).minus(1).toFixed(0);
-    console.log(this.walletAddress);
     return this.getContractByAddress(tokenAddress, config.Token.ABI)
       .methods.approve(contractAddress, allowance)
       .send({
@@ -731,7 +730,7 @@ export default class WalletService {
 
   getTxReceiptType() {
     // const isProduction = process.env.REACT_APP_IS_PROD === 'production';
-    const isProduction = false;
+    const isProduction = true;
     const chains = isProduction ? prodChains : devChains;
     const chainsAsArray = Object.values(chains);
     const chainId = this.getChainId();

@@ -16,7 +16,7 @@ const { Option } = Select;
 
 const SelectNetwork: React.FC = observer(() => {
   // const isProduction = process.env.REACT_APP_IS_PROD === 'production';
-  const isProduction = false;
+  const isProduction = true;
   const chains = isProduction ? prodChains : devChains;
 
   const { networks, /* basicTokens, */ theme, user } = useMst();
