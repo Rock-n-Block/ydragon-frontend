@@ -5,7 +5,7 @@ export type TChain = 'Ethereum' | 'Binance-Smart-Chain' | 'Avalanche' /*   | 'Po
 export enum chainsEnum {
   Ethereum = 'Ethereum',
   'Binance-Smart-Chain' = 'Binance-Smart-Chain',
-  // Polygon = 'Polygon',
+  Polygon = 'Polygon',
   Avalanche = 'Avalanche',
 }
 

@@ -18,7 +18,6 @@ const Partners: React.FC = observer(() => {
   }, [theme.value]);
 
   const toNextTab = useCallback(() => {
-    console.log('toNextTab called');
     const indexOfCurrentTab = partnersSetArray.indexOf(partnersTab);
     const isTabLast = indexOfCurrentTab === partnersSetArray.length - 1;
     const nextTab = isTabLast ? partnersSetArray[0] : partnersSetArray[indexOfCurrentTab + 1];

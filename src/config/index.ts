@@ -10,17 +10,17 @@ import bncLight from '../assets/img/icons/icon-binance-light.svg';
 import avalancheLogo from '../assets/img/icons/icon-avalanche.svg';
 import metamaskImg from '../assets/img/auth/metamask.svg';
 import walletConnectImg from '../assets/img/auth/walletconnect.svg';
-// import plgDark from '../assets/img/icons/icon-polygon-dark.svg';
-// import plgLight from '../assets/img/icons/icon-polygon-light.svg';
+import plgDark from '../assets/img/icons/icon-polygon-dark.svg';
+import plgLight from '../assets/img/icons/icon-polygon-light.svg';
 import eth from '../assets/img/icons/blockchains/eth.svg';
 import { chainsEnum, IConnectWallet, IContracts } from '../types';
 import { rootStore } from '../store/store';
 import { factoryAbi, routerAbi, tokenAbi } from './abi';
 import { INetwork } from '@amfi/connect-wallet/dist/interface';
 
-const IS_PRODUCTION = true;
+const IS_PRODUCTION = false;
 const BACKEND_URL = IS_PRODUCTION
-  ? 'https://ydragon.io/api/'
+  ? 'https://preprod.ydragon.io/api/' //   for prod 'https://ydragon.io/api/' for preprod 'https://preprod.ydragon.io/api/'
   : 'https://dev-ydragon.rocknblock.io/api/';
 const SOCIAL_LINKS = {
   twitter: {
@@ -93,16 +93,16 @@ const NETWORK_TOKENS = {
     },
     disabled: false,
   },
-  // matic: {
-  //   symbol: 'matic',
-  //   address: '0x0000000000000000000000000000000000000000',
-  //   decimals: 18,
-  //   name: 'Polygon (Matic)',
-  //   image: (theme: string) => {
-  //     return theme === 'dark' ? plgDark : plgLight;
-  //   },
-  //   disabled: false,
-  // },
+  'Polygon': {
+    symbol: 'matic',
+    address: '0x0000000000000000000000000000000000000000',
+    decimals: 18,
+    name: 'Polygon (Matic)',
+    image: (theme: string) => {
+      return theme === 'dark' ? plgDark : plgLight;
+    },
+    disabled: false,
+  },
 };
 const INFURA_KEY = 'e15330fb7e954a868e15297dd74dea37';
 
@@ -220,14 +220,27 @@ const chains: {
     },
     explorer: IS_PRODUCTION ? 'https://snowtrace.io/' : 'https://testnet.snowtrace.io/',
   },
-  /* [chainsEnum.Polygon]: {
+  [chainsEnum.Polygon]: {
     name: chainsEnum.Polygon,
-    chainId: IS_PRODUCTION ? 137 : 80001,
-    img:  (theme: string) => {
-      return theme === 'dark' ? po : bncLight;
+    // chainId: IS_PRODUCTION ? 137 : 80001,
+    network: {
+      chainID: IS_PRODUCTION ? 137 : 80001,
+      chainName: IS_PRODUCTION ? 'Polygon' : 'Polygon Testnet',
+      nativeCurrency: {
+        name: 'matic',
+        symbol: 'matic',
+        decimals: 18,
+      },
+      rpc: IS_PRODUCTION ? 'https://polygon-rpc.com/' : 'https://rpc-mumbai.matic.today',
+      blockExplorerUrl: IS_PRODUCTION
+        ? 'https://polygonscan.com/'
+        : 'https://mumbai.polygonscan.com/',
+    },
+    img: (theme: string) => {
+      return theme === 'dark' ? plgDark : plgLight;
     },
     provider: {
-      MetaMask: {name: 'MetaMask', img: metamaskImg},
+      MetaMask: { name: 'MetaMask', img: metamaskImg },
       WalletConnect: {
         img: walletConnectImg,
         name: 'WalletConnect',
@@ -236,8 +249,8 @@ const chains: {
           rpc: {
             rpc: {
               [IS_PRODUCTION ? 137 : 80001]: IS_PRODUCTION
-                ? 'https://bsc-dataseed.binance.org/'
-                : 'https://data-seed-prebsc-2-s1.binance.org:8545/',
+                ? 'https://polygon-rpc.com/'
+                : 'https://rpc-mumbai.matic.today',
             },
             chainId: IS_PRODUCTION ? 137 : 80001,
           },
@@ -245,7 +258,7 @@ const chains: {
       },
     },
     explorer: IS_PRODUCTION ? 'https://polygonscan.com' : 'https://mumbai.polygonscan.com',
-  }, */
+  },
 };
 
 export const connectWallet = (
@@ -257,7 +270,7 @@ export const connectWallet = (
 
   return {
     wallets: ['MetaMask', 'WalletConnect'],
-    blockchains: ['Ethereum', 'Binance Smart Chain', 'Avalanche'],
+    blockchains: ['Ethereum', 'Binance Smart Chain', 'Avalanche', 'Polygon'],
     network: chain.network,
     provider: chain.provider,
     settings: { providerType: true },
@@ -292,7 +305,7 @@ export const BACKEND_NETWORKS = {
   'Ethereum': 'ethereum',
   'Binance-Smart-Chain': 'binance-smart-chain',
   'Avalanche': 'avalanche',
-  // matic: 'polygon-pos',
+  'Polygon': 'polygon-pos',
 };
 
 export default {
@@ -309,12 +322,13 @@ export default {
     'Avalanche': IS_PRODUCTION
       ? 'https://cchain.explorer.avax.network'
       : 'https://cchain.explorer.avax-test.network',
-    // matic: IS_PRODUCTION ? 'https://polygonscan.com' : 'https://mumbai.polygonscan.com',
+    'Polygon': IS_PRODUCTION ? 'https://polygonscan.com' : 'https://mumbai.polygonscan.com',
   },
   SWAP_URLS: {
     'Ethereum': 'https://app.uniswap.org/#/add/',
     'Binance-Smart-Chain': 'https://pancakeswap.finance/add/',
     'Avalanche': 'https://app.partyswap.io/#/home',
+    'Polygon': 'https://quickswap.exchange/#/',
   },
   CHAIN_IDS: {
     mainnet: {
@@ -330,10 +344,10 @@ export default {
         name: 'Avalanche',
         id: '0xa86a',
       },
-      // matic: {
-      //   name: 'Matic',
-      //   id: '0x89',
-      // },
+      'Polygon': {
+        name: 'Matic',
+        id: '0x89',
+      },
     },
     testnet: {
       'Ethereum': {
@@ -348,10 +362,10 @@ export default {
         name: 'Avalanche Fuji Testnet',
         id: '0xa869',
       },
-      // matic: {
-      //   name: 'Matic',
-      //   id: '0x13881',
-      // },
+      'Polygon': {
+        name: 'Matic',
+        id: '0x13881',
+      },
     },
   },
   NETWORK_BY_CHAIN_ID: {
@@ -359,20 +373,20 @@ export default {
       '0x1': 'Ethereum',
       '0x38': 'Binance-Smart-Chain',
       '0xa86a': 'Avalanche',
-      // '0x89': 'matic',
+      '0x89': 'Polygon',
     },
     testnet: {
       '0x2a': 'Eth',
       '0x61': 'Binance-Smart-Chain',
       '0xa869': 'Avalanche',
-      // '0x13881': 'matic',
+      '0x13881': 'Polygon',
     },
   },
   NATIVE_TOKENS: {
     'Ethereum': { native: 'eth', wrapped: 'weth' },
     'Binance-Smart-Chain': { native: 'bnb', wrapped: 'wbnb' },
     'Avalanche': { native: 'avax', wrapped: 'wavax' },
-    // matic: { native: 'matic', wrapped: 'wmatic' },
+    'Polygon': { native: 'matic', wrapped: 'wmatic' },
   },
   FULL_CHAIN_INFO: {
     mainnet: {
@@ -400,14 +414,14 @@ export default {
         rpcUrls: ['https://api.avax.network/ext/bc/C/rpc'],
         blockExplorerUrls: ['https://cchain.explorer.avax.network'],
       },
-      // matic: {
-      //   chainId: '0x89',
-      //   chainName: 'Matic(Polygon) Mainnet',
-      //   shortName: 'Polygon',
-      //   nativeCurrency: NETWORK_TOKENS.matic,
-      //   rpcUrls: ['https://rpc-mainnet.matic.network'],
-      //   blockExplorerUrls: ['https://polygonscan.com'],
-      // },
+      'Polygon': {
+        chainId: '0x89',
+        chainName: 'Matic(Polygon) Mainnet',
+        shortName: 'Polygon',
+        nativeCurrency: NETWORK_TOKENS.Polygon,
+        rpcUrls: ['https://rpc-mainnet.matic.network'],
+        blockExplorerUrls: ['https://polygonscan.com'],
+      },
     },
     testnet: {
       'Ethereum': {
@@ -441,14 +455,14 @@ export default {
         rpcUrls: ['https://api.avax-test.network/ext/bc/C/rpc'],
         blockExplorerUrls: ['https://cchain.explorer.avax-test.network'],
       },
-      // matic: {
-      //   chainId: '0x13881',
-      //   chainName: 'Matic Testnet Mumbai',
-      //   shortName: 'Polygon Testnet',
-      //   nativeCurrency: NETWORK_TOKENS.matic,
-      //   rpcUrls: ['https://rpc-mumbai.matic.today'],
-      //   blockExplorerUrls: ['https://mumbai.polygonscan.com/'],
-      // },
+      'Polygon': {
+        chainId: '0x13881',
+        chainName: 'Matic Testnet Mumbai',
+        shortName: 'Polygon Testnet',
+        nativeCurrency: NETWORK_TOKENS.Polygon,
+        rpcUrls: ['https://rpc-mumbai.matic.today'],
+        blockExplorerUrls: ['https://mumbai.polygonscan.com/'],
+      },
     },
   },
 };
@@ -457,4 +471,5 @@ export const BLOCKS_PER_YEAR = {
   'Binance-Smart-Chain': 10512000,
   'Ethereum': 2102400,
   'Avalanche': 15768000,
+  'Polygon': 7890000,
 };
