@@ -172,7 +172,7 @@ p {
     background-color: $black;
     background-image: url('../assets/img/home-dark-bg.png');
 
-    &--home {
+    &--home,&--pbf {
       background-image: url('../assets/img/home-dark-bg.png'), url('../assets/img/home-dark-bg-bottom.png');
     }
 
@@ -243,6 +243,11 @@ p {
     background-size: contain;
     background-blend-mode: unset;
   }
+  &--pbf {
+    background-position: top center, bottom 500px center;
+    background-size: contain;
+    background-blend-mode: unset;
+  }
 
   &--about {
     background-position: top center, bottom 681px center;
@@ -254,12 +259,6 @@ p {
       background-size: cover;
       background-blend-mode: unset;
     }
-  }
-
-  &--pbf {
-    background-position: top center, bottom 1740px center, bottom 400px center;
-    background-size: contain;
-    background-blend-mode: unset;
   }
 
   &--staking {
