@@ -3,12 +3,16 @@
 
 .dark {
   .m-get-in {
-    &__content {
-      @include shadow-dark-block;
+    &__field {
+      .input-border {
+        .input,
+        .ant-input[disabled] {
+          background: $black;
+        }
+      }
     }
-
-    &__logo {
-      background: $white;
+    &__logo{
+      background: $main-bg;
       border: 9px solid #181c33;
     }
   }
@@ -16,13 +20,17 @@
 
 .light {
   .m-get-in {
-    &__content {
-      @include shadow-light-block;
+    &__field {
+      .input-border {
+        .input,
+        .ant-input[disabled] {
+          background: $white;
+        }
+      }
     }
-
-    &__logo {
-      background: $white;
-      border: 9px solid $white;
+    &__logo{
+      background: $main-dark-bg;
+      border: 9px solid white;
     }
   }
 }
@@ -32,7 +40,7 @@
     position: relative;
 
     padding: 100px 20px 26px;
-
+    //@include shadow-block;
     display: flex;
     flex-direction: column;
   }
@@ -70,7 +78,6 @@
     font-size: 20px;
     font-weight: normal;
     line-height: 24px;
-    text-align: center;
     text-transform: uppercase;
 
     span {
@@ -84,14 +91,21 @@
 
   &__field {
     margin-bottom: 20px;
+
     .input-border {
       width: 100%;
       height: 85px;
+
       .input {
+        padding: 0 25px;
+
         font-size: 30px;
         line-height: 35px;
         text-align: left;
-        padding: 0px 25px;
+      }
+
+      .ant-input[disabled] {
+        color: unset;
       }
     }
   }
@@ -101,6 +115,11 @@
 
     display: flex;
     justify-content: space-between;
+
+    &-box {
+      display: flex;
+      align-items: center;
+    }
   }
 
   &__label {
@@ -110,6 +129,15 @@
     line-height: 14px;
 
     opacity: 0.5;
+
+    &-max {
+      margin-left: 10px;
+
+      cursor: pointer;
+
+      color: #d53038;
+      opacity: 1;
+    }
   }
 
   &__fee {
@@ -120,5 +148,9 @@
     margin: 26px auto 0;
 
     width: unset !important;
+  }
+
+  .input {
+    background: rgb(23, 27, 49);
   }
 }
