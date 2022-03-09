@@ -172,11 +172,52 @@ p {
     background-color: $black;
     background-image: url('../assets/img/home-dark-bg.png');
 
-    &--home{
+    &--home {
       background-image: url('../assets/img/home-dark-bg.png'), url('../assets/img/home-dark-bg-bottom.png');
     }
-    &--simplified{
-      background-image: url('../assets/img/simplified-bg.png');
+
+    &--simplified {
+      position: relative;
+
+      main, footer {
+        z-index: 2;
+      }
+
+      header {
+        z-index: 3;
+      }
+
+      &::before {
+        content: '';
+        display: block;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 1440px;
+        z-index: 1;
+        background-image:url('../assets/img/home-dark-bg.png');
+        background-repeat: no-repeat;
+        background-position: top center;
+        background-size: cover;
+      }
+
+      &::after {
+        content: '';
+        display: block;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+        opacity: 0.2;
+        background-image: url('../assets/img/simplified-bg.png');
+        mix-blend-mode: luminosity;
+        background-repeat: no-repeat;
+        background-position: bottom center;
+        background-size: cover;
+      }
     }
 
     &--staking {
