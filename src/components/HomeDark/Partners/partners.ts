@@ -12,8 +12,6 @@ import bscStationD from '../../../assets/img/icons/partners/bsc-station-dark.png
 import polygonD from '../../../assets/img/icons/partners/polygon-dark.svg';
 import polygonL from '../../../assets/img/icons/partners/polygon-light.svg';
 import qiDaoD from '../../../assets/img/icons/partners/qi-dao-dark.png';
-import mateLD from '../../../assets/img/icons/partners/mate-dark.png';
-import orakuruLD from '../../../assets/img/icons/partners/orakuru-dark.png';
 import widilandLD from '../../../assets/img/icons/partners/widiland.png';
 import realmD from '../../../assets/img/icons/partners/realm-dark.png';
 import realmL from '../../../assets/img/icons/partners/realm-light.png';
@@ -82,16 +80,6 @@ export const partners: Record<TPartnerSet, IPartner[]> = {
       height: 64,
     },
     {
-      name: 'orakuru',
-      image: {
-        light: orakuruLD,
-        dark: orakuruLD,
-      },
-      link: 'https://orakuru.io/',
-      width: 118,
-      height: 118,
-    },
-    {
       name: 'ape swap',
       image: {
         light: apeswapLD,
@@ -100,16 +88,6 @@ export const partners: Record<TPartnerSet, IPartner[]> = {
       link: 'https://apeswap.finance/',
       width: 315,
       height: 84,
-    },
-    {
-      name: 'usemate',
-      image: {
-        light: mateLD,
-        dark: mateLD,
-      },
-      link: 'https://usemate.com/',
-      width: 182,
-      height: 51,
     },
     {
       name: 'widiland',
