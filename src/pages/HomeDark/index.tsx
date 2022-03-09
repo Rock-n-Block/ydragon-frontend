@@ -1,14 +1,16 @@
 import React from 'react';
 
-import { Advantages, Features, Indexpad, Machine, Main, Partners } from '../../components/HomeDark';
+import { Advantages, Features, Machine, Main, Partners } from '../../components/HomeDark';
 import './Home.scss';
+import { Ecosystem } from '../../components';
 
 const Home: React.FC = () => {
   return (
     <main className="home-page">
       <div className="container">
         <Main />
-        <Indexpad />
+        <Ecosystem />
+        {/* <Indexpad /> */}
         <Machine />
         <Features />
         <Advantages />

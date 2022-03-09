@@ -3,6 +3,7 @@ export { default as Footer } from './FooterDark';
 export { default as Button } from './Button';
 export { default as Input } from './Input';
 export { default as GuardedRoute } from './GuardedRoute';
+export { default as Ecosystem } from './Ecosystem';
 export { StyledTextArea as TextArea } from './Input';
 export { InputWithSelect } from './Input';
 // eslint-disable-next-line import/no-cycle

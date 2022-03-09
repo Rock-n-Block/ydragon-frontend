@@ -1,0 +1,109 @@
+@import 'src/styles/_variables.scss';
+@import 'src/styles/mixins';
+
+.ecosystem {
+  margin-top: 50px;
+
+  padding: 40px 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  @include b('tablet') {
+    padding: 16px;
+  }
+
+  &__tabs {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 15px;
+
+    &_btn {
+      cursor: pointer;
+      padding: 20px 28px;
+      font-family: Monument Extended, sans-serif;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 18px;
+      line-height: 120%;
+      /* identical to box height, or 22px */
+
+      font-feature-settings: 'liga' off;
+
+      border: none;
+      @include shadow-dark-block;
+      border-radius: 20px;
+      transition: all 0.5s;
+
+      &:hover {
+        box-shadow: 0px 0px 24px rgba(234, 98, 64, 0.5);
+      }
+
+      &-active {
+        background: linear-gradient(149.35deg, #B12E2A 53.78%, #F47C45 102.7%);
+        box-shadow: 0px 0px 24px rgba(234, 98, 64, 0.5);
+      }
+    }
+  }
+
+  &__block {
+    margin: 108px auto 0;
+    max-width: 1025px;
+  }
+
+  &__element {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 46px;
+
+    &-title {
+      font-family: 'Monument Extended';
+      font-size: 32px;
+      line-height: 38px;
+      display: flex;
+      align-items: center;
+      letter-spacing: 0.035em;
+      text-transform: uppercase;
+      position: relative;
+
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: -24px;
+        left: 0;
+        width: 84px;
+        height: 2px;
+        border-radius: 2px;
+        background: $gradient;
+      }
+    }
+
+    &-text {
+      margin-top: 48px;
+      font-family: 'Rubik';
+      font-size: 20px;
+      line-height: 32px;
+
+      color: #FFFFFF;
+
+      opacity: 0.8;
+    }
+    &-btn{
+      margin-top: 44px;
+      max-width: 250px;
+    }
+  }
+
+  &__info {
+    min-width: 522px;
+    max-width: 522px;
+    display: flex;
+    flex-direction: column;
+  }
+  &__img{
+    flex-grow: 1;
+    height: auto;
+  }
+}
