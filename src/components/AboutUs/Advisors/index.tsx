@@ -6,7 +6,7 @@ import { team } from './data';
 
 const Advisors: React.FC = () => {
   return (
-    <section className="section teams">
+    <section className="section advisors">
       <div className="teams__title-wrapper">
         <h1 className="teams__title text-outline">Advisors</h1>
       </div>

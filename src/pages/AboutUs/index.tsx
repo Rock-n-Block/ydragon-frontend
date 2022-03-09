@@ -11,7 +11,9 @@ const AboutUs: React.FC = () => {
       <div className="container">
         <Title />
         <Description />
-        <Teams />
+      </div>
+      <Teams />
+      <div className="container">
         <Partners />
         <Advisors />
         <Questions />

@@ -100,11 +100,11 @@ const Teams: React.FC = () => {
   ];
 
   return (
-    <section className="section teams" id="team">
+    <section className="teams" id="team">
       <div className="teams__title-wrapper">
         <h1 className="teams__title text-outline">TEAM</h1>
       </div>
-      <div className="teams__items">
+      <div className="teams__items container">
         {team.map((employee: IEmployee) => (
           <div className="team" key={`team_${employee.name}`}>
             <div className="team__img--wrapper">
