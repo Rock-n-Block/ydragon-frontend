@@ -39,7 +39,7 @@ const Routes: React.FC = observer(() => {
           component={AdminIndex}
           auth={user.isAdmin}
         />
-        <GuardedRoute exact path="/staking" component={StakingPage} auth={user.isUser} />
+        <Route exact path="/staking" component={StakingPage} />
 
         <Route exact path="/indexes" component={IndexDashboard} />
         <Route exact path="/about-us">

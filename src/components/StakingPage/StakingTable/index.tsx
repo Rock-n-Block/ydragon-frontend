@@ -15,7 +15,10 @@ interface IStakingTableProps {
 
 const StakingTable: React.FC<IStakingTableProps> = observer(({ ydrPrice }) => {
   const walletConnector = useWalletConnectorContext();
-  const { networks } = useMst();
+  const {
+    networks,
+    user: { address },
+  } = useMst();
 
   const [stakesCount, setStakesCount] = useState<number | null>(null);
 
@@ -28,11 +31,14 @@ const StakingTable: React.FC<IStakingTableProps> = observer(({ ydrPrice }) => {
   }, [networks, walletConnector.walletService]);
 
   useEffect(() => {
-    if (networks.networksList.length) {
+    if (networks.networksList.length && address) {
       getStakesCount();
     }
-  }, [getStakesCount, networks.networksList.length]);
+  }, [address, getStakesCount, networks.networksList.length]);
 
+  if (!address) {
+    return null;
+  }
   return (
     <section className="section">
       <div className="staking-table">
