@@ -315,7 +315,7 @@ export const partners: Record<TPartnerSet, IPartner[]> = {
         light: hyperconnectL,
         dark: hyperconnectD,
       },
-      link: '', // TODO: add link
+      link: 'https://hyperconnect.com/ko/',
       width: 290,
       height: 64,
     },
